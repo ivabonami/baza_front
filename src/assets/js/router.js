@@ -12,6 +12,7 @@ import ExchangersView from "../../views/sidebar/ExchangersView.vue";
 import ShopsPawView from "../../views/sidebar/ShopsPawView.vue";
 import SellersView from "../../views/sidebar/SellersView.vue";
 import ForumsView from "../../views/sidebar/ForumsView.vue";
+import AdminPageView from "../../views/admin/AdminPageView.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -44,13 +45,13 @@ const router = createRouter({
         {
             path: '/sign-in',
             name: 'Sign in',
-            component: SignInView
-        },
-        {
+            component: AdminView
+        },{
             path: '/admin',
             name: 'Admin',
-            component: AdminView
+            component: AdminPageView
         },
+
         {
             path: '/catalog',
             name: 'Catalog',

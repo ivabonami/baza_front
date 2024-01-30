@@ -8,6 +8,12 @@
 
   background-color: $theme;
   min-height: 100vh;
+  .header {
+    .row {
+      background-color: white;
+      margin-top: 30px;
+    }
+  }
 
 
   .link {
@@ -81,7 +87,14 @@
     $main: #2B2B2B;
     $links: #ffffff;
     $color: #00F0FF;
-
+    .sidebar .sidebar-links .sidebar-link a {
+      color: white;
+      svg {
+        path {
+          fill: white;
+        }
+      }
+    }
     background-color: $theme;
     .logo {
       a {

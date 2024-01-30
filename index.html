@@ -5,8 +5,46 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + Vue</title>
+    <style>
+      .preloader {
+        width: 100%;
+        margin-top: 100px;
+        text-align: center;
+      }
+      .pulse-loader {
+        width: 50px;
+        height: 50px;
+        border-radius: 100px;
+        animation: pulse 3s infinite;
+        background-color: black;
+        margin-bottom: 50px;
+        display: inline-block;
+        margin: 0 auto;
+      
+      }
+
+      @keyframes pulse {
+        0%, 100% {
+          transform: scale(1);
+        }
+        25%, 75% {
+          transform: scale(1.13);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+      
+
+
+    </style>
   </head>
   <body class="theme">
+    <div class="preloader">
+      <div class="pulse-loader"></div>
+      <p>
+        Market is loading</p>
+    </div>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
   </body>

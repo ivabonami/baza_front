@@ -3,6 +3,10 @@
   background-color: #F6F8FF;
   min-height: 100vh;
 }
+.theme .header .row {
+  background-color: white;
+  margin-top: 30px;
+}
 .theme .link {
   color: #2B2B2B;
 }
@@ -48,6 +52,12 @@
 }
 .theme.dark {
   background-color: #131313;
+}
+.theme.dark .sidebar .sidebar-links .sidebar-link a {
+  color: white;
+}
+.theme.dark .sidebar .sidebar-links .sidebar-link a svg path {
+  fill: white;
 }
 .theme.dark .logo a svg path {
   fill: #ffffff;
@@ -97,7 +107,7 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
-.row {
+.global-wrapper .row {
   display: flex;
   flex-wrap: wrap;
   flex-basis: border-box;
@@ -105,33 +115,32 @@ body {
   width: 94%;
   margin: 0 auto;
 }
-
-.main .row {
+.global-wrapper .main .row {
   gap: 30px;
   align-items: start;
   margin-top: 30px;
   justify-content: space-between;
 }
-.main .row .sidebar section, .main .row .content {
+.global-wrapper .main .row .sidebar section, .global-wrapper .main .row .content {
   border-radius: 15px;
   padding: 10px;
   box-shadow: 0px 4px 6px 0px rgba(108, 122, 255, 0.15);
 }
-.main .row .sidebar {
+.global-wrapper .main .row .sidebar {
   flex: 1 1;
   flex-wrap: wrap;
 }
-.main .row .sidebar section {
+.global-wrapper .main .row .sidebar section {
   width: 100%;
   box-sizing: border-box;
   margin-bottom: 30px;
   padding: 20px;
 }
-.main .row .content {
-  flex: 2 1;
+.global-wrapper .main .row .content {
+  flex: 3 1;
   padding: 30px;
 }
-.main .row .content p {
+.global-wrapper .main .row .content p {
   color: #000;
   font-family: Montserrat;
   font-size: 18px;
@@ -139,47 +148,45 @@ body {
   font-weight: 400;
   line-height: normal;
 }
-
-.header {
-  padding: 20px 2%;
+.global-wrapper .header .d-flex {
+  display: flex;
+  flex-basis: border-box;
+  width: 96%;
+  margin-left: 2%;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
-.header .nav {
+.global-wrapper .header .nav {
   width: 40%;
   flex-direction: row;
   align-items: center;
 }
-.header .nav .links {
+.global-wrapper .header .nav .links {
   width: 100%;
   display: flex;
   flex-basis: border-box;
   flex-wrap: wrap;
   justify-content: space-between;
 }
-.header .nav .links a.router-link-active {
+.global-wrapper .header .nav .links a.router-link-active {
   border-bottom: 1px solid;
 }
-
-.justify-between {
+.global-wrapper .justify-between {
   justify-content: space-between;
 }
-
-.align-center {
+.global-wrapper .align-center {
   align-items: center;
 }
-
-.box {
+.global-wrapper .box {
   border-radius: 15px;
 }
-
-.box-shadow {
+.global-wrapper .box-shadow {
   box-shadow: 0px 4px 6px 0px rgba(108, 122, 255, 0.15);
 }
-
-a {
+.global-wrapper a {
   text-decoration: none;
 }
-
-.link {
+.global-wrapper .link {
   font-family: "Montserrat", "Arial", Serif;
   font-size: 20px;
   font-style: normal;
@@ -188,8 +195,7 @@ a {
   margin-right: 2rem;
   text-decoration: none;
 }
-
-.btn {
+.global-wrapper .btn {
   border: 1px solid transparent;
   box-shadow: 0 4px 6px 0 rgba(1, 176, 117, 0.2);
   border-radius: 10px;
@@ -203,10 +209,10 @@ a {
   align-items: center;
   transition: 0.15s ease;
 }
-.btn:hover {
+.global-wrapper .btn:hover {
   transform: translateY(-5px);
 }
-.btn.btn-big-pages {
+.global-wrapper .btn.btn-big-pages {
   justify-content: start;
   margin-top: 20px;
   border-radius: 15px;
@@ -218,24 +224,21 @@ a {
   font-weight: 600;
   line-height: normal;
 }
-
-.theme-switcher {
+.global-wrapper .theme-switcher {
   width: 30%;
   justify-content: center;
   display: flex;
 }
-
-.logo {
+.global-wrapper .logo {
   width: 110px;
   height: 65px;
 }
-
-.sidebar-links {
+.global-wrapper .sidebar-links {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
 }
-.sidebar-links .separator {
+.global-wrapper .sidebar-links .separator {
   display: flex;
   margin-top: 5px;
   margin-bottom: 5px;
@@ -243,13 +246,13 @@ a {
   height: 1px;
   background-color: #494A4E;
 }
-.sidebar-links .sidebar-link {
+.global-wrapper .sidebar-links .sidebar-link {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   margin: 5px 0;
 }
-.sidebar-links .sidebar-link a {
+.global-wrapper .sidebar-links .sidebar-link a {
   min-height: 30px;
   padding: 10px 20px;
   border-radius: 10px;

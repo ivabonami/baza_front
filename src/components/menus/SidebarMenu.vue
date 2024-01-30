@@ -66,7 +66,7 @@
       </div>
     </div>
   </section>
-  <section>
+  <section class="highlight-project">
     <div class="image">
       <svg xmlns="http://www.w3.org/2000/svg" width="64" height="67" viewBox="0 0 64 67" fill="none">
         <path d="M55.2445 8.11017C55.2445 13.484 55.2445 18.7379 55.2445 23.9898C55.2445 24.9356 55.2445 25.8813 55.2445 26.827C55.2487 28.6302 54.5657 29.5717 53.2501 29.5822C51.9135 29.5906 51.2073 28.6554 51.2094 26.8774C51.2115 22.2539 51.2136 17.6304 51.2157 13.0069C51.2157 12.7631 51.2157 12.5214 51.2157 12.1053C50.829 12.1053 50.4991 12.1053 50.167 12.1053C35.3529 12.1053 20.5387 12.1053 5.72456 12.1053C4.14416 12.1053 4.14206 12.1137 4.14206 13.6857C4.14206 28.3633 4.14206 43.0387 4.14206 57.7163C4.14206 59.1853 4.15257 59.1874 5.60267 59.1874C12.7124 59.1874 19.8221 59.1874 26.9318 59.1874C27.1777 59.1874 27.4236 59.1769 27.6673 59.1979C28.8779 59.3051 29.6449 60.0974 29.6428 61.2301C29.6428 62.3797 28.8947 63.1741 27.6463 63.2035C25.5468 63.2519 23.4452 63.2372 21.3436 63.2351C16.0203 63.2351 10.6969 63.2329 5.3736 63.2224C1.93118 63.2161 0.100692 61.4193 0.0964883 58.0021C0.0922852 43.0114 0.0922852 28.0207 0.0922852 13.0279C0.0922852 10.1151 2.05728 8.07655 4.92386 8.07234C21.455 8.05973 37.9841 8.06604 54.5152 8.06814C54.7191 8.06814 54.9229 8.09126 55.2445 8.11017Z" fill="#6C7AFF"/>
@@ -87,9 +87,9 @@
       мы подберем для вас
       предложение
     </div>
-    <div class="btn btn-filled">
-
-    </div>
+    <button class="btn btn-filled">
+      Вперед
+    </button>
   </section>
   <section>
     donation
@@ -112,6 +112,44 @@ export default {
 
       }
     }
+  }
+}
+.highlight-project {
+  text-align: center;
+  padding: 50px 60px!important;
+  box-sizing: border-box;
+  display: block;
+
+  .highlight-heading {
+    text-align: center;
+    margin-top: 30px;
+    font-family: Montserrat;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+  }
+  .highlight-description {
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 20px;
+  }
+  .btn.btn-filled {
+    color: #ffffff;
+    background-color: #6C7AFF;
+    margin-top: 30px;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
   }
 }
 
