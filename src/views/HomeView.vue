@@ -7,7 +7,19 @@
 import recommended from "../components/Recommended.vue";
 export default {
   name: "HomeView.vue",
-  components: { recommended }
+  components: { recommended },
+  mounted() {
+    this.getShops()
+  },
+  methods: {
+    async getShops(count) {
+      const response = fetch('.//assets/response.json').then( res => {
+        console.log(res)
+        // res.json()
+      })
+      // console.log(response)
+    }
+  }
 
 }
 </script>

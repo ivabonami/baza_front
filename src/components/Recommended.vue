@@ -33,6 +33,7 @@
 export default {
   name: "Recommended.vue",
 
+
   data() {
     return {
       recommendedShops: [
