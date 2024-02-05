@@ -5,14 +5,12 @@ import AdvertisementView from "../../views/AdvertisementView.vue";
 import AboutProjectView from "../../views/AboutProjectView.vue";
 import ContactsView from "../../views/ContactsView.vue";
 import SignInView from "../../views/SignInView.vue";
-import AdminView from "../../views/admin/AdminView.vue";
 import CatalogView from "../../views/sidebar/CatalogView.vue";
 import MarketsView from "../../views/sidebar/MarketsView.vue";
 import ExchangersView from "../../views/sidebar/ExchangersView.vue";
 import ShopsPawView from "../../views/sidebar/ShopsPawView.vue";
 import SellersView from "../../views/sidebar/SellersView.vue";
 import ForumsView from "../../views/sidebar/ForumsView.vue";
-import AdminPageView from "../../views/admin/AdminPageView.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -42,16 +40,6 @@ const router = createRouter({
             name: 'Contacts',
             component: ContactsView
         },
-        {
-            path: '/sign-in',
-            name: 'Sign in',
-            component: AdminView
-        },{
-            path: '/admin',
-            name: 'Admin',
-            component: AdminPageView
-        },
-
         {
             path: '/catalog',
             name: 'Catalog',

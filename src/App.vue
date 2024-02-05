@@ -1,10 +1,9 @@
 <script>
 import SidebarMenu from "./components/menus/SidebarMenu.vue";
-import TopMenu from "./views/admin/TopMenu.vue";
-import AdminPageView from "./views/admin/AdminPageView.vue";
+import TopMenu from "./components/menus/TopMenu.vue";
 
 export default {
-  components: { SidebarMenu, TopMenu, AdminPageView },
+  components: { SidebarMenu, TopMenu },
   data() {
     return {
       isLoaded: false,
@@ -54,7 +53,7 @@ export default {
 </script>
 
 <template>
-  <div class="global-wrapper" v-if="this.isLoaded === true && isAdmin === false">
+  <div class="global-wrapper" v-if="this.isLoaded === true">
     <header class="header" >
       <div class="row  box box-shadow">
         <div class="d-flex justify-between align-center">
@@ -84,9 +83,7 @@ export default {
             </router-link>
 
           </div>
-          <div class="theme-switcher">
-            <button id="switcher" v-on:click="this.switchTheme()">SWITCH</button>
-          </div>
+
           <div class="nav">
             <top-menu></top-menu>
           </div>
@@ -127,11 +124,6 @@ export default {
     </footer>
 
   </div>
-  <div class="admin" v-else-if="isAdmin === true">
-    <admin-page-view></admin-page-view>
-
-  </div>
-
 
 
 </template>

@@ -1,29 +1,39 @@
 <template>
-<h1>Главная</h1>
-  <recommended></recommended>
+  <div class="wrapper">
+    <h1>Главная</h1>
+    <recommended></recommended>
+  </div>
+
+  <div class="projects-wrapper">
+    <shops-row></shops-row>
+  </div>
+
+
+
+
+
 </template>
 
 <script>
 import recommended from "../components/Recommended.vue";
+import ShopsRow from "../components/ShopsRow.vue";
 export default {
   name: "HomeView.vue",
-  components: { recommended },
+  components: { recommended, ShopsRow },
   mounted() {
-    this.getShops()
+
   },
   methods: {
-    async getShops(count) {
-      const response = fetch('.//assets/response.json').then( res => {
-        console.log(res)
-        // res.json()
-      })
-      // console.log(response)
-    }
+
   }
 
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.projects-wrapper {
+  margin-top: 50px;
+
+}
 
 </style>
