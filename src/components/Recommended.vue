@@ -131,7 +131,7 @@ export default {
   margin-top: 30px;
 
   .shop-view {
-    max-width: 30%;
+    max-width: 32%;
     img {
       width: 100%;
 

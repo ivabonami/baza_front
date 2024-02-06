@@ -1,16 +1,18 @@
 import {createRouter, createWebHistory} from "vue-router";
-import HomeView from "../../views/HomeView.vue";
-import GuaranteeView from "../../views/GuaranteeView.vue";
-import AdvertisementView from "../../views/AdvertisementView.vue";
-import AboutProjectView from "../../views/AboutProjectView.vue";
-import ContactsView from "../../views/ContactsView.vue";
-import SignInView from "../../views/SignInView.vue";
+import HomeView from "../../views/pages/HomeView.vue";
+import GuaranteeView from "../../views/pages/GuaranteeView.vue";
+import AdvertisementView from "../../views/pages/AdvertisementView.vue";
+import AboutProjectView from "../../views/pages/AboutProjectView.vue";
+import ContactsView from "../../views/pages/ContactsView.vue";
+import SignInView from "../../views/pages/SignInView.vue";
 import CatalogView from "../../views/sidebar/CatalogView.vue";
 import MarketsView from "../../views/sidebar/MarketsView.vue";
 import ExchangersView from "../../views/sidebar/ExchangersView.vue";
 import ShopsPawView from "../../views/sidebar/ShopsPawView.vue";
 import SellersView from "../../views/sidebar/SellersView.vue";
 import ForumsView from "../../views/sidebar/ForumsView.vue";
+
+import pageView from "../../views/PageView.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -21,25 +23,33 @@ const router = createRouter({
             component: HomeView
         },
         {
-            path: '/about-project',
-            name: 'About project',
-            component: AboutProjectView
+            path: '/page',
+            name: 'Page',
+            component: pageView,
+            children: [
+                {
+                    path: '/about-project',
+                    name: 'About project',
+                    component: AboutProjectView
+                },
+                {
+                    path: '/advertisement',
+                    name: 'Advertisement',
+                    component: AdvertisementView
+                },
+                {
+                    path: '/guarantee',
+                    name: 'Guarantee',
+                    component: GuaranteeView
+                },
+                {
+                    path: '/contacts',
+                    name: 'Contacts',
+                    component: ContactsView
+                },
+            ]
         },
-        {
-            path: '/advertisement',
-            name: 'Advertisement',
-            component: AdvertisementView
-        },
-        {
-            path: '/guarantee',
-            name: 'Guarantee',
-            component: GuaranteeView
-        },
-        {
-            path: '/contacts',
-            name: 'Contacts',
-            component: ContactsView
-        },
+
         {
             path: '/catalog',
             name: 'Catalog',

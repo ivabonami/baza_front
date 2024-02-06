@@ -1,10 +1,11 @@
 <template>
 
+  <router-view></router-view>
 </template>
 
 <script>
 export default {
-  name: "ShopView.vue"
+  name: "PageView.vue"
 }
 </script>
 

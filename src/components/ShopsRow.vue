@@ -1367,6 +1367,34 @@ export default {
 
           }
         }
+        .rating {
+          display: flex;
+
+          .recommend-project {
+            margin-left: 20px;
+            width: 70px;
+            height: 30px;
+            display: flex;
+            align-items: stretch;
+
+            .recommend-this-project {
+              background-color: transparent;
+              border-radius: 5px;
+              border: 1px solid #6C7AFF;
+              cursor: default;
+              padding: 0;
+              
+              span {
+
+                background-color: #6C7AFF;
+                height: 100%;
+                color: #ffffff;
+              }
+              
+            }
+          }
+
+        }
 
       }
       .project-description {
@@ -1465,6 +1493,7 @@ export default {
 
           }
         }
+
 
       }
 

@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import recommended from "../components/Recommended.vue";
-import ShopsRow from "../components/ShopsRow.vue";
+import recommended from "../../components/Recommended.vue";
+import ShopsRow from "../../components/ShopsRow.vue";
 export default {
   name: "HomeView.vue",
   components: { recommended, ShopsRow },
