@@ -13,6 +13,8 @@ import SellersView from "../../views/sidebar/SellersView.vue";
 import ForumsView from "../../views/sidebar/ForumsView.vue";
 
 import pageView from "../../views/PageView.vue";
+import ShopsRow from "../../components/ShopsRow.vue";
+import ProjectsView from "../../views/project/ProjectsView.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -49,12 +51,21 @@ const router = createRouter({
                 },
             ]
         },
-
         {
-            path: '/catalog',
-            name: 'Catalog',
-            component: CatalogView
+          path: '/project/:id',
+          component: ProjectsView,
+            children: [
+                {
+                    path: '/description'
+
+                },{
+                    path: '/services'
+                },{
+                    path: '/reviews'
+                },
+            ]
         },
+
         {
             path: '/markets',
             name: 'Markets',
