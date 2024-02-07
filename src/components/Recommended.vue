@@ -23,6 +23,7 @@
           <span>{{ item.name }}</span>
         </div>
       </div>
+
       <div class="shop-view"
            v-for="item in this.freshShops"
            v-if="this.tab === 'fresh'"
@@ -57,6 +58,11 @@ export default {
           name: 'Документы',
           id: 3
         },
+        {
+          image: "https://media.istockphoto.com/id/1035676256/photo/background-of-galaxy-and-stars.jpg?s=612x612&w=0&k=20&c=dh7eWJ6ovqnQZ9QwQQlq2wxqmAR7mgRlQTgaIylgBwc=",
+          name: 'Документы',
+          id: 4
+        },
       ],
       freshShops: [
         {
@@ -71,6 +77,11 @@ export default {
           image: "https://res.cloudinary.com/momentum-media-group-pty-ltd/image/upload/v1686795211/Space%20Connect/space-exploration-sc_fm1ysf.jpg",
           name: 'Крипта дешево',
           id: 6
+        },
+        {
+          image: "https://res.cloudinary.com/momentum-media-group-pty-ltd/image/upload/v1686795211/Space%20Connect/space-exploration-sc_fm1ysf.jpg",
+          name: 'Крипта дешево',
+          id: 7
         },
 
       ],
@@ -95,52 +106,25 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.tabs-links {
-  margin-top: 30px;
-  color: #000;
-  border-bottom: 1px solid #000;
-  width: fit-content;
 
-  button {
-    &.recommended {
-      margin-right: 30px;
-    }
-    font-family: Montserrat;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
-    background-color: transparent;
-    border: none;
-    border-bottom: 5px solid transparent;
-    cursor: default;
-    transition: .3s ease;
-
-    &:hover {
-      opacity: .8;
-    }
-    &.active {
-      border-bottom-color: #6C7AFF;
-    }
-
-  }
-}
 .tabs-content {
   display: flex;
   width: 100%;
   justify-content: space-between;
   margin-top: 30px;
+  gap: 20px;
 
   .shop-view {
-    max-width: 32%;
+    max-width: 230px;
+
     img {
       width: 100%;
-
       border-radius: 15px;
 
     }
     .shop-heading {
       font-family: Montserrat;
-      font-size: 26px;
+      font-size: 20px;
       font-style: normal;
       font-weight: 600;
       margin-top: 10px;

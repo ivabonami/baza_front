@@ -2,11 +2,29 @@
   <div class="projects">
     <project-card
         v-bind:projectId="2"
+        v-bind:paid="true"
     >
 
     </project-card>
     <project-card
         v-bind:projectId="3"
+        v-bind:paid="true"
+    >
+
+    </project-card>
+    <project-card
+        v-bind:projectId="4"
+        v-bind:paid="true"
+    >
+
+    </project-card>
+    <project-card
+        v-bind:projectId="5"
+    >
+
+    </project-card>
+    <project-card
+        v-bind:projectId="6"
     >
 
     </project-card>
@@ -15,7 +33,6 @@
 </template>
 
 <script>
-// import { router } from "../assets/js/router.js";
 import projectCard from "../views/project/ProjectCard.vue";
 
 
@@ -32,6 +49,13 @@ export default {
   },
 
   mounted() {
+    const description = document.querySelectorAll('.project-description p')
+    for (let item of description) {
+      if (item.innerHTML.length > 130) {
+
+        item.innerHTML = item.innerHTML.substring(130, 0) + '...'
+      }
+    }
 
   },
   methods: {

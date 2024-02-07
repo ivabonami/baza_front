@@ -4,8 +4,6 @@ import GuaranteeView from "../../views/pages/GuaranteeView.vue";
 import AdvertisementView from "../../views/pages/AdvertisementView.vue";
 import AboutProjectView from "../../views/pages/AboutProjectView.vue";
 import ContactsView from "../../views/pages/ContactsView.vue";
-import SignInView from "../../views/pages/SignInView.vue";
-import CatalogView from "../../views/sidebar/CatalogView.vue";
 import MarketsView from "../../views/sidebar/MarketsView.vue";
 import ExchangersView from "../../views/sidebar/ExchangersView.vue";
 import ShopsPawView from "../../views/sidebar/ShopsPawView.vue";
@@ -13,7 +11,7 @@ import SellersView from "../../views/sidebar/SellersView.vue";
 import ForumsView from "../../views/sidebar/ForumsView.vue";
 
 import pageView from "../../views/PageView.vue";
-import ShopsRow from "../../components/ShopsRow.vue";
+
 import ProjectsView from "../../views/project/ProjectsView.vue";
 
 const router = createRouter({
@@ -25,43 +23,49 @@ const router = createRouter({
             component: HomeView
         },
         {
-            path: '/page',
-            name: 'Page',
-            component: pageView,
-            children: [
-                {
-                    path: '/about-project',
-                    name: 'About project',
-                    component: AboutProjectView
-                },
-                {
-                    path: '/advertisement',
-                    name: 'Advertisement',
-                    component: AdvertisementView
-                },
-                {
-                    path: '/guarantee',
-                    name: 'Guarantee',
-                    component: GuaranteeView
-                },
-                {
-                    path: '/contacts',
-                    name: 'Contacts',
-                    component: ContactsView
-                },
-            ]
+            path: '/about-project',
+            name: 'About project',
+            component: AboutProjectView,
+            meta: {
+                transition: 'slide-fade',
+                mode: 'in-out'
+            }
+        },
+        {
+            path: '/advertisement',
+            name: 'Advertisement',
+            component: AdvertisementView,
+            meta: {
+                transition: 'slide-fade',
+                mode: 'in-out'
+            }
+        },
+        {
+            path: '/guarantee',
+            name: 'Guarantee',
+            component: GuaranteeView
+        },
+        {
+            path: '/contacts',
+            name: 'Contacts',
+            component: ContactsView
         },
         {
           path: '/project/:id',
           component: ProjectsView,
+            meta: {
+                transition: 's1',
+                mode: 'in-out'
+            },
+
             children: [
                 {
-                    path: '/description'
+                    path: 'description'
 
                 },{
-                    path: '/services'
+                    path: 'services'
                 },{
-                    path: '/reviews'
+                    path: 'reviews'
                 },
             ]
         },

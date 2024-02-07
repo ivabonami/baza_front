@@ -33,7 +33,6 @@
 }
 .theme .sidebar .sidebar-links .sidebar-link a.router-link-active {
   background-color: #6C7AFF;
-  box-shadow: 0px 4px 6px 0px rgba(1, 176, 117, 0.2);
   color: #ffffff;
 }
 .theme .sidebar .sidebar-links .sidebar-link a.router-link-active svg path {
@@ -44,7 +43,6 @@
 }
 .theme .sidebar .sidebar-links .sidebar-link:hover a {
   background-color: #6C7AFF;
-  box-shadow: 0px 4px 6px 0px rgba(1, 176, 117, 0.2);
   color: #ffffff;
 }
 .theme .sidebar .sidebar-links .sidebar-link:hover a svg path {
@@ -125,7 +123,7 @@ body {
 .main .row .sidebar section {
   border-radius: 15px;
   padding: 10px;
-  box-shadow: 0px 4px 6px 0px rgba(108, 122, 255, 0.15);
+  box-shadow: 0 0 8px #a3d7fc;
 }
 .main .row .sidebar {
   flex: 1 1;
@@ -139,7 +137,6 @@ body {
 }
 .main .row .content {
   flex: 3 1;
-  padding: 30px;
 }
 .main .row .content p {
   color: #000;
@@ -187,7 +184,7 @@ body {
 }
 
 .box-shadow {
-  box-shadow: 0px 4px 6px 0px rgba(108, 122, 255, 0.15);
+  box-shadow: 0 0 8px #a3d7fc;
 }
 
 a {
@@ -206,7 +203,7 @@ a {
 
 .btn {
   border: 1px solid transparent;
-  box-shadow: 0 4px 6px 0 rgba(1, 176, 117, 0.2);
+  box-shadow: 0 0 8px #a3d7fc;
   border-radius: 10px;
   flex-shrink: 0;
   box-sizing: border-box;
@@ -272,6 +269,47 @@ a {
   gap: 10px;
   width: 100%;
   align-items: center;
+}
+
+.tabs-links {
+  margin-top: 30px;
+  color: #000;
+  border-bottom: 1px solid #000;
+  width: fit-content;
+}
+.tabs-links button {
+  font-family: Montserrat;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  background-color: transparent;
+  border: none;
+  border-bottom: 5px solid transparent;
+  cursor: default;
+  transition: 0.3s ease;
+}
+.tabs-links button.recommended {
+  margin-right: 30px;
+}
+.tabs-links button:hover {
+  opacity: 0.8;
+}
+.tabs-links button.active {
+  border-bottom-color: #6C7AFF;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.2s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
 }
 
 /*# sourceMappingURL=main.css.map */
