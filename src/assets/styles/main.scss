@@ -32,7 +32,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   flex-basis: border-box;
-  max-width: 1440px;
+  max-width: 1140px;
   width: 94%;
 
   margin: 0 auto;
@@ -52,7 +52,7 @@ body {
 
     }
     .sidebar {
-      flex: 1 1;
+      flex: 1 4;
       flex-wrap: wrap;
 
       section {
@@ -64,7 +64,7 @@ body {
       }
     }
     .content {
-      flex: 3 1;
+      flex: 3 4;
 
       p {
         color: #000;
@@ -92,7 +92,7 @@ body {
 
 
   .nav {
-    width: 40%;
+    width: 60%;
     flex-direction: row;
     align-items: center;
 
@@ -101,7 +101,9 @@ body {
       display: flex;
       flex-basis: border-box;
       flex-wrap: wrap;
-      justify-content: space-between;
+      justify-content: end;
+      margin-left: auto;
+      align-items: center;
 
       a {
         &.router-link-active {
@@ -129,7 +131,7 @@ a {
 }
 .link {
   font-family: 'Montserrat', 'Arial', Serif;
-  font-size: 20px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -212,7 +214,7 @@ a {
   }
 }
 .tabs-links {
-  margin-top: 30px;
+
   color: #000;
   border-bottom: 1px solid #000;
   width: fit-content;
@@ -222,7 +224,7 @@ a {
       margin-right: 30px;
     }
     font-family: Montserrat;
-    font-size: 24px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 400;
     background-color: transparent;

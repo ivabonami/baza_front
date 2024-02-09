@@ -4,12 +4,12 @@
       <button
          v-on:click="switchTabs('recommended')"
          class="recommended active">
-        Рекомендовано для вас
+        Рекомендовано
       </button>
       <button
          v-on:click="switchTabs('fresh')"
          class="fresh">
-        Свежее
+        Новое
       </button>
     </div>
     <div class="tabs-content" >
@@ -124,7 +124,7 @@ export default {
     }
     .shop-heading {
       font-family: Montserrat;
-      font-size: 20px;
+      font-size: 16px;
       font-style: normal;
       font-weight: 600;
       margin-top: 10px;

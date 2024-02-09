@@ -51,9 +51,9 @@ export default {
   mounted() {
     const description = document.querySelectorAll('.project-description p')
     for (let item of description) {
-      if (item.innerHTML.length > 130) {
+      if (item.innerHTML.length > 120) {
 
-        item.innerHTML = item.innerHTML.substring(130, 0) + '...'
+        item.innerHTML = item.innerHTML.substring(120, 0) + '...'
       }
     }
 

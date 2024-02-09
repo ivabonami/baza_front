@@ -76,6 +76,17 @@
         <router-view>
           123
         </router-view>
+
+        <div class="services">
+          <services-card
+          v-for="projectS of this.projectServices"
+          v-bind:name="projectS.name"
+          v-bind:description="projectS.description"
+          v-bind:image="projectS.image"
+          >
+
+          </services-card>
+        </div>
       </div>
 
     </div>
@@ -84,13 +95,46 @@
 </template>
 
 <script>
-
+import servicesCard from "./ServicesCard.vue";
 export default {
 
   name: "ProjectsView.vue",
+  components: {servicesCard},
+
 
   data () {
     return {
+      projectServices: [
+        {
+          name: 'OVPN',
+          description: 'Aenean convallis tellus turpis, eu posuere nunc pulvinar ac. Vivamus vel sagittis mi, at vehicula eros. Duis fermentum pulvinar quam, ac congue augue euismod vitae. Nulla eu ante vel arcu interdum ultricies sed et eros. Nullam non vulputate dui, non imperdiet purus. Cras tempus urna eget varius vulputate.',
+          image: 'https://www.kaspersky.com/content/en-global/images/repository/isc/2020/what-is-a-vpn.jpg'
+        },
+          {
+          name: 'OVPN2',
+          description: 'Aenean convallis tellus turpis, eu posuere nunc pulvinar ac. Vivamus vel sagittis mi, at vehicula eros. Duis fermentum pulvinar quam, ac congue augue euismod vitae. Nulla eu ante vel arcu interdum ultricies sed et eros. Nullam non vulputate dui, non imperdiet purus. Cras tempus urna eget varius vulputate.',
+          image: 'https://www.kaspersky.com/content/en-global/images/repository/isc/2020/what-is-a-vpn.jpg'
+        },
+          {
+          name: 'OVPN3',
+          description: 'Aenean convallis tellus turpis, eu posuere nunc pulvinar ac. Vivamus vel sagittis mi, at vehicula eros. Duis fermentum pulvinar quam, ac congue augue euismod vitae. Nulla eu ante vel arcu interdum ultricies sed et eros. Nullam non vulputate dui, non imperdiet purus. Cras tempus urna eget varius vulputate.',
+          image: 'https://www.kaspersky.com/content/en-global/images/repository/isc/2020/what-is-a-vpn.jpg'
+        },
+          {
+          name: 'OVPN4',
+          description: 'Aenean convallis tellus turpis, eu posuere nunc pulvinar ac. Vivamus vel sagittis mi, at vehicula eros. Duis fermentum pulvinar quam, ac congue augue euismod vitae. Nulla eu ante vel arcu interdum ultricies sed et eros. Nullam non vulputate dui, non imperdiet purus. Cras tempus urna eget varius vulputate.',
+          image: 'https://www.kaspersky.com/content/en-global/images/repository/isc/2020/what-is-a-vpn.jpg'
+        },{
+          name: 'OVPN5',
+          description: 'Aenean convallis tellus turpis, eu posuere nunc pulvinar ac. Vivamus vel sagittis mi, at vehicula eros. Duis fermentum pulvinar quam, ac congue augue euismod vitae. Nulla eu ante vel arcu interdum ultricies sed et eros. Nullam non vulputate dui, non imperdiet purus. Cras tempus urna eget varius vulputate.',
+          image: 'https://www.kaspersky.com/content/en-global/images/repository/isc/2020/what-is-a-vpn.jpg'
+        },{
+          name: 'OVPN6',
+          description: 'Aenean convallis tellus turpis, eu posuere nunc pulvinar ac. Vivamus vel sagittis mi, at vehicula eros. Duis fermentum pulvinar quam, ac congue augue euismod vitae. Nulla eu ante vel arcu interdum ultricies sed et eros. Nullam non vulputate dui, non imperdiet purus. Cras tempus urna eget varius vulputate.',
+          image: 'https://www.kaspersky.com/content/en-global/images/repository/isc/2020/what-is-a-vpn.jpg'
+        },
+
+      ]
 
     }
   },
@@ -106,6 +150,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.services {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
 .content {
   padding: 0;
 }

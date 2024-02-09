@@ -112,7 +112,7 @@
 </template>
 
 <script>
-export default {
+export default  {
   name: "SidebarMenu.vue",
   components: 'SidebarMenu'
 }
