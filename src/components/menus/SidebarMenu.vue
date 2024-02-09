@@ -139,7 +139,7 @@ export default  {
     text-align: center;
     margin-top: 30px;
     font-family: Montserrat;
-    font-size: 25px;
+    font-size: 12px;
     font-style: normal;
     font-weight: 900;
     line-height: normal;
@@ -147,7 +147,7 @@ export default  {
   .highlight-description {
     text-align: center;
     font-family: Montserrat;
-    font-size: 16px;
+    font-size: 10px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;

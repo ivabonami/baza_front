@@ -219,7 +219,7 @@ export default {
 
   color: var(--secondary, #2B2B2B);
   font-family: Montserrat;
-  font-size: 35px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
