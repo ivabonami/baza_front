@@ -79,7 +79,7 @@
               <span>1266</span>
             </div>
             <div class="date"  title="Дата создания">
-              Дата создания: 01.01.2024
+              01.01.2024
             </div>
           </div>
 
@@ -129,7 +129,7 @@ export default {
   border-radius: 30px;
   position: relative;
   background-color: #fff;
-  padding: 20px;
+  padding: 10px 15px;
   gap: 20px;
   display: flex;
   justify-content: space-between;
@@ -147,8 +147,8 @@ export default {
   .avatar {
     width: fit-content;
     img {
-      width: 100px;
-      height: 100px;
+      width: 110px;
+      height: 110px;
       border-radius: 15px;
     }
   }

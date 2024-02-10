@@ -31,9 +31,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.projects-wrapper {
-  margin-top: 50px;
 
-}
 
 </style>

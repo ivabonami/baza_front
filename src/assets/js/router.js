@@ -13,6 +13,8 @@ import ForumsView from "../../views/sidebar/ForumsView.vue";
 import pageView from "../../views/PageView.vue";
 
 import ProjectsView from "../../views/project/ProjectsView.vue";
+import ServicesCard from "../../views/project/ServicesCard.vue";
+import ProjectDescription from "../../views/project/ProjectDescription.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -60,12 +62,11 @@ const router = createRouter({
 
             children: [
                 {
-                    path: 'description'
-
+                    path: 'services',
+                    component: ServicesCard
                 },{
-                    path: 'services'
-                },{
-                    path: 'reviews'
+                    path: 'description',
+                    component: ProjectDescription
                 },
             ]
         },

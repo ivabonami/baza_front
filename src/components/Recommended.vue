@@ -14,22 +14,32 @@
     </div>
     <div class="tabs-content" >
       <div class="shop-view"
-           v-for="item in this.recommendedShops"
+           v-for="(item, index, selectedId) in this.recommendedShops"
            v-if="this.tab === 'recommended'"
-           v-on:click="$router.push(`/project/id${item.id}`)"
+
+
+
       >
-        <img :src="item.image" alt="">
-        <div class="shop-heading">
-          <span>{{ item.name }}</span>
-        </div>
+        <services-card
+            v-on:click="$router.push(`/project/id2/`);"
+            v-bind:tab="description"
+            v-bind:selectedId="1"
+
+        >
+          <img :src="item.image" alt="" >
+          <div class="shop-heading">
+            <span>{{ item.name }}</span>
+          </div>
+        </services-card>
+
       </div>
 
       <div class="shop-view"
-           v-for="item in this.freshShops"
+           v-for="(item, index) in this.recommendedShops"
            v-if="this.tab === 'fresh'"
            v-on:click="$router.push(`/project/id${item.id}`)">
-        <img :src="item.image" alt="">
-        <div class="shop-heading">
+        <img :src="item.image" alt=""v-if="index < 4">
+        <div class="shop-heading"v-if="index < 4">
           <span>{{ item.name }}</span>
         </div>
       </div>
@@ -38,53 +48,19 @@
 </template>
 
 <script>
+
+import { ref } from 'vue'
+import ProjectsView from "../views/project/ProjectsView.vue";
+import ServicesCard from "../views/project/ServicesCard.vue";
+
 export default {
   name: "Recommended.vue",
+  components: {},
 
 
   data() {
     return {
-      recommendedShops: [
-        {
-          image: "https://media.istockphoto.com/id/1035676256/photo/background-of-galaxy-and-stars.jpg?s=612x612&w=0&k=20&c=dh7eWJ6ovqnQZ9QwQQlq2wxqmAR7mgRlQTgaIylgBwc=",
-          name: 'Space X',
-          id: 1
-        },{
-          image: "https://media.istockphoto.com/id/1035676256/photo/background-of-galaxy-and-stars.jpg?s=612x612&w=0&k=20&c=dh7eWJ6ovqnQZ9QwQQlq2wxqmAR7mgRlQTgaIylgBwc=",
-          name: 'Взлом аккаунтов',
-          id: 2
-        },{
-          image: "https://media.istockphoto.com/id/1035676256/photo/background-of-galaxy-and-stars.jpg?s=612x612&w=0&k=20&c=dh7eWJ6ovqnQZ9QwQQlq2wxqmAR7mgRlQTgaIylgBwc=",
-          name: 'Документы',
-          id: 3
-        },
-        {
-          image: "https://media.istockphoto.com/id/1035676256/photo/background-of-galaxy-and-stars.jpg?s=612x612&w=0&k=20&c=dh7eWJ6ovqnQZ9QwQQlq2wxqmAR7mgRlQTgaIylgBwc=",
-          name: 'Документы',
-          id: 4
-        },
-      ],
-      freshShops: [
-        {
-          image: "https://res.cloudinary.com/momentum-media-group-pty-ltd/image/upload/v1686795211/Space%20Connect/space-exploration-sc_fm1ysf.jpg",
-          name: 'Ебать магазик',
-          id: 4
-        },{
-          image: "https://res.cloudinary.com/momentum-media-group-pty-ltd/image/upload/v1686795211/Space%20Connect/space-exploration-sc_fm1ysf.jpg",
-          name: 'Лучший обнал',
-          id: 5
-        },{
-          image: "https://res.cloudinary.com/momentum-media-group-pty-ltd/image/upload/v1686795211/Space%20Connect/space-exploration-sc_fm1ysf.jpg",
-          name: 'Крипта дешево',
-          id: 6
-        },
-        {
-          image: "https://res.cloudinary.com/momentum-media-group-pty-ltd/image/upload/v1686795211/Space%20Connect/space-exploration-sc_fm1ysf.jpg",
-          name: 'Крипта дешево',
-          id: 7
-        },
-
-      ],
+      recommendedShops: ref(null),
       tab: 'recommended'
     }
   }, methods: {
@@ -100,7 +76,21 @@ export default {
         document.querySelector('.fresh').classList.add('active')
 
       }
-    }
+    },
+
+  },
+  created() {
+
+
+  },
+
+  mounted() {
+    fetch('https://run.mocky.io/v3/6bab9566-ba3c-4c66-aa0d-62fa77e610e8')
+        .then((res) => res.json())
+        .then((json) => {
+          this.recommendedShops = json
+        })
+
   }
 }
 </script>

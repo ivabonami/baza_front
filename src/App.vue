@@ -1,9 +1,10 @@
 <script>
 import SidebarMenu from "./components/menus/SidebarMenu.vue";
 import TopMenu from "./components/menus/TopMenu.vue";
+import FooterView from "./components/FooterView.vue";
 
 export default {
-  components: { SidebarMenu, TopMenu },
+  components: {FooterView, SidebarMenu, TopMenu },
   data() {
     return {
       isLoaded: false,
@@ -118,7 +119,9 @@ export default {
       </div>
     </section>
     <footer class="footer">
-
+      <div class="row">
+        <footer-view></footer-view>
+      </div>
     </footer>
 
   </div>

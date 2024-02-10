@@ -1,13 +1,27 @@
 <template>
-<h1>Markets</h1>
+<h1>Магазины</h1>
+  <div class="wrapper">
+
+    <recommended></recommended>
+  </div>
+
+  <div class="projects-wrapper">
+    <shops-row></shops-row>
+  </div>
 </template>
 
 <script>
+import recommended from "../../components/Recommended.vue";
+import shopsRow from "../../components/ShopsRow.vue";
+
 export default {
-  name: "MarketsView.vue"
+  name: "MarketsView.vue",
+  components: {recommended, shopsRow}
 }
 </script>
 
 <style scoped>
-
+h1 {
+  margin-bottom: 20px;
+}
 </style>

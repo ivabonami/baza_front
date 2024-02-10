@@ -28,6 +28,21 @@
     >
 
     </project-card>
+    <project-card
+        v-bind:projectId="7"
+    >
+
+    </project-card>
+    <project-card
+        v-bind:projectId="8"
+    >
+
+    </project-card>
+    <project-card
+        v-bind:projectId="9"
+    >
+
+    </project-card>
 
   </div>
 </template>
