@@ -2,12 +2,21 @@
 
     <div class="project"
          :class="{ paid: paid }"
-         v-on:click="$router.push('/project/' + projectId)">
+         >
 
       <div class="avatar">
-        <img src="./../../assets/images/avatar.webp" alt="">
+        <img src="./../../assets/images/avatar.webp" alt=""
+             v-on:click="$router.push('/project/' + projectId)">
+        <div class="favorite"
+             v-on:click="!favorite ? favorite = true : favorite = false"
+              :class="{active: favorite}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="15" viewBox="0 0 18 15" fill="none">
+            <path d="M17.8439 5.89384C17.9178 5.6196 17.9491 5.3353 18 5.05562V4.4311C17.9448 4.12916 17.9126 3.82152 17.8301 3.52636C17.4873 2.3023 16.7299 1.36471 15.5924 0.698098C14.8063 0.23731 13.9422 0.0170985 13.0261 0.0157409C11.9435 0.0141117 10.9418 0.298405 10.0748 0.925098C9.68808 1.20423 9.33757 1.52762 8.93818 1.85808C8.82115 1.73888 8.68831 1.59768 8.54885 1.46246C7.82367 0.758649 6.95128 0.297318 5.93425 0.10073C4.89134 -0.101017 3.87115 -0.00163713 2.9007 0.416249C1.5415 1.00113 0.635463 1.97837 0.166198 3.31566C0.097476 3.51143 0.0546326 3.71535 0 3.91547V5.5175C0.00690096 5.52945 0.0169649 5.54058 0.0195527 5.55334C0.221406 6.55665 0.714537 7.41088 1.48284 8.12935C2.39176 8.97979 3.29319 9.83728 4.19808 10.6918C5.64843 12.0614 7.0985 13.4313 8.54914 14.8006C8.83093 15.0667 9.10409 15.0659 9.38502 14.8017C11.7449 12.5819 14.1038 10.3613 16.4651 8.1432C17.14 7.50972 17.6095 6.76437 17.8439 5.89384Z" fill="white"/>
+          </svg>
+        </div>
       </div>
-      <div class="project-body">
+      <div class="project-body"
+           v-on:click="$router.push('/project/' + projectId)">
         <div class="project-top">
           <div class="name">
             KRAKEN
@@ -118,14 +127,16 @@ export default {
 
   data () {
     return {
-
+      favorite: false
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
+
 .project {
+
   border-radius: 30px;
   position: relative;
   background-color: #fff;
@@ -136,20 +147,53 @@ export default {
   border: 2px solid transparent;
   box-sizing: border-box;
   margin-bottom: 30px;
+  border: 1px solid #eaeaea;
+  transition:.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 
   &.paid {
-    border-radius: 15px;
-    box-shadow: 0 0 8px #a3d7fc;
     background: #f0f6ff;
-    border: 1px solid #eaeaea;
+    border: 1px solid #d2e1e8;
   }
 
   .avatar {
     width: fit-content;
+    position: relative;
     img {
       width: 110px;
       height: 110px;
       border-radius: 15px;
+    }
+    .favorite {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      border-radius: 400px;
+      background-color: rgba(0,0,0,.3);
+      padding: 5px;
+      transition: .3s ease;
+      svg {
+        transition: .3s ease;
+        path {
+          fill: transparent;
+          stroke: #fff;
+          stroke-linejoin: round;
+          stroke-linecap: round;
+          stroke-width: 1px;
+          transition: .3s ease;
+        }
+      }
+      &.active {
+        svg {
+          path {
+            fill: #fff;
+          }
+        }
+      }
     }
   }
   .dropdown {
@@ -218,8 +262,8 @@ export default {
           align-items: stretch;
           align-self: center;
           svg {
-            width: 25px;
-            height: 25px;
+            width: 17px;
+            height: 17px;
             path {
               fill: #0a58ca;
             }

@@ -316,6 +316,7 @@ export default {
 
 <style scoped lang="scss">
 .wrapper {
+  border: 1px solid #eaeaea;
   margin-top: 20px;
   width: 100%;
   background-color: #ffffff;

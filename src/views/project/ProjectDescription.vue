@@ -1,9 +1,7 @@
 <template>
 <div class="wrapper">
   <div class="left">
-    <h3 class="about">
-      О проекте
-    </h3>
+
     <div class="about-description">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod nunc nisi, in sodales enim sollicitudin a. Nulla ornare eu nulla ac convallis. Ut aliquet, lectus a dapibus luctus, libero nunc eleifend enim, nec euismod turpis enim vel libero. Phasellus turpis est, ultricies sit amet dui ac, elementum interdum est. Vivamus porttitor, lorem convallis interdum mollis, ipsum eros placerat risus, in pharetra velit odio eget dui. Cras gravida lorem et odio malesuada malesuada. Mauris vitae enim sed neque dignissim fermentum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo dolor eu justo vehicula, vitae varius diam interdum. Cras nec pharetra lacus. Quisque fringilla leo in mollis ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus sed ullamcorper urna, eget vestibulum dui.
     </div>
@@ -128,24 +126,50 @@
         </div>
       </div>
     </div>
-    <div class="send-review">
-      <h3 class="your-rating">
-        Ваша оценка
-      </h3>
-      <p>
-        Рейтинг зависит от данной оценки
-      </p>
+    <div class="send-review box-shadow">
+      <div class="send-header">
+        <div class="text">
+          <h3 class="your-rating">
+            Ваша оценка
+          </h3>
+          <p>
+            Рейтинг зависит от данной оценки
+          </p>
+        </div>
+        <div class="set-rating">
+          <svg dataValue="1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M13.521 1.0626L15.2966 6.92712C15.4883 7.56086 16.0387 7.98972 16.6596 7.98972H22.4062C23.7945 7.98972 24.3719 9.89583 23.2486 10.7718L18.5996 14.396C18.0972 14.7875 17.8872 15.4817 18.079 16.1154L19.8545 21.98C20.2836 23.3968 18.7723 24.5749 17.649 23.6994L13 20.0752C12.4976 19.6837 11.8175 19.6837 11.3151 20.0752L6.66604 23.6994C5.54281 24.5749 4.0315 23.3968 4.46058 21.98L6.23613 16.1154C6.4279 15.4817 6.21791 14.7875 5.71552 14.396L1.06727 10.7713C-0.0559599 9.89582 0.521395 7.98928 1.9097 7.98928H7.65591C8.27676 7.98928 8.82719 7.56042 9.01895 6.92668L10.7949 1.0626C11.224 -0.3542 13.0919 -0.3542 13.521 1.0626Z" fill="#6C7AFF"/>
+          </svg>
+          <svg dataValue="2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M13.521 1.0626L15.2966 6.92712C15.4883 7.56086 16.0387 7.98972 16.6596 7.98972H22.4062C23.7945 7.98972 24.3719 9.89583 23.2486 10.7718L18.5996 14.396C18.0972 14.7875 17.8872 15.4817 18.079 16.1154L19.8545 21.98C20.2836 23.3968 18.7723 24.5749 17.649 23.6994L13 20.0752C12.4976 19.6837 11.8175 19.6837 11.3151 20.0752L6.66604 23.6994C5.54281 24.5749 4.0315 23.3968 4.46058 21.98L6.23613 16.1154C6.4279 15.4817 6.21791 14.7875 5.71552 14.396L1.06727 10.7713C-0.0559599 9.89582 0.521395 7.98928 1.9097 7.98928H7.65591C8.27676 7.98928 8.82719 7.56042 9.01895 6.92668L10.7949 1.0626C11.224 -0.3542 13.0919 -0.3542 13.521 1.0626Z" fill="#6C7AFF"/>
+          </svg>
+          <svg dataValue="3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M13.521 1.0626L15.2966 6.92712C15.4883 7.56086 16.0387 7.98972 16.6596 7.98972H22.4062C23.7945 7.98972 24.3719 9.89583 23.2486 10.7718L18.5996 14.396C18.0972 14.7875 17.8872 15.4817 18.079 16.1154L19.8545 21.98C20.2836 23.3968 18.7723 24.5749 17.649 23.6994L13 20.0752C12.4976 19.6837 11.8175 19.6837 11.3151 20.0752L6.66604 23.6994C5.54281 24.5749 4.0315 23.3968 4.46058 21.98L6.23613 16.1154C6.4279 15.4817 6.21791 14.7875 5.71552 14.396L1.06727 10.7713C-0.0559599 9.89582 0.521395 7.98928 1.9097 7.98928H7.65591C8.27676 7.98928 8.82719 7.56042 9.01895 6.92668L10.7949 1.0626C11.224 -0.3542 13.0919 -0.3542 13.521 1.0626Z" fill="#6C7AFF"/>
+          </svg>
+          <svg dataValue="4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M13.521 1.0626L15.2966 6.92712C15.4883 7.56086 16.0387 7.98972 16.6596 7.98972H22.4062C23.7945 7.98972 24.3719 9.89583 23.2486 10.7718L18.5996 14.396C18.0972 14.7875 17.8872 15.4817 18.079 16.1154L19.8545 21.98C20.2836 23.3968 18.7723 24.5749 17.649 23.6994L13 20.0752C12.4976 19.6837 11.8175 19.6837 11.3151 20.0752L6.66604 23.6994C5.54281 24.5749 4.0315 23.3968 4.46058 21.98L6.23613 16.1154C6.4279 15.4817 6.21791 14.7875 5.71552 14.396L1.06727 10.7713C-0.0559599 9.89582 0.521395 7.98928 1.9097 7.98928H7.65591C8.27676 7.98928 8.82719 7.56042 9.01895 6.92668L10.7949 1.0626C11.224 -0.3542 13.0919 -0.3542 13.521 1.0626Z" fill="#6C7AFF"/>
+          </svg>
+          <svg dataValue="5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M13.521 1.0626L15.2966 6.92712C15.4883 7.56086 16.0387 7.98972 16.6596 7.98972H22.4062C23.7945 7.98972 24.3719 9.89583 23.2486 10.7718L18.5996 14.396C18.0972 14.7875 17.8872 15.4817 18.079 16.1154L19.8545 21.98C20.2836 23.3968 18.7723 24.5749 17.649 23.6994L13 20.0752C12.4976 19.6837 11.8175 19.6837 11.3151 20.0752L6.66604 23.6994C5.54281 24.5749 4.0315 23.3968 4.46058 21.98L6.23613 16.1154C6.4279 15.4817 6.21791 14.7875 5.71552 14.396L1.06727 10.7713C-0.0559599 9.89582 0.521395 7.98928 1.9097 7.98928H7.65591C8.27676 7.98928 8.82719 7.56042 9.01895 6.92668L10.7949 1.0626C11.224 -0.3542 13.0919 -0.3542 13.521 1.0626Z" fill="#6C7AFF"/>
+          </svg>
+        </div>
+
+      </div>
+
       <h3 class="your-rating">
         Комментарий
       </h3>
-      <textarea placeholder="Этот магаз держит хороший парень, я vel sagittis mi, at vehicula eros. Duis fermentum pulvinar quam, ac congue augue euismod vitae. Nulla eu ante vel arcu interdum ultricies sed et eros. Nullam non vulputate dui, non imperdiet purus. Cras tempus urna.">
-
-      </textarea>
+      <textarea placeholder="Этот магаз держит хороший парень, я vel sagittis mi, at vehicula eros. Duis fermentum pulvinar quam, ac congue augue euismod vitae. Nulla eu ante vel arcu interdum ultricies sed et eros. Nullam non vulputate dui, non imperdiet purus. Cras tempus urna."></textarea>
       <div class="buttons">
         <button class="btn btn-filled">
-          Вперед
+          <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 141.26 112.65">
+            <path
+                d="M91.03,55.54c-9.84-1.08-19.67-2.18-29.51-3.22-10.77-1.14-21.56-2.07-32.29-3.5-2.05-.27-4.6-1.99-5.64-3.78C15.83,31.64,8.37,18.07,.92,4.49,.22,3.21,.29,1.51,0,0,1.55,.11,3.24-.15,4.61,.4,49.02,18.02,93.41,35.71,137.76,53.48c1.35,.54,2.34,1.96,3.5,2.97-1.11,.88-2.09,2.08-3.34,2.58C93.4,76.82,48.85,94.55,4.29,112.23c-1.25,.49-2.77,.29-4.16,.42,.22-1.5,.03-3.22,.71-4.46,7.36-13.43,14.96-26.74,22.23-40.22,1.75-3.25,4.03-4.24,7.47-4.57,19.4-1.9,38.77-4.01,58.15-6.07,.78-.08,1.55-.33,2.32-.51l.02-1.28Z"/>
+          </svg>
+          Отправить
         </button>
-        <button class="btn btn-empty">
+        <button class="btn btn-empty"
+        v-on:click="clearTextarea()">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 14 13" fill="none">
             <path d="M1 0.5L13 12.5M1 12.5L13 0.5" stroke="#2B2B2B"/>
           </svg>
@@ -159,11 +183,96 @@
 
 <script>
 export default {
-  name: "ProjectDescription.vue"
+  name: "ProjectDescription.vue",
+  mounted() {
+    const stars = document.querySelectorAll('.set-rating svg')
+    let value = 0;
+    let selected = false;
+    for (let item of stars) {
+      item.addEventListener('mouseenter', () => {
+        value = item.attributes.dataValue.value;
+        this.setOpacity(0.6, value)
+
+      })
+      item.addEventListener('mouseleave', () => {
+        value = item.attributes.dataValue.value;
+        this.setOpacity(0.3, value)
+
+      })
+      item.addEventListener('click', () => {
+        value = item.attributes.dataValue.value;
+        this.setOpacity(1, value, 'active')
+
+      })
+
+    }
+  },
+  methods: {
+    setOpacity (opacityValue, index, addClass) {
+      for (let i = 5; i > 0; i--) {
+        document.querySelector(`div.set-rating > svg:nth-child(${i})`).style.opacity = 0.3
+      }
+      for (let i = index; i > 0; i--) {
+        document.querySelector(`div.set-rating > svg:nth-child(${i})`).style.opacity = opacityValue
+      }
+      if (addClass) {
+        for (let i = 5; i > 0; i--) {
+          document.querySelector(`div.set-rating > svg:nth-child(${i})`).classList.remove(addClass)
+        }
+        for (let i = index; i > 0; i--) {
+          document.querySelector(`div.set-rating > svg:nth-child(${i})`).classList.add(addClass)
+        }
+      }
+      console.log(index)
+    },
+    clearTextarea () {
+      document.querySelector('textarea').value = ''
+      this.setOpacity( 0.3, 0, 'active')
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
+.set-rating {
+  svg {
+    opacity: .3;
+    transition: .3s ease;
+
+    &.active {
+      opacity: 1!important;
+    }
+  }
+}
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn-filled {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  svg {
+    width: 20px;
+    height: 20px;
+    path {
+      fill: #fff;
+    }
+  }
+}
+.send-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+  svg {
+    width: 20px;
+    height: 20px;
+    margin-left: 8px;
+    opacity: .3;
+  }
+}
 .left {
   h3 {
     color: #000;

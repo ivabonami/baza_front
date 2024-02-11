@@ -15,6 +15,8 @@ import pageView from "../../views/PageView.vue";
 import ProjectsView from "../../views/project/ProjectsView.vue";
 import ServicesCard from "../../views/project/ServicesCard.vue";
 import ProjectDescription from "../../views/project/ProjectDescription.vue";
+import addProject from "../../views/pages/AddProject.vue";
+import addService from "../../views/pages/AddService.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -67,8 +69,15 @@ const router = createRouter({
                 },{
                     path: 'description',
                     component: ProjectDescription
+                },{
+                    path: 'add-service',
+                    component: addService
                 },
             ]
+        },
+        {
+            path: '/add-project',
+            component: addProject
         },
 
         {

@@ -112,6 +112,10 @@ body {
   margin: 0 auto;
 }
 
+.box-shadow {
+  border: 1px solid #eaeaea;
+}
+
 .main .row {
   gap: 30px;
   align-items: start;
@@ -121,7 +125,7 @@ body {
 .main .row .sidebar section {
   border-radius: 15px;
   padding: 10px;
-  box-shadow: 0 0 8px #a3d7fc;
+  border: 1px solid #eaeaea;
 }
 .main .row .sidebar {
   flex: 1 4;
@@ -187,10 +191,6 @@ body {
   border-radius: 15px;
 }
 
-.box-shadow {
-  box-shadow: 0 0 8px #a3d7fc;
-}
-
 a {
   text-decoration: none;
 }
@@ -234,7 +234,26 @@ a {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  box-shadow: 0 0 8px #a3d7fc;
+  border: 1px solid #eaeaea;
+}
+.btn.btn-secondary {
+  color: #000;
+  background-color: #f5f5f5;
+  margin-top: 30px;
+  cursor: pointer;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: 1px solid #eaeaea;
+}
+.btn.btn-secondary svg path {
+  fill: black;
 }
 .btn.btn-empty {
   color: #2B2B2B;
@@ -339,6 +358,143 @@ a {
 .slide-fade-leave-to {
   transform: translateX(20px);
   opacity: 0;
+}
+
+form.add-project {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1%;
+}
+form.add-project .left, form.add-project .right {
+  width: 49%;
+}
+form.add-project textarea {
+  width: 100%;
+  resize: none;
+}
+form.add-project .bottom {
+  width: 100%;
+}
+form.add-project .bottom {
+  margin-top: 30px;
+}
+form.add-project .bottom .top-head {
+  display: flex;
+  justify-content: start;
+  gap: 30px;
+}
+form.add-project .bottom .top-head .add {
+  background-color: #6C7AFF;
+  color: #fff;
+  transition: 0.3s ease;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 10px;
+}
+form.add-project .bottom .top-head .add:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+form.add-project .bottom .added-project-links {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: start;
+}
+form.add-project .bottom label {
+  display: flex;
+}
+form.add-project .bottom label input {
+  width: 100%;
+}
+form.add-project input[type=text] {
+  font-size: 16px;
+  margin-top: 10px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid #eaeaea;
+  width: 70%;
+  font-family: "Montserrat", "Arial", Serif;
+}
+form.add-project input[type=file] {
+  margin-top: 10px;
+  height: auto;
+  padding: 10px 20px;
+  border: 1px solid #eaeaea;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+  font-size: 14px;
+  color: #000;
+  text-align: center;
+  background-color: #fff;
+  line-height: 22px;
+  border-radius: 10px;
+  transition: background-color 0.2s;
+  width: 70%;
+}
+form.add-project textarea {
+  background-color: #fff;
+  font-size: 16px;
+  border-radius: 10px;
+  padding: 10px 20px;
+  border: 1px solid #eaeaea;
+  font-family: "Montserrat", "Arial", Serif;
+}
+form.add-project label {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  align-items: flex-start;
+}
+form.add-project label span {
+  width: 100%;
+}
+form.add-project .project-link {
+  width: 30%;
+  display: flex;
+  align-items: stretch;
+}
+form.add-project .project-link.always {
+  align-self: center;
+}
+form.add-project .project-link.always input {
+  width: 100% !important;
+  border-radius: 10px;
+}
+form.add-project .project-link .delete {
+  width: 30px;
+  padding-left: 5px;
+  box-sizing: border-box;
+  color: #fff;
+  line-height: 2;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 0 10px 10px 0;
+  background-color: #af7373;
+}
+form.add-project .project-link .delete:hover {
+  outline: none;
+  background-color: #d05555;
+}
+form.add-project .project-link input {
+  font-size: 16px;
+  margin-top: 0;
+  padding: 10px 20px;
+  border: 1px solid #eaeaea;
+  border-radius: 10px 0 0 10px;
+  width: 70% !important;
+  font-family: "Montserrat", "Arial", Serif;
+  outline: none;
+}
+form.add-project .project-link input:hover, form.add-project .project-link input:focus {
+  outline: none;
 }
 
 /*# sourceMappingURL=main.css.map */

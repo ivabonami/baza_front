@@ -4,12 +4,12 @@
       <button
          v-on:click="switchTabs('recommended')"
          class="recommended active">
-        Рекомендовано
+        Рекомендации
       </button>
       <button
          v-on:click="switchTabs('fresh')"
          class="fresh">
-        Новое
+        Новые
       </button>
     </div>
     <div class="tabs-content" >

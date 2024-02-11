@@ -3,11 +3,19 @@
     <div class="project">
       <div class="project-banner">
         <img src="/src/assets/images/banner.webp" alt="">
+
       </div>
       <div class="project-header">
         <div class="left">
           <div class="avatar">
             <img src="/src/assets/images/avatar.webp" alt="">
+            <div class="favorite"
+                 v-on:click="!favorite ? favorite = true : favorite = false"
+                 :class="{active: favorite}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="15" viewBox="0 0 18 15" fill="none">
+                <path d="M17.8439 5.89384C17.9178 5.6196 17.9491 5.3353 18 5.05562V4.4311C17.9448 4.12916 17.9126 3.82152 17.8301 3.52636C17.4873 2.3023 16.7299 1.36471 15.5924 0.698098C14.8063 0.23731 13.9422 0.0170985 13.0261 0.0157409C11.9435 0.0141117 10.9418 0.298405 10.0748 0.925098C9.68808 1.20423 9.33757 1.52762 8.93818 1.85808C8.82115 1.73888 8.68831 1.59768 8.54885 1.46246C7.82367 0.758649 6.95128 0.297318 5.93425 0.10073C4.89134 -0.101017 3.87115 -0.00163713 2.9007 0.416249C1.5415 1.00113 0.635463 1.97837 0.166198 3.31566C0.097476 3.51143 0.0546326 3.71535 0 3.91547V5.5175C0.00690096 5.52945 0.0169649 5.54058 0.0195527 5.55334C0.221406 6.55665 0.714537 7.41088 1.48284 8.12935C2.39176 8.97979 3.29319 9.83728 4.19808 10.6918C5.64843 12.0614 7.0985 13.4313 8.54914 14.8006C8.83093 15.0667 9.10409 15.0659 9.38502 14.8017C11.7449 12.5819 14.1038 10.3613 16.4651 8.1432C17.14 7.50972 17.6095 6.76437 17.8439 5.89384Z" fill="white"/>
+              </svg>
+            </div>
           </div>
           <div class="name">
             KRAKEN
@@ -73,6 +81,7 @@
               class="fresh">
             Услуги
           </button>
+
         </div>
         <div class="tabs-body">
           <div class="tab-content">
@@ -94,7 +103,20 @@
               >
                 {{ item.name }}
               </services-card>
+              <div class="addService">
+                <button
+                    v-on:click="switchTabs('addService')"
+                    class="btn btn-filled">
+                  Добавить проект
+                </button>
+              </div>
 
+            </div>
+
+            <div class="flex"
+                 v-if="this.tab === 'addService'">
+
+              <add-service></add-service>
             </div>
           </div>
           <div class="tab-rating">
@@ -102,7 +124,7 @@
               На сайте с октября 2023
             </div>
 
-            <div class="project-detailed-rating">
+            <div class="project-detailed-rating box-shadow">
               <div class="heading">
                 Оценило 16 человек
               </div>
@@ -166,7 +188,7 @@
                         fill="#6C7AFF"/>
                   </svg>
                   <span>
-                    6511
+                    651
                   </span>
                 </div>
 
@@ -274,7 +296,7 @@
 
             </div>
 
-            <div class="tab-stats">
+            <div class="tab-stats box-shadow">
               <div class="stat">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="11" viewBox="0 0 20 11" fill="none">
                   <path
@@ -296,7 +318,7 @@
               </div>
             </div>
 
-            <div class="project-links">
+            <div class="project-links box-shadow">
               <div class="links-heading">
                 Ссылки на проект
               </div>
@@ -324,18 +346,21 @@
 <script>
 import servicesCard from "./ServicesCard.vue";
 import ProjectDescription from "./ProjectDescription.vue";
+import AddProject from "../pages/AddProject.vue";
 import {ref} from "vue";
+import AddService from "../pages/AddService.vue";
 
 export default {
 
   name: "ProjectsView.vue",
-  components: {servicesCard, ProjectDescription},
+  components: {AddService, servicesCard, ProjectDescription},
 
 
   data() {
     return {
       services: ref(null),
-      tab: 'description'
+      tab: 'description',
+      favorite: false
     }
   },
   props: ['selectedId', 'highlight', 'tab'],
@@ -352,6 +377,11 @@ export default {
 
       } else if (tab === 'services') {
         this.tab = 'services'
+        document.querySelector('.recommended').classList.remove('active')
+        document.querySelector('.fresh').classList.add('active')
+
+      }else if (tab === 'addService') {
+        this.tab = 'addService'
         document.querySelector('.recommended').classList.remove('active')
         document.querySelector('.fresh').classList.add('active')
 
@@ -423,6 +453,7 @@ export default {
       align-items: end;
 
       .avatar {
+        position: relative;
 
 
         img {
@@ -447,8 +478,8 @@ export default {
         margin-right: 20px;
 
         svg {
-          width: 15px;
-          height: 15px;
+          width: 20px;
+          height: 20px;
           margin-left: 7px;
         }
       }
@@ -462,8 +493,8 @@ export default {
 
   .recommend-project {
     svg {
-      width: 15px;
-      height: 15px;
+      width: 17px;
+      height: 17px;
 
       path {
         fill: #0a58ca;
@@ -544,12 +575,17 @@ export default {
           align-items: center;
 
           svg {
+            width: 20px!important;
+            height: 20px!important;
+            path {
+
+            }
 
             &.op3 {
               opacity: .3;
             }
 
-            margin-right: 2px;
+            margin-right: 8px;
           }
 
           span {
@@ -558,6 +594,7 @@ export default {
             font-family: Montserrat;
             font-size: 12px;
             font-style: normal;
+            width: 30px;
             font-weight: 400;
           }
         }
@@ -612,6 +649,33 @@ export default {
           font-weight: 400;
           line-height: 36px; /* 257.143% */
         }
+      }
+    }
+  }
+}
+.favorite {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  border-radius: 400px;
+  background-color: rgba(0,0,0,.3);
+  padding: 5px;
+  transition: .3s ease;
+  svg {
+    transition: .3s ease;
+    path {
+      fill: transparent;
+      stroke: #fff;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+      stroke-width: 1px;
+      transition: .3s ease;
+    }
+  }
+  &.active {
+    svg {
+      path {
+        fill: #fff;
       }
     }
   }
