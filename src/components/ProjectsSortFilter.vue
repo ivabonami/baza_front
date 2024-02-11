@@ -106,7 +106,9 @@ export default {
   }
   .search {
     position: relative;
+    width: 40%;
     input[type=search] {
+      width: 100%;
       color: var(--new-dark, #6C7AFF);
       font-family: Montserrat;
       font-size: 14px;
@@ -115,12 +117,27 @@ export default {
       line-height: normal;
       padding: 5px 10px;
       border-radius: 100px;
+      border: 1px solid #6C7AFF;
+      background-color: transparent;
+      &::-webkit-search-cancel-button {
+        display: none;
+      }
+
+      &::placeholder {
+        color: #6C7AFF;
+        opacity: .5;
+      }
+
+      &:hover, &:focus {
+        outline: none;
+      }
 
     }
     button {
       position: absolute;
-      right: 3px;
+      right: 15px;
       cursor: pointer;
+      width: 20px;
       top: 3px;
       border: none;
       background-color: transparent;

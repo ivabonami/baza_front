@@ -493,8 +493,8 @@ export default {
 
   .recommend-project {
     svg {
-      width: 17px;
-      height: 17px;
+      width: 22px;
+      height: 22px;
 
       path {
         fill: #0a58ca;
