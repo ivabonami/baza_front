@@ -10,6 +10,9 @@
       <label for="">
         <span>Фото услуги</span>
         <input type="file">
+        <span class="helper">
+          230х170px \ png, webp, jpg, jpeg
+        </span>
       </label>
 
       <button class="btn btn-filled">
@@ -37,5 +40,8 @@ export default {
 </script>
 
 <style scoped>
+.btn {
+  margin-top: 20px;
+}
 
 </style>

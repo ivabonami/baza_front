@@ -158,6 +158,7 @@ export default {
   &.paid {
     background: #f0f6ff;
     border: 1px solid #d2e1e8;
+    box-shadow: 0 0 8px #a3d7fc;
   }
 
   .avatar {
@@ -228,8 +229,8 @@ export default {
         line-height: normal;
 
         .verified {
-          width: 23px;
-          height: 23px;
+          width: 17px;
+          height: 17px;
 
         }
       }

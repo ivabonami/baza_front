@@ -519,8 +519,8 @@ export default {
   line-height: normal;
 
   .verified {
-    width: 23px;
-    height: 23px;
+    width: 17px;
+    height: 17px;
 
   }
 }

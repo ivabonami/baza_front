@@ -5,6 +5,9 @@
   </div>
 
   <div class="projects-wrapper">
+    <projects-sort-filter>
+
+    </projects-sort-filter>
     <shops-row></shops-row>
   </div>
 
@@ -17,9 +20,10 @@
 <script>
 import recommended from "../../components/Recommended.vue";
 import ShopsRow from "../../components/ShopsRow.vue";
+import ProjectsSortFilter from "../../components/ProjectsSortFilter.vue";
 export default {
   name: "HomeView.vue",
-  components: { recommended, ShopsRow },
+  components: { recommended, ShopsRow, ProjectsSortFilter },
   mounted() {
 
   },

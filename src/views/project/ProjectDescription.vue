@@ -22,7 +22,9 @@
         </div>
         <select name="" id="sortier">
           <option value="new">Сначала новые</option>
+          <option value="good">Сначала старые</option>
           <option value="good">Сначала положительные</option>
+          <option value="good">Сначала отрицательные</option>
         </select>
       </div>
       <div class="review">

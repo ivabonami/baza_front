@@ -426,7 +426,11 @@ form.add-project {
     width: 30%;
     display: flex;
     align-items: stretch;
+    flex-wrap: wrap;
 
+    input {
+      width: 100%;
+    }
     &.always {
 
       align-self: center;
@@ -435,19 +439,14 @@ form.add-project {
         border-radius: 10px;
       }
     }
+    .delete, .important {
+      font-size: 12px;
+      padding-left: 10px;
+    }
     .delete {
-      width: 30px;
-      padding-left: 5px;
-      box-sizing: border-box;
-      color: #fff;
-      line-height: 2;
-      font-size: 20px;
-      cursor: pointer;
-      border-radius: 0 10px 10px 0;
-      background-color: #af7373;
       &:hover {
         outline: none;
-        background-color: #d05555;
+        color: #d05555;
       }
     }
     input {
@@ -455,13 +454,17 @@ form.add-project {
       margin-top: 0;
       padding: 10px 20px;
       border: 1px solid #eaeaea;
-      border-radius: 10px 0 0 10px;
-      width: 70%!important;
+      border-radius: 10px;
+      width: 100%;
       font-family: "Montserrat", "Arial", Serif;
       outline: none;
       &:hover, &:focus {
         outline: none;
       }
     }
+  }
+  .helper {
+    margin-top: 5px;
+    font-size: 10px;
   }
 }

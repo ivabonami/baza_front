@@ -10,10 +10,12 @@
       <label for="">
         <span>Аватар</span>
         <input type="file">
+        <span class="helper">110x110px \ png, webp, jpg, jpeg </span>
       </label>
       <label for="">
         <span>Баннер</span>
         <input type="file">
+        <span class="helper">1060x220px \ png, webp, jpg, jpeg </span>
       </label>
 
     </div>
@@ -36,7 +38,9 @@
       </div>
       <div class="added-project-links">
         <div class="project-link always">
+          <input type="text" placeholder="Название">
           <input type="text" placeholder="Ссылка">
+          <span class="important">Обязательно</span>
         </div>
 
 
@@ -66,8 +70,9 @@ export default {
       if (wrapper.childNodes.length < 12) {
         const newInput = document.createElement('label')
         newInput.classList.add('project-link')
-        newInput.innerHTML = `<input type="text" placeholder="Ссылка">
-        <div class="delete" title="Удалить ссылку">x</div>`
+        newInput.innerHTML = `<input type="text" placeholder="Название">
+        <input type="text" placeholder="Ссылка">
+        <span class="delete" title="Удалить ссылку">Удалить</span>`
         wrapper.appendChild(newInput)
 
 

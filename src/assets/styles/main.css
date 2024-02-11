@@ -460,6 +460,10 @@ form.add-project .project-link {
   width: 30%;
   display: flex;
   align-items: stretch;
+  flex-wrap: wrap;
+}
+form.add-project .project-link input {
+  width: 100%;
 }
 form.add-project .project-link.always {
   align-self: center;
@@ -468,33 +472,30 @@ form.add-project .project-link.always input {
   width: 100% !important;
   border-radius: 10px;
 }
-form.add-project .project-link .delete {
-  width: 30px;
-  padding-left: 5px;
-  box-sizing: border-box;
-  color: #fff;
-  line-height: 2;
-  font-size: 20px;
-  cursor: pointer;
-  border-radius: 0 10px 10px 0;
-  background-color: #af7373;
+form.add-project .project-link .delete, form.add-project .project-link .important {
+  font-size: 12px;
+  padding-left: 10px;
 }
 form.add-project .project-link .delete:hover {
   outline: none;
-  background-color: #d05555;
+  color: #d05555;
 }
 form.add-project .project-link input {
   font-size: 16px;
   margin-top: 0;
   padding: 10px 20px;
   border: 1px solid #eaeaea;
-  border-radius: 10px 0 0 10px;
-  width: 70% !important;
+  border-radius: 10px;
+  width: 100%;
   font-family: "Montserrat", "Arial", Serif;
   outline: none;
 }
 form.add-project .project-link input:hover, form.add-project .project-link input:focus {
   outline: none;
+}
+form.add-project .helper {
+  margin-top: 5px;
+  font-size: 10px;
 }
 
 /*# sourceMappingURL=main.css.map */
