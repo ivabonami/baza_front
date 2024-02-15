@@ -91,7 +91,7 @@
               <span>1266</span>
             </div>
             <div class="date"  title="Дата создания">
-              01.01.2024
+              01 янв 2024
             </div>
           </div>
 
@@ -177,13 +177,14 @@ export default {
       right: 10px;
       top: 10px;
       border-radius: 400px;
-      background-color: rgba(0,0,0,.3);
-      padding: 8px;
+      background-color: rgba(0,0,0,.5);
+      padding: 4px;
       transition: .3s ease;
       svg {
+        padding: 4px 2px;
         transition: .3s ease;
         width: 17px;
-        height: 17px;
+        height: 14px;
 
         path {
           fill: transparent;
