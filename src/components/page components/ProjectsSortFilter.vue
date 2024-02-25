@@ -108,6 +108,7 @@ export default {
     position: relative;
     width: 40%;
     input[type=search] {
+      background-color: #ffffff;
       width: 100%;
       color: var(--new-dark, #6C7AFF);
       font-family: Montserrat;
@@ -118,7 +119,7 @@ export default {
       padding: 5px 10px;
       border-radius: 100px;
       border: 1px solid #6C7AFF;
-      background-color: transparent;
+
       &::-webkit-search-cancel-button {
         display: none;
       }

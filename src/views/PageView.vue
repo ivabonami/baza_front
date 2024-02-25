@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import ModalWindowBackdrop from "../components/ModalWindowBackdrop.vue";
+import ModalWindowBackdrop from "../components/page components/ModalWindowBackdrop.vue";
 export default {
   name: "PageView.vue",
   components: {ModalWindowBackdrop}

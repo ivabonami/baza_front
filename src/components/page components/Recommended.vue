@@ -50,8 +50,8 @@
 <script>
 
 import { ref } from 'vue'
-import ProjectsView from "../views/project/ProjectsView.vue";
-import ServicesCard from "../views/project/ServicesCard.vue";
+import ProjectsView from "../../views/project/ProjectsView.vue";
+import ServicesCard from "../../views/project/ServicesCard.vue";
 
 export default {
   name: "Recommended.vue",

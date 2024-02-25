@@ -218,9 +218,29 @@ a {
   align-items: center;
   transition: 0.15s ease;
   font-size: 12px;
+  cursor: pointer;
 }
 .btn:hover {
   transform: translateY(-2px);
+}
+.btn.btn-outlined {
+  border-radius: 10px;
+  border: 1px solid var(--new-dark, #6C7AFF);
+  box-shadow: 0 0 3px rgba(13, 110, 253, 0.25);
+  background-color: transparent;
+}
+.btn.btn-submit {
+  border-radius: 10px;
+  background: var(--new-dark, #6C7AFF);
+  padding: 10px 15px;
+  color: #FFF;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  height: auto;
 }
 .btn.btn-filled {
   color: #ffffff;
@@ -333,8 +353,8 @@ a {
   background-color: transparent;
   border: none;
   border-bottom: 5px solid transparent;
-  cursor: default;
   transition: 0.3s ease;
+  cursor: pointer;
 }
 .tabs-links button.recommended {
   margin-right: 30px;
@@ -496,6 +516,190 @@ form.add-project .project-link input:hover, form.add-project .project-link input
 form.add-project .helper {
   margin-top: 5px;
   font-size: 10px;
+}
+
+.form-wrapper {
+  margin-top: 20px;
+}
+.form-wrapper .input-wrapper {
+  margin-bottom: 10px;
+}
+.form-wrapper .fake-input {
+  position: relative;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--new-dark, #6C7AFF);
+  background: var(--neutral, #FFF);
+}
+.form-wrapper .fake-input .name {
+  width: 100px;
+  display: inline-block;
+  color: #000;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  opacity: 0.5;
+}
+.form-wrapper .fake-input input[type=file] {
+  color: #6C7AFF;
+  font-family: Montserrat;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.form-wrapper .fake-input input[type=file]::file-selector-button {
+  border-radius: 5px;
+  border: 1px solid var(--new-dark, #6C7AFF);
+  background: #FFF;
+  padding: 5px 10px;
+  color: #6C7AFF;
+  font-family: Montserrat;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding-left: 25px;
+}
+.form-wrapper .fake-input input[type=file]::before {
+  content: url("./../../assets/images/upload.svg");
+  width: 15px;
+  height: 15px;
+  position: relative;
+  right: -20px;
+  z-index: 2;
+  top: 2px;
+}
+.form-wrapper input[type=text] {
+  border-radius: 5px;
+  border: 1px solid var(--new-dark, #6C7AFF);
+  background: var(--neutral, #FFF);
+  color: #000;
+  padding: 10px 15px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.form-wrapper input[type=text]::placeholder {
+  opacity: 0.3;
+}
+.form-wrapper textarea {
+  border-radius: 5px;
+  border: 1px solid var(--new-dark, #6C7AFF);
+  background: var(--neutral, #FFF);
+  padding: 10px 15px;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: normal;
+  height: 280px;
+  font-weight: 400;
+  line-height: normal;
+  resize: none;
+  box-sizing: border-box;
+  width: 100%;
+}
+.form-wrapper textarea::placeholder {
+  opacity: 0.3;
+}
+.form-wrapper select {
+  border-radius: 5px;
+  border: 1px solid var(--new-dark, #6C7AFF);
+  background: var(--neutral, #FFF);
+  color: #000;
+  padding: 10px 15px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.form-wrapper select::placeholder {
+  opacity: 0.3;
+}
+
+.links-wrapper .links {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  align-items: start;
+}
+.links-wrapper .links .link {
+  width: 30%;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  transition: 0.3s ease;
+}
+.links-wrapper .links .link .name {
+  justify-content: space-between;
+  display: flex;
+}
+.links-wrapper .links .link .name .delete {
+  cursor: pointer;
+  align-items: center;
+}
+.links-wrapper .links .link .name .delete:hover {
+  color: #C8716B;
+}
+.links-wrapper .links .link .name .delete:hover svg path, .links-wrapper .links .link .name .delete:hover svg defs {
+  fill: #C8716B;
+}
+.links-wrapper .links span.name {
+  color: #000;
+  font-family: Montserrat;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: -5px;
+}
+.links-wrapper .links .leftW, .links-wrapper .links .rightW {
+  width: 47%;
+}
+.links-wrapper .links .bottom {
+  width: 100%;
+}
+.links-wrapper .links .bottom .heading {
+  margin-top: 20px;
+  color: #000;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  opacity: 0.5;
+}
+.links-wrapper .links .bottom .description {
+  color: #000;
+  font-family: Montserrat;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  opacity: 0.5;
+}
+.links-wrapper .help {
+  color: #000;
+  font-family: Montserrat;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  margin-top: 7px;
+  opacity: 0.5;
+  display: block;
 }
 
 /*# sourceMappingURL=main.css.map */

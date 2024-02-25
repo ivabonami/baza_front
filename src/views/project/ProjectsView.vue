@@ -18,9 +18,10 @@
             </div>
           </div>
           <div class="name">
-            KRAKEN
+             {{ project.name }}
 
             <img src="./../../assets/images/verified.webp"
+                 v-if="project.verified === true"
                  class="verified"
                  title="Проверенный магазин">
 
@@ -87,7 +88,9 @@
           <div class="tab-content">
             <div class="flex"
                  v-if="this.tab === 'description'">
-              <project-description>
+              <project-description
+              v-bind:projectDescription="project.description"
+              v-bind:projectLinks="{link: project.links }">
 
               </project-description>
 
@@ -107,7 +110,7 @@
                 <button
                     v-on:click="switchTabs('addService')"
                     class="btn btn-filled">
-                  Добавить проект
+                  Добавить услугу
                 </button>
               </div>
 
@@ -318,20 +321,7 @@
               </div>
             </div>
 
-            <div class="project-links box-shadow">
-              <div class="links-heading">
-                Ссылки на проект
-              </div>
 
-              <div class="links-links">
-                <a href="#" class="link">Зеркало 1</a>
-                <a href="#" class="link">Зеркало 2</a>
-                <a href="#" class="link">Зеркало 3</a>
-                <a href="#" class="link">Зеркало 4</a>
-                <a href="#" class="link">Onion</a>
-                <a href="#" class="link">WWH</a>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -346,9 +336,8 @@
 <script>
 import servicesCard from "./ServicesCard.vue";
 import ProjectDescription from "./ProjectDescription.vue";
-import AddProject from "../pages/AddProject.vue";
 import {ref} from "vue";
-import AddService from "../pages/AddService.vue";
+import AddService from "../addItems/AddService.vue";
 
 export default {
 
@@ -360,15 +349,32 @@ export default {
     return {
       services: ref(null),
       tab: 'description',
-      favorite: false
+      favorite: false,
+      project: {}
     }
   },
   props: ['selectedId', 'highlight', 'tab'],
   setup(props) {
-    console.log('props: ' + props.selectedId)
+
   },
 
   methods: {
+    getProjectFullInfo () {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      const projectId = window.location.pathname.replace('/project/', '');
+
+      fetch("http://62.113.96.171:3000/projects/" + projectId, {
+        method: "GET",
+        headers: myHeaders,
+      })
+          .then((response) => response.json())
+          .then((result) => {
+            this.project = result.project
+            console.log(result.project)
+          })
+          .catch((error) => console.error(error));
+    },
     switchTabs(tab) {
       if (tab === 'description') {
         this.tab = 'description'
@@ -388,15 +394,10 @@ export default {
       }
     },
   },
-  mounted() {
-    fetch('https://run.mocky.io/v3/e5c8328f-c3c0-41ed-aea5-8b4e9e22d6bb')
-        .then((res) => res.json())
-        .then((json) => {
-          this.services = json
-          console.log(json)
-        })
+  created() {
+    this.getProjectFullInfo()
+  },
 
-  }
 }
 </script>
 

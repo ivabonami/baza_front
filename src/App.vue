@@ -1,7 +1,7 @@
 <script>
 import SidebarMenu from "./components/menus/SidebarMenu.vue";
 import TopMenu from "./components/menus/TopMenu.vue";
-import FooterView from "./components/FooterView.vue";
+import FooterView from "./components/page components/FooterView.vue";
 
 export default {
   components: {FooterView, SidebarMenu, TopMenu },
@@ -12,47 +12,12 @@ export default {
 
     }
   },
-  created() {
-    this.setTheme()
-  },
   mounted() {
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelector('.preloader').style.display = 'none'
-      this.isLoaded = true
+    document.querySelector('.preloader').style.display = 'none'
+    this.isLoaded = true
 
-    })
-    if (localStorage.getItem('isAdmin') === 'false') {
-      this.isAdmin = false
-    } else {
-      this.isAdmin = true
-    }
-
-  },
-  computed: {
-    setTransitionProperty: function () {
-      return router.meta.transition
-    }
   },
   methods: {
-    switchTheme() {
-      const themeSwitch = document.querySelector('#switcher');
-      document.querySelector('.theme').classList.add(localStorage.getItem('theme'))
-
-      themeSwitch.addEventListener('click', function () {
-
-        document.querySelector('.theme').classList.remove(localStorage.getItem('theme'))
-        localStorage.getItem('theme') === 'light' ? localStorage.setItem('theme', 'dark') : localStorage.setItem('theme', 'light')
-        document.querySelector('body').classList.add(localStorage.getItem('theme'))
-
-      });
-
-    },
-    setTheme() {
-      document.querySelector('.theme').classList.add(localStorage.getItem('theme'))
-      if (!localStorage.getItem('theme')) {
-        localStorage.setItem('theme', 'light')
-      }
-    }
 
   },
 
@@ -107,12 +72,11 @@ export default {
         <div class="content">
 
           <router-view v-slot="{ Component, route }">
-            <transition :name="$route.meta.transition" mode="in-out">
+
               <div :key="route">
                 <component :is="Component" :key="route.path"></component>
               </div>
 
-            </transition>
           </router-view>
 
         </div>

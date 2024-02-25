@@ -4,11 +4,11 @@
        v-if="this.state === 'signIn'">
     <div class="h2">Вход на базу</div>
     <input type="text"
-           id="sign-in-username"
+           v-model="inputUsername"
            class="input login"
            placeholder="Логин">
     <input type="password"
-           id="sign-in-password"
+           v-model="inputPassword"
            class="input password"
            placeholder="Пароль">
     <input type="submit" value="Войти" class="btn btn-filled"
@@ -19,8 +19,8 @@
       Зарегистрироваться
     </button>
 
-    <div class="error-box" v-if="this.credentialsError === true">
-      {{this.errorMessage}}
+    <div class="error-box" v-if="this.credentialsError !== ''">
+      {{this.credentialsError}}
     </div>
   </div>
 
@@ -29,17 +29,21 @@
     <div class="h2">Регистрация</div>
     <input type="text"
            id="sign-in-password"
+           v-model="inputUsername"
            class="input"
            placeholder="Логин">
     <input type="password"
            id="sign-in-password"
+           v-model="inputPassword"
            class="input"
            placeholder="Пароль">
     <input type="password"
            id="sign-in-password"
+           v-model="inputRepeatPassword"
            class="input"
            placeholder="Повторите пароль">
-    <input type="submit" value="Войти" class="btn btn-filled">
+    <input type="submit" value="Войти" class="btn btn-filled"
+           v-on:click="signUp()">
 
     <button class="switch"
     v-on:click="this.signInSwitch()">
@@ -53,14 +57,18 @@ export default {
   name: "SignInView.vue",
   data () {
     return {
+      //form control
+      inputUsername: '',
+      inputPassword: '',
+      inputRepeatPassword: '',
+
       state: 'signIn',
-      username: 'admin',
-      password: 'admin',
-      credentialsError: false,
-      errorMessage: ''
+      credentialsError: '',
+
 
     }
   },
+
   methods: {
     signInSwitch () {
       this.state = 'signIn'
@@ -70,40 +78,79 @@ export default {
     },
 
     signIn() {
-      const userUsername = document.querySelector('#sign-in-username'),
-          userPassword = document.querySelector('#sign-in-password'),
-          userInputBoxLogin = document.querySelector('#sign-in .login'),
-          userInputBoxPassword = document.querySelector('#sign-in .password')
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
 
-      if (userUsername.value === this.username && userPassword.value === this.password) {
-        console.log('all true', userUsername.value, userPassword.value)
+      fetch("http://62.113.96.171:3000/login", {
+        method: "POST",
+        headers: myHeaders,
+        body: JSON.stringify({
+          username: this.inputUsername,
+          password: this.inputPassword
+        }),
+      })
+          .then((response) => response.json())
+          .then((result) => {
+            localStorage.setItem('token', result.token)
+            if (this.inputUsername === 'admin') {
+              localStorage.setItem('role', 'admin')
 
-        localStorage.setItem('signedUsername', 'Главный')
-        localStorage.setItem('role', 'admin')
-        localStorage.setItem('token', 'dsasadsadasdasdds')
+            }
+            localStorage.setItem('username', this.inputUsername)
+            this.credentialsError = result.message
+            this.$router.go()
+          })
+          .catch((error) => {
+            console.log('messageE:', error.message)
+          });
 
-      } else if ( userUsername.value === this.username && userPassword.value !== this.password ) {
-        console.log('pass false', userUsername.value, userPassword.value)
+    },
 
-        userInputBoxPassword.classList.remove('error')
-        userInputBoxLogin.classList.remove('error')
+    signUp() {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
 
-        userInputBoxPassword.classList.add('error')
+      if (this.inputPassword === this.inputRepeatPassword) {
+        fetch("http://62.113.96.171:3000/signup", {
+          method: "POST",
+          headers: myHeaders,
+          body: JSON.stringify({
+            username: this.inputUsername,
+            password: this.inputPassword
+          }),
+        })
+            .then((response) => response.json())
+            .then((result) => {
+              fetch("http://62.113.96.171:3000/login", {
+                method: "POST",
+                headers: myHeaders,
+                body: JSON.stringify({
+                  username: this.inputUsername,
+                  password: this.inputPassword
+                }),
+              })
+                  .then((response) => response.json())
+                  .then((result) => {
+                    localStorage.setItem('token', result.token)
+                    localStorage.setItem('username', this.inputUsername)
+                    if (this.inputUsername === 'admin') {
+                      localStorage.setItem('role', 'admin')
 
-        this.credentialsError = true
-        this.errorMessage = 'Не правильный пароль'
-      } else {
-        console.log('all false', userUsername.value, userPassword.value)
-
-        userInputBoxPassword.classList.remove('error')
-        userInputBoxLogin.classList.remove('error')
-
-        userInputBoxLogin.classList.add('error')
-        userInputBoxPassword.classList.add('error')
-
-        this.credentialsError = true
-        this.errorMessage = 'Не правильный юзернейм и пароль'
+                    }
+                    this.credentialsError = result.message
+                    this.$router.go()
+                  })
+                  .catch((error) => {
+                    console.log('messageE:', error.message)
+                  });
+            })
+            .catch((error) => {
+              console.log('messageE:', error.message)
+            });
       }
+
+
+
     }
   }
 }

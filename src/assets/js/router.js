@@ -4,19 +4,14 @@ import GuaranteeView from "../../views/pages/GuaranteeView.vue";
 import AdvertisementView from "../../views/pages/AdvertisementView.vue";
 import AboutProjectView from "../../views/pages/AboutProjectView.vue";
 import ContactsView from "../../views/pages/ContactsView.vue";
-import MarketsView from "../../views/sidebar/MarketsView.vue";
-import ExchangersView from "../../views/sidebar/ExchangersView.vue";
-import ShopsPawView from "../../views/sidebar/ShopsPawView.vue";
-import SellersView from "../../views/sidebar/SellersView.vue";
-import ForumsView from "../../views/sidebar/ForumsView.vue";
-
-import pageView from "../../views/PageView.vue";
 
 import ProjectsView from "../../views/project/ProjectsView.vue";
 import ServicesCard from "../../views/project/ServicesCard.vue";
 import ProjectDescription from "../../views/project/ProjectDescription.vue";
-import addProject from "../../views/pages/AddProject.vue";
-import addService from "../../views/pages/AddService.vue";
+import addProject from "../../views/addItems/AddProject.vue";
+import addService from "../../views/addItems/AddService.vue";
+import addCategory from "../../views/addItems/addCategory.vue";
+import allProjectsWithSort from "../../views/pages/AllProjectsWithSort.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -50,6 +45,11 @@ const router = createRouter({
             component: GuaranteeView
         },
         {
+            path: '/projects-list/:id',
+            name: 'New projects view',
+            component: allProjectsWithSort
+        },
+        {
             path: '/contacts',
             name: 'Contacts',
             component: ContactsView
@@ -79,31 +79,9 @@ const router = createRouter({
             path: '/add-project',
             component: addProject
         },
-
         {
-            path: '/markets',
-            name: 'Markets',
-            component: MarketsView
-        },
-        {
-            path: '/exchangers',
-            name: 'Exchangers',
-            component: ExchangersView
-        },
-        {
-            path: '/shops-paw',
-            name: 'Shops Paw',
-            component: ShopsPawView
-        },
-        {
-            path: '/sellers',
-            name: 'Sellers',
-            component: SellersView
-        },
-        {
-            path: '/forums',
-            name: 'Forums',
-            component: ForumsView
+          path: '/category-control',
+          component: addCategory
         },
 
     ]

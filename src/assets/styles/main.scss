@@ -162,8 +162,29 @@ a {
   align-items: center;
   transition: .15s ease;
   font-size: 12px;
+  cursor: pointer;
+
   &:hover {
     transform: translateY(-2px);
+  }
+  &.btn-outlined {
+    border-radius: 10px;
+    border: 1px solid var(--new-dark, #6C7AFF);
+    box-shadow: 0 0 3px  rgba(13, 110, 253, 0.25);
+    background-color: transparent;
+  }
+  &.btn-submit {
+    border-radius: 10px;
+    background: var(--new-dark, #6C7AFF);
+    padding: 10px 15px;
+    color: #FFF;
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    height: auto;
   }
   &.btn-filled {
     color: #ffffff;
@@ -289,8 +310,9 @@ a {
     background-color: transparent;
     border: none;
     border-bottom: 5px solid transparent;
-    cursor: default;
+
     transition: .3s ease;
+    cursor: pointer;
 
     &:hover {
       opacity: .8;
@@ -466,5 +488,223 @@ form.add-project {
   .helper {
     margin-top: 5px;
     font-size: 10px;
+  }
+}
+
+.form-wrapper {
+  margin-top: 20px;
+  .input-wrapper {
+    margin-bottom: 10px;
+
+  }
+  .fake-input {
+    position: relative;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--new-dark, #6C7AFF);
+    background: var(--neutral, #FFF);
+
+    .name {
+      width: 100px;
+      display: inline-block;
+      color: #000;
+      font-family: Montserrat;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      opacity: .5;
+    }
+
+    input[type='file'] {
+      color: #6C7AFF;
+
+      font-family: Montserrat;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+
+      &::file-selector-button {
+        border-radius: 5px;
+        border: 1px solid var(--new-dark, #6C7AFF);
+        background: #FFF;
+        padding: 5px 10px;
+        color: #6C7AFF;
+        font-family: Montserrat;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        padding-left: 25px;
+
+      }
+
+      &::before {
+        content: url("./../../assets/images/upload.svg");
+        width: 15px;
+        height: 15px;
+        position: relative;
+        right: -20px;
+        z-index: 2;
+        top: 2px;
+      }
+
+    }
+  }
+
+
+  input[type='text'] {
+    border-radius: 5px;
+    border: 1px solid var(--new-dark, #6C7AFF);
+    background: var(--neutral, #FFF);
+    color: #000;
+    padding: 10px 15px;
+    width: 100%;
+    box-sizing: border-box;
+
+    font-family: Montserrat;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    &::placeholder {
+      opacity: .3;
+    }
+  }
+  textarea {
+    border-radius: 5px;
+    border: 1px solid var(--new-dark, #6C7AFF);
+    background: var(--neutral, #FFF);
+    padding: 10px 15px;
+
+    font-family: Montserrat;
+    font-size: 14px;
+    font-style: normal;
+    height: 280px;
+    font-weight: 400;
+    line-height: normal;
+    resize: none;
+
+    box-sizing: border-box;
+
+    width: 100%;
+
+    &::placeholder {
+      opacity: .3;
+    }
+  }
+  select {
+    border-radius: 5px;
+    border: 1px solid var(--new-dark, #6C7AFF);
+    background: var(--neutral, #FFF);
+    color: #000;
+    padding: 10px 15px;
+    width: 100%;
+    box-sizing: border-box;
+
+    font-family: Montserrat;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    &::placeholder {
+      opacity: .3;
+    }
+  }
+}
+.links-wrapper {
+  .links {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: start;
+
+    .link {
+      width: 30%;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      box-sizing: border-box;
+      transition: .3s ease;
+
+      .name {
+        justify-content: space-between;
+        display: flex;
+
+        .delete {
+          cursor: pointer;
+          align-items: center;
+
+          &:hover {
+            color: #C8716B;
+            svg {
+              path, defs {
+                fill: #C8716B;
+              }
+            }
+          }
+        }
+      }
+
+    }
+
+    span.name {
+      color: #000;
+      font-family: Montserrat;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      margin-bottom: -5px;
+    }
+
+    .leftW, .rightW {
+      width: 47%;
+
+    }
+    .bottom {
+      width: 100%;
+
+      .heading {
+        margin-top: 20px;
+        color: #000;
+        font-family: Montserrat;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+
+        opacity: .5;
+      }
+      .description {
+        color: #000;
+        font-family: Montserrat;
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+
+        opacity: .5;
+      }
+    }
+
+  }
+  .help {
+    color: #000;
+    font-family: Montserrat;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    margin-top: 7px;
+
+    opacity: 0.5;
+    display: block;
   }
 }

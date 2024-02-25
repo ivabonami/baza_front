@@ -11,4 +11,3 @@ router.afterEach((to, from) => {
 })
 
 createApp(App).use(router).mount('#app')
-
