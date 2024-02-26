@@ -26,7 +26,15 @@
       <h1>
         Список категорий
       </h1>
-      <div class="calegory-list">
+      <div class="category-list">
+
+        <shops-categories
+            v-on:someChanges="(emit) => {console.log(emit)}"
+            v-bind:is-editable="true">
+
+        </shops-categories>
+
+
         <div class="category"
              v-for="category of categories">
           <span class="name">
@@ -72,41 +80,18 @@
 
   </div>
 
-  <modal-window-backdrop
-      v-if="showModal === true"
-      v-on:changeModal="(emitShowModal) => {this.showModal = emitShowModal}"
-      v-bind:icon-type="'warning'"
-      v-bind:heading="'Удалить категорию: ' + category.name"
-      v-bind:description="'Это действие безвозвратно удалит данную категорию, подтвердить?'"
-      v-bind:descriptionType="'text'"
-      v-bind:confirmAction="true"
 
-      v-on:confirmAction="(emitConfirmAction) => {
-        console.log(emitConfirmAction)
-        console.log(category)
-        if (emitConfirmAction === true) {
-          deleteCategory(category.id)
-          this.getCategoryList()
-          this.deleteStateMessage = `Категория ${category.name} успешно удалена! Надеюсь это не было случайностью.`
-
-
-        }
-        showModal === false
-      }"
-
-  >
-
-  </modal-window-backdrop>
 
 </template>
 
 <script>
 import modalWindowBackdrop from "../../components/page components/ModalWindowBackdrop.vue";
+import shopsCategories from "../../components/reusable/ShopsCategories.vue";
 
 
 export default {
   name: "addCategory.vue",
-  components: { modalWindowBackdrop},
+  components: { modalWindowBackdrop, shopsCategories },
 
   emits: ['confirmAction', 'forceReload'],
 
@@ -117,16 +102,15 @@ export default {
       addStateMessage: '',
       deleteStateMessage: '',
       showModal: this.$emit.showModal,
-      category: '',
-      forceReload: ''
+      category: ''
 
     }
   },
   mounted() {
-    this.getCategoryList();
+
   },
   updated() {
-    this.getCategoryList();
+
   },
   methods: {
     addCategory () {
@@ -156,45 +140,11 @@ export default {
 
           })
           .catch((error) => {console.error(error)});
-      this.forceUpdate()
 
 
     },
-    forceUpdate() {
-      this.updatekey += 1;
-    },
-    getCategoryList() {
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-
-      fetch("http://62.113.96.171:3000/categories", {
-        method: "GET",
-        headers: myHeaders,
-      })
-          .then((response) => response.json())
-          .then((result) => {this.categories = result.categories})
-          .catch((error) => {console.error(error)});
-    },
-    deleteCategory(categoryId) {
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
-
-      fetch(`http://62.113.96.171:3000/categories/${categoryId}`, {
-        method: "DELETE",
-        headers: myHeaders,
-      })
-          .then((response) => response.json())
-          .catch((error) => {console.error(error)});
 
 
-
-    },
-    testEmit() {
-      console.log(this.$emit.forceReload)
-
-      this.$emit.forceReload = 1
-    }
   }
 }
 </script>
@@ -208,16 +158,12 @@ export default {
   gap: 30px;
   align-items: center;
 }
-.categories {
-  margin-top: 30px;
-  .state {
-    margin-top: 20px;
-  }
-}
-.calegory-list {
+
+
+.category-list {
 
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   flex-wrap: wrap;
   width: 100%;
   box-sizing: border-box;
@@ -235,44 +181,12 @@ export default {
       background-color: rgba(108, 122, 255, 0.1);
     }
 
-    .name {
-      font-weight: 800;
-      width: 70%;
 
-    }
     .id {
       font-weight: 300;
       opacity: .5;
     }
-    .delete {
-      margin-left: 50px;
-      color: var(--86868B, #494A4E);
-      font-family: Montserrat;
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      transition: .3s ease;
 
-      svg {
-        margin-right: 10px;
-        path, defs {
-          transition: .3s ease;
-        }
-      }
-
-      &:hover {
-        color: #C8716B;
-        svg {
-          path, defs {
-            fill: #C8716B;
-          }
-        }
-      }
-    }
   }
 }
 
