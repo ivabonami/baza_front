@@ -45,11 +45,11 @@ export default {
     }
   },
   mounted() {
-    this.getCategoryList()
+    this.getProjectsList()
   },
 
   methods: {
-    getCategoryList() {
+    getProjectsList() {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 

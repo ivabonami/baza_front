@@ -38,10 +38,10 @@
 
       <div class="input-wrapper">
         <div class="fake-input">
-          <span class="name"
-                @change="uploadBanner($event)"
-                accept="image/*">Баннер</span>
-          <input type="file">
+          <span class="name">Баннер</span>
+          <input type="file"
+                 v-on:change="uploadBanner($event)"
+                 accept="image/*">
         </div>
         <span class="help">
           Загрузите аватар проекта, размеры 1060х220px, форматы: jpeg, jpg, gif. webp
@@ -154,7 +154,7 @@ export default {
       projectName: '',
       projectDescription: '',
       projectCategory: [],
-      projectAvatar: null,
+      projectAvatar: '',
       projectBanner: '',
 
       projectLinks: []
@@ -169,25 +169,47 @@ export default {
       this.projectAvatar = e.target;
       const image = e.target.files[0]
 
+      console.log(image)
       const myHeaders = new Headers();
       // myHeaders.append("Content-Type", "image/webp");
       myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
 
-      console.log(image)
+      const formData = new FormData();
+      formData.append("image-upload", image );
 
-      fetch(`http://62.113.96.171:3000/image-upload`, {
+      console.log(formData)
+      fetch("http://62.113.96.171:3000/image-upload", {
         method: "POST",
         headers: myHeaders,
-        body: JSON.stringify({'image-upload': image})
+        body: formData,
+        redirect: "follow"
       })
           .then((response) => response.json())
-          .then(response => console.log(response))
-          .catch((error) => {
-            console.error(error)
-          });
+          .then((result) => this.projectAvatar = result.filePath)
+          .catch((error) => console.error(error));
     },
     uploadBanner(e){
-      this.projectAvatar = e.target.files[0];
+      this.projectBanner = e.target;
+      const image = e.target.files[0]
+
+      console.log(image)
+      const myHeaders = new Headers();
+      // myHeaders.append("Content-Type", "image/webp");
+      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+
+      const formData = new FormData();
+      formData.append("image-upload", image );
+
+      console.log(formData)
+      fetch("http://62.113.96.171:3000/image-upload", {
+        method: "POST",
+        headers: myHeaders,
+        body: formData,
+        redirect: "follow"
+      })
+          .then((response) => response.json())
+          .then((result) => this.projectBanner = result.filePath)
+          .catch((error) => console.error(error));
     },
     addAnotherOneLink () {
       const wrapper = document.querySelector('.links-wrapper .links')
@@ -251,8 +273,8 @@ export default {
         description: this.projectDescription,
         categoryIds: [this.projectCategory],
         payed: true,
-        avatarFilePath: '',
-        bannerFilePath: '',
+        avatarFilePath: this.projectAvatar,
+        bannerFilePath: this.projectBanner,
         links:  {
           name: this.projectLinks.name,
           link: this.projectLinks.link

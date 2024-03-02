@@ -2,12 +2,37 @@
   <div class="sidebar-link" v-for="category of categories">
     <div class="categories-list" v-if="isEditable === true" >
       <div class="category">
-        <span class="name">
+        <input
+            class="name"
+            v-model="newCategoryName"
+            v-if="this.editCategoryName === category.id">
+        <span class="name" v-else>
           {{ category.name }}
         </span>
 
-        <span class="delete"
-              v-on:click="() => {
+
+        <div class="icons">
+          <span class="edit"
+                v-if="this.editCategoryName !== category.id"
+                v-on:click="(e) => {
+                  this.newCategoryName = category.name
+                  this.editCategoryName = category.id
+                }">
+            <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 333.45 340.57"><path d="M164.18,340.54c-40.51,0-81.01,.01-121.52,0C17.02,340.53,.01,323.57,0,298,0,216.97,0,135.95,0,54.92,.01,29.57,17.04,12.44,42.25,12.43c40.17-.02,80.34,.02,120.52-.03,6.75,0,12.09,2.5,15.41,8.38,3.11,5.51,2.91,11.23-.5,16.6-3.68,5.79-9.34,7.59-15.9,7.58-36.17-.04-72.34-.02-108.51-.01-4.17,0-8.34-.1-12.5,.04-5.62,.2-8.14,2.78-8.15,8.46-.03,82.02-.03,164.05,0,246.07,0,6.11,2.86,8.66,9.59,8.67,21.17,.04,42.34,.01,63.51,.01,59.51,0,119.02,0,178.52,0,9.42,0,11.44-2.02,11.44-11.43,0-42.01-.02-84.03,.02-126.04,0-8.24,5.37-14.96,12.73-16.3,8.41-1.53,15.53,2.21,18.5,9.99,.75,1.96,1.01,4.21,1.01,6.32,.06,43.51,.13,87.03,0,130.54-.07,21.68-17.74,39.12-39.73,39.2-41.34,.15-82.68,.04-124.02,.05Z"/><path d="M283.42,135.51c-3.29,3.08-7.26,6.59-11.01,10.33-21.11,21.05-42.24,42.07-63.16,63.31-3.96,4.02-8.47,6.09-13.78,7.29-26.6,5.97-53.16,12.06-79.74,18.1-11.76,2.68-19.57-4.91-16.92-16.48,6.35-27.7,12.64-55.42,19.19-83.07,.73-3.08,2.36-6.37,4.56-8.6,24.82-25.1,49.83-50.02,74.79-74.98,.46-.46,1.02-.83,1.2-.98,28.13,28.2,56.17,56.3,84.88,85.08Z"/><path d="M210.34,38.32c11.22-11.19,22.89-23.05,34.82-34.64,5.17-5.02,12.35-4.88,17.52,.25,22.34,22.17,44.59,44.42,66.76,66.75,5.3,5.34,5.35,12.49,.09,17.91-11.49,11.81-23.22,23.39-34.51,34.71-28.2-28.3-56.22-56.42-84.68-84.99Z"/></svg>
+          </span>
+
+          <span class="edit"
+                v-else
+                v-on:click="() => {
+                  updateCategoryList(newCategoryName, category.id)
+                  $emit('someChanges', editCategoryName)
+                  this.editCategoryName = 0
+                }">
+            <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 439 438.77"><path d="M219.42,438.74c-63.17,0-126.34-.03-189.51,.03-12.01,.01-21.73-4.34-26.78-15.44-2.31-5.08-2.97-11.28-2.98-16.98C-.04,329.37,.02,252.37,.02,175.38c0-47.83-.09-95.66,.13-143.48,.03-5.53,.91-11.43,3-16.48C7.03,6.05,15.07,1.47,25,.31,27.8-.01,30.66,.04,33.49,.04,117.99,.03,202.49,.07,287,0c22.68-.02,41.57,8.13,57.47,24.34,23.27,23.74,46.86,47.19,70.55,70.52,15.75,15.51,23.93,34.04,23.94,56.13,.01,85.49-.04,170.98,.05,256.47,.01,12.04-3.47,22.26-14.72,27.8-4.71,2.32-10.53,3.32-15.85,3.33-63,.22-126,.14-189.01,.14ZM36.35,219.14c0,33.83,0,67.67,0,101.5,0,25.33,.12,50.67-.11,76-.04,4.75,1.56,6.03,6.02,5.87,7.82-.28,15.67-.08,23.5-.08q7.43,0,7.44-7.31c0-35.67-.03-71.33,.03-107,.01-7.37,.69-14.61,5.42-20.83,6.44-8.46,15.07-11.03,25.41-11.01,73.01,.18,146.02,.09,219.03,.1,5.83,0,11.67,.14,17.5,.16,5.96,.02,10.91,2.4,15.41,6.14,7.41,6.18,9.77,14.39,9.77,23.59,.01,36.83,.07,73.67-.07,110.5-.02,4.31,1.17,5.92,5.65,5.74,7.82-.32,15.66-.09,23.5-.09q7.7,0,7.7-7.49c0-81.33-.04-162.66,.05-244,.01-11.67-4.09-21.27-12.31-29.44-24.34-24.21-48.67-48.45-72.8-72.87-5.84-5.91-12.74-9.44-20.49-11.75-2.8-.84-4.17,.24-4.34,3.02-.1,1.66-.09,3.33-.09,5,0,35.17,.1,70.33-.11,105.5-.03,5.4-.39,11.28-2.53,16.09-5.13,11.53-14.81,16.03-27.42,15.98-53.01-.22-106.01-.09-159.02-.11-2.5,0-5.13,.22-7.46-.48-3.91-1.16-7.99-2.41-11.34-4.63-9.29-6.16-11.51-15.73-11.5-26.19,.03-36,.02-72,0-108,0-6.85-.02-6.86-6.99-6.86-7.67,0-15.34-.01-23,0-6.85,.01-6.87,.02-6.87,6.95,0,58.67,0,117.33,0,176Zm183.15,183.29c34.49,0,68.98,0,103.47,0,6.53,0,6.55-.03,6.55-6.69,0-32.15,0-64.31,0-96.46,0-6.81-.03-6.88-7.04-6.88-68.65,0-137.3-.01-205.95,0-7.03,0-7.11,.12-7.11,7.4,0,31.99,0,63.98,0,95.96,0,6.64,0,6.66,6.61,6.67,34.49,0,68.98,0,103.47,0Zm36.91-311.22c0-14.33,.06-28.66-.02-42.98-.05-8.05-4.02-11.99-12.02-12.01-16.5-.05-32.99-.06-49.49,.01-8.36,.03-12.27,3.85-12.29,12.25-.07,28.49-.07,56.98,0,85.47,.02,8.65,3.9,12.57,12.55,12.64,16.16,.12,32.33,.12,48.49,0,8.97-.07,12.76-4.02,12.78-12.88,.03-14.16,0-28.32,0-42.48Z"/></svg>
+          </span>
+
+          <span class="delete"
+            v-on:click="() => {
             showModal = !showModal;
             this.category = {
               id: category.id,
@@ -28,8 +53,15 @@
                   d="M6.73258 10.3095C6.73258 11.268 6.73495 12.2268 6.731 13.1853C6.72982 13.5234 6.50986 13.8375 6.21842 13.9441C5.85511 14.0766 5.50207 13.9897 5.25289 13.7096C5.08979 13.5265 5.0661 13.3066 5.0661 13.0779C5.06689 11.2251 5.0661 9.37222 5.0665 7.51937C5.0665 7.48731 5.0665 7.45486 5.06729 7.42279C5.08269 6.93601 5.4227 6.60377 5.90013 6.60995C6.37559 6.61613 6.72863 6.95881 6.7314 7.434C6.73614 8.39249 6.73298 9.35136 6.73258 10.3099V10.3095Z"
                   fill="#494A4E"/>
             </svg>
-            Удалить
-        </span>
+          </span>
+
+
+
+        </div>
+
+
+
+
       </div>
     </div>
 
@@ -108,6 +140,7 @@
   </div>
 
 
+
   <modal-window-backdrop
       v-if="showModal === true"
       v-on:changeModal="(emitShowModal) => {this.showModal = emitShowModal}"
@@ -141,35 +174,35 @@ import modalWindowBackdrop from "../../components/page components/ModalWindowBac
 export default {
   name: "ShopsCategories.vue",
   emits: ['someChanges'],
-  watch: {
-    categories: []
-  },
   props: ['isEditable'],
   data() {
     return {
       categories: '',
       showModal: false,
-      count: 0
+      editCategoryName: 0,
+      count: 0,
+      newCategoryName: '',
+      changed: true
     }
   },
   components: { modalWindowBackdrop },
   created() {
-    this.$watch('a', (newVal, oldVal) => {
-      // сделать что-нибудь
-    })
+
   },
   mounted() {
     this.getCategoryList()
   },
+
   updated() {
-    this.getCategoryList()
+    // this.getCategoryList()
   },
+
   methods: {
     getCategoryList() {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
-      fetch("http://62.113.96.171:3000/categories", {
+      fetch("http://62.113.96.171:3000/categories/", {
         method: "GET",
         headers: myHeaders,
       })
@@ -178,6 +211,30 @@ export default {
             result.success === true ? this.categories = result.categories : console.error("Can't load categories, fetch result: ", result)
           })
           .catch((error) => {console.error(error)});
+
+
+    },
+
+    updateCategoryList(target, id) {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+      myHeaders.append("Content-Type", "application/json");
+
+      fetch("http://62.113.96.171:3000/categories/" + id, {
+        method: "PUT",
+        headers: myHeaders,
+        body: JSON.stringify({
+          "name": target
+        })
+      })
+          .then((response) => response.json())
+          .then((result) => {
+            this.$emit('someChanges')
+            this.getCategoryList()
+          })
+          .catch((error) => {console.error(error)});
+
+
     },
 
     deleteCategory(categoryId) {
@@ -190,6 +247,7 @@ export default {
         headers: myHeaders,
       })
           .then((response) => response.json())
+          .then(res => this.getCategoryList())
           .catch((error) => {console.error(error)});
 
 
@@ -200,6 +258,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+
+input.name {
+  font-size: 16px;
+  padding: 2px 10px;
+  border-radius: 10px;
+  margin-top: 0px;
+  border: 1px solid #eaeaea;
+  width: 70%;
+  font-family: "Montserrat", "Arial", Serif;
+}
 .category-list {
   margin-top: 30px;
   display: flex;
@@ -218,11 +287,24 @@ export default {
     .name {
       font-weight: 800;
       width: 70%;
+      box-sizing: border-box;
+      margin-right: 10px;
 
     }
 
-    .delete {
-      margin-left: 50px;
+    .icons {
+      display: flex;
+      justify-content: end;
+
+
+      svg {
+        left: 10px;
+      }
+    }
+
+    .delete, .edit {
+      width: 25px;
+      height: 25px;
       color: var(--86868B, #494A4E);
       font-family: Montserrat;
       font-size: 14px;
@@ -238,6 +320,7 @@ export default {
         margin-right: 10px;
         path, defs {
           transition: .3s ease;
+          fill: #000;
         }
       }
 

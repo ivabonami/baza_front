@@ -12,9 +12,8 @@
       </div>
 
       <shops-categories
-          v-on:someChanges="(emit) => {
-            this.$forceUpdate()
-          }">
+          v-on:someChanges="(emit) => { console.log('sme', emit)}"
+          v-bind:is-editable="false">
 
       </shops-categories>
 
@@ -152,11 +151,13 @@ export default  {
     this.checkAdmin()
     this.getCategoryList()
 
-
   },
 
   setup(emits) {
 
+  },
+  updated() {
+    this.getCategoryList();
   },
 
   methods: {

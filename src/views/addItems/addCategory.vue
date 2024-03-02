@@ -29,7 +29,7 @@
       <div class="category-list">
 
         <shops-categories
-            v-on:someChanges="(emit) => {console.log(emit)}"
+            v-on:someChanges="(emit) => { console.log('ace', emit)}"
             v-bind:is-editable="true">
 
         </shops-categories>
@@ -130,9 +130,8 @@ export default {
           .then((response) => {
             const catName = this.categoryName;
             this.addStateMessage = `Категория: ${catName} успешно добавлена!`
-            this.getCategoryList()
             this.categoryName = ''
-
+            this.$forceUpdate()
             setTimeout(() => {
               this.addStateMessage = ''
 
@@ -150,6 +149,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+
 .state-message {
   color: #0b5348;
 }

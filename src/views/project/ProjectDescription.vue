@@ -217,6 +217,7 @@ export default {
     }
   },
   mounted() {
+
     const stars = document.querySelectorAll('.set-rating svg')
     let value = 0;
     let selected = false;
@@ -240,6 +241,26 @@ export default {
     }
   },
   methods: {
+    getReviews () {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      const raw = JSON.stringify({
+        "projectId": "5"
+      });
+
+      const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow"
+      };
+
+      fetch("http://62.113.96.171:3000/reviews/", requestOptions)
+          .then((response) => response.text())
+          .then((result) => console.log(result))
+          .catch((error) => console.error(error));
+    },
     setOpacity (opacityValue, index, addClass) {
       for (let i = 5; i > 0; i--) {
         document.querySelector(`div.set-rating > svg:nth-child(${i})`).style.opacity = 0.3

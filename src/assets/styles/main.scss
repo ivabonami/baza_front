@@ -12,7 +12,13 @@ h1 {
   font-family: Montserrat;
   font-size: 25px;
   font-style: normal;
-  font-weight: 900;
+  font-weight: 400;
+  line-height: normal;
+}h3 {
+  font-family: Montserrat;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
   line-height: normal;
 }
 p {
@@ -339,6 +345,8 @@ a {
 .footer {
 
 }
+
+
 
 form.add-project {
   margin-top: 30px;
