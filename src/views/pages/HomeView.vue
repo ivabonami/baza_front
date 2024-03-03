@@ -18,7 +18,7 @@
                   v-bind:projectDescription="project.description"
                   v-bind:projectCreateDate="project.createdAt"
                   v-bind:projectViews="project.viewCount"
-                  v-bind:paid="project.paid"
+                  v-bind:payed="project.payed"
                   v-bind:projectRating="project.ratingAvg"
                   v-bind:avatar="project.avatarFilePath"
                   >

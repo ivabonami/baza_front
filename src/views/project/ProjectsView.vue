@@ -43,10 +43,29 @@
 
         <div class="rating">
           <div class="stars">
-            <div class="project-rating">
-              Рейтинг проекта: <span>{{ project.ratingAvg }}</span>
+            <div class="project-rating"
+                 v-if="project.ratingAvg !== null"
+                 :class="{
+                        goodGreen: project.ratingAvg === 5,
+                        green: project.ratingAvg >= 4 && project.ratingAvg < 5,
+                        yellow: project.ratingAvg > 3 && project.ratingAvg < 4,
+                        orange: project.ratingAvg > 2 && project.ratingAvg <= 3,
+                        red: project.ratingAvg > 1 && project.ratingAvg <= 2,
+                        badRed: project.ratingAvg >= 0 && project.ratingAvg <= 1,
+                          }">
+              {{ project.ratingAvg }}
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" >
+                <path
+                    d="M8.93325 0.7084L10.1489 4.61808C10.2802 5.04057 10.6571 5.32648 11.0822 5.32648H15.0168C15.9674 5.32648 16.3627 6.59722 15.5936 7.18118L12.4105 9.59732C12.0665 9.85835 11.9227 10.3211 12.054 10.7436L13.2697 14.6533C13.5635 15.5978 12.5287 16.3833 11.7597 15.7996L8.57651 13.3835C8.23253 13.1224 7.7669 13.1224 7.42292 13.3835L4.23977 15.7996C3.47071 16.3833 2.43593 15.5978 2.72972 14.6533L3.94542 10.7436C4.07671 10.3211 3.93294 9.85835 3.58896 9.59732L0.406373 7.18088C-0.362688 6.59722 0.0326187 5.32618 0.983169 5.32618H4.91752C5.3426 5.32618 5.71947 5.04028 5.85077 4.61778L7.06675 0.7084C7.36053 -0.236133 8.63947 -0.236133 8.93325 0.7084Z"/>
+              </svg>
             </div>
+
+            <div class="project-rating-no" v-else>
+              У проекта нет оценок
+            </div>
+
           </div>
+
 
         </div>
       </div>
@@ -105,7 +124,9 @@
           </div>
           <div class="tab-rating">
             <div class="onsite">
-              На сайте с октября 2023
+              На сайте с
+              {{ new Date(project.createdAt)
+                .toLocaleString('ru-ru', { month: 'long', year: 'numeric' }).replace(/\ь/, 'я').replace(/\й/, 'я') }}
             </div>
 
             <div class="project-detailed-rating box-shadow">
@@ -292,7 +313,7 @@
                 </svg>
                 Просмотры: {{ project.viewCount }}
               </div>
-              <div class="stat">
+              <div class="stat" v-if="project.deposit === ''">
                 <svg xmlns="http://www.w3.org/2000/svg" width="11" height="18" viewBox="0 0 11 18" fill="none">
                   <path
                       d="M5.11204 17.16V0.23999H6.26404V17.16H5.11204ZM5.56204 15.144C4.60204 15.144 3.68404 15 2.80804 14.712C1.93204 14.412 1.24204 14.028 0.738037 13.56L1.40404 12.156C1.88404 12.576 2.49604 12.924 3.24004 13.2C3.98404 13.476 4.75804 13.614 5.56204 13.614C6.29404 13.614 6.88804 13.53 7.34404 13.362C7.80004 13.194 8.13604 12.966 8.35204 12.678C8.56804 12.378 8.67604 12.042 8.67604 11.67C8.67604 11.238 8.53204 10.89 8.24404 10.626C7.96804 10.362 7.60204 10.152 7.14604 9.99599C6.70204 9.82799 6.21004 9.68399 5.67004 9.56399C5.13004 9.44399 4.58404 9.30599 4.03204 9.14999C3.49204 8.98199 2.99404 8.77199 2.53804 8.51999C2.09404 8.26799 1.73404 7.93199 1.45804 7.51199C1.18204 7.07999 1.04404 6.52799 1.04404 5.85599C1.04404 5.20799 1.21204 4.61399 1.54804 4.07399C1.89604 3.52199 2.42404 3.08399 3.13204 2.75999C3.85204 2.42399 4.76404 2.25599 5.86804 2.25599C6.60004 2.25599 7.32604 2.35199 8.04604 2.54399C8.76604 2.73599 9.39004 3.01199 9.91804 3.37199L9.32404 4.81199C8.78404 4.45199 8.21404 4.19399 7.61404 4.03799C7.01404 3.86999 6.43204 3.78599 5.86804 3.78599C5.16004 3.78599 4.57804 3.87599 4.12204 4.05599C3.66604 4.23599 3.33004 4.47599 3.11404 4.77599C2.91004 5.07599 2.80804 5.41199 2.80804 5.78399C2.80804 6.22799 2.94604 6.58199 3.22204 6.84599C3.51004 7.10999 3.87604 7.31999 4.32004 7.47599C4.77604 7.63199 5.27404 7.77599 5.81404 7.90799C6.35404 8.02799 6.89404 8.16599 7.43404 8.32199C7.98604 8.47799 8.48404 8.68199 8.92804 8.93399C9.38404 9.18599 9.75004 9.52199 10.026 9.94199C10.302 10.362 10.44 10.902 10.44 11.562C10.44 12.198 10.266 12.792 9.91804 13.344C9.57004 13.884 9.03004 14.322 8.29804 14.658C7.57804 14.982 6.66604 15.144 5.56204 15.144Z"
@@ -371,8 +392,17 @@ export default {
     },
   },
   created() {
-    this.getProjectFullInfo()
+
   },
+  mounted() {
+    this.getProjectFullInfo()
+
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    })
+  }
 
 }
 </script>
@@ -468,6 +498,39 @@ export default {
         line-height: normal;
         color: #3e4b5b;
         .project-rating {
+          padding: 5px 15px;
+          color: #fff;
+          font-weight: 700;
+          border-radius: 5px;
+          font-size: 14px;
+
+          svg {
+            width: 10px;
+            height: 10px;
+            margin-right: 0;
+            path {
+              fill: #fff;
+            }
+          }
+
+          &.goodGreen {
+            background-color: #0fd067;
+          }
+          &.green {
+            background-color: #56d790;
+          }
+          &.yellow {
+            background-color: yellow;
+          }
+          &.orange {
+            background-color: orange;
+          }
+          &.red {
+            background-color: orangered;
+          }
+          &.badRed {
+            background-color: red;
+          }
           span {
             background-color: #6C7AFF;
             padding: 5px 15px;

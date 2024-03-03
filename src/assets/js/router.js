@@ -14,6 +14,9 @@ import addCategory from "../../views/addItems/addCategory.vue";
 import allProjectsWithSort from "../../views/pages/AllProjectsWithSort.vue";
 
 const router = createRouter({
+    scrollBehavior() {
+        return { x: 0, y: 0 };
+    },
     history: createWebHistory(),
     routes: [
         {

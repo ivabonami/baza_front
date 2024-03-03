@@ -410,6 +410,8 @@ form.add-project {
     border: 1px solid #eaeaea;
     width: 70%;
     font-family: "Montserrat", "Arial", Serif;
+
+
   }
   input[type=file] {
     margin-top: 0px;
@@ -576,6 +578,14 @@ form.add-project {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+
+    &.bad {
+      background-color: #fff3f3;
+      border: 1px solid #984a5a;
+      &.ok {
+        background-color: #ffffff;
+      }
+    }
 
     &::placeholder {
       opacity: .3;

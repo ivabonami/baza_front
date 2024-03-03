@@ -8,9 +8,15 @@
             type="text"
             placeholder="Название проекта"
             v-model="projectName"
+            v-on:input="(e) => {
+              projectName.length <= 5 ? e.target.classList.add('bad') : e.target.classList.add('ok')
+              projectName.length > 5 ? e.target.classList.remove('bad') : e.target.classList.remove('ok')
+            }"
+
+            minlength="5" maxlength="30"
             required>
         <span class="help">
-          Введите название проекта, которое коротко и ясно отражает его суть.
+          Введите название проекта, которое коротко и ясно отражает его суть. От 5 до 30 символов.
         </span>
       </div>
 
@@ -99,6 +105,7 @@
 
           <button class="add"
                   v-if="this.count < 12"
+
                   v-on:click="addAnotherOneLink()">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
               <path opacity="0.3" d="M7.69655 17V0H10.3034V17H7.69655ZM0 9.70283V7.33727H18V9.70283H0Z" fill="black"/>
@@ -110,7 +117,8 @@
 
     </div>
 
-    <button class="btn-filled btn"
+    <button class="btn-filled btn disabled"
+            disabled
     v-on:click="() => {
       previewBeforeUpload()
       console.log($emit.changeModal)
@@ -157,7 +165,10 @@ export default {
       projectAvatar: '',
       projectBanner: '',
 
-      projectLinks: []
+      projectLinks: [],
+      errorMessage: '',
+
+      acceptableInput: ''
     }
   },
   mounted() {
@@ -272,7 +283,6 @@ export default {
         name: this.projectName,
         description: this.projectDescription,
         categoryIds: [this.projectCategory],
-        payed: true,
         avatarFilePath: this.projectAvatar,
         bannerFilePath: this.projectBanner,
         links:  {

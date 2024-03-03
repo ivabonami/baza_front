@@ -1,7 +1,7 @@
 <template>
 
     <div class="project"
-         :class="{ paid: paid }"
+         :class="{ paid: $props.payed }"
          >
 
       <div class="avatar">
@@ -42,10 +42,7 @@
 
             <div class="stars">
               <div class="project-rating">
-<!--                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"  v-if="$props.projectRating">-->
-<!--                  <path-->
-<!--                      d="M8.93325 0.7084L10.1489 4.61808C10.2802 5.04057 10.6571 5.32648 11.0822 5.32648H15.0168C15.9674 5.32648 16.3627 6.59722 15.5936 7.18118L12.4105 9.59732C12.0665 9.85835 11.9227 10.3211 12.054 10.7436L13.2697 14.6533C13.5635 15.5978 12.5287 16.3833 11.7597 15.7996L8.57651 13.3835C8.23253 13.1224 7.7669 13.1224 7.42292 13.3835L4.23977 15.7996C3.47071 16.3833 2.43593 15.5978 2.72972 14.6533L3.94542 10.7436C4.07671 10.3211 3.93294 9.85835 3.58896 9.59732L0.406373 7.18088C-0.362688 6.59722 0.0326187 5.32618 0.983169 5.32618H4.91752C5.3426 5.32618 5.71947 5.04028 5.85077 4.61778L7.06675 0.7084C7.36053 -0.236133 8.63947 -0.236133 8.93325 0.7084Z"/>-->
-<!--                </svg>-->
+
                 <span class="number"
                       v-if="$props.projectRating"
                       :class="{
@@ -57,6 +54,10 @@
                         badRed: $props.projectRating >= 0 && $props.projectRating <= 1,
                           }">
                   {{ $props.projectRating }}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" >
+                <path
+                    d="M8.93325 0.7084L10.1489 4.61808C10.2802 5.04057 10.6571 5.32648 11.0822 5.32648H15.0168C15.9674 5.32648 16.3627 6.59722 15.5936 7.18118L12.4105 9.59732C12.0665 9.85835 11.9227 10.3211 12.054 10.7436L13.2697 14.6533C13.5635 15.5978 12.5287 16.3833 11.7597 15.7996L8.57651 13.3835C8.23253 13.1224 7.7669 13.1224 7.42292 13.3835L4.23977 15.7996C3.47071 16.3833 2.43593 15.5978 2.72972 14.6533L3.94542 10.7436C4.07671 10.3211 3.93294 9.85835 3.58896 9.59732L0.406373 7.18088C-0.362688 6.59722 0.0326187 5.32618 0.983169 5.32618H4.91752C5.3426 5.32618 5.71947 5.04028 5.85077 4.61778L7.06675 0.7084C7.36053 -0.236133 8.63947 -0.236133 8.93325 0.7084Z"/>
+              </svg>
                 </span>
                 <span class="text" v-else title="Проект пока не имеет оценок, но это не значит что он плохой или хороший.">
                   Нет оценок
@@ -84,7 +85,7 @@
                 <path d="M7.29969 10.4151C7.69923 10.4151 8.09915 10.412 8.49869 10.4158C8.83861 10.4193 9.07013 10.645 9.06935 10.9625C9.06819 11.2811 8.83435 11.5084 8.49792 11.5091C7.69226 11.5111 6.88621 11.5111 6.08055 11.5091C5.74721 11.5084 5.50796 11.2765 5.50757 10.9617C5.50757 10.6458 5.74257 10.4185 6.08133 10.4158C6.48745 10.4123 6.89357 10.4151 7.29969 10.4151Z" fill="#2B2B2B"/>
                 <path d="M17.5858 10.4151C17.9532 10.4151 18.321 10.4124 18.6884 10.4159C19.0349 10.4194 19.2583 10.6358 19.2587 10.9602C19.2587 11.2866 19.0341 11.5084 18.6919 11.5092C17.9567 11.5115 17.2219 11.5111 16.4867 11.5092C16.1468 11.5084 15.9172 11.2854 15.916 10.9629C15.9145 10.6416 16.1406 10.4198 16.4832 10.4155C16.8506 10.4112 17.2184 10.4143 17.5858 10.4147V10.4151Z" fill="#2B2B2B"/>
               </svg>
-              <span>{{ $props.projectId }}</span>
+              <span>{{ reviewsLength || 0 }}</span>
             </div>
             <div class="views hoverable" title="Просмотров " v-on:click="$router.push('/project/' + projectId)">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="11" viewBox="0 0 20 11" fill="none">
@@ -159,7 +160,7 @@ import modalWindowBackdrop from "../../components/page components/ModalWindowBac
 export default {
   name: "ProjectCard.vue",
   components: { ProjectsView, modalWindowBackdrop },
-  props: ['projectId', 'avatar', 'paid', 'projectName', 'projectDescription', 'projectCreateDate', 'projectViews', 'projectRating'],
+  props: ['projectId', 'avatar', 'payed', 'projectName', 'projectDescription', 'projectCreateDate', 'projectViews', 'projectRating'],
   setup(props) {
     if (props.paid === true) {
       console.log(props)
@@ -172,10 +173,12 @@ export default {
       favorite: false,
       isAdmin: false,
       showModal: this.$emit.showModal,
+      reviewsLength: 0
     }
   },
   mounted() {
     this.checkIsAdmin()
+    this.getReviews(this.$props.projectId)
   },
   methods: {
     checkIsAdmin () {
@@ -187,7 +190,23 @@ export default {
       } else {
       }
     },
+    getReviews (projectId) {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
 
+      const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+      };
+
+      fetch(`http://62.113.96.171:3000/reviews?projectId=${projectId}`, requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+
+            this.reviewsLength = result.reviews.length
+          })
+          .catch((error) => console.error(error));
+    },
 
     deleteProject(projectId) {
       const myHeaders = new Headers();
@@ -363,6 +382,15 @@ export default {
               font-weight: 700;
               border-radius: 5px;
               font-size: 14px;
+
+              svg {
+                width: 10px;
+                height: 10px;
+                margin-right: 0;
+                path {
+                  fill: #fff;
+                }
+              }
 
               &.goodGreen {
                 background-color: #0fd067;
