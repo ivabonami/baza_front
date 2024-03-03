@@ -12,6 +12,7 @@ import addProject from "../../views/addItems/AddProject.vue";
 import addService from "../../views/addItems/AddService.vue";
 import addCategory from "../../views/addItems/addCategory.vue";
 import allProjectsWithSort from "../../views/pages/AllProjectsWithSort.vue";
+import checkProjects from "../../views/project/checkProjects.vue";
 
 const router = createRouter({
     scrollBehavior() {
@@ -86,6 +87,10 @@ const router = createRouter({
           path: '/category-control',
           component: addCategory
         },
+        {
+            path: '/check-projects',
+            component: checkProjects
+        }
 
     ]
 })

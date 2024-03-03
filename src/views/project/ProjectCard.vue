@@ -99,7 +99,11 @@
             </div>
           </div>
           <div class="delete" v-if="isAdmin === true">
-            <button class="btn btn-delete" v-on:click="showModal = true">
+            <button class="btn btn-approve" v-on:click="showModalApprove = true" v-if="$props.reviewed === false">
+              <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 253.38 253.44"><path d="M0,126.38C-.26,56.92,56.58,1.28,123.91,.02c72.59-1.36,129.81,57.57,129.47,126.88-.35,70.26-56.52,126.6-126.74,126.54C56.09,253.38-.03,197.07,0,126.38Zm126.77,98.16c53.91-.53,96.72-43.12,97.54-96.03,.87-55.79-43.41-98.67-96.02-99.43-55.58-.8-98.84,43.57-99.33,96.68-.5,54.54,43.38,98.59,97.81,98.79Z"/><path d="M68.69,106.26c4.18-.48,7.52,1.96,10.36,5.57,6.17,7.85,12.55,15.53,18.56,23.5,2.58,3.42,4.47,3.9,7.97,1.02,20.29-16.72,40.66-33.34,61.29-49.64,3.14-2.48,7.72-4.19,11.7-4.32,4.75-.16,8.81,2.75,10.45,7.82,1.78,5.5,1.46,10.74-3.21,14.62-11.9,9.89-23.96,19.58-36,29.3-13.59,10.98-27.24,21.89-40.83,32.87-8.04,6.5-15.01,5.95-21.52-2.07-9.86-12.13-19.64-24.34-29.35-36.59-2.97-3.74-5.01-7.83-3.25-12.92,2.23-6.43,6.13-9.24,13.84-9.15Z"/></svg>
+              Одобрить
+            </button>
+            <button class="btn btn-delete" v-on:click="showModalDelete = true">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="19" viewBox="0 0 16 19" fill="none">
                 <path d="M14.3066 10.5404C14.3066 11.9891 14.3153 13.4375 14.3039 14.8862C14.2936 16.1901 13.6839 17.1536 12.5161 17.7756C12.0391 18.0298 11.517 18.1295 10.9784 18.1303C8.71443 18.1341 6.45046 18.1469 4.18689 18.1264C2.73366 18.1133 1.69388 17.4252 1.0885 16.1337C0.912373 15.7578 0.853533 15.3464 0.853928 14.9299C0.854717 11.9041 0.859851 8.878 0.849189 5.85224C0.847214 5.26656 1.28595 4.90264 1.80919 4.96677C2.1575 5.00926 2.48526 5.32683 2.50777 5.6726C2.5133 5.75604 2.51014 5.83988 2.51014 5.92371C2.51014 8.87877 2.51922 11.8338 2.50501 14.7889C2.50027 15.7489 3.24584 16.5096 4.25087 16.5003C6.46823 16.4795 8.68639 16.4787 10.9042 16.5003C11.9171 16.5104 12.6615 15.7458 12.6563 14.7746C12.6397 11.7875 12.65 8.79996 12.6504 5.81284C12.6504 5.25729 13.0382 4.91461 13.6021 4.96831C13.9248 4.99883 14.2265 5.26424 14.281 5.57833C14.3027 5.70428 14.3054 5.83447 14.3054 5.96273C14.307 7.48875 14.3066 9.01437 14.3062 10.5404H14.3066Z" fill="#494A4E"/>
                 <path d="M7.58574 4.10691C5.35494 4.10691 3.12415 4.10691 0.893745 4.10691C0.435265 4.10691 0.177395 3.92263 0.0316763 3.49418C-0.102195 3.10128 0.205828 2.58746 0.625212 2.51483C0.747237 2.49358 0.873605 2.48817 0.998394 2.48779C1.98525 2.48586 2.9725 2.48161 3.95936 2.49049C4.15918 2.49242 4.22276 2.43254 4.21723 2.23744C4.20459 1.78698 4.21052 1.33613 4.21447 0.885667C4.21921 0.358323 4.55764 0.00830615 5.09747 0.00560182C6.74894 -0.00212483 8.40081 -0.00135216 10.0523 0.00482915C10.6032 0.00676082 10.9424 0.35446 10.9471 0.89378C10.9507 1.34424 10.9554 1.79509 10.9448 2.24556C10.9404 2.42945 10.9989 2.49126 11.1908 2.4901C12.2041 2.48238 13.2174 2.48701 14.2307 2.48624C14.4732 2.48624 14.7003 2.5214 14.8855 2.69641C15.1627 2.95834 15.2306 3.26779 15.0821 3.62979C14.9621 3.92147 14.671 4.10613 14.3176 4.10652C12.0738 4.10729 9.82996 4.10691 7.58613 4.10691H7.58574ZM7.59995 1.64017C7.09329 1.64017 6.58624 1.64365 6.07958 1.63786C5.94334 1.63631 5.88766 1.6819 5.89319 1.81596C5.8999 1.97667 5.89635 2.13777 5.89438 2.29887C5.8928 2.42366 5.93979 2.48817 6.07958 2.48779C7.07987 2.48508 8.08055 2.48508 9.08083 2.48779C9.22063 2.48817 9.26762 2.42366 9.26604 2.29887C9.26406 2.14434 9.25893 1.98942 9.26801 1.83527C9.2771 1.68306 9.2147 1.63477 9.06109 1.63708C8.57417 1.64481 8.08687 1.63979 7.59995 1.63979V1.64017Z" fill="#494A4E"/>
@@ -108,6 +112,8 @@
               </svg>
               Удалить
             </button>
+
+
           </div>
 
 
@@ -129,8 +135,8 @@
     </div>
 
   <modal-window-backdrop
-      v-if="showModal === true"
-      v-on:changeModal="(emitShowModal) => {this.showModal = emitShowModal}"
+      v-if="showModalDelete === true"
+      v-on:changeModal="(emitShowModal) => {this.showModalDelete = emitShowModal}"
       v-bind:icon-type="'warning'"
       v-bind:heading="'Удалить проект: ' + $props.projectName"
       v-bind:description="'Это действие безвозвратно удалит данную категорию, подтвердить?'"
@@ -143,7 +149,23 @@
 
 
                 }
-                showModal === false
+                showModalDelete === false
+              }"
+
+  >
+
+  </modal-window-backdrop>
+
+  <modal-window-backdrop
+      v-if="showModalApprove === true"
+      v-on:changeModal="(emitShowModal) => {this.showModalApprove = emitShowModal}"
+      v-bind:icon-type="'ok'"
+      v-bind:heading="'Вы собираетесь опубликовать проект: ' + $props.projectName"
+      v-bind:description="'Вы действительно хотите это сделать? Проект появится в результатах выдачи.'"
+      v-bind:descriptionType="'textApprove'"
+      v-bind:confirmAction="true"
+      v-on:confirmAction="(emitConfirmAction) => {
+                showModalApprove === false
               }"
 
   >
@@ -160,7 +182,7 @@ import modalWindowBackdrop from "../../components/page components/ModalWindowBac
 export default {
   name: "ProjectCard.vue",
   components: { ProjectsView, modalWindowBackdrop },
-  props: ['projectId', 'avatar', 'payed', 'projectName', 'projectDescription', 'projectCreateDate', 'projectViews', 'projectRating'],
+  props: ['projectId', 'avatar', 'payed', 'projectName', 'projectDescription', 'projectCreateDate', 'projectViews', 'projectRating', 'reviewed'],
   setup(props) {
     if (props.paid === true) {
       console.log(props)
@@ -172,7 +194,8 @@ export default {
     return {
       favorite: false,
       isAdmin: false,
-      showModal: this.$emit.showModal,
+      showModalDelete: this.$emit.showModalDelete,
+      showModalApprove: this.$emit.showModalApprove,
       reviewsLength: 0
     }
   },
@@ -227,6 +250,8 @@ export default {
 
 <style scoped lang="scss">
 .delete {
+  display: flex;
+
   .btn {
     color: gray;
     background-color: transparent;
@@ -242,6 +267,24 @@ export default {
       svg {
         path, defs {
           fill: #C8716B;
+        }
+      }
+    }
+    &.btn-approve {
+      svg {
+        width: 20px;
+        height: 20px;
+        path, defs {
+          transition: .3s ease;
+          fill: gray;
+        }
+      }
+      &:hover {
+        color: #9ec86b;
+        svg {
+          path, defs {
+            fill: #9ec86b;
+          }
         }
       }
     }

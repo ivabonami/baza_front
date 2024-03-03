@@ -53,7 +53,7 @@
 
     <div class="modal-body">
       <div class="text"
-           v-if="$props.descriptionType === 'text'">
+           v-if="$props.descriptionType === 'text' || $props.descriptionType === 'textApprove'">
         {{ $props.description }}
       </div>
 
@@ -62,14 +62,16 @@
 
         <div class="buttons">
             <button class="btn confirm"
+                    :class="{ approve: $props.descriptionType === 'textApprove'}"
                     title="Действие безвозвратно!!!!"
                     @click="() => {
                     $emit('confirmAction', true)
                     $emit('changeModal', false)
 
                   }">
+              <span v-if="$props.descriptionType === 'textApprove'">Опубликовать</span>
+              <span v-else>Удалить</span>
 
-              Удалить
             </button>
 
           <button class="btn cancel"
@@ -77,7 +79,8 @@
                     $emit('confirmAction', false)
                     $emit('changeModal', false)
                   }">
-            Не удалять
+            <span v-if="$props.descriptionType === 'textApprove'">Отмена</span>
+            <span v-else>Не удалять</span>
           </button>
         </div>
       </div>
@@ -104,7 +107,7 @@ export default {
   name: "ModalWindowBackdrop.vue",
   components: {signInView},
 
-  props: ['iconType', 'heading', 'descriptionType', "description", "show", 'confirmAction'],
+  props: ['iconType', 'heading', 'descriptionType', "description", "show", 'confirmAction', 'textApprove'],
 
   data (props) {
     return {
@@ -135,14 +138,20 @@ export default {
       background-color: #C8716B;
       color: #fff;
 
+      &.approve {
+        background-color: #85c86b;
+        color: #fff;
+      }
+
       &:hover {
-        background-color: #c93b32;
+        background-color: #4ec932;
       }
     }
     .cancel {
 
     }
   }
+
 }
 .backdrop {
   position: fixed;
@@ -154,6 +163,7 @@ export default {
   width: 100%;
   height: 100%;
   z-index: 20;
+  overflow: hidden;
 }
 .modal {
   position: fixed;
@@ -183,10 +193,9 @@ export default {
     color: #000;
 
     font-family: Montserrat;
-    font-size: 25px;
+    font-size: 20px;
     font-style: normal;
-    font-weight: 900;
-    line-height: normal;
+    font-weight: 800;
     margin-top: 20px;
     line-height: 1;
   }
