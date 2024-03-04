@@ -123,14 +123,27 @@
         }"
                  v-if="this.isAdmin === true"
                  :class="{ active: this.adminDropDownShow === true }">
-              <span></span>
-              <span></span>
-              <span></span>
+              <span class="burger"></span>
+              <span class="burger"></span>
+              <span class="burger"></span>
 
               <div class="admin-menu" v-if="this.adminDropDownShow === true">
                 <button class="btn btn-approve" v-on:click="showModalApprove = true" v-if="$props.reviewed === false">
                   <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 253.38 253.44"><path d="M0,126.38C-.26,56.92,56.58,1.28,123.91,.02c72.59-1.36,129.81,57.57,129.47,126.88-.35,70.26-56.52,126.6-126.74,126.54C56.09,253.38-.03,197.07,0,126.38Zm126.77,98.16c53.91-.53,96.72-43.12,97.54-96.03,.87-55.79-43.41-98.67-96.02-99.43-55.58-.8-98.84,43.57-99.33,96.68-.5,54.54,43.38,98.59,97.81,98.79Z"/><path d="M68.69,106.26c4.18-.48,7.52,1.96,10.36,5.57,6.17,7.85,12.55,15.53,18.56,23.5,2.58,3.42,4.47,3.9,7.97,1.02,20.29-16.72,40.66-33.34,61.29-49.64,3.14-2.48,7.72-4.19,11.7-4.32,4.75-.16,8.81,2.75,10.45,7.82,1.78,5.5,1.46,10.74-3.21,14.62-11.9,9.89-23.96,19.58-36,29.3-13.59,10.98-27.24,21.89-40.83,32.87-8.04,6.5-15.01,5.95-21.52-2.07-9.86-12.13-19.64-24.34-29.35-36.59-2.97-3.74-5.01-7.83-3.25-12.92,2.23-6.43,6.13-9.24,13.84-9.15Z"/></svg>
                   Одобрить
+                </button>
+                <button class="btn btn-default" v-on:click="() => {
+                  if ($props.payed === true) {
+                    updateProjectPayedStatus($props.projectId, false)
+                  } else {
+                    updateProjectPayedStatus($props.projectId, true)
+                  }
+                }">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="18" viewBox="0 0 11 18" fill="none">
+                    <path d="M5.11179 17.16V0.23999H6.26379V17.16H5.11179ZM5.56179 15.144C4.60179 15.144 3.68379 15 2.80779 14.712C1.93179 14.412 1.24179 14.028 0.737793 13.56L1.40379 12.156C1.88379 12.576 2.49579 12.924 3.23979 13.2C3.98379 13.476 4.75779 13.614 5.56179 13.614C6.29379 13.614 6.88779 13.53 7.34379 13.362C7.79979 13.194 8.13579 12.966 8.35179 12.678C8.56779 12.378 8.67579 12.042 8.67579 11.67C8.67579 11.238 8.53179 10.89 8.24379 10.626C7.96779 10.362 7.60179 10.152 7.14579 9.99599C6.70179 9.82799 6.20979 9.68399 5.66979 9.56399C5.12979 9.44399 4.58379 9.30599 4.03179 9.14999C3.49179 8.98199 2.99379 8.77199 2.53779 8.51999C2.09379 8.26799 1.73379 7.93199 1.45779 7.51199C1.18179 7.07999 1.04379 6.52799 1.04379 5.85599C1.04379 5.20799 1.21179 4.61399 1.54779 4.07399C1.89579 3.52199 2.42379 3.08399 3.13179 2.75999C3.85179 2.42399 4.76379 2.25599 5.86779 2.25599C6.59979 2.25599 7.32579 2.35199 8.04579 2.54399C8.76579 2.73599 9.38979 3.01199 9.91779 3.37199L9.32379 4.81199C8.78379 4.45199 8.21379 4.19399 7.61379 4.03799C7.01379 3.86999 6.43179 3.78599 5.86779 3.78599C5.15979 3.78599 4.57779 3.87599 4.12179 4.05599C3.66579 4.23599 3.32979 4.47599 3.11379 4.77599C2.90979 5.07599 2.80779 5.41199 2.80779 5.78399C2.80779 6.22799 2.94579 6.58199 3.22179 6.84599C3.50979 7.10999 3.87579 7.31999 4.31979 7.47599C4.77579 7.63199 5.27379 7.77599 5.81379 7.90799C6.35379 8.02799 6.89379 8.16599 7.43379 8.32199C7.98579 8.47799 8.48379 8.68199 8.92779 8.93399C9.38379 9.18599 9.74979 9.52199 10.0258 9.94199C10.3018 10.362 10.4398 10.902 10.4398 11.562C10.4398 12.198 10.2658 12.792 9.91779 13.344C9.56979 13.884 9.02979 14.322 8.29779 14.658C7.57779 14.982 6.66579 15.144 5.56179 15.144Z" fill="#6C7AFF"/>
+                  </svg>
+                  <span class="text" v-if="$props.payed === false">Сделать платным</span>
+                  <span class="text" v-else>Сделать бесплатным</span>
                 </button>
                 <button class="btn btn-delete" v-on:click="showModalDelete = true">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="19" viewBox="0 0 16 19" fill="none">
@@ -286,6 +299,26 @@ export default {
             this.$router.go()
           })
           .catch((error) => {console.error(error)});
+    },
+    updateProjectPayedStatus (projectId, status) {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+      myHeaders.append("Content-Type", "application/json");
+
+      fetch(`http://62.113.96.171:3000/projects/${projectId}`, {
+        method: "PUT",
+        headers: myHeaders,
+        body: JSON.stringify({
+          isReviewed: true,
+          payed: status
+        })
+      })
+          .then((response) => response.json())
+          .then((result) => {
+            this.projects = result.projects
+            this.$router.go()
+          })
+          .catch((error) => {console.error(error)});
     }
   }
 }
@@ -296,7 +329,8 @@ export default {
   cursor: pointer;
   position: relative;
 
-  span {
+
+  span.burger {
     width: 15px;
     height: 4px;
     border-radius: 10px;
@@ -312,26 +346,29 @@ export default {
       opacity: 1;
     }
   }
+  span.text {
+    opacity: 1!important;
+  }
 
   &:hover {
-    span {
+    span.burger {
       color: #6C7AFF;
     }
-    span:nth-child(2) {
+    span.burger:nth-child(2) {
       margin-left: 0px;
     }
   }
 
   &.active {
-    span:nth-child(1) {
+    span.burger:nth-child(1) {
       transform: rotate(50grad);
       top: 6px;
     }
-    span:nth-child(2) {
+    span.burger:nth-child(2) {
       opacity: 0!important;
       transform: rotate(400grad);
     }
-    span:nth-child(3) {
+    span.burger:nth-child(3) {
       transform: rotate(-50grad);
       top: -6px;
     }
@@ -339,6 +376,7 @@ export default {
 }
 
 .admin-menu {
+  width: 240px;
   z-index: 20;
   position: absolute;
   background-color: #fff;
@@ -346,7 +384,7 @@ export default {
   border-radius: 10px;
   padding: 10px 0;
   right: 0;
-  bottom: -65px;
+  top: 20px;
   transition: .3s ease;
 }
 .admin-menu {
@@ -387,6 +425,25 @@ export default {
         svg {
           path, defs {
             fill: #9ec86b;
+          }
+        }
+      }
+    }
+
+    &.btn-default {
+      svg {
+        width: 20px;
+        height: 20px;
+        path, defs {
+          transition: .3s ease;
+          fill: gray;
+        }
+      }
+      &:hover {
+        color: #6C7AFF;
+        svg {
+          path, defs {
+            fill: #6C7AFF;
           }
         }
       }
@@ -631,16 +688,19 @@ export default {
         align-items: center;
 
       }
-
-      span {
-        color: var(--secondary, #2B2B2B);
-        font-family: Montserrat;
-        font-size: 14px;
-        font-style: normal;
-        opacity: .5;
-        font-weight: 400;
-        line-height: 25px; /* 138.889% */
+      .stats, .testimonials {
+        span {
+          color: var(--secondary, #2B2B2B);
+          font-family: Montserrat;
+          font-size: 14px;
+          font-style: normal;
+          opacity: .5;
+          font-weight: 400;
+          line-height: 25px; /* 138.889% */
+        }
       }
+
+
     }
 
   }
