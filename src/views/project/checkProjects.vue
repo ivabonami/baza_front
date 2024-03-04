@@ -48,7 +48,9 @@ export default {
             this.projects = result.projects
           })
           .catch((error) => {console.error(error)});
-    }
+    },
+
+
   }
 }
 </script>
