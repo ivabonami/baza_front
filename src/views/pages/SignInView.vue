@@ -42,7 +42,7 @@
            v-model="inputRepeatPassword"
            class="input"
            placeholder="Повторите пароль">
-    <input type="submit" value="Войти" class="btn btn-filled"
+    <input type="submit" value="Зарегистрироваться" class="btn btn-filled"
            v-on:click="signUp()">
 
     <button class="switch"

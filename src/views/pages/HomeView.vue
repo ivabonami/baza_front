@@ -1,17 +1,8 @@
 <template>
-  <div class="wrapper">
-
-    <recommended></recommended>
-  </div>
-
-
-
-
-
   <div class="projects-wrapper">
-    <projects-sort-filter>
+    <all-projects-with-sort>
 
-    </projects-sort-filter>
+    </all-projects-with-sort>
     <project-card v-for="project of projects"
                   v-bind:projectId="project.id"
                   v-bind:projectName="project.name"
@@ -34,12 +25,13 @@
 <script>
 import recommended from "../../components/page components/Recommended.vue";
 import projectCard from "../project/ProjectCard.vue";
-import ProjectsSortFilter from "../../components/page components/ProjectsSortFilter.vue";
 import ModalWindowBackdrop from "../../components/page components/ModalWindowBackdrop.vue";
+import allProjectsWithSort from "./AllProjectsWithSort.vue";
+
 
 export default {
   name: "HomeView.vue",
-  components: { recommended, ProjectsSortFilter, ModalWindowBackdrop, projectCard },
+  components: { recommended, allProjectsWithSort, ModalWindowBackdrop, projectCard },
   data() {
     return {
       projects: {},

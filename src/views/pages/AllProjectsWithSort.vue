@@ -84,9 +84,6 @@
   </div>
 
   <div class="projects-wrapper">
-    <projects-sort-filter>
-
-    </projects-sort-filter>
 
     <project-card v-for="project of projects"
                   v-bind:projectId="project.id"
@@ -97,6 +94,8 @@
                   v-bind:payed="project.payed"
                   v-bind:projectRating="project.ratingAvg"
                   v-bind:avatar="project.avatarFilePath"
+                  v-bind:projectCategory="project.categories[0].name"
+
     >
 
 
@@ -112,12 +111,11 @@
 
 <script>
 import recommended from "../../components/page components/Recommended.vue";
-import projectsSortFilter from "../../components/page components/ProjectsSortFilter.vue";
 import projectCard from "../project/ProjectCard.vue";
 
 export default {
   name: "AllProjectsWithSort.vue",
-  components: {recommended, projectsSortFilter, projectCard},
+  components: {recommended, projectCard},
 
   data () {
     return {
@@ -145,8 +143,15 @@ export default {
       })
           .then((response) => response.json())
           .then((result) => {
-            this.category = parseInt(this.$route.path.replace('/projects-list/', ''))
-            this.projects = result.projects.filter( project => project.categories[0].id === this.category);
+
+            if (this.$route.path === '/') {
+              this.projects = result.projects
+              console.log(result.projects)
+            } else {
+              this.category = parseInt(this.$route.path.replace('/projects-list/', ''))
+              this.projects = result.projects.filter( project => project.categories[0].id === this.category);
+              console.log(321)
+            }
 
           })
           .catch((error) => {console.error(error)});
@@ -160,6 +165,7 @@ export default {
   display: flex;
   gap: 10px;
   margin-top: 30px;
+  margin-bottom: 20px;
 }
 .arrow {
   transition: .3s ease;

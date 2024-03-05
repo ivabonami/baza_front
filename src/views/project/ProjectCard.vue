@@ -4,6 +4,7 @@
          :class="{ paid: $props.payed }"
          >
 
+
       <div class="avatar">
         <img :src="'http://62.113.96.171:3000/' + $props.avatar"
              alt="" class="hoverable"
@@ -217,7 +218,7 @@ import modalWindowBackdrop from "../../components/page components/ModalWindowBac
 export default {
   name: "ProjectCard.vue",
   components: { ProjectsView, modalWindowBackdrop },
-  props: ['projectId', 'avatar', 'payed', 'projectName', 'projectDescription', 'projectCreateDate', 'projectViews', 'projectRating', 'reviewed'],
+  props: ['projectId', 'avatar', 'payed', 'projectName', 'projectDescription', 'projectCreateDate', 'projectViews', 'projectRating', 'reviewed', 'projectCategory'],
   setup(props) {
     if (props.paid === true) {
       console.log(props)
@@ -238,6 +239,7 @@ export default {
   mounted() {
     this.checkIsAdmin()
     this.getReviews(this.$props.projectId)
+    console.log(this.$props.payed)
   },
   methods: {
     checkIsAdmin () {

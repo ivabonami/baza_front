@@ -1,7 +1,11 @@
 <template>
 <h1>Добавление проекта</h1>
 
-  <div class="add-project form-wrapper">
+  <div v-if="userLoggined === false" class="not-registered">
+    Вы не зарегистрированы.
+  </div>
+
+  <div class="add-project form-wrapper" v-else>
     <div class="left">
       <div class="input-wrapper">
         <input
@@ -156,7 +160,7 @@
     </div>
 
     <button class="btn-filled btn disabled"
-            disabled
+
     v-on:click="() => {
       previewBeforeUpload()
       console.log($emit.changeModal)
@@ -209,11 +213,15 @@ export default {
       projectExchangeRate: '',
       projectReserve: '',
 
-      acceptableInput: ''
+      acceptableInput: '',
+
+      userLoggined: false,
     }
   },
   mounted() {
     this.getCategoryList()
+
+    localStorage.getItem('token') ? this.userLoggined = true : this.userLoggined = false
   },
 
   methods: {
@@ -329,7 +337,8 @@ export default {
         links:  {
           name: this.projectLinks.name,
           link: this.projectLinks.link
-        }
+        },
+        payed: false
 
 
       };
@@ -367,6 +376,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.not-registered {
+  margin-top: 10px;
+}
 .add {
   border-radius: 10px;
   border: 1px solid #DFDFDF;
