@@ -22,7 +22,8 @@
 
       <div class="input-wrapper">
         <select v-model="projectCategory">
-          <option v-for="category of categories" :value="category.id" selected>{{ category.name }}</option>
+          <option v-for="category of categories" :value="category.id" selected
+          >{{ category.name }}</option>
         </select>
         <span class="help">
           Выберите категорию, к которой относится проект.
@@ -62,6 +63,43 @@
       <span class="help">
         Предоставьте подробное описание проекта, включая его цель, описание продаваемых товаров, что бы пользователь точно понимал что он покупает.
       </span>
+    </div>
+    <div class="advanced">
+      <div class="input-wrapper">
+        <input
+            type="text"
+            placeholder="Минимальный обмен"
+            v-model="projectExchangeRate"
+            v-on:input="(e) => {
+              projectName.length <= 5 ? e.target.classList.add('bad') : e.target.classList.add('ok')
+              projectName.length > 5 ? e.target.classList.remove('bad') : e.target.classList.remove('ok')
+            }"
+
+            minlength="2" maxlength="30"
+            required v-if="this.projectCategory === 95">
+        <span class="help" v-if="this.projectCategory === 95">
+          Введите размер минимальной суммы обмена
+        </span>
+      </div>
+
+      <div class="input-wrapper">
+        <input
+            type="text"
+            placeholder="Резерв"
+            v-model="projectReserve"
+            v-on:input="(e) => {
+              projectName.length <= 5 ? e.target.classList.add('bad') : e.target.classList.add('ok')
+              projectName.length > 5 ? e.target.classList.remove('bad') : e.target.classList.remove('ok')
+            }"
+
+            minlength="2" maxlength="30"
+            required v-if="projectCategory === 95">
+        <span class="help" v-if="this.projectCategory === 95">
+          Введите резерв валюты.
+        </span>
+      </div>
+
+
     </div>
 
     <div class="bottom">
@@ -167,6 +205,9 @@ export default {
 
       projectLinks: [],
       errorMessage: '',
+
+      projectExchangeRate: '',
+      projectReserve: '',
 
       acceptableInput: ''
     }

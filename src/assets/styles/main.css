@@ -160,6 +160,9 @@ body {
 .projects-wrapper {
   margin-top: 0px;
 }
+.projects-wrapper .advanced {
+  display: flex;
+}
 
 .header .d-flex {
   display: flex;
@@ -528,6 +531,15 @@ form.add-project .helper {
 
 .form-wrapper {
   margin-top: 20px;
+}
+.form-wrapper .advanced {
+  display: flex;
+  gap: 30px;
+  margin-top: 10px;
+}
+.form-wrapper .advanced input {
+  width: 100%;
+  box-sizing: border-box;
 }
 .form-wrapper .input-wrapper {
   margin-bottom: 10px;

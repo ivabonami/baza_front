@@ -92,6 +92,11 @@ body {
 .projects-wrapper {
   margin-top: 0px;
 
+  .advanced {
+    display: flex;
+
+  }
+
 }
 footer {
 
@@ -503,6 +508,18 @@ form.add-project {
 
 .form-wrapper {
   margin-top: 20px;
+
+  .advanced {
+    display: flex;
+    gap: 30px;
+    margin-top: 10px;
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+
   .input-wrapper {
     margin-bottom: 10px;
 
