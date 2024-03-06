@@ -14,23 +14,25 @@
       <div class="project-header">
         <div class="left">
           <div class="avatar">
-              <img :src="'http://62.113.96.171:3000/' + project.avatarFilePath"
-                   alt=""
-                   v-if="project.avatarFilePath !== ''">
+            <img :src="'http://62.113.96.171:3000/' + project.avatarFilePath"
+                 alt=""
+                 v-if="project.avatarFilePath !== ''">
 
-              <img src="/src/assets/images/avatar.webp"
-                   alt=""
-                   v-else>
+            <img src="/src/assets/images/avatar.webp"
+                 alt=""
+                 v-else>
             <div class="favorite"
                  v-on:click="!favorite ? favorite = true : favorite = false"
                  :class="{active: favorite}">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="15" viewBox="0 0 18 15" fill="none">
-                <path d="M17.8439 5.89384C17.9178 5.6196 17.9491 5.3353 18 5.05562V4.4311C17.9448 4.12916 17.9126 3.82152 17.8301 3.52636C17.4873 2.3023 16.7299 1.36471 15.5924 0.698098C14.8063 0.23731 13.9422 0.0170985 13.0261 0.0157409C11.9435 0.0141117 10.9418 0.298405 10.0748 0.925098C9.68808 1.20423 9.33757 1.52762 8.93818 1.85808C8.82115 1.73888 8.68831 1.59768 8.54885 1.46246C7.82367 0.758649 6.95128 0.297318 5.93425 0.10073C4.89134 -0.101017 3.87115 -0.00163713 2.9007 0.416249C1.5415 1.00113 0.635463 1.97837 0.166198 3.31566C0.097476 3.51143 0.0546326 3.71535 0 3.91547V5.5175C0.00690096 5.52945 0.0169649 5.54058 0.0195527 5.55334C0.221406 6.55665 0.714537 7.41088 1.48284 8.12935C2.39176 8.97979 3.29319 9.83728 4.19808 10.6918C5.64843 12.0614 7.0985 13.4313 8.54914 14.8006C8.83093 15.0667 9.10409 15.0659 9.38502 14.8017C11.7449 12.5819 14.1038 10.3613 16.4651 8.1432C17.14 7.50972 17.6095 6.76437 17.8439 5.89384Z" fill="white"/>
+                <path
+                    d="M17.8439 5.89384C17.9178 5.6196 17.9491 5.3353 18 5.05562V4.4311C17.9448 4.12916 17.9126 3.82152 17.8301 3.52636C17.4873 2.3023 16.7299 1.36471 15.5924 0.698098C14.8063 0.23731 13.9422 0.0170985 13.0261 0.0157409C11.9435 0.0141117 10.9418 0.298405 10.0748 0.925098C9.68808 1.20423 9.33757 1.52762 8.93818 1.85808C8.82115 1.73888 8.68831 1.59768 8.54885 1.46246C7.82367 0.758649 6.95128 0.297318 5.93425 0.10073C4.89134 -0.101017 3.87115 -0.00163713 2.9007 0.416249C1.5415 1.00113 0.635463 1.97837 0.166198 3.31566C0.097476 3.51143 0.0546326 3.71535 0 3.91547V5.5175C0.00690096 5.52945 0.0169649 5.54058 0.0195527 5.55334C0.221406 6.55665 0.714537 7.41088 1.48284 8.12935C2.39176 8.97979 3.29319 9.83728 4.19808 10.6918C5.64843 12.0614 7.0985 13.4313 8.54914 14.8006C8.83093 15.0667 9.10409 15.0659 9.38502 14.8017C11.7449 12.5819 14.1038 10.3613 16.4651 8.1432C17.14 7.50972 17.6095 6.76437 17.8439 5.89384Z"
+                    fill="white"/>
               </svg>
             </div>
           </div>
           <div class="name">
-             {{ project.name }}
+            {{ project.name }}
 
             <img src="./../../assets/images/verified.webp"
                  v-if="project.verified === true"
@@ -54,7 +56,7 @@
                         badRed: project.ratingAvg >= 0 && project.ratingAvg <= 1,
                           }">
               {{ project.ratingAvg }}
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path
                     d="M8.93325 0.7084L10.1489 4.61808C10.2802 5.04057 10.6571 5.32648 11.0822 5.32648H15.0168C15.9674 5.32648 16.3627 6.59722 15.5936 7.18118L12.4105 9.59732C12.0665 9.85835 11.9227 10.3211 12.054 10.7436L13.2697 14.6533C13.5635 15.5978 12.5287 16.3833 11.7597 15.7996L8.57651 13.3835C8.23253 13.1224 7.7669 13.1224 7.42292 13.3835L4.23977 15.7996C3.47071 16.3833 2.43593 15.5978 2.72972 14.6533L3.94542 10.7436C4.07671 10.3211 3.93294 9.85835 3.58896 9.59732L0.406373 7.18088C-0.362688 6.59722 0.0326187 5.32618 0.983169 5.32618H4.91752C5.3426 5.32618 5.71947 5.04028 5.85077 4.61778L7.06675 0.7084C7.36053 -0.236133 8.63947 -0.236133 8.93325 0.7084Z"/>
               </svg>
@@ -89,8 +91,8 @@
             <div class="flex"
                  v-if="this.tab === 'description'">
               <project-description
-              v-bind:projectDescription="project.description"
-              v-bind:projectLinks="{link: project.links }">
+                  v-bind:projectDescription="project.description"
+                  v-bind:projectLinks="{link: project.links }">
 
               </project-description>
 
@@ -106,12 +108,73 @@
               >
                 {{ item.name }}
               </services-card>
-              <div class="addService">
-                <button
-                    v-on:click="switchTabs('addService')"
-                    class="btn btn-filled">
-                  Добавить услугу
-                </button>
+
+              <button
+                  v-if="this.tab ==='services'"
+                  v-on:click="switchTabs('addService')"
+                  class="btn btn-filled">
+                Добавить услугу
+              </button>
+
+              <div class="addService" v-if="this.tab === 'addService'">
+
+                <div class="add-project form-wrapper">
+                  <div class="left">
+                    <div class="input-wrapper">
+                      <input
+                          type="text"
+                          placeholder="Название проекта"
+                          v-model="productName"
+                          v-on:input="(e) => {
+                            productName.length <= 5 ? e.target.classList.add('bad') : e.target.classList.add('ok')
+                            productName.length > 5 ? e.target.classList.remove('bad') : e.target.classList.remove('ok')
+                          }"
+
+                          minlength="5" maxlength="30"
+                          required>
+                      <span class="help">
+                        Введите название проекта, которое коротко и ясно отражает его суть. От 5 до 30 символов.
+                      </span>
+                    </div>
+
+
+                    <div class="input-wrapper">
+                      <div class="fake-input">
+                        <span class="name">Фото</span>
+                        <input type="file"
+                               v-on:change="uploadPhoto($event)"
+                               accept="image/*">
+                      </div>
+                      <span class="help">
+                        Загрузите аватар проекта, размеры 245х180px, форматы: jpeg, jpg, gif. webp
+                      </span>
+                    </div>
+
+
+                  </div>
+                  <div class="right">
+                    <textarea placeholder="описание проекта *" required v-model="projectDescription"></textarea>
+                    <span class="help">
+                      Предоставьте подробное описание услуги, включая ее цель, описание, что бы пользователь точно понимал что он покупает.
+                    </span>
+                  </div>
+
+
+
+
+                  <button class="btn-filled btn disabled"
+
+                          v-on:click="() => {
+                            previewBeforeUpload()
+                            console.log($emit.changeModal)
+                            this.showModal = true
+                          }">
+                    Добавить проект
+                  </button>
+                </div>
+
+
+
               </div>
 
             </div>
@@ -125,8 +188,10 @@
           <div class="tab-rating">
             <div class="onsite">
               На сайте с
-              {{ new Date(project.createdAt)
-                .toLocaleString('ru-ru', { month: 'long', year: 'numeric' }).replace(/\ь/, 'я').replace(/\й/, 'я') }}
+              {{
+                new Date(project.createdAt)
+                    .toLocaleString('ru-ru', {month: 'long', year: 'numeric'}).replace(/\ь/, 'я').replace(/\й/, 'я')
+              }}
             </div>
 
             <div class="project-detailed-rating box-shadow">
@@ -352,7 +417,10 @@ export default {
       services: ref(null),
       tab: 'services',
       favorite: false,
-      project: {}
+      project: {},
+
+      productName: '',
+      productPhoto: '',
     }
   },
   props: ['selectedId', 'highlight', 'tab'],
@@ -361,7 +429,7 @@ export default {
   },
 
   methods: {
-    getProjectFullInfo () {
+    getProjectFullInfo() {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       const projectId = window.location.pathname.replace('/project/', '');
@@ -388,7 +456,36 @@ export default {
         document.querySelector('.recommended').classList.remove('active')
         document.querySelector('.fresh').classList.add('active')
 
+      } else if (tab === 'addService') {
+        this.tab = 'addService'
+        document.querySelector('.recommended').classList.remove('active')
+        document.querySelector('.fresh').classList.add('active')
+
       }
+    },
+
+    uploadPhoto(e){
+      this.projectBanner = e.target;
+      const image = e.target.files[0]
+
+      console.log(image)
+      const myHeaders = new Headers();
+      // myHeaders.append("Content-Type", "image/webp");
+      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+
+      const formData = new FormData();
+      formData.append("image-upload", image );
+
+      console.log(formData)
+      fetch("http://62.113.96.171:3000/image-upload", {
+        method: "POST",
+        headers: myHeaders,
+        body: formData,
+        redirect: "follow"
+      })
+          .then((response) => response.json())
+          .then((result) => this.productPhoto = result.filePath)
+          .catch((error) => console.error(error));
     },
   },
   created() {
@@ -497,6 +594,7 @@ export default {
         font-weight: 200;
         line-height: normal;
         color: #3e4b5b;
+
         .project-rating {
           padding: 5px 15px;
           color: #fff;
@@ -508,6 +606,7 @@ export default {
             width: 10px;
             height: 10px;
             margin-right: 0;
+
             path {
               fill: #fff;
             }
@@ -516,21 +615,27 @@ export default {
           &.goodGreen {
             background-color: #0fd067;
           }
+
           &.green {
             background-color: #56d790;
           }
+
           &.yellow {
             background-color: yellow;
           }
+
           &.orange {
             background-color: orange;
           }
+
           &.red {
             background-color: orangered;
           }
+
           &.badRed {
             background-color: red;
           }
+
           span {
             background-color: #6C7AFF;
             padding: 5px 15px;
@@ -632,8 +737,9 @@ export default {
           align-items: center;
 
           svg {
-            width: 20px!important;
-            height: 20px!important;
+            width: 20px !important;
+            height: 20px !important;
+
             path {
 
             }
@@ -710,16 +816,19 @@ export default {
     }
   }
 }
+
 .favorite {
   position: absolute;
   right: 5px;
   top: 5px;
   border-radius: 400px;
-  background-color: rgba(0,0,0,.3);
+  background-color: rgba(0, 0, 0, .3);
   padding: 5px;
   transition: .3s ease;
+
   svg {
     transition: .3s ease;
+
     path {
       fill: transparent;
       stroke: #fff;
@@ -729,6 +838,7 @@ export default {
       transition: .3s ease;
     }
   }
+
   &.active {
     svg {
       path {
