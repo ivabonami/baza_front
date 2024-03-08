@@ -6,18 +6,25 @@
 
 
       <div class="avatar">
-        <img :src="'http://62.113.96.171:3000/' + $props.avatar"
-             alt="" class="hoverable"
-             v-if="$props.avatar !== ''"
-             v-on:click="$router.push('/project/' + $props.projectId)">
 
-        <img src="/src/assets/images/avatar.webp"
-             alt="" class="hoverable"
-             v-else
-             v-on:click="$router.push('/project/' + $props.projectId)">
+
+        <figure class="cover">
+          <img :src="'http://62.113.96.171:3000/' + $props.avatar"
+               alt="" class="hoverable"
+               v-if="$props.avatar !== ''"
+               v-on:click="$router.push('/project/' + $props.projectId)">
+
+          <img src="/src/assets/images/avatar.webp"
+               alt="" class="hoverable"
+               v-else
+               v-on:click="$router.push('/project/' + $props.projectId)">
+        </figure>
+
+
 
 
         <div class="favorite"
+             v-if="isLoggined === true"
              v-on:click="!favorite ? favorite = true : favorite = false"
               :class="{active: favorite}">
           <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 118.65 106.19">
@@ -28,10 +35,10 @@
           </svg>
         </div>
       </div>
-      <div class="project-body">
+      <div class="project-body" v-on:click="$router.push('/project/' + projectId)">
         <div class="project-top">
-          <div class="name hoverable" v-on:click="$router.push('/project/' + projectId)">
-            {{ $props.projectName }} {{ $props.projectId }}
+          <div class="name hoverable">
+            {{ $props.projectName }}
 
             <img src="./../../assets/images/verified.webp"
                  class="verified"
@@ -110,14 +117,8 @@
 
 
 
-          <div class="links ">
+          <div class="links " v-on:click.stop >
 
-            <div class="dropdown hoverable"
-                 v-on:click="$router.push('/project/' + projectId)">
-              Ссылки на проект
-
-
-            </div>
             <div class="admin-menu-toggler" v-on:click="() => {
           this.adminDropDownShow = !this.adminDropDownShow
           console.log(adminDropDownShow)
@@ -128,7 +129,7 @@
               <span class="burger"></span>
               <span class="burger"></span>
 
-              <div class="admin-menu" v-if="this.adminDropDownShow === true">
+              <div class="admin-menu" v-if="this.adminDropDownShow === true" v-on:keydown.esc="this.adminDropDownShow = false">
                 <button class="btn btn-approve" v-on:click="showModalApprove = true" v-if="$props.reviewed === false">
                   <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 253.38 253.44"><path d="M0,126.38C-.26,56.92,56.58,1.28,123.91,.02c72.59-1.36,129.81,57.57,129.47,126.88-.35,70.26-56.52,126.6-126.74,126.54C56.09,253.38-.03,197.07,0,126.38Zm126.77,98.16c53.91-.53,96.72-43.12,97.54-96.03,.87-55.79-43.41-98.67-96.02-99.43-55.58-.8-98.84,43.57-99.33,96.68-.5,54.54,43.38,98.59,97.81,98.79Z"/><path d="M68.69,106.26c4.18-.48,7.52,1.96,10.36,5.57,6.17,7.85,12.55,15.53,18.56,23.5,2.58,3.42,4.47,3.9,7.97,1.02,20.29-16.72,40.66-33.34,61.29-49.64,3.14-2.48,7.72-4.19,11.7-4.32,4.75-.16,8.81,2.75,10.45,7.82,1.78,5.5,1.46,10.74-3.21,14.62-11.9,9.89-23.96,19.58-36,29.3-13.59,10.98-27.24,21.89-40.83,32.87-8.04,6.5-15.01,5.95-21.52-2.07-9.86-12.13-19.64-24.34-29.35-36.59-2.97-3.74-5.01-7.83-3.25-12.92,2.23-6.43,6.13-9.24,13.84-9.15Z"/></svg>
                   Одобрить
@@ -233,13 +234,16 @@ export default {
       showModalDelete: this.$emit.showModalDelete,
       showModalApprove: this.$emit.showModalApprove,
       reviewsLength: 0,
-      adminDropDownShow: false
+      adminDropDownShow: false,
+
+      isLoggined: false
     }
   },
   mounted() {
     this.checkIsAdmin()
     this.getReviews(this.$props.projectId)
-    console.log(this.$props.payed)
+
+    localStorage.getItem('token') !== '' ? this.isLoggined = true : this.isLoggined = false
   },
   methods: {
     checkIsAdmin () {
@@ -464,8 +468,8 @@ export default {
   padding: 10px 15px;
   gap: 20px;
   display: flex;
-  justify-content: space-between;
-  border: 2px solid transparent;
+  flex-wrap: nowrap;
+
   box-sizing: border-box;
   margin-bottom: 30px;
   border: 1px solid #eaeaea;
@@ -479,12 +483,34 @@ export default {
   }
 
   .avatar {
-    width: fit-content;
+    flex-basis: 110px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    display: block;
+    box-sizing: border-box;
     position: relative;
-    img {
+    border-radius: 15px;
+    overflow: hidden;
+
+    figure {
       width: 110px;
       height: 110px;
-      border-radius: 15px;
+      text-align: center;
+      margin: 0;
+      display: block;
+      box-sizing: border-box;
+    }
+
+    .cover img {
+      object-fit: cover;
+      min-height: 100%;
+      width: inherit;
+    }
+
+
+    img {
+      object-fit: cover;
+
     }
     .favorite {
       position: absolute;
@@ -531,6 +557,7 @@ export default {
   .project-body {
     display: flex;
     flex-wrap: wrap ;
+    flex-basis: 100%;
     .project-top {
       display: flex;
       justify-content: space-between;

@@ -119,10 +119,12 @@ export default {
   setup(props) {
 
   },
+
   methods: {
     changeModal () {
       this.modalShow = !this.modalShow
     },
+
   }
 }
 </script>
@@ -171,9 +173,11 @@ export default {
   background-color: #fff;
   border-radius: 10px;
   width: 300px;
-  left: calc( 50% - 150px );
+
   padding: 20px;
-  top: 200px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   .modal-header {
     display: flex;
 

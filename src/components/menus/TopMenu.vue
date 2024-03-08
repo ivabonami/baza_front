@@ -16,7 +16,7 @@
       </svg>
       Войти
     </button>
-    <div v-else-if="this.userHere === true" class="loggined" v-on:click="signOut()" title="Выйти из аккаунта">
+    <div v-else-if="this.userHere === true" class="loggined" title="Выйти из аккаунта">
       <div class="username">
         {{ username }}
       </div>
@@ -24,6 +24,7 @@
       <svg xmlns="http://www.w3.org/2000/svg"
            width="20" height="23" viewBox="0 0 20 23"
            fill="none"
+           v-on:click="signOut()"
       >
         <g clip-path="url(#clip0_374_5108)">
           <path d="M14.5361 4.58419H12.3134V2.31297H2.27149V20.6832H12.304V18.4077H14.5372C14.5372 18.6066 14.5377 18.8001 14.5372 18.9941C14.5346 19.6047 14.5435 20.2159 14.5257 20.8261C14.4921 21.9719 13.556 22.9588 12.4396 22.976C10.7025 23.003 8.96539 22.99 7.22774 22.9911C5.61268 22.9922 3.99709 22.9588 2.38254 22.9981C1.03465 23.0321 -0.00521891 21.9282 1.97057e-05 20.542C0.0241174 14.4883 0.00944922 8.43459 0.0110208 2.38035C0.0110208 1.00058 0.956592 0.00726143 2.29192 0.00456658C5.60953 -0.00244003 8.92663 -0.00190106 12.2442 0.00456658C13.3946 0.00672246 14.2842 0.741877 14.4927 1.8597C14.5477 2.1556 14.5314 2.46766 14.534 2.77218C14.5398 3.37151 14.5356 3.97031 14.5356 4.58365L14.5361 4.58419Z" fill="#6C7AFF"/>
@@ -95,26 +96,34 @@ export default {
 
 <style scoped lang="scss">
 .btn {
-  cursor: pointer;
+
 }
 .loggined {
   text-align: right;
   display: flex;
   align-items: center;
   margin-left: 20px;
-  cursor: pointer;
   transition: .3s ease;
+  cursor: default;
+
+  svg {
+    cursor: pointer;
+  }
+  .username {
+    cursor: default;
+  }
 
   svg {
     transition: .3s ease;
     position: relative;
-  }
+    &:hover {
 
-  &:hover {
-    svg {
       transform: translateX(5px)
+
     }
   }
+
+
 
   .username {
     color: var(--new-dark, #6C7AFF);

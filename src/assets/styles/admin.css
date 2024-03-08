@@ -8310,8 +8310,7 @@ fieldset:disabled .btn {
 
 .modal {
   position: fixed;
-  top: 0;
-  left: 0;
+
   z-index: 1055;
   display: none;
   width: 100%;
@@ -8319,6 +8318,7 @@ fieldset:disabled .btn {
   overflow-x: hidden;
   overflow-y: auto;
   outline: 0;
+
 }
 
 .modal-dialog {

@@ -1,6 +1,6 @@
 <template>
 
-  <div class="form" id="sign-in"
+  <div class="form" id="sign-in" @keydown.enter="signIn()"
        v-if="this.state === 'signIn'">
     <div class="h2">Вход на базу</div>
     <input type="text"
@@ -12,6 +12,7 @@
            class="input password"
            placeholder="Пароль">
     <input type="submit" value="Войти" class="btn btn-filled"
+
     v-on:click="signIn()">
 
     <button class="switch"
@@ -91,14 +92,20 @@ export default {
       })
           .then((response) => response.json())
           .then((result) => {
-            localStorage.setItem('token', result.token)
-            if (this.inputUsername === 'admin') {
-              localStorage.setItem('role', 'admin')
+            if (result.success === false) {
+              this.credentialsError = result.message
+              console.log(result)
 
+            } else {
+              localStorage.setItem('token', result.token)
+              if (this.inputUsername === 'admin') {
+                localStorage.setItem('role', 'admin')
+                this.$router.go()
+              }
+              localStorage.setItem('username', this.inputUsername)
             }
-            localStorage.setItem('username', this.inputUsername)
-            this.credentialsError = result.message
-            this.$router.go()
+
+
           })
           .catch((error) => {
             console.log('messageE:', error.message)
@@ -133,10 +140,6 @@ export default {
                   .then((result) => {
                     localStorage.setItem('token', result.token)
                     localStorage.setItem('username', this.inputUsername)
-                    if (this.inputUsername === 'admin') {
-                      localStorage.setItem('role', 'admin')
-
-                    }
                     this.credentialsError = result.message
                     this.$router.go()
                   })
@@ -222,6 +225,15 @@ export default {
       opacity: 1;
     }
   }
+}
+
+.error-box {
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+  padding: 10px;
+  background-color: #ffdede;
+  border-radius: 10px;
 }
 
 </style>
