@@ -228,7 +228,11 @@ a {
 
     border: 1px solid #eaeaea;
     svg {
+      width: 20px;
+      height: 20px;
       path {
+        width: 20px;
+        height: 20px;
         fill: black;
       }
     }
@@ -608,6 +612,24 @@ form.add-project {
       opacity: .3;
     }
   }
+
+  input[type=number] {
+    border-radius: 5px;
+    border: 1px solid var(--new-dark, #6C7AFF);
+    background: var(--neutral, #FFF);
+    color: #000;
+    padding: 10px 15px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+
+  }
+
   textarea {
     border-radius: 5px;
     border: 1px solid var(--new-dark, #6C7AFF);

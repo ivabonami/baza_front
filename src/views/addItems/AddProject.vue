@@ -21,8 +21,12 @@
       </div>
 
       <div class="input-wrapper">
-        <select v-model="projectCategory" ref="projectCategory">
-          <option :id="category.id" v-for="category of categories" :value="category.id"
+        <select v-model="projectCategory" ref="projectCategory" >
+          <option :id="category.id"
+                  v-for="category of categories"
+                  :value="category.id"
+                  :data-name="category.id"
+
           >{{ category.name }}</option>
         </select>
         <span class="help">
@@ -71,35 +75,49 @@
     </div>
     <div class="advanced">
       <div class="input-wrapper">
+        <label for="min">Минимальный обмен</label>
         <input
-            type="text"
+            type="number"
+            id="min"
             placeholder="Минимальный обмен"
             v-model="projectExchangeRate"
-            v-on:input="(e) => {
-              projectName.length <= 5 ? e.target.classList.add('bad') : e.target.classList.add('ok')
-              projectName.length > 5 ? e.target.classList.remove('bad') : e.target.classList.remove('ok')
-            }"
+            ref="projectExchangeRate"
+            max="6"
 
-            minlength="2" maxlength="30"
-            required v-if="this.projectCategory === 95">
-        <span class="help" v-if="this.projectCategory === 95">
+            v-if="this.projectCategory === this.exchangersCategory">
+        <span class="help" v-if="this.projectCategory === this.exchangersCategory">
           Введите размер минимальной суммы обмена
         </span>
       </div>
 
       <div class="input-wrapper">
+        <label for="rate">Курс обмена</label>
         <input
-            type="text"
+            type="number"
+            id="rate"
+            placeholder="Курс"
+            v-model="minValueToExchange"
+            ref="minValueToExchange"
+            max="6"
+
+            v-if="projectCategory === this.exchangersCategory">
+        <span class="help" v-if="this.projectCategory === this.exchangersCategory">
+          Введите текущий курс вашего обмена
+        </span>
+      </div>
+
+      <div class="input-wrapper">
+        <label for="res">Резерв</label>
+        <input
+            type="number"
+            id="res"
             placeholder="Резерв"
             v-model="projectReserve"
-            v-on:input="(e) => {
-              projectName.length <= 5 ? e.target.classList.add('bad') : e.target.classList.add('ok')
-              projectName.length > 5 ? e.target.classList.remove('bad') : e.target.classList.remove('ok')
-            }"
+            ref="projectReserve"
+            max="6"
 
-            minlength="2" maxlength="30"
-            required v-if="projectCategory === 95">
-        <span class="help" v-if="this.projectCategory === 95">
+            v-if="projectCategory === this.exchangersCategory">
+        <span class="help" v-if="this.projectCategory === this.exchangersCategory">
           Введите резерв валюты.
         </span>
       </div>
@@ -164,12 +182,7 @@
 
     v-on:click="() => {
        checkForm ()
-      if (this.errors.length > 0 ) {
-        this.$refs.errors.scrollIntoView({ behavior: 'smooth', block: 'center'})
-      } else {
-        previewBeforeUpload();
-        this.showModal = true
-      }
+
     }">
       Добавить проект
     </button>
@@ -186,7 +199,10 @@
 
   <modal-window-backdrop
       v-if="showModal === true"
-      v-on:changeModal="(emitShowModal) => {this.showModal = emitShowModal}"
+      v-on:changeModal="(emitShowModal) => {
+        this.showModal = emitShowModal
+        this.$router.push('/')
+      }"
       v-bind:icon-type="'ok'"
       v-bind:heading="'Проект успешно добавлен'"
       v-bind:descriptionType="'text'"
@@ -200,7 +216,7 @@
 
 <script>
 import modalWindowBackdrop from "../../components/page components/ModalWindowBackdrop.vue";
-import {ref} from "vue";
+import { ref, watch } from "vue";
 export default {
   name: "AddProject.vue",
   components: {modalWindowBackdrop},
@@ -218,16 +234,19 @@ export default {
       projectName: '',
       projectDescription: '',
       projectCategory: [],
+      projectCategoryName: [],
       projectAvatar: '',
       projectBanner: '',
+
+      exchangersCategory: 0,
 
       projectLinks: [],
       errorMessage: '',
 
-      projectExchangeRate: '',
-      projectReserve: '',
+      projectExchangeRate: 100,
+      projectReserve: 10000,
+      minValueToExchange: 10,
 
-      acceptableInput: '',
 
       userLoggined: false,
 
@@ -237,8 +256,10 @@ export default {
   mounted() {
     this.getCategoryList()
 
+    console.log(this.reviewedCount)
     localStorage.getItem('token') ? this.userLoggined = true : this.userLoggined = false
   },
+
 
   methods: {
     uploadAvatar(e){
@@ -343,25 +364,46 @@ export default {
       }
 
     },
+
     previewBeforeUpload () {
+
+      let projectType =''
+      if (this.projectCategory === this.exchangersCategory) {
+
+        projectType = 'exchanger'
+        console.log('pts', this.projectCategory)
+      } else {
+        projectType = 'project'
+        console.log('pte', this.projectCategory)
+      }
+
+      if (this.projectCategory === this.exchangersCategory) {
+        projectType = 'exchanger'
+        console.log(projectType)
+      } else {
+        projectType = 'project'
+        console.log(projectType)
+      }
+
 
       const project = {
         name: this.projectName,
         description: this.projectDescription,
         categoryIds: [this.projectCategory],
         avatarFilePath: this.projectAvatar,
-        bannerFilePath: this.projectBanner,
+        bannerFilePath: this.projectBanner || null,
+        type: projectType,
         links:  {
           name: this.projectLinks.name,
           link: this.projectLinks.link
         },
+        minValueToExchange: this.minValueToExchange || null,
+        exchangeRate: this.projectExchangeRate || null,
+        reserve: this.projectReserve || null,
         payed: false
 
 
       };
-      console.log(project.links)
-
-      this.checkForm()
 
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -391,12 +433,23 @@ export default {
           .then((result) => {
             this.categories = result.categories
             this.projectCategory = result.categories[0].id
+            console.log(this.categories.find(ex => {
+              if (ex.name === 'Обменники') {
+                this.exchangersCategory = ex.id
+              }
+              console.log(this.exchangersCategory)
+
+            } ))
           })
           .catch((error) => {console.error(error)});
     },
 
+
+
+
     checkForm () {
       this.errors = []
+
       if (this.projectName.length < 5) {
         this.errors.push('Название проекта должно быть не менее 5 символов')
         this.$refs.projectName.style.borderColor = 'red'
@@ -421,10 +474,35 @@ export default {
       if (this.projectAvatar.length === 0) {
         this.errors.push('Аватар не загружен')
         this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
-        console.log(this.$refs.projectAvatar.parentElement)
       } else {
         this.$refs.projectAvatar.parentElement.style.borderColor = '#6C7AFF'
-        console.log(this.$refs.projectAvatar)
+      }
+
+      if (this.projectCategory === this.exchangersCategory) {
+        if (this.projectExchangeRate < 10) {
+          this.errors.push('Минимальный обмен не должен быть меньше 10$')
+          this.$refs.projectExchangeRate.style.borderColor = 'red'
+        } else {
+          this.$refs.projectExchangeRate.style.borderColor = '#6C7AFF'
+
+        }
+
+        if (this.projectReserve === 0) {
+          this.errors.push('Резерв не может быть меньше 500$')
+          this.$refs.projectReserve.style.borderColor = 'red'
+          console.log(this.$refs.projectReserve)
+        } else {
+          this.$refs.projectReserve.style.borderColor = '#6C7AFF'
+        }
+      }
+
+      if (this.errors.length > 0 ) {
+        setTimeout(()=> {
+          this.$refs.errors.scrollIntoView({ behavior: 'smooth', block: 'center'})
+        }, 20)
+      } else {
+        this.previewBeforeUpload();
+        this.showModal = true
       }
     }
   },

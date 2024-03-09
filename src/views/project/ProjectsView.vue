@@ -4,20 +4,24 @@
       <div class="project-banner">
         <img :src="'http://62.113.96.171:3000/' + project.bannerFilePath"
              alt=""
-             v-if="project.bannerFilePath !== ''">
+             v-if="project.bannerFilePath !== null">
 
         <img src="/src/assets/images/banner.webp"
              alt=""
              v-else>
 
         <div v-if="this.canEdit === true" class="canEdit">
-          <span v-if="this.isEditable === true" v-on:click="this.isEditable = false">
+          <span v-if="this.isEditable === true" v-on:click="() => {
+            this.tab === 'description'
+            this.isEditable = false
+          }">
             <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 333.45 340.57"><path d="M164.18,340.54c-40.51,0-81.01,.01-121.52,0C17.02,340.53,.01,323.57,0,298,0,216.97,0,135.95,0,54.92,.01,29.57,17.04,12.44,42.25,12.43c40.17-.02,80.34,.02,120.52-.03,6.75,0,12.09,2.5,15.41,8.38,3.11,5.51,2.91,11.23-.5,16.6-3.68,5.79-9.34,7.59-15.9,7.58-36.17-.04-72.34-.02-108.51-.01-4.17,0-8.34-.1-12.5,.04-5.62,.2-8.14,2.78-8.15,8.46-.03,82.02-.03,164.05,0,246.07,0,6.11,2.86,8.66,9.59,8.67,21.17,.04,42.34,.01,63.51,.01,59.51,0,119.02,0,178.52,0,9.42,0,11.44-2.02,11.44-11.43,0-42.01-.02-84.03,.02-126.04,0-8.24,5.37-14.96,12.73-16.3,8.41-1.53,15.53,2.21,18.5,9.99,.75,1.96,1.01,4.21,1.01,6.32,.06,43.51,.13,87.03,0,130.54-.07,21.68-17.74,39.12-39.73,39.2-41.34,.15-82.68,.04-124.02,.05Z"/><path d="M283.42,135.51c-3.29,3.08-7.26,6.59-11.01,10.33-21.11,21.05-42.24,42.07-63.16,63.31-3.96,4.02-8.47,6.09-13.78,7.29-26.6,5.97-53.16,12.06-79.74,18.1-11.76,2.68-19.57-4.91-16.92-16.48,6.35-27.7,12.64-55.42,19.19-83.07,.73-3.08,2.36-6.37,4.56-8.6,24.82-25.1,49.83-50.02,74.79-74.98,.46-.46,1.02-.83,1.2-.98,28.13,28.2,56.17,56.3,84.88,85.08Z"/><path d="M210.34,38.32c11.22-11.19,22.89-23.05,34.82-34.64,5.17-5.02,12.35-4.88,17.52,.25,22.34,22.17,44.59,44.42,66.76,66.75,5.3,5.34,5.35,12.49,.09,17.91-11.49,11.81-23.22,23.39-34.51,34.71-28.2-28.3-56.22-56.42-84.68-84.99Z"/></svg>
 
             редактировать
           </span>
           <span v-else v-on:click="() => {
             this.isEditable = true
+
             updateProject()
           }">
                         <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 439 438.77"><path d="M219.42,438.74c-63.17,0-126.34-.03-189.51,.03-12.01,.01-21.73-4.34-26.78-15.44-2.31-5.08-2.97-11.28-2.98-16.98C-.04,329.37,.02,252.37,.02,175.38c0-47.83-.09-95.66,.13-143.48,.03-5.53,.91-11.43,3-16.48C7.03,6.05,15.07,1.47,25,.31,27.8-.01,30.66,.04,33.49,.04,117.99,.03,202.49,.07,287,0c22.68-.02,41.57,8.13,57.47,24.34,23.27,23.74,46.86,47.19,70.55,70.52,15.75,15.51,23.93,34.04,23.94,56.13,.01,85.49-.04,170.98,.05,256.47,.01,12.04-3.47,22.26-14.72,27.8-4.71,2.32-10.53,3.32-15.85,3.33-63,.22-126,.14-189.01,.14ZM36.35,219.14c0,33.83,0,67.67,0,101.5,0,25.33,.12,50.67-.11,76-.04,4.75,1.56,6.03,6.02,5.87,7.82-.28,15.67-.08,23.5-.08q7.43,0,7.44-7.31c0-35.67-.03-71.33,.03-107,.01-7.37,.69-14.61,5.42-20.83,6.44-8.46,15.07-11.03,25.41-11.01,73.01,.18,146.02,.09,219.03,.1,5.83,0,11.67,.14,17.5,.16,5.96,.02,10.91,2.4,15.41,6.14,7.41,6.18,9.77,14.39,9.77,23.59,.01,36.83,.07,73.67-.07,110.5-.02,4.31,1.17,5.92,5.65,5.74,7.82-.32,15.66-.09,23.5-.09q7.7,0,7.7-7.49c0-81.33-.04-162.66,.05-244,.01-11.67-4.09-21.27-12.31-29.44-24.34-24.21-48.67-48.45-72.8-72.87-5.84-5.91-12.74-9.44-20.49-11.75-2.8-.84-4.17,.24-4.34,3.02-.1,1.66-.09,3.33-.09,5,0,35.17,.1,70.33-.11,105.5-.03,5.4-.39,11.28-2.53,16.09-5.13,11.53-14.81,16.03-27.42,15.98-53.01-.22-106.01-.09-159.02-.11-2.5,0-5.13,.22-7.46-.48-3.91-1.16-7.99-2.41-11.34-4.63-9.29-6.16-11.51-15.73-11.5-26.19,.03-36,.02-72,0-108,0-6.85-.02-6.86-6.99-6.86-7.67,0-15.34-.01-23,0-6.85,.01-6.87,.02-6.87,6.95,0,58.67,0,117.33,0,176Zm183.15,183.29c34.49,0,68.98,0,103.47,0,6.53,0,6.55-.03,6.55-6.69,0-32.15,0-64.31,0-96.46,0-6.81-.03-6.88-7.04-6.88-68.65,0-137.3-.01-205.95,0-7.03,0-7.11,.12-7.11,7.4,0,31.99,0,63.98,0,95.96,0,6.64,0,6.66,6.61,6.67,34.49,0,68.98,0,103.47,0Zm36.91-311.22c0-14.33,.06-28.66-.02-42.98-.05-8.05-4.02-11.99-12.02-12.01-16.5-.05-32.99-.06-49.49,.01-8.36,.03-12.27,3.85-12.29,12.25-.07,28.49-.07,56.98,0,85.47,.02,8.65,3.9,12.57,12.55,12.64,16.16,.12,32.33,.12,48.49,0,8.97-.07,12.76-4.02,12.78-12.88,.03-14.16,0-28.32,0-42.48Z"/></svg>
@@ -99,6 +103,11 @@
       <div class="project-body">
         <div class="tabs-links">
           <button
+              v-on:click="this.$router.go(-1)"
+              class="recommended">
+            Назад
+          </button>
+          <button
               v-on:click="switchTabs('description')"
               class="recommended">
             Описание проекта
@@ -151,10 +160,10 @@
                   </div>
 
 
-                  <h3 class="services" v-if="reviewsLength > 0">
+                  <h3 class="services">
                     Отзывы
                   </h3>
-                  <div class="reviews"  v-if="reviewsLength > 0 ">
+                  <div class="reviews">
                     <div class="sort">
                       <div class="sort-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" viewBox="0 0 20 16" fill="none">
@@ -196,7 +205,7 @@
 
                       </div>
                     </div>
-                    <div class="review" ref="clickedReview" v-for="(review, index) of reviews" v-if="showNotReviewed === false">
+                    <div class="review" ref="clickedReview" v-for="(review, index) of reviews">
                       <div class="review-body">
                         <div class="review-header">
                           <div class="review-nickname">
@@ -268,15 +277,33 @@
                         </div>
                       </div>
                     </div>
-                    <div class="notReviewed" v-if="this.notReviewedMessageShow === true && this.showNotReviewed === true">
+                    <div class="notReviewed" v-if="this.allReviewed === true && this.showNotReviewed === true">
+
                       <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 253.38 253.44"><path d="M0,126.38C-.26,56.92,56.58,1.28,123.91,.02c72.59-1.36,129.81,57.57,129.47,126.88-.35,70.26-56.52,126.6-126.74,126.54C56.09,253.38-.03,197.07,0,126.38Zm126.77,98.16c53.91-.53,96.72-43.12,97.54-96.03,.87-55.79-43.41-98.67-96.02-99.43-55.58-.8-98.84,43.57-99.33,96.68-.5,54.54,43.38,98.59,97.81,98.79Z"/><path d="M68.69,106.26c4.18-.48,7.52,1.96,10.36,5.57,6.17,7.85,12.55,15.53,18.56,23.5,2.58,3.42,4.47,3.9,7.97,1.02,20.29-16.72,40.66-33.34,61.29-49.64,3.14-2.48,7.72-4.19,11.7-4.32,4.75-.16,8.81,2.75,10.45,7.82,1.78,5.5,1.46,10.74-3.21,14.62-11.9,9.89-23.96,19.58-36,29.3-13.59,10.98-27.24,21.89-40.83,32.87-8.04,6.5-15.01,5.95-21.52-2.07-9.86-12.13-19.64-24.34-29.35-36.59-2.97-3.74-5.01-7.83-3.25-12.92,2.23-6.43,6.13-9.24,13.84-9.15Z"/></svg>
                       <span>Все отзывы к проекту проверены</span>
                     </div>
+
+                    <div class="notReviews" v-if="this.allReviewed === true && this.showNotReviewed === false">
+
+                      <svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58" fill="none">
+                        <g clip-path="url(#clip0_380_7664)">
+                          <path d="M26.8089 0C28.2705 0 29.7295 0 31.1911 0C31.4772 0.0721778 31.7608 0.172711 32.0521 0.211378C44.129 1.84569 52.2593 8.43964 56.4353 19.8308C57.2473 22.0503 57.4922 24.476 58 26.8089V31.1911C57.9252 31.5185 57.8144 31.8433 57.7809 32.1758C56.6364 43.5309 48.4313 53.4812 37.4448 56.7008C35.4084 57.2963 33.2791 57.5747 31.1911 58H26.8089C26.5202 57.9278 26.2366 57.8196 25.9453 57.7912C14.0515 56.5874 4.02907 48.0343 1.01564 36.4524C0.567111 34.7278 0.332533 32.9466 0 31.1911C0 29.7295 0 28.2705 0 26.8089C0.0747556 26.4815 0.172711 26.1593 0.219111 25.8293C1.85084 14.0927 8.18444 6.02169 19.2302 1.7864C21.6327 0.866133 24.2749 0.577422 26.8089 0ZM3.35111 28.8685C3.35369 43.2628 14.6882 54.6412 29.0284 54.6489C43.1881 54.654 54.6515 43.2061 54.6489 29.0619C54.6489 14.8428 43.2577 3.35369 29.1572 3.35111C14.8377 3.34853 3.34853 14.7114 3.35111 28.8685Z" fill="#C8716B"/>
+                          <path d="M29.0079 13.2653C29.8225 13.4999 30.668 13.6623 31.4439 13.9871C32.3719 14.3763 32.756 15.1857 32.6761 16.1833C32.3409 20.416 31.9981 24.6487 31.6527 28.8815C31.5135 30.5905 31.3537 32.2996 31.2093 34.0086C31.0985 35.3388 30.3793 36.0477 29.0775 36.0915C27.7293 36.1379 26.9173 35.4316 26.7936 34.0422C26.2986 28.5309 25.7934 23.0222 25.3397 17.5083C25.0922 14.4975 26.1001 13.4019 29.0079 13.2627V13.2653Z" fill="#C8716B"/>
+                          <path d="M28.7914 44.5957C27.2138 44.49 25.9172 43.0052 26.0409 41.4482C26.1672 39.8629 27.6546 38.5611 29.1987 38.69C30.7737 38.8189 32.0806 40.3217 31.9595 41.8581C31.8332 43.4408 30.3767 44.7013 28.794 44.5957H28.7914Z" fill="#C8716B"/>
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_380_7664">
+                            <rect width="58" height="58" fill="white"/>
+                          </clipPath>
+                        </defs>
+                      </svg>                      <span>У проекта еще нет отзывов.</span>
+                    </div>
                   </div>
+
 
                   <div class="send-review box-shadow" v-on:keydown.enter="() => {
                     this.reviewText.length <= 30  ? this.reviewTextError = 'Отзыв должен содержать как минимум 30 символов.' : sendReview()
-                  }"
+                        }"
                        ref="sendForm"
                        v-if="this.isProjectReviewed === false || this.editReview === true">
                     <div class="send-header">
@@ -343,6 +370,7 @@
                           updateReview(this.editReviewId)
                         } else {
                           sendReview()
+                          reviewSended()
                         }
                       }"
                       >
@@ -362,6 +390,10 @@
                       </button>
                     </div>
                   </div>
+
+
+
+
                 </div>
               </div>
 
@@ -465,7 +497,7 @@
             </div>
 
             <div class="project-detailed-rating box-shadow">
-              <div class="heading">
+              <div class="heading" >
                 Оценило 16 человек
               </div>
               <div class="five-stars">
@@ -495,8 +527,8 @@
                         d="M8.93325 0.7084L10.1489 4.61808C10.2802 5.04057 10.6571 5.32648 11.0822 5.32648H15.0168C15.9674 5.32648 16.3627 6.59722 15.5936 7.18118L12.4105 9.59732C12.0665 9.85835 11.9227 10.3211 12.054 10.7436L13.2697 14.6533C13.5635 15.5978 12.5287 16.3833 11.7597 15.7996L8.57651 13.3835C8.23253 13.1224 7.7669 13.1224 7.42292 13.3835L4.23977 15.7996C3.47071 16.3833 2.43593 15.5978 2.72972 14.6533L3.94542 10.7436C4.07671 10.3211 3.93294 9.85835 3.58896 9.59732L0.406373 7.18088C-0.362688 6.59722 0.0326187 5.32618 0.983169 5.32618H4.91752C5.3426 5.32618 5.71947 5.04028 5.85077 4.61778L7.06675 0.7084C7.36053 -0.236133 8.63947 -0.236133 8.93325 0.7084Z"
                         fill="#6C7AFF"/>
                   </svg>
-                  <span>
-                    651
+                  <span >
+                    {{ reviewedCount[5] || 0 }}
                   </span>
                 </div>
 
@@ -528,7 +560,7 @@
                         fill="#6C7AFF"/>
                   </svg>
                   <span>
-                    651
+                    {{ reviewedCount[4] || 0 }}
                   </span>
                 </div>
 
@@ -561,7 +593,7 @@
                         fill="#6C7AFF"/>
                   </svg>
                   <span>
-                    6
+                    {{ reviewedCount[3] || 0 }}
                   </span>
                 </div>
                 <div class="project-review-stars">
@@ -594,7 +626,7 @@
                         fill="#6C7AFF"/>
                   </svg>
                   <span>
-                    5
+                    {{ reviewedCount[2] || 0 }}
                   </span>
                 </div>
                 <div class="project-review-stars">
@@ -628,7 +660,7 @@
                         fill="#6C7AFF"/>
                   </svg>
                   <span>
-                    1
+                    {{ reviewedCount[1] || 0 }}
                   </span>
                 </div>
               </div>
@@ -714,7 +746,10 @@ export default {
       isAdmin: false,
       showNotReviewed: false,
       notReviewedMessageShow: false,
-      clickedReviewIndex: 0
+      allReviewed: true,
+      clickedReviewIndex: 0,
+
+      reviewedCount: {},
     }
   },
   props: ['selectedId', 'highlight', 'tab'],
@@ -728,6 +763,25 @@ export default {
   },
 
   methods: {
+    getReviewsCount() {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      const projectId = window.location.pathname.replace('/project/', '');
+
+
+      const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+      };
+
+      fetch(`http://62.113.96.171:3000/reviews-count?projectId=${projectId}`, requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            this.reviewedCount = result.ratingCount
+            console.log(this.reviewedCount[4])
+          })
+          .catch((error) => console.error(error));
+    },
     getProjectFullInfo() {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -850,12 +904,10 @@ export default {
       myHeaders.append("Content-Type", "application/json");
 
       const projectId = parseInt(this.$route.path.replace('/project/', ''))
-      let url = ``
+      let url = `http://62.113.96.171:3000/reviews?projectId=${projectId}&sort=${this.reviewsSort}`
 
       if (isNotReviewed === true) {
-        url = `http://62.113.96.171:3000/reviews?projectId=${projectId}&sort=${this.reviewsSort}&showNotReviewed=false`
-      } else {
-        url = `http://62.113.96.171:3000/reviews?projectId=${projectId}&sort=${this.reviewsSort}`
+        url += `&showNotReviewed=true`
       }
 
       const requestOptions = {
@@ -867,8 +919,10 @@ export default {
           .then((response) => response.json())
           .then((result) => {
             if(result.message === "No reviews found for this project") {
-              this.notReviewedMessageShow = true
+              this.reviews = {}
+              this.allReviewed = true
             } else {
+              this.allReviewed = false
               this.reviews = result.reviews
               this.reviewsLength = result.reviews.length
             }
@@ -985,6 +1039,14 @@ export default {
 
 
     },
+    reviewSended(target) {
+      this.isProjectReviewed = true
+
+
+      setTimeout(() => {
+        this.isProjectReviewed = false
+      }, 2000)
+    },
     approveReview (id, rating, comment) {
       const review = {
         rating: rating,
@@ -1007,10 +1069,12 @@ export default {
           .then((response) => response.json())
           .then((result) => {
             if (result.success === true && this.reviewText.length >= 30) {
-              this.getReviews()
+
               this.isProjectReviewed = false
               this.editReview = false
               window.scrollTo( { top: 400, behavior: 'smooth' })
+              this.reviewTextError = ''
+              this.getReviews()
             }
             else {
               this.reviewTextError = 'Вы заполнили не все поля, или заполнили их не правильно. Пожалуйста проверьте правильность введенных данных'
@@ -1037,8 +1101,9 @@ export default {
       })
           .then((response) => response.json())
           .then(() => {
-            this.getReviews()
+
             this.isProjectReviewed = false
+            this.getReviews()
           })
           .catch((error) => {console.error(error)});
     }
@@ -1051,6 +1116,7 @@ export default {
       this.$refs.wrapper.scrollIntoView({behavior: 'smooth', block: 'start'})
     },20)
 
+    this.getReviewsCount()
 
     if (localStorage.getItem('role') === 'admin') {
       this.isAdmin = true
@@ -1230,6 +1296,7 @@ textarea {
     font-weight: 300;
     line-height: normal;
     margin-bottom: 10px;
+    word-break: break-all;
   }
   .reviews {
     .sort {
@@ -1866,7 +1933,7 @@ textarea {
 
 
 }
-.notReviewed {
+.notReviewed, .sended, .notReviews {
   margin-bottom: 30px;
   font-weight: bold;
   text-align: center;
@@ -1888,6 +1955,22 @@ textarea {
     flex-basis: 100%;
   }
 
+}
+.notReviews {
+  svg {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 30px;
+    flex-basis: 100%;
+
+    path {
+      fill: #c8b56b;
+    }
+  }
+  span {
+    color: #c8b56b;
+    flex-basis: 100%;
+  }
 }
 .review {
   transition: .3s ease;

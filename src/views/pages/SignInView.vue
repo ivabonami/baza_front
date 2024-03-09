@@ -95,7 +95,7 @@ export default {
             if (result.success === false) {
               this.credentialsError = result.message
               console.log(result)
-
+              this.$router.go()
             } else {
               localStorage.setItem('token', result.token)
               if (this.inputUsername === 'admin') {

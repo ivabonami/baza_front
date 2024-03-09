@@ -13,7 +13,8 @@
     "axios": "^1.6.7",
     "sass": "^1.70.0",
     "vue": "^3.3.11",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "vue-waypoint": "^4.3.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.2",

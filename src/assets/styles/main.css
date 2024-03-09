@@ -283,7 +283,13 @@ a {
   width: 100%;
   border: 1px solid #eaeaea;
 }
+.btn.btn-secondary svg {
+  width: 20px;
+  height: 20px;
+}
 .btn.btn-secondary svg path {
+  width: 20px;
+  height: 20px;
   fill: black;
 }
 .btn.btn-empty {
@@ -615,6 +621,20 @@ form.add-project .helper {
 }
 .form-wrapper input[type=text]::placeholder {
   opacity: 0.3;
+}
+.form-wrapper input[type=number] {
+  border-radius: 5px;
+  border: 1px solid var(--new-dark, #6C7AFF);
+  background: var(--neutral, #FFF);
+  color: #000;
+  padding: 10px 15px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 .form-wrapper textarea {
   border-radius: 5px;

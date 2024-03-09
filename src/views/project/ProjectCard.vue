@@ -25,7 +25,10 @@
 
         <div class="favorite"
              v-if="isLoggined === true"
-             v-on:click="!favorite ? favorite = true : favorite = false"
+             v-on:click="() => {
+               !favorite ? favorite = true : favorite = false
+               addFavorite(projectId)
+             }"
               :class="{active: favorite}">
           <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 118.65 106.19">
             <path class="b"
@@ -112,6 +115,8 @@
             <div class="date hoverable"  title="Дата создания" v-on:click="$router.push('/project/' + projectId)">
               {{ new Date($props.projectCreateDate).toLocaleString('ru-ru', { day: '2-digit', month: 'short', year: 'numeric' }) }}
             </div>
+
+
           </div>
 
 
@@ -139,20 +144,29 @@
                 </button>
                 <button class="btn btn-default" v-on:click="() => {
                   this.counter++
+
+
                   if ($props.payed === true) {
                     updateProjectPayedStatus($props.projectId, false)
                     this.adminDropDownShow = !this.adminDropDownShow
                   } else {
                     updateProjectPayedStatus($props.projectId, true)
                     this.adminDropDownShow = !this.adminDropDownShow
+
+
                   }
+
                 }"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="11" height="18" viewBox="0 0 11 18" fill="none">
                     <path d="M5.11179 17.16V0.23999H6.26379V17.16H5.11179ZM5.56179 15.144C4.60179 15.144 3.68379 15 2.80779 14.712C1.93179 14.412 1.24179 14.028 0.737793 13.56L1.40379 12.156C1.88379 12.576 2.49579 12.924 3.23979 13.2C3.98379 13.476 4.75779 13.614 5.56179 13.614C6.29379 13.614 6.88779 13.53 7.34379 13.362C7.79979 13.194 8.13579 12.966 8.35179 12.678C8.56779 12.378 8.67579 12.042 8.67579 11.67C8.67579 11.238 8.53179 10.89 8.24379 10.626C7.96779 10.362 7.60179 10.152 7.14579 9.99599C6.70179 9.82799 6.20979 9.68399 5.66979 9.56399C5.12979 9.44399 4.58379 9.30599 4.03179 9.14999C3.49179 8.98199 2.99379 8.77199 2.53779 8.51999C2.09379 8.26799 1.73379 7.93199 1.45779 7.51199C1.18179 7.07999 1.04379 6.52799 1.04379 5.85599C1.04379 5.20799 1.21179 4.61399 1.54779 4.07399C1.89579 3.52199 2.42379 3.08399 3.13179 2.75999C3.85179 2.42399 4.76379 2.25599 5.86779 2.25599C6.59979 2.25599 7.32579 2.35199 8.04579 2.54399C8.76579 2.73599 9.38979 3.01199 9.91779 3.37199L9.32379 4.81199C8.78379 4.45199 8.21379 4.19399 7.61379 4.03799C7.01379 3.86999 6.43179 3.78599 5.86779 3.78599C5.15979 3.78599 4.57779 3.87599 4.12179 4.05599C3.66579 4.23599 3.32979 4.47599 3.11379 4.77599C2.90979 5.07599 2.80779 5.41199 2.80779 5.78399C2.80779 6.22799 2.94579 6.58199 3.22179 6.84599C3.50979 7.10999 3.87579 7.31999 4.31979 7.47599C4.77579 7.63199 5.27379 7.77599 5.81379 7.90799C6.35379 8.02799 6.89379 8.16599 7.43379 8.32199C7.98579 8.47799 8.48379 8.68199 8.92779 8.93399C9.38379 9.18599 9.74979 9.52199 10.0258 9.94199C10.3018 10.362 10.4398 10.902 10.4398 11.562C10.4398 12.198 10.2658 12.792 9.91779 13.344C9.56979 13.884 9.02979 14.322 8.29779 14.658C7.57779 14.982 6.66579 15.144 5.56179 15.144Z" fill="#6C7AFF"/>
                   </svg>
-                  <span class="text" v-if="$props.payed === false">Сделать платным</span>
-                  <span class="text" v-else>Сделать бесплатным</span>
+                  <span class="text" v-if="$props.payed === false"
+                  >
+                    Сделать платным</span>
+                  <span class="text" v-else
+                  >
+                    Сделать бесплатным</span>
                 </button>
                 <button class="btn btn-delete" v-on:click="showModalDelete = true">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="19" viewBox="0 0 16 19" fill="none">
@@ -168,6 +182,10 @@
 
 
           </div>
+        </div>
+        <div class="advanced-fields">
+          {{ $props.exchangeRate }}
+          {{ $props.reserve }}
         </div>
       </div>
 
@@ -208,7 +226,6 @@
                 if (emitConfirmAction === true) {
                   updateProject($props.projectId)
 
-
                 }
               }"
 
@@ -228,7 +245,7 @@ import { ref } from "vue";
 export default {
   name: "ProjectCard.vue",
   components: { ProjectsView, modalWindowBackdrop },
-  props: ['projectId', 'avatar', 'payed', 'projectName', 'projectDescription', 'projectCreateDate', 'projectViews', 'projectRating', 'reviewed', 'projectCategory'],
+  props: ['projectId', 'exchangeRate', 'reserve', 'avatar', 'payed', 'projectName', 'projectDescription', 'projectCreateDate', 'projectViews', 'projectRating', 'reviewed', 'projectCategory'],
   emits: ['updated'],
 
   setup(props, emits) {
@@ -251,42 +268,71 @@ export default {
       adminDropDownShow: false,
       counter: 0,
       isLoggined: false,
+      reviewsCount: 0
 
 
     }
   },
   updated() {
-    onClickOutside(this.$refs.dropdown, event => this.adminDropDownShow = false)
 
+    // onClickOutside(this.$refs.dropdown, event => this.adminDropDownShow = false)
   },
   mounted() {
     this.checkIsAdmin()
     this.getReviews(this.$props.projectId)
 
 
-
-    localStorage.getItem('token') !== '' ? this.isLoggined = true : this.isLoggined = false
+    localStorage.getItem('token') ? this.isLoggined = true : this.isLoggined = false
   },
   methods: {
     checkIsAdmin () {
       const token = localStorage.getItem('token')
       const role = localStorage.getItem('role')
 
+      console.log(this.isLoggined)
+
+
+
       if (role === 'admin' && token !== '') {
         this.isAdmin = true
       } else {
       }
     },
+
+    addFavorite(projectId) {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+
+      fetch(`http://62.113.96.171:3000/projects/${projectId}`, {
+        method: "PUT",
+        headers: myHeaders,
+        body: JSON.stringify(
+            {
+              status: 'favorite'
+            }
+        )
+      })
+          .then((response) => response.json())
+          .then((res) => { console.log(res) })
+          .catch((error) => {console.error(error)});
+    },
     closeOnEsc() {
+
       document.addEventListener('keydown', (e) => {
         e.key === 'Escape' ? this.adminDropDownShow = false : this.adminDropDownShow = true
       })
+      document.addEventListener('click', (e) => {
+        this.adminDropDownShow = false
+      })
+
+
 
     },
-    getReviews (projectId) {
+    getReviews (projectId, offset) {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-
+      console.log(this.getOffset)
       const requestOptions = {
         method: "GET",
         headers: myHeaders,
@@ -315,6 +361,7 @@ export default {
           .catch((error) => {console.error(error)});
     },
 
+
     updateProject (projectId) {
       const myHeaders = new Headers();
       myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
@@ -338,6 +385,7 @@ export default {
       const myHeaders = new Headers();
       myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
       myHeaders.append("Content-Type", "application/json");
+      this.adminDropDownShow = false
 
       fetch(`http://62.113.96.171:3000/projects/${projectId}`, {
         method: "PUT",
@@ -350,7 +398,6 @@ export default {
           .then((response) => response.json())
           .then((result) => {
             this.projects = result.projects
-
             this.$emit('updated', this.counter)
 
           })
@@ -432,6 +479,8 @@ export default {
     color: gray;
     background-color: transparent;
     transition: .3s ease;
+    width: 100%;
+    justify-content: start;
     svg {
       path, defs {
         transition: .3s ease;
@@ -716,6 +765,7 @@ export default {
       font-style: normal;
       font-weight: 300;
       line-height: normal;
+      word-break: break-all;
 
 
 
