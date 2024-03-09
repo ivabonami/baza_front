@@ -12,12 +12,8 @@
             type="text"
             placeholder="Название проекта"
             v-model="projectName"
-            v-on:input="(e) => {
-              projectName.length <= 5 ? e.target.classList.add('bad') : e.target.classList.add('ok')
-              projectName.length > 5 ? e.target.classList.remove('bad') : e.target.classList.remove('ok')
-            }"
-
             minlength="5" maxlength="30"
+            ref="projectName"
             required>
         <span class="help">
           Введите название проекта, которое коротко и ясно отражает его суть. От 5 до 30 символов.
@@ -25,8 +21,8 @@
       </div>
 
       <div class="input-wrapper">
-        <select v-model="projectCategory">
-          <option v-for="category of categories" :value="category.id" selected
+        <select v-model="projectCategory" ref="projectCategory">
+          <option :id="category.id" v-for="category of categories" :value="category.id"
           >{{ category.name }}</option>
         </select>
         <span class="help">
@@ -37,6 +33,7 @@
         <div class="fake-input">
           <span class="name">Аватарка *</span>
           <input type="file"
+                 ref="projectAvatar"
                  v-on:change="uploadAvatar($event)"
                  accept="image/*"
           >
@@ -51,6 +48,7 @@
         <div class="fake-input">
           <span class="name">Баннер</span>
           <input type="file"
+
                  v-on:change="uploadBanner($event)"
                  accept="image/*">
         </div>
@@ -63,7 +61,10 @@
 
     </div>
     <div class="right">
-      <textarea placeholder="описание проекта *" required v-model="projectDescription"></textarea>
+      <textarea placeholder="описание проекта *"
+                required
+                ref="projectDescription"
+                v-model="projectDescription"></textarea>
       <span class="help">
         Предоставьте подробное описание проекта, включая его цель, описание продаваемых товаров, что бы пользователь точно понимал что он покупает.
       </span>
@@ -162,13 +163,25 @@
     <button class="btn-filled btn disabled"
 
     v-on:click="() => {
-      previewBeforeUpload()
-      console.log($emit.changeModal)
-      this.showModal = true
+       checkForm ()
+      if (this.errors.length > 0 ) {
+        this.$refs.errors.scrollIntoView({ behavior: 'smooth', block: 'center'})
+      } else {
+        previewBeforeUpload();
+        this.showModal = true
+      }
     }">
       Добавить проект
     </button>
   </div>
+  <div class="errors" ref="errors" v-if="this.errors.length > 0">
+    <h3>Устраните ошибки:</h3>
+    <div class="error" v-for="(error, index) of errors" >
+      {{ index + 1 }}) {{ error }}
+
+    </div>
+  </div>
+
 
 
   <modal-window-backdrop
@@ -187,6 +200,7 @@
 
 <script>
 import modalWindowBackdrop from "../../components/page components/ModalWindowBackdrop.vue";
+import {ref} from "vue";
 export default {
   name: "AddProject.vue",
   components: {modalWindowBackdrop},
@@ -216,6 +230,8 @@ export default {
       acceptableInput: '',
 
       userLoggined: false,
+
+      errors: []
     }
   },
   mounted() {
@@ -328,6 +344,7 @@ export default {
 
     },
     previewBeforeUpload () {
+
       const project = {
         name: this.projectName,
         description: this.projectDescription,
@@ -344,20 +361,23 @@ export default {
       };
       console.log(project.links)
 
+      this.checkForm()
 
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
 
-      fetch(`http://62.113.96.171:3000/projects`, {
-        method: "POST",
-        headers: myHeaders,
-        body: JSON.stringify(project)
-      })
-          .then((response) => response.json())
-          .then(response => console.log(response))
-          .catch((error) => {console.error(error)});
-      console.log(project)
+
+        fetch(`http://62.113.96.171:3000/projects`, {
+          method: "POST",
+          headers: myHeaders,
+          body: JSON.stringify(project)
+        })
+            .then((response) => response.json())
+            .then(response => console.log(response))
+            .catch((error) => {console.error(error)});
+
+
     },
     getCategoryList() {
       const myHeaders = new Headers();
@@ -368,9 +388,45 @@ export default {
         headers: myHeaders,
       })
           .then((response) => response.json())
-          .then((result) => {this.categories = result.categories})
+          .then((result) => {
+            this.categories = result.categories
+            this.projectCategory = result.categories[0].id
+          })
           .catch((error) => {console.error(error)});
     },
+
+    checkForm () {
+      this.errors = []
+      if (this.projectName.length < 5) {
+        this.errors.push('Название проекта должно быть не менее 5 символов')
+        this.$refs.projectName.style.borderColor = 'red'
+      } else {
+        this.$refs.projectName.style.borderColor = '#6C7AFF'
+      }
+
+      if (this.projectDescription.length < 30) {
+        this.errors.push('Описание проекта должно быть не менее 30 символов')
+        this.$refs.projectDescription.style.borderColor = 'red'
+      } else {
+        this.$refs.projectDescription.style.borderColor = '#6C7AFF'
+      }
+
+      if (this.projectCategory.length === 0) {
+        this.errors.push('Не выбрана категория проекта')
+        this.$refs.projectCategory.style.borderColor = 'red'
+      } else {
+        this.$refs.projectCategory.style.borderColor = '#6C7AFF'
+      }
+
+      if (this.projectAvatar.length === 0) {
+        this.errors.push('Аватар не загружен')
+        this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
+        console.log(this.$refs.projectAvatar.parentElement)
+      } else {
+        this.$refs.projectAvatar.parentElement.style.borderColor = '#6C7AFF'
+        console.log(this.$refs.projectAvatar)
+      }
+    }
   },
 }
 </script>
@@ -378,6 +434,18 @@ export default {
 <style scoped lang="scss">
 .not-registered {
   margin-top: 10px;
+}
+.errors {
+  margin-top: 10px;
+  background-color: #ffdada;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 14px;
+
+  .error {
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
 }
 .add {
   border-radius: 10px;

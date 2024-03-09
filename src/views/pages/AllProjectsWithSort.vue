@@ -96,6 +96,11 @@
                   v-bind:avatar="project.avatarFilePath"
                   v-bind:projectCategory="project.categories[0].name"
 
+                  v-on:updated="(emit) => {
+                    this.getProjectsList(this.activeSort, emit)
+
+                   }"
+
     >
 
 
@@ -116,6 +121,7 @@ import projectCard from "../project/ProjectCard.vue";
 export default {
   name: "AllProjectsWithSort.vue",
   components: {recommended, projectCard},
+  emits: ['updated'],
 
   data () {
     return {
@@ -131,6 +137,7 @@ export default {
   mounted() {
     this.getProjectsList(this.activeSort)
   },
+
 
   methods: {
     getProjectsList(sort) {
