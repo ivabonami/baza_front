@@ -72,12 +72,15 @@ export default {
         <div class="content">
 
           <router-view v-slot="{ Component, route }">
-
+            <transition name="slide-fade" mode="out-in">
               <div :key="route">
-                <component :is="Component" :key="route.path"></component>
+                <component :is="Component"></component>
               </div>
 
+            </transition>
           </router-view>
+
+
 
         </div>
       </div>
@@ -94,5 +97,17 @@ export default {
 </template>
 
 <style scoped>
+.slide-fade-enter-active {
+  transition: all 0.2s ease-out;
+}
 
+.slide-fade-leave-active {
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}
 </style>

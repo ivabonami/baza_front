@@ -23,30 +23,26 @@ const router = createRouter({
         {
             path: '/',
             name: 'Home',
-            component: allProjectsWithSort
+            component: allProjectsWithSort,
+            meta: { transitionName: 'slide' }
         },
         {
             path: '/about-project',
             name: 'About project',
             component: AboutProjectView,
-            meta: {
-                transition: 'slide-fade',
-                mode: 'in-out'
-            }
+            meta: { transitionName: 'slide' }
         },
         {
             path: '/advertisement',
             name: 'Advertisement',
             component: AdvertisementView,
-            meta: {
-                transition: 'slide-fade',
-                mode: 'in-out'
-            }
+            meta: { transitionName: 'slide' }
         },
         {
             path: '/guarantee',
             name: 'Guarantee',
-            component: GuaranteeView
+            component: GuaranteeView,
+            meta: { transitionName: 'slide' }
         },
         {
             path: '/projects-list/:id',

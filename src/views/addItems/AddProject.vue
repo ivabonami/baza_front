@@ -498,7 +498,7 @@ export default {
 
       if (this.errors.length > 0 ) {
         setTimeout(()=> {
-          this.$refs.errors.scrollIntoView({ behavior: 'smooth', block: 'center'})
+          this.$refs.errors.scrollIntoView({ behavior: 'smooth', block: 'start'})
         }, 20)
       } else {
         this.previewBeforeUpload();

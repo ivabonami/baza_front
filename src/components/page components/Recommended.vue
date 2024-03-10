@@ -2,46 +2,60 @@
   <div class="tabs">
     <div class="tabs-links">
       <button
-         v-on:click="switchTabs('recommended')"
+         v-on:click=" () => {
+           getProducts('random')
+           switchTabs('recommended')
+         }"
          class="recommended active">
         Рекомендации
       </button>
       <button
-         v-on:click="switchTabs('fresh')"
+         v-on:click=" () => {
+           getProducts('newest')
+           switchTabs('fresh')
+         }"
          class="fresh">
         Новые
       </button>
     </div>
     <div class="tabs-content" >
       <div class="shop-view"
-           v-for="(item, index, selectedId) in this.recommendedShops"
            v-if="this.tab === 'recommended'"
-
-
-
       >
         <services-card
-            v-on:click="$router.push(`/project/id2/`);"
-            v-bind:tab="description"
-            v-bind:selectedId="1"
+            v-for="(item, index) in products"
+            v-bind:name="item.name"
+            v-bind:image="`http://62.113.96.171:3000/${item.avatarFilePath}`"
+            v-bind:description="item.description"
+            v-bind:id="item.id"
+            v-bind:projectId="item.ProjectId"
+            v-bind:isOwner="true"
+            v-bind:clickable="true"
+
+
 
         >
-          <img :src="item.image" alt="" >
-          <div class="shop-heading">
-            <span>{{ item.name }}</span>
-          </div>
         </services-card>
 
       </div>
 
       <div class="shop-view"
-           v-for="(item, index) in this.recommendedShops"
            v-if="this.tab === 'fresh'"
-           v-on:click="$router.push(`/project/id${item.id}`)">
-        <img :src="item.image" alt=""v-if="index < 4">
-        <div class="shop-heading"v-if="index < 4">
-          <span>{{ item.name }}</span>
-        </div>
+           >
+        <services-card
+            v-for="(item, index) in products"
+            v-bind:name="item.name"
+            v-bind:image="`http://62.113.96.171:3000/${item.avatarFilePath}`"
+            v-bind:description="item.description"
+            v-bind:id="item.id"
+            v-bind:projectId="item.ProjectId"
+            v-bind:isOwner="true"
+            v-bind:clickable="true"
+
+
+
+        >
+        </services-card>
       </div>
     </div>
   </div>
@@ -51,19 +65,22 @@
 
 import { ref } from 'vue'
 import ProjectsView from "../../views/project/ProjectsView.vue";
-import ServicesCard from "../../views/project/ServicesCard.vue";
+import servicesCard from "../../views/project/ServicesCard.vue";
+
 
 export default {
   name: "Recommended.vue",
-  components: {},
+  components: {servicesCard},
 
 
   data() {
     return {
       recommendedShops: ref(null),
-      tab: 'recommended'
+      tab: 'recommended',
+      products: []
     }
-  }, methods: {
+  },
+  methods: {
     switchTabs(tab) {
       if (tab === 'recommended') {
         this.tab = 'recommended'
@@ -78,20 +95,32 @@ export default {
       }
     },
 
+    getProducts(sort) {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+      const projectId = window.location.pathname.replace('/project/', '');
+
+      const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+      };
+
+      fetch(`http://62.113.96.171:3000/products?limit=4&sort=${sort}`, requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            this.products = result.products
+            console.log(result.products)
+          })
+          .catch((error) => console.error(error));
+
   },
-  created() {
 
-
-  },
-
+},
   mounted() {
-    fetch('https://run.mocky.io/v3/6bab9566-ba3c-4c66-aa0d-62fa77e610e8')
-        .then((res) => res.json())
-        .then((json) => {
-          this.recommendedShops = json
-        })
-
+    this.getProducts('random')
   }
+
 }
 </script>
 
@@ -105,20 +134,8 @@ export default {
   gap: 20px;
 
   .shop-view {
-    max-width: 230px;
-
-    img {
-      width: 100%;
-      border-radius: 15px;
-
-    }
-    .shop-heading {
-      font-family: Montserrat;
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 600;
-      margin-top: 10px;
-    }
+    display: flex;
+    width: 100%;
   }
 }
 
