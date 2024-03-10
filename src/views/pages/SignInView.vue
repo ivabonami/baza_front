@@ -26,19 +26,23 @@
   </div>
 
   <div class="form"
+       @keydown.enter="signUp()"
        v-if="this.state === 'signUp'">
     <div class="h2">Регистрация</div>
     <input type="text"
            id="sign-in-password"
            v-model="inputUsername"
+           ref="inputUsername"
            class="input"
            placeholder="Логин">
     <input type="password"
            id="sign-in-password"
+           ref="inputPassword"
            v-model="inputPassword"
            class="input"
            placeholder="Пароль">
     <input type="password"
+           ref="inputRepeatPassword"
            id="sign-in-password"
            v-model="inputRepeatPassword"
            class="input"
@@ -50,6 +54,18 @@
     v-on:click="this.signInSwitch()">
       У меня есть аккаунт, войти
     </button>
+
+    <div class="error-box" v-if="this.credentialsError !== ''">
+      {{this.credentialsError}}
+    </div>
+
+    <div class="errors" ref="errors" v-if="this.errors.length > 0">
+      <h3>Устраните ошибки:</h3>
+      <div class="error" v-for="(error, index) of errors" >
+        {{ index + 1 }}) {{ error }}
+
+      </div>
+    </div>
   </div>
 </template>
 
@@ -65,6 +81,8 @@ export default {
 
       state: 'signIn',
       credentialsError: '',
+
+      errors: []
 
 
     }
@@ -93,9 +111,10 @@ export default {
           .then((response) => response.json())
           .then((result) => {
             if (result.success === false) {
-              this.credentialsError = result.message
+              result.message === 'User not found' ? this.credentialsError = 'Такого пользователя не существует' : this.credentialsError = result.message
+
               console.log(result)
-              this.$router.go()
+
             } else {
               localStorage.setItem('token', result.token)
               if (this.inputUsername === 'admin') {
@@ -112,7 +131,39 @@ export default {
           });
 
     },
+    checkForm () {
+      this.errors = []
 
+      console.log(this.$refs)
+
+      if (this.projectName.length < 5) {
+        this.errors.push('Название услуги должно быть не менее 5 символов')
+        this.$refs.projectName.style.borderColor = 'red'
+      } else {
+        this.$refs.projectName.style.borderColor = '#6C7AFF'
+      }
+
+      if (this.projectDescription.length < 30) {
+        this.errors.push('Описание услуги не должно быть меньше 30 символов')
+        this.$refs.projectDescription.style.borderColor = 'red'
+      } else {
+        this.$refs.projectDescription.style.borderColor = '#6C7AFF'
+      }
+
+      if (this.errors.length > 0 ) {
+        setTimeout(()=> {
+          this.$refs.errors.scrollIntoView({ behavior: 'smooth', block: 'nearest'})
+        }, 20)
+      } else {
+        this.editable = false
+        this.$emit('changed', {
+          id: this.$props.id,
+          newName: this.projectName,
+          newDescription: this.projectDescription
+        })
+      }
+
+    },
     signUp() {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -128,24 +179,41 @@ export default {
         })
             .then((response) => response.json())
             .then((result) => {
-              fetch("http://62.113.96.171:3000/login", {
-                method: "POST",
-                headers: myHeaders,
-                body: JSON.stringify({
-                  username: this.inputUsername,
-                  password: this.inputPassword
-                }),
-              })
-                  .then((response) => response.json())
-                  .then((result) => {
-                    localStorage.setItem('token', result.token)
-                    localStorage.setItem('username', this.inputUsername)
-                    this.credentialsError = result.message
-                    this.$router.go()
-                  })
-                  .catch((error) => {
-                    console.log('messageE:', error.message)
-                  });
+
+              if (result.success === false) {
+                switch (result.message) {
+
+                  case 'Username and password are required':
+                    this.credentialsError = 'Не введен логин и пароль'
+                    break
+                  case "Username already exists":
+                    this.credentialsError = 'Такой пользователь существует'
+                    break
+                  case '':
+                    this.credentialsError = ''
+                    break
+                }
+              } else {
+                fetch("http://62.113.96.171:3000/login", {
+                  method: "POST",
+                  headers: myHeaders,
+                  body: JSON.stringify({
+                    username: this.inputUsername,
+                    password: this.inputPassword
+                  }),
+                })
+                    .then((response) => response.json())
+                    .then((result) => {
+                      localStorage.setItem('token', result.token)
+                      localStorage.setItem('username', this.inputUsername)
+                      this.$router.go()
+
+                    })
+                    .catch((error) => {
+                      console.log('messageE:', error.message)
+                    });
+              }
+
             })
             .catch((error) => {
               console.log('messageE:', error.message)
