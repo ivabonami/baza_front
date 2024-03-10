@@ -136,6 +136,15 @@ export default {
   .shop-view {
     display: flex;
     width: 100%;
+
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .tabs-content {
+    .shop-view {
+      flex-wrap: wrap;
+    }
   }
 }
 

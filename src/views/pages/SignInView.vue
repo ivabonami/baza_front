@@ -119,9 +119,11 @@ export default {
               localStorage.setItem('token', result.token)
               if (this.inputUsername === 'admin') {
                 localStorage.setItem('role', 'admin')
-                this.$router.go()
+
               }
+
               localStorage.setItem('username', this.inputUsername)
+              this.$router.go()
             }
 
 

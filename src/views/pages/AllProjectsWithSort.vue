@@ -9,7 +9,7 @@
     <button class="btn btn-sort-switcher" v-on:click="() => {
       this.activeSort = 'random'
       this.getOffset = 0
-      this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true)
+      this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true, this.searchStatus)
       this.activeSortTab = 'random'
     }"
             :class="{ active: activeSortTab === 'random' }">
@@ -27,7 +27,7 @@
       this.activeSort === 'oldest' ? this.activeSort = 'newest' : this.activeSort = 'oldest'
       this.arrowDate === 'up' ? this.arrowDate = 'down' : this.arrowDate = 'up'
       this.getOffset = 0
-      this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true)
+      this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true, this.searchStatus)
       this.activeSortTab = 'date'
 
       console.log(this.activeSort)
@@ -48,7 +48,7 @@
       this.arrowRating === 'up' ? this.arrowRating = 'down' : this.arrowRating = 'up'
       this.activeSortTab = 'rating'
       this.getOffset = 0
-      this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true)
+      this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true, this.searchStatus)
 
     }"
             :class="{ active: activeSortTab === 'rating' }">
@@ -63,7 +63,36 @@
       }" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 263.08 74.2"><path d="M254.57,74.2c-1.3,0-2.63-.3-3.87-.94L149.13,21.23c-11.02-5.64-24.17-5.64-35.19,0L12.38,73.26c-4.18,2.14-9.3,.49-11.44-3.69-2.14-4.18-.49-9.3,3.69-11.44L106.19,6.1c15.87-8.13,34.82-8.13,50.69,0l101.57,52.04c4.18,2.14,5.83,7.26,3.69,11.44-1.5,2.94-4.48,4.63-7.57,4.63Z"/></svg>
 
     </button>
+
+    <div class="search" v-on:keydown.enter="() => {
+      this.getOffset = 0
+      lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false, true)
+    }">
+      <input type="search" placeholder="Искать продавца или магазин " v-model="searchQuery">
+      <button class="clearQ"
+              v-if="searchQuery !== ''"
+              v-on:click="() => {
+      this.searchQuery = ''
+      lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false)
+    }">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 14 13" fill="none">
+          <path d="M1 0.5L13 12.5M1 12.5L13 0.5" stroke="#2B2B2B"/>
+        </svg>
+      </button>
+
+      <button class="searchQ"
+      v-on:click="() => {
+      this.getOffset = 0
+      lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false, true)
+    }">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M16.0192 14.6473C16.1135 14.7262 16.2098 14.7948 16.2924 14.877C17.4092 15.9915 18.5222 17.1094 19.6408 18.2221C19.9431 18.5232 20.0764 18.8698 19.9558 19.2845C19.7436 20.0111 18.8578 20.2413 18.3001 19.7087C17.8035 19.2338 17.3256 18.7397 16.8397 18.2531C16.106 17.5185 15.3723 16.7834 14.6301 16.0395C12.2652 17.8276 9.64012 18.4274 6.76629 17.7115C4.56655 17.1634 2.82168 15.9094 1.54672 14.032C-1.02481 10.2472 -0.32677 5.18447 3.17141 2.14558C6.54706 -0.787156 11.7014 -0.704961 15.0583 2.34144C18.456 5.42495 19.0761 10.739 16.0192 14.6478V14.6473ZM2.00159 8.99083C1.99033 12.8366 5.12329 15.9854 8.97682 16.0009C12.8393 16.0169 15.991 12.8846 16.0018 9.01948C16.0126 5.15347 12.8937 2.01689 9.01766 1.99481C5.17352 1.97321 2.01286 5.12482 2.00159 8.99083Z" fill="#6C7AFF"/>
+        </svg>
+      </button>
+    </div>
+
   </div>
+
 
   <div class="projects-wrapper">
 
@@ -96,7 +125,7 @@
 
 
       </project-card>
-      <div v-else class="noProjects">
+      <div v-else-if="lazyProjects.length <= 1" class="noProjects">
         <svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58" fill="none">
           <g clip-path="url(#clip0_380_7664)">
             <path d="M26.8089 0C28.2705 0 29.7295 0 31.1911 0C31.4772 0.0721778 31.7608 0.172711 32.0521 0.211378C44.129 1.84569 52.2593 8.43964 56.4353 19.8308C57.2473 22.0503 57.4922 24.476 58 26.8089V31.1911C57.9252 31.5185 57.8144 31.8433 57.7809 32.1758C56.6364 43.5309 48.4313 53.4812 37.4448 56.7008C35.4084 57.2963 33.2791 57.5747 31.1911 58H26.8089C26.5202 57.9278 26.2366 57.8196 25.9453 57.7912C14.0515 56.5874 4.02907 48.0343 1.01564 36.4524C0.567111 34.7278 0.332533 32.9466 0 31.1911C0 29.7295 0 28.2705 0 26.8089C0.0747556 26.4815 0.172711 26.1593 0.219111 25.8293C1.85084 14.0927 8.18444 6.02169 19.2302 1.7864C21.6327 0.866133 24.2749 0.577422 26.8089 0ZM3.35111 28.8685C3.35369 43.2628 14.6882 54.6412 29.0284 54.6489C43.1881 54.654 54.6515 43.2061 54.6489 29.0619C54.6489 14.8428 43.2577 3.35369 29.1572 3.35111C14.8377 3.34853 3.34853 14.7114 3.35111 28.8685Z" fill="#C8716B"/>
@@ -109,7 +138,7 @@
             </clipPath>
           </defs>
         </svg>
-        <span>У этой категории еще нет проектов.</span>
+        <span>Нет проектов.</span>
 
       </div>
     </div>
@@ -169,14 +198,17 @@ export default {
       getOffset: 0,
       getLimit: 5,
       lazyProjects: [],
-      emptyResponse: false
+      emptyResponse: false,
+
+      searchQuery: '',
+      searchStatus: false,
     }
   },
   mounted() {
     this.handleScroll()
 
     if (this.lazyProjects.length < 1) {
-      this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false)
+      this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false, false)
     }
   },
 
@@ -194,7 +226,7 @@ export default {
       }
 
     },
-    lazyProjectLoad (sort, offset, limit, global) {
+    lazyProjectLoad (sort, offset, limit, global, search) {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
@@ -204,10 +236,24 @@ export default {
       if(global === true) {
         this.getOffset = 0
       }
+
+
       let url = `http://62.113.96.171:3000/projects?isPayedFirst=true&sort=${sort}&offset=${offset}&limit=${limit}`
 
-      if (this.$route.path !== '/') {
+      if (this.$route.path !== '/' && search === false ) {
+        this.lazyProjects = []
+        this.getOffset = 0
         url = `http://62.113.96.171:3000/projects?isPayedFirst=true&sort=${sort}&offset=${offset}&limit=${limit}&categoryIds=[${category}]`
+      } else if(this.$route.path === '/' && this.searchQuery !== '') {
+        this.lazyProjects = []
+        this.getOffset = 0
+        url = `http://62.113.96.171:3000/projects?isPayedFirst=true&sort=${sort}&offset=${offset}&limit=${limit}&search=${this.searchQuery}`
+
+      } else if (this.$route.path !== '/' && this.searchQuery !== '') {
+        this.lazyProjects = []
+        this.getOffset = 0
+        url = `http://62.113.96.171:3000/projects?isPayedFirst=true&sort=${sort}&offset=${offset}&limit=${limit}&categoryIds=[${category}]&search=${this.searchQuery}`
+
       }
 
       fetch(url, {
@@ -219,7 +265,7 @@ export default {
             if (this.$route.path === '/') {
               console.log(result)
 
-              if(global === true) {
+              if(global === true || this.searchQuery !== '') {
                 this.lazyProjects = []
               }
 
@@ -319,7 +365,7 @@ export default {
 }
 .search {
   position: relative;
-  width: 40%;
+  width: 100%;
   input[type=search] {
     background-color: #ffffff;
     width: 100%;
@@ -347,12 +393,22 @@ export default {
     }
 
   }
-  button {
+  .searchQ {
     position: absolute;
     right: 15px;
     cursor: pointer;
     width: 20px;
     top: 3px;
+    border: none;
+    background-color: transparent;
+
+  }
+  .clearQ {
+    position: absolute;
+    right: 35px;
+    cursor: pointer;
+    width: 20px;
+    top: 6px;
     border: none;
     background-color: transparent;
 
