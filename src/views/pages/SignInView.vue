@@ -111,7 +111,20 @@ export default {
           .then((response) => response.json())
           .then((result) => {
             if (result.success === false) {
-              result.message === 'User not found' ? this.credentialsError = 'Такого пользователя не существует' : this.credentialsError = result.message
+
+              switch (result.message){
+                case "User not found":
+                  this.credentialsError = 'Такого пользователя не существует'
+                  break;
+
+                case "Invalid credentials":
+                  this.credentialsError = 'Пароль введен не верно'
+                  break;
+
+                case "Username and password are required":
+                  this.credentialsError = 'Вы не ввели логин и/или пароль'
+                  break;
+              }
 
               console.log(result)
 
@@ -154,7 +167,7 @@ export default {
 
       if (this.errors.length > 0 ) {
         setTimeout(()=> {
-          this.$refs.errors.scrollIntoView({ behavior: 'smooth', block: 'nearest'})
+          this.$refs.errors.scrollIntoView({ behavior: 'smooth', block: 'center'})
         }, 20)
       } else {
         this.editable = false

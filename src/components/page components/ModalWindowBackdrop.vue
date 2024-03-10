@@ -56,16 +56,6 @@
            v-if="$props.descriptionType === 'text' || $props.descriptionType === 'textApprove'">
         {{ $props.description }}
 
-        <div class="buttons">
-          <button class="btn confirm"
-                  :class="{ approve: $props.descriptionType === 'textApprove'}"
-                  @click="() => {
-                    this.$router.push('/')
-                  }">
-            Закрыть
-
-          </button>
-        </div>
       </div>
 
       <div class="confirm"

@@ -24,18 +24,27 @@
 
 
         <div class="favorite"
-             v-if="isLoggined === true"
+             v-if="isLoggined === true && isFavourite === false"
              v-on:click="() => {
-               !favorite ? favorite = true : favorite = false
+
                addFavorite(projectId)
+               this.isFavourite = true
+
              }"
-              :class="{active: favorite}">
-          <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 118.65 106.19">
-            <path class="b"
-                  d="M59.29,105.69c-.11,0-.18-.02-.2-.03-15.22-8.34-26.8-16.62-36.43-26.05-7.62-7.46-13.18-14.96-17.01-22.93C1.93,48.91,.25,41.6,.53,34.33,.99,22.39,5.81,12.96,14.86,6.29,20,2.5,25.92,.5,31.98,.5c7.57,0,14.91,3.15,20.65,8.88,1.44,1.44,2.72,3.11,3.96,4.72,.58,.75,1.15,1.5,1.74,2.23,.12,.15,.23,.32,.35,.49l.58,.84,.42-.56c.38-.51,.75-1.02,1.11-1.53,.79-1.1,1.54-2.13,2.37-3.14,4.85-5.91,10.3-9.52,16.67-11.04,2.4-.57,4.78-.86,7.08-.86,6.72,0,13.06,2.46,18.85,7.31,6.8,5.7,10.86,13.32,12.06,22.66,1.14,8.85-.6,17.74-5.33,27.19-4.04,8.07-9.91,15.69-17.96,23.31-8.46,8.02-18.31,15.15-30.98,22.43-1.25,.72-2.6,1.48-3.98,2.21-.05,.02-.15,.05-.27,.05Z"/>
-            <path class="b"
-                  d="M31.98,0V1c7.44,0,14.65,3.1,20.3,8.74,1.42,1.41,2.69,3.07,3.92,4.67,.57,.74,1.15,1.5,1.75,2.24,.11,.14,.21,.29,.31,.45,.06,.09,.12,.19,.19,.28l.79,1.15,.83-1.12c.38-.51,.75-1.02,1.11-1.53,.79-1.09,1.54-2.13,2.35-3.12,4.78-5.82,10.14-9.38,16.4-10.87,2.36-.56,4.7-.85,6.97-.85,6.6,0,12.83,2.42,18.53,7.19,6.7,5.61,10.7,13.13,11.88,22.34,1.13,8.75-.6,17.55-5.28,26.9-4.01,8.01-9.85,15.59-17.85,23.17-8.32,7.88-18.42,15.2-30.89,22.36-1.25,.72-2.6,1.48-3.93,2.18,0,0-.03,0-.08,0h-.01c-15.15-8.31-26.68-16.55-36.26-25.93-7.58-7.42-13.11-14.88-16.91-22.79-3.7-7.7-5.36-14.94-5.08-22.12C1.49,22.57,6.24,13.26,15.15,6.7,20.21,2.97,26.03,1,31.98,1V0m0,0c-6.01,0-12.06,1.94-17.42,5.89C5.03,12.91,.48,22.63,.03,34.31c-.31,7.97,1.75,15.45,5.18,22.59,4.22,8.79,10.19,16.29,17.11,23.07,10.82,10.6,23.31,18.88,36.54,26.13,.11,.06,.27,.09,.44,.09,.18,0,.37-.04,.5-.11,1.35-.71,2.68-1.46,4-2.22,11.15-6.41,21.71-13.63,31.08-22.5,7.25-6.87,13.56-14.47,18.06-23.45,4.33-8.65,6.63-17.73,5.38-27.47-1.18-9.18-5.1-17.01-12.23-22.98C100.31,2.63,93.92,.03,86.91,.03c-2.33,0-4.73,.29-7.2,.88-6.97,1.67-12.45,5.74-16.94,11.21-1.22,1.49-2.31,3.08-3.49,4.68-.19-.28-.35-.55-.55-.79-1.9-2.34-3.62-4.87-5.74-6.99C46.99,3.05,39.52,0,31.98,0h0Z"/>
-          </svg>
+             :class="{ active: this.isFavourite }">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path fill="#00192E" fill-rule="evenodd" d="M12 22c-.316-.02-.56-.147-.848-.278a23.5 23.5 0 0 1-4.781-2.942C3.777 16.705 1 13.449 1 9a6 6 0 0 1 6-6 6.18 6.18 0 0 1 5 2.568A6.18 6.18 0 0 1 17 3a6 6 0 0 1 6 6c0 4.448-2.78 7.705-5.375 9.78a23.6 23.6 0 0 1-4.78 2.942c-.543.249-.732.278-.845.278M7 5a4 4 0 0 0-4 4c0 3.552 2.218 6.296 4.621 8.22A21.5 21.5 0 0 0 12 19.91a21.6 21.6 0 0 0 4.377-2.69C18.78 15.294 21 12.551 21 9a4 4 0 0 0-4-4c-1.957 0-3.652 1.396-4.02 3.2a1 1 0 0 1-1.96 0C10.652 6.396 8.957 5 7 5" clip-rule="evenodd"></path><path fill="white" fill-rule="evenodd" d="M12 22c-.285-.018-.512-.123-.764-.24l-.084-.038a23.5 23.5 0 0 1-4.781-2.942C3.777 16.705 1 13.449 1 9a6 6 0 0 1 6-6 6.18 6.18 0 0 1 5 2.568q.3-.418.666-.78A6.18 6.18 0 0 1 17 3a6 6 0 0 1 6 6c0 4.448-2.78 7.705-5.375 9.78a23.6 23.6 0 0 1-4.78 2.942c-.543.249-.732.278-.845.278m0-17.959A7.18 7.18 0 0 1 17 2a7 7 0 0 1 7 7c0 4.897-3.061 8.41-5.75 10.562a24.6 24.6 0 0 1-4.989 3.07c-.566.258-.92.368-1.261.368h-.032l-.033-.002c-.484-.032-.881-.218-1.12-.33l-.077-.036a24.5 24.5 0 0 1-4.991-3.07C3.056 17.408 0 13.895 0 9a7 7 0 0 1 7-7c1.918 0 3.701.776 5 2.041M3 9a4 4 0 0 1 4-4c1.957 0 3.652 1.396 4.02 3.2a1 1 0 0 0 1.96 0C13.348 6.396 15.043 5 17 5a4 4 0 0 1 4 4c0 3.552-2.22 6.295-4.625 8.22A21.6 21.6 0 0 1 12 19.91a21.5 21.5 0 0 1-4.377-2.69C5.217 15.295 3 12.551 3 9" clip-rule="evenodd"></path></svg>
+        </div>
+
+        <div class="favorite"
+             v-if="isLoggined === true && isFavourite === true"
+             v-on:click="() => {
+
+               deleteFavorite(projectId)
+               this.isFavourite = false
+
+             }"
+             :class="{ active: this.isFavourite }">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path fill="#F8104B" fill-rule="evenodd" d="M12 22c-.316-.02-.56-.147-.848-.278a23.5 23.5 0 0 1-4.781-2.942C3.777 16.705 1 13.449 1 9a6 6 0 0 1 6-6 6.18 6.18 0 0 1 5 2.568A6.18 6.18 0 0 1 17 3a6 6 0 0 1 6 6c0 4.448-2.78 7.705-5.375 9.78a23.6 23.6 0 0 1-4.78 2.942c-.543.249-.732.278-.845.278" clip-rule="evenodd"></path></svg>
         </div>
       </div>
       <div class="project-body" v-on:click="$router.push('/project/' + projectId)">
@@ -43,9 +52,11 @@
           <div class="name hoverable">
             {{ $props.projectName }}
 
-            <img src="./../../assets/images/verified.webp"
-                 class="verified"
-                 title="Проверенный магазин">
+
+
+<!--            <img src="./../../assets/images/verified.webp"-->
+<!--                 class="verified"-->
+<!--                 title="Проверенный магазин">-->
 
           </div>
 
@@ -263,7 +274,7 @@ import { ref } from "vue";
 export default {
   name: "ProjectCard.vue",
   components: { ProjectsView, modalWindowBackdrop },
-  props: ['projectId', 'minValueToExchange', 'isExchanger', 'exchangeRate', 'reserve', 'avatar', 'payed', 'projectName', 'projectDescription', 'projectCreateDate', 'projectViews', 'projectRating', 'reviewed', 'projectCategory'],
+  props: ['projectId', 'favourite', 'minValueToExchange', 'isExchanger', 'exchangeRate', 'reserve', 'avatar', 'payed', 'projectName', 'projectDescription', 'projectCreateDate', 'projectViews', 'projectRating', 'reviewed', 'projectCategory'],
   emits: ['updated'],
 
   setup(props, emits) {
@@ -286,7 +297,8 @@ export default {
       adminDropDownShow: false,
       counter: 0,
       isLoggined: false,
-      reviewsCount: 0
+      reviewsCount: 0,
+      isFavourite: false
 
 
     }
@@ -298,19 +310,23 @@ export default {
   mounted() {
     this.checkIsAdmin()
     this.getReviews(this.$props.projectId)
+    console.log(this.$props.favourite)
+
+    if (this.$props.favourite === 1) {
+      this.isFavourite = true
+    } else {
+      this.isFavourite = false
+    }
+
 
 
     localStorage.getItem('token') ? this.isLoggined = true : this.isLoggined = false
   },
   methods: {
+
     checkIsAdmin () {
       const token = localStorage.getItem('token')
       const role = localStorage.getItem('role')
-
-      console.log(this.isLoggined)
-
-
-
       if (role === 'admin' && token !== '') {
         this.isAdmin = true
       } else {
@@ -322,8 +338,27 @@ export default {
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
 
-      fetch(`http://62.113.96.171:3000/projects/${projectId}`, {
-        method: "PUT",
+      fetch(`http://62.113.96.171:3000/user/project/${projectId}`, {
+        method: "POST",
+        headers: myHeaders,
+        body: JSON.stringify(
+            {
+              status: 'favorite'
+            }
+        )
+      })
+          .then((response) => response.json())
+          .then((res) => { console.log(res) })
+          .catch((error) => {console.error(error)});
+    },
+
+    deleteFavorite(projectId) {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+
+      fetch(`http://62.113.96.171:3000/user/project/${projectId}`, {
+        method: "DELETE",
         headers: myHeaders,
         body: JSON.stringify(
             {
@@ -350,7 +385,6 @@ export default {
     getReviews (projectId, offset) {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-      console.log(this.getOffset)
       const requestOptions = {
         method: "GET",
         headers: myHeaders,
@@ -416,7 +450,7 @@ export default {
           .then((response) => response.json())
           .then((result) => {
             this.projects = result.projects
-            this.$emit('updated', this.counter)
+            this.$emit('updated', projectId)
 
           })
           .catch((error) => {console.error(error)});
@@ -626,6 +660,7 @@ export default {
 
   .avatar {
     flex-basis: 110px;
+    height: 110px;
     flex-shrink: 0;
     flex-grow: 0;
     display: block;
@@ -656,33 +691,14 @@ export default {
     }
     .favorite {
       position: absolute;
-      right: 10px;
-      top: 10px;
+      right: 5px;
+      top: 5px;
       border-radius: 400px;
-      background-color: rgba(0,0,0,.5);
       padding: 4px;
       transition: .3s ease;
-      svg {
-        padding: 4px 2px;
-        transition: .3s ease;
-        width: 17px;
-        height: 14px;
 
-        path {
-          fill: transparent;
-          stroke: #fff;
-          stroke-linejoin: round;
-          stroke-linecap: round;
-          stroke-width: 5px;
-          transition: .3s ease;
-        }
-      }
-      &.active {
-        svg {
-          path {
-            fill: #fff;
-          }
-        }
+      svg {
+
       }
     }
   }
@@ -702,14 +718,16 @@ export default {
     flex-basis: 100%;
     .project-top {
       display: flex;
+      width: 100%;
       justify-content: space-between;
       align-items: center;
-      width: 100%;
+
 
       .name {
         display: flex;
         align-items: center;
         gap: 20px;
+        word-break: break-all;
 
         color: var(--secondary, #2B2B2B);
         font-family: Montserrat;
@@ -726,7 +744,11 @@ export default {
       }
       .rating {
         display: flex;
+        flex-basis: 23%;
         align-items: center;
+        .stars {
+          width: 100%;
+        }
         .rate {
           margin-right: 10px;
           color: #000;
@@ -740,6 +762,8 @@ export default {
         }
         .stars {
           .project-rating {
+            width: 100%;
+            justify-content: end;
             display: flex;
             align-items: center;
             svg {

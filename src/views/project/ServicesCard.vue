@@ -126,7 +126,7 @@ export default {
 
       if (this.errors.length > 0 ) {
         setTimeout(()=> {
-          this.$refs.errors.scrollIntoView({ behavior: 'smooth', block: 'nearest'})
+          this.$refs.errors.scrollIntoView({ behavior: 'smooth', block: 'center'})
         }, 20)
       } else {
         this.editable = false
@@ -165,7 +165,7 @@ export default {
 
 
 .service-card {
-  width: 29%;
+  width: 46%;
   margin-bottom: 5px;
   padding: 5px;
   position: relative;
@@ -262,13 +262,15 @@ export default {
     background-color: #ffffff;
     border-radius: 10px;
     width: 100%;
-    height: 120px;
+    height: 160px;
     overflow: hidden;
     display: block;
+    text-align: center;
 
     img {
-      width: 100%;
-      min-height: 100%;
+      width: auto;
+
+      height: 160px;
     }
   }
   .service-header {

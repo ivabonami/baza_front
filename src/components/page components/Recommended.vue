@@ -6,7 +6,10 @@
            getProducts('random')
            switchTabs('recommended')
          }"
-         class="recommended active">
+         class="recommended"
+        :class="{
+           active: this.tab === 'recommended'
+        }">
         Рекомендации
       </button>
       <button
@@ -14,7 +17,10 @@
            getProducts('newest')
            switchTabs('fresh')
          }"
-         class="fresh">
+         class="fresh"
+         :class="{
+           active: this.tab === 'fresh'
+        }">
         Новые
       </button>
     </div>
@@ -29,7 +35,7 @@
             v-bind:description="item.description"
             v-bind:id="item.id"
             v-bind:projectId="item.ProjectId"
-            v-bind:isOwner="true"
+            v-bind:isOwner="false"
             v-bind:clickable="true"
 
 
@@ -82,17 +88,7 @@ export default {
   },
   methods: {
     switchTabs(tab) {
-      if (tab === 'recommended') {
-        this.tab = 'recommended'
-        document.querySelector('.recommended').classList.add('active')
-        document.querySelector('.fresh').classList.remove('active')
-
-      } else if (tab === 'fresh') {
-        this.tab = 'fresh'
-        document.querySelector('.recommended').classList.remove('active')
-        document.querySelector('.fresh').classList.add('active')
-
-      }
+      this.tab = tab
     },
 
     getProducts(sort) {
@@ -106,7 +102,7 @@ export default {
         headers: myHeaders,
       };
 
-      fetch(`http://62.113.96.171:3000/products?limit=4&sort=${sort}`, requestOptions)
+      fetch(`http://62.113.96.171:3000/products?limit=3&sort=${sort}`, requestOptions)
           .then((response) => response.json())
           .then((result) => {
             this.products = result.products

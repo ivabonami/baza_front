@@ -5,6 +5,11 @@
         <input
             class="name"
             v-model="newCategoryName"
+            v-on:keydown.enter="() => {
+                  updateCategoryList(newCategoryName, category.id)
+                  $emit('someChanges', editCategoryName)
+                  this.editCategoryName = 0
+                }"
             v-if="this.editCategoryName === category.id">
         <span class="name" v-else>
           {{ category.name }}
@@ -136,7 +141,6 @@
 
 
 
-
   </div>
 
 
@@ -170,6 +174,8 @@
 
 <script>
 import modalWindowBackdrop from "../../components/page components/ModalWindowBackdrop.vue";
+import Vuex from "vuex";
+
 
 export default {
   name: "ShopsCategories.vue",
@@ -186,15 +192,20 @@ export default {
     }
   },
   components: { modalWindowBackdrop },
-  created() {
-
+  watch: {
+    categories: function(value) {
+      // If "pageData" ever changes, then we will console log its new value.
+      this.$forceUpdate()
+      console.log(value);
+    }
   },
   mounted() {
     this.getCategoryList()
+
   },
 
   updated() {
-    // this.getCategoryList()
+
   },
 
   methods: {
@@ -216,6 +227,7 @@ export default {
     },
 
     updateCategoryList(target, id) {
+
       const myHeaders = new Headers();
       myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
       myHeaders.append("Content-Type", "application/json");

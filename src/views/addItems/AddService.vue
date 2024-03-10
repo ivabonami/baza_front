@@ -1,5 +1,5 @@
 <template>
-  <h1>Добавить услуг в проект:</h1>
+  <h1>Добавить услугу в проект:</h1>
 
   <div class="add-project form-wrapper">
     <div class="left">
@@ -8,11 +8,11 @@
             type="text"
             placeholder="Название проекта"
             v-model="productName"
-            minlength="5" maxlength="30"
+            minlength="5" maxlength="255"
             ref="productName"
             required>
         <span class="help">
-          Введите название проекта, которое коротко и ясно отражает его суть. От 5 до 30 символов.
+          Введите название услуги, которое коротко и ясно отражает его суть. От 5 до 255 символов.
         </span>
       </div>
 
@@ -24,6 +24,7 @@
                  ref="projectAvatar"
                  v-on:change="uploadAvatar($event)"
                  accept="image/*"
+
           >
         </div>
         <span class="help">
@@ -34,6 +35,7 @@
       <textarea placeholder="описание проекта *"
                 required
                 ref="productDescription"
+                maxlength="65535"
                 v-model="productDescription"></textarea>
       <span class="help">
         Предоставьте подробное описание услуги, включая еу цель, описание продаваемого товара, что бы пользователь точно понимал что он покупает.
@@ -71,6 +73,8 @@ export default {
       counter: 0,
       errors: [],
       addedId: 0,
+      avatarError: false,
+      avatarErrorPusher: false
     }
   },
 
@@ -79,7 +83,7 @@ export default {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
-
+      this.counter++
 
       fetch(`http://62.113.96.171:3000/products`, {
         method: "POST",
@@ -93,7 +97,19 @@ export default {
         })
       })
           .then((response) => response.json())
-          .then(response => console.log(response))
+          .then(response => {
+            if (response.success === true) {
+              console.log(response)
+
+              this.counter++
+              this.$emit('added',this.counter )
+
+            }
+            else {
+              this.errors.push(response.message)
+              console.log(response)
+            }
+          })
           .catch((error) => {console.error(error)});
     },
 
@@ -103,6 +119,8 @@ export default {
       this.projectAvatar = e.target;
       const image = e.target.files[0]
 
+      console.log(this.$refs.projectAvatar.parentElement)
+
       console.log(image)
       const myHeaders = new Headers();
       // myHeaders.append("Content-Type", "image/webp");
@@ -111,16 +129,34 @@ export default {
       const formData = new FormData();
       formData.append("image-upload", image );
 
-      console.log(formData)
-      fetch("http://62.113.96.171:3000/image-upload", {
-        method: "POST",
-        headers: myHeaders,
-        body: formData,
-        redirect: "follow"
-      })
-          .then((response) => response.json())
-          .then((result) => this.projectAvatar = result.filePath)
-          .catch((error) => console.error(error));
+      if (e.target.files[0].type !== "image/jpeg" &&
+          e.target.files[0].type !== "image/jpg" &&
+          e.target.files[0].type !== "image/png" &&
+          e.target.files[0].type !== "image/webp") {
+        this.avatarError = true
+        console.log( e.target.files[0].type)
+        if (this.avatarError === true && this.avatarErrorPushed === false) {
+          this.errors.push('Формат артинки не поддерживается')
+          this.avatarErrorPushed = true
+        }
+        this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
+        console.dir(e.target.files[0].type)
+
+      } else {
+        this.avatarError = false
+        this.avatarErrorPushed = false
+        this.$refs.projectAvatar.parentElement.style.borderColor = '#6C7AFF'
+
+        fetch("http://62.113.96.171:3000/image-upload", {
+          method: "POST",
+          headers: myHeaders,
+          body: formData,
+          redirect: "follow"
+        })
+            .then((response) => response.json())
+            .then((result) => this.projectAvatar = result.filePath)
+            .catch((error) => console.error(error));
+      }
     },
 
     checkForm () {
@@ -147,14 +183,18 @@ export default {
         this.$refs.projectAvatar.parentElement.style.borderColor = '#6C7AFF'
       }
 
+      if (this.avatarError === true) {
+        this.avatarError = this.errors.push('Формат изображения не поддерживается')
+        this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
+      }
+
       if (this.errors.length > 0 ) {
         setTimeout(()=> {
           this.$refs.errors.scrollIntoView({ behavior: 'smooth', block: 'center'})
         }, 20)
       } else {
         this.addProduct();
-        this.counter++
-        this.$emit('added',this.counter )
+
       }
     }
   }

@@ -8,6 +8,14 @@
       <input type="text"
              v-model="categoryName"
              placeholder="Название категории">
+      <div class="allowFront">
+        <input type="checkbox"
+               v-model="canHasFront"
+               id="checkbox"
+               checked
+        >
+        <label for="checkbox">Может иметь витрину?</label>
+      </div>
 
       <button class="btn btn-submit"
       v-on:click="addCategory()">
@@ -102,15 +110,17 @@ export default {
       addStateMessage: '',
       deleteStateMessage: '',
       showModal: this.$emit.showModal,
-      category: ''
+      category: '',
+      canHasFront: true,
 
     }
   },
   mounted() {
+    this.$forceUpdate()
 
   },
   updated() {
-
+    console.log()
   },
   methods: {
     addCategory () {
@@ -123,7 +133,8 @@ export default {
         method: "POST",
         headers: myHeaders,
         body: JSON.stringify({
-          name: this.categoryName
+          name: this.categoryName,
+          allowShopfront: this.canHasFront
         }),
       })
           .then((response) => response.json())
@@ -131,7 +142,6 @@ export default {
             const catName = this.categoryName;
             this.addStateMessage = `Категория: ${catName} успешно добавлена!`
             this.categoryName = ''
-            this.$forceUpdate()
             setTimeout(() => {
               this.addStateMessage = ''
 
@@ -188,6 +198,18 @@ export default {
       opacity: .5;
     }
 
+  }
+}
+.allowFront {
+  padding-left: 10px;
+  display: flex;
+  width: 40%;
+  input {
+    transform: scale(1.5);
+  }
+  label {
+    font-size: 14px;
+    margin-left: 10px;
   }
 }
 

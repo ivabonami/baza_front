@@ -12,11 +12,11 @@
             type="text"
             placeholder="Название проекта"
             v-model="projectName"
-            minlength="5" maxlength="30"
+            minlength="5" maxlength="255"
             ref="projectName"
             required>
         <span class="help">
-          Введите название проекта, которое коротко и ясно отражает его суть. От 5 до 30 символов.
+          Введите название проекта, которое коротко и ясно отражает его суть. От 5 до 255 символов.
         </span>
       </div>
 
@@ -31,6 +31,7 @@
         </select>
         <span class="help">
           Выберите категорию, к которой относится проект.
+
         </span>
       </div>
       <div class="input-wrapper">
@@ -54,7 +55,7 @@
           <input type="file"
 
                  v-on:change="uploadBanner($event)"
-                 accept="image/*">
+                 accept="image/*" ref="projectBanner">
         </div>
         <span class="help">
           Загрузите аватар проекта, размеры 1060х220px, форматы: jpeg, jpg, gif. webp
@@ -68,14 +69,15 @@
       <textarea placeholder="описание проекта *"
                 required
                 ref="projectDescription"
-                v-model="projectDescription"></textarea>
+                v-model="projectDescription" maxlength="65535"></textarea>
       <span class="help">
         Предоставьте подробное описание проекта, включая его цель, описание продаваемых товаров, что бы пользователь точно понимал что он покупает.
+        От 30 до 65535 символов.
       </span>
     </div>
-    <div class="advanced">
+    <div class="advanced" v-if="this.projectCategory === this.exchangersCategory">
       <div class="input-wrapper">
-        <label for="min">Минимальный обмен</label>
+        <label for="min" >Минимальный обмен</label>
         <input
             type="number"
             id="min"
@@ -91,7 +93,7 @@
       </div>
 
       <div class="input-wrapper">
-        <label for="rate">Курс обмена</label>
+        <label for="rate" v-if="this.projectCategory === this.exchangersCategory">Курс обмена</label>
         <input
             type="number"
             id="rate"
@@ -107,7 +109,7 @@
       </div>
 
       <div class="input-wrapper">
-        <label for="res">Резерв</label>
+        <label for="res" v-if="this.projectCategory === this.exchangersCategory">Резерв</label>
         <input
             type="number"
             id="res"
@@ -137,42 +139,55 @@
         <div class="top-heading">
 
         </div>
-        <div class="links">
-          <div class="link">
-            <span class="name">
+        <div class="links" >
+          <div class="link" ref="link" v-on:keydown.enter="checkLinks()"
+               v-if="this.addedLinksCount < 13">
+            <span class="name" v-if="this.addedLinksCount < 13">
               Обязательная ссылка
             </span>
-            <div class="leftW">
+            <div class="leftW" v-if="this.addedLinksCount < 13">
               <input
                   type="text"
                   placeholder="Название"
-                  v-model="projectLinks.name"
+                  v-model="addName"
+                  ref="addName"
                   required>
               <span class="help">
               Название ссылки (например: Зеркало, Onion, WWH и другое)
             </span>
             </div>
-            <div class="rightW">
+            <div class="rightW" v-if="this.addedLinksCount < 13">
               <input
                   type="text"
                   placeholder="Ссылка"
-                  v-model="projectLinks.link"
+                  v-model="addLink"
+                  ref="addLink"
+
                   required>
-              <span class="help">
+              <span class="help" >
               Сама ссылка, https://myproject.com и аналогичное
             </span>
             </div>
+            <button class="add"
+                    v-if="this.addedLinksCount < 13"
+                    v-on:click="checkLinks()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
+                <path opacity="0.3" d="M7.69655 17V0H10.3034V17H7.69655ZM0 9.70283V7.33727H18V9.70283H0Z" fill="black"/>
+              </svg>
+              Добавить ссылку в проект
+            </button>
           </div>
 
-          <button class="add"
-                  v-if="this.count < 12"
+          <div class="links-to-add">
+            <p class="name" v-for="(link, index) of linksToAdd">{{parseInt(index) + 1}}) {{link.name}}: {{link.link}}
+              <span v-on:click="deleteLink(index)">
+                удалить
+              </span></p>
 
-                  v-on:click="addAnotherOneLink()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
-              <path opacity="0.3" d="M7.69655 17V0H10.3034V17H7.69655ZM0 9.70283V7.33727H18V9.70283H0Z" fill="black"/>
-            </svg>
-            Добавить еще ссылку
-          </button>
+
+          </div>
+
+
         </div>
       </div>
 
@@ -250,7 +265,17 @@ export default {
 
       userLoggined: false,
 
-      errors: []
+      errors: [],
+      avatarError: false,
+      avatarErrorPushed: false,
+      bannerError: false,
+      bannerErrorPushed: false,
+      linksToAdd: {},
+
+      addLink: '',
+      addName: '',
+      addedLinksCount: 0,
+      linkErr: false
     }
   },
   mounted() {
@@ -263,6 +288,10 @@ export default {
 
   methods: {
     uploadAvatar(e){
+
+
+
+
       this.projectAvatar = e.target;
       const image = e.target.files[0]
 
@@ -275,15 +304,35 @@ export default {
       formData.append("image-upload", image );
 
       console.log(formData)
-      fetch("http://62.113.96.171:3000/image-upload", {
-        method: "POST",
-        headers: myHeaders,
-        body: formData,
-        redirect: "follow"
-      })
-          .then((response) => response.json())
-          .then((result) => this.projectAvatar = result.filePath)
-          .catch((error) => console.error(error));
+
+      if (e.target.files[0].type !== "image/jpeg" ??
+          e.target.files[0].type !== "image/jpg" ??
+          e.target.files[0].type !== "image/png" ??
+          e.target.files[0].type !== "image/webp") {
+        this.avatarError = true
+        if (this.avatarError === true && this.avatarErrorPushed === false) {
+          this.errors.push('Формат аватарки не поддерживается')
+          this.avatarErrorPushed = true
+        }
+
+
+        this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
+        console.dir(e.target.files[0].type)
+      } else {
+        this.avatarError = false
+        this.avatarErrorPushed = false
+        this.$refs.projectAvatar.parentElement.style.borderColor = '#6C7AFF'
+        fetch("http://62.113.96.171:3000/image-upload", {
+          method: "POST",
+          headers: myHeaders,
+          body: formData,
+          redirect: "follow"
+        })
+            .then((response) => response.json())
+            .then((result) => this.projectAvatar = result.filePath)
+            .catch((error) => console.error(error));
+      }
+
     },
     uploadBanner(e){
       this.projectBanner = e.target;
@@ -298,71 +347,45 @@ export default {
       formData.append("image-upload", image );
 
       console.log(formData)
-      fetch("http://62.113.96.171:3000/image-upload", {
-        method: "POST",
-        headers: myHeaders,
-        body: formData,
-        redirect: "follow"
-      })
-          .then((response) => response.json())
-          .then((result) => this.projectBanner = result.filePath)
-          .catch((error) => console.error(error));
-    },
-    addAnotherOneLink () {
-      const wrapper = document.querySelector('.links-wrapper .links')
-      this.count = wrapper.childNodes.length
 
-      if (wrapper.childNodes.length < 13) {
-        const newInput = document.createElement('div')
-
-
-        newInput.classList.add('link')
-        newInput.innerHTML = `<span class="name">
-              Дополнительная ссылка
-              <span class="delete">
-                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="11" viewBox="0 0 9 11" fill="none">
-                  <path d="M2.82058 1.25147C2.93 0.47276 3.57911 -0.00211763 4.23459 7.10013e-06C4.87201 0.00213183 5.51687 0.448326 5.64116 1.25041C5.67197 1.25041 5.70491 1.25041 5.73678 1.25041C6.24778 1.25041 6.75877 1.24723 7.26871 1.25254C7.84451 1.25891 8.31727 1.65305 8.43625 2.21504C8.55736 2.78872 8.29496 3.33265 7.77227 3.58549C7.72128 3.60993 7.70641 3.64074 7.70641 3.69386C7.70747 4.79341 7.70747 5.89189 7.70747 6.99144C7.70747 7.7351 7.71172 8.47875 7.70747 9.22347C7.70428 9.83433 7.3282 10.3081 6.75559 10.4324C6.6621 10.4526 6.5633 10.459 6.46662 10.459C4.97612 10.4601 3.48562 10.4601 1.99406 10.4601C1.27484 10.4601 0.756403 9.94376 0.755341 9.22241C0.754278 7.72341 0.755341 6.22441 0.755341 4.72541C0.755341 4.38121 0.754278 4.037 0.756403 3.69279C0.756403 3.63649 0.738343 3.60993 0.688412 3.58656C0.186975 3.35284 -0.0552449 2.84715 0.0106219 2.29684C0.0786133 1.7306 0.583237 1.23979 1.25147 1.24935C1.75078 1.25679 2.25115 1.25147 2.75046 1.25147C2.77171 1.25147 2.79402 1.25147 2.82058 1.25147ZM1.32477 3.71192C1.32477 3.79372 1.32477 3.87127 1.32477 3.94776C1.32477 5.71023 1.32477 7.47269 1.32477 9.23516C1.32477 9.62505 1.59461 9.89383 1.98344 9.89383C2.50506 9.89383 3.02668 9.89383 3.5483 9.89383C4.52568 9.89383 5.50199 9.89383 6.47937 9.89383C6.61854 9.89383 6.74815 9.86196 6.86395 9.78122C7.06367 9.64098 7.14016 9.44445 7.1391 9.20754C7.13698 8.77197 7.13698 8.3364 7.13698 7.90083C7.13698 6.56331 7.13804 5.22579 7.13804 3.88827C7.13804 3.8309 7.13804 3.77353 7.13804 3.71298C5.19497 3.71192 3.26465 3.71192 1.32477 3.71192ZM4.22609 3.13824V3.1393C4.87839 3.1393 5.53068 3.1393 6.18297 3.1393C6.55799 3.1393 6.93194 3.14567 7.30696 3.13293C7.62035 3.1223 7.85301 2.88539 7.89232 2.56562C7.93269 2.24054 7.74996 1.93458 7.44825 1.85277C7.33033 1.8209 7.20178 1.81984 7.07748 1.81984C5.13442 1.81772 3.19241 1.81878 1.24934 1.81772C0.767027 1.81772 0.461065 2.22142 0.593861 2.68673C0.658665 2.91302 0.881762 3.14036 1.22809 3.1393C2.22884 3.13505 3.22747 3.13824 4.22609 3.13824ZM3.40276 1.24723C3.95625 1.24723 4.5055 1.24723 5.05474 1.24723C5.00268 0.878584 4.64679 0.578997 4.24946 0.567311C3.84577 0.555625 3.48669 0.840339 3.40276 1.24723Z" fill="black"/>
-                  <path d="M3.94871 7.28678C3.94871 6.76515 3.94871 6.24353 3.94871 5.72297C3.94871 5.53918 4.0677 5.41276 4.23449 5.41383C4.3981 5.41595 4.51496 5.54237 4.51496 5.71979C4.51496 6.76516 4.51496 7.81159 4.51496 8.85695C4.51496 9.04818 4.3896 9.17885 4.21537 9.17035C4.06133 9.16292 3.94871 9.04074 3.94871 8.87714C3.94765 8.34596 3.94871 7.81584 3.94871 7.28678Z" fill="black"/>
-                  <path d="M2.42965 7.28687C2.42965 6.75675 2.42859 6.22663 2.43071 5.69651C2.43071 5.5669 2.5072 5.46598 2.62619 5.42667C2.73561 5.39055 2.86522 5.42136 2.92896 5.52228C2.96933 5.58602 2.99483 5.67101 2.99483 5.74644C3.00014 6.39555 2.99801 7.04571 2.99801 7.69482C2.99801 8.08365 2.99908 8.47247 2.99695 8.86024C2.99589 9.04721 2.86841 9.17682 2.69949 9.16832C2.54757 9.16089 2.43284 9.04402 2.43071 8.88467C2.42752 8.62333 2.42965 8.36305 2.42965 8.10171C2.42965 7.8308 2.42965 7.55884 2.42965 7.28687Z" fill="black"/>
-                  <path d="M6.03217 7.29729C6.03217 7.82423 6.03323 8.35222 6.03111 8.87916C6.03004 9.07038 5.88025 9.19362 5.69434 9.16281C5.55942 9.1405 5.46593 9.01939 5.46593 8.85791C5.46487 8.42446 5.46487 7.99208 5.46487 7.55863C5.46487 6.94565 5.4638 6.3316 5.46593 5.71862C5.46699 5.50189 5.65715 5.35847 5.84625 5.42859C5.96099 5.47215 6.03217 5.57201 6.03217 5.70587C6.03429 6.13294 6.03323 6.56107 6.03323 6.98814C6.03323 7.09225 6.03323 7.1953 6.03217 7.29729C6.03323 7.29729 6.03323 7.29729 6.03217 7.29729Z" fill="black"/>
-                </svg>
-                    Удалить
-                </span>
-            </span>
-
-            <div class="leftW">
-              <input
-                  type="text"
-                  placeholder="Название"
-                  required>
-              <span class="help">
-              Название ссылки (например: Зеркало, Onion, WWH и другое)
-            </span>
-            </div>
-            <div class="rightW">
-              <input
-                  type="text"
-                  placeholder="Ссылка"
-                  required>
-              <span class="help">
-              Сама ссылка, https://myproject.com и аналогичное
-            </span>
-            </div>`
-        wrapper.insertBefore(newInput, document.querySelector('.add'))
-
-
-        const deleteButtons = document.querySelectorAll('.delete')
-        for (let button of deleteButtons) {
-          button.addEventListener('click', (e) => {
-            e.target.parentNode.parentNode.remove()
-            console.log()
-            this.count = wrapper.childNodes.length - 1
-          })
-
+      if (e.target.files[0].type !== "image/jpeg" ??
+          e.target.files[0].type !== "image/jpg" ??
+          e.target.files[0].type !== "image/png" ??
+          e.target.files[0].type !== "image/webp") {
+        this.avatarError = true
+        if (this.avatarError === true && this.avatarErrorPushed === false) {
+          this.errors.push('Формат аватарки не поддерживается')
+          this.avatarErrorPushed = true
         }
-        console.log(this.count)
+
+
+        this.$refs.projectBanner.parentElement.style.borderColor = 'red'
+        console.dir(e.target.files[0].type)
+      } else {
+        this.bannerError = false
+        this.bannerErrorPushed = false
+        this.$refs.projectBanner.parentElement.style.borderColor = '#6C7AFF'
+        fetch("http://62.113.96.171:3000/image-upload", {
+          method: "POST",
+          headers: myHeaders,
+          body: formData,
+          redirect: "follow"
+        })
+            .then((response) => response.json())
+            .then((result) => this.projectBanner = result.filePath)
+            .catch((error) => console.error(error));
       }
 
+    },
+    addLinkToProject(index) {
+
+      this.linksToAdd[index] = {
+        name: this.addName,
+        link: this.addLink
+      }
+      this.addName = ''
+      this.addLink = ''
+      console.log(this.addName)
     },
 
     previewBeforeUpload () {
@@ -393,10 +416,7 @@ export default {
         avatarFilePath: this.projectAvatar,
         bannerFilePath: this.projectBanner || null,
         type: projectType,
-        links:  {
-          name: this.projectLinks.name,
-          link: this.projectLinks.link
-        },
+        links:  this.linksToAdd,
         minValueToExchange: this.minValueToExchange || null,
         exchangeRate: this.projectExchangeRate || null,
         reserve: this.projectReserve || null,
@@ -444,9 +464,46 @@ export default {
           .catch((error) => {console.error(error)});
     },
 
+    deleteLink(index) {
+      console.log(this.linksToAdd)
+      this.addedLinksCount--
+      delete this.linksToAdd[index]
+    },
+
+    checkLinks() {
+
+      if (this.addName < 3) {
+        this.errors.push('Имя ссылки не может быть меньше 3х символов')
+        this.linkErr = true
+        this.$refs.addName.style.borderColor = 'red'
+      } else {
+        this.linkErr = false
+        this.errors = []
+        this.$refs.addName.style.borderColor = '#6C7AFF'
+      }
+
+      if (this.addLink < 10 ) {
+        this.errors.push('Сама ссылка не может быть меньше, чем 10 символов')
+        this.$refs.addLink.style.borderColor = 'red'
+        this.linkErr = true
+      } else {
+        this.linkErr = false
+        this.errors = []
+        this.$refs.addLink.style.borderColor = '#6C7AFF'
+      }
+
+      if ( this.addName < 3 || this.addLink < 10 || this.linkErr === true) {
+        setTimeout(()=> {
+          this.$refs.errors.scrollIntoView({ behavior: 'smooth', block: 'start'})
+        }, 20)
+      } else {
+        this.errors = []
+        this.addLinkToProject(this.addedLinksCount)
+        this.addedLinksCount++
+      }
 
 
-
+    },
     checkForm () {
       this.errors = []
 
@@ -457,8 +514,8 @@ export default {
         this.$refs.projectName.style.borderColor = '#6C7AFF'
       }
 
-      if (this.projectDescription.length < 30) {
-        this.errors.push('Описание проекта должно быть не менее 30 символов')
+      if (this.projectDescription.length < 30 || this.projectDescription.length > 65535) {
+        this.errors.push('Описание проекта должно быть не менее 30 символов и не более 65535')
         this.$refs.projectDescription.style.borderColor = 'red'
       } else {
         this.$refs.projectDescription.style.borderColor = '#6C7AFF'
@@ -478,6 +535,16 @@ export default {
         this.$refs.projectAvatar.parentElement.style.borderColor = '#6C7AFF'
       }
 
+      if (this.linksToAdd.length === 0) {
+        this.errors.push('Проект должен содержать хотя бы 1 ссылку')
+        this.$refs.addName.style.borderColor = 'red'
+        this.$refs.addLink.style.borderColor = 'red'
+      } else {
+        this.$refs.addName.style.borderColor = '#6C7AFF'
+        this.$refs.addLink.style.borderColor = '#6C7AFF'
+      }
+
+
       if (this.projectCategory === this.exchangersCategory) {
         if (this.projectExchangeRate < 10) {
           this.errors.push('Минимальный обмен не должен быть меньше 10$')
@@ -494,6 +561,16 @@ export default {
         } else {
           this.$refs.projectReserve.style.borderColor = '#6C7AFF'
         }
+      }
+
+      if (this.avatarError === true) {
+        this.avatarError = this.errors.push('Формат аватарки не поддерживается')
+        this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
+      }
+
+      if (this.bannerError === true) {
+        this.bannerError = this.errors.push('Формат аватарки не поддерживается')
+        this.$refs.projectBanner.parentElement.style.borderColor = 'red'
       }
 
       if (this.errors.length > 0 ) {
@@ -529,7 +606,7 @@ export default {
   border-radius: 10px;
   border: 1px solid #DFDFDF;
   background: #FFF;
-  margin-top: 22px;
+  margin-top: 0px;
 
   color: #000;
   font-family: Montserrat;
@@ -537,11 +614,12 @@ export default {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  opacity: .5;
+  opacity: 1;
   cursor: pointer;
   height: auto;
   align-items: center;
   padding: 10px;
+  width: 100%;
   position: relative;
   top: 4px;
   svg {
@@ -554,6 +632,16 @@ export default {
     opacity: 1;
   }
 }
+.links-to-add {
+  padding-top: 20px;
+
+  padding-bottom: 10px;
+  box-sizing: border-box;
+
+  p {
+    margin-bottom: 5px;
+  }
+}
 .top-heading {
   display: flex;
   width: 100%;
@@ -563,6 +651,7 @@ export default {
 }
 .bottom {
   margin-top: 20px;
+  width: 100%;
 
   .heading {
     color: #000;

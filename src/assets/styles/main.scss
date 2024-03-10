@@ -673,6 +673,7 @@ form.add-project {
   }
 }
 .links-wrapper {
+  justify-content: start;
   .links {
     display: flex;
     width: 100%;
@@ -722,7 +723,7 @@ form.add-project {
     }
 
     .leftW, .rightW {
-      width: 47%;
+      width: 100%;
 
     }
     .bottom {

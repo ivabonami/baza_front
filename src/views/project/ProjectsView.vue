@@ -12,7 +12,7 @@
 
         <div v-if="this.canEdit === true" class="canEdit">
           <span v-if="this.isEditable === true" v-on:click="() => {
-            this.tab === 'description'
+            switchTabs('description')
             this.isEditable = false
           }">
             <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 333.45 340.57"><path d="M164.18,340.54c-40.51,0-81.01,.01-121.52,0C17.02,340.53,.01,323.57,0,298,0,216.97,0,135.95,0,54.92,.01,29.57,17.04,12.44,42.25,12.43c40.17-.02,80.34,.02,120.52-.03,6.75,0,12.09,2.5,15.41,8.38,3.11,5.51,2.91,11.23-.5,16.6-3.68,5.79-9.34,7.59-15.9,7.58-36.17-.04-72.34-.02-108.51-.01-4.17,0-8.34-.1-12.5,.04-5.62,.2-8.14,2.78-8.15,8.46-.03,82.02-.03,164.05,0,246.07,0,6.11,2.86,8.66,9.59,8.67,21.17,.04,42.34,.01,63.51,.01,59.51,0,119.02,0,178.52,0,9.42,0,11.44-2.02,11.44-11.43,0-42.01-.02-84.03,.02-126.04,0-8.24,5.37-14.96,12.73-16.3,8.41-1.53,15.53,2.21,18.5,9.99,.75,1.96,1.01,4.21,1.01,6.32,.06,43.51,.13,87.03,0,130.54-.07,21.68-17.74,39.12-39.73,39.2-41.34,.15-82.68,.04-124.02,.05Z"/><path d="M283.42,135.51c-3.29,3.08-7.26,6.59-11.01,10.33-21.11,21.05-42.24,42.07-63.16,63.31-3.96,4.02-8.47,6.09-13.78,7.29-26.6,5.97-53.16,12.06-79.74,18.1-11.76,2.68-19.57-4.91-16.92-16.48,6.35-27.7,12.64-55.42,19.19-83.07,.73-3.08,2.36-6.37,4.56-8.6,24.82-25.1,49.83-50.02,74.79-74.98,.46-.46,1.02-.83,1.2-.98,28.13,28.2,56.17,56.3,84.88,85.08Z"/><path d="M210.34,38.32c11.22-11.19,22.89-23.05,34.82-34.64,5.17-5.02,12.35-4.88,17.52,.25,22.34,22.17,44.59,44.42,66.76,66.75,5.3,5.34,5.35,12.49,.09,17.91-11.49,11.81-23.22,23.39-34.51,34.71-28.2-28.3-56.22-56.42-84.68-84.99Z"/></svg>
@@ -22,7 +22,7 @@
           <span v-else v-on:click="() => {
             this.isEditable = true
 
-            updateProject()
+            checkAndUpdateProject()
           }">
                         <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 439 438.77"><path d="M219.42,438.74c-63.17,0-126.34-.03-189.51,.03-12.01,.01-21.73-4.34-26.78-15.44-2.31-5.08-2.97-11.28-2.98-16.98C-.04,329.37,.02,252.37,.02,175.38c0-47.83-.09-95.66,.13-143.48,.03-5.53,.91-11.43,3-16.48C7.03,6.05,15.07,1.47,25,.31,27.8-.01,30.66,.04,33.49,.04,117.99,.03,202.49,.07,287,0c22.68-.02,41.57,8.13,57.47,24.34,23.27,23.74,46.86,47.19,70.55,70.52,15.75,15.51,23.93,34.04,23.94,56.13,.01,85.49-.04,170.98,.05,256.47,.01,12.04-3.47,22.26-14.72,27.8-4.71,2.32-10.53,3.32-15.85,3.33-63,.22-126,.14-189.01,.14ZM36.35,219.14c0,33.83,0,67.67,0,101.5,0,25.33,.12,50.67-.11,76-.04,4.75,1.56,6.03,6.02,5.87,7.82-.28,15.67-.08,23.5-.08q7.43,0,7.44-7.31c0-35.67-.03-71.33,.03-107,.01-7.37,.69-14.61,5.42-20.83,6.44-8.46,15.07-11.03,25.41-11.01,73.01,.18,146.02,.09,219.03,.1,5.83,0,11.67,.14,17.5,.16,5.96,.02,10.91,2.4,15.41,6.14,7.41,6.18,9.77,14.39,9.77,23.59,.01,36.83,.07,73.67-.07,110.5-.02,4.31,1.17,5.92,5.65,5.74,7.82-.32,15.66-.09,23.5-.09q7.7,0,7.7-7.49c0-81.33-.04-162.66,.05-244,.01-11.67-4.09-21.27-12.31-29.44-24.34-24.21-48.67-48.45-72.8-72.87-5.84-5.91-12.74-9.44-20.49-11.75-2.8-.84-4.17,.24-4.34,3.02-.1,1.66-.09,3.33-.09,5,0,35.17,.1,70.33-.11,105.5-.03,5.4-.39,11.28-2.53,16.09-5.13,11.53-14.81,16.03-27.42,15.98-53.01-.22-106.01-.09-159.02-.11-2.5,0-5.13,.22-7.46-.48-3.91-1.16-7.99-2.41-11.34-4.63-9.29-6.16-11.51-15.73-11.5-26.19,.03-36,.02-72,0-108,0-6.85-.02-6.86-6.99-6.86-7.67,0-15.34-.01-23,0-6.85,.01-6.87,.02-6.87,6.95,0,58.67,0,117.33,0,176Zm183.15,183.29c34.49,0,68.98,0,103.47,0,6.53,0,6.55-.03,6.55-6.69,0-32.15,0-64.31,0-96.46,0-6.81-.03-6.88-7.04-6.88-68.65,0-137.3-.01-205.95,0-7.03,0-7.11,.12-7.11,7.4,0,31.99,0,63.98,0,95.96,0,6.64,0,6.66,6.61,6.67,34.49,0,68.98,0,103.47,0Zm36.91-311.22c0-14.33,.06-28.66-.02-42.98-.05-8.05-4.02-11.99-12.02-12.01-16.5-.05-32.99-.06-49.49,.01-8.36,.03-12.27,3.85-12.29,12.25-.07,28.49-.07,56.98,0,85.47,.02,8.65,3.9,12.57,12.55,12.64,16.16,.12,32.33,.12,48.49,0,8.97-.07,12.76-4.02,12.78-12.88,.03-14.16,0-28.32,0-42.48Z"/></svg>
 
@@ -42,18 +42,26 @@
                  alt=""
                  v-else>
             <div class="favorite"
-                 v-on:click="!favorite ? favorite = true : favorite = false"
-                 :class="{active: favorite}">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="15" viewBox="0 0 18 15" fill="none">
-                <path
-                    d="M17.8439 5.89384C17.9178 5.6196 17.9491 5.3353 18 5.05562V4.4311C17.9448 4.12916 17.9126 3.82152 17.8301 3.52636C17.4873 2.3023 16.7299 1.36471 15.5924 0.698098C14.8063 0.23731 13.9422 0.0170985 13.0261 0.0157409C11.9435 0.0141117 10.9418 0.298405 10.0748 0.925098C9.68808 1.20423 9.33757 1.52762 8.93818 1.85808C8.82115 1.73888 8.68831 1.59768 8.54885 1.46246C7.82367 0.758649 6.95128 0.297318 5.93425 0.10073C4.89134 -0.101017 3.87115 -0.00163713 2.9007 0.416249C1.5415 1.00113 0.635463 1.97837 0.166198 3.31566C0.097476 3.51143 0.0546326 3.71535 0 3.91547V5.5175C0.00690096 5.52945 0.0169649 5.54058 0.0195527 5.55334C0.221406 6.55665 0.714537 7.41088 1.48284 8.12935C2.39176 8.97979 3.29319 9.83728 4.19808 10.6918C5.64843 12.0614 7.0985 13.4313 8.54914 14.8006C8.83093 15.0667 9.10409 15.0659 9.38502 14.8017C11.7449 12.5819 14.1038 10.3613 16.4651 8.1432C17.14 7.50972 17.6095 6.76437 17.8439 5.89384Z"
-                    fill="white"/>
-              </svg>
+                 v-if="isFavourite === false"
+                 v-on:click="() => {
+               addFavorite(project.id)
+               this.isFavourite = true
+             }">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path fill="#00192E" fill-rule="evenodd" d="M12 22c-.316-.02-.56-.147-.848-.278a23.5 23.5 0 0 1-4.781-2.942C3.777 16.705 1 13.449 1 9a6 6 0 0 1 6-6 6.18 6.18 0 0 1 5 2.568A6.18 6.18 0 0 1 17 3a6 6 0 0 1 6 6c0 4.448-2.78 7.705-5.375 9.78a23.6 23.6 0 0 1-4.78 2.942c-.543.249-.732.278-.845.278M7 5a4 4 0 0 0-4 4c0 3.552 2.218 6.296 4.621 8.22A21.5 21.5 0 0 0 12 19.91a21.6 21.6 0 0 0 4.377-2.69C18.78 15.294 21 12.551 21 9a4 4 0 0 0-4-4c-1.957 0-3.652 1.396-4.02 3.2a1 1 0 0 1-1.96 0C10.652 6.396 8.957 5 7 5" clip-rule="evenodd"></path><path fill="white" fill-rule="evenodd" d="M12 22c-.285-.018-.512-.123-.764-.24l-.084-.038a23.5 23.5 0 0 1-4.781-2.942C3.777 16.705 1 13.449 1 9a6 6 0 0 1 6-6 6.18 6.18 0 0 1 5 2.568q.3-.418.666-.78A6.18 6.18 0 0 1 17 3a6 6 0 0 1 6 6c0 4.448-2.78 7.705-5.375 9.78a23.6 23.6 0 0 1-4.78 2.942c-.543.249-.732.278-.845.278m0-17.959A7.18 7.18 0 0 1 17 2a7 7 0 0 1 7 7c0 4.897-3.061 8.41-5.75 10.562a24.6 24.6 0 0 1-4.989 3.07c-.566.258-.92.368-1.261.368h-.032l-.033-.002c-.484-.032-.881-.218-1.12-.33l-.077-.036a24.5 24.5 0 0 1-4.991-3.07C3.056 17.408 0 13.895 0 9a7 7 0 0 1 7-7c1.918 0 3.701.776 5 2.041M3 9a4 4 0 0 1 4-4c1.957 0 3.652 1.396 4.02 3.2a1 1 0 0 0 1.96 0C13.348 6.396 15.043 5 17 5a4 4 0 0 1 4 4c0 3.552-2.22 6.295-4.625 8.22A21.6 21.6 0 0 1 12 19.91a21.5 21.5 0 0 1-4.377-2.69C5.217 15.295 3 12.551 3 9" clip-rule="evenodd"></path></svg>
+            </div>
+
+            <div class="favorite"
+                 v-if="isFavourite === true"
+                 v-on:click="() => {
+               deleteFavorite(project.id)
+               this.isFavourite = false
+             }">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path fill="#F8104B" fill-rule="evenodd" d="M12 22c-.316-.02-.56-.147-.848-.278a23.5 23.5 0 0 1-4.781-2.942C3.777 16.705 1 13.449 1 9a6 6 0 0 1 6-6 6.18 6.18 0 0 1 5 2.568A6.18 6.18 0 0 1 17 3a6 6 0 0 1 6 6c0 4.448-2.78 7.705-5.375 9.78a23.6 23.6 0 0 1-4.78 2.942c-.543.249-.732.278-.845.278" clip-rule="evenodd"></path></svg>
             </div>
           </div>
           <div class="name">
             <input type="text" v-if="isEditable === false"
-                   v-model="projectName">
+                   v-model="projectName" v-on:keydown.enter="checkAndUpdateProject()">
             <span v-else>
               {{ project.name }}
             </span>
@@ -109,12 +117,19 @@
           </button>
           <button
               v-on:click="switchTabs('description')"
-              class="recommended">
+              class="recommended" ref="description"
+          :class="{
+                active: this.tab === 'description'
+          }">
             Описание проекта
           </button>
           <button
+              v-if="this.products.length > 0"
               v-on:click="switchTabs('services')"
-              class="fresh active">
+              class="fresh" ref="services"
+              :class="{
+                active: this.tab === 'services'
+          }">
             Услуги и товары
           </button>
 
@@ -145,14 +160,14 @@
                     </h3>
 
                     <div class="this-project-links">
-                      <div class="this-project-link">
-                        <a :href="project.links.link" target="_blank">
+                      <div class="this-project-link" v-for="link of this.project.links">
+                        <a :href="link.link" target="_blank">
                           <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">
                             <path d="M0.742943 8.0844C0.742943 6.8414 0.734787 5.59839 0.747837 4.35539C0.751371 3.9996 0.785353 3.63796 0.856581 3.29027C1.03547 2.41702 1.85595 1.65407 2.72373 1.57727C3.36315 1.52058 4.008 1.52588 4.65069 1.51024C4.95871 1.5027 5.267 1.50243 5.57475 1.51388C5.92953 1.52728 6.20574 1.75432 6.31122 2.09614C6.40637 2.40501 6.29817 2.76274 6.04316 2.97471C5.87271 3.11657 5.6718 3.15902 5.45812 3.1593C4.80103 3.1593 4.14421 3.15651 3.48712 3.16293C3.29328 3.16488 3.09591 3.17438 2.90696 3.21376C2.59704 3.27827 2.38798 3.52737 2.37547 3.85327C2.35454 4.40175 2.3453 4.95106 2.34448 5.50009C2.34149 7.56246 2.34285 9.62482 2.3453 11.6872C2.3453 11.9056 2.35672 12.1245 2.37493 12.3423C2.40538 12.7085 2.66066 12.983 3.01979 12.9947C3.74403 13.0184 4.46881 13.0265 5.19332 13.0282C7.01018 13.0321 8.8273 13.0299 10.6442 13.0274C10.8521 13.0271 11.0606 13.0148 11.2684 12.9992C11.6294 12.9718 11.9042 12.7048 11.9181 12.3348C11.9407 11.7397 11.942 11.1437 11.9496 10.5483C11.9529 10.2878 11.9434 10.0267 11.951 9.76641C11.9611 9.41789 12.1057 9.14756 12.4227 8.99704C12.7296 8.85126 13.0156 8.90655 13.2736 9.11991C13.4615 9.27546 13.5534 9.48882 13.5523 9.73178C13.5485 10.6115 13.5612 11.4923 13.5207 12.3703C13.4737 13.3868 12.9536 14.0953 12.047 14.4924C11.6973 14.6454 11.3159 14.6667 10.9391 14.6694C10.0376 14.6767 9.13587 14.6798 8.2341 14.6789C6.57574 14.6773 4.91738 14.6759 3.25903 14.665C2.7656 14.6616 2.28277 14.5843 1.85785 14.2941C1.27036 13.8931 0.866368 13.3547 0.803568 12.6199C0.74974 11.9815 0.747293 11.3375 0.739953 10.6961C0.730166 9.82561 0.737506 8.95487 0.737506 8.0844H0.742943Z" fill="white"/>
                             <path d="M11.6108 2.32875C10.9026 2.32875 10.2275 2.3321 9.5525 2.32735C9.16592 2.32484 8.87828 2.08942 8.77797 1.71018C8.65155 1.23152 8.98812 0.723258 9.46986 0.702593C9.97661 0.68081 10.4844 0.689747 10.9917 0.688909C11.8122 0.687513 12.6324 0.690584 13.4526 0.687513C13.7481 0.686395 14.0051 0.759842 14.1943 1.01509C14.3161 1.17986 14.3604 1.36696 14.3607 1.56412C14.3636 2.9004 14.3655 4.23668 14.3607 5.57268C14.3587 6.12115 13.9752 6.48141 13.4624 6.43644C13.0853 6.40321 12.7694 6.07228 12.7629 5.67377C12.7523 5.00829 12.7578 4.34224 12.7561 3.67676C12.7561 3.63096 12.7561 3.58516 12.7561 3.50194C12.6822 3.5765 12.6292 3.62928 12.5767 3.6829C11.2361 5.05744 9.89559 6.43253 8.55477 7.80679C8.27258 8.09611 7.93166 8.17123 7.6144 8.0168C7.10819 7.77049 6.98912 7.11366 7.38277 6.69532C7.74816 6.30714 8.12387 5.9293 8.49496 5.54699C9.49677 4.51567 10.4989 3.48434 11.5007 2.45302C11.5317 2.42118 11.5599 2.38656 11.6105 2.32931L11.6108 2.32875Z" fill="white"/>
                           </svg>
 
-                          {{ project.links.name }}
+                          {{ link.name }}
 
                         </a>
                       </div>
@@ -165,16 +180,16 @@
                   </h3>
                   <div class="reviews">
                     <div class="sort">
-                      <div class="sort-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" viewBox="0 0 20 16" fill="none">
+                      <div class="sort-icon" >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" viewBox="0 0 20 16" fill="none" v-if="reviews.length > 0">
                           <path d="M2.13919 13.2517C2.13919 12.5319 2.13919 11.8122 2.13919 11.0928C2.13919 7.66982 2.13919 4.24682 2.13919 0.823823C2.13919 0.327743 2.42317 0 2.85004 0C3.28048 0 3.56938 0.327297 3.56938 0.819358C3.56982 4.88221 3.56938 8.94552 3.56938 13.0084V13.2477L3.61671 13.2794C3.8998 12.991 4.18066 12.6998 4.46732 12.415C4.75175 12.1323 5.16969 12.1136 5.45591 12.3618C5.75776 12.6239 5.79928 13.0865 5.51351 13.379C4.79596 14.1135 4.06903 14.8391 3.3354 15.5575C3.05722 15.8304 2.64777 15.829 2.3678 15.5549C1.63953 14.8418 0.918408 14.1211 0.203982 13.3937C-0.0746449 13.1102 -0.0616959 12.6771 0.205321 12.406C0.484394 12.1225 0.909478 12.1051 1.20775 12.3877C1.5096 12.6739 1.79269 12.9798 2.08426 13.2767L2.13874 13.2508L2.13919 13.2517Z" fill="#494A4E"/>
                           <path d="M13.917 15.0373C12.1546 15.0373 10.3922 15.0387 8.62983 15.0365C8.05828 15.0356 7.69839 14.5377 7.91361 14.0434C8.04667 13.738 8.29672 13.6058 8.62625 13.6063C9.9274 13.6076 11.229 13.6067 12.5301 13.6067C14.6792 13.6067 16.8283 13.6067 18.9774 13.6067C19.0814 13.6067 19.1859 13.6049 19.2895 13.6089C19.6999 13.625 20.008 13.9447 19.9995 14.3439C19.9914 14.7257 19.6726 15.036 19.2708 15.0373C17.9991 15.0405 16.7274 15.0382 15.4557 15.0382C14.9427 15.0382 14.4296 15.0382 13.9166 15.0382V15.0373H13.917Z" fill="#494A4E"/>
                           <path d="M12.8301 10.7521C11.425 10.7521 10.0198 10.7521 8.61413 10.7521C8.29353 10.7521 8.05152 10.6155 7.91801 10.3234C7.79209 10.047 7.84032 9.78449 8.04036 9.55632C8.19217 9.38307 8.39132 9.32056 8.61904 9.32056C10.4185 9.32234 12.2175 9.321 14.017 9.32056C15.0283 9.32056 16.0393 9.32056 17.0506 9.32145C17.5284 9.3219 17.8552 9.60901 17.8561 10.0265C17.857 10.4578 17.5311 10.7512 17.0457 10.7516C15.6405 10.7525 14.2353 10.7516 12.8297 10.7516L12.8301 10.7521Z" fill="#494A4E"/>
                           <path d="M11.8077 5.03493C12.8485 5.03493 13.8889 5.03493 14.9297 5.03493C15.3803 5.03493 15.7107 5.33097 15.7142 5.73864C15.7183 6.153 15.3995 6.46289 14.9494 6.46333C12.8311 6.46601 10.7124 6.46557 8.59409 6.46244C8.17303 6.46199 7.85868 6.15434 7.85555 5.75918C7.85243 5.35017 8.16722 5.03627 8.59632 5.03493C9.66662 5.03135 10.7369 5.03359 11.8072 5.03359V5.03493H11.8077Z" fill="#494A4E"/>
                           <path d="M10.3445 0.747014C10.9165 0.747014 11.489 0.745228 12.061 0.747461C12.5338 0.749247 12.8549 1.04216 12.8544 1.46501C12.8544 1.88563 12.5289 2.17721 12.0578 2.17721C10.9063 2.17765 9.75469 2.17855 8.60268 2.17855C8.3111 2.17855 8.08427 2.05799 7.94273 1.80079C7.80967 1.55967 7.81815 1.31409 7.9655 1.08146C8.11285 0.84882 8.33164 0.746121 8.6058 0.747461C9.18538 0.749693 9.76496 0.748354 10.3445 0.748354V0.747014Z" fill="#494A4E"/>
                         </svg>
-                        <span>Сортировать</span>
-                        <select name="" id="sortier" v-model="reviewsSort" v-on:change="getReviews(reviewsSort)">
+                        <span v-if="reviews.length > 0">Сортировать</span>
+                        <select name="" id="sortier" v-model="reviewsSort" v-on:change="getReviews(reviewsSort)" v-if="reviews.length > 0">
                           <option value="newest">Сначала новые</option>
                           <option value="oldest">Сначала старые</option>
                           <option value="highestRating">Сначала положительные</option>
@@ -401,7 +416,8 @@
 
             </div>
             <div class="flex"
-                 v-if="this.tab === 'services'">
+
+                 v-if="this.tab === 'services' && this.products.length > 0 ">
               <div class="cards-wrapper" ref="service">
                 <services-card
                     v-for="(item, index) in products"
@@ -433,12 +449,7 @@
                 </services-card>
               </div>
 
-              <button
-                  v-if="this.tab ==='services'"
-                  v-on:click="switchTabs('addService')"
-                  class="btn btn-filled">
-                Добавить услугу
-              </button>
+
 
 
 
@@ -535,11 +546,8 @@
               }}
             </div>
 
-            <div class="project-detailed-rating box-shadow">
+            <div class="project-detailed-rating box-shadow" v-if="totalReviews > 0">
               <div class="heading" >
-                <span>
-
-                </span>
                 {{ reviewedText }} {{ totalReviews }} {{ reviewedHumanText }}
               </div>
               <div class="five-stars">
@@ -710,6 +718,10 @@
 
             </div>
 
+            <div class="project-detailed-rating box-shadow" v-else>
+              <div class="heading">У этого проекта еще нет оценок.</div>
+            </div>
+
             <div class="tab-stats box-shadow">
               <div class="stat">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="11" viewBox="0 0 20 11" fill="none">
@@ -750,6 +762,13 @@
               </div>
             </div>
 
+            <button
+                v-if="this.canEdit"
+                v-on:click="switchTabs('addService')"
+                class="btn btn-filled addService">
+              Добавить услугу
+            </button>
+
 
           </div>
         </div>
@@ -776,7 +795,7 @@ export default {
   data() {
     return {
       services: {},
-      tab: 'services',
+      tab: '',
       favorite: false,
       project: {},
 
@@ -818,6 +837,8 @@ export default {
       totalReviews: 0,
       highlighted: '',
       products: [],
+
+      isFavourite: false
     }
   },
   props: ['selectedId', 'highlight', 'tab'],
@@ -889,6 +910,45 @@ export default {
           .catch((error) => {console.error(error)});
     },
 
+    addFavorite(projectId) {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+
+      fetch(`http://62.113.96.171:3000/user/project/${projectId}`, {
+        method: "POST",
+        headers: myHeaders,
+        body: JSON.stringify(
+            {
+              status: 'favorite'
+            }
+        )
+      })
+          .then((response) => response.json())
+          .then((res) => { console.log(res) })
+          .catch((error) => {console.error(error)});
+    },
+
+    deleteFavorite(projectId) {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+
+      fetch(`http://62.113.96.171:3000/user/project/${projectId}`, {
+        method: "DELETE",
+        headers: myHeaders,
+        body: JSON.stringify(
+            {
+              status: 'favorite'
+            }
+        )
+      })
+          .then((response) => response.json())
+          .then((res) => { console.log(res) })
+          .catch((error) => {console.error(error)});
+    },
+
+
     getProducts(emit) {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -904,6 +964,14 @@ export default {
           .then((response) => response.json())
           .then((result) => {
             this.products = result.products
+            console.log(result.products)
+
+            if(this.products.length <= 0) {
+              this.switchTabs('description')
+            } else {
+              this.switchTabs('services')
+            }
+
             for (let product of this.products) {
               if (parseInt(this.$route.query.highlight) === product.id) {
                 product.highlighted = true
@@ -969,22 +1037,7 @@ export default {
 
     },
     switchTabs(tab) {
-      if (tab === 'description') {
-        this.tab = 'description'
-        document.querySelector('.recommended').classList.add('active')
-        document.querySelector('.fresh').classList.remove('active')
-
-      } else if (tab === 'services') {
-        this.tab = 'services'
-        document.querySelector('.recommended').classList.remove('active')
-        document.querySelector('.fresh').classList.add('active')
-
-      } else if (tab === 'addService') {
-        this.tab = 'addService'
-        document.querySelector('.recommended').classList.remove('active')
-        document.querySelector('.fresh').classList.add('active')
-
-      }
+      this.tab = tab
 
     },
     setOpacity () {
@@ -1024,7 +1077,7 @@ export default {
           .then((result) => this.productPhoto = result.filePath)
           .catch((error) => console.error(error));
     },
-    updateProject () {
+    checkAndUpdateProject () {
       const project = {
         name: this.projectName,
         description: this.projectDescription,
@@ -1034,14 +1087,39 @@ export default {
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
 
-      fetch(`http://62.113.96.171:3000/projects/${this.project.id}`, {
-        method: "PUT",
-        headers: myHeaders,
-        body: JSON.stringify(project)
-      })
-          .then((response) => response.json())
-          .then(() => this.getProjectFullInfo())
-          .catch((error) => {console.error(error)});
+
+      if (this.projectName.length < 5) {
+        this.errors.push('Название услуги должно быть не менее 5 символов')
+        this.$refs.projectName.style.borderColor = 'red'
+      } else {
+        this.$refs.projectName.style.borderColor = '#6C7AFF'
+      }
+
+      if (this.projectDescription.length < 5) {
+        this.errors.push('Название услуги должно быть не менее 5 символов')
+        this.$refs.projectDescription.style.borderColor = 'red'
+      } else {
+        this.$refs.projectDescription.style.borderColor = '#6C7AFF'
+      }
+
+      if (this.projectDescription.length < 5 && this.projectName.length < 5 ) {
+        setTimeout(()=> {
+          this.$refs.errors.scrollIntoView({ behavior: 'smooth', block: 'center'})
+        }, 20)
+      } else {
+        this.editable = false
+
+        fetch(`http://62.113.96.171:3000/projects/${this.project.id}`, {
+          method: "PUT",
+          headers: myHeaders,
+          body: JSON.stringify(project)
+        })
+            .then((response) => response.json())
+            .then(() => this.getProjectFullInfo())
+            .catch((error) => {console.error(error)});
+      }
+
+
       console.log(project)
 
 
@@ -1106,8 +1184,7 @@ export default {
     },
 
     clearTextarea () {
-      document.querySelector('textarea').value = ''
-      this.setOpacity( 0.3, 0, 'active')
+      this.reviewText = ''
     },
 
     sendReview () {
@@ -1254,6 +1331,24 @@ export default {
 
 
     },
+    getFavourite () {
+
+      console.log(123)
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxMDA4MTk3MywiZXhwIjoxNzEwMTY4MzczfQ.nj3djnfIpdDlrozTfZgyPoX5UCwrNrBb5ch25a37TNs");
+
+
+      const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow"
+      };
+
+      fetch("http://62.113.96.171:3000/user/project/", requestOptions)
+          .then((response) => response.json())
+          .then((result) => console.log('res; ',result))
+          .catch((error) => console.error(error));
+    },
     deleteReview (id) {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -1271,12 +1366,17 @@ export default {
             this.getReviews()
           })
           .catch((error) => {console.error(error)});
-    }
+    },
+
+
 
   },
 
 
   mounted(emits) {
+
+
+
 
 
     setTimeout(() => {
@@ -1285,6 +1385,8 @@ export default {
 
     this.getProducts()
     this.getReviewsCount()
+
+    this.getFavourite()
 
     if (localStorage.getItem('role') === 'admin') {
       this.isAdmin = true
@@ -1311,6 +1413,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.addService {
+  width: 100%;
+  font-size: 14px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
 [v-cloak] {
   display: block;
   padding: 50px 0;
@@ -1413,13 +1521,14 @@ textarea {
   display: flex;
   width: 100%;
 
+
   .this-project-link {
     border-radius: 10px;
     background: #6C7AFF;
     padding: 0 15px;
     width: auto;
     margin-top: 10px;
-
+    margin-right: 10px;
 
     a {
       color: var(--neutral, #FFF);
@@ -1959,6 +2068,11 @@ textarea {
   gap: 10px;
   position: relative;
   top: -5px;
+  word-break: break-all;
+
+  background-color: #F6F8FF;
+  padding: 5px 5px 0px 5px;
+  border-radius: 10px;
 
   color: var(--secondary, #2B2B2B);
   font-family: Montserrat;
@@ -1966,6 +2080,11 @@ textarea {
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  width: 100%;
+
+  input {
+    width: 100%;
+  }
 
   .verified {
     width: 17px;
@@ -2115,31 +2234,8 @@ textarea {
   right: 5px;
   top: 5px;
   border-radius: 400px;
-  background-color: rgba(0, 0, 0, .3);
   padding: 5px;
   transition: .3s ease;
-
-  svg {
-    transition: .3s ease;
-
-    path {
-      fill: transparent;
-      stroke: #fff;
-      stroke-linejoin: round;
-      stroke-linecap: round;
-      stroke-width: 1px;
-      transition: .3s ease;
-    }
-  }
-
-  &.active {
-    svg {
-      path {
-        fill: #fff;
-      }
-    }
-  }
-
 
 }
 .notReviewed, .sended, .notReviews {
@@ -2198,6 +2294,7 @@ textarea {
 
 
 .cards-wrapper {
+  width: 100%;
   display: flex;
   gap: 20px;
   flex-wrap: wrap;

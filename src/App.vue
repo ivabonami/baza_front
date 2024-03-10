@@ -16,9 +16,14 @@ export default {
     document.querySelector('.preloader').style.display = 'none'
     this.isLoaded = true
 
-  },
-  methods: {
 
+  },
+  watch: {
+    categories: function(value) {
+      // If "pageData" ever changes, then we will console log its new value.
+      this.$forceUpdate()
+      console.log(value, 1233);
+    }
   },
 
 }
@@ -66,7 +71,12 @@ export default {
     <section class="main">
       <div class="row">
         <div class="sidebar">
-          <sidebar-menu></sidebar-menu>
+          <keep-alive>
+            <sidebar-menu
+                v-on:someChanges="(emit) => { console.log('sme', emit)}">
+
+            </sidebar-menu>
+          </keep-alive>
         </div>
 
         <div class="content">
