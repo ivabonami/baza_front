@@ -49,7 +49,7 @@
             v-bind:description="item.description"
             v-bind:id="item.id"
             v-bind:projectId="item.ProjectId"
-            v-bind:isOwner="true"
+            v-bind:isOwner="false"
             v-bind:clickable="true"
 
 

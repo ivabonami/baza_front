@@ -2,7 +2,7 @@
 <h1>Добавление проекта</h1>
 
   <div v-if="userLoggined === false" class="not-registered">
-    Вы не зарегистрированы.
+    Вы не вошли в аккаунт, что бы добавить проект Вам нужно зарегитстрироваться и \ или войти в аккаунт.
   </div>
 
   <div class="add-project form-wrapper" v-else>

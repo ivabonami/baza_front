@@ -409,7 +409,7 @@
                     v-bind:image="`http://62.113.96.171:3000/${item.avatarFilePath}`"
                     v-bind:description="item.description"
                     v-bind:id="item.id"
-                    v-bind:isOwner="true"
+                    v-bind:isOwner="this.canEdit"
                     v-bind:highlight="item.highlighted"
 
 
@@ -421,6 +421,11 @@
 
                     v-on:updated="(emit) => {
                       deleteProduct(emit)
+
+                    }"
+                    v-on:changed="(emit) => {
+                      updateProduct(emit.id, emit.newDescription, emit.newName)
+                      console.log(emit)
 
                     }"
                 >
@@ -826,6 +831,27 @@ export default {
   },
 
   methods: {
+    updateProduct(id, description, name) {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+
+
+      fetch(`http://62.113.96.171:3000/products/${id}`, {
+        method: "PUT",
+        headers: myHeaders,
+        body: JSON.stringify({
+          name: name,
+          description: description,
+
+        })
+      })
+          .then((response) => response.json())
+          .then(response => {
+            this.getProducts()
+          })
+          .catch((error) => {console.error(error)});
+    },
     highlightProject() {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -863,15 +889,11 @@ export default {
           .catch((error) => {console.error(error)});
     },
 
-    getProducts() {
+    getProducts(emit) {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
       const projectId = window.location.pathname.replace('/project/', '');
-
-      const raw = JSON.stringify({
-        "type": "exchanger"
-      });
 
       const requestOptions = {
         method: "GET",
@@ -1279,6 +1301,10 @@ export default {
 
     this.getReviews()
   },
+
+  updated() {
+
+  }
 
 
 }
@@ -2169,20 +2195,7 @@ textarea {
     border-color: #e9ffe9;
   }
 }
-.back {
 
-  svg {
-    width: 18px;
-    height: 18px;
-    transition: .3s ease;
-    position: relative;
-    top: 3px;
-
-    &:hover {
-      transform: translateX(-2px);
-    }
-  }
-}
 
 .cards-wrapper {
   display: flex;

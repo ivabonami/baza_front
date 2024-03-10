@@ -749,4 +749,21 @@ form.add-project .helper {
   display: block;
 }
 
+.back {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  display: inline-block;
+}
+.back svg {
+  width: 18px;
+  height: 18px;
+  transition: 0.3s ease;
+  position: relative;
+  top: 3px;
+}
+.back svg:hover {
+  transform: translateX(-2px);
+}
+
 /*# sourceMappingURL=main.css.map */
