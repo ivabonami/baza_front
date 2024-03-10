@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs">
+  <div class="tabs"  v-if="products.length > 0">
     <div class="tabs-links">
       <button
          v-on:click=" () => {
@@ -62,6 +62,9 @@
 
         >
         </services-card>
+        <div class="v-else">
+
+        </div>
       </div>
     </div>
   </div>

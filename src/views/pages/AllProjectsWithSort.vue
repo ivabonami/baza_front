@@ -118,7 +118,7 @@
                     v-bind:payed="project.payed"
                     v-bind:projectRating="project.ratingAvg"
                     v-bind:avatar="project.avatarFilePath"
-                    v-bind:projectCategory="project.categories[0].name"
+                    v-bind:projectCategory="project.categories[0].name || 0"
                     v-bind:exchangeRate="project.exchangeRate"
                     v-bind:reserve="project.reserve"
                     v-bind:minValueToExchange="project.minValueToExchange"
