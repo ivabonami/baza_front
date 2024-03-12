@@ -218,13 +218,13 @@ export default {
   .help {
     color: #000;
     font-family: Montserrat;
-    font-size: 12px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: 1;
     margin-top: 7px;
 
-    opacity: 0.5;
+    opacity: 1;
     display: block;
   }
 }

@@ -1,10 +1,10 @@
 <template>
-  <div class="tabs"  v-if="products.length > 0">
+  <div class="tabs" v-if="products.length > 0">
     <div class="tabs-links">
       <button
          v-on:click=" () => {
            getProducts('random')
-           switchTabs('recommended')
+           this.tab = 'recommended'
          }"
          class="recommended"
         :class="{
@@ -15,7 +15,7 @@
       <button
          v-on:click=" () => {
            getProducts('newest')
-           switchTabs('fresh')
+           this.tab = 'newest'
          }"
          class="fresh"
          :class="{
@@ -26,54 +26,25 @@
     </div>
     <div class="tabs-content" >
       <div class="shop-view"
-           v-if="this.tab === 'recommended'"
       >
         <services-card
             v-for="(item, index) in products"
             v-bind:name="item.name"
             v-bind:image="`http://62.113.96.171:3000/${item.avatarFilePath}`"
-            v-bind:description="item.description"
             v-bind:id="item.id"
             v-bind:projectId="item.ProjectId"
             v-bind:isOwner="false"
             v-bind:clickable="true"
-
-
-
         >
         </services-card>
 
-      </div>
-
-      <div class="shop-view"
-           v-if="this.tab === 'fresh'"
-           >
-        <services-card
-            v-for="(item, index) in products"
-            v-bind:name="item.name"
-            v-bind:image="`http://62.113.96.171:3000/${item.avatarFilePath}`"
-            v-bind:description="item.description"
-            v-bind:id="item.id"
-            v-bind:projectId="item.ProjectId"
-            v-bind:isOwner="false"
-            v-bind:clickable="true"
-
-
-
-        >
-        </services-card>
-        <div class="v-else">
-
-        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
 import { ref } from 'vue'
-import ProjectsView from "../../views/project/ProjectsView.vue";
 import servicesCard from "../../views/project/ServicesCard.vue";
 
 

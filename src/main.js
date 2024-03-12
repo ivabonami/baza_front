@@ -1,7 +1,6 @@
 import './assets/styles/main.css'
 import {createApp, watch} from "vue";
 import App from './App.vue'
-import loader from "vue3-ui-preloader";
 import {createStore}  from 'vuex'
 
 //router
@@ -22,5 +21,4 @@ const store = createStore({
 
 createApp(App)
     .use(router, store )
-    .component('loader', loader)
     .mount('#app')

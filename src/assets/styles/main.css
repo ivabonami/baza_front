@@ -147,6 +147,7 @@ body {
 }
 .main .row .content {
   flex: 3 4;
+  position: relative;
 }
 .main .row .content p {
   color: #000;
@@ -743,7 +744,7 @@ form.add-project .helper {
 .links-wrapper .help {
   color: #000;
   font-family: Montserrat;
-  font-size: 12px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 1;

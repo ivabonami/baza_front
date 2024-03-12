@@ -1,5 +1,11 @@
 <template>
+  <loading v-model:active="isLoading"
+           :can-cancel="true"
+           :on-cancel="onCancel"
+           :is-full-page="fullPage"/>
+
   <div class="sidebar-link" v-for="category of categories">
+
     <div class="categories-list" v-if="isEditable === true" >
       <div class="category">
         <input
@@ -175,6 +181,8 @@
 <script>
 import modalWindowBackdrop from "../../components/page components/ModalWindowBackdrop.vue";
 import Vuex from "vuex";
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
 
 
 export default {
@@ -188,16 +196,22 @@ export default {
       editCategoryName: 0,
       count: 0,
       newCategoryName: '',
-      changed: true
+      changed: true,
+
+      isLoading: false,
+      fullPage: true
     }
   },
-  components: { modalWindowBackdrop },
+  components: { modalWindowBackdrop, Loading },
   watch: {
     categories: function(value) {
       // If "pageData" ever changes, then we will console log its new value.
       this.$forceUpdate()
       console.log(value);
     }
+  },
+  created() {
+    this.isLoading = true
   },
   mounted() {
     this.getCategoryList()
@@ -206,9 +220,21 @@ export default {
 
   updated() {
 
+    this.isLoading = false
   },
 
   methods: {
+    doAjax() {
+      this.isLoading = true;
+      // simulate AJAX
+      setTimeout(() => {
+        this.isLoading = false
+      }, 5000)
+    },
+    onCancel() {
+      console.log('User cancelled the loader.')
+    },
+
     getCategoryList() {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -282,10 +308,10 @@ input.name {
   font-family: "Montserrat", "Arial", Serif;
 }
 .category-list {
-  margin-top: 30px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  margin-top: 50px;
 
   .sidebar-link {
     margin-top: 10px;
@@ -293,11 +319,13 @@ input.name {
     width: 45%;
     margin-bottom: 20px;
     box-sizing: border-box;
+
     .category {
       display: flex;
     }
     .name {
-      font-weight: 800;
+      font-size: 18px;
+      font-weight: 400;
       width: 70%;
       box-sizing: border-box;
       margin-right: 10px;
