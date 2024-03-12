@@ -245,14 +245,14 @@
                                  v-if="review.isReviewed === false"
                                  v-on:click="() => {
                                 approveReview(review.id, review.rating, review.comment)
-
+                                getReviews()
                             }">
                               <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 253.38 253.44"><path d="M0,126.38C-.26,56.92,56.58,1.28,123.91,.02c72.59-1.36,129.81,57.57,129.47,126.88-.35,70.26-56.52,126.6-126.74,126.54C56.09,253.38-.03,197.07,0,126.38Zm126.77,98.16c53.91-.53,96.72-43.12,97.54-96.03,.87-55.79-43.41-98.67-96.02-99.43-55.58-.8-98.84,43.57-99.33,96.68-.5,54.54,43.38,98.59,97.81,98.79Z"/><path d="M68.69,106.26c4.18-.48,7.52,1.96,10.36,5.57,6.17,7.85,12.55,15.53,18.56,23.5,2.58,3.42,4.47,3.9,7.97,1.02,20.29-16.72,40.66-33.34,61.29-49.64,3.14-2.48,7.72-4.19,11.7-4.32,4.75-.16,8.81,2.75,10.45,7.82,1.78,5.5,1.46,10.74-3.21,14.62-11.9,9.89-23.96,19.58-36,29.3-13.59,10.98-27.24,21.89-40.83,32.87-8.04,6.5-15.01,5.95-21.52-2.07-9.86-12.13-19.64-24.34-29.35-36.59-2.97-3.74-5.01-7.83-3.25-12.92,2.23-6.43,6.13-9.24,13.84-9.15Z"/></svg>
                               Одобрить
                             </div>
 
                             <div class="item edit" v-on:click="() => {
-                                editComment(review.comment, review.rating, review.id)
+                                editComment(review.comment, review.rating, review.id, review.isReviewed)
                                 this.clickedReviewIndex = index
 
                             }">
@@ -361,14 +361,18 @@
                       {{ reviewTextError }}
                     </div>
                     <div class="buttons">
-                      <button class="btn btn-filled" v-on:click="() => {
-                        if (this.reviewText.length <= 30) {
+                      <button class="btn btn-filled" v-on:click="(event) => {
+                        if (this.reviewText.length <= 5) {
                           this.reviewTextError = 'Отзыв должен содержать как минимум 30 символов.'
-                        } else if (this.reviewText.length > 30 && this.editReview === true) {
-                          updateReview(this.editReviewId)
+                        } else if (this.reviewText.length > 5 && this.editReview === true) {
+                          updateReview(this.editReviewId, false)
+                          getReviews()
                         } else {
                           sendReview()
-                          reviewSended()
+                          reviewSended(event.target)
+                          this.starsRating = 0
+                          this.reviewText = ''
+                          getReviews()
                         }
                       }"
                       >
@@ -924,7 +928,6 @@ export default {
           })
           .catch((error) => console.error(error));
     },
-
     deleteProduct(id) {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -942,7 +945,6 @@ export default {
           })
           .catch((error) => {console.error(error)});
     },
-
     addFavorite(projectId) {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -961,7 +963,6 @@ export default {
           .then((res) => { console.log(res) })
           .catch((error) => {console.error(error)});
     },
-
     deleteFavorite(projectId) {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -980,8 +981,6 @@ export default {
           .then((res) => { console.log(res) })
           .catch((error) => {console.error(error)});
     },
-
-
     getProducts(emit) {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -1215,16 +1214,15 @@ export default {
           })
           .catch((error) => console.error(error));
     },
-
     clearTextarea () {
       this.reviewText = ''
     },
-
     sendReview () {
       const review = {
         rating: this.dataStars,
         comment: this.reviewText,
-        projectId: this.project.id
+        projectId: this.project.id,
+        isReviewed: this.isAdmin
       };
 
       const myHeaders = new Headers();
@@ -1238,7 +1236,7 @@ export default {
       })
           .then((response) => response.json())
           .then((result) => {
-            if (result.success === true && this.reviewText.length >= 30) {
+            if (result.success === true && this.reviewText.length >= 5) {
 
 
 
@@ -1261,11 +1259,12 @@ export default {
           .catch((error) => {console.error(error)});
 
     },
+    updateReview (id, reviewed) {
 
-    updateReview (id, el, reviewed) {
       const review = {
         rating: this.dataStars,
         comment: this.reviewText,
+        isReviewed: reviewed
       };
 
 
@@ -1282,7 +1281,7 @@ export default {
 
           .then((response) => response.json())
           .then((result) => {
-            if (result.success === true && this.reviewText.length >= 30) {
+            if (result.success === true && this.reviewText.length >= 5) {
 
               this.isProjectReviewed = false
               this.editReview = false
@@ -1308,7 +1307,7 @@ export default {
 
           })
           .catch((error) => {
-            console.log('reerreer')
+            console.log('error')
           });
 
 
@@ -1316,7 +1315,7 @@ export default {
     },
     reviewSended(target) {
       this.isProjectReviewed = true
-
+      console.log(target)
 
       setTimeout(() => {
         this.isProjectReviewed = false
@@ -1343,7 +1342,7 @@ export default {
 
           .then((response) => response.json())
           .then((result) => {
-            if (result.success === true && this.reviewText.length >= 30) {
+            if (result.success === true && this.reviewText.length >= 5) {
 
               this.isProjectReviewed = false
               this.editReview = false
