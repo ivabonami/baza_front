@@ -24,7 +24,7 @@
 
 
         <div class="favorite"
-             v-if="isLoggined === true && $props.project.favorite === 0"
+             v-if="isLoggined === true && $props.project.favorite === 0 || this.isFavourite === false"
              v-on:click="() => {
 
                addFavorite($props.project.id)
@@ -36,7 +36,7 @@
         </div>
 
         <div class="favorite"
-             v-if="isLoggined === true &&  $props.project.favorite === 1"
+             v-if="isLoggined === true &&  $props.project.favorite === 1 || this.isFavourite === true"
              v-on:click="() => {
 
                deleteFavorite($props.project.id)
@@ -308,9 +308,7 @@ export default {
   mounted() {
     this.checkIsAdmin()
 
-
-
-
+    this.$props.project.favorite === 1 ? this.isFavourite = true : this.isFavourite = false
 
     localStorage.getItem('token') ? this.isLoggined = true : this.isLoggined = false
   },
