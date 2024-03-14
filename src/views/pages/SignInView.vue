@@ -155,14 +155,14 @@ export default {
         this.errors.push('Название услуги должно быть не менее 5 символов')
         this.$refs.projectName.style.borderColor = 'red'
       } else {
-        this.$refs.projectName.style.borderColor = '#6C7AFF'
+        this.$refs.projectName.style.borderColor = 'rgb(0, 115, 236)'
       }
 
       if (this.projectDescription.length < 30) {
         this.errors.push('Описание услуги не должно быть меньше 30 символов')
         this.$refs.projectDescription.style.borderColor = 'red'
       } else {
-        this.$refs.projectDescription.style.borderColor = '#6C7AFF'
+        this.$refs.projectDescription.style.borderColor = 'rgb(0, 115, 236)'
       }
 
       if (this.errors.length > 0 ) {
@@ -246,7 +246,7 @@ export default {
 .h2 {
   color: #000;
 
-  font-family: Montserrat;
+  font-family: 'Gilroy-Regular', sans-serif;
   font-size: 25px;
   font-style: normal;
   font-weight: 900;
@@ -258,11 +258,11 @@ export default {
 .form {
   .input {
     border-radius: 5px;
-    border: 1px solid #6C7AFF;
+    border: 1px solid rgb(0, 115, 236);
     background: var(--neutral, #FFF);
     padding: 10px;
     color: #000;
-    font-family: Montserrat;
+    font-family: 'Gilroy-Regular', sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -297,7 +297,7 @@ export default {
     width: 100%;
     text-align: center;
 
-    font-family: Montserrat;
+    font-family: 'Gilroy-Regular', sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -316,7 +316,7 @@ export default {
   text-align: center;
   padding: 10px;
   background-color: #ffdede;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 </style>

@@ -76,7 +76,7 @@ export default {
         headers: myHeaders,
       };
 
-      fetch(`http://62.113.96.171:3000/products?limit=3&sort=${sort}`, requestOptions)
+      fetch(`http://62.113.96.171:3000/products?limit=4&sort=${sort}`, requestOptions)
           .then((response) => response.json())
           .then((result) => {
             this.products = result.products
@@ -106,6 +106,7 @@ export default {
   .shop-view {
     display: flex;
     width: 100%;
+    gap: 20px;
 
   }
 }

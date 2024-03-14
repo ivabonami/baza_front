@@ -5,7 +5,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56" fill="none"
         v-if="$props.iconType === 'user'">
           <g clip-path="url(#clip0_374_2476)">
-            <path d="M0 30.8V25.2C0.0896 24.8948 0.21 24.5952 0.2604 24.2816C2.1224 13.0984 8.3524 5.4768 18.9812 1.554C21.056 0.7868 23.31 0.504 25.48 0H30.52C30.8784 0.0868 31.234 0.2072 31.5952 0.2576C43.2208 1.8228 52.4664 10.1472 55.202 21.5432C55.5156 22.8452 55.734 24.1668 55.9972 25.48V30.8C55.8992 31.15 55.7704 31.4972 55.7116 31.8528C53.8468 42.798 47.7652 50.3468 37.408 54.334C35.3024 55.1432 33.0064 55.4568 30.8 56H24.92C24.5644 55.9048 24.2144 55.776 23.8504 55.72C12.418 53.9756 3.1668 45.3404 0.6636 34.0648C0.4256 32.9812 0.2212 31.8892 0 30.8ZM26.012 32.2756C23.1084 31.4468 20.6024 30.0468 18.8776 27.496C17.122 24.8976 16.4948 22.0612 17.1192 18.9728C18.1048 14.0896 22.302 10.4048 27.1908 10.1248C32.3876 9.8252 36.9656 12.8772 38.5056 17.71C39.5192 20.8992 39.2168 23.9792 37.5088 26.8744C35.8064 29.764 33.1716 31.43 29.9656 32.3232C38.0128 33.3424 43.8816 37.4472 47.824 44.4052C55.9412 35.1848 56.518 18.8692 45.1276 8.6772C34.3252 -0.9884 17.388 0.2744 8.1312 11.4856C-1.5176 23.1728 2.0132 38.1024 8.2684 44.3464C12.0596 37.2484 18.0908 33.4628 26.012 32.2728V32.2756Z" fill="#6C7AFF"/>
+            <path d="M0 30.8V25.2C0.0896 24.8948 0.21 24.5952 0.2604 24.2816C2.1224 13.0984 8.3524 5.4768 18.9812 1.554C21.056 0.7868 23.31 0.504 25.48 0H30.52C30.8784 0.0868 31.234 0.2072 31.5952 0.2576C43.2208 1.8228 52.4664 10.1472 55.202 21.5432C55.5156 22.8452 55.734 24.1668 55.9972 25.48V30.8C55.8992 31.15 55.7704 31.4972 55.7116 31.8528C53.8468 42.798 47.7652 50.3468 37.408 54.334C35.3024 55.1432 33.0064 55.4568 30.8 56H24.92C24.5644 55.9048 24.2144 55.776 23.8504 55.72C12.418 53.9756 3.1668 45.3404 0.6636 34.0648C0.4256 32.9812 0.2212 31.8892 0 30.8ZM26.012 32.2756C23.1084 31.4468 20.6024 30.0468 18.8776 27.496C17.122 24.8976 16.4948 22.0612 17.1192 18.9728C18.1048 14.0896 22.302 10.4048 27.1908 10.1248C32.3876 9.8252 36.9656 12.8772 38.5056 17.71C39.5192 20.8992 39.2168 23.9792 37.5088 26.8744C35.8064 29.764 33.1716 31.43 29.9656 32.3232C38.0128 33.3424 43.8816 37.4472 47.824 44.4052C55.9412 35.1848 56.518 18.8692 45.1276 8.6772C34.3252 -0.9884 17.388 0.2744 8.1312 11.4856C-1.5176 23.1728 2.0132 38.1024 8.2684 44.3464C12.0596 37.2484 18.0908 33.4628 26.012 32.2728V32.2756Z" fill="rgb(0, 115, 236)"/>
           </g>
           <defs>
             <clipPath id="clip0_374_2476">
@@ -59,21 +59,21 @@
       </div>
 
       <div class="confirm"
-      v-if="$props.confirmAction === true">
+           v-if="$props.confirmAction === true">
 
         <div class="buttons">
-            <button class="btn confirm"
-                    :class="{ approve: $props.descriptionType === 'textApprove'}"
-                    title="Действие безвозвратно!!!!"
-                    @click="() => {
+          <button class="btn confirm"
+                  :class="{ approve: $props.descriptionType === 'textApprove'}"
+                  title="Действие безвозвратно!!!!"
+                  @click="() => {
                     $emit('confirmAction', true)
                     $emit('changeModal', false)
 
                   }">
-              <span v-if="$props.descriptionType === 'textApprove'">Опубликовать</span>
-              <span v-else>Удалить</span>
+            <span v-if="$props.descriptionType === 'textApprove'">Опубликовать</span>
+            <span v-else>Удалить</span>
 
-            </button>
+          </button>
 
           <button class="btn cancel"
                   @click="() => {
@@ -82,6 +82,20 @@
                   }">
             <span v-if="$props.descriptionType === 'textApprove'">Отмена</span>
             <span v-else>Не удалять</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="confirm"
+           v-if="$props.close === true">
+
+        <div class="buttons">
+
+          <button class="btn btn-secondary"
+                  @click="() => {
+                    $emit('changeModal', false)
+                  }">
+            <span>Закрыть</span>
           </button>
         </div>
       </div>
@@ -108,7 +122,7 @@ export default {
   name: "ModalWindowBackdrop.vue",
   components: {signInView},
 
-  props: ['iconType', 'heading', 'descriptionType', "description", "show", 'confirmAction', 'textApprove'],
+  props: ['close', 'iconType', 'heading', 'descriptionType', "description", "show", 'confirmAction', 'textApprove'],
 
   data (props) {
     return {
@@ -140,15 +154,19 @@ export default {
     .confirm {
       background-color: #C8716B;
       color: #fff;
+      &:hover {
+        background-color: #a41f1f;
+      }
 
       &.approve {
         background-color: #85c86b;
         color: #fff;
+        &:hover {
+          background-color: #3168b9;
+        }
       }
 
-      &:hover {
-        background-color: #4ec932;
-      }
+
     }
     .cancel {
 
@@ -172,7 +190,7 @@ export default {
   position: fixed;
   z-index: 25;
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 5px;
   width: 300px;
 
   padding: 20px;
@@ -197,8 +215,8 @@ export default {
   .h2 {
     color: #000;
 
-    font-family: Montserrat;
-    font-size: 20px;
+    font-family: 'Gilroy-Bold', sans-serif;
+    font-size: 22px;
     font-style: normal;
     font-weight: 800;
     margin-top: 20px;
@@ -208,8 +226,8 @@ export default {
     margin-top: 20px;
     .text {
       color: #000;
-      font-family: Montserrat;
-      font-size: 10px;
+      font-family: 'Gilroy-Regular', sans-serif;
+      font-size: 14px;
       font-style: normal;
       font-weight: 400;
       line-height: normal;

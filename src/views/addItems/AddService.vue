@@ -145,7 +145,7 @@ export default {
       } else {
         this.avatarError = false
         this.avatarErrorPushed = false
-        this.$refs.projectAvatar.parentElement.style.borderColor = '#6C7AFF'
+        this.$refs.projectAvatar.parentElement.style.borderColor = 'rgb(0, 115, 236)'
 
         fetch("http://62.113.96.171:3000/image-upload", {
           method: "POST",
@@ -166,21 +166,21 @@ export default {
         this.errors.push('Название услуги должно быть не менее 4 символов')
         this.$refs.productName.style.borderColor = 'red'
       } else {
-        this.$refs.productName.style.borderColor = '#6C7AFF'
+        this.$refs.productName.style.borderColor = 'rgb(0, 115, 236)'
       }
 
       if (this.productDescription.length < 30) {
         this.errors.push('Описание услуги должно быть не менее 30 символов')
         this.$refs.productDescription.style.borderColor = 'red'
       } else {
-        this.$refs.productDescription.style.borderColor = '#6C7AFF'
+        this.$refs.productDescription.style.borderColor = 'rgb(0, 115, 236)'
       }
 
       if (this.projectAvatar.length === 0) {
         this.errors.push('Изображение не загружено')
         this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
       } else {
-        this.$refs.projectAvatar.parentElement.style.borderColor = '#6C7AFF'
+        this.$refs.projectAvatar.parentElement.style.borderColor = 'rgb(0, 115, 236)'
       }
 
       if (this.avatarError === true) {
@@ -217,7 +217,7 @@ export default {
 
   .help {
     color: #000;
-    font-family: Montserrat;
+    font-family: 'Gilroy-Regular', sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -232,7 +232,7 @@ export default {
 .errors {
   margin-top: 10px;
   background-color: #ffdada;
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 10px;
   font-size: 14px;
 

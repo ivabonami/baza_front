@@ -1,5 +1,5 @@
 <template>
-  <div class="service-card" v-if="$props.name !== ''" :class="{
+  <div class="service-card box-shadow" v-if="$props.name !== ''" :class="{
           deleted: this.toDelete,
           highlight: highlight,
           hoverable: $props.clickable,
@@ -114,14 +114,14 @@ export default {
         this.errors.push('Название услуги должно быть не менее 5 символов')
         this.$refs.projectName.style.borderColor = 'red'
       } else {
-        this.$refs.projectName.style.borderColor = '#6C7AFF'
+        this.$refs.projectName.style.borderColor = 'rgb(0, 115, 236)'
       }
 
       if (this.projectDescription.length < 30) {
         this.errors.push('Описание услуги не должно быть меньше 30 символов')
         this.$refs.projectDescription.style.borderColor = 'red'
       } else {
-        this.$refs.projectDescription.style.borderColor = '#6C7AFF'
+        this.$refs.projectDescription.style.borderColor = 'rgb(0, 115, 236)'
       }
 
       if (this.errors.length > 0 ) {
@@ -149,7 +149,7 @@ export default {
 .errors {
   margin-top: 10px;
   background-color: #ffdada;
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 10px;
   font-size: 12px;
 
@@ -165,10 +165,18 @@ export default {
 
 
 .service-card {
-  width: 46%;
+  width: 32%;
   margin-bottom: 5px;
-  padding: 5px;
+
   position: relative;
+  border-radius: 20px;
+  background-color: #ffffff;
+  p {
+    padding: 0 10px;
+  }
+  .service-description {
+    padding-bottom: 20px;
+  }
 
   &.editable {
     background-color: #e3eaff;
@@ -181,7 +189,7 @@ export default {
     margin-top: 10px;
     padding: 5px 10px;
     font-weight: 600;
-    border-radius: 10px;
+    border-radius: 5px;
     border: 1px solid #eaeaea;
     width: 100%;
     box-sizing: border-box;
@@ -192,7 +200,7 @@ export default {
   textarea {
     background-color: #fff;
     font-size: 14px;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 5px 10px;
     border: 1px solid #eaeaea;
     width: 100%;
@@ -204,13 +212,12 @@ export default {
   }
 
   &.hoverable {
-    border: 3px solid transparent;
     cursor: pointer;
     transition: .3s ease;
-    border-radius: 10px;
 
     &:hover {
-      box-shadow: 0 0 20px rgba(0,0,0,.1);
+      transform: translateY(-5px);
+      box-shadow: rgba(0, 0, 0, 0.09) 0 13px 22px;
 
     }
   }
@@ -260,7 +267,7 @@ export default {
   .image {
     position: relative;
     background-color: #ffffff;
-    border-radius: 10px;
+    border-radius: 20px;
     width: 100%;
     height: 160px;
     overflow: hidden;
@@ -268,17 +275,17 @@ export default {
     text-align: center;
 
     img {
-      width: auto;
+      width: 100%;
 
-      height: 160px;
+      min-height: 100%;
     }
   }
   .service-header {
     p {
-      margin-top: 10px;
+      margin-top: 20px;
       margin-bottom: 10px;
       color: var(--secondary, #2B2B2B);
-      font-family: Montserrat;
+      font-family: 'Gilroy-Regular', sans-serif;
       font-size: 16px;
       font-style: normal;
       font-weight: 700;
@@ -294,7 +301,7 @@ export default {
   }
   .service-description {
     color: var(--secondary, #2B2B2B);
-    font-family: Montserrat;
+    font-family: 'Gilroy-Regular', sans-serif;
     font-size: 14px;
     font-style: normal;
     word-break: break-all;

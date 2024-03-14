@@ -1,28 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-@import "colors";
+@import url('https://fonts.cdnfonts.com/css/gilroy-bold');
 
 body {
   transition: color, background-color .15s ease;
+  background-color: #f4f6f9;
+  padding-top: 30px;
 }
 h1, h2, h3, h4, h5, h6, p {
   margin-top: 0;
   margin-bottom: 0;
 }
 h1 {
-  font-family: Montserrat;
+  font-family: 'Gilroy-Regular', sans-serif;
   font-size: 25px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
 }h3 {
-  font-family: Montserrat;
+  font-family: 'Gilroy-Bold', sans-serif;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+
 }
 p {
-  font-family: Montserrat;
+  font-family: 'Gilroy-Regular', sans-serif;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -38,13 +40,13 @@ body {
   display: flex;
   flex-wrap: wrap;
   flex-basis: border-box;
-  max-width: 1140px;
+  max-width: 1440px;
   width: 94%;
 
   margin: 0 auto;
 }
 .box-shadow {
-  border: 1px solid #eaeaea;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
 }
 
 .main {
@@ -65,11 +67,13 @@ body {
       flex: 1 4;
       flex-wrap: wrap;
 
+
       section {
         width: 100%;
         box-sizing: border-box;
         margin-bottom: 30px;
         padding: 20px;
+        background-color: #ffffff;
 
       }
     }
@@ -79,7 +83,7 @@ body {
       p {
         color: #000;
 
-        font-family: Montserrat;
+        font-family: 'Gilroy-Regular', sans-serif;
         font-size: 14px;
         font-style: normal;
         font-weight: 400;
@@ -103,6 +107,8 @@ footer {
 
 }
 .header {
+  margin-top: 30px;
+
   .d-flex {
     display: flex;
     flex-basis: border-box;
@@ -162,10 +168,10 @@ a {
 
 .btn {
   border: 1px solid transparent;
-  border-radius: 10px;
+  border-radius: 5px;
   flex-shrink: 0;
   box-sizing: border-box;
-  padding: 10px 30px;
+  padding: 12px 16px;
   text-decoration: none;
   display: flex;
   justify-content: space-around;
@@ -179,18 +185,18 @@ a {
     transform: translateY(-2px);
   }
   &.btn-outlined {
-    border-radius: 10px;
-    border: 1px solid var(--new-dark, #6C7AFF);
+    border-radius: 5px;
+    border: 1px solid var(--new-dark, rgb(0, 115, 236));
     box-shadow: 0 0 3px  rgba(13, 110, 253, 0.25);
     background-color: transparent;
   }
   &.btn-submit {
-    border-radius: 10px;
-    background: var(--new-dark, #6C7AFF);
+    border-radius: 5px;
+    background: var(--new-dark, rgb(0, 115, 236));
     padding: 10px 15px;
     color: #FFF;
     text-align: center;
-    font-family: Montserrat;
+    font-family: 'Gilroy-Regular', sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -199,12 +205,12 @@ a {
   }
   &.btn-filled {
     color: #ffffff;
-    background-color: #6C7AFF;
+    background-color: rgb(0, 115, 236);
     margin-top: 30px;
     display: inline-block;
     cursor: pointer;
     text-align: center;
-    font-family: Montserrat;
+    font-family: 'Gilroy-Regular', sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -217,7 +223,7 @@ a {
     margin-top: 30px;
     cursor: pointer;
     text-align: center;
-    font-family: Montserrat;
+    font-family: 'Gilroy-Regular', sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -244,7 +250,7 @@ a {
     display: inline-block;
     cursor: pointer;
     text-align: center;
-    font-family: Montserrat;
+    font-family: 'Gilroy-Regular', sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -292,18 +298,33 @@ a {
     display: flex;
     flex-wrap: wrap;
     margin: 5px 0;
+    border-radius: 5px;
+    transition: .3s ease;
 
 
+    &:hover {
+      background-color: #edf1fc;
+    }
 
     a {
       min-height: 30px;
       padding: 10px 20px;
-      border-radius: 10px;
+      border-radius: 5px;
       display: flex;
       gap: 10px;
       width: 100%;
       align-items: center;
 
+      &.router-link-active {
+        background-color: #f7f9ff;
+      }
+
+      svg {
+        path {
+          fill : #000000;
+        }
+
+      }
     }
 
   }
@@ -315,10 +336,11 @@ a {
   width: fit-content;
 
   button {
+    margin-right: 10px;
     &.recommended {
-      margin-right: 30px;
+
     }
-    font-family: Montserrat;
+    font-family: 'Gilroy-Regular', sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -333,7 +355,7 @@ a {
       opacity: .8;
     }
     &.active {
-      border-bottom-color: #6C7AFF;
+      border-bottom-color: rgb(0, 115, 236);
     }
 
   }
@@ -380,12 +402,12 @@ form.add-project {
       justify-content: start;
       gap: 30px;
       .add {
-        background-color: #6C7AFF;
+        background-color: rgb(0, 115, 236);
         color: #fff;
         transition: .3s ease;
         padding-left: 5px;
         padding-right: 5px;
-        border-radius: 10px;
+        border-radius: 5px;
         &:hover {
         cursor: pointer;
         opacity: .8;
@@ -415,7 +437,7 @@ form.add-project {
     font-size: 16px;
     margin-top: 10px;
     padding: 10px 20px;
-    border-radius: 10px;
+    border-radius: 5px;
     border: 1px solid #eaeaea;
     width: 70%;
     font-family: "Montserrat", "Arial", Serif;
@@ -437,7 +459,7 @@ form.add-project {
     text-align: center;
     background-color: #fff;
     line-height: 22px;
-    border-radius: 10px;
+    border-radius: 5px;
     transition: background-color 0.2s;
     width: 70%;
 
@@ -445,7 +467,7 @@ form.add-project {
   textarea {
     background-color: #fff;
     font-size: 16px;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 10px 20px;
     border: 1px solid #eaeaea;
     font-family: "Montserrat", "Arial", Serif;
@@ -477,7 +499,7 @@ form.add-project {
       align-self: center;
       input {
         width: 100%!important;
-        border-radius: 10px;
+        border-radius: 5px;
       }
     }
     .delete, .important {
@@ -495,7 +517,7 @@ form.add-project {
       margin-top: 0;
       padding: 10px 20px;
       border: 1px solid #eaeaea;
-      border-radius: 10px;
+      border-radius: 5px;
       width: 100%;
       font-family: "Montserrat", "Arial", Serif;
       outline: none;
@@ -532,14 +554,14 @@ form.add-project {
     position: relative;
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid var(--new-dark, #6C7AFF);
+    border: 1px solid var(--new-dark, rgb(0, 115, 236));
     background: var(--neutral, #FFF);
 
     .name {
       width: 100px;
       display: inline-block;
       color: #000;
-      font-family: Montserrat;
+      font-family: 'Gilroy-Regular', sans-serif;
       font-size: 14px;
       font-style: normal;
       font-weight: 400;
@@ -548,9 +570,9 @@ form.add-project {
     }
 
     input[type='file'] {
-      color: #6C7AFF;
+      color: rgb(0, 115, 236);
 
-      font-family: Montserrat;
+      font-family: 'Gilroy-Regular', sans-serif;
       font-size: 10px;
       font-style: normal;
       font-weight: 400;
@@ -558,11 +580,11 @@ form.add-project {
 
       &::file-selector-button {
         border-radius: 5px;
-        border: 1px solid var(--new-dark, #6C7AFF);
+        border: 1px solid var(--new-dark, rgb(0, 115, 236));
         background: #FFF;
         padding: 5px 10px;
-        color: #6C7AFF;
-        font-family: Montserrat;
+        color: rgb(0, 115, 236);
+        font-family: 'Gilroy-Regular', sans-serif;
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
@@ -587,14 +609,14 @@ form.add-project {
 
   input[type='text'] {
     border-radius: 5px;
-    border: 1px solid var(--new-dark, #6C7AFF);
+    border: 1px solid var(--new-dark, rgb(0, 115, 236));
     background: var(--neutral, #FFF);
     color: #000;
     padding: 10px 15px;
     width: 100%;
     box-sizing: border-box;
 
-    font-family: Montserrat;
+    font-family: 'Gilroy-Regular', sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -615,13 +637,13 @@ form.add-project {
 
   input[type=number] {
     border-radius: 5px;
-    border: 1px solid var(--new-dark, #6C7AFF);
+    border: 1px solid var(--new-dark, rgb(0, 115, 236));
     background: var(--neutral, #FFF);
     color: #000;
     padding: 10px 15px;
     width: 100%;
     box-sizing: border-box;
-    font-family: Montserrat;
+    font-family: 'Gilroy-Regular', sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -632,11 +654,11 @@ form.add-project {
 
   textarea {
     border-radius: 5px;
-    border: 1px solid var(--new-dark, #6C7AFF);
+    border: 1px solid var(--new-dark, rgb(0, 115, 236));
     background: var(--neutral, #FFF);
     padding: 10px 15px;
 
-    font-family: Montserrat;
+    font-family: 'Gilroy-Regular', sans-serif;
     font-size: 14px;
     font-style: normal;
     height: 280px;
@@ -654,14 +676,14 @@ form.add-project {
   }
   select {
     border-radius: 5px;
-    border: 1px solid var(--new-dark, #6C7AFF);
+    border: 1px solid var(--new-dark, rgb(0, 115, 236));
     background: var(--neutral, #FFF);
     color: #000;
     padding: 10px 15px;
     width: 100%;
     box-sizing: border-box;
 
-    font-family: Montserrat;
+    font-family: 'Gilroy-Regular', sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -711,7 +733,7 @@ form.add-project {
 
     span.name {
       color: #000;
-      font-family: Montserrat;
+      font-family: 'Gilroy-Regular', sans-serif;
       font-size: 10px;
       font-style: normal;
       font-weight: 400;
@@ -732,7 +754,7 @@ form.add-project {
       .heading {
         margin-top: 20px;
         color: #000;
-        font-family: Montserrat;
+        font-family: 'Gilroy-Regular', sans-serif;
         font-size: 16px;
         font-style: normal;
         font-weight: 400;
@@ -742,7 +764,7 @@ form.add-project {
       }
       .description {
         color: #000;
-        font-family: Montserrat;
+        font-family: 'Gilroy-Regular', sans-serif;
         font-size: 10px;
         font-style: normal;
         font-weight: 400;
@@ -755,7 +777,7 @@ form.add-project {
   }
   .help {
     color: #000;
-    font-family: Montserrat;
+    font-family: 'Gilroy-Regular', sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -783,4 +805,8 @@ form.add-project {
       transform: translateX(-2px);
     }
   }
+}
+
+@media screen and (max-width: 900px)  {
+  
 }

@@ -301,7 +301,7 @@ export default {
 input.name {
   font-size: 16px;
   padding: 2px 10px;
-  border-radius: 10px;
+  border-radius: 5px;
   margin-top: 0px;
   border: 1px solid #eaeaea;
   width: 70%;
@@ -319,6 +319,8 @@ input.name {
     width: 45%;
     margin-bottom: 20px;
     box-sizing: border-box;
+
+
 
     .category {
       display: flex;
@@ -346,7 +348,7 @@ input.name {
       width: 25px;
       height: 25px;
       color: var(--86868B, #494A4E);
-      font-family: Montserrat;
+      font-family: 'Gilroy-Regular', sans-serif;
       font-size: 14px;
       font-style: normal;
       font-weight: 400;
