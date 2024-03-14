@@ -71,6 +71,7 @@
 
                   }">
             <span v-if="$props.descriptionType === 'textApprove'">Опубликовать</span>
+            <span v-else-if="$props.exit === true">Выйти</span>
             <span v-else>Удалить</span>
 
           </button>
@@ -81,6 +82,7 @@
                     $emit('changeModal', false)
                   }">
             <span v-if="$props.descriptionType === 'textApprove'">Отмена</span>
+            <span v-else-if="$props.exit === true">Остаться</span>
             <span v-else>Не удалять</span>
           </button>
         </div>
@@ -122,7 +124,7 @@ export default {
   name: "ModalWindowBackdrop.vue",
   components: {signInView},
 
-  props: ['close', 'iconType', 'heading', 'descriptionType', "description", "show", 'confirmAction', 'textApprove'],
+  props: ['close', 'iconType', 'exit', 'heading', 'descriptionType', "description", "show", 'confirmAction', 'textApprove'],
 
   data (props) {
     return {
@@ -226,7 +228,7 @@ export default {
     margin-top: 20px;
     .text {
       color: #000;
-      font-family: 'Gilroy-Regular', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 14px;
       font-style: normal;
       font-weight: 400;

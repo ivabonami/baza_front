@@ -348,7 +348,7 @@ input.name {
       width: 25px;
       height: 25px;
       color: var(--86868B, #494A4E);
-      font-family: 'Gilroy-Regular', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 14px;
       font-style: normal;
       font-weight: 400;

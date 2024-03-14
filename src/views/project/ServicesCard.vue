@@ -3,7 +3,8 @@
           deleted: this.toDelete,
           highlight: highlight,
           hoverable: $props.clickable,
-          editable: this.editable
+          editable: this.editable,
+          notNormal: !$props.clickable
         }"
         v-on:mouseover="() => {
           highlight = false
@@ -165,7 +166,7 @@ export default {
 
 
 .service-card {
-  width: 32%;
+  width: 100%;
   margin-bottom: 5px;
 
   position: relative;
@@ -220,6 +221,13 @@ export default {
       box-shadow: rgba(0, 0, 0, 0.09) 0 13px 22px;
 
     }
+  }
+
+  &.notNormal {
+    background-color: transparent;
+    box-shadow: none;
+    cursor: default;
+    text-align: left;
   }
 
 
@@ -285,7 +293,7 @@ export default {
       margin-top: 20px;
       margin-bottom: 10px;
       color: var(--secondary, #2B2B2B);
-      font-family: 'Gilroy-Regular', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 16px;
       font-style: normal;
       font-weight: 700;
@@ -301,7 +309,7 @@ export default {
   }
   .service-description {
     color: var(--secondary, #2B2B2B);
-    font-family: 'Gilroy-Regular', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     font-style: normal;
     word-break: break-all;

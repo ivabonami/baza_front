@@ -1,8 +1,11 @@
 <template>
 
     <div class="project"
-         :class="{ paid: $props.project.payed }"
-         >
+         :class="{
+      paid: $props.project.payed,
+      animate: $props.animate === true
+    }"
+    >
 
 
       <div class="avatar">
@@ -24,7 +27,7 @@
 
 
         <div class="favorite"
-             v-if="isLoggined === true && $props.project.favorite === 0 || this.isFavourite === false"
+             v-if="isLoggined === true && $props.project.favorite === 0 || isLoggined === true && this.isFavourite === false"
              v-on:click="() => {
 
                addFavorite($props.project.id)
@@ -36,7 +39,7 @@
         </div>
 
         <div class="favorite"
-             v-if="isLoggined === true &&  $props.project.favorite === 1 || this.isFavourite === true"
+             v-if="isLoggined === true &&  $props.project.favorite === 1 || isLoggined === true && this.isFavourite === true"
              v-on:click="() => {
 
                deleteFavorite($props.project.id)
@@ -54,9 +57,9 @@
 
 
 
-<!--            <img src="./../../assets/images/verified.webp"-->
-<!--                 class="verified"-->
-<!--                 title="Проверенный магазин">-->
+            <!--            <img src="./../../assets/images/verified.webp"-->
+            <!--                 class="verified"-->
+            <!--                 title="Проверенный магазин">-->
 
           </div>
 
@@ -121,9 +124,9 @@
               </svg>
               <span> Просмотров: {{ $props.project.viewCount === null ? 0 : $props.project.viewCount }} </span>
             </div>
-<!--            <div class="date hoverable"  title="Дата создания" v-on:click="$router.push('/project/' + projectId)">-->
-<!--              {{ new Date($props.projectCreateDate).toLocaleString('ru-ru', { day: '2-digit', month: 'short', year: 'numeric' }) }}-->
-<!--            </div>-->
+            <!--            <div class="date hoverable"  title="Дата создания" v-on:click="$router.push('/project/' + projectId)">-->
+            <!--              {{ new Date($props.projectCreateDate).toLocaleString('ru-ru', { day: '2-digit', month: 'short', year: 'numeric' }) }}-->
+            <!--            </div>-->
 
 
 
@@ -217,6 +220,8 @@
 
     </div>
 
+
+
   <modal-window-backdrop
       v-if="showModalDelete === true"
       v-on:changeModal="(emitShowModal) => {this.showModalDelete = emitShowModal}"
@@ -272,7 +277,7 @@ import { ref } from "vue";
 export default {
   name: "ProjectCard.vue",
   components: { ProjectsView, modalWindowBackdrop },
-  props: ['project'],
+  props: ['project', 'fadeAnimate'],
   emits: ['updated'],
 
   setup(props, emits) {
@@ -307,10 +312,10 @@ export default {
   },
   mounted() {
     this.checkIsAdmin()
-
+    console.log(' 13132213 ',localStorage.getItem('token'))
     this.$props.project.favorite === 1 ? this.isFavourite = true : this.isFavourite = false
 
-    localStorage.getItem('token') ? this.isLoggined = true : this.isLoggined = false
+    localStorage.getItem('token') === null ? this.isLoggined = false : this.isLoggined = true
   },
   methods: {
 
@@ -434,6 +439,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 .admin-menu-toggler {
   cursor: pointer;
   position: relative;
@@ -565,6 +571,10 @@ export default {
   cursor: pointer;
 }
 
+.notNormal {
+
+}
+
 .project {
   cursor: pointer;
 
@@ -680,7 +690,7 @@ export default {
   .dropdown {
     color: var(--new-dark, rgb(0, 115, 236));
     text-align: right;
-    font-family: 'Gilroy-Regular', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -705,7 +715,7 @@ export default {
         word-break: break-all;
 
         color: var(--secondary, #2B2B2B);
-        font-family: 'Gilroy-Regular', sans-serif;
+        font-family: 'Montserrat', sans-serif;
         font-size: 20px;
         font-style: normal;
         font-weight: 700;
@@ -729,7 +739,7 @@ export default {
           color: #000;
 
           text-align: right;
-          font-family: 'Gilroy-Regular', sans-serif;
+          font-family: 'Montserrat', sans-serif;
           font-size: 12px;
           font-style: normal;
           font-weight: 400;
@@ -824,7 +834,7 @@ export default {
       margin-top: 10px;
       padding-bottom: 10px;
       color: var(--secondary, #2B2B2B);
-      font-family: 'Gilroy-Regular', sans-serif;
+      font-family: 'Montserrat', sans-serif;
 
       font-style: normal;
       font-weight: 300;
@@ -874,7 +884,7 @@ export default {
       .stats, .testimonials {
         span {
           color: var(--secondary, #2B2B2B);
-          font-family: 'Gilroy-Regular', sans-serif;
+          font-family: 'Montserrat', sans-serif;
           font-size: 14px;
           font-style: normal;
           opacity: .5;

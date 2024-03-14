@@ -208,6 +208,7 @@ export default  {
   a {
     display: block;
     font-size: 14px;
+    color: #000000;
     svg {
       width: 25px;
       height: 25px;
@@ -232,7 +233,7 @@ export default  {
   .highlight-heading {
     text-align: center;
     margin-top: 30px;
-    font-family: 'Gilroy-Regular', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 900;
@@ -240,7 +241,7 @@ export default  {
   }
   .highlight-description {
     text-align: center;
-    font-family: 'Gilroy-Regular', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -253,7 +254,7 @@ export default  {
   .donation-header {
     margin-bottom: 10px;
     color: var(--new-dark, rgb(0, 115, 236));
-    font-family: 'Gilroy-Regular', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 18px;
     font-style: normal;
     font-weight: 900;
@@ -263,7 +264,7 @@ export default  {
     margin-bottom: 10px;
     .nick {
       color: var(--secondary, #2B2B2B);
-      font-family: 'Gilroy-Regular', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 14px;
       font-style: normal;
       font-weight: 700;
@@ -271,7 +272,7 @@ export default  {
     }
     .sum {
       color: var(--main, #131313);
-      font-family: 'Gilroy-Regular', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 14px;
       font-style: normal;
       font-weight: 400;
@@ -283,7 +284,7 @@ export default  {
     background-color: #F6F8FF;
     padding: 10px;
     color: var(--main, #131313);
-    font-family: 'Gilroy-Regular', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 12px;
     font-style: normal;
     font-weight: 300;

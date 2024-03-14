@@ -246,7 +246,7 @@ export default {
 .h2 {
   color: #000;
 
-  font-family: 'Gilroy-Regular', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 25px;
   font-style: normal;
   font-weight: 900;
@@ -262,7 +262,7 @@ export default {
     background: var(--neutral, #FFF);
     padding: 10px;
     color: #000;
-    font-family: 'Gilroy-Regular', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -297,7 +297,7 @@ export default {
     width: 100%;
     text-align: center;
 
-    font-family: 'Gilroy-Regular', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;

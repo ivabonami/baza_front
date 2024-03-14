@@ -1,84 +1,136 @@
 <template>
 
-  <div class="wrapper" ref="recommend">
-    <loading v-model:active="isLoading"
-             :is-full-page="fullPage"/>
-
-    <recommended ></recommended>
-  </div>
-
-  <div class="buttons">
+<!--  <div class="wrapper" ref="recommend">-->
+<!--      <recommended></recommended>-->
+<!--  </div>-->
+  <transition name="list">
+    <div class="buttons" v-if="projects.length > 0 && loaded === true">
 
     <div class="btns">
-      <button class="btn btn-sort-switcher" v-on:click="() => {
-      this.activeSort = 'random'
-      this.getOffset = 0
+      <span class="currentSort"
+            ref="currentSort"
+            v-click-outside="onClickOutside"
+            v-on:click="() => {
+              this.showSort = !this.showSort
+              this.arrowDate === 'down' ? this.arrowDate = 'up' : this.arrowDate = 'down'
 
-      this.clicked === false ? this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true) : ''
-      this.clicked = true
-      this.lazyProjects = []
-      this.activeSortTab = 'random'
-    }"
-              :class="{ active: activeSortTab === 'random' }">
-        <!--      <svg xmlns="http://www.w3.org/2000/svg" width="23" height="20" viewBox="0 0 23 20" fill="none">-->
-        <!--        <path d="M15.9284 8.29975C17.8821 8.29975 19.8363 8.31854 21.7893 8.29068C22.5423 8.27966 23.0898 8.88292 22.9874 9.62938C22.922 10.1069 22.4347 10.5586 21.8878 10.5994C21.8237 10.6039 21.7582 10.6026 21.6934 10.6026C17.851 10.6026 14.0078 10.6033 10.1654 10.602C9.25303 10.602 8.74955 9.98771 8.92256 9.0974C8.98541 8.77406 9.38327 8.37815 9.71244 8.32955C9.88221 8.30428 10.0565 8.30104 10.2289 8.3004C12.1287 8.29845 14.0286 8.2991 15.9278 8.29975H15.9284Z" fill="#2B2B2B"/>-->
-        <!--        <path d="M15.9285 0.708541C17.9042 0.708541 19.8805 0.724741 21.8555 0.698822C22.5171 0.690398 23.0322 1.26645 22.9985 1.86776C22.9661 2.4464 22.5475 2.89221 21.9229 2.94793C21.8263 2.95636 21.7285 2.95312 21.6313 2.95312C17.8199 2.95312 14.0085 2.95312 10.1978 2.95312C9.7747 2.95312 9.38138 2.88443 9.10664 2.51379C8.82801 2.13862 8.79756 1.70836 8.98417 1.31763C9.17144 0.924964 9.51745 0.69947 10.0008 0.70271C11.9765 0.715021 13.9522 0.707893 15.9285 0.707893V0.708541Z" fill="#2B2B2B"/>-->
-        <!--        <path d="M13.2565 15.9072C14.3243 15.9072 15.3922 15.9046 16.4594 15.9085C16.9331 15.9098 17.3912 16.191 17.5305 16.5519C17.7314 17.0716 17.6303 17.6016 17.2 17.9185C16.9966 18.0681 16.7115 18.1796 16.4626 18.1815C14.3166 18.2016 12.1705 18.1977 10.0237 18.1906C9.34985 18.1887 8.86905 17.6787 8.88007 17.0107C8.88979 16.3802 9.36799 15.9117 10.0211 15.9085C11.0994 15.9033 12.1782 15.9072 13.2565 15.9072Z" fill="#2B2B2B"/>-->
-        <!--        <path d="M2.05552 16.7664C2.55122 16.1651 3.03007 15.5709 3.52448 14.9903C3.72405 14.7557 3.92557 14.494 4.18476 14.3475C4.53531 14.1492 4.99667 14.2944 5.20726 14.575C5.42627 14.8665 5.42433 15.3039 5.16903 15.6305C4.72452 16.1988 4.26446 16.7547 3.80569 17.312C3.43635 17.761 3.06441 18.2081 2.68406 18.6475C2.16309 19.2488 1.6324 19.2183 1.18011 18.558C0.815953 18.0261 0.455681 17.4902 0.116792 16.942C-0.0937991 16.6018 -0.00567497 16.1955 0.287856 15.9487C0.602123 15.6836 1.02914 15.6402 1.32137 15.9072C1.57926 16.1424 1.78078 16.4398 2.05488 16.7671L2.05552 16.7664Z" fill="#2B2B2B"/>-->
-        <!--        <path d="M2.02723 2.50308C2.22486 2.28212 2.40888 2.08903 2.57865 1.88427C2.99076 1.38663 3.39574 0.883151 3.80461 0.382917C4.13249 -0.0188257 4.67549 -0.119909 5.02993 0.153535C5.43685 0.467801 5.49711 0.951188 5.13425 1.40801C4.45129 2.26722 3.7437 3.10634 3.04519 3.95195C2.87413 4.1593 2.71796 4.38609 2.51774 4.56169C2.11146 4.91742 1.59762 4.86688 1.28141 4.4282C0.8855 3.87937 0.51486 3.3124 0.155236 2.73894C-0.102657 2.32748 -0.0171248 1.91213 0.338612 1.6497C0.728691 1.36265 1.13238 1.38663 1.46738 1.75208C1.66825 1.9711 1.82635 2.22834 2.02787 2.50178L2.02723 2.50308Z" fill="#2B2B2B"/>-->
-        <!--        <path d="M2.03006 9.65195C2.31128 9.32213 2.56204 9.03249 2.80762 8.73831C3.15299 8.3249 3.49318 7.90696 3.8392 7.4942C4.21696 7.04386 4.66212 6.98554 5.0833 7.32573C5.43839 7.61213 5.45329 8.15967 5.11764 8.57178C4.34202 9.52365 3.56575 10.4762 2.79013 11.428C2.25037 12.0903 1.64063 12.0682 1.14298 11.3555C0.798264 10.8617 0.478166 10.3505 0.134093 9.85671C-0.170454 9.41933 0.0978065 8.93853 0.401705 8.72664C0.74513 8.48754 1.30692 8.61973 1.55639 8.97352C1.70413 9.18217 1.84927 9.39276 2.02941 9.65195H2.03006Z" fill="#2B2B2B"/>-->
-        <!--      </svg>-->
-        Популярные
-      </button>
-      <button class="btn btn-sort-switcher" v-on:click="() => {
-      this.activeSort === 'oldest' ? this.activeSort = 'newest' : this.activeSort = 'oldest'
-      this.arrowDate === 'up' ? this.arrowDate = 'down' : this.arrowDate = 'up'
-      this.getOffset = 0
-      this.clicked = false
-      this.lazyProjects = []
-      this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true, this.searchStatus)
-      this.activeSortTab = 'date'
 
-      console.log(this.activeSort)
-    }"
-              :class="{ active: activeSortTab === 'date' }">
-        <!--      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">-->
-        <!--        <path d="M7.50269 15.0001C3.35458 15.0006 0 11.6468 0 7.49947C0 3.3511 3.35381 -0.000660988 7.50371 0.000106943C11.6508 0.000874875 15.0026 3.35725 15 7.50663C14.9974 11.6476 11.6439 14.9993 7.50269 15.0001ZM7.50781 1.20832C4.05007 1.20576 1.21564 4.02483 1.20898 7.47285C1.20232 10.9534 4.02217 13.7891 7.49219 13.7914C10.9558 13.7937 13.7869 10.9726 13.7915 7.51431C13.7961 4.04429 10.9727 1.21088 7.50806 1.20832H7.50781Z" fill="rgb(0, 115, 236)"/>-->
-        <!--        <path d="M8.10729 6.89229C8.17154 6.89229 8.2212 6.89229 8.27112 6.89229C9.11994 6.89229 9.9685 6.89152 10.8173 6.8928C11.1514 6.89331 11.3917 7.08555 11.4511 7.39272C11.5126 7.7109 11.2991 8.02959 10.9806 8.09C10.9182 8.10178 10.8537 8.10639 10.7899 8.10639C9.72379 8.10741 8.65739 8.10741 7.59124 8.10664C7.12869 8.10639 6.89242 7.86807 6.89242 7.40347C6.89191 6.03016 6.89114 4.65684 6.89242 3.28352C6.89294 2.78718 7.34448 2.48027 7.76582 2.68966C8.00951 2.81048 8.1078 3.02038 8.10755 3.28608C8.10652 4.43337 8.10703 5.58066 8.10703 6.72795C8.10703 6.77812 8.10703 6.82804 8.10703 6.89229H8.10729Z" fill="rgb(0, 115, 236)"/>-->
-        <!--      </svg>-->
-        Давность
+            }">
+        {{ this.activeSortName }}
         <svg id="a" xmlns="http://www.w3.org/2000/svg" :class="{
-        up: arrowDate === 'up',
-        down: arrowDate === 'down'
-      }" class="arrow"
-             viewBox="0 0 15.96 8.57"><path class="b" d="M.6,8.57c-.15,0-.31-.06-.42-.18-.23-.23-.23-.61,0-.85L7.56,.17c.23-.22,.62-.22,.85,0l7.38,7.38c.23,.23,.23,.61,0,.85-.23,.24-.61,.23-.85,0L7.98,1.44,1.02,8.4c-.12,.12-.27,.18-.42,.18Z"/></svg>
-      </button>
-      <button class="btn btn-sort-switcher" v-on:click="() => {
-      this.activeSort === 'highestRating' ? this.activeSort = 'lowestRating' : this.activeSort = 'highestRating'
-      this.arrowRating === 'up' ? this.arrowRating = 'down' : this.arrowRating = 'up'
-      this.activeSortTab = 'rating'
-      this.getOffset = 0
-      this.lazyProjects = []
-      this.clicked = false
-      this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true, this.searchStatus)
+            up: arrowDate === 'up',
+            down: arrowDate === 'down'
+          }" class="arrow"
+                         viewBox="0 0 15.96 8.57"><path class="b" d="M.6,8.57c-.15,0-.31-.06-.42-.18-.23-.23-.23-.61,0-.85L7.56,.17c.23-.22,.62-.22,.85,0l7.38,7.38c.23,.23,.23,.61,0,.85-.23,.24-.61,.23-.85,0L7.98,1.44,1.02,8.4c-.12,.12-.27,.18-.42,.18Z"/></svg>
 
-    }"
-              :class="{ active: activeSortTab === 'rating' }">
-        <!--      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">-->
-        <!--        <path-->
-        <!--            d="M8.93325 0.7084L10.1489 4.61808C10.2802 5.04057 10.6571 5.32648 11.0822 5.32648H15.0168C15.9674 5.32648 16.3627 6.59722 15.5936 7.18118L12.4105 9.59732C12.0665 9.85835 11.9227 10.3211 12.054 10.7436L13.2697 14.6533C13.5635 15.5978 12.5287 16.3833 11.7597 15.7996L8.57651 13.3835C8.23253 13.1224 7.7669 13.1224 7.42292 13.3835L4.23977 15.7996C3.47071 16.3833 2.43593 15.5978 2.72972 14.6533L3.94542 10.7436C4.07671 10.3211 3.93294 9.85835 3.58896 9.59732L0.406373 7.18088C-0.362688 6.59722 0.0326187 5.32618 0.983169 5.32618H4.91752C5.3426 5.32618 5.71947 5.04028 5.85077 4.61778L7.06675 0.7084C7.36053 -0.236133 8.63947 -0.236133 8.93325 0.7084Z"/>-->
-        <!--      </svg>-->
-        Рейтинг
-        <svg id="a" xmlns="http://www.w3.org/2000/svg" :class="{
-        up: arrowRating === 'up',
-        down: arrowRating === 'down'
-      }" class="arrow"
-             viewBox="0 0 15.96 8.57"><path class="b" d="M.6,8.57c-.15,0-.31-.06-.42-.18-.23-.23-.23-.61,0-.85L7.56,.17c.23-.22,.62-.22,.85,0l7.38,7.38c.23,.23,.23,.61,0,.85-.23,.24-.61,.23-.85,0L7.98,1.44,1.02,8.4c-.12,.12-.27,.18-.42,.18Z"/></svg>
+      </span>
+      <div class="sortFilter box-shadow" v-if="this.showSort === true">
+        <span class="filter" :class="{active: this.activeSortName === 'Популярные'}"
+              v-on:click=" () => {
+                if (this.activeSortName !== 'Популярные') {
+                  this.activeSortName = 'Популярные'
+                  this.activeSort = 'random'
+                  this.getOffset = 0
 
-      </button>
+                  this.clicked = true
+                  this.projects = this.projects.slice(this.projects.length, this.projects.length)
+                  this.activeSortTab = 'random'
+                  this.projectCardAnimate = true
+
+                  this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit)
+                }
+              }
+
+              ">Популярные
+
+          <svg id="a" v-if="this.activeSortName === 'Популярные'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213.47 166.37">
+            <path class="b" d="M77.45,100.37c1.51-1.42,2.84-2.62,4.11-3.88,30.17-30.16,60.34-60.34,90.51-90.51,7.98-7.98,13.68-7.98,21.67,0,5.07,5.06,10.18,10.09,15.17,15.23,5.98,6.15,6.09,12.43,.13,18.4-40.72,40.81-81.48,81.58-122.26,122.32-5.99,5.98-12.81,5.91-18.88-.14-21.01-20.94-41.98-41.91-62.92-62.91-6.66-6.68-6.63-12.84-.04-19.51,5.27-5.33,10.57-10.64,15.91-15.91,6.67-6.58,12.78-6.56,19.5,.13,11.11,11.05,22.16,22.15,33.25,33.21,1.15,1.15,2.39,2.22,3.84,3.57Z"/>
+          </svg>
+
+        </span>
+        <div class="sep"></div>
+
+
+        <span class="filter" :class="{active: this.activeSortName === 'Сначала старые'}" v-on:click=" () => {
+                if (this.activeSortName !== 'Сначала старые') {
+                  this.activeSortName = 'Сначала старые'
+                  this.activeSort = 'oldest'
+                  this.getOffset = 0
+                   this.projects = this.projects.slice(this.projects.length, this.projects.length )
+                  this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true)
+                  this.clicked = true
+                  this.activeSortTab = 'oldest'
+                }
+              }
+              ">Сначала старые
+           <svg id="a" v-if="this.activeSortName === 'Сначала старые'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213.47 166.37">
+            <path class="b" d="M77.45,100.37c1.51-1.42,2.84-2.62,4.11-3.88,30.17-30.16,60.34-60.34,90.51-90.51,7.98-7.98,13.68-7.98,21.67,0,5.07,5.06,10.18,10.09,15.17,15.23,5.98,6.15,6.09,12.43,.13,18.4-40.72,40.81-81.48,81.58-122.26,122.32-5.99,5.98-12.81,5.91-18.88-.14-21.01-20.94-41.98-41.91-62.92-62.91-6.66-6.68-6.63-12.84-.04-19.51,5.27-5.33,10.57-10.64,15.91-15.91,6.67-6.58,12.78-6.56,19.5,.13,11.11,11.05,22.16,22.15,33.25,33.21,1.15,1.15,2.39,2.22,3.84,3.57Z"/>
+          </svg>
+
+        </span>
+        <div class="sep"></div>
+
+        <span class="filter" :class="{active: this.activeSortName === 'Сначала новые'}" v-on:click=" () => {
+                if (this.activeSortName !== 'Сначала новые') {
+                  this.activeSortName = 'Сначала новые'
+                  this.activeSort = 'newest'
+                  this.getOffset = 0
+                  this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true)
+                  this.clicked = true
+                  this.lazyProjects = []
+                  this.activeSortTab = 'newest'
+                }
+              }">Сначала новые
+           <svg id="a" v-if="this.activeSortName === 'Сначала новые'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213.47 166.37">
+            <path class="b" d="M77.45,100.37c1.51-1.42,2.84-2.62,4.11-3.88,30.17-30.16,60.34-60.34,90.51-90.51,7.98-7.98,13.68-7.98,21.67,0,5.07,5.06,10.18,10.09,15.17,15.23,5.98,6.15,6.09,12.43,.13,18.4-40.72,40.81-81.48,81.58-122.26,122.32-5.99,5.98-12.81,5.91-18.88-.14-21.01-20.94-41.98-41.91-62.92-62.91-6.66-6.68-6.63-12.84-.04-19.51,5.27-5.33,10.57-10.64,15.91-15.91,6.67-6.58,12.78-6.56,19.5,.13,11.11,11.05,22.16,22.15,33.25,33.21,1.15,1.15,2.39,2.22,3.84,3.57Z"/>
+          </svg>
+
+        </span>
+        <div class="sep"></div>
+
+        <span class="filter" :class="{active: this.activeSortName === 'С высоким рейтингом'}" v-on:click=" () => {
+                if (this.activeSortName !== 'С высоким рейтингом') {
+                  this.activeSortName = 'С высоким рейтингом'
+                  this.activeSort = 'highestRating'
+                  this.getOffset = 0
+                  this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true)
+                  this.clicked = true
+                  this.lazyProjects = []
+                  this.activeSortTab = 'highestRating'
+                }
+              }">С высоким рейтингом
+           <svg id="a" v-if="this.activeSortName === 'С высоким рейтингом'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213.47 166.37">
+            <path class="b" d="M77.45,100.37c1.51-1.42,2.84-2.62,4.11-3.88,30.17-30.16,60.34-60.34,90.51-90.51,7.98-7.98,13.68-7.98,21.67,0,5.07,5.06,10.18,10.09,15.17,15.23,5.98,6.15,6.09,12.43,.13,18.4-40.72,40.81-81.48,81.58-122.26,122.32-5.99,5.98-12.81,5.91-18.88-.14-21.01-20.94-41.98-41.91-62.92-62.91-6.66-6.68-6.63-12.84-.04-19.51,5.27-5.33,10.57-10.64,15.91-15.91,6.67-6.58,12.78-6.56,19.5,.13,11.11,11.05,22.16,22.15,33.25,33.21,1.15,1.15,2.39,2.22,3.84,3.57Z"/>
+          </svg>
+        </span>
+
+        <div class="sep"></div>
+
+
+        <span class="filter" :class="{active: this.activeSortName === 'С низким рейтингом'}" v-on:click="() => {
+                if (this.activeSortName !== 'С низким рейтингом') {
+                  this.activeSortName = 'С низким рейтингом'
+                  this.activeSort = 'lowestRating'
+                  this.getOffset = 0
+                  this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true)
+                  this.clicked = true
+                  this.lazyProjects = []
+                  this.activeSortTab = 'lowestRating'
+                }
+              }">С низким рейтингом
+           <svg id="a" v-if="this.activeSortName === 'С низким рейтингом'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213.47 166.37">
+            <path class="b" d="M77.45,100.37c1.51-1.42,2.84-2.62,4.11-3.88,30.17-30.16,60.34-60.34,90.51-90.51,7.98-7.98,13.68-7.98,21.67,0,5.07,5.06,10.18,10.09,15.17,15.23,5.98,6.15,6.09,12.43,.13,18.4-40.72,40.81-81.48,81.58-122.26,122.32-5.99,5.98-12.81,5.91-18.88-.14-21.01-20.94-41.98-41.91-62.92-62.91-6.66-6.68-6.63-12.84-.04-19.51,5.27-5.33,10.57-10.64,15.91-15.91,6.67-6.58,12.78-6.56,19.5,.13,11.11,11.05,22.16,22.15,33.25,33.21,1.15,1.15,2.39,2.22,3.84,3.57Z"/>
+          </svg>
+
+        </span>
+
+      </div>
+
+
     </div>
 
-    <div class="search" v-on:input="() => {
+    <div class="search"
+         v-on:input="() => {
       this.lazyProjects = []
       this.getOffset = 0
       lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit)
@@ -111,47 +163,57 @@
     </div>
 
   </div>
+  </transition>
+  <div class="projects-wrapper" :class="{fadeAnimate: this.projectCardAnimate}" >
 
 
-  <div class="projects-wrapper">
+    <div class="projectsList" >
+      <transition-group name="list" tag="div">
+        <div v-for="project of projects" v-if="loaded === true">
+          <project-card v-if="projects.length > 0"
+              ref='fadeAnimate'
+              v-bind:project="project"
+              v-on:updated="(emit) => {
+                this.$refs.recommend.scrollIntoView({behavior: 'smooth'})
+                this.lazyProjects = []
+                this.getOffset = 0
+                this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit)
+
+               }"
+          >
+
+          </project-card>
 
 
-    <div class="" v-for="projects of lazyProjects" >
-      <project-card v-for="project of projects" v-if="projects.length > 0"
-                    v-bind:project="project"
-
-                    v-on:updated="(emit) => {
-                    this.$refs.recommend.scrollIntoView({behavior: 'smooth'})
-                    this.lazyProjects = []
-                    this.getOffset = 0
-                    this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit)
-
-                   }"
-
-      >
 
 
-      </project-card>
-      <div v-else-if="projects.length <= 0 && this.$route.path !== '/'" class="noProjects">
-        <svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58" fill="none">
-          <g clip-path="url(#clip0_380_7664)">
-            <path d="M26.8089 0C28.2705 0 29.7295 0 31.1911 0C31.4772 0.0721778 31.7608 0.172711 32.0521 0.211378C44.129 1.84569 52.2593 8.43964 56.4353 19.8308C57.2473 22.0503 57.4922 24.476 58 26.8089V31.1911C57.9252 31.5185 57.8144 31.8433 57.7809 32.1758C56.6364 43.5309 48.4313 53.4812 37.4448 56.7008C35.4084 57.2963 33.2791 57.5747 31.1911 58H26.8089C26.5202 57.9278 26.2366 57.8196 25.9453 57.7912C14.0515 56.5874 4.02907 48.0343 1.01564 36.4524C0.567111 34.7278 0.332533 32.9466 0 31.1911C0 29.7295 0 28.2705 0 26.8089C0.0747556 26.4815 0.172711 26.1593 0.219111 25.8293C1.85084 14.0927 8.18444 6.02169 19.2302 1.7864C21.6327 0.866133 24.2749 0.577422 26.8089 0ZM3.35111 28.8685C3.35369 43.2628 14.6882 54.6412 29.0284 54.6489C43.1881 54.654 54.6515 43.2061 54.6489 29.0619C54.6489 14.8428 43.2577 3.35369 29.1572 3.35111C14.8377 3.34853 3.34853 14.7114 3.35111 28.8685Z" fill="#C8716B"/>
-            <path d="M29.0079 13.2653C29.8225 13.4999 30.668 13.6623 31.4439 13.9871C32.3719 14.3763 32.756 15.1857 32.6761 16.1833C32.3409 20.416 31.9981 24.6487 31.6527 28.8815C31.5135 30.5905 31.3537 32.2996 31.2093 34.0086C31.0985 35.3388 30.3793 36.0477 29.0775 36.0915C27.7293 36.1379 26.9173 35.4316 26.7936 34.0422C26.2986 28.5309 25.7934 23.0222 25.3397 17.5083C25.0922 14.4975 26.1001 13.4019 29.0079 13.2627V13.2653Z" fill="#C8716B"/>
-            <path d="M28.7914 44.5957C27.2138 44.49 25.9172 43.0052 26.0409 41.4482C26.1672 39.8629 27.6546 38.5611 29.1987 38.69C30.7737 38.8189 32.0806 40.3217 31.9595 41.8581C31.8332 43.4408 30.3767 44.7013 28.794 44.5957H28.7914Z" fill="#C8716B"/>
-          </g>
-          <defs>
-            <clipPath id="clip0_380_7664">
-              <rect width="58" height="58" fill="white"/>
-            </clipPath>
-          </defs>
-        </svg>
-        <span>Нет проектов.</span>
+        </div>
+        <div v-if="projects.length <= 0 && loaded === true" class="noProjects">
+          <svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58" fill="none">
+            <g clip-path="url(#clip0_380_7664)">
+              <path d="M26.8089 0C28.2705 0 29.7295 0 31.1911 0C31.4772 0.0721778 31.7608 0.172711 32.0521 0.211378C44.129 1.84569 52.2593 8.43964 56.4353 19.8308C57.2473 22.0503 57.4922 24.476 58 26.8089V31.1911C57.9252 31.5185 57.8144 31.8433 57.7809 32.1758C56.6364 43.5309 48.4313 53.4812 37.4448 56.7008C35.4084 57.2963 33.2791 57.5747 31.1911 58H26.8089C26.5202 57.9278 26.2366 57.8196 25.9453 57.7912C14.0515 56.5874 4.02907 48.0343 1.01564 36.4524C0.567111 34.7278 0.332533 32.9466 0 31.1911C0 29.7295 0 28.2705 0 26.8089C0.0747556 26.4815 0.172711 26.1593 0.219111 25.8293C1.85084 14.0927 8.18444 6.02169 19.2302 1.7864C21.6327 0.866133 24.2749 0.577422 26.8089 0ZM3.35111 28.8685C3.35369 43.2628 14.6882 54.6412 29.0284 54.6489C43.1881 54.654 54.6515 43.2061 54.6489 29.0619C54.6489 14.8428 43.2577 3.35369 29.1572 3.35111C14.8377 3.34853 3.34853 14.7114 3.35111 28.8685Z" fill="#C8716B"/>
+              <path d="M29.0079 13.2653C29.8225 13.4999 30.668 13.6623 31.4439 13.9871C32.3719 14.3763 32.756 15.1857 32.6761 16.1833C32.3409 20.416 31.9981 24.6487 31.6527 28.8815C31.5135 30.5905 31.3537 32.2996 31.2093 34.0086C31.0985 35.3388 30.3793 36.0477 29.0775 36.0915C27.7293 36.1379 26.9173 35.4316 26.7936 34.0422C26.2986 28.5309 25.7934 23.0222 25.3397 17.5083C25.0922 14.4975 26.1001 13.4019 29.0079 13.2627V13.2653Z" fill="#C8716B"/>
+              <path d="M28.7914 44.5957C27.2138 44.49 25.9172 43.0052 26.0409 41.4482C26.1672 39.8629 27.6546 38.5611 29.1987 38.69C30.7737 38.8189 32.0806 40.3217 31.9595 41.8581C31.8332 43.4408 30.3767 44.7013 28.794 44.5957H28.7914Z" fill="#C8716B"/>
+            </g>
+            <defs>
+              <clipPath id="clip0_380_7664">
+                <rect width="58" height="58" fill="white"/>
+              </clipPath>
+            </defs>
+          </svg>
+          <span>Нет проектов.</span>
 
-      </div>
+        </div>
+
+      </transition-group>
+
+      <loader v-if="loaded === false"></loader>
+
+
+
     </div>
 
-
-    <Waypoint @change="(way) => {
+    <Waypoint v-if="emptyResponse === false && loaded === true" @change="(way) => {
 
       if (way.going === 'IN' && way.direction === 'UP' && emptyResponse === false) {
         lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false)
@@ -169,12 +231,12 @@
     </Waypoint>
 
 
-    <div class="empty" v-if="projects.length === 0">
-      Категория пуста
-    </div>
+
+
 
 
   </div>
+
 </template>
 
 <script>
@@ -182,22 +244,27 @@ import recommended from "../../components/page components/Recommended.vue";
 import projectCard from "../project/ProjectCard.vue";
 import { ref, defineComponent } from "vue";
 import { Waypoint } from "vue-waypoint";
+import vClickOutside from 'click-outside-vue3'
+import AnimateHeight from 'vue-animate-height';
 
-import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
+import loader from "../../components/reusable/loader.vue";
 
 export default {
   name: "AllProjectsWithSort.vue",
-  components: {recommended, projectCard, Waypoint, Loading},
+  components: {recommended, projectCard, Waypoint, loader, AnimateHeight},
   emits: ['updated'],
 
   data () {
     return {
+      loaded: false,
+      showSort: false,
       category: {},
-      projects: {},
+      projects: [],
       recommend: ref(),
 
       activeSort: 'random',
+      activeSortName: 'Популярные',
       activeSortTab: 'random',
       arrowDate: 'up',
       arrowRating: 'up',
@@ -212,26 +279,37 @@ export default {
 
       searchQuery: '',
       searchStatus: false,
-      clicked: true,
+      clicked: false,
 
       isLoading: false,
-      fullPage: true
+      fullPage: true,
+
+      fadeAnimate: false,
+      projectCardAnimate: false,
+      height: 0
 
     }
   },
+  directives: {
+    clickOutside: vClickOutside.directive
+  },
+  setup () {
+
+  },
 
   mounted() {
-    this.handleScroll()
-
+    this.height = 1250
 
     if (this.lazyProjects.length < 1) {
       this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false, false)
     }
+    this.loaded === true ? this.handleScroll() : ''
   },
   created() {
     this.isLoading = true
   },
   updated() {
+
       this.isLoading = false
   },
 
@@ -239,6 +317,10 @@ export default {
 
   methods: {
 
+    onClickOutside (event) {
+      this.showSort = false
+      this.arrowDate = 'up'
+    },
     handleScroll () {
 
       if (this.$refs.loadmore.getBoundingClientRect().bottom < window.innerHeight) {
@@ -279,11 +361,15 @@ export default {
       })
           .then((response) => response.json())
           .then((result) => {
+
             if (this.$route.path === '/') {
               console.log(result)
 
 
-              this.lazyProjects.push(result.projects)
+              for (let project of result.projects) {
+                this.projects.push(project)
+                console.log( this.$refs.fadeAnimate )
+              }
               console.log(result.projects)
 
               result.projects.length < this.getLimit ? this.emptyResponse = true : this.emptyResponse = false
@@ -291,14 +377,28 @@ export default {
             } else {
 
 
-              this.lazyProjects.push(result.projects)
+              for (let project of result.projects) {
+                this.projects.push(project)
+                console.log( this.$refs.fadeAnimate )
+              }
 
               console.log(this.lazyProjects)
               result.projects.length < this.getLimit ? this.emptyResponse = true : this.emptyResponse = false
             }
 
+
+
+            this.loaded = true
+            this.projectCardAnimate = true
+
+            setTimeout(() => {
+              this.projectCardAnimate = false
+            }, 200)
+
+
           })
           .catch((error) => {console.error(error)});
+
 
       this.getOffset += this.getLimit
 
@@ -319,9 +419,83 @@ export default {
   .btns {
     display: flex;
     gap: 10px;
+    position: relative;
+    align-items: center;
+
+    .currentSort {
+      width: 220px;
+      border: 1px solid #0a58ca;
+      outline: none;
+      color: #000;
+      background-color: #fff;
+      font-size: 16px;
+      font-family: "Montserrat", sans-serif;
+      transition: all 0.2s ease-in-out;
+      border-radius: 10px;
+      padding: 0.4375rem 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      cursor: pointer;
+
+      svg {
+        position: relative;
+        top: 2px;
+        margin-left: 5px;
+        width: 15px;
+        height: 15px;
+      }
+
+    }
+
+    .sortFilter {
+      position: absolute;
+      border-radius: 10px;
+      background-color: #fff;
+      z-index: 10;
+      top: 45px;
+
+
+
+      .sep {
+        width: 100%;
+        height: 1px;
+        background-color: rgba(0,0,0,.2);
+      }
+
+      .filter {
+        display: flex;
+        padding: 10px;
+        font-size: 14px;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        transition: .3s ease;
+        width: 220px;
+
+
+
+        svg {
+          width: 15px;
+          height: 15px;
+
+          path {
+            fill: #000;
+          }
+        }
+
+        &.active {
+          color: #000;
+        }
+
+        &:hover {
+          background-color: rgba(10, 88, 202, 0.11);
+        }
+      }
+    }
   }
 }
 .noProjects {
+  padding-top: 30px;
   margin-bottom: 30px;
   font-weight: bold;
   text-align: center;
@@ -355,7 +529,7 @@ export default {
 }
 .btn {
   color: rgb(0, 115, 236);
-  font-family: 'Gilroy-Regular', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -461,6 +635,14 @@ export default {
   svg {
     width: 15px;
     height: 15px;
+  }
+}
+.projects-wrapper {
+  padding-bottom: 30px;
+  transition: max-height 3.25s ease;
+
+  .projectsList {
+    transition: .3s ease;
   }
 }
 

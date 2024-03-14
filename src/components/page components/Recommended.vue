@@ -1,8 +1,10 @@
 <template>
-  <div class="tabs" v-if="products.length > 0">
+  <transition name="list">
+  <div class="tabs">
     <div class="tabs-links">
       <button
          v-on:click=" () => {
+ this.products = this.products.slice(this.products.length, this.products.length)
            getProducts('random')
            this.tab = 'recommended'
          }"
@@ -14,8 +16,9 @@
       </button>
       <button
          v-on:click=" () => {
+            this.products = this.products.slice(this.products.length, this.products.length)
            getProducts('newest')
-           this.tab = 'newest'
+           this.tab = 'fresh'
          }"
          class="fresh"
          :class="{
@@ -24,40 +27,51 @@
         Новые
       </button>
     </div>
-    <div class="tabs-content" >
-      <div class="shop-view"
-      >
-        <services-card
-            v-for="(item, index) in products"
-            v-bind:name="item.name"
-            v-bind:image="`http://62.113.96.171:3000/${item.avatarFilePath}`"
-            v-bind:id="item.id"
-            v-bind:projectId="item.ProjectId"
-            v-bind:isOwner="false"
-            v-bind:clickable="true"
-        >
-        </services-card>
+    <div class="tabs-content-wrapper" >
 
-      </div>
+      <transition-group name="list" tag="div" class="tabs-content" :css="loading">
+        <div class="shop-view" v-for="item in products" v-if="products.length > 0 && loading === false"
+        >
+          <services-card
+
+              v-bind:name="item.name"
+              v-bind:image="`http://62.113.96.171:3000/${item.avatarFilePath}`"
+              v-bind:id="item.id"
+              v-bind:projectId="item.ProjectId"
+              v-bind:isOwner="false"
+              v-bind:clickable="true"
+          >
+          </services-card>
+
+        </div>
+        <loader v-if="loading === true"></loader>
+
+      </transition-group>
+
     </div>
+
+
   </div>
+  </transition>
 </template>
 
 <script>
 import { ref } from 'vue'
 import servicesCard from "../../views/project/ServicesCard.vue";
+import loader from "../reusable/loader.vue";
 
 
 export default {
   name: "Recommended.vue",
-  components: {servicesCard},
+  components: {servicesCard, loader},
 
 
   data() {
     return {
       recommendedShops: ref(null),
       tab: 'recommended',
-      products: []
+      products: [],
+      loading: true,
     }
   },
   methods: {
@@ -66,6 +80,8 @@ export default {
     },
 
     getProducts(sort) {
+      this.loading = true
+
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
@@ -79,8 +95,11 @@ export default {
       fetch(`http://62.113.96.171:3000/products?limit=4&sort=${sort}`, requestOptions)
           .then((response) => response.json())
           .then((result) => {
-            this.products = result.products
-            console.log(result.products)
+            for (let product of result.products) {
+              this.products.push(product)
+            }
+
+            this.loading = false
           })
           .catch((error) => console.error(error));
 
@@ -97,15 +116,19 @@ export default {
 <style scoped lang="scss">
 
 .tabs-content {
-  display: flex;
   width: 100%;
   justify-content: space-between;
   margin-top: 30px;
+  min-height: 270px;
   gap: 20px;
+  display: flex;
+  flex-wrap: nowrap;
+
 
   .shop-view {
     display: flex;
     width: 100%;
+    flex-basis: 24%;
     gap: 20px;
 
   }

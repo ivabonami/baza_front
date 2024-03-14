@@ -111,7 +111,7 @@ export default {
 
       a {
         color: var(--neutral, #FFF);
-        font-family: 'Gilroy-Regular', sans-serif;
+        font-family: 'Montserrat', sans-serif;
         font-size: 14px;
         font-style: normal;
         font-weight: 600;
@@ -129,7 +129,7 @@ export default {
     h3 {
       color: #000;
 
-      font-family: 'Gilroy-Regular', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 18px;
       font-style: normal;
       font-weight: 900;
@@ -137,7 +137,7 @@ export default {
     }
     .about-description {
       color: var(--secondary, #2B2B2B);
-      font-family: 'Gilroy-Regular', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 14px;
       font-style: normal;
       font-weight: 300;

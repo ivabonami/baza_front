@@ -1,16 +1,8 @@
 <template>
   <div class="wrapper">
     <project-card v-for="project of projects"
-                  v-bind:projectId="project.id"
-                  v-bind:projectName="project.name"
-                  v-bind:projectDescription="project.description"
-                  v-bind:projectCreateDate="project.createdAt"
-                  v-bind:projectViews="project.viewCount"
-                  v-bind:payed="project.payed"
-                  v-bind:projectRating="project.ratingAvg"
-                  v-bind:avatar="project.avatarFilePath"
-                  v-bind:reviewed="false"
-                  v-bind:descriptionType="'textApprove'"
+                  v-bind:project="project"
+
 
     >
 

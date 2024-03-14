@@ -11,7 +11,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 h1 {
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 25px;
   font-style: normal;
   font-weight: 400;
@@ -19,7 +19,7 @@ h1 {
 }
 
 h3 {
-  font-family: "Gilroy-Bold", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -27,7 +27,7 @@ h3 {
 }
 
 p {
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -80,7 +80,7 @@ body {
 }
 .main .row .content p {
   color: #000;
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -96,6 +96,9 @@ body {
 
 .header {
   margin-top: 30px;
+}
+.header .box {
+  background-color: white;
 }
 .header .d-flex {
   display: flex;
@@ -179,7 +182,7 @@ a {
   padding: 10px 15px;
   color: #FFF;
   text-align: center;
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -193,7 +196,7 @@ a {
   display: inline-block;
   cursor: pointer;
   text-align: center;
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -206,7 +209,7 @@ a {
   margin-top: 30px;
   cursor: pointer;
   text-align: center;
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -232,7 +235,7 @@ a {
   display: inline-block;
   cursor: pointer;
   text-align: center;
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -308,7 +311,7 @@ a {
 }
 .tabs-links button {
   margin-right: 10px;
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -325,20 +328,20 @@ a {
   border-bottom-color: rgb(0, 115, 236);
 }
 
-.slide-fade-enter-active {
-  transition: all 0.2s ease-out;
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.6s ease;
 }
 
-.slide-fade-leave-active {
-  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateX(20px);
+.list-enter-from,
+.list-leave-to {
   opacity: 0;
+  transform: translateY(10px);
 }
 
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
 form.add-project {
   margin-top: 30px;
   display: flex;
@@ -503,7 +506,7 @@ form.add-project .helper {
   width: 100px;
   display: inline-block;
   color: #000;
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -512,7 +515,7 @@ form.add-project .helper {
 }
 .form-wrapper .fake-input input[type=file] {
   color: rgb(0, 115, 236);
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 10px;
   font-style: normal;
   font-weight: 400;
@@ -524,7 +527,7 @@ form.add-project .helper {
   background: #FFF;
   padding: 5px 10px;
   color: rgb(0, 115, 236);
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -548,7 +551,7 @@ form.add-project .helper {
   padding: 10px 15px;
   width: 100%;
   box-sizing: border-box;
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -572,7 +575,7 @@ form.add-project .helper {
   padding: 10px 15px;
   width: 100%;
   box-sizing: border-box;
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -583,7 +586,7 @@ form.add-project .helper {
   border: 1px solid var(--new-dark, rgb(0, 115, 236));
   background: var(--neutral, #FFF);
   padding: 10px 15px;
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 14px;
   font-style: normal;
   height: 280px;
@@ -604,7 +607,7 @@ form.add-project .helper {
   padding: 10px 15px;
   width: 100%;
   box-sizing: border-box;
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -647,7 +650,7 @@ form.add-project .helper {
 }
 .links-wrapper .links span.name {
   color: #000;
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 10px;
   font-style: normal;
   font-weight: 400;
@@ -666,7 +669,7 @@ form.add-project .helper {
 .links-wrapper .links .bottom .heading {
   margin-top: 20px;
   color: #000;
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -675,7 +678,7 @@ form.add-project .helper {
 }
 .links-wrapper .links .bottom .description {
   color: #000;
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 10px;
   font-style: normal;
   font-weight: 400;
@@ -684,7 +687,7 @@ form.add-project .helper {
 }
 .links-wrapper .help {
   color: #000;
-  font-family: "Gilroy-Regular", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;

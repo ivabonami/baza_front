@@ -626,7 +626,7 @@ export default {
   margin-top: 0px;
 
   color: #000;
-  font-family: 'Gilroy-Regular', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -663,7 +663,7 @@ export default {
 
   .heading {
     color: #000;
-    font-family: 'Gilroy-Regular', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -672,7 +672,7 @@ export default {
   }
   .description {
     color: #000;
-    font-family: 'Gilroy-Regular', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 10px;
     font-style: normal;
     font-weight: 400;
@@ -682,7 +682,7 @@ export default {
 }
 .help {
   color: #000;
-  font-family: 'Gilroy-Regular', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -725,7 +725,7 @@ export default {
       margin: 5px 10px;
 
       color: var(--neutral, #FFF);
-      font-family: 'Gilroy-Regular', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 16px;
       font-style: normal;
       font-weight: 600;

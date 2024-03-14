@@ -2,9 +2,10 @@
 import SidebarMenu from "./components/menus/SidebarMenu.vue";
 import TopMenu from "./components/menus/TopMenu.vue";
 import FooterView from "./components/page components/FooterView.vue";
+import recommended from "./components/page components/Recommended.vue";
 
 export default {
-  components: {FooterView, SidebarMenu, TopMenu },
+  components: {FooterView, SidebarMenu, TopMenu, recommended },
   data() {
     return {
       isLoaded: false,
@@ -16,6 +17,10 @@ export default {
     document.querySelector('.preloader').style.display = 'none'
     this.isLoaded = true
 
+
+  },
+  updated() {
+    console.log(this.$refs.wrapper.getBoundingClientRect().height)
 
   },
   watch: {
@@ -30,7 +35,7 @@ export default {
 </script>
 
 <template>
-  <div class="global-wrapper" v-if="this.isLoaded === true">
+  <div class="global-wrapper" v-if="this.isLoaded === true" ref="wrapper">
     <header class="header" >
       <div class="row  box box-shadow">
         <div class="d-flex justify-between align-center">
@@ -73,6 +78,7 @@ export default {
         <div class="sidebar">
           <keep-alive>
             <sidebar-menu
+
                 v-on:someChanges="(emit) => { console.log('sme', emit)}">
 
             </sidebar-menu>
@@ -80,9 +86,12 @@ export default {
         </div>
 
         <div class="content">
+          <recommended
+              v-if="this.$route.name === 'New projects view' || this.$route.name === 'Home'">
 
+          </recommended>
           <router-view v-slot="{ Component, route }">
-            <transition name="slide-fade" mode="out-in">
+            <transition name="list" mode="out-in">
               <div :key="route">
                 <component :is="Component"></component>
               </div>
@@ -107,17 +116,5 @@ export default {
 </template>
 
 <style scoped>
-.slide-fade-enter-active {
-  transition: all 0.2s ease-out;
-}
 
-.slide-fade-leave-active {
-  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateX(20px);
-  opacity: 0;
-}
 </style>
