@@ -28,8 +28,8 @@
       </button>
     </div>
     <div class="tabs-content-wrapper" >
-
-      <transition-group name="list" tag="div" class="tabs-content" :css="loading">
+      <loader v-if="loading === true"></loader>
+      <transition-group name="list" tag="div" class="tabs-content" v-else>
         <div class="shop-view" v-for="item in products" v-if="products.length > 0 && loading === false"
         >
           <services-card
@@ -44,7 +44,7 @@
           </services-card>
 
         </div>
-        <loader v-if="loading === true"></loader>
+
 
       </transition-group>
 
@@ -136,8 +136,11 @@ export default {
 
 @media screen and (max-width: 500px) {
   .tabs-content {
+    flex-wrap: wrap;
     .shop-view {
       flex-wrap: wrap;
+      width: 100%;
+      flex-basis: 100%;
     }
   }
 }

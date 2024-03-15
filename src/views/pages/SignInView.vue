@@ -1,5 +1,6 @@
 <template>
-
+  <transition name="fadeHeight" mode="out-in">
+    <div class="">
   <div class="form" id="sign-in" @keydown.enter="signIn()"
        v-if="this.state === 'signIn'">
     <div class="h2">Вход на базу</div>
@@ -67,11 +68,14 @@
       </div>
     </div>
   </div>
+    </div>
+  </transition>
 </template>
 
 <script>
 export default {
   name: "SignInView.vue",
+  props: ['tab'],
   data () {
     return {
       //form control
@@ -86,6 +90,10 @@ export default {
 
 
     }
+  },
+  mounted() {
+    console.log(this.$props.tab)
+    this.$props.tab === 'signup' ? this.state = 'signUp' : this.state = 'signIn'
   },
 
   methods: {
@@ -253,7 +261,7 @@ export default {
   line-height: normal;
 }
 .modal {
-  transition: .3s ease;
+
 }
 .form {
   .input {
@@ -318,5 +326,15 @@ export default {
   background-color: #ffdede;
   border-radius: 5px;
 }
-
+.fadeHeight-enter-active,
+.fadeHeight-leave-active {
+  transition: all 0.2s;
+  max-height: 230px;
+}
+.fadeHeight-enter,
+.fadeHeight-leave-to
+{
+  opacity: 0;
+  max-height: 0px;
+}
 </style>

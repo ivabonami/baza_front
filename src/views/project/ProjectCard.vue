@@ -312,7 +312,6 @@ export default {
   },
   mounted() {
     this.checkIsAdmin()
-    console.log(' 13132213 ',localStorage.getItem('token'))
     this.$props.project.favorite === 1 ? this.isFavourite = true : this.isFavourite = false
 
     localStorage.getItem('token') === null ? this.isLoggined = false : this.isLoggined = true
@@ -761,40 +760,24 @@ export default {
             }
             .number {
               padding: 2px 10px;
-              color: #fff;
+              color: #000;
               font-weight: 700;
               border-radius: 5px;
-              font-size: 14px;
+              font-size: 16px;
 
               svg {
-                width: 12px;
-                height: 12px;
+                width: 15px;
+                height: 15px;
                 position: relative;
+                top: 1px;
                 margin-right: 3px;
 
                 path {
-                  fill: #fff;
+                  fill: #000;
                 }
               }
 
-              &.goodGreen {
-                background-color: #10c44c;
-              }
-              &.green {
-                background-color: #27c75c;
-              }
-              &.yellow {
-                background-color: #73c410;
-              }
-              &.orange {
-                background-color: #c1d770;
-              }
-              &.red {
-                background-color: #eeb5b5;
-              }
-              &.badRed {
-                background-color: #e58787;
-              }
+
 
             }
             .text {
@@ -907,24 +890,112 @@ export default {
 
 @media screen and (max-width: 500px)  {
 
+
+
   .project {
     flex-wrap: wrap;
     justify-content: center;
-    width: 50%;
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 50px;
+
+    .advanced-fields {
+      bottom: -80px;
+      width: 60%;
+      left: 20%;
+      font-size: 14px;
+      flex-wrap: wrap;
+      justify-content: start;
+      .stat {
+        display: block;
+        width: 100%;
+        margin-bottom: 5px;
+      }
+    }
 
     .project-body {
-      flex-basis: 1%;
-      .project-top {
-        margin-bottom: 20px;
-        .name {
+      display: flex;
+      width: 160px;
+      
 
+      .project-top {
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: start;
+
+        .rating {
+          width: 100%;
+          display: flex;
+          flex-basis: auto;
+          text-align: left;
+          margin-top: 10px;
+
+          .stars {
+
+
+            .project-rating {
+              width: 100%;
+              display: flex;
+              justify-content: center;
+
+
+              .text {
+                text-align: center;
+                padding: 0;
+              }
+            }
+          }
+        }
+
+
+        .name {
+          width: 100%;
+          text-align: center;
+          justify-content: center;
+          font-size: 16px;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 3;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       }
       .project-description {
         display: none;
+
       }
       .project-bottom {
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+
+        .links {
+          margin-top: 10px;
+          text-align: left;
+          width: 100%;
+          .category {
+            text-align: center;
+            width: 100%;
+          }
+        }
         .stats {
+          flex-wrap: nowrap;
+          width: 100%;
+          justify-content: center;
+
+          .testimonials, .views {
+            width: auto;
+            flex-wrap: nowrap;
+            text-align: left;
+            align-items: center;
+          }
+          .testimonials {
+            justify-content: end;
+          }
+          .views {
+            justify-content: start;
+          }
           span {
             font-size: 12px;
           }

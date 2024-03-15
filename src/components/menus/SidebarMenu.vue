@@ -226,7 +226,7 @@ export default  {
 }
 .highlight-project {
   text-align: center;
-  padding: 25px 40px!important;
+  padding: 25px 15px!important;
   box-sizing: border-box;
   display: block;
 
@@ -234,7 +234,7 @@ export default  {
     text-align: center;
     margin-top: 30px;
     font-family: 'Montserrat', sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     font-style: normal;
     font-weight: 900;
     line-height: normal;

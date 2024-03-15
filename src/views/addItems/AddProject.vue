@@ -6,7 +6,48 @@
 </button>Добавление проекта</h1>
 
   <div v-if="userLoggined === false" class="not-registered">
-    Вы не вошли в аккаунт, что бы добавить проект Вам нужно зарегитстрироваться и \ или войти в аккаунт.
+
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58" fill="none">
+      <g clip-path="url(#clip0_380_7664)">
+        <path d="M26.8089 0C28.2705 0 29.7295 0 31.1911 0C31.4772 0.0721778 31.7608 0.172711 32.0521 0.211378C44.129 1.84569 52.2593 8.43964 56.4353 19.8308C57.2473 22.0503 57.4922 24.476 58 26.8089V31.1911C57.9252 31.5185 57.8144 31.8433 57.7809 32.1758C56.6364 43.5309 48.4313 53.4812 37.4448 56.7008C35.4084 57.2963 33.2791 57.5747 31.1911 58H26.8089C26.5202 57.9278 26.2366 57.8196 25.9453 57.7912C14.0515 56.5874 4.02907 48.0343 1.01564 36.4524C0.567111 34.7278 0.332533 32.9466 0 31.1911C0 29.7295 0 28.2705 0 26.8089C0.0747556 26.4815 0.172711 26.1593 0.219111 25.8293C1.85084 14.0927 8.18444 6.02169 19.2302 1.7864C21.6327 0.866133 24.2749 0.577422 26.8089 0ZM3.35111 28.8685C3.35369 43.2628 14.6882 54.6412 29.0284 54.6489C43.1881 54.654 54.6515 43.2061 54.6489 29.0619C54.6489 14.8428 43.2577 3.35369 29.1572 3.35111C14.8377 3.34853 3.34853 14.7114 3.35111 28.8685Z" fill="#C8716B"/>
+        <path d="M29.0079 13.2653C29.8225 13.4999 30.668 13.6623 31.4439 13.9871C32.3719 14.3763 32.756 15.1857 32.6761 16.1833C32.3409 20.416 31.9981 24.6487 31.6527 28.8815C31.5135 30.5905 31.3537 32.2996 31.2093 34.0086C31.0985 35.3388 30.3793 36.0477 29.0775 36.0915C27.7293 36.1379 26.9173 35.4316 26.7936 34.0422C26.2986 28.5309 25.7934 23.0222 25.3397 17.5083C25.0922 14.4975 26.1001 13.4019 29.0079 13.2627V13.2653Z" fill="#C8716B"/>
+        <path d="M28.7914 44.5957C27.2138 44.49 25.9172 43.0052 26.0409 41.4482C26.1672 39.8629 27.6546 38.5611 29.1987 38.69C30.7737 38.8189 32.0806 40.3217 31.9595 41.8581C31.8332 43.4408 30.3767 44.7013 28.794 44.5957H28.7914Z" fill="#C8716B"/>
+      </g>
+      <defs>
+        <clipPath id="clip0_380_7664">
+          <rect width="58" height="58" fill="white"/>
+        </clipPath>
+      </defs>
+    </svg>
+    <div class="text">
+      Вы не вошли в аккаунт. <br><br>Что бы добавить проект Вам нужно
+
+      <span
+          v-on:click="() => {
+              this.showModal = !showModal
+              this.modal = {
+                iconType: 'user',
+                descriptionType: 'sign-in',
+                tab: 'signup'
+              }
+
+            }">
+        <br>
+      зарегистрироваться</span> или
+      <span v-on:click="() => {
+              this.showModal = !showModal
+              this.modal = {
+                iconType: 'user',
+                descriptionType: 'sign-in',
+                tab: 'signin'
+              }
+
+            }">
+    войти</span> в аккаунт.
+    </div>
+
+
   </div>
 
   <div class="add-project form-wrapper" v-else>
@@ -183,8 +224,9 @@
           </div>
 
           <div class="links-to-add">
-            <p class="name" v-for="(link, index) of linksToAdd">
-              link.name
+            <h3 v-if="linksToAdd.length > 0">Добавляемые ссылки</h3><br>
+            <p class="name" v-for="(link, index) of linksToAdd" v-if="linksToAdd.length > 0">
+              {{ link.name }}
               <a :href="link.link" target="_blank">
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">
                   <path d="M0.742943 8.0844C0.742943 6.8414 0.734787 5.59839 0.747837 4.35539C0.751371 3.9996 0.785353 3.63796 0.856581 3.29027C1.03547 2.41702 1.85595 1.65407 2.72373 1.57727C3.36315 1.52058 4.008 1.52588 4.65069 1.51024C4.95871 1.5027 5.267 1.50243 5.57475 1.51388C5.92953 1.52728 6.20574 1.75432 6.31122 2.09614C6.40637 2.40501 6.29817 2.76274 6.04316 2.97471C5.87271 3.11657 5.6718 3.15902 5.45812 3.1593C4.80103 3.1593 4.14421 3.15651 3.48712 3.16293C3.29328 3.16488 3.09591 3.17438 2.90696 3.21376C2.59704 3.27827 2.38798 3.52737 2.37547 3.85327C2.35454 4.40175 2.3453 4.95106 2.34448 5.50009C2.34149 7.56246 2.34285 9.62482 2.3453 11.6872C2.3453 11.9056 2.35672 12.1245 2.37493 12.3423C2.40538 12.7085 2.66066 12.983 3.01979 12.9947C3.74403 13.0184 4.46881 13.0265 5.19332 13.0282C7.01018 13.0321 8.8273 13.0299 10.6442 13.0274C10.8521 13.0271 11.0606 13.0148 11.2684 12.9992C11.6294 12.9718 11.9042 12.7048 11.9181 12.3348C11.9407 11.7397 11.942 11.1437 11.9496 10.5483C11.9529 10.2878 11.9434 10.0267 11.951 9.76641C11.9611 9.41789 12.1057 9.14756 12.4227 8.99704C12.7296 8.85126 13.0156 8.90655 13.2736 9.11991C13.4615 9.27546 13.5534 9.48882 13.5523 9.73178C13.5485 10.6115 13.5612 11.4923 13.5207 12.3703C13.4737 13.3868 12.9536 14.0953 12.047 14.4924C11.6973 14.6454 11.3159 14.6667 10.9391 14.6694C10.0376 14.6767 9.13587 14.6798 8.2341 14.6789C6.57574 14.6773 4.91738 14.6759 3.25903 14.665C2.7656 14.6616 2.28277 14.5843 1.85785 14.2941C1.27036 13.8931 0.866368 13.3547 0.803568 12.6199C0.74974 11.9815 0.747293 11.3375 0.739953 10.6961C0.730166 9.82561 0.737506 8.95487 0.737506 8.0844H0.742943Z" fill="white"/>
@@ -233,14 +275,18 @@
       v-if="showModal === true"
       v-on:changeModal="(emitShowModal) => {
         this.showModal = emitShowModal
-        this.$router.push('/')
+        this.goHome === true ? this.$router.push('/') : ''
       }"
-      v-bind:icon-type="'ok'"
-      v-bind:heading="'Проект успешно добавлен'"
-      v-bind:descriptionType="'text'"
-      v-bind:description="'Проект появится в результатах поиска после одобрения модератором.\n'+
-  '\n'+
-  'Так же после одобрения проекта вы сможете добавлять, редактировать и удалять услуги и ссылки проекта '"
+
+      v-bind:tab="this.modal.tab"
+      v-bind:icon-type="this.modal.iconType"
+      v-bind:descriptionType="this.modal.descriptionType"
+      v-bind:heading="this.modal.heading"
+      v-bind:description="this.modal.description"
+      v-bind:close="this.modal.close"
+      v-bind:confirmAction="this.modal.confirm"
+      v-bind:exit="this.modal.exit"
+
   >
 
   </modal-window-backdrop>
@@ -252,7 +298,6 @@ import { ref, watch } from "vue";
 export default {
   name: "AddProject.vue",
   components: {modalWindowBackdrop},
-
   emits: ['changeModal'],
 
   data () {
@@ -261,7 +306,10 @@ export default {
       selectedOption: '',
       count: 1,
 
-      showModal: this.$emit.changeModal,
+      tab: '',
+      modal: {},
+
+      showModal: false,
 
       projectName: '',
       projectDescription: '',
@@ -287,12 +335,13 @@ export default {
       avatarErrorPushed: false,
       bannerError: false,
       bannerErrorPushed: false,
-      linksToAdd: {},
+      linksToAdd: [],
 
       addLink: '',
       addName: '',
       addedLinksCount: 0,
-      linkErr: false
+      linkErr: false,
+      goHome: false
     }
   },
   mounted() {
@@ -305,10 +354,6 @@ export default {
 
   methods: {
     uploadAvatar(e){
-
-
-
-
       this.projectAvatar = e.target;
       const image = e.target.files[0]
 
@@ -394,12 +439,12 @@ export default {
       }
 
     },
-    addLinkToProject(index) {
+    addLinkToProject() {
 
-      this.linksToAdd[index] = {
+      this.linksToAdd.push({
         name: this.addName,
         link: this.addLink
-      }
+      })
       this.addName = ''
       this.addLink = ''
       console.log(this.addName)
@@ -408,6 +453,9 @@ export default {
     previewBeforeUpload () {
 
       let projectType =''
+
+      this.addName !== '' && this.addLink !== '' ? this.checkLinks() : ''
+
       if (this.projectCategory === this.exchangersCategory) {
 
         projectType = 'exchanger'
@@ -452,8 +500,52 @@ export default {
           headers: myHeaders,
           body: JSON.stringify(project)
         })
-            .then((response) => response.json())
-            .then(response => console.log(response))
+            .then((response) => {
+
+              if (response.ok === false) {
+                this.showModal = true
+                this.modal = {
+                  iconType: 'warning',
+                  heading: `Ошибка при добавлении`,
+                  description: `Вы хотите добавить слишком много информации, мы получили ошибку от сервера об этом. Стоит сократить количество информации или перестать баловаться. Код ошибки ${response.status}}`,
+                  descriptionType: 'text',
+                  exit: true,
+                  close: true,
+                  confirm: false
+                }
+                return response
+              } else {
+                return response.json()
+              }
+            })
+            .then(response => {
+
+              if (response.success === true) {
+                this.goHome = true
+                this.showModal = true
+                this.modal = {
+                  iconType: 'ok',
+                  heading: 'Проект успешно добавлен!',
+                  description: `Спасибо ${this.username}! Поскольку ты админ то он уже опубликован!`,
+                  descriptionType: 'text',
+                  exit: true,
+                  close: true,
+                  confirm: false
+
+                }
+              } else {
+                this.showModal = true
+                this.modal = {
+                  iconType: 'warning',
+                  heading: `Ошибка при добавлении`,
+                  description: `${response.message}`,
+                  descriptionType: 'text',
+                  exit: true,
+                  close: true,
+                  confirm: false
+                }
+              }
+            })
             .catch((error) => {console.error(error)});
 
 
@@ -515,10 +607,10 @@ export default {
         }, 20)
       } else {
         this.errors = []
-        this.addLinkToProject(this.addedLinksCount)
-        this.addedLinksCount++
-      }
+        this.addLinkToProject()
 
+      }
+      console.log(this.addName, this.addLink)
 
     },
     checkForm () {
@@ -550,15 +642,6 @@ export default {
         this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
       } else {
         this.$refs.projectAvatar.parentElement.style.borderColor = 'rgb(0, 115, 236)'
-      }
-
-      if (this.linksToAdd.length === 0) {
-        this.errors.push('Проект должен содержать хотя бы 1 ссылку')
-        this.$refs.addName.style.borderColor = 'red'
-        this.$refs.addLink.style.borderColor = 'red'
-      } else {
-        this.$refs.addName.style.borderColor = 'rgb(0, 115, 236)'
-        this.$refs.addLink.style.borderColor = 'rgb(0, 115, 236)'
       }
 
 
@@ -606,6 +689,31 @@ export default {
 <style scoped lang="scss">
 .not-registered {
   margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-weight: bold;
+  text-align: center;
+
+  svg {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 30px;
+    flex-basis: 100%;
+
+    path {
+      fill: #c86b6b;
+    }
+  }
+  span {
+
+    flex-basis: 100%;
+  }
+
+  span {
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0,0,0,.3);
+  }
 }
 .errors {
   margin-top: 10px;

@@ -23,12 +23,13 @@
       </svg>
       Войти
     </button>
-    <div v-else-if="this.userHere === true" class="loggined" title="Выйти из аккаунта">
-      <div class="username">
-        {{ username }}
+    <div v-else-if="this.userHere === true" class="loggined">
+      <div class="username"  :title="'Ты - ' + username">
+        {{ username.slice(0, 2) }}
       </div>
 
       <svg xmlns="http://www.w3.org/2000/svg"
+           title="Выйти из аккаунта"
            width="20" height="23" viewBox="0 0 20 23"
            fill="none"
            v-on:click="() => {
@@ -60,6 +61,8 @@
 
   <modal-window-backdrop
       v-if="showModal === true"
+      v-on:keydown.esc="console.log('12321321321123312213213')"
+
       v-on:changeModal="(emitShowModal) => {this.showModal = emitShowModal}"
       v-bind:icon-type="this.modal.iconType"
       v-bind:descriptionType="this.modal.descriptionType"
@@ -68,7 +71,10 @@
       v-bind:close="this.modal.close"
       v-bind:confirmAction="this.modal.confirm"
       v-bind:exit="this.modal.exit"
+      ref="modal"
+      tabindex="0"
       v-on:confirmAction="(emit)=> {
+
         emit === true ? signOut() : this.showModal = false
       }"
 
@@ -86,6 +92,9 @@ export default {
 
   emits: ['changeModal'],
 
+  setup () {
+
+  },
 
   mounted() {
     if ( localStorage.getItem('token') ) {
@@ -95,7 +104,6 @@ export default {
       this.userHere = false
     }
     console.log('emit: ', this.emits)
-
 
   },
   methods: {
@@ -142,6 +150,7 @@ export default {
   }
   .username {
     cursor: default;
+
   }
 
   svg {
@@ -165,6 +174,13 @@ export default {
     font-weight: 400;
     line-height: normal;
     margin-right: 10px;
+
+    text-transform: uppercase;
+    background-color: #0a58ca;
+    padding: 5px;
+    border-radius: 30px;
+    color: #fff;
+    font-weight: 600;
   }
 }
 

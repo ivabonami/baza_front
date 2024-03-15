@@ -38,7 +38,9 @@ export default {
   <div class="global-wrapper" v-if="this.isLoaded === true" ref="wrapper">
     <header class="header" >
       <div class="row  box box-shadow">
+
         <div class="d-flex justify-between align-center">
+          <div class="hamburger" ref="hamburger">=</div>
           <div class="logo">
             <router-link to="/" class="">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 103" fill="none">
@@ -75,7 +77,7 @@ export default {
     </header>
     <section class="main">
       <div class="row">
-        <div class="sidebar">
+        <div class="sidebar collapse">
           <keep-alive>
             <sidebar-menu
 
@@ -115,6 +117,6 @@ export default {
 
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 
 </style>

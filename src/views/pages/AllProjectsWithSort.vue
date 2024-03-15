@@ -4,7 +4,7 @@
 <!--      <recommended></recommended>-->
 <!--  </div>-->
   <transition name="list">
-    <div class="buttons" v-if="projects.length > 0 && loaded === true">
+    <div class="buttons" v-if="loaded === true">
 
     <div class="btns">
       <span class="currentSort"
@@ -57,9 +57,10 @@
                   this.activeSort = 'oldest'
                   this.getOffset = 0
                    this.projects = this.projects.slice(this.projects.length, this.projects.length )
-                  this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true)
+
                   this.clicked = true
                   this.activeSortTab = 'oldest'
+                  this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true)
                 }
               }
               ">Сначала старые
@@ -75,10 +76,10 @@
                   this.activeSortName = 'Сначала новые'
                   this.activeSort = 'newest'
                   this.getOffset = 0
-                  this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true)
+                  this.projects = this.projects.slice(this.projects.length, this.projects.length)
                   this.clicked = true
-                  this.lazyProjects = []
                   this.activeSortTab = 'newest'
+                  this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true)
                 }
               }">Сначала новые
            <svg id="a" v-if="this.activeSortName === 'Сначала новые'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213.47 166.37">
@@ -93,10 +94,10 @@
                   this.activeSortName = 'С высоким рейтингом'
                   this.activeSort = 'highestRating'
                   this.getOffset = 0
-                  this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true)
+                  this.projects = this.projects.slice(this.projects.length, this.projects.length)
                   this.clicked = true
-                  this.lazyProjects = []
                   this.activeSortTab = 'highestRating'
+                  this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true)
                 }
               }">С высоким рейтингом
            <svg id="a" v-if="this.activeSortName === 'С высоким рейтингом'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213.47 166.37">
@@ -112,10 +113,10 @@
                   this.activeSortName = 'С низким рейтингом'
                   this.activeSort = 'lowestRating'
                   this.getOffset = 0
-                  this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true)
+                  this.projects = this.projects.slice(this.projects.length, this.projects.length)
                   this.clicked = true
-                  this.lazyProjects = []
                   this.activeSortTab = 'lowestRating'
+                  this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true)
                 }
               }">С низким рейтингом
            <svg id="a" v-if="this.activeSortName === 'С низким рейтингом'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213.47 166.37">
@@ -130,17 +131,19 @@
     </div>
 
     <div class="search"
-         v-on:input="() => {
-      this.lazyProjects = []
+         v-on:keyup="() => {
       this.getOffset = 0
-      lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit)
+      this.projects = this.projects.slice(this.projects.length, this.projects.length)
+
+      this.timerSearch()
     }">
       <input type="search" placeholder="Искать продавца или магазин " v-model="searchQuery">
       <button class="searchQ"
               v-on:click="() => {
         this.getOffset = 0
-        this.lazyProjects = []
-        lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit)
+
+        this.projects = this.projects.slice(this.projects.length, this.projects.length)
+        this.timerSearch()
       }">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
           <path d="M16.0192 14.6473C16.1135 14.7262 16.2098 14.7948 16.2924 14.877C17.4092 15.9915 18.5222 17.1094 19.6408 18.2221C19.9431 18.5232 20.0764 18.8698 19.9558 19.2845C19.7436 20.0111 18.8578 20.2413 18.3001 19.7087C17.8035 19.2338 17.3256 18.7397 16.8397 18.2531C16.106 17.5185 15.3723 16.7834 14.6301 16.0395C12.2652 17.8276 9.64012 18.4274 6.76629 17.7115C4.56655 17.1634 2.82168 15.9094 1.54672 14.032C-1.02481 10.2472 -0.32677 5.18447 3.17141 2.14558C6.54706 -0.787156 11.7014 -0.704961 15.0583 2.34144C18.456 5.42495 19.0761 10.739 16.0192 14.6478V14.6473ZM2.00159 8.99083C1.99033 12.8366 5.12329 15.9854 8.97682 16.0009C12.8393 16.0169 15.991 12.8846 16.0018 9.01948C16.0126 5.15347 12.8937 2.01689 9.01766 1.99481C5.17352 1.97321 2.01286 5.12482 2.00159 8.99083Z" fill="#6C7AFF"/>
@@ -168,8 +171,11 @@
 
 
     <div class="projectsList" >
-      <transition-group name="list" tag="div">
-        <div v-for="project of projects" v-if="loaded === true">
+      <transition-group name="list" tag="div" class="list-wrapper">
+
+
+
+        <div class="project" v-for="project of projects" v-if="loaded === true">
           <project-card v-if="projects.length > 0"
               ref='fadeAnimate'
               v-bind:project="project"
@@ -187,8 +193,12 @@
 
 
 
+
+
         </div>
-        <div v-if="projects.length <= 0 && loaded === true" class="noProjects">
+
+
+        <div v-if="this.backendNoProjects === true" class="noProjects">
           <svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58" fill="none">
             <g clip-path="url(#clip0_380_7664)">
               <path d="M26.8089 0C28.2705 0 29.7295 0 31.1911 0C31.4772 0.0721778 31.7608 0.172711 32.0521 0.211378C44.129 1.84569 52.2593 8.43964 56.4353 19.8308C57.2473 22.0503 57.4922 24.476 58 26.8089V31.1911C57.9252 31.5185 57.8144 31.8433 57.7809 32.1758C56.6364 43.5309 48.4313 53.4812 37.4448 56.7008C35.4084 57.2963 33.2791 57.5747 31.1911 58H26.8089C26.5202 57.9278 26.2366 57.8196 25.9453 57.7912C14.0515 56.5874 4.02907 48.0343 1.01564 36.4524C0.567111 34.7278 0.332533 32.9466 0 31.1911C0 29.7295 0 28.2705 0 26.8089C0.0747556 26.4815 0.172711 26.1593 0.219111 25.8293C1.85084 14.0927 8.18444 6.02169 19.2302 1.7864C21.6327 0.866133 24.2749 0.577422 26.8089 0ZM3.35111 28.8685C3.35369 43.2628 14.6882 54.6412 29.0284 54.6489C43.1881 54.654 54.6515 43.2061 54.6489 29.0619C54.6489 14.8428 43.2577 3.35369 29.1572 3.35111C14.8377 3.34853 3.34853 14.7114 3.35111 28.8685Z" fill="#C8716B"/>
@@ -205,7 +215,25 @@
 
         </div>
 
+
+
       </transition-group>
+      <Waypoint v-if="emptyResponse === false && loaded === true" @change="(way) => {
+
+                if (way.going === 'IN' && way.direction === 'UP' && emptyResponse === false) {
+                  lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false)
+                }
+                console.log(way)
+              }">
+        <div class="loadmore btn btn-outlined" ref="loadmore"
+             v-if="emptyResponse === false && backendNoProjects === false"
+             v-on:click="() => {
+                       lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false)
+
+                     }">
+          load more
+        </div>
+      </Waypoint>
 
       <loader v-if="loaded === false"></loader>
 
@@ -213,22 +241,7 @@
 
     </div>
 
-    <Waypoint v-if="emptyResponse === false && loaded === true" @change="(way) => {
 
-      if (way.going === 'IN' && way.direction === 'UP' && emptyResponse === false) {
-        lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false)
-      }
-      console.log(way)
-    }">
-      <div class="loadmore btn btn-outlined" ref="loadmore"
-           v-if="emptyResponse === false"
-           v-on:click="() => {
-             lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false)
-
-           }">
-        load more
-      </div>
-    </Waypoint>
 
 
 
@@ -257,11 +270,13 @@ export default {
 
   data () {
     return {
+
       loaded: false,
       showSort: false,
       category: {},
       projects: [],
       recommend: ref(),
+      backendNoProjects: true,
 
       activeSort: 'random',
       activeSortName: 'Популярные',
@@ -286,8 +301,9 @@ export default {
 
       fadeAnimate: false,
       projectCardAnimate: false,
-      height: 0
+      height: 0,
 
+      timer: ref(null)
     }
   },
   directives: {
@@ -316,6 +332,14 @@ export default {
 
 
   methods: {
+    timerSearch() {
+      clearTimeout(this.timer);
+
+      this.timer = setTimeout(() => {
+        this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit)
+      }, 600);
+
+    },
 
     onClickOutside (event) {
       this.showSort = false
@@ -361,11 +385,10 @@ export default {
       })
           .then((response) => response.json())
           .then((result) => {
+            result.projects.length === 0 && offset === 0 ? this.backendNoProjects = true : this.backendNoProjects = false
+            console.log('no projects: ', this.backendNoProjects, result.projects.length)
 
             if (this.$route.path === '/') {
-              console.log(result)
-
-
               for (let project of result.projects) {
                 this.projects.push(project)
                 console.log( this.$refs.fadeAnimate )
@@ -376,17 +399,13 @@ export default {
 
             } else {
 
-
               for (let project of result.projects) {
                 this.projects.push(project)
                 console.log( this.$refs.fadeAnimate )
               }
-
-              console.log(this.lazyProjects)
-              result.projects.length < this.getLimit ? this.emptyResponse = true : this.emptyResponse = false
+              console.log(result.projects)
+              result.projects.length < limit ? this.emptyResponse = true : this.emptyResponse = false
             }
-
-
 
             this.loaded = true
             this.projectCardAnimate = true
@@ -432,7 +451,7 @@ export default {
       font-family: "Montserrat", sans-serif;
       transition: all 0.2s ease-in-out;
       border-radius: 10px;
-      padding: 0.4375rem 0.5rem;
+      padding: 10px 10px;
       display: flex;
       justify-content: space-between;
       cursor: pointer;
@@ -495,8 +514,6 @@ export default {
   }
 }
 .noProjects {
-  padding-top: 30px;
-  margin-bottom: 30px;
   font-weight: bold;
   text-align: center;
   display: flex;
@@ -650,6 +667,28 @@ export default {
   .projects-wrapper {
     display: flex;
 
+  }
+  .list-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    .project {
+      width: 100%;
+    }
+  }
+  .buttons {
+    .btns {
+      .currentSort {
+        width: 160px;
+        font-size: 12px;
+      }
+      .sortFilter {
+        .filter {
+          font-size: 12px;
+        }
+      }
+    }
   }
 }
 

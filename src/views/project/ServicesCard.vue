@@ -81,10 +81,11 @@
 
 <script>
 import { ref, watch } from "vue";
+import config from "../../assets/js/config.js";
 
 export default {
   name: "ServicesCard.vue",
-  props: ['name', 'image', 'description', 'id', 'isOwner', 'highlight', 'clickable', 'projectId'],
+  props: ['name', 'image', 'description', 'id', 'isOwner', 'highlight', 'clickable', 'projectId', 'productId'],
 
   data() {
     return {
@@ -93,7 +94,9 @@ export default {
         description: '',
         image: ''
       },
+
       editable: false,
+      highlight: false,
       toDelete: false,
       counter: 0,
       projectName: '',
@@ -104,8 +107,16 @@ export default {
   mounted() {
     this.projectName = this.$props.name
     this.projectDescription = this.$props.description
+
+    this.highlightProject()
   },
   methods: {
+    highlightProject() {
+
+       if (this.productId === parseInt(this.$route.query.highlight)) {
+         this.highlight = true
+       }
+    },
     checkForm () {
       this.errors = []
 
@@ -172,6 +183,7 @@ export default {
   position: relative;
   border-radius: 20px;
   background-color: #ffffff;
+
   p {
     padding: 0 10px;
   }
@@ -230,11 +242,10 @@ export default {
     text-align: left;
   }
 
-
   &.highlight {
     background-color: #fff2d6;
     box-sizing: content-box;
-    border-color: #fff2d6;
+    box-shadow: 0 0 5px 5px #fff2d6;
   }
 
   .btn {

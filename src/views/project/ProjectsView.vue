@@ -10,7 +10,9 @@
              alt=""
              v-else>
 
-
+        <div class="owner">
+          Владелец: <b><span ref="owner"></span></b>
+        </div>
 
       </div>
       <div class="project-header">
@@ -24,7 +26,7 @@
                  alt=""
                  v-else>
             <div class="favorite"
-                 v-if="project.favorite === 0"
+                 v-if="project.favorite === 0 && this.isLoggined === true"
                  v-on:click="() => {
                addFavorite(project.id)
                this.isFavourite = true
@@ -33,7 +35,7 @@
             </div>
 
             <div class="favorite"
-                 v-else
+                 v-else-if="project.favorite === 1  && this.isLoggined === true"
                  v-on:click="() => {
                deleteFavorite(project.id)
                this.isFavourite = false
@@ -56,16 +58,10 @@
 
         <div class="rating">
           <div class="stars">
+
             <div class="project-rating"
                  v-if="project.ratingAvg !== null"
-                 :class="{
-                        goodGreen: project.ratingAvg === 5,
-                        green: project.ratingAvg >= 4 && project.ratingAvg < 5,
-                        yellow: project.ratingAvg > 3 && project.ratingAvg < 4,
-                        orange: project.ratingAvg > 2 && project.ratingAvg <= 3,
-                        red: project.ratingAvg > 1 && project.ratingAvg <= 2,
-                        badRed: project.ratingAvg >= 0 && project.ratingAvg <= 1,
-                          }">
+                 >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path
                     d="M8.93325 0.7084L10.1489 4.61808C10.2802 5.04057 10.6571 5.32648 11.0822 5.32648H15.0168C15.9674 5.32648 16.3627 6.59722 15.5936 7.18118L12.4105 9.59732C12.0665 9.85835 11.9227 10.3211 12.054 10.7436L13.2697 14.6533C13.5635 15.5978 12.5287 16.3833 11.7597 15.7996L8.57651 13.3835C8.23253 13.1224 7.7669 13.1224 7.42292 13.3835L4.23977 15.7996C3.47071 16.3833 2.43593 15.5978 2.72972 14.6533L3.94542 10.7436C4.07671 10.3211 3.93294 9.85835 3.58896 9.59732L0.406373 7.18088C-0.362688 6.59722 0.0326187 5.32618 0.983169 5.32618H4.91752C5.3426 5.32618 5.71947 5.04028 5.85077 4.61778L7.06675 0.7084C7.36053 -0.236133 8.63947 -0.236133 8.93325 0.7084Z"/>
@@ -76,14 +72,13 @@
 
             <div class="project-rating-no" v-else>
               У проекта нет оценок
-
-
             </div>
 
           </div>
 
 
         </div>
+
       </div>
 
       <div class="project-body">
@@ -123,18 +118,22 @@
 
 
         </div>
+
         <div class="tabs-body">
           <div class="tab-content">
+            <Transition>
             <div class="flex"
                  v-if="this.tab === 'description'">
 
-              <project-description-tab
-                    v-bind:isAdmin="this.isAdmin"
-                    v-bind:project="this.project">
+                <project-description-tab
+                      v-bind:isAdmin="this.isAdmin"
+                      v-bind:project="this.project">
 
-              </project-description-tab>
+                </project-description-tab>
 
             </div>
+            </Transition>
+            <Transition>
             <div class="flex"
                  v-if="this.tab === 'testimonials'">
 
@@ -145,8 +144,8 @@
               </project-reviews>
 
             </div>
-
-
+            </Transition>
+            <Transition>
             <div class="flex"
 
                  v-if="this.tab === 'services' && this.products.length > 0 ">
@@ -155,7 +154,7 @@
                   <div class="shop-view" v-for="item in products" v-if="products.length > 0"
                   >
                     <services-card
-
+                        v-bind:productId="item.id"
                         v-bind:name="item.name"
                         v-bind:image="`http://62.113.96.171:3000/${item.avatarFilePath}`"
                         v-bind:id="item.id"
@@ -242,7 +241,8 @@
               </div>
 
             </div>
-
+            </Transition>
+            <Transition>
             <div class="flex"
                  v-if="this.tab === 'addService'">
 
@@ -262,6 +262,7 @@
 
               </add-service>
             </div>
+            </Transition>
           </div>
 
         </div>
@@ -343,6 +344,7 @@ import servicesCard from "./ServicesCard.vue";
 import { ref } from 'vue'
 import AddService from "../addItems/AddService.vue";
 import config from '../../assets/js/config.js'
+import { isLoggined } from '../../assets/js/config.js'
 import projectDescriptionTab from "./project_parts/projectDescriptionTab.vue";
 import projectReviews from "./project_parts/projectReviews.vue";
 
@@ -356,7 +358,8 @@ export default {
   data() {
     return {
       api: config.api.url,
-      
+
+      isLoggined: isLoggined,
 
       services: {},
       tab: '',
@@ -548,10 +551,9 @@ export default {
           .then((response) => response.json())
           .then((result) => {
             this.project = result.project
-            result.project.userData.username === localStorage.getItem('username')  || localStorage.getItem('username') === 'admin' ? this.canEdit = true : this.canEdit = false
-
             this.projectDescription = this.project.description
             this.projectName = this.project.name
+            this.$refs.owner.innerHTML = this.project.userData.username
           })
           .catch((error) => console.error(error));
 
@@ -651,7 +653,7 @@ export default {
     }
     this.getProjectFullInfo()
 
-    this.username = localStorage.getItem('username');
+    // this.username = localStorage.getItem('username');
 
     window.scrollTo({
       top: 0,
@@ -665,7 +667,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.v-enter-active,
+.v-leave-active {
+  transition: opacity .1s ease, max-height .3s, transform 0.3s;
+}
 
+.v-enter-from,
+.v-leave-to {
+  transform: translateX(5px);
+  max-height: 0;
+  opacity: 0;
+}
 .fixed-menu {
   position: sticky;
   max-width: 100%;
@@ -892,6 +904,19 @@ textarea {
     border-radius: 20px;
     position: relative;
 
+    .owner {
+      position: absolute;
+      z-index: 20;
+      text-align: right;
+      right: 10px;
+      bottom: 10px;
+      font-size: 12px;
+      color: #ffffff;
+      background-color: #000;
+      padding: 5px 10px;
+      border-radius: 10px;
+    }
+
 
 
     img {
@@ -960,24 +985,29 @@ textarea {
         line-height: normal;
         color: #3e4b5b;
 
+        .owner {
+          font-size: 14px;
+          font-weight: 400;
+        }
+
         .project-rating {
           display: flex;
           justify-content: end;
           padding: 5px 15px;
-          color: #fff;
+          color: #000;
           font-weight: 700;
           border-radius: 5px;
-          font-size: 14px;
+          font-size: 18px;
           text-align: end;
           align-items: center;
 
           svg {
-            width: 10px;
-            height: 10px;
-            margin-right: 5px;
+            width: 15px;
+            height: 15px;
+            margin-right: 10px;
 
             path {
-              fill: #fff;
+              fill: #000;
             }
           }
 
@@ -1038,16 +1068,15 @@ textarea {
   top: -5px;
   word-break: break-all;
 
-  text-shadow: 0 0 5px #f4f6f9, 0 0 10px #f4f6f9, 0 0 15px #f4f6f9, 0 0 25px #f4f6f9, 0 0 35px #f4f6f9;
   padding: 5px 5px 0px 5px;
   border-radius: 5px;
 
   color: var(--secondary, #2B2B2B);
   font-family: 'Gilroy-Bold', sans-serif;
-  font-size: 22px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 700;
-  line-height: normal;
+  line-height: 18px;
   width: 100%;
 
   input {
@@ -1137,7 +1166,7 @@ textarea {
   .stat {
     color: var(--86868B, #494A4E);
     font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: 24px; /* 200% */

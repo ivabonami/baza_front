@@ -393,6 +393,21 @@ export default {
 
 @media screen and (max-width: 900px)  {
   .wrapper {
+    .top {
+      flex-wrap: wrap;
+      justify-content: center;
+      .links {
+        flex-wrap: wrap;
+        a {
+          display: block;
+          width: 100%;
+          text-align: center;
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
+      }
+    }
+
     .friends {
       flex-wrap: wrap;
     }
