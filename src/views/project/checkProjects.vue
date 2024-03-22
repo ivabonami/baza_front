@@ -1,8 +1,12 @@
 <template>
   <div class="wrapper">
     <project-card v-for="project of projects"
-                  v-bind:project="project"
 
+                  v-bind:project="project"
+                  v-on:projectUpdated="() => {
+                    this.getProjects()
+                    this.getProjects()
+                  }"
 
     >
 

@@ -65,15 +65,25 @@
         </span>
       </div>
 
-      <div class="input-wrapper">
-        <select v-model="projectCategory" ref="projectCategory" >
-          <option :id="category.id"
-                  v-for="category of categories"
-                  :value="category.id"
-                  :data-name="category.id"
+      <div class="input-wrapper" ref="projectMultiCategories">
+        <div class="category"
+             v-for="category of categories"
+             >
 
-          >{{ category.name }}</option>
-        </select>
+          <input :id="category.id"
+                 v-model="projectMultiCategories"
+                 type="checkbox"
+                 :value="category.id"
+                 v-on:change="() => {
+                  delete this.errors.projectCategoryErr
+                  this.$refs.projectMultiCategories.style.borderColor = 'transparent'
+                  this.projectMultiCategories.includes(exchangersCategory) ? exchangerSelected = true : exchangerSelected = false
+
+                 }"
+                 class="projectMultiCategories">
+          <label :for="category.id">{{category.name}}</label>
+        </div>
+
         <span class="help">
           Выберите категорию, к которой относится проект.
 
@@ -87,6 +97,16 @@
                  v-on:change="uploadAvatar($event)"
                  accept="image/*"
           >
+
+
+        </div>
+        <div class="loader" v-if="avatarLoader === true">
+          <loader></loader>
+        </div>
+        <div class="loaded" v-if="avatarLoaded === true">
+          <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 253.38 253.44"><path d="M0,126.38C-.26,56.92,56.58,1.28,123.91,.02c72.59-1.36,129.81,57.57,129.47,126.88-.35,70.26-56.52,126.6-126.74,126.54C56.09,253.38-.03,197.07,0,126.38Zm126.77,98.16c53.91-.53,96.72-43.12,97.54-96.03,.87-55.79-43.41-98.67-96.02-99.43-55.58-.8-98.84,43.57-99.33,96.68-.5,54.54,43.38,98.59,97.81,98.79Z"/><path d="M68.69,106.26c4.18-.48,7.52,1.96,10.36,5.57,6.17,7.85,12.55,15.53,18.56,23.5,2.58,3.42,4.47,3.9,7.97,1.02,20.29-16.72,40.66-33.34,61.29-49.64,3.14-2.48,7.72-4.19,11.7-4.32,4.75-.16,8.81,2.75,10.45,7.82,1.78,5.5,1.46,10.74-3.21,14.62-11.9,9.89-23.96,19.58-36,29.3-13.59,10.98-27.24,21.89-40.83,32.87-8.04,6.5-15.01,5.95-21.52-2.07-9.86-12.13-19.64-24.34-29.35-36.59-2.97-3.74-5.01-7.83-3.25-12.92,2.23-6.43,6.13-9.24,13.84-9.15Z"/></svg>
+
+          Аватар загружен!
         </div>
         <span class="help">
           Загрузите аватар проекта, размеры 110x110px, форматы: jpeg, jpg, gif. webp
@@ -101,6 +121,14 @@
 
                  v-on:change="uploadBanner($event)"
                  accept="image/*" ref="projectBanner">
+        </div>
+        <div class="loader" v-if="bannerLoader === true">
+          <loader></loader>
+        </div>
+        <div class="loaded" v-if="bannerLoaded === true">
+          <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 253.38 253.44"><path d="M0,126.38C-.26,56.92,56.58,1.28,123.91,.02c72.59-1.36,129.81,57.57,129.47,126.88-.35,70.26-56.52,126.6-126.74,126.54C56.09,253.38-.03,197.07,0,126.38Zm126.77,98.16c53.91-.53,96.72-43.12,97.54-96.03,.87-55.79-43.41-98.67-96.02-99.43-55.58-.8-98.84,43.57-99.33,96.68-.5,54.54,43.38,98.59,97.81,98.79Z"/><path d="M68.69,106.26c4.18-.48,7.52,1.96,10.36,5.57,6.17,7.85,12.55,15.53,18.56,23.5,2.58,3.42,4.47,3.9,7.97,1.02,20.29-16.72,40.66-33.34,61.29-49.64,3.14-2.48,7.72-4.19,11.7-4.32,4.75-.16,8.81,2.75,10.45,7.82,1.78,5.5,1.46,10.74-3.21,14.62-11.9,9.89-23.96,19.58-36,29.3-13.59,10.98-27.24,21.89-40.83,32.87-8.04,6.5-15.01,5.95-21.52-2.07-9.86-12.13-19.64-24.34-29.35-36.59-2.97-3.74-5.01-7.83-3.25-12.92,2.23-6.43,6.13-9.24,13.84-9.15Z"/></svg>
+
+          Аватар загружен!
         </div>
         <span class="help">
           Загрузите аватар проекта, размеры 1060х220px, форматы: jpeg, jpg, gif. webp
@@ -120,7 +148,7 @@
         От 30 до 65535 символов.
       </span>
     </div>
-    <div class="advanced" v-if="this.projectCategory === this.exchangersCategory">
+    <div class="advanced" v-if="this.exchangerSelected === true">
       <div class="input-wrapper">
         <label for="min" >Минимальный обмен</label>
         <input
@@ -129,42 +157,36 @@
             placeholder="Минимальный обмен"
             v-model="projectExchangeRate"
             ref="projectExchangeRate"
-            max="6"
-
-            v-if="this.projectCategory === this.exchangersCategory">
-        <span class="help" v-if="this.projectCategory === this.exchangersCategory">
+            max="6">
+        <span class="help">
           Введите размер минимальной суммы обмена
         </span>
       </div>
 
       <div class="input-wrapper">
-        <label for="rate" v-if="this.projectCategory === this.exchangersCategory">Курс обмена</label>
+        <label for="rate">Курс обмена</label>
         <input
             type="number"
             id="rate"
             placeholder="Курс"
             v-model="minValueToExchange"
             ref="minValueToExchange"
-            max="6"
-
-            v-if="projectCategory === this.exchangersCategory">
-        <span class="help" v-if="this.projectCategory === this.exchangersCategory">
+            max="6">
+        <span class="help">
           Введите текущий курс вашего обмена
         </span>
       </div>
 
       <div class="input-wrapper">
-        <label for="res" v-if="this.projectCategory === this.exchangersCategory">Резерв</label>
+        <label for="res">Резерв</label>
         <input
             type="number"
             id="res"
             placeholder="Резерв"
             v-model="projectReserve"
             ref="projectReserve"
-            max="6"
-
-            v-if="projectCategory === this.exchangersCategory">
-        <span class="help" v-if="this.projectCategory === this.exchangersCategory">
+            max="6">
+        <span class="help">
           Введите резерв валюты.
         </span>
       </div>
@@ -196,6 +218,7 @@
                   placeholder="Название"
                   v-model="addName"
                   ref="addName"
+                  maxlength="20"
                   required>
               <span class="help">
               Название ссылки (например: Зеркало, Onion, WWH и другое)
@@ -208,13 +231,14 @@
                   v-model="addLink"
                   ref="addLink"
 
+                  maxlength="100"
                   required>
               <span class="help" >
               Сама ссылка, https://myproject.com и аналогичное
             </span>
             </div>
             <button class="add"
-                    v-if="this.addedLinksCount < 13"
+                    v-if="this.linksToAdd.length < 13"
                     v-on:click="checkLinks()">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
                 <path opacity="0.3" d="M7.69655 17V0H10.3034V17H7.69655ZM0 9.70283V7.33727H18V9.70283H0Z" fill="black"/>
@@ -226,8 +250,9 @@
           <div class="links-to-add">
             <h3 v-if="linksToAdd.length > 0">Добавляемые ссылки</h3><br>
             <p class="name" v-for="(link, index) of linksToAdd" v-if="linksToAdd.length > 0">
-              {{ link.name }}
-              <a :href="link.link" target="_blank">
+
+              <a :href="link.link" target="_blank" title="Проверить работоспособность">
+                {{ link.name }}
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">
                   <path d="M0.742943 8.0844C0.742943 6.8414 0.734787 5.59839 0.747837 4.35539C0.751371 3.9996 0.785353 3.63796 0.856581 3.29027C1.03547 2.41702 1.85595 1.65407 2.72373 1.57727C3.36315 1.52058 4.008 1.52588 4.65069 1.51024C4.95871 1.5027 5.267 1.50243 5.57475 1.51388C5.92953 1.52728 6.20574 1.75432 6.31122 2.09614C6.40637 2.40501 6.29817 2.76274 6.04316 2.97471C5.87271 3.11657 5.6718 3.15902 5.45812 3.1593C4.80103 3.1593 4.14421 3.15651 3.48712 3.16293C3.29328 3.16488 3.09591 3.17438 2.90696 3.21376C2.59704 3.27827 2.38798 3.52737 2.37547 3.85327C2.35454 4.40175 2.3453 4.95106 2.34448 5.50009C2.34149 7.56246 2.34285 9.62482 2.3453 11.6872C2.3453 11.9056 2.35672 12.1245 2.37493 12.3423C2.40538 12.7085 2.66066 12.983 3.01979 12.9947C3.74403 13.0184 4.46881 13.0265 5.19332 13.0282C7.01018 13.0321 8.8273 13.0299 10.6442 13.0274C10.8521 13.0271 11.0606 13.0148 11.2684 12.9992C11.6294 12.9718 11.9042 12.7048 11.9181 12.3348C11.9407 11.7397 11.942 11.1437 11.9496 10.5483C11.9529 10.2878 11.9434 10.0267 11.951 9.76641C11.9611 9.41789 12.1057 9.14756 12.4227 8.99704C12.7296 8.85126 13.0156 8.90655 13.2736 9.11991C13.4615 9.27546 13.5534 9.48882 13.5523 9.73178C13.5485 10.6115 13.5612 11.4923 13.5207 12.3703C13.4737 13.3868 12.9536 14.0953 12.047 14.4924C11.6973 14.6454 11.3159 14.6667 10.9391 14.6694C10.0376 14.6767 9.13587 14.6798 8.2341 14.6789C6.57574 14.6773 4.91738 14.6759 3.25903 14.665C2.7656 14.6616 2.28277 14.5843 1.85785 14.2941C1.27036 13.8931 0.866368 13.3547 0.803568 12.6199C0.74974 11.9815 0.747293 11.3375 0.739953 10.6961C0.730166 9.82561 0.737506 8.95487 0.737506 8.0844H0.742943Z" fill="white"/>
                   <path d="M11.6108 2.32875C10.9026 2.32875 10.2275 2.3321 9.5525 2.32735C9.16592 2.32484 8.87828 2.08942 8.77797 1.71018C8.65155 1.23152 8.98812 0.723258 9.46986 0.702593C9.97661 0.68081 10.4844 0.689747 10.9917 0.688909C11.8122 0.687513 12.6324 0.690584 13.4526 0.687513C13.7481 0.686395 14.0051 0.759842 14.1943 1.01509C14.3161 1.17986 14.3604 1.36696 14.3607 1.56412C14.3636 2.9004 14.3655 4.23668 14.3607 5.57268C14.3587 6.12115 13.9752 6.48141 13.4624 6.43644C13.0853 6.40321 12.7694 6.07228 12.7629 5.67377C12.7523 5.00829 12.7578 4.34224 12.7561 3.67676C12.7561 3.63096 12.7561 3.58516 12.7561 3.50194C12.6822 3.5765 12.6292 3.62928 12.5767 3.6829C11.2361 5.05744 9.89559 6.43253 8.55477 7.80679C8.27258 8.09611 7.93166 8.17123 7.6144 8.0168C7.10819 7.77049 6.98912 7.11366 7.38277 6.69532C7.74816 6.30714 8.12387 5.9293 8.49496 5.54699C9.49677 4.51567 10.4989 3.48434 11.5007 2.45302C11.5317 2.42118 11.5599 2.38656 11.6105 2.32931L11.6108 2.32875Z" fill="white"/>
@@ -256,15 +281,15 @@
 
     v-on:click="() => {
        checkForm ()
-
     }">
       Добавить проект
     </button>
   </div>
-  <div class="errors" ref="errors" v-if="this.errors.length > 0">
+  <div class="errors" ref="errors" v-if="Object.keys(this.errors).length > 0">
     <h3>Устраните ошибки:</h3>
-    <div class="error" v-for="(error, index) of errors" >
-      {{ index + 1 }}) {{ error }}
+
+    <div class="error" v-for="error of errors" >
+      {{ error }}
 
     </div>
   </div>
@@ -294,10 +319,12 @@
 
 <script>
 import modalWindowBackdrop from "../../components/page components/ModalWindowBackdrop.vue";
+
 import { ref, watch } from "vue";
+import loader from "../../components/reusable/loader.vue";
 export default {
   name: "AddProject.vue",
-  components: {modalWindowBackdrop},
+  components: {modalWindowBackdrop,loader},
   emits: ['changeModal'],
 
   data () {
@@ -305,7 +332,7 @@ export default {
       categories: '',
       selectedOption: '',
       count: 1,
-
+      exchangerSelected: false,
       tab: '',
       modal: {},
 
@@ -327,10 +354,10 @@ export default {
       projectReserve: 10000,
       minValueToExchange: 10,
 
-
+      projectMultiCategories: [],
       userLoggined: false,
 
-      errors: [],
+      errors: {},
       avatarError: false,
       avatarErrorPushed: false,
       bannerError: false,
@@ -341,7 +368,13 @@ export default {
       addName: '',
       addedLinksCount: 0,
       linkErr: false,
-      goHome: false
+      goHome: false,
+      linkError: false,
+
+      avatarLoader: false,
+      avatarLoaded: false,
+      bannerLoader: false,
+      bannerLoaded: false
     }
   },
   mounted() {
@@ -350,14 +383,18 @@ export default {
     console.log(this.reviewedCount)
     localStorage.getItem('token') ? this.userLoggined = true : this.userLoggined = false
   },
+  updated() {
+
+  },
 
 
   methods: {
     uploadAvatar(e){
+      this.avatarLoaded = false
       this.projectAvatar = e.target;
       const image = e.target.files[0]
+      const reader = new FileReader();
 
-      console.log(image)
       const myHeaders = new Headers();
       // myHeaders.append("Content-Type", "image/webp");
       myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
@@ -365,38 +402,63 @@ export default {
       const formData = new FormData();
       formData.append("image-upload", image );
 
-      console.log(formData)
 
-      if (e.target.files[0].type !== "image/jpeg" ??
-          e.target.files[0].type !== "image/jpg" ??
-          e.target.files[0].type !== "image/png" ??
+      if (e.target.files[0].type !== "image/jpeg" &&
+          e.target.files[0].type !== "image/jpg" &&
+          e.target.files[0].type !== "image/png" &&
           e.target.files[0].type !== "image/webp") {
         this.avatarError = true
-        if (this.avatarError === true && this.avatarErrorPushed === false) {
-          this.errors.push('Формат аватарки не поддерживается')
+
+        if (this.avatarError === true) {
+          this.$refs.projectAvatar.value = null
+          this.errors.projectAvatarTypeErr = 'Формат аватарки не поддерживается'
           this.avatarErrorPushed = true
+        } else {
+          delete this.errors.projectAvatarTypeErr
         }
 
 
         this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
-        console.dir(e.target.files[0].type)
+
       } else {
-        this.avatarError = false
-        this.avatarErrorPushed = false
-        this.$refs.projectAvatar.parentElement.style.borderColor = 'rgb(0, 115, 236)'
-        fetch("http://62.113.96.171:3000/image-upload", {
-          method: "POST",
-          headers: myHeaders,
-          body: formData,
-          redirect: "follow"
-        })
-            .then((response) => response.json())
-            .then((result) => this.projectAvatar = result.filePath)
-            .catch((error) => console.error(error));
+        if (parseInt(image.size) > 1048576) {
+          this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
+          this.$refs.projectAvatar.value = null
+          this.errors.projectAvatarLengthErr = 'Слишком большой размер, рекомендуем загружать аватар до 512х512px и весом не более 1024Кб'
+          this.avatarErrorPushed = true
+
+        } else {
+          this.avatarError = false
+          delete this.errors.projectAvatarLengthErr
+          this.$refs.projectAvatar.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+
+          console.dir();
+          reader.addEventListener('progress', () => {
+
+          })
+          this.avatarLoader = true
+          fetch("http://62.113.96.171:3000/image-upload", {
+            method: "POST",
+            headers: myHeaders,
+            body: formData,
+            redirect: "follow"
+          })
+              .then((response) => response.json())
+              .then((result) => {
+                this.avatarLoader = false
+                this.avatarLoaded = true
+                this.projectAvatar = result.filePath
+              })
+              .catch((error) => console.error(error));
+        }
+
+
+
       }
 
     },
     uploadBanner(e){
+      this.bannerLoaded = false
       this.projectBanner = e.target;
       const image = e.target.files[0]
 
@@ -410,32 +472,45 @@ export default {
 
       console.log(formData)
 
-      if (e.target.files[0].type !== "image/jpeg" ??
-          e.target.files[0].type !== "image/jpg" ??
-          e.target.files[0].type !== "image/png" ??
+      if (e.target.files[0].type !== "image/jpeg" &&
+          e.target.files[0].type !== "image/jpg" &&
+          e.target.files[0].type !== "image/png" &&
           e.target.files[0].type !== "image/webp") {
-        this.avatarError = true
-        if (this.avatarError === true && this.avatarErrorPushed === false) {
-          this.errors.push('Формат аватарки не поддерживается')
-          this.avatarErrorPushed = true
+
+        this.bannerError = true
+        if (this.bannerError === true) {
+          this.$refs.projectBanner.value = null
+          this.errors.bannerTypeErr = 'Формат баннера не поддерживается'
+
+        }
+        this.$refs.projectBanner.parentElement.style.borderColor = 'red'
+      } else {
+
+        if (parseInt(image.size) > 1048576) {
+          this.$refs.projectBanner.parentElement.style.borderColor = 'red'
+          this.$refs.projectBanner.value = null
+          this.errors.bannerLenghtErr = 'Слишком большой размер, рекомендуем загружать баннер до 1060х220px и весом не более 1024Кб'
+
+        } else {
+          this.bannerError = false
+          delete this.errors.bannerLenghtErr
+          this.$refs.projectBanner.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+          this.bannerLoader = true
+          fetch("http://62.113.96.171:3000/image-upload", {
+            method: "POST",
+            headers: myHeaders,
+            body: formData,
+            redirect: "follow"
+          })
+              .then((response) => response.json())
+              .then((result) => {
+                this.bannerLoader = false
+                this.bannerLoaded = true
+                this.projectBanner = result.filePath
+              })
+              .catch((error) => console.error(error));
         }
 
-
-        this.$refs.projectBanner.parentElement.style.borderColor = 'red'
-        console.dir(e.target.files[0].type)
-      } else {
-        this.bannerError = false
-        this.bannerErrorPushed = false
-        this.$refs.projectBanner.parentElement.style.borderColor = 'rgb(0, 115, 236)'
-        fetch("http://62.113.96.171:3000/image-upload", {
-          method: "POST",
-          headers: myHeaders,
-          body: formData,
-          redirect: "follow"
-        })
-            .then((response) => response.json())
-            .then((result) => this.projectBanner = result.filePath)
-            .catch((error) => console.error(error));
       }
 
     },
@@ -449,7 +524,6 @@ export default {
       this.addLink = ''
       console.log(this.addName)
     },
-
     previewBeforeUpload () {
 
       let projectType =''
@@ -566,7 +640,7 @@ export default {
               if (ex.name === 'Обменники') {
                 this.exchangersCategory = ex.id
               }
-              console.log(this.exchangersCategory)
+              console.log('exchangerID: ', this.exchangersCategory)
 
             } ))
           })
@@ -574,39 +648,50 @@ export default {
     },
 
     deleteLink(index) {
-      console.log(this.linksToAdd)
+      console.log(this.linksToAdd, index)
       this.addedLinksCount--
-      delete this.linksToAdd[index]
+      this.linksToAdd.splice(index, 1)
     },
 
     checkLinks() {
+      this.checkForm()
 
       if (this.addName < 3) {
-        this.errors.push('Имя ссылки не может быть меньше 3х символов')
+        this.errors.linkError = 'Имя ссылки не может быть меньше 3х символов'
         this.linkErr = true
         this.$refs.addName.style.borderColor = 'red'
       } else {
         this.linkErr = false
-        this.errors = []
+        delete this.errors.linkError
         this.$refs.addName.style.borderColor = 'rgb(0, 115, 236)'
       }
 
       if (this.addLink < 10 ) {
-        this.errors.push('Сама ссылка не может быть меньше, чем 10 символов')
+        this.errors.linkLengthError = 'Сама ссылка не может быть меньше, чем 10 символов'
         this.$refs.addLink.style.borderColor = 'red'
         this.linkErr = true
       } else {
         this.linkErr = false
-        this.errors = []
+        delete this.errors.linkLengthError
         this.$refs.addLink.style.borderColor = 'rgb(0, 115, 236)'
       }
 
-      if ( this.addName < 3 || this.addLink < 10 || this.linkErr === true) {
+      if (/(http(s?)):\/\/+[a-z0-9._]+\.+[a-z0-9._]/i.test(this.addLink) === true) {
+        this.linkErr = false
+        delete this.errors.linkTypeError
+      } else {
+        this.errors.linkTypeError = 'Ссылка не валидная, введите ссылку формата https://example.com'
+        this.linkErr = true
+        this.$refs.addLink.style.borderColor = 'red'
+      }
+      console.log(this.errors)
+      if (this.linkErr === true) {
         setTimeout(()=> {
           this.$refs.errors.scrollIntoView({ behavior: 'smooth', block: 'start'})
         }, 20)
       } else {
-        this.errors = []
+        console.log(this.linkErr)
+        delete this.errors.linksToAddEmpty
         this.addLinkToProject()
 
       }
@@ -614,66 +699,115 @@ export default {
 
     },
     checkForm () {
-      this.errors = []
-
       if (this.projectName.length < 5) {
-        this.errors.push('Название проекта должно быть не менее 5 символов')
+        this.errors.projectNameErr = 'Название проекта должно быть не менее 5 символов'
         this.$refs.projectName.style.borderColor = 'red'
       } else {
+        delete this.errors.projectNameErr
         this.$refs.projectName.style.borderColor = 'rgb(0, 115, 236)'
       }
 
+      if (this.avatarLoader === true) {
+        this.errors.avatarLoaderErr = 'Аватар еще не загружен, дождитесь завершения загрузки'
+        this.$refs.projectAvatar.style.borderColor = 'red'
+      } else {
+        delete this.errors.avatarLoaderErr
+        this.$refs.projectAvatar.style.borderColor = 'rgb(0, 115, 236)'
+      }
+
+      if (this.bannerLoader === true) {
+        this.errors.bannerLoaderErr = 'Баннер еще не загружен, дождитесь завершения загрузки'
+        this.$refs.projectBanner.style.borderColor = 'red'
+      } else {
+        delete this.errors.bannerLoaderErr
+        this.$refs.projectBanner.style.borderColor = 'rgb(0, 115, 236)'
+      }
+
       if (this.projectDescription.length < 30 || this.projectDescription.length > 65535) {
-        this.errors.push('Описание проекта должно быть не менее 30 символов и не более 65535')
+        this.errors.descriptionErr = 'Описание проекта должно быть не менее 30 символов и не более 65535'
         this.$refs.projectDescription.style.borderColor = 'red'
       } else {
+        delete  this.errors.descriptionErr
         this.$refs.projectDescription.style.borderColor = 'rgb(0, 115, 236)'
       }
 
-      if (this.projectCategory.length === 0) {
-        this.errors.push('Не выбрана категория проекта')
-        this.$refs.projectCategory.style.borderColor = 'red'
+      if (this.projectMultiCategories.length === 0) {
+        this.errors.projectCategoryErr = 'Не выбрана категория проекта'
+        this.$refs.projectMultiCategories.style.borderColor = 'red'
       } else {
-        this.$refs.projectCategory.style.borderColor = 'rgb(0, 115, 236)'
+        delete this.errors.projectCategoryErr
+        this.$refs.projectMultiCategories.style.borderColor = 'transparent'
       }
 
-      if (this.projectAvatar.length === 0) {
-        this.errors.push('Аватар не загружен')
-        this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
+      if (this.linksToAdd.length === 0) {
+        this.$refs.addLink.value.length === 0 ?  this.$refs.addLink.style.borderColor = 'red' : this.$refs.addLink.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.addName.value.length === 0 ?  this.$refs.addName.style.borderColor = 'red' : this.$refs.addName.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+
+        this.errors.linksToAddEmpty = 'Не добавлено ни одной ссылки'
+
       } else {
+        delete this.errors.linksToAddEmpty
+        this.$refs.addLink.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.addName.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+      }
+      console.log('links: ',this.linksToAdd)
+
+      if (this.projectAvatar.length === 0) {
+        this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
+        this.errors.projectAvatarEmpty = 'Аватар не загружен'
+
+      } else {
+        delete this.errors.projectAvatarEmpty
         this.$refs.projectAvatar.parentElement.style.borderColor = 'rgb(0, 115, 236)'
       }
 
-
-      if (this.projectCategory === this.exchangersCategory) {
+      if (this.projectMultiCategories.includes(this.exchangersCategory)) {
         if (this.projectExchangeRate < 10) {
-          this.errors.push('Минимальный обмен не должен быть меньше 10$')
+          this.errors.projectExchangeRateErr = 'Минимальный обмен не должен быть меньше 10$'
           this.$refs.projectExchangeRate.style.borderColor = 'red'
-        } else {
+        } else if (this.projectExchangeRate > 10000000) {
+          this.$refs.projectExchangeRate.style.borderColor = 'red'
+          this.errors.projectExchangeRateMaxErr = 'Минимальный обмен не может быть на столько большим'
+        }
+        else {
+          delete this.errors.projectExchangeRateErr
           this.$refs.projectExchangeRate.style.borderColor = 'rgb(0, 115, 236)'
+        }
+
+        if (this.minValueToExchange < 10) {
+          this.errors.minValueToExchangeErr = 'Текущий курс вашего обмена не должен быть меньше 10$'
+          this.$refs.minValueToExchange.style.borderColor = 'red'
+        } else if (this.minValueToExchange > 10000000) {
+          this.$refs.minValueToExchange.style.borderColor = 'red'
+          this.errors.minValueToExchangeErr = 'Текущий курс вашего обмена не может быть на столько большим'
+        }
+        else {
+          delete this.errors.minValueToExchangeErr
+          this.$refs.minValueToExchange.style.borderColor = 'rgb(0, 115, 236)'
+        }
+
+        if (this.projectReserve < 500 ) {
+          this.$refs.projectReserve.style.borderColor = 'red'
+          this.errors.projectReserveErr = 'Резерв не может быть меньше 500$'
+
+
+        } else if (this.projectReserve > 10000000) {
+          delete this.errors.projectReserveErr
+          this.$refs.projectReserve.style.borderColor = 'red'
+          this.errors.projectReserveMaxErr = 'Резерв не может быть на столько большим'
 
         }
 
-        if (this.projectReserve === 0) {
-          this.errors.push('Резерв не может быть меньше 500$')
-          this.$refs.projectReserve.style.borderColor = 'red'
-          console.log(this.$refs.projectReserve)
-        } else {
+        else {
+          delete this.errors.projectReserveErr
+          delete this.errors.projectReserveMaxErr
           this.$refs.projectReserve.style.borderColor = 'rgb(0, 115, 236)'
         }
+
       }
 
-      if (this.avatarError === true) {
-        this.avatarError = this.errors.push('Формат аватарки не поддерживается')
-        this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
-      }
-
-      if (this.bannerError === true) {
-        this.bannerError = this.errors.push('Формат аватарки не поддерживается')
-        this.$refs.projectBanner.parentElement.style.borderColor = 'red'
-      }
-
-      if (this.errors.length > 0 ) {
+      console.log(this.errors)
+      if (Object.keys(this.errors).length > 0) {
         setTimeout(()=> {
           this.$refs.errors.scrollIntoView({ behavior: 'smooth', block: 'start'})
         }, 20)
@@ -821,6 +955,12 @@ export default {
     padding: 0 15px;
     box-sizing: border-box;
     display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    h3 {
+      width: 100%;
+    }
 
     .name {
       padding: 0 15px;
@@ -830,7 +970,10 @@ export default {
       border-radius: 5px;
       background: rgb(0, 115, 236);
       width: auto;
-      margin: 5px 10px;
+      margin: 10px 0px;
+      a {
+        color: #fff;
+      }
 
       color: var(--neutral, #FFF);
       font-family: 'Montserrat', sans-serif;

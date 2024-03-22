@@ -103,7 +103,6 @@ export default {
     } else {
       this.userHere = false
     }
-    console.log('emit: ', this.emits)
 
   },
   methods: {

@@ -180,9 +180,10 @@
               ref='fadeAnimate'
               v-bind:project="project"
               v-on:updated="(emit) => {
-                this.$refs.recommend.scrollIntoView({behavior: 'smooth'})
-                this.lazyProjects = []
+                this.projects = this.projects.slice(this.projects.length, this.projects.length)
                 this.getOffset = 0
+
+                this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit)
                 this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit)
 
                }"
@@ -266,7 +267,7 @@ import loader from "../../components/reusable/loader.vue";
 export default {
   name: "AllProjectsWithSort.vue",
   components: {recommended, projectCard, Waypoint, loader, AnimateHeight},
-  emits: ['updated'],
+  emits: ['updated', 'projectDeleted'],
 
   data () {
     return {

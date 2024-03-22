@@ -146,10 +146,8 @@
     </router-link>
 
 
-
   </div>
-
-
+  {{ data.data }}
 
   <modal-window-backdrop
       v-if="showModal === true"
@@ -165,7 +163,7 @@
         console.log(category)
         if (emitConfirmAction === true) {
           deleteCategory(category.id)
-          this.getCategoryList()
+          this.getCategories()
           this.deleteStateMessage = `Категория ${category.name} успешно удалена! Надеюсь это не было случайностью.`
 
 
@@ -180,41 +178,40 @@
 
 <script>
 import modalWindowBackdrop from "../../components/page components/ModalWindowBackdrop.vue";
-import Vuex from "vuex";
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
-
+import config from "../../assets/js/config.js";
+import {useFetch} from "../../assets/js/getCategories.js";
+import {reactive} from "vue";
 
 export default {
   name: "ShopsCategories.vue",
   emits: ['someChanges'],
   props: ['isEditable'],
+
   data() {
     return {
+      data: '',
       categories: '',
       showModal: false,
       editCategoryName: 0,
-      count: 0,
+      count: 3,
       newCategoryName: '',
       changed: true,
 
       isLoading: false,
-      fullPage: true
+      fullPage: true,
+      obj: {}
     }
   },
   components: { modalWindowBackdrop, Loading },
-  watch: {
-    categories: function(value) {
-      // If "pageData" ever changes, then we will console log its new value.
-      this.$forceUpdate()
-      console.log(value);
-    }
-  },
   created() {
     this.isLoading = true
   },
   mounted() {
-    this.getCategoryList()
+    this.getCategories()
+
+
 
   },
 
@@ -222,29 +219,24 @@ export default {
 
     this.isLoading = false
   },
+  setup() {
+    const data = reactive(useFetch())
+
+    console.log('data', data.data)
+  },
 
   methods: {
-    doAjax() {
-      this.isLoading = true;
-      // simulate AJAX
-      setTimeout(() => {
-        this.isLoading = false
-      }, 5000)
-    },
-    onCancel() {
-      console.log('User cancelled the loader.')
-    },
-
-    getCategoryList() {
+    getCategories() {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
-      fetch("http://62.113.96.171:3000/categories/", {
+      fetch(`${config.api.url}categories/`, {
         method: "GET",
         headers: myHeaders,
       })
           .then((response) => response.json())
           .then((result) => {
+
             result.success === true ? this.categories = result.categories : console.error("Can't load categories, fetch result: ", result)
           })
           .catch((error) => {console.error(error)});
@@ -267,10 +259,12 @@ export default {
       })
           .then((response) => response.json())
           .then((result) => {
+            this.getCategoriesList()
             this.$emit('someChanges')
-            this.getCategoryList()
           })
           .catch((error) => {console.error(error)});
+
+
 
 
     },
@@ -285,12 +279,12 @@ export default {
         headers: myHeaders,
       })
           .then((response) => response.json())
-          .then(res => this.getCategoryList())
+          .then(res => res)
           .catch((error) => {console.error(error)});
 
 
 
-    }
+    },
   }
 }
 </script>

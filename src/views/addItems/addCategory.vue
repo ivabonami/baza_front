@@ -102,8 +102,7 @@
 <script>
 import modalWindowBackdrop from "../../components/page components/ModalWindowBackdrop.vue";
 import shopsCategories from "../../components/reusable/ShopsCategories.vue";
-
-import Loading from 'vue-loading-overlay';
+import config from "../../assets/js/config.js";
 import 'vue-loading-overlay/dist/css/index.css';
 
 export default {
@@ -121,14 +120,15 @@ export default {
       showModal: this.$emit.showModal,
       category: '',
       canHasFront: true,
-
+      componentKey: 0,
       isLoading: false,
       fullPage: true
     }
   },
   mounted() {
     this.$forceUpdate()
-
+    console.log(config.categories)
+    console.log('type:', typeof(getCategoriesList))
   },
   created() {
     this.isLoading = true
@@ -137,13 +137,17 @@ export default {
     this.isLoading = false
   },
   methods: {
+    forceRerender() {
+      this.componentKey += 1;
+    },
     addCategory () {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
 
+      console.log(config.api.url)
 
-      fetch("http://62.113.96.171:3000/categories", {
+      fetch(`${config.api.url}categories`, {
         method: "POST",
         headers: myHeaders,
         body: JSON.stringify({

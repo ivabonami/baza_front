@@ -235,7 +235,7 @@
                 if (emitConfirmAction === true) {
                   deleteProject($props.project.id)
 
-
+                  showModalDelete === false
                 }
                 showModalDelete === false
               }"
@@ -256,7 +256,7 @@
                 showModalApprove === false
                 if (emitConfirmAction === true) {
                   updateProject($props.project.id)
-                  this.$router.push('/')
+                  this.$emit('projectUpdated', counter)
 
                 }
               }"
@@ -387,7 +387,9 @@ export default {
         headers: myHeaders,
       })
           .then((response) => response.json())
-          .then(() => { this.$emit('updated', this.counter) })
+          .then(() => {
+            this.$emit('updated', this.counter)
+          })
           .catch((error) => {console.error(error)});
     },
 

@@ -61,6 +61,7 @@ import servicesCard from "../../views/project/ServicesCard.vue";
 import loader from "../reusable/loader.vue";
 
 
+
 export default {
   name: "Recommended.vue",
   components: {servicesCard, loader},
@@ -108,7 +109,9 @@ export default {
 },
   mounted() {
     this.getProducts('random')
-  }
+
+  },
+
 
 }
 </script>

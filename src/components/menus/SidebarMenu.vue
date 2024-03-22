@@ -140,27 +140,28 @@
 
 <script>
 import shopsCategories from "../reusable/ShopsCategories.vue";
+import config from "../../assets/js/config.js";
+
 
 export default  {
   name: "SidebarMenu.vue",
   components: {shopsCategories},
-
+  expose: ['increment'],
   emits: ['someChanges'],
 
   mounted() {
     this.checkAdmin()
-    this.getCategoryList()
-
   },
 
-  setup(emits) {
-
+  watch: {
+    shopsCategories
   },
   updated() {
     this.getCategoryList();
   },
 
   methods: {
+
     checkAdmin () {
       if (localStorage.getItem('role') !== 'admin') {
         this.isAdmin = false
@@ -177,24 +178,28 @@ export default  {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
-      fetch("http://62.113.96.171:3000/categories", {
+
+      fetch(`${config.api.url}categories`, {
         method: "GET",
         headers: myHeaders,
       })
           .then((response) => response.json())
           .then((result) => {
-            this.categories = result.categories
-            console.log(this.categories)
+            config.categories = result.categories
           })
           .catch((error) => {console.error(error)});
+
+      console.log(123, config.categories)
     },
   },
   data () {
     return {
       isAdmin: false,
-
+      count: 0
     }
-  }
+
+  },
+
 }
 </script>
 

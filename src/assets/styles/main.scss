@@ -559,7 +559,28 @@ form.add-project {
   }
 
   .input-wrapper {
+    border: 1px solid transparent;
     margin-bottom: 10px;
+    border-radius: 5px;
+    .loader {
+
+    }
+    .category {
+      border: 1px solid transparent;
+    }
+    .loaded {
+      color: #10c44c;
+      svg {
+        position: relative;
+
+        top: 4px;
+        width: 20px;
+        height: 20px;
+        path {
+          fill: #10c44c;
+        }
+      }
+    }
 
   }
   .fake-input {
