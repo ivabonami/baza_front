@@ -6,7 +6,7 @@ import AboutProjectView from "../../views/pages/AboutProjectView.vue";
 import ContactsView from "../../views/pages/ContactsView.vue";
 
 import ProjectsView from "../../views/project/ProjectsView.vue";
-import ServicesCard from "../../views/project/ServicesCard.vue";
+import ServicesCard from "../../views/project/project_parts/ServicesCard.vue";
 import ProjectDescription from "../../views/project/ProjectDescription.vue";
 import addProject from "../../views/addItems/AddProject.vue";
 import addService from "../../views/addItems/AddService.vue";

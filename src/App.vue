@@ -3,13 +3,17 @@ import SidebarMenu from "./components/menus/SidebarMenu.vue";
 import TopMenu from "./components/menus/TopMenu.vue";
 import FooterView from "./components/page components/FooterView.vue";
 import recommended from "./components/page components/Recommended.vue";
+import addCategory from "./views/addItems/addCategory.vue";
+
+import {userInfo, refreshToken} from "./assets/js/userService.js";
 
 export default {
-  components: {FooterView, SidebarMenu, TopMenu, recommended },
+  components: { FooterView, SidebarMenu, TopMenu, recommended, addCategory },
   data() {
     return {
       isLoaded: false,
       isAdmin: false,
+      userInfo, refreshToken
 
     }
   },
@@ -17,18 +21,18 @@ export default {
     document.querySelector('.preloader').style.display = 'none'
     this.isLoaded = true
 
-
   },
+
   updated() {
-    console.log(this.$refs.wrapper.getBoundingClientRect().height)
 
-  },
-  watch: {
-    categories: function(value) {
-      // If "pageData" ever changes, then we will console log its new value.
-      this.$forceUpdate()
-      console.log(value, 1233);
+    if (userInfo.expired - 3000 < Math.floor(Date.now() / 1000) && localStorage.getItem('role' !== '')) {
+      refreshToken()
+      console.log('token updated')
+    } else {
+
     }
+
+
   },
 
 }
@@ -40,7 +44,7 @@ export default {
       <div class="row  box box-shadow">
 
         <div class="d-flex justify-between align-center">
-          <div class="hamburger" ref="hamburger">=</div>
+<!--          <div class="hamburger" ref="hamburger">=</div>-->
           <div class="logo">
             <router-link to="/" class="">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 103" fill="none">
@@ -80,7 +84,7 @@ export default {
         <div class="sidebar collapse">
           <keep-alive>
             <sidebar-menu
-
+                ref="sidebar"
                 v-on:someChanges="(emit) => { console.log('sme', emit)}">
 
             </sidebar-menu>

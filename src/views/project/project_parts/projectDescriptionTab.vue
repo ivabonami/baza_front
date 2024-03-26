@@ -104,7 +104,7 @@ export default {
     .this-project-link {
       border-radius: 5px;
       background: rgb(0, 115, 236);
-      padding: 0 15px;
+      padding: 10px 15px;
       width: auto;
       margin-top: 10px;
       margin-right: 10px;
@@ -112,10 +112,9 @@ export default {
       a {
         color: var(--neutral, #FFF);
         font-family: 'Montserrat', sans-serif;
-        font-size: 14px;
+        font-size: 16px;
         font-style: normal;
         font-weight: 600;
-        line-height: 36px; /* 257.143% */
         text-decoration: none;
         transition: .3s ;
 
@@ -130,19 +129,20 @@ export default {
       color: #000;
 
       font-family: 'Montserrat', sans-serif;
-      font-size: 18px;
+      font-size: 20px;
       font-style: normal;
-      font-weight: 900;
+      font-weight: 600;
       line-height: normal;
     }
     .about-description {
-      color: var(--secondary, #2B2B2B);
+      color: var(--secondary, #000000);
       font-family: 'Montserrat', sans-serif;
-      font-size: 14px;
+      font-size: 16px;
       font-style: normal;
-      font-weight: 300;
+      font-weight: 400;
       line-height: normal;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
+      margin-top: 10px;
       word-break: break-all;
     }
 

@@ -4,7 +4,7 @@
            :on-cancel="onCancel"
            :is-full-page="fullPage"/>
 
-  <div class="sidebar-link" v-for="category of categories">
+  <div class="sidebar-link" v-for="category of store.categories">
 
     <div class="categories-list" v-if="isEditable === true" >
       <div class="category">
@@ -181,8 +181,10 @@ import modalWindowBackdrop from "../../components/page components/ModalWindowBac
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 import config from "../../assets/js/config.js";
-import {useFetch} from "../../assets/js/getCategories.js";
-import {reactive} from "vue";
+import {reactive, watch} from "vue";
+import {store} from "../../assets/js/store.js";
+
+
 
 export default {
   name: "ShopsCategories.vue",
@@ -201,7 +203,8 @@ export default {
 
       isLoading: false,
       fullPage: true,
-      obj: {}
+      obj: {},
+      store
     }
   },
   components: { modalWindowBackdrop, Loading },
@@ -220,13 +223,16 @@ export default {
     this.isLoading = false
   },
   setup() {
-    const data = reactive(useFetch())
 
-    console.log('data', data.data)
+
+    watch(store, (value, oldValue) => {
+    }, { immediate: true })
   },
 
   methods: {
     getCategories() {
+      //
+
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
@@ -237,30 +243,38 @@ export default {
           .then((response) => response.json())
           .then((result) => {
 
-            result.success === true ? this.categories = result.categories : console.error("Can't load categories, fetch result: ", result)
+
+            store.categories = result.categories
+
+            // result.success === true ? this.categories = result.categories : console.error("Can't load categories, fetch result: ", result)
           })
           .catch((error) => {console.error(error)});
 
 
     },
 
-    updateCategoryList(target, id) {
+    updateCategoryList(categoryName, id) {
 
       const myHeaders = new Headers();
       myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
       myHeaders.append("Content-Type", "application/json");
 
+      const newCategoryName = {
+        "name": categoryName
+      }
+
       fetch("http://62.113.96.171:3000/categories/" + id, {
         method: "PUT",
         headers: myHeaders,
-        body: JSON.stringify({
-          "name": target
-        })
+        body: JSON.stringify(newCategoryName)
+
+
       })
           .then((response) => response.json())
           .then((result) => {
-            this.getCategoriesList()
-            this.$emit('someChanges')
+
+            const index = store.categories.findIndex(item => item.id === id)
+            store.categories[index].name = categoryName
           })
           .catch((error) => {console.error(error)});
 
@@ -278,9 +292,34 @@ export default {
         method: "DELETE",
         headers: myHeaders,
       })
-          .then((response) => response.json())
-          .then(res => res)
-          .catch((error) => {console.error(error)});
+          .then((response) => {
+            if (response.success === true) {
+              response.json()
+
+
+            } else {
+
+              this.modal = {
+                iconType: 'ok',
+                heading: 'Проект успешно добавлен!',
+                description: `Спасибо ${this.username}! Поскольку ты админ то он уже опубликован!`,
+                descriptionType: 'text',
+                exit: true,
+                close: true,
+                confirm: false
+
+              }
+
+            }
+          })
+          .then(res => {
+
+            const index = store.categories.findIndex(item => item.id === categoryId)
+            store.categories.splice(index)
+          })
+          .catch((error) => {
+            console.error(error)
+          });
 
 
 

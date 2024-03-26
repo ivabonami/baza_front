@@ -14,6 +14,7 @@
     <div class="form">
       <input type="text"
              v-model="categoryName"
+             maxlength="25"
              placeholder="Название категории">
       <div class="allowFront">
         <input type="checkbox"
@@ -44,7 +45,7 @@
       <div class="category-list">
 
         <shops-categories
-            v-on:someChanges="(emit) => { console.log('ace', emit)}"
+            v-on:someChanges="(emit) => { console.log('ace', emit) }"
             v-bind:is-editable="true">
 
         </shops-categories>
@@ -104,6 +105,7 @@ import modalWindowBackdrop from "../../components/page components/ModalWindowBac
 import shopsCategories from "../../components/reusable/ShopsCategories.vue";
 import config from "../../assets/js/config.js";
 import 'vue-loading-overlay/dist/css/index.css';
+import { store } from "../../assets/js/store.js";
 
 export default {
   name: "addCategory.vue",
@@ -122,38 +124,39 @@ export default {
       canHasFront: true,
       componentKey: 0,
       isLoading: false,
-      fullPage: true
+      fullPage: true,
+      store
     }
   },
   mounted() {
-    this.$forceUpdate()
-    console.log(config.categories)
-    console.log('type:', typeof(getCategoriesList))
+    this.isLoading = false
+    console.log(store)
+    console.log(config.token)
   },
   created() {
     this.isLoading = true
   },
   updated() {
-    this.isLoading = false
+
   },
   methods: {
-    forceRerender() {
-      this.componentKey += 1;
-    },
+
     addCategory () {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+      myHeaders.append("Authorization", `Bearer ${config.token}`);
 
       console.log(config.api.url)
+
+      const newCategory = {
+        name: this.categoryName,
+        allowShopfront: this.canHasFront
+      }
 
       fetch(`${config.api.url}categories`, {
         method: "POST",
         headers: myHeaders,
-        body: JSON.stringify({
-          name: this.categoryName,
-          allowShopfront: this.canHasFront
-        }),
+        body: JSON.stringify(newCategory),
       })
           .then((response) => response.json())
           .then((response) => {
@@ -164,6 +167,8 @@ export default {
               this.addStateMessage = ''
 
             }, 10000)
+
+            store.categories.push(newCategory)
 
           })
           .catch((error) => {console.error(error)});

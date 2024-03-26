@@ -410,6 +410,7 @@ export default {
 
     .friends {
       flex-wrap: wrap;
+      justify-content: center;
     }
   }
 }

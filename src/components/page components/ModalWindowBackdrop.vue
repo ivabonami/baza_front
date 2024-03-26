@@ -213,6 +213,7 @@ export default {
   .close {
     position: absolute;
     right: 20px;
+    cursor: pointer;
     top: 20px;
   }
   .h2 {

@@ -57,7 +57,7 @@
 
 <script>
 import { ref } from 'vue'
-import servicesCard from "../../views/project/ServicesCard.vue";
+import servicesCard from "../../views/project/project_parts/ServicesCard.vue";
 import loader from "../reusable/loader.vue";
 
 
@@ -120,7 +120,7 @@ export default {
 
 .tabs-content {
   width: 100%;
-  justify-content: space-between;
+  justify-content: start;
   margin-top: 30px;
   min-height: 270px;
   gap: 20px;
@@ -130,14 +130,13 @@ export default {
 
   .shop-view {
     display: flex;
-    width: 100%;
-    flex-basis: 24%;
+    width: 23%;
     gap: 20px;
 
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 768px) {
   .tabs-content {
     flex-wrap: wrap;
     .shop-view {

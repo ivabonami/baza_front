@@ -1,4 +1,10 @@
 <template v-cloak>
+  <button
+      v-on:click="this.$router.go(-1)"
+      class="back">
+    <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80.52 137.91"><path d="M26.75,68.29c14.02,13.92,26.77,26.57,39.5,39.23,3.54,3.52,7.15,6.98,10.53,10.65,4.87,5.29,4.82,11.95,.1,16.49-4.67,4.49-11.53,4.36-16.53-.62C41.46,115.25,22.61,96.41,3.83,77.51c-4.97-5-5.17-11.48-.22-16.49C22.7,41.7,41.91,22.5,61.2,3.38c4.71-4.67,11.74-4.38,16.15,.11,4.28,4.36,4.32,11.35-.42,16.15-14.74,14.95-29.61,29.77-44.5,44.57-1.41,1.4-3.26,2.36-5.69,4.08Z"/></svg>
+    Назад
+  </button>
   <div class="wrapper" ref="wrapper">
     <div class="project">
       <div class="project-banner">
@@ -18,15 +24,17 @@
       <div class="project-header">
         <div class="left">
           <div class="avatar">
-            <img :src="api + project.avatarFilePath"
-                 alt=""
-                 v-if="project.avatarFilePath !== ''">
+            <figure class="cover">
+              <img :src="'http://62.113.96.171:3000/' + this.project.avatarFilePath"
+                   alt="" class="hoverable"
+                   v-if="this.project.avatarFilePath !== ''">
 
-            <img src="/src/assets/images/avatar.webp"
-                 alt=""
-                 v-else>
+              <img src="/src/assets/images/avatar.webp"
+                   alt="" class="hoverable"
+                   v-else>
+            </figure>
             <div class="favorite"
-                 v-if="project.favorite === 0 && this.isLoggined === true"
+                 v-if="project.favorite === 0 && this.isLogin === true"
                  v-on:click="() => {
                addFavorite(project.id)
                this.isFavourite = true
@@ -35,7 +43,7 @@
             </div>
 
             <div class="favorite"
-                 v-else-if="project.favorite === 1  && this.isLoggined === true"
+                 v-else-if="project.favorite === 1  && this.isLogin === true"
                  v-on:click="() => {
                deleteFavorite(project.id)
                this.isFavourite = false
@@ -71,7 +79,7 @@
             </div>
 
             <div class="project-rating-no" v-else>
-              У проекта нет оценок
+              Нет оценок
             </div>
 
           </div>
@@ -83,55 +91,86 @@
 
       <div class="project-body">
         <div class="tabs-links">
-          <button
-              v-on:click="this.$router.go(-1)"
-              class="back">
-            <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80.52 137.91"><path d="M26.75,68.29c14.02,13.92,26.77,26.57,39.5,39.23,3.54,3.52,7.15,6.98,10.53,10.65,4.87,5.29,4.82,11.95,.1,16.49-4.67,4.49-11.53,4.36-16.53-.62C41.46,115.25,22.61,96.41,3.83,77.51c-4.97-5-5.17-11.48-.22-16.49C22.7,41.7,41.91,22.5,61.2,3.38c4.71-4.67,11.74-4.38,16.15,.11,4.28,4.36,4.32,11.35-.42,16.15-14.74,14.95-29.61,29.77-44.5,44.57-1.41,1.4-3.26,2.36-5.69,4.08Z"/></svg>
-          </button>
-
-          <button
-              v-if="this.products.length > 0"
-              v-on:click="switchTabs('services')"
-              class="fresh" ref="services"
-              :class="{
+          <div class="left">
+            <button
+                v-if="this.products.length > 0"
+                v-on:click="switchTabs('services')"
+                class="fresh" ref="services"
+                :class="{
                 active: this.tab === 'services'
           }">
-            Витрина
-          </button>
+              Витрина
+            </button>
 
-          <button
-              v-on:click="switchTabs('description')"
-              class="recommended" ref="description"
-          :class="{
+            <button
+                v-on:click="switchTabs('description')"
+                class="recommended" ref="description"
+                :class="{
                 active: this.tab === 'description'
           }">
-            Описание
-          </button>
-          <button
-              v-on:click="switchTabs('testimonials')"
-              class="recommended" ref="description"
-          :class="{
+              Описание
+            </button>
+            <button
+                v-if="isLogin === true"
+                v-on:click="switchTabs('testimonials')"
+                class="recommended" ref="description"
+                :class="{
                 active: this.tab === 'testimonials'
           }">
-            Отзывы
-          </button>
+              Отзывы
+            </button>
+            <button
+                v-if="isOwner && allowShopFront === true || isAdmin && allowShopFront && allowShopFront === true"
+                v-on:click="switchTabs('addService')"
+                class="recommended" ref="description"
+                :class="{
+                active: this.tab === 'addService'
+          }">
+              Добавить услугу
+            </button>
+            <button
+                v-if="isOwner || isAdmin"
+                v-on:click="switchTabs('editProject')"
+                class="recommended" ref="description"
+                :class="{
+                active: this.tab === 'editProject'
+          }">
+              Изменить проект
+            </button>
+          </div>
+
+
 
 
         </div>
 
+
+
         <div class="tabs-body">
           <div class="tab-content">
             <Transition>
-            <div class="flex"
-                 v-if="this.tab === 'description'">
+              <div class="flex"
+                   v-if="this.tab === 'description'">
 
                 <project-description-tab
-                      v-bind:isAdmin="this.isAdmin"
-                      v-bind:project="this.project">
+                    v-bind:isAdmin="this.isAdmin"
+                    v-bind:project="this.project">
 
                 </project-description-tab>
 
-            </div>
+              </div>
+            </Transition>
+
+            <Transition>
+              <div class="flex"
+                   v-if="this.tab === 'editService'">
+
+                <edit-service
+                v-bind="this.service">
+
+                </edit-service>
+
+              </div>
             </Transition>
             <Transition>
             <div class="flex"
@@ -146,6 +185,21 @@
             </div>
             </Transition>
             <Transition>
+              <div class="flex"
+                   v-if="this.tab === 'editProject'">
+
+                <edit-project
+                    v-bind:isAdmin="this.isAdmin"
+                    v-on:switchTabBack="() => {
+                      this.tab = 'description'
+                      this.getProjectFullInfo()
+                    }"
+                    v-bind:project="this.project">
+
+                </edit-project>
+              </div>
+            </Transition>
+            <Transition>
             <div class="flex"
 
                  v-if="this.tab === 'services' && this.products.length > 0 ">
@@ -156,20 +210,43 @@
                     <services-card
                         v-bind:productId="item.id"
                         v-bind:name="item.name"
-                        v-bind:image="`http://62.113.96.171:3000/${item.avatarFilePath}`"
+                        v-bind:image="`${config.api.url}${item.avatarFilePath}`"
                         v-bind:id="item.id"
                         v-bind:projectId="item.ProjectId"
-                        v-bind:isOwner="false"
+                        v-bind:isOwner="isOwner || isAdmin"
                         v-bind:clickable="false"
                         v-bind:description="item.description"
+                        v-on:editService="(emit) => {
+                          this.tab = 'editService'
+                        }"
 
                     >
                     </services-card>
+
+
 
                   </div>
 
 
                 </transition-group>
+                <Waypoint @change="(way) => {
+
+                          if (way.going === 'IN' && way.direction === 'UP' && emptyResponse === false) {
+                            this.offset += this.limit
+                            getProducts(this.limit, this.offset)
+                          }
+                        }"
+                          v-if="emptyResponse === false">
+                  <div class="loadmore btn btn-outlined" ref="loadmore"
+
+                       v-on:click="() => {
+                         this.offset += this.limit
+                           getProducts(this.limit, this.offset)
+
+                       }">
+                    Загрузить еще
+                  </div>
+                </Waypoint>
 
 
               </div>
@@ -179,66 +256,7 @@
 
 
 
-              <div class="addService" v-if="this.tab === 'addService'">
 
-                <div class="add-project form-wrapper">
-                  <div class="left">
-                    <div class="input-wrapper">
-                      <input
-                          type="text"
-                          placeholder="Название проекта"
-                          v-model="productName"
-                          v-on:input="(e) => {
-                            productName.length <= 5 ? e.target.classList.add('bad') : e.target.classList.add('ok')
-                            productName.length > 5 ? e.target.classList.remove('bad') : e.target.classList.remove('ok')
-                          }"
-
-                          minlength="5" maxlength="30"
-                          required>
-                      <span class="help">
-                        Введите название проекта, которое коротко и ясно отражает его суть. От 5 до 30 символов.
-                      </span>
-                    </div>
-
-
-                    <div class="input-wrapper">
-                      <div class="fake-input">
-                        <span class="name">Фото</span>
-                        <input type="file"
-                               v-on:change="uploadPhoto($event)"
-                               accept="image/*">
-                      </div>
-                      <span class="help">
-                        Загрузите аватар проекта, размеры 245х180px, форматы: jpeg, jpg, gif. webp
-                      </span>
-                    </div>
-
-
-                  </div>
-                  <div class="right">
-                    <textarea placeholder="описание проекта *" required v-model="productDescription"></textarea>
-                    <span class="help">
-                      Предоставьте подробное описание услуги, включая ее цель, описание, что бы пользователь точно понимал что он покупает.
-                    </span>
-                  </div>
-
-
-
-
-                  <button class="btn-filled btn disabled"
-
-                          v-on:click="() => {
-                            previewBeforeUpload()
-                            console.log($emit.changeModal)
-                            this.showModal = true
-                          }">
-                    Добавить проект
-                  </button>
-                </div>
-
-
-
-              </div>
 
             </div>
             </Transition>
@@ -254,6 +272,17 @@
                   v-bind:projectId="project.id"
                   v-on:added="() => {
                     this.tab = 'services'
+                    this.showModal = true
+                    this.modal = {
+                      iconType: 'ok',
+                      heading: 'Услуга успешно добавлена!',
+                      description: `Спасибо!`,
+                      descriptionType: 'text',
+                      exit: true,
+                      close: true,
+                      confirm: false
+
+                    }
                     this.getProducts()
                     this.highlightProject()
                   }"
@@ -271,30 +300,7 @@
       </div>
 
     </div>
-    <div class="fixed-menu">
-      <div class="buttons">
 
-
-
-        <div v-if="this.isAdmin === true && this.tab !== 'addService'" class="canEdit"
-             v-on:mouseover="this.editAddShow = true"
-             v-on:mouseleave="this.editAddShow = false">
-          <span v-if="this.isAdmin === true"
-                class="icon-wrapper"
-                :class="{active: this.editAddShow}"
-                v-on:click="() => {
-                  this.editAddShow = false
-                  switchTabs('addService')
-                }">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
-                <path opacity="0.3" d="M7.69655 17V0H10.3034V17H7.69655ZM0 9.70283V7.33727H18V9.70283H0Z" fill="black"/>
-              </svg>
-              <span v-if="this.editAddShow === true">Добавить услугу</span>
-          </span>
-
-        </div>
-      </div>
-    </div>
     <div class="tab-stats box-shadow">
       <div class="stat">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="11" viewBox="0 0 20 11" fill="none">
@@ -336,31 +342,59 @@
     </div>
 
 
+
+
   </div>
+  <modal-window-backdrop
+      v-if="showModal === true"
+      v-on:changeModal="(emitShowModal) => {this.showModal = emitShowModal}"
+      v-bind:icon-type="this.modal.iconType"
+      v-bind:descriptionType="this.modal.descriptionType"
+      v-bind:heading="this.modal.heading"
+      v-bind:description="this.modal.description"
+      v-bind:close="this.modal.close"
+      v-bind:confirmAction="this.modal.confirm"
+      v-bind:exit="this.modal.exit"
+      ref="modal"
+      tabindex="0"
+      v-on:confirmAction="(emit)=> {
+
+        emit === true ? signOut() : this.showModal = false
+      }"
+
+  >
+
+  </modal-window-backdrop>
 
 </template>
 <script>
-import servicesCard from "./ServicesCard.vue";
+import servicesCard from "./project_parts/ServicesCard.vue";
 import { ref } from 'vue'
 import AddService from "../addItems/AddService.vue";
 import config from '../../assets/js/config.js'
-import { isLoggined } from '../../assets/js/config.js'
+import { isLogin } from '../../assets/js/config.js'
 import projectDescriptionTab from "./project_parts/projectDescriptionTab.vue";
 import projectReviews from "./project_parts/projectReviews.vue";
-
+import editProject from "../addItems/editProject.vue";
+import editService from "../addItems/editService.vue";
+import modalWindowBackdrop from "../../components/page components/ModalWindowBackdrop.vue";
+import {Waypoint} from "vue-waypoint";
 
 export default {
 
   name: "ProjectsView.vue",
-  components: { AddService, servicesCard, projectDescriptionTab, projectReviews  },
+  components: {editProject, AddService, servicesCard, modalWindowBackdrop, projectDescriptionTab, projectReviews, editService, Waypoint },
   emits: ['updated', 'high'],
 
   data() {
     return {
+      modal: {},
+      showModal:false,
+      allowShopFront: true,
       api: config.api.url,
 
-      isLoggined: isLoggined,
-
+      isLogin: isLogin(),
+      editProjectShow: false,
       services: {},
       tab: '',
       favorite: false,
@@ -397,14 +431,20 @@ export default {
       isFavourite: false,
 
       editTextShow: false,
-      editAddShow: false
+      editAddShow: false,
+
+      limit: 6,
+      offset: 0,
+      emptyResponse: false,
+
+
+      config
     }
   },
   props: ['selectedId', 'highlight', 'tab'],
   setup() {
     const el = ref(null);
     const starOne = ref(null);
-    console.log(config)
 
     return {
       el
@@ -428,7 +468,7 @@ export default {
       })
           .then((response) => response.json())
           .then(response => {
-            this.getProducts()
+            this.getProducts(this.limit, this.offset)
           })
           .catch((error) => {console.error(error)});
     },
@@ -462,7 +502,7 @@ export default {
       })
           .then((response) => response.json())
           .then(response => {
-            this.getProducts()
+            this.getProducts(this.limit, this.offset)
             this.$refs.service.scrollIntoView({behavior: "smooth", block: "center"})
           })
           .catch((error) => {console.error(error)});
@@ -491,7 +531,7 @@ export default {
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
 
-      fetch(`http://62.113.96.171:3000/user/project/${projectId}`, {
+      fetch(`${config.api.url}user/project/${projectId}`, {
         method: "DELETE",
         headers: myHeaders,
         body: JSON.stringify(
@@ -504,10 +544,10 @@ export default {
           .then(() => { this.getProjectFullInfo() })
           .catch((error) => {console.error(error)});
     },
-    getProducts(emit) {
+    getProducts(limit, offset) {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+      myHeaders.append("Authorization", `Bearer ${config.token}`);
       const projectId = window.location.pathname.replace('/project/', '');
 
       const requestOptions = {
@@ -515,12 +555,14 @@ export default {
         headers: myHeaders,
       };
 
-      fetch(`${config.api.url}products?projectId=${projectId}`, requestOptions)
+      fetch(`${config.api.url}products?projectId=${projectId}&limit=${limit}&offset=${offset}&sort=newest`, requestOptions)
           .then((response) => response.json())
           .then((result) => {
-            this.products = result.products
-            console.log(result.products)
-
+            for (let product of result.products) {
+              this.products.push(product)
+              console.log( this.$refs.fadeAnimate )
+            }
+            result.products.length < this.limit ? this.emptyResponse = true : this.emptyResponse = false
             if(this.products.length <= 0) {
               this.switchTabs('description')
             } else {
@@ -533,7 +575,7 @@ export default {
 
               }
             }
-            console.log(this.products)
+
           })
           .catch((error) => console.error(error));
     },
@@ -554,6 +596,19 @@ export default {
             this.projectDescription = this.project.description
             this.projectName = this.project.name
             this.$refs.owner.innerHTML = this.project.userData.username
+            if (this.$refs.owner.innerHTML === localStorage.getItem('username')) {
+              this.isOwner = true
+            }
+            for (let category of this.project.categories) {
+              if (category.allowShopfront === false) {
+                console.log('123', false)
+                this.allowShopFront = false
+                break
+              } else {
+
+              }
+
+            }
           })
           .catch((error) => console.error(error));
 
@@ -561,77 +616,6 @@ export default {
     },
     switchTabs(tab) {
       this.tab = tab
-
-    },
-
-    uploadPhoto(e){
-      this.projectBanner = e.target;
-      const image = e.target.files[0]
-
-      console.log(image)
-      const myHeaders = new Headers();
-      // myHeaders.append("Content-Type", "image/webp");
-      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
-
-      const formData = new FormData();
-      formData.append("image-upload", image );
-
-      console.log(formData)
-      fetch("${config.api.url}image-upload", {
-        method: "POST",
-        headers: myHeaders,
-        body: formData,
-        redirect: "follow"
-      })
-          .then((response) => response.json())
-          .then((result) => this.productPhoto = result.filePath)
-          .catch((error) => console.error(error));
-    },
-    checkAndUpdateProject () {
-      const project = {
-        name: this.projectName,
-        description: this.projectDescription,
-      };
-
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
-
-
-      if (this.projectName.length < 5) {
-        this.errors.push('Название услуги должно быть не менее 5 символов')
-        this.$refs.projectName.style.borderColor = 'red'
-      } else {
-        this.$refs.projectName.style.borderColor = 'rgb(0, 115, 236)'
-      }
-
-      if (this.projectDescription.length < 5) {
-        this.errors.push('Название услуги должно быть не менее 5 символов')
-        this.$refs.projectDescription.style.borderColor = 'red'
-      } else {
-        this.$refs.projectDescription.style.borderColor = 'rgb(0, 115, 236)'
-      }
-
-      if (this.projectDescription.length < 5 && this.projectName.length < 5 ) {
-        setTimeout(()=> {
-          this.$refs.errors.scrollIntoView({ behavior: 'smooth', block: 'center'})
-        }, 20)
-      } else {
-        this.editable = false
-
-        fetch(`${config.api.url}projects/${this.project.id}`, {
-          method: "PUT",
-          headers: myHeaders,
-          body: JSON.stringify(project)
-        })
-            .then((response) => response.json())
-            .then(() => this.getProjectFullInfo())
-            .catch((error) => {console.error(error)});
-      }
-
-
-      console.log(project)
-
 
     },
 
@@ -645,13 +629,15 @@ export default {
       this.$refs.wrapper.scrollIntoView({behavior: 'smooth', block: 'start'})
     },20)
 
-    this.getProducts()
+    this.getProducts(this.limit, this.offset)
+
+    this.getProjectFullInfo()
+
 
 
     if (localStorage.getItem('role') === 'admin') {
       this.isAdmin = true
     }
-    this.getProjectFullInfo()
 
     // this.username = localStorage.getItem('username');
 
@@ -678,73 +664,7 @@ export default {
   max-height: 0;
   opacity: 0;
 }
-.fixed-menu {
-  position: sticky;
-  max-width: 100%;
-  bottom: 0;
-  align-items: center;
-  justify-content: end;
-  display: flex;
-  padding-bottom: 10px;
 
-  .canEdit {
-
-    .icon-wrapper {
-      transition: all 0.5s ease;
-      display: flex;
-      overflow: hidden;
-      flex-wrap: nowrap;
-      align-items: center;
-      background-color: rgb(0, 115, 236);
-      color: #ffffff;
-      cursor: pointer;
-      border-radius: 999px;
-      padding: 10px;
-      opacity: 1;
-
-      width: 20px;
-      height: 20px;
-      position: relative;
-
-      span {
-        margin-right: -140px;
-        white-space: nowrap;
-      }
-
-
-      &.active{
-        width: 150px;
-        font-size: 14px;
-        span {
-          margin-right: 0;
-        }
-      }
-      svg {
-        background-color: rgb(0, 115, 236);
-        border-right: 10px solid rgb(0, 115, 236);
-        border-radius: 5px;
-
-        width: 20px;
-        height: 20px;
-        position: absolute;
-        top: 10px;
-        right: -5px;
-        opacity: 1;
-
-        margin-right: 5px;
-
-        path {
-          opacity: 1;
-          fill: #ffffff;
-        }
-      }
-    }
-
-    &:hover {
-      opacity: 1;
-    }
-  }
-}
 .wrapper {
   position: relative;
 }
@@ -870,6 +790,11 @@ textarea {
 
 .tabs-links {
   margin-bottom: 20px;
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .services {
@@ -944,23 +869,48 @@ textarea {
       align-items: end;
 
       .avatar {
-        position: relative;
-        background-color: #ffffff;
-        border-radius: 15px;
+        flex-basis: 110px;
         width: 110px;
         height: 110px;
-        overflow: hidden;
-        text-align: center;
-        margin: 0;
+        flex-shrink: 0;
+        flex-grow: 0;
+        display: block;
         box-sizing: border-box;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+        position: relative;
+        border-radius: 15px;
+        overflow: hidden;
+
+        figure {
+          width: 110px;
+          height: 110px;
+          text-align: center;
+          margin: 0;
+          display: block;
+          box-sizing: border-box;
+        }
+
+        .cover img {
+          object-fit: cover;
+          min-height: 100%;
+          width: inherit;
+        }
+
 
         img {
-          display: inline-block;
-          height: 100%;
-          border-radius: 15px;
+          object-fit: cover;
+
+        }
+        .favorite {
+          position: absolute;
+          right: 5px;
+          top: 5px;
+          border-radius: 400px;
+          padding: 4px;
+          transition: .3s ease;
+
+          svg {
+
+          }
         }
       }
 
@@ -970,10 +920,11 @@ textarea {
     }
 
     .rating {
-      width: 10%;
+      width: 12%;
       justify-content: end;
       display: flex;
       align-items: center;
+      margin-bottom: 4px;
 
       .stars {
         margin-right: 20px;
@@ -993,7 +944,6 @@ textarea {
         .project-rating {
           display: flex;
           justify-content: end;
-          padding: 5px 15px;
           color: #000;
           font-weight: 700;
           border-radius: 5px;
@@ -1143,7 +1093,7 @@ textarea {
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: start;
 
     .shop-view {
       width: 31%
@@ -1158,10 +1108,12 @@ textarea {
   background-color: #fff;
   width: fit-content;
   border-radius: 15px;
-  margin-bottom: 30px;
+
   padding: 10px 20px;
   display: flex;
-  gap: 30px;
+  gap: 50px;
+  align-items: center;
+  margin: 30px auto;
 
   .stat {
     color: var(--86868B, #494A4E);
@@ -1182,6 +1134,74 @@ textarea {
       }
     }
   }
+}
+.waypoint {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  .loadmore {
+    width: fit-content;
+
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .project {
+    .project-body {
+      padding: 0;
+    }
+    .project-banner {
+      max-height: 160px;
+    }
+  }
+
+  .cards-wrapper {
+    .tabs-content {
+      .shop-view {
+        width: 100%;
+      }
+    }
+  }
+  .tabs-links {
+    flex-wrap: wrap;
+    justify-content: start;
+
+    .left {
+      order: 2;
+      width: 100%;
+      justify-content: space-between;
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 5px;
+    }
+    .back {
+      order: 1;
+      margin-bottom: 10px;
+    }
+  }
+  .name {
+    font-size: 16px;
+  }
+  .project {
+    .project-header {
+      flex-wrap: wrap;
+      .rating {
+        justify-content: start;
+        width: 100%;
+      }
+    }
+  }
+
+  .tab-stats {
+    flex-wrap: wrap;
+    gap: 0;
+    box-sizing: border-box;
+    width: 60%;
+    .stat {
+      width: 100%;
+    }
+  }
+
 }
 
 </style>

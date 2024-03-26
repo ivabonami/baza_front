@@ -480,6 +480,20 @@ form.add-project .helper {
   font-size: 10px;
 }
 
+button.back {
+  border-radius: 10px;
+  padding: 3px 5px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+button.back svg {
+  position: relative;
+  top: 1px;
+  width: 12px;
+  height: 12px;
+}
+
 .form-wrapper {
   margin-top: 20px;
 }
@@ -494,8 +508,50 @@ form.add-project .helper {
 }
 .form-wrapper .input-wrapper {
   border: 1px solid transparent;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   border-radius: 5px;
+  position: relative;
+}
+.form-wrapper .input-wrapper.double {
+  display: flex;
+  gap: 15px;
+  position: relative;
+}
+.form-wrapper .input-wrapper.double .left, .form-wrapper .input-wrapper.double .right {
+  position: relative;
+  width: 50%;
+}
+.form-wrapper .input-wrapper.triple {
+  display: flex;
+  gap: 15px;
+  position: relative;
+  flex-wrap: wrap;
+  align-items: start;
+}
+.form-wrapper .input-wrapper.triple .left, .form-wrapper .input-wrapper.triple .middle, .form-wrapper .input-wrapper.triple .right {
+  position: relative;
+  width: 31%;
+}
+.form-wrapper .input-wrapper .field-name {
+  position: absolute;
+  font-size: 12px;
+  background-color: #fff;
+  color: #0a58ca;
+  left: 10px;
+  top: -9px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 5px;
+  border: 1px solid #0a58ca;
+  z-index: 20;
+}
+.form-wrapper .input-wrapper.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.form-wrapper .input-wrapper.categories .help {
+  width: 100%;
 }
 .form-wrapper .input-wrapper .category {
   border: 1px solid transparent;
@@ -520,7 +576,7 @@ form.add-project .helper {
   background: var(--neutral, #FFF);
 }
 .form-wrapper .fake-input .name {
-  width: 100px;
+  min-width: 100px;
   display: inline-block;
   color: #000;
   font-family: "Montserrat", sans-serif;
@@ -560,6 +616,22 @@ form.add-project .helper {
   z-index: 2;
   top: 2px;
 }
+.form-wrapper .fake-input input[type=file]:disabled {
+  opacity: 0.5;
+}
+.form-wrapper .fake-input input[type=file]:disabled::file-selector-button {
+  border-radius: 5px;
+  border: 1px solid var(--new-dark, rgb(93, 93, 93));
+  background: #FFF;
+  padding: 5px 10px;
+  color: rgb(77, 77, 77);
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding-left: 25px;
+}
 .form-wrapper input[type=text] {
   border-radius: 5px;
   border: 1px solid var(--new-dark, rgb(0, 115, 236));
@@ -569,10 +641,13 @@ form.add-project .helper {
   width: 100%;
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+.form-wrapper input[type=text]:focus {
+  outline: none;
 }
 .form-wrapper input[type=text].bad {
   background-color: #fff3f3;
@@ -593,7 +668,7 @@ form.add-project .helper {
   width: 100%;
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -604,7 +679,7 @@ form.add-project .helper {
   background: var(--neutral, #FFF);
   padding: 10px 15px;
   font-family: "Montserrat", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-style: normal;
   height: 280px;
   font-weight: 400;
@@ -612,6 +687,9 @@ form.add-project .helper {
   resize: none;
   box-sizing: border-box;
   width: 100%;
+}
+.form-wrapper textarea:focus {
+  outline: none;
 }
 .form-wrapper textarea::placeholder {
   opacity: 0.3;
@@ -713,6 +791,9 @@ form.add-project .helper {
   opacity: 0.5;
   display: block;
 }
+.links-wrapper .help.description {
+  margin-bottom: 20px;
+}
 
 .back {
   cursor: pointer;
@@ -729,6 +810,32 @@ form.add-project .helper {
 }
 .back svg:hover {
   transform: translateX(-2px);
+}
+
+@media screen and (max-width: 768px) {
+  .main .row .sidebar {
+    display: none;
+    width: 100%;
+  }
+  .main .row .content {
+    width: 100%;
+  }
+  .form-wrapper .input-wrapper.double {
+    flex-wrap: wrap;
+  }
+  .form-wrapper .input-wrapper.double .left, .form-wrapper .input-wrapper.double .right {
+    width: 100%;
+  }
+  .form-wrapper .input-wrapper.triple {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .form-wrapper .input-wrapper.triple .left, .form-wrapper .input-wrapper.triple .middle {
+    width: 47%;
+  }
+  .form-wrapper .input-wrapper.triple .right {
+    width: 100%;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */

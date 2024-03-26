@@ -5,21 +5,57 @@
       <div class="reviews">
         <div class="sort">
           <div class="left">
-            <h3 class="services">
+            <h3 class="services" v-if="showNotReviewed === false">
               Оценки проекта
+            </h3>
+            <h3 v-else >
+              Непроверенные оценки
             </h3>
 
 
-            <div class="sort-icon">
-              <!--            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" viewBox="0 0 20 16" fill="none" v-if="reviews.length > 0">-->
-              <!--              <path d="M2.13919 13.2517C2.13919 12.5319 2.13919 11.8122 2.13919 11.0928C2.13919 7.66982 2.13919 4.24682 2.13919 0.823823C2.13919 0.327743 2.42317 0 2.85004 0C3.28048 0 3.56938 0.327297 3.56938 0.819358C3.56982 4.88221 3.56938 8.94552 3.56938 13.0084V13.2477L3.61671 13.2794C3.8998 12.991 4.18066 12.6998 4.46732 12.415C4.75175 12.1323 5.16969 12.1136 5.45591 12.3618C5.75776 12.6239 5.79928 13.0865 5.51351 13.379C4.79596 14.1135 4.06903 14.8391 3.3354 15.5575C3.05722 15.8304 2.64777 15.829 2.3678 15.5549C1.63953 14.8418 0.918408 14.1211 0.203982 13.3937C-0.0746449 13.1102 -0.0616959 12.6771 0.205321 12.406C0.484394 12.1225 0.909478 12.1051 1.20775 12.3877C1.5096 12.6739 1.79269 12.9798 2.08426 13.2767L2.13874 13.2508L2.13919 13.2517Z" fill="#494A4E"/>-->
-              <!--              <path d="M13.917 15.0373C12.1546 15.0373 10.3922 15.0387 8.62983 15.0365C8.05828 15.0356 7.69839 14.5377 7.91361 14.0434C8.04667 13.738 8.29672 13.6058 8.62625 13.6063C9.9274 13.6076 11.229 13.6067 12.5301 13.6067C14.6792 13.6067 16.8283 13.6067 18.9774 13.6067C19.0814 13.6067 19.1859 13.6049 19.2895 13.6089C19.6999 13.625 20.008 13.9447 19.9995 14.3439C19.9914 14.7257 19.6726 15.036 19.2708 15.0373C17.9991 15.0405 16.7274 15.0382 15.4557 15.0382C14.9427 15.0382 14.4296 15.0382 13.9166 15.0382V15.0373H13.917Z" fill="#494A4E"/>-->
-              <!--              <path d="M12.8301 10.7521C11.425 10.7521 10.0198 10.7521 8.61413 10.7521C8.29353 10.7521 8.05152 10.6155 7.91801 10.3234C7.79209 10.047 7.84032 9.78449 8.04036 9.55632C8.19217 9.38307 8.39132 9.32056 8.61904 9.32056C10.4185 9.32234 12.2175 9.321 14.017 9.32056C15.0283 9.32056 16.0393 9.32056 17.0506 9.32145C17.5284 9.3219 17.8552 9.60901 17.8561 10.0265C17.857 10.4578 17.5311 10.7512 17.0457 10.7516C15.6405 10.7525 14.2353 10.7516 12.8297 10.7516L12.8301 10.7521Z" fill="#494A4E"/>-->
-              <!--              <path d="M11.8077 5.03493C12.8485 5.03493 13.8889 5.03493 14.9297 5.03493C15.3803 5.03493 15.7107 5.33097 15.7142 5.73864C15.7183 6.153 15.3995 6.46289 14.9494 6.46333C12.8311 6.46601 10.7124 6.46557 8.59409 6.46244C8.17303 6.46199 7.85868 6.15434 7.85555 5.75918C7.85243 5.35017 8.16722 5.03627 8.59632 5.03493C9.66662 5.03135 10.7369 5.03359 11.8072 5.03359V5.03493H11.8077Z" fill="#494A4E"/>-->
-              <!--              <path d="M10.3445 0.747014C10.9165 0.747014 11.489 0.745228 12.061 0.747461C12.5338 0.749247 12.8549 1.04216 12.8544 1.46501C12.8544 1.88563 12.5289 2.17721 12.0578 2.17721C10.9063 2.17765 9.75469 2.17855 8.60268 2.17855C8.3111 2.17855 8.08427 2.05799 7.94273 1.80079C7.80967 1.55967 7.81815 1.31409 7.9655 1.08146C8.11285 0.84882 8.33164 0.746121 8.6058 0.747461C9.18538 0.749693 9.76496 0.748354 10.3445 0.748354V0.747014Z" fill="#494A4E"/>-->
-              <!--            </svg>-->
 
-              <div class="btns" v-if="reviews.length > 1">
+          </div>
+
+
+
+          <div v-if="isAdmin === true" class="check">
+            <button class="btn btn-outlined"
+                    v-on:click="() => {
+                                  this.reviews = this.reviews.splice(this.reviews.length, this.reviews.length)
+                                  this.offset = 0
+                                  this.limit = 5
+                                  this.showNotReviewed = true
+                                  this.loadingComponents.reviews = true
+                                  this.editReview = false
+                                  getReviews(this.limit,this.offset,'newest', this.showNotReviewed)
+                                }"
+                    v-if="this.showNotReviewed === false">
+             Проверить отзывы
+            </button>
+
+            <button class="btn btn-outlined"
+                    v-on:click="() => {
+                      this.reviews = this.reviews.splice(this.reviews.length, this.reviews.length)
+                      this.offset = 0
+                      this.limit = 5
+                      this.loadingComponents.reviews = true
+                      this.editReview = false
+
+                      this.showNotReviewed = false
+                      getReviews(this.limit,this.offset,'newest', this.showNotReviewed)
+                                }"
+                    v-if="this.showNotReviewed === true">
+              Показать проверенные
+            </button>
+
+          </div>
+        </div>
+
+
+        <div class="sort-icon">
+
+
+          <div class="btns" v-if="reviews.length > 1">
       <span class="currentSort"
             ref="currentSort"
             v-click-outside="onClickOutside"
@@ -38,7 +74,7 @@
                                             d="M.6,8.57c-.15,0-.31-.06-.42-.18-.23-.23-.23-.61,0-.85L7.56,.17c.23-.22,.62-.22,.85,0l7.38,7.38c.23,.23,.23,.61,0,.85-.23,.24-.61,.23-.85,0L7.98,1.44,1.02,8.4c-.12,.12-.27,.18-.42,.18Z"/></svg>
 
       </span>
-                <div class="sortFilter box-shadow" v-if="this.showSort === true">
+            <div class="sortFilter box-shadow" v-if="this.showSort === true">
 
                   <span class="filter" :class="{active: this.activeSortName === 'Сначала старые'}" v-on:click=" () => {
                 if (this.activeSortName !== 'Сначала старые') {
@@ -58,9 +94,9 @@
           </svg>
 
         </span>
-                  <div class="sep"></div>
+              <div class="sep"></div>
 
-                  <span class="filter" :class="{active: this.activeSortName === 'Сначала новые'}" v-on:click=" () => {
+              <span class="filter" :class="{active: this.activeSortName === 'Сначала новые'}" v-on:click=" () => {
                 if (this.activeSortName !== 'Сначала новые') {
                   this.activeSortName = 'Сначала новые'
                   this.review.sort = 'newest'
@@ -78,9 +114,9 @@
           </svg>
 
         </span>
-                  <div class="sep"></div>
+              <div class="sep"></div>
 
-                  <span class="filter" :class="{active: this.activeSortName === 'С высоким рейтингом'}" v-on:click=" () => {
+              <span class="filter" :class="{active: this.activeSortName === 'С высоким рейтингом'}" v-on:click=" () => {
                 if (this.activeSortName !== 'С высоким рейтингом') {
                   this.activeSortName = 'С высоким рейтингом'
                   this.review.sort = 'highestRating'
@@ -98,10 +134,10 @@
           </svg>
         </span>
 
-                  <div class="sep"></div>
+              <div class="sep"></div>
 
 
-                    <span class="filter" :class="{active: this.activeSortName === 'С низким рейтингом'}" v-on:click="() => {
+              <span class="filter" :class="{active: this.activeSortName === 'С низким рейтингом'}" v-on:click="() => {
                   if (this.activeSortName !== 'С низким рейтингом') {
                     this.activeSortName = 'С низким рейтингом'
                     this.review.sort = 'lowestRating'
@@ -109,7 +145,7 @@
                     this.reviews = this.reviews.slice(this.reviews.length, this.reviews.length)
                     this.clicked = true
                     this.activeSortTab = 'lowestRating'
-                    getReviews(this.review.sort, false)
+                    getReviews(this.limit, this.offset, this.sort, false)
                   }
                 }">С низким рейтингом
                      <svg id="a" v-if="this.activeSortName === 'С низким рейтингом'" xmlns="http://www.w3.org/2000/svg"
@@ -119,43 +155,9 @@
                     </svg>
 
                   </span>
-                </div>
-              </div>
             </div>
           </div>
-
-
-
-          <div v-if="isAdmin === true">
-            <button class="btn btn-outlined"
-                    v-on:click="() => {
-                                  this.showNotReviewed = true
-                                  this.loadingComponents.reviews = true
-                                  this.editReview = false
-                                  getReviews('newest', true )
-                                }"
-                    v-if="this.showNotReviewed === false">
-             Проверить отзывы
-            </button>
-
-            <button class="btn btn-outlined"
-                    v-on:click="() => {
-                      this.loadingComponents.reviews = true
-                      this.editReview = false
-                      getReviews('newest', false)
-                      this.showNotReviewed = false
-
-                                }"
-                    v-if="this.showNotReviewed === true">
-              Показать проверенные
-            </button>
-
-          </div>
         </div>
-
-        <h3 style="margin-bottom: 10px;" v-if="showNotReviewed === true">
-          Непроверенные отзывы
-        </h3>
         <transition-group name="list">
           <div v-for="(review, index) of reviews" v-if="reviews.length > 0 && this.loadingComponents.reviews === false">
             <div class="review" >
@@ -274,7 +276,44 @@
           </div>
         </transition-group>
 
+          <div v-if="reviews.length <= 0" class="no-reviews">
 
+            <svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58" fill="none">
+              <g clip-path="url(#clip0_380_7664)">
+                <path d="M26.8089 0C28.2705 0 29.7295 0 31.1911 0C31.4772 0.0721778 31.7608 0.172711 32.0521 0.211378C44.129 1.84569 52.2593 8.43964 56.4353 19.8308C57.2473 22.0503 57.4922 24.476 58 26.8089V31.1911C57.9252 31.5185 57.8144 31.8433 57.7809 32.1758C56.6364 43.5309 48.4313 53.4812 37.4448 56.7008C35.4084 57.2963 33.2791 57.5747 31.1911 58H26.8089C26.5202 57.9278 26.2366 57.8196 25.9453 57.7912C14.0515 56.5874 4.02907 48.0343 1.01564 36.4524C0.567111 34.7278 0.332533 32.9466 0 31.1911C0 29.7295 0 28.2705 0 26.8089C0.0747556 26.4815 0.172711 26.1593 0.219111 25.8293C1.85084 14.0927 8.18444 6.02169 19.2302 1.7864C21.6327 0.866133 24.2749 0.577422 26.8089 0ZM3.35111 28.8685C3.35369 43.2628 14.6882 54.6412 29.0284 54.6489C43.1881 54.654 54.6515 43.2061 54.6489 29.0619C54.6489 14.8428 43.2577 3.35369 29.1572 3.35111C14.8377 3.34853 3.34853 14.7114 3.35111 28.8685Z" fill="#C8716B"/>
+                <path d="M29.0079 13.2653C29.8225 13.4999 30.668 13.6623 31.4439 13.9871C32.3719 14.3763 32.756 15.1857 32.6761 16.1833C32.3409 20.416 31.9981 24.6487 31.6527 28.8815C31.5135 30.5905 31.3537 32.2996 31.2093 34.0086C31.0985 35.3388 30.3793 36.0477 29.0775 36.0915C27.7293 36.1379 26.9173 35.4316 26.7936 34.0422C26.2986 28.5309 25.7934 23.0222 25.3397 17.5083C25.0922 14.4975 26.1001 13.4019 29.0079 13.2627V13.2653Z" fill="#C8716B"/>
+                <path d="M28.7914 44.5957C27.2138 44.49 25.9172 43.0052 26.0409 41.4482C26.1672 39.8629 27.6546 38.5611 29.1987 38.69C30.7737 38.8189 32.0806 40.3217 31.9595 41.8581C31.8332 43.4408 30.3767 44.7013 28.794 44.5957H28.7914Z" fill="#C8716B"/>
+              </g>
+              <defs>
+                <clipPath id="clip0_380_7664">
+                  <rect width="58" height="58" fill="white"/>
+                </clipPath>
+              </defs>
+            </svg>
+            <span v-if="this.showNotReviewed === true">Нет непроверенных отзывов</span>
+            <span v-if="this.showNotReviewed === false">Нет отзывов</span>
+          </div>
+
+        <Waypoint @change="(way) => {
+
+                          if (way.going === 'IN' && way.direction === 'UP' && emptyResponse === false) {
+                            this.offset += this.limit
+
+                            getReviews(this.limit, this.offset, this.sort, this.showNotReviewed)
+                            console.log('emptyResponse', emptyResponse)
+                          }
+                        }"
+                  v-if="emptyResponse === false">
+          <div class="loadmore btn btn-outlined" ref="loadmore"
+
+               v-on:click="() => {
+                         this.offset += this.limit
+                           getReviews(this.limit, this.offset, this.sort, this.showNotReviewed)
+
+                       }">
+            Загрузить еще
+          </div>
+        </Waypoint>
 
 
 
@@ -287,13 +326,13 @@
                         } else if (this.editReview === true) {
 
                           updateReview(reviewID, isReviewed)
-                          getReviews()
+                          getReviews(this.limit, this.offset)
                         } else {
                           sendReview()
                           reviewSended(event.target)
                           this.dataStars = 0
                           this.reviewText = ''
-                          getReviews()
+                          getReviews(this.limit, this.offset)
                         }
                         }"
            v-if="this.isLoggined === true && this.isProjectReviewed === false ||
@@ -580,27 +619,6 @@
       </div>
 
 
-      <div class="tab-stats box-shadow" v-if="project.type === 'exchanger'">
-        <div class="stat" v-if="project.type === 'exchanger'">
-          <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 332.02 345"><path d="M331.96,56.65c-.83-17.38-10.77-29.29-24.33-38.62-15.59-10.72-33.29-15.55-51.92-18.03h-26.97c-16.86,2.27-32.92,6.57-47.72,15.18-13.02,7.57-22.18,18.41-28.03,32.12-.94,2.21-1.19,4.85-1.2,7.29-.09,20.99-.05,41.98-.05,62.97,0,1.93,0,3.86,0,5.03-11.57-3.74-22.65-8.59-34.23-10.83-34.21-6.6-66.97-3.13-96.27,17.72-9.65,6.86-16.06,16.33-20.18,27.29-.96,2.56-.99,5.57-.99,8.37C0,204.96,.1,244.77,0,284.59c-.05,19.33,10.08,32.57,25.22,42.73,14.96,10.05,31.78,14.95,49.58,16.82,1.28,.13,2.53,.56,3.79,.86h23c8.6-1.69,17.34-2.91,25.78-5.18,15.86-4.27,30.04-11.71,41.09-24.26,7.55-8.57,11.6-18.54,11.76-30.01,.04-2.76,0-5.52,0-8.21,9.46,3.48,18.08,7.57,27.17,9.82,31.92,7.92,63.15,6.12,92.68-9.41,14.25-7.5,25.57-18.14,29.92-34.39,1.14-4.27,1.47-8.87,1.47-13.32,.09-52.31,.04-104.62,.07-156.93,0-5.49,.68-11,.42-16.46ZM32.96,154.41c9.51-9.93,21.92-14.32,34.97-16.81,8.13-1.55,16.48-1.98,20.71-2.46,20.6,.87,36.51,3.73,50.78,12.69,1.97,1.23,3.69,2.85,5.63,4.12,9.45,6.18,9.13,23.92-.11,30.82-10.89,8.13-22.97,12.51-36.12,14.65-20.33,3.31-40.26,1.92-59.19-6.49-5.96-2.65-11.73-6.49-16.48-10.96-8.32-7.84-8.12-17.29-.19-25.56Zm-6.29,70.52c.18-4.8,.04-9.62,.04-15.03,41.71,21.17,82.86,21.5,124.82,1.35,0,7.8,.47,15.53-.25,23.14-.25,2.69-3.08,5.44-5.3,7.57-7.88,7.59-17.65,11.76-28.12,14.28-25.42,6.11-50.16,4.57-73.73-7.43-3.8-1.93-7.3-4.64-10.52-7.47-4.87-4.27-7.18-9.81-6.93-16.42Zm108.68,82.94c-28.68,14.46-58.59,14.19-87.85,1.39-18.4-8.05-22.7-17.61-19.94-38.79,19.74,11.59,40.8,16.27,62.98,16.19,21.96-.08,42.91-4.48,62.16-15.88,2.2,18.92,2.22,27.21-17.36,37.08ZM184.26,46.63c4.27-4.46,9.52-8.65,15.15-11.04,30.41-12.9,60.74-12.83,90.45,2.49,3.19,1.65,5.98,4.19,8.73,6.57,8.69,7.51,8.27,20.33-.34,28.01-8.97,8-19.59,12.56-31.11,14.9-8.27,1.68-16.76,2.25-25.15,3.31-16.16-.53-31.61-3.27-45.76-11.14-4.29-2.39-8.39-5.53-11.76-9.11-7.31-7.77-7.56-16.33-.22-24Zm104.95,206.81c-18.24,10.6-38.23,13.35-58.78,10.88-9.77-1.17-19.27-4.6-28.88-7.09-1.26-.33-2.43-1.06-3.61-1.67-16.07-8.23-19.96-15.94-17.21-34.15,41.28,19.87,82.42,19.8,123.41-.88,2.7,16.07-1.07,24.85-14.93,32.9Zm-3.55-53.76c-28.67,13.45-57.83,13.17-86.85,.62-2.72-1.18-5.29-2.81-7.75-4.49-7.22-4.94-12.46-10.86-10.85-20.65,.63-3.86,.1-7.91,.1-12.85,20.18,11.44,41.01,15.76,62.75,15.56,21.53-.2,42.14-4.67,61.01-15.91,3.21,19.64-1.14,29.63-18.4,37.73Zm-3.13-57.04c-27.9,11.41-56.1,11.16-83.77-1.32-4.32-1.95-8.31-4.92-11.95-8.01-5.57-4.72-8.68-10.77-8.15-18.43,.31-4.46,.06-8.96,.06-13.97,42.15,21.37,83.76,21.39,125.5,1.12,4.09,20.33-1.74,32.47-21.67,40.62Z"/></svg>
-          Резерв: {{ project.reserve }}$
-        </div>
-
-        <div class="stat" v-if="project.type === 'exchanger'">
-          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="18" viewBox="0 0 11 18" fill="none">
-            <path d="M5.11204 17.16V0.23999H6.26404V17.16H5.11204ZM5.56204 15.144C4.60204 15.144 3.68404 15 2.80804 14.712C1.93204 14.412 1.24204 14.028 0.738037 13.56L1.40404 12.156C1.88404 12.576 2.49604 12.924 3.24004 13.2C3.98404 13.476 4.75804 13.614 5.56204 13.614C6.29404 13.614 6.88804 13.53 7.34404 13.362C7.80004 13.194 8.13604 12.966 8.35204 12.678C8.56804 12.378 8.67604 12.042 8.67604 11.67C8.67604 11.238 8.53204 10.89 8.24404 10.626C7.96804 10.362 7.60204 10.152 7.14604 9.99599C6.70204 9.82799 6.21004 9.68399 5.67004 9.56399C5.13004 9.44399 4.58404 9.30599 4.03204 9.14999C3.49204 8.98199 2.99404 8.77199 2.53804 8.51999C2.09404 8.26799 1.73404 7.93199 1.45804 7.51199C1.18204 7.07999 1.04404 6.52799 1.04404 5.85599C1.04404 5.20799 1.21204 4.61399 1.54804 4.07399C1.89604 3.52199 2.42404 3.08399 3.13204 2.75999C3.85204 2.42399 4.76404 2.25599 5.86804 2.25599C6.60004 2.25599 7.32604 2.35199 8.04604 2.54399C8.76604 2.73599 9.39004 3.01199 9.91804 3.37199L9.32404 4.81199C8.78404 4.45199 8.21404 4.19399 7.61404 4.03799C7.01404 3.86999 6.43204 3.78599 5.86804 3.78599C5.16004 3.78599 4.57804 3.87599 4.12204 4.05599C3.66604 4.23599 3.33004 4.47599 3.11404 4.77599C2.91004 5.07599 2.80804 5.41199 2.80804 5.78399C2.80804 6.22799 2.94604 6.58199 3.22204 6.84599C3.51004 7.10999 3.87604 7.31999 4.32004 7.47599C4.77604 7.63199 5.27404 7.77599 5.81404 7.90799C6.35404 8.02799 6.89404 8.16599 7.43404 8.32199C7.98604 8.47799 8.48404 8.68199 8.92804 8.93399C9.38404 9.18599 9.75004 9.52199 10.026 9.94199C10.302 10.362 10.44 10.902 10.44 11.562C10.44 12.198 10.266 12.792 9.91804 13.344C9.57004 13.884 9.03004 14.322 8.29804 14.658C7.57804 14.982 6.66604 15.144 5.56204 15.144Z" fill="rgb(0, 115, 236)"/>
-          </svg>
-          Курс: {{ project.exchangeRate }}$
-        </div>
-
-        <div class="stat" v-if="project.type === 'exchanger'">
-          <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 222.87 270.23"><path d="M166.56,52.77c-8.26-8.17-16.51-16.36-24.8-24.5-5.17-5.08-6.66-11.15-4.18-17.82,4.29-11.56,18.15-14.01,27.34-4.9,14.55,14.43,29,28.97,43.48,43.46,3.18,3.18,6.46,6.28,9.5,9.59,6.67,7.27,6.67,16.22-.27,23.23-17.59,17.76-35.25,35.44-53.02,53.02-7.2,7.12-16.99,7.09-23.63,.35-6.3-6.39-6.05-16.22,.82-23.28,6.97-7.17,14.13-14.16,21.19-21.24,1.15-1.15,2.22-2.37,4.21-4.52-2.86,0-4.59,0-6.32,0-77.5,0-64.99,0-142.49,0-9.42,0-15.05-3.61-17.51-11.08-3.51-10.68,4.03-21.08,15.66-21.16,20.5-.15,41-.06,61.5-.05,58.33,0,26.66,0,85,.01,.98,0,1.95,0,2.93,0,.2-.37,.41-.74,.61-1.11Z"/><path d="M56.31,217.46c8.26,8.17,16.51,16.36,24.8,24.5,5.17,5.08,6.66,11.15,4.18,17.82-4.29,11.56-18.15,14.01-27.34,4.9-14.55-14.43-29-28.97-43.48-43.46-3.18-3.18-6.46-6.28-9.5-9.59-6.67-7.27-6.67-16.22,.27-23.23,17.59-17.76,35.25-35.44,53.02-53.02,7.2-7.12,16.99-7.09,23.63-.35,6.3,6.39,6.05,16.22-.82,23.28-6.97,7.17-14.13,14.16-21.19,21.24-1.15,1.15-2.22,2.37-4.21,4.52,2.86,0,4.59,0,6.32,0,77.5,0,64.99,0,142.49,0,9.42,0,15.05,3.61,17.51,11.08,3.51,10.68-4.03,21.08-15.66,21.16-20.5,.15-41,.06-61.5,.05-58.33,0-26.66,0-85-.01-.98,0-1.95,0-2.93,0-.2,.37-.41,.74-.61,1.11Z"/></svg>
-
-          Мин. обмен: {{ project.minValueToExchange }}$
-        </div>
-
-      </div>
-
 
     </div>
   </div>
@@ -630,8 +648,9 @@ import config from "../../../assets/js/config.js";
 import {ref} from "vue";
 import loader from "../../../components/reusable/loader.vue";
 import ModalWindowBackdrop from "../../../components/page components/ModalWindowBackdrop.vue";
-import {isLoggined} from "../../../assets/js/config.js";
+import {isLogin} from "../../../assets/js/config.js";
 import vClickOutside from 'click-outside-vue3'
+import {Waypoint} from "vue-waypoint";
 
 
 export default {
@@ -651,7 +670,7 @@ export default {
       modalShow:false,
 
       dataStars: 0,
-      isLoggined: isLoggined(),
+      isLoggined: isLogin(),
 
       reviewToDeleteId: 0,
       reviewToDeleteUsername: '',
@@ -693,10 +712,14 @@ export default {
       isLoading: false,
 
       reviewText: '',
-      reviewTextError: ''
+      reviewTextError: '',
+
+      limit: 5,
+      offset: 0,
+      emptyResponse: false,
     }
   },
-  components: {ModalWindowBackdrop, loader, vClickOutside },
+  components: {ModalWindowBackdrop, loader, vClickOutside, Waypoint },
   methods: {
 
     reviewSended(target) {
@@ -774,11 +797,11 @@ export default {
           .then((response) => response.json())
           .then(() => {
             this.isProjectReviewed = false
-            this.getReviews()
+            this.getReviews(this.limit, this.offset)
           })
           .catch((error) => {console.error(error)});
     },
-    getReviews (reviewsSort, isNotReviewed) {
+    getReviews (limit, offset, reviewsSort, isNotReviewed) {
       this.loadingComponents.reviews = true
       reviewsSort = '' ? reviewsSort = 'newest' : reviewsSort
       const myHeaders = new Headers();
@@ -786,7 +809,7 @@ export default {
       myHeaders.append("Content-Type", "application/json");
 
       const projectId = parseInt(this.$route.path.replace('/project/', ''))
-      let url = `${config.api.url}reviews?projectId=${projectId}&sort=${this.review.sort}`
+      let url = `${config.api.url}reviews?projectId=${projectId}&sort=${this.review.sort}&limit=${limit}&offset=${offset}`
 
       isNotReviewed === true ? url += `&showNotReviewed=true` : url
 
@@ -799,24 +822,25 @@ export default {
           .then((response) => response.json())
           .then((result) => {
             if(result.message === "No reviews found for this project") {
-              this.reviews = []
               this.loadingComponents.reviews = false
               this.loadingComponents.wrapper = false
             } else {
+              for (let review of result.reviews) {
+                this.reviews.push(review)
+              }
 
-              this.reviews = result.reviews
-              this.reviewsLength = result.reviews.length
               this.loadingComponents.reviews = false
               this.loadingComponents.wrapper = false
 
 
               for (let review of this.reviews) {
-console.log('s: ', localStorage.getItem('username') === review.userData.username)
+
                 localStorage.getItem('username') === review.userData.username ? this.isProjectReviewed = true : ''
 
               }
 
             }
+            result.reviews.length < this.limit ? this.emptyResponse = true : this.emptyResponse = false
           })
           .catch((error) => console.error(error));
     },
@@ -884,7 +908,7 @@ console.log('s: ', localStorage.getItem('username') === review.userData.username
 
                 }
               }
-              this.getReviews()
+              this.getReviews(this.limit, this.offset)
               this.getReviewsCount()
 
             } else if (result.message === "This user already rated this project.") {
@@ -1090,12 +1114,17 @@ console.log('s: ', localStorage.getItem('username') === review.userData.username
 
     },
     onClickOutside (event) {
-      this.showSort = false
-      this.arrowDate = 'up'
+      console.log(event.target)
+      if (event.target.classList[0] !== 'filter') {
+        this.showSort = false
+        this.arrowDate = 'up'
+      } else {
+
+      }
     },
   },
   mounted() {
-    this.getReviews()
+    this.getReviews(this.limit, this.offset)
     this.getReviewsCount()
 
 
@@ -1212,7 +1241,6 @@ console.log('s: ', localStorage.getItem('username') === review.userData.username
           font-family: 'Montserrat', sans-serif;
           font-size: 12px;
           font-style: normal;
-          width: 30px;
           font-weight: 400;
         }
       }
@@ -1276,6 +1304,35 @@ console.log('s: ', localStorage.getItem('username') === review.userData.username
 }
 .reviews {
   width: 100%;
+  .no-reviews {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-weight: bold;
+    text-align: center;
+    svg {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 30px;
+      flex-basis: 100%;
+    }
+  }
+  .sort-icon {
+    margin-bottom: 20px;
+
+    span {
+      color: #000;
+
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+
+  }
   .sort {
     display: flex;
     align-items: center;
@@ -1289,25 +1346,7 @@ console.log('s: ', localStorage.getItem('username') === review.userData.username
     }
 
 
-    .sort-icon {
 
-
-      svg {
-        position: relative;
-        top: 3px;
-        margin-right: 5px;
-      }
-      span {
-        color: #000;
-
-        font-family: 'Montserrat', sans-serif;
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-      }
-
-    }
     select {
       color: #000;
       margin-left: 10px;
@@ -1653,6 +1692,83 @@ console.log('s: ', localStorage.getItem('username') === review.userData.username
       }
     }
   }
+}
+@media screen and (max-width: 768px) {
+  .wrapper {
+    flex-wrap: wrap;
+    .left,.tab-rating {
+      width: 100%;
+    }
+    .left {
+      order: 2;
+    }
+    .tab-rating {
+      order: 1;
+      .onsite {
+        text-align: center;
+      }
+      .project-detailed-rating {
+        width: fit-content;
+        margin: 0 auto 30px;
+        .heading {
+          text-align: center;
+        }
+        .project-review-stars {
+          justify-content: center;
+        }
+      }
+    }
+  }
+  .reviews {
+    .review {
+      .date {
+        flex-wrap: wrap;
+        svg {
+          margin-left: 0;
+        }
+        .menu {
+          margin-top: 10px;
+          width: 100%;
+        }
+      }
+    }
+    .sort {
+      .left {
+        order: 1;
+      }
+      .check {
+        order: 2;
+        width: 50%;
+        display: flex;
+        justify-content: end;
+        .btn {
+
+        }
+      }
+    }
+  }
+  .send-header {
+    align-items: start;
+
+    .set-rating {
+      margin-top: 5px;
+    }
+    svg {
+      margin-left: 4px;
+      width: 18px;
+      height: 18px;
+    }
+    .text {
+      width: 50%;
+
+    }
+  }
+  .send-review {
+    textarea {
+      height: 150px;
+    }
+  }
+
 }
 .fadeHeight-enter-active,
 .fadeHeight-leave-active {

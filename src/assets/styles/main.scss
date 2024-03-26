@@ -414,6 +414,8 @@ form.add-project {
       justify-content: start;
       gap: 30px;
       .add {
+
+
         background-color: rgb(0, 115, 236);
         color: #fff;
         transition: .3s ease;
@@ -543,7 +545,21 @@ form.add-project {
     font-size: 10px;
   }
 }
+button.back {
 
+  border-radius: 10px;
+  padding: 3px 5px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 20px;
+
+  svg {
+    position: relative;
+    top: 1px;
+    width: 12px;
+    height: 12px;
+  }
+}
 .form-wrapper {
   margin-top: 20px;
 
@@ -560,8 +576,61 @@ form.add-project {
 
   .input-wrapper {
     border: 1px solid transparent;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     border-radius: 5px;
+    position: relative;
+
+
+    &.double {
+      display: flex;
+      gap: 15px;
+      position: relative;
+      .left, .right {
+        position: relative;
+        width: 50%;
+      }
+
+    }
+
+    &.triple {
+      display: flex;
+      gap: 15px;
+      position: relative;
+      flex-wrap: wrap;
+      align-items: start;
+      .left, .middle, .right {
+
+        position: relative;
+        width: 31%;
+      }
+
+    }
+
+
+
+    .field-name {
+      position: absolute;
+      font-size: 12px;
+      background-color: #fff;
+      color: #0a58ca;
+      left: 10px;
+      top: -9px;
+      padding-left: 5px;
+      padding-right: 5px;
+      border-radius: 5px;
+      border: 1px solid #0a58ca;
+      z-index: 20;
+
+    }
+    &.categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+
+      .help {
+        width: 100%;
+      }
+    }
     .loader {
 
     }
@@ -591,7 +660,7 @@ form.add-project {
     background: var(--neutral, #FFF);
 
     .name {
-      width: 100px;
+      min-width: 100px;
       display: inline-block;
       color: #000;
       font-family: 'Montserrat', sans-serif;
@@ -636,6 +705,25 @@ form.add-project {
         top: 2px;
       }
 
+      &:disabled {
+        opacity: .5;
+        &::file-selector-button {
+          border-radius: 5px;
+          border: 1px solid var(--new-dark, rgb(93, 93, 93));
+          background: #FFF;
+          padding: 5px 10px;
+          color: rgb(77, 77, 77);
+          font-family: 'Montserrat', sans-serif;
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+          padding-left: 25px;
+
+        }
+
+      }
+
     }
   }
 
@@ -650,10 +738,14 @@ form.add-project {
     box-sizing: border-box;
 
     font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+
+    &:focus {
+      outline: none;
+    }
 
     &.bad {
       background-color: #fff3f3;
@@ -677,7 +769,7 @@ form.add-project {
     width: 100%;
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -692,7 +784,7 @@ form.add-project {
     padding: 10px 15px;
 
     font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-style: normal;
     height: 280px;
     font-weight: 400;
@@ -702,6 +794,10 @@ form.add-project {
     box-sizing: border-box;
 
     width: 100%;
+
+    &:focus {
+      outline: none;
+    }
 
     &::placeholder {
       opacity: .3;
@@ -819,6 +915,10 @@ form.add-project {
 
     opacity: 0.5;
     display: block;
+
+    &.description {
+      margin-bottom: 20px;
+    }
   }
 }
 .back {
@@ -840,6 +940,38 @@ form.add-project {
   }
 }
 
-@media screen and (max-width: 900px)  {
+@media screen and (max-width: 768px)  {
+  .main {
+    .row {
 
+      .sidebar {
+        display: none;
+        width: 100%;
+      }
+      .content {
+        width: 100%;
+      }
+    }
+  }
+  .form-wrapper {
+    .input-wrapper {
+      &.double {
+        flex-wrap: wrap;
+        .left, .right {
+          width: 100%;
+        }
+      }
+
+      &.triple {
+        flex-wrap: wrap;
+        justify-content: space-between;
+        .left, .middle {
+          width: 47%;
+        }
+        .right {
+          width: 100%;
+        }
+      }
+    }
+  }
 }

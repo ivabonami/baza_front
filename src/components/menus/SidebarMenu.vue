@@ -12,11 +12,10 @@
       </div>
 
       <shops-categories
-          v-on:someChanges="(emit) => { console.log('sme', emit)}"
+          v-on:someChanges="(emit) => { console.log('sibebar', emit) }"
           v-bind:is-editable="false">
 
       </shops-categories>
-
       <div class="sep"></div>
 
       <div class="sidebar-link">
@@ -108,6 +107,8 @@
       Вперед
     </button>
   </section>
+
+
 <!--  <section>-->
 <!--    <div class="donation">-->
 <!--      <div class="donation-header">-->
@@ -141,21 +142,29 @@
 <script>
 import shopsCategories from "../reusable/ShopsCategories.vue";
 import config from "../../assets/js/config.js";
+import { store } from "../../assets/js/store.js";
 
+import {watch} from "vue";
 
 export default  {
   name: "SidebarMenu.vue",
   components: {shopsCategories},
-  expose: ['increment'],
   emits: ['someChanges'],
+
+  setup() {
+
+    watch(store, (value, oldValue) => {
+
+    }, { immediate: true })
+  },
 
   mounted() {
     this.checkAdmin()
+    console.log('store: ', store.count)
+
+
   },
 
-  watch: {
-    shopsCategories
-  },
   updated() {
     this.getCategoryList();
   },
@@ -175,27 +184,31 @@ export default  {
     },
 
     getCategoryList() {
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
 
 
-      fetch(`${config.api.url}categories`, {
-        method: "GET",
-        headers: myHeaders,
-      })
-          .then((response) => response.json())
-          .then((result) => {
-            config.categories = result.categories
-          })
-          .catch((error) => {console.error(error)});
+      // TODO: loader
 
-      console.log(123, config.categories)
+      // const myHeaders = new Headers();
+      // myHeaders.append("Content-Type", "application/json");
+      //
+      //
+      // fetch(`${config.api.url}categories`, {
+      //   method: "GET",
+      //   headers: myHeaders,
+      // })
+      //     .then((response) => response.json())
+      //     .then((result) => {
+      //       store.categories = result.categories
+      //     })
+      //     .catch((error) => {console.error(error)});
+
     },
   },
   data () {
     return {
       isAdmin: false,
-      count: 0
+      count: 0,
+      store
     }
 
   },

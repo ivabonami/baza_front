@@ -1,5 +1,5 @@
 <template>
-  <h1>Добавить услугу в проект:</h1>
+  <h1>Изменить услугу:</h1>
 
   <div class="add-project form-wrapper">
     <div class="left">
@@ -61,9 +61,8 @@
 </template>
 
 <script>
-import {isAdmin} from "../../assets/js/userService.js";
 export default {
-  name: "AddService.vue",
+  name: "editService.vue",
   props: ['projectId'],
 
   data () {
@@ -75,12 +74,8 @@ export default {
       errors: {},
       addedId: 0,
       avatarError: false,
-      avatarErrorPusher: false,
-      isAdmin,
+      avatarErrorPusher: false
     }
-  },
-  mounted() {
-    console.log(isAdmin())
   },
 
   methods: {
@@ -95,7 +90,6 @@ export default {
         headers: myHeaders,
         body: JSON.stringify({
           name: this.productName,
-          isReviewed: isAdmin(),
           avatarFilePath: this.projectAvatar,
           description: this.productDescription,
           projectId: this.$props.projectId,

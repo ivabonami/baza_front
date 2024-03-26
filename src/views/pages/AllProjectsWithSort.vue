@@ -24,7 +24,7 @@
                          viewBox="0 0 15.96 8.57"><path class="b" d="M.6,8.57c-.15,0-.31-.06-.42-.18-.23-.23-.23-.61,0-.85L7.56,.17c.23-.22,.62-.22,.85,0l7.38,7.38c.23,.23,.23,.61,0,.85-.23,.24-.61,.23-.85,0L7.98,1.44,1.02,8.4c-.12,.12-.27,.18-.42,.18Z"/></svg>
 
       </span>
-      <div class="sortFilter box-shadow" v-if="this.showSort === true">
+      <div class="sortFilter box-shadow" v-if="this.showSort === true" ref="sortFilter">
         <span class="filter" :class="{active: this.activeSortName === 'Популярные'}"
               v-on:click=" () => {
                 if (this.activeSortName !== 'Популярные') {
@@ -180,10 +180,11 @@
               ref='fadeAnimate'
               v-bind:project="project"
               v-on:updated="(emit) => {
+
+                this.$refs.currentSort.scrollIntoView({ behavior: 'smooth', block: 'start'})
                 this.projects = this.projects.slice(this.projects.length, this.projects.length)
                 this.getOffset = 0
 
-                this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit)
                 this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit)
 
                }"
@@ -232,7 +233,7 @@
                        lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false)
 
                      }">
-          load more
+          Загрузить еще
         </div>
       </Waypoint>
 
@@ -343,8 +344,13 @@ export default {
     },
 
     onClickOutside (event) {
-      this.showSort = false
-      this.arrowDate = 'up'
+      if (event.target.classList[0] !== 'filter') {
+        this.showSort = false
+        this.arrowDate = 'up'
+      } else {
+
+      }
+
     },
     handleScroll () {
 
@@ -394,7 +400,8 @@ export default {
                 this.projects.push(project)
                 console.log( this.$refs.fadeAnimate )
               }
-              console.log(result.projects)
+
+
 
               result.projects.length < this.getLimit ? this.emptyResponse = true : this.emptyResponse = false
 
@@ -610,7 +617,7 @@ export default {
   }
   .searchQ {
     position: absolute;
-    right: 10px;
+    right: 9px;
     cursor: pointer;
     width: 20px;
     top: 8px;
@@ -660,11 +667,12 @@ export default {
   transition: max-height 3.25s ease;
 
   .projectsList {
+    width: 100%;
     transition: .3s ease;
   }
 }
 
-@media screen and (max-width: 500px)  {
+@media screen and (max-width: 768px)  {
   .projects-wrapper {
     display: flex;
 
@@ -673,15 +681,17 @@ export default {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    width: 100%;
+    justify-content: center;
 
     .project {
-      width: 100%;
+      width: 48%;
     }
   }
   .buttons {
     .btns {
       .currentSort {
-        width: 160px;
+        width: 165px;
         font-size: 12px;
       }
       .sortFilter {
