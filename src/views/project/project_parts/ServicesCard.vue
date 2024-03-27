@@ -1,10 +1,9 @@
 <template>
-  <div class="service-card box-shadow" v-if="$props.name !== ''" :class="{
+  <div class="service-card box-shadow can-be-hovered" v-if="$props.name !== ''" :class="{
           deleted: this.toDelete,
           highlight: highlight,
-          hoverable: $props.clickable,
           editable: this.editable,
-          notNormal: !$props.clickable
+
         }"
         v-on:mouseover="() => {
           highlight = false
@@ -226,7 +225,7 @@ export default {
     font-family: "Montserrat", "Arial", Serif;
   }
 
-  &.hoverable {
+  &.can-be-hovered {
     cursor: pointer;
     transition: .3s ease;
 

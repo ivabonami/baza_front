@@ -26,11 +26,11 @@
           <div class="avatar">
             <figure class="cover">
               <img :src="'http://62.113.96.171:3000/' + this.project.avatarFilePath"
-                   alt="" class="hoverable"
+                   alt="" class="can-be-hovered"
                    v-if="this.project.avatarFilePath !== ''">
 
               <img src="/src/assets/images/avatar.webp"
-                   alt="" class="hoverable"
+                   alt="" class="can-be-hovered"
                    v-else>
             </figure>
             <div class="favorite"
@@ -215,9 +215,23 @@
                         v-bind:projectId="item.ProjectId"
                         v-bind:isOwner="isOwner || isAdmin"
                         v-bind:clickable="false"
-                        v-bind:description="item.description"
+
                         v-on:editService="(emit) => {
                           this.tab = 'editService'
+                        }"
+                        v-on:click="() => {
+                          this.showModal = true
+                          this.modal= {
+                            iconType: 'service',
+                            large: true,
+                            image: `${config.api.url}${item.avatarFilePath}`,
+                            heading: item.name,
+                            description: item.description,
+                            descriptionType: 'text',
+                            exit: true,
+                            close: false,
+                            confirm: false
+                          }
                         }"
 
                     >
@@ -353,6 +367,8 @@
       v-bind:heading="this.modal.heading"
       v-bind:description="this.modal.description"
       v-bind:close="this.modal.close"
+      v-bind:image="this.modal.image || null"
+      v-bind:large="this.modal.large || false"
       v-bind:confirmAction="this.modal.confirm"
       v-bind:exit="this.modal.exit"
       ref="modal"

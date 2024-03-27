@@ -1,5 +1,5 @@
 <template>
-  <div class="modal box-shadow" ref="modal">
+  <div class="modal box-shadow" ref="modal" :class="{large: this.$props.large}">
     <div class="modal-header">
       <div class="icon">
         <Vue3Lottie :animationData="user" :height="120" :width="120" :loop="1" v-if="$props.iconType === 'user'" />
@@ -8,12 +8,16 @@
 
 
       </div>
-      <div class="close"
+      <div class="close box-shadow"
            ref="modalBackdrop"
            @click="$emit('changeModal', false)">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path d="M1 1L23.1778 23.1778M23.1778 1L1 23.1778" stroke="black"/>
         </svg>
+      </div>
+
+      <div class="image" v-if="this.$props.image !== null">
+        <img :src="this.$props.image" alt="">
       </div>
 
 
@@ -104,7 +108,7 @@ export default {
   name: "ModalWindowBackdrop.vue",
   components: {signInView, Vue3Lottie},
 
-  props: ['close', 'iconType', 'exit', 'heading', 'descriptionType', "description", "show", 'confirmAction', 'textApprove', 'tab'],
+  props: ['close', 'large', 'image', 'iconType', 'exit', 'heading', 'descriptionType', "description", "show", 'confirmAction', 'textApprove', 'tab'],
   emits: ['close'],
 
   data (props) {
@@ -198,10 +202,28 @@ export default {
   transition: all .3s ease, height 1s;
   transform: translate(-50%, -50%);
 
+  &.large {
+    width: 75%;
+    max-width: 500px;
+    .h2 {
+      text-align: left;
+    }
+
+    .modal-body {
+      text-align: left;
+    }
+  }
+
   .modal-header {
     display: flex;
     width: 100%;
     justify-content: center;
+    .image {
+      width: 100%;
+      img {
+        width: 100%;
+      }
+    }
 
     .icon {
       svg {
@@ -212,13 +234,25 @@ export default {
   }
   .close {
     position: absolute;
-    right: 20px;
+    right: -20px;
     cursor: pointer;
-    top: 20px;
+    top: -16px;
+    background-color: #fff;
+    padding: 14px 15px;
+    margin-bottom: 0;
+    border-radius: 50px;
+
+    svg {
+      top: 2px;
+      position: relative;
+      width: 20px;
+      height: 20px;
+    }
+
   }
   .h2 {
     color: #000;
-
+    word-wrap: break-word;
     font-family: 'Montserrat', sans-serif;
     font-size: 18px;
     font-style: normal;
@@ -230,6 +264,7 @@ export default {
     margin-top: 20px;
     .text {
       color: #000;
+      word-wrap: break-word;
       font-family: 'Montserrat', sans-serif;
       font-size: 14px;
       font-style: normal;

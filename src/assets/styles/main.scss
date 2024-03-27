@@ -942,7 +942,31 @@ button.back {
     }
   }
 }
+@media screen and (max-width: 1080px) {
+  .main {
+    .row {
+      .content {
+        width: 72%;
+      }
+      .sidebar {
+        padding: 10px;
+        section {
 
+        }
+      }
+    }
+  }
+
+  .sidebar-links {
+    .sidebar-link {
+      a {
+        padding: 5px;
+      }
+    }
+  }
+
+
+}
 @media screen and (max-width: 768px)  {
   .main {
     .row {

@@ -321,6 +321,7 @@ export default {
   width: 100%;
   background-color: #ffffff;
   border-radius: 30px;
+  box-sizing: border-box;
   padding: 20px;
   .logo {
     display: flex;
@@ -374,13 +375,14 @@ export default {
     gap: 20px;
     justify-content: space-between;
     width: 100%;
+    box-sizing: border-box;
 
     .friend {
       transition: .3s ease;
       opacity: .5;
       cursor: pointer;
       svg {
-        width: 150px;
+        width: 100%;
       }
       &:hover {
         opacity: 1;

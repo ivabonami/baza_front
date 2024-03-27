@@ -814,6 +814,17 @@ button.back svg {
   transform: translateX(-2px);
 }
 
+@media screen and (max-width: 1080px) {
+  .main .row .content {
+    width: 72%;
+  }
+  .main .row .sidebar {
+    padding: 10px;
+  }
+  .sidebar-links .sidebar-link a {
+    padding: 5px;
+  }
+}
 @media screen and (max-width: 768px) {
   .main .row .sidebar {
     display: none;
