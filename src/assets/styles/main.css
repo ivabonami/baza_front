@@ -55,9 +55,10 @@ body {
 
 .main .row {
   gap: 30px;
-  align-items: start;
+  align-items: stretch;
   margin-top: 30px;
   justify-content: space-between;
+  position: relative;
 }
 .main .row .sidebar section {
   border-radius: 15px;
@@ -67,6 +68,7 @@ body {
 .main .row .sidebar {
   width: 20%;
   flex-wrap: wrap;
+  height: auto;
 }
 .main .row .sidebar section {
   width: 100%;

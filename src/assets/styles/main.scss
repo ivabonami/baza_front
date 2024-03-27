@@ -54,9 +54,10 @@ body {
 .main {
   .row {
     gap: 30px;
-    align-items: start;
+    align-items: stretch;
     margin-top: 30px;
     justify-content: space-between;
+    position: relative;
 
 
     .sidebar section {
@@ -68,6 +69,8 @@ body {
     .sidebar {
       width: 20%;
       flex-wrap: wrap;
+      height: auto;
+
 
 
       section {

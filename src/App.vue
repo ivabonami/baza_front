@@ -13,11 +13,23 @@ export default {
     return {
       isLoaded: false,
       isAdmin: false,
+      showScrollTopButton: false,
       userInfo, refreshToken
 
     }
   },
+  methods: {
+    scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'});
+    },
+    handleScroll() {
+      window.scrollY > 200 ? this.showScrollTopButton = true : this.showScrollTopButton = false
+    }
+  },
   mounted() {
+    window.addEventListener('scroll', this.handleScroll);
     document.querySelector('.preloader').style.display = 'none'
     this.isLoaded = true
 
@@ -115,12 +127,43 @@ export default {
         <footer-view></footer-view>
       </div>
     </footer>
+    <div class="scroll-to-top" v-if="showScrollTopButton === true" ref="scrollToTop">
+      <svg id="a" xmlns="http://www.w3.org/2000/svg" class="arrow"  v-on:click="scrollToTop()"
+           viewBox="0 0 15.96 8.57"><path class="b" d="M.6,8.57c-.15,0-.31-.06-.42-.18-.23-.23-.23-.61,0-.85L7.56,.17c.23-.22,.62-.22,.85,0l7.38,7.38c.23,.23,.23,.61,0,.85-.23,.24-.61,.23-.85,0L7.98,1.44,1.02,8.4c-.12,.12-.27,.18-.42,.18Z"/></svg>
 
+    </div>
   </div>
+
 
 
 </template>
 
 <style scoped lang="scss">
+.scroll-to-top {
 
+  padding: 1em;
+  max-width: 1440px;
+  max-width: 94%;
+  margin: 0 auto 20px;
+  display: flex;
+  justify-content: end;
+  box-sizing: border-box;
+  right: 0;
+  position: sticky;
+  top: 20px;
+  bottom: 20px;
+  transition: .3s ease;
+
+  svg {
+    background-color: #0a58ca;
+    padding: 10px;
+    border-radius: 40px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    path {
+      fill: #ffffff;
+    }
+  }
+}
 </style>
