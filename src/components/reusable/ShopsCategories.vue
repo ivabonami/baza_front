@@ -410,4 +410,43 @@ input.name {
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+
+
+
+  .category-list {
+    flex-wrap: wrap;
+    width: 100%;
+    display: block;
+
+    .sidebar-link {
+      width: 100%;
+      margin-top: 20px;
+      margin-bottom: 0;
+
+      align-items: center;
+
+      .name {
+        width: 90%;
+        line-height: 2;
+      }
+      .icons {
+        .edit, .delete {
+          width: 40px;
+          height: 40px;
+          svg {
+            width: 35px;
+            height: 35px;
+            left: 0;
+            margin-left: 20px;
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+
+
+}
 </style>

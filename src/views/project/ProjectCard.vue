@@ -699,7 +699,7 @@ export default {
       display: flex;
       width: 100%;
       justify-content: space-between;
-      align-items: center;
+      align-items: start;
 
 
       .name {
@@ -745,6 +745,8 @@ export default {
             justify-content: end;
             display: flex;
             align-items: center;
+            position: relative;
+            top: -5px;
             svg {
 
               width: 22px;

@@ -1,10 +1,9 @@
 import {createRouter, createWebHistory} from "vue-router";
-import HomeView from "../../views/pages/HomeView.vue";
+
 import GuaranteeView from "../../views/pages/GuaranteeView.vue";
 import AdvertisementView from "../../views/pages/AdvertisementView.vue";
 import AboutProjectView from "../../views/pages/AboutProjectView.vue";
 import ContactsView from "../../views/pages/ContactsView.vue";
-
 import ProjectsView from "../../views/project/ProjectsView.vue";
 import ServicesCard from "../../views/project/project_parts/ServicesCard.vue";
 import ProjectDescription from "../../views/project/ProjectDescription.vue";
