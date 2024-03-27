@@ -159,8 +159,6 @@
       v-bind:confirmAction="true"
 
       v-on:confirmAction="(emitConfirmAction) => {
-        console.log(emitConfirmAction)
-        console.log(category)
         if (emitConfirmAction === true) {
           deleteCategory(category.id)
           this.getCategories()
@@ -177,12 +175,12 @@
 </template>
 
 <script>
-import modalWindowBackdrop from "../../components/page components/ModalWindowBackdrop.vue";
+import modalWindowBackdrop from "../../TemplateParts/Page Parts/Modal.vue";
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
-import config from "../../assets/js/config.js";
+import config from "../../../assets/js/config.js";
 import {reactive, watch} from "vue";
-import {store} from "../../assets/js/store.js";
+import {store} from "../../../assets/js/store.js";
 
 
 

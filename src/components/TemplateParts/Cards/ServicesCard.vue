@@ -114,15 +114,12 @@ export default {
   mounted() {
     this.projectName = this.$props.name
     this.projectDescription = this.$props.description
-    console.log('clicked: ', highlight.id)
     highlight.id === this.$props.id ? this.highlighted = true : this.highlighted = false
 
   },
   methods: {
     checkForm () {
       this.errors = []
-
-      console.log(this.$refs)
 
       if (this.projectName.length < 5) {
         this.errors.push('Название услуги должно быть не менее 5 символов')

@@ -262,7 +262,7 @@
                 if (way.going === 'IN' && way.direction === 'UP' && emptyResponse === false) {
                   lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false)
                 }
-                console.log(way)
+
               }">
         <div class="loadmore btn btn-outlined" ref="loadmore"
              v-if="emptyResponse === false && backendNoProjects === false"
@@ -292,15 +292,15 @@
 </template>
 
 <script>
-import recommended from "../../components/page components/Recommended.vue";
-import projectCard from "../project/ProjectCard.vue";
+import recommended from "../TemplateParts/Page Parts/FreshAndRecommendedProduct.vue";
+import projectCard from "../TemplateParts/Cards/ProjectCard.vue";
 import { ref, defineComponent } from "vue";
 import { Waypoint } from "vue-waypoint";
 import vClickOutside from 'click-outside-vue3'
 import AnimateHeight from 'vue-animate-height';
 
 import 'vue-loading-overlay/dist/css/index.css';
-import loader from "../../components/reusable/loader.vue";
+import loader from "../TemplateParts/Page Parts/Loader.vue";
 import {store} from "../../assets/js/store.js";
 import config from "../../assets/js/config.js";
 
@@ -406,9 +406,6 @@ export default {
     },
     handleScroll () {
 
-      if (this.$refs.loadmore.getBoundingClientRect().bottom < window.innerHeight) {
-        console.log('ref: ', this.$refs.loadmore)
-      }
 
     },
     lazyProjectLoad (sort, offset, limit) {
@@ -417,7 +414,6 @@ export default {
       myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
 
       const category = [parseInt(this.$route.path.replace('/projects-list/', ''))]
-      console.log('category:', category)
 
 
       let url = `${config.api.url}projects?isPayedFirst=true&sort=${sort}&offset=${offset}&limit=${limit}`
@@ -441,12 +437,11 @@ export default {
           .then((response) => response.json())
           .then((result) => {
             result.projects.length === 0 && offset === 0 ? this.backendNoProjects = true : this.backendNoProjects = false
-            console.log('no projects: ', this.backendNoProjects, result.projects.length)
 
             if (this.$route.path === '/') {
               for (let project of result.projects) {
                 this.projects.push(project)
-                console.log( this.$refs.fadeAnimate )
+
               }
 
 
@@ -457,9 +452,9 @@ export default {
 
               for (let project of result.projects) {
                 this.projects.push(project)
-                console.log( this.$refs.fadeAnimate )
+
               }
-              console.log(result.projects)
+
               result.projects.length < limit ? this.emptyResponse = true : this.emptyResponse = false
             }
 

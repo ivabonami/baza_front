@@ -1,13 +1,14 @@
 <template>
-  <h3>Добавить услугу в проект:</h3>
+  <h1>Изменить услугу:</h1>
 
   <div class="add-project form-wrapper">
     <div class="left">
       <div class="input-wrapper">
+        <div class="field-name">Название услуги</div>
         <input
             type="text"
             placeholder="Название проекта"
-            v-model="productName"
+            v-model="product.name"
             minlength="5" maxlength="255"
             ref="productName"
             required>
@@ -18,8 +19,8 @@
 
 
       <div class="input-wrapper">
+        <div class="field-name">Изображение услуги</div>
         <div class="fake-input">
-          <span class="name">Изображение *</span>
           <input type="file"
                  ref="projectAvatar"
                  v-on:change="uploadAvatar($event)"
@@ -28,23 +29,26 @@
           >
         </div>
         <span class="help">
-          Загрузите изображение услуги, размеры 230x170px, форматы: jpeg, jpg, gif. webp
+          Загрузите изображение услуги, размеры 230x170px, форматы: jpeg, jpg, gif. webp. Старое изображение будет удалено.
         </span>
       </div>
-
-      <textarea placeholder="описание проекта *"
-                required
-                ref="productDescription"
-                maxlength="65535"
-                v-model="productDescription"></textarea>
-      <span class="help">
+      <div class="input-wrapper">
+        <div class="field-name">Описание услуги</div>
+        <textarea
+            required
+            ref="productDescription"
+            maxlength="65535"
+            v-model="product.description"></textarea>
+        <span class="help">
         Предоставьте подробное описание услуги, включая еу цель, описание продаваемого товара, что бы пользователь точно понимал что он покупает.
       </span>
+      </div>
+
 
 
       <button class="btn btn-filled"
               v-on:click="checkForm()">
-        Добавить услугу
+        Обновить услугу
       </button>
 
     </div>
@@ -58,29 +62,48 @@
     </div>
 
   </div>
+
+  <modal-window-backdrop
+      v-if="showModal === true"
+      v-on:changeModal="(emitShowModal) => {
+        this.$emit('updated', product.id)
+        this.showModal = emitShowModal
+      }"
+      v-bind:icon-type="this.modal.iconType"
+      v-bind:descriptionType="this.modal.descriptionType"
+      v-bind:heading="this.modal.heading"
+      v-bind:description="this.modal.description"
+      v-bind:close="this.modal.close"
+      v-bind:exit="this.modal.exit"
+      ref="modal"
+      tabindex="0"
+
+  >
+
+  </modal-window-backdrop>
 </template>
 
 <script>
-import {isAdmin} from "../../assets/js/userService.js";
+import config from "../../../assets/js/config.js";
+import modalWindowBackdrop from "../../TemplateParts/Page Parts/Modal.vue";
 export default {
-  name: "AddService.vue",
-  props: ['projectId'],
-
+  name: "editService.vue",
+  props: ['product'],
+  components: {modalWindowBackdrop},
   data () {
     return {
-      productDescription: '',
-      projectAvatar: '',
-      productName: '',
+      modal: {},
+      showModal: false,
+      product: this.$props.product,
       counter: 0,
       errors: {},
-      addedId: 0,
       avatarError: false,
-      avatarErrorPusher: false,
-      isAdmin,
+      avatarErrorPusher: false
     }
   },
+
   mounted() {
-    console.log(isAdmin())
+
   },
 
   methods: {
@@ -90,30 +113,36 @@ export default {
       myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
       this.counter++
 
-      fetch(`http://62.113.96.171:3000/products`, {
-        method: "POST",
+      fetch(`${config.api.url}products/${this.$props.product.id}`, {
+        method: "PUT",
         headers: myHeaders,
         body: JSON.stringify({
-          name: this.productName,
-          isReviewed: isAdmin(),
-          avatarFilePath: this.projectAvatar,
-          description: this.productDescription,
-          projectId: this.$props.projectId,
+          name: this.product.name,
+          avatarFilePath: this.product.image,
+          description: this.product.description,
 
         })
       })
           .then((response) => response.json())
           .then(response => {
             if (response.success === true) {
-              console.log(response)
 
               this.counter++
-              this.$emit('added',this.counter )
+              this.showModal = true
+              this.modal = {
+                iconType: 'ok',
+                heading: 'Услуга успешно обновлена!',
+                description: `Спасибо!`,
+                descriptionType: 'text',
+                exit: true,
+                close: true,
+                confirm: false
+
+              }
 
             }
             else {
               this.errors.push(response.message)
-              console.log(response)
             }
           })
           .catch((error) => {console.error(error)});
@@ -125,9 +154,7 @@ export default {
       this.projectAvatar = e.target;
       const image = e.target.files[0]
 
-      console.log(this.$refs.projectAvatar.parentElement)
 
-      console.log(image)
       const myHeaders = new Headers();
       // myHeaders.append("Content-Type", "image/webp");
       myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
@@ -140,7 +167,6 @@ export default {
           e.target.files[0].type !== "image/png" &&
           e.target.files[0].type !== "image/webp") {
         this.avatarError = true
-        console.log( e.target.files[0].type)
         if (this.avatarError === true && this.avatarErrorPushed === false) {
           this.errors.push('Формат артинки не поддерживается')
           this.avatarErrorPushed = true
@@ -167,7 +193,7 @@ export default {
 
     checkForm () {
 
-      if (this.productName.length < 4) {
+      if (this.product.name.length < 4) {
         this.errors.serviceNameErr = 'Название услуги должно быть не менее 4 символов'
         this.$refs.productName.style.borderColor = 'red'
       } else {
@@ -175,7 +201,7 @@ export default {
         this.$refs.productName.style.borderColor = 'rgb(0, 115, 236)'
       }
 
-      if (this.productDescription.length < 30) {
+      if (this.product.description.length < 30) {
         this.errors.serviceDescriptionErr = 'Описание услуги должно быть не менее 30 символов'
         this.$refs.productDescription.style.borderColor = 'red'
       } else {
@@ -183,7 +209,7 @@ export default {
         this.$refs.productDescription.style.borderColor = 'rgb(0, 115, 236)'
       }
 
-      if (this.projectAvatar.length === 0) {
+      if (this.product.image.length === 0) {
         this.errors.serviceImageErr = 'Изображение не загружено'
         this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
       } else {

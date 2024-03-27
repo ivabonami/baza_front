@@ -92,7 +92,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$props.tab)
+
     this.$props.tab === 'signup' ? this.state = 'signUp' : this.state = 'signIn'
   },
 
@@ -134,7 +134,6 @@ export default {
                   break;
               }
 
-              console.log(result)
 
             } else {
               localStorage.setItem('token', result.token)
@@ -150,14 +149,12 @@ export default {
 
           })
           .catch((error) => {
-            console.log('messageE:', error.message)
+            console.error(error.message)
           });
 
     },
     checkForm () {
       this.errors = []
-
-      console.log(this.$refs)
 
       if (this.projectName.length < 5) {
         this.errors.push('Название услуги должно быть не менее 5 символов')
@@ -233,13 +230,13 @@ export default {
 
                     })
                     .catch((error) => {
-                      console.log('messageE:', error.message)
+                      console.error(error.message)
                     });
               }
 
             })
             .catch((error) => {
-              console.log('messageE:', error.message)
+              console.error(error.message)
             });
       }
 

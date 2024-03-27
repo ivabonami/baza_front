@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import projectCard from "./ProjectCard.vue";
+import projectCard from "../TemplateParts/Cards/ProjectCard.vue";
 export default {
   name: "checkProjects.vue",
   data() {

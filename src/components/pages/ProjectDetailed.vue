@@ -317,7 +317,7 @@
                     this.offset = 0
                     this.products = this.products.splice(this.products.length, this.products.length)
                     this.getProducts(6, 0)
-                    
+
 
                     this.showModal = true
                     this.modal = {
@@ -417,16 +417,16 @@
 
 </template>
 <script>
-import servicesCard from "./project_parts/ServicesCard.vue";
+import servicesCard from "../TemplateParts/Cards/ServicesCard.vue";
 import { ref } from 'vue'
-import AddService from "../addItems/AddService.vue";
+import AddService from "../Controllers/ProductControllers/ProductController_Add.vue";
 import config from '../../assets/js/config.js'
 import { isLogin } from '../../assets/js/config.js'
-import projectDescriptionTab from "./project_parts/projectDescriptionTab.vue";
-import projectReviews from "./project_parts/projectReviews.vue";
-import editProject from "../addItems/editProject.vue";
-import editService from "../addItems/editService.vue";
-import modalWindowBackdrop from "../../components/page components/ModalWindowBackdrop.vue";
+import projectDescriptionTab from "../TemplateParts/Project Tabs/DescriptionTab.vue";
+import projectReviews from "../TemplateParts/Project Tabs/ReviewsTab.vue";
+import editProject from "../Controllers/ProjectControllers/ProjectController_Edit.vue";
+import editService from "../Controllers/ProductControllers/ProductController_Edit.vue";
+import modalWindowBackdrop from "../TemplateParts/Page Parts/Modal.vue";
 import {Waypoint} from "vue-waypoint";
 
 export default {
@@ -596,7 +596,6 @@ export default {
           .then((result) => {
             for (let product of result.products) {
               this.products.push(product)
-              console.log( this.$refs.fadeAnimate )
             }
             result.products.length < this.limit ? this.emptyResponse = true : this.emptyResponse = false
             if(this.products.length <= 0) {
@@ -637,7 +636,6 @@ export default {
             }
             for (let category of this.project.categories) {
               if (category.allowShopfront === false) {
-                console.log('123', false)
                 this.allowShopFront = false
                 break
               } else {

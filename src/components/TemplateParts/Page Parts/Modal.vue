@@ -100,7 +100,7 @@
 </template>
 
 <script>
-import signInView from "../../views/pages/SignInView.vue";
+import signInView from "../Auth.vue";
 import { Vue3Lottie } from 'vue3-lottie'
 import ok from '/src/assets/lottie/ok.json'
 import warning from '/src/assets/lottie/warning.json'
@@ -135,7 +135,7 @@ export default {
 
     window.addEventListener("keydown", (e) => {
       {
-        // console.log('keydown', event.key)
+
         if(event.key === 'Escape'){
           this.$emit('changeModal', false)
         }

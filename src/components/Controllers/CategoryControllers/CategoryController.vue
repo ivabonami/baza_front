@@ -28,7 +28,7 @@
       </div>
 
       <button class="btn btn-submit"
-      v-on:click="addCategory()">
+      v-on:click="CategoryController()">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
           <path d="M7.69655 17V0H10.3034V17H7.69655ZM0 9.70283V7.33727H18V9.70283H0Z" fill="white"/>
         </svg>
@@ -47,7 +47,7 @@
       <div class="category-list">
 
         <shops-categories
-            v-on:someChanges="(emit) => { console.log('ace', emit) }"
+            v-on:someChanges="(emit) => {  }"
             v-bind:is-editable="true">
 
         </shops-categories>
@@ -103,11 +103,11 @@
 </template>
 
 <script>
-import modalWindowBackdrop from "../../components/page components/ModalWindowBackdrop.vue";
-import shopsCategories from "../../components/reusable/ShopsCategories.vue";
-import config from "../../assets/js/config.js";
+import modalWindowBackdrop from "../../TemplateParts/Page Parts/Modal.vue";
+import shopsCategories from "./AllCategories.vue";
+import config from "../../../assets/js/config.js";
 import 'vue-loading-overlay/dist/css/index.css';
-import { store } from "../../assets/js/store.js";
+import {store} from "../../../assets/js/store.js";
 
 export default {
   name: "addCategory.vue",
@@ -132,8 +132,7 @@ export default {
   },
   mounted() {
     this.isLoading = false
-    console.log(store)
-    console.log(config.token)
+
   },
   created() {
     this.isLoading = true
@@ -147,8 +146,6 @@ export default {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Authorization", `Bearer ${config.token}`);
-
-      console.log(config.api.url)
 
       const newCategory = {
         name: this.categoryName,

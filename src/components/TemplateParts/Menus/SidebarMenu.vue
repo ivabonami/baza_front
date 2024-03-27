@@ -12,7 +12,7 @@
       </div>
 
       <shops-categories
-          v-on:someChanges="(emit) => { console.log('sibebar', emit) }"
+          v-on:someChanges="(emit) => {  }"
           v-bind:is-editable="false">
 
       </shops-categories>
@@ -139,9 +139,9 @@
 </template>
 
 <script>
-import shopsCategories from "../reusable/ShopsCategories.vue";
-import config from "../../assets/js/config.js";
-import { store } from "../../assets/js/store.js";
+import shopsCategories from "../../Controllers/CategoryControllers/AllCategories.vue";
+import config from "../../../assets/js/config.js";
+import { store } from "../../../assets/js/store.js";
 
 import {watch} from "vue";
 
@@ -159,9 +159,6 @@ export default  {
 
   mounted() {
     this.checkAdmin()
-    console.log('store: ', store.count)
-
-
   },
 
   updated() {

@@ -83,10 +83,10 @@
 </template>
 
 <script>
-import modalWindowBackdrop from "../page components/ModalWindowBackdrop.vue";
-import {signOut, userInfo, refreshToken} from "../../assets/js/userService.js";
+import modalWindowBackdrop from "../Page Parts/Modal.vue";
+import {signOut, userInfo, refreshToken} from "../../../assets/js/userService.js";
 import {watch} from "vue";
-import {store} from "../../assets/js/store.js";
+import {store} from "../../../assets/js/store.js";
 export default {
   name: "TopMenu.vue",
   components: { modalWindowBackdrop },

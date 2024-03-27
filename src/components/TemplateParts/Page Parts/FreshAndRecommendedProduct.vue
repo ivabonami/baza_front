@@ -57,9 +57,9 @@
 
 <script>
 import { ref } from 'vue'
-import servicesCard from "../../views/project/project_parts/ServicesCard.vue";
-import loader from "../reusable/loader.vue";
-import config from "../../assets/js/config.js";
+import servicesCard from "../Cards/ServicesCard.vue";
+import loader from "./Loader.vue";
+import config from "../../../assets/js/config.js";
 
 
 export default {
@@ -94,7 +94,7 @@ export default {
         headers: myHeaders,
       };
 
-      fetch(`http://62.113.96.171:3000/products?limit=4&sort=${sort}`, requestOptions)
+      fetch(`${config.api.url}products?limit=4&sort=${sort}`, requestOptions)
           .then((response) => response.json())
           .then((result) => {
             for (let product of result.products) {

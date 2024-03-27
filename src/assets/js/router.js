@@ -1,17 +1,16 @@
 import {createRouter, createWebHistory} from "vue-router";
 
-import GuaranteeView from "../../views/pages/GuaranteeView.vue";
-import AdvertisementView from "../../views/pages/AdvertisementView.vue";
-import AboutProjectView from "../../views/pages/AboutProjectView.vue";
-import ContactsView from "../../views/pages/ContactsView.vue";
-import ProjectsView from "../../views/project/ProjectsView.vue";
-import ServicesCard from "../../views/project/project_parts/ServicesCard.vue";
-import ProjectDescription from "../../views/project/ProjectDescription.vue";
-import addProject from "../../views/addItems/AddProject.vue";
-import addService from "../../views/addItems/AddService.vue";
-import addCategory from "../../views/addItems/addCategory.vue";
-import allProjectsWithSort from "../../views/pages/AllProjectsWithSort.vue";
-import checkProjects from "../../views/project/checkProjects.vue";
+import GuaranteeView from "../../components/pages/Guarantee.vue";
+import AdvertisementView from "../../components/pages/Advertisement.vue";
+import AboutProjectView from "../../components/pages/About.vue";
+import ContactsView from "../../components/pages/Contacts.vue";
+import ProjectsView from "../../components/pages/ProjectDetailed.vue";
+import ServicesCard from "../../components/TemplateParts/Cards/ServicesCard.vue";
+import addProject from "../../components/Controllers/ProjectControllers/ProjectController_Add.vue";
+import addService from "../../components/Controllers/ProductControllers/ProductController_Add.vue";
+import addCategory from "../../components/Controllers/CategoryControllers/CategoryController.vue";
+import allProjectsWithSort from "../../components/pages/Projects.vue";
+import checkProjects from "../../components/pages/CheckProjects.vue";
 
 const router = createRouter({
     scrollBehavior() {
@@ -61,9 +60,6 @@ const router = createRouter({
                 {
                     path: 'services',
                     component: ServicesCard
-                },{
-                    path: 'description',
-                    component: ProjectDescription
                 },{
                     path: 'add-service',
                     component: addService

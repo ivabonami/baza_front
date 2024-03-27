@@ -222,7 +222,7 @@
       v-bind:descriptionType="'text'"
       v-bind:confirmAction="true"
       v-on:confirmAction="(emitConfirmAction) => {
-                console.log(emitConfirmAction)
+
                 if (emitConfirmAction === true) {
                   deleteProject($props.project.id)
 
@@ -260,8 +260,8 @@
 </template>
 
 <script>
-import ProjectsView from "./ProjectsView.vue";
-import modalWindowBackdrop from "../../components/page components/ModalWindowBackdrop.vue";
+import ProjectsView from "../../pages/ProjectDetailed.vue";
+import modalWindowBackdrop from "../Page Parts/Modal.vue";
 import { onClickOutside } from '@vueuse/core'
 import { ref } from "vue";
 
@@ -333,7 +333,7 @@ export default {
         )
       })
           .then((response) => response.json())
-          .then((res) => { console.log(res) })
+          .then((res) => { res })
           .catch((error) => {console.error(error)});
     },
 

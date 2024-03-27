@@ -1,9 +1,9 @@
 <script>
-import SidebarMenu from "./components/menus/SidebarMenu.vue";
-import TopMenu from "./components/menus/TopMenu.vue";
-import FooterView from "./components/page components/FooterView.vue";
-import recommended from "./components/page components/Recommended.vue";
-import addCategory from "./views/addItems/addCategory.vue";
+import SidebarMenu from "./components/TemplateParts/Menus/SidebarMenu.vue";
+import TopMenu from "./components/TemplateParts/Menus/TopMenu.vue";
+import FooterView from "./components/TemplateParts/Page Parts/Footer.vue";
+import recommended from "./components/TemplateParts/Page Parts/FreshAndRecommendedProduct.vue";
+import addCategory from "./components/Controllers/CategoryControllers/CategoryController.vue";
 
 import {userInfo, refreshToken} from "./assets/js/userService.js";
 
@@ -39,7 +39,6 @@ export default {
 
     if (userInfo.expired - 3000 < Math.floor(Date.now() / 1000) && localStorage.getItem('role' !== '')) {
       refreshToken()
-      console.log('token updated')
     } else {
 
     }
@@ -97,7 +96,7 @@ export default {
           <keep-alive>
             <sidebar-menu
                 ref="sidebar"
-                v-on:someChanges="(emit) => { console.log('sme', emit)}">
+                v-on:someChanges="(emit) => { }">
 
             </sidebar-menu>
           </keep-alive>

@@ -300,7 +300,6 @@
                             this.offset += this.limit
 
                             getReviews(this.limit, this.offset, this.sort, this.showNotReviewed)
-                            console.log('emptyResponse', emptyResponse)
                           }
                         }"
                   v-if="emptyResponse === false">
@@ -646,8 +645,8 @@
 <script>
 import config from "../../../assets/js/config.js";
 import {ref} from "vue";
-import loader from "../../../components/reusable/loader.vue";
-import ModalWindowBackdrop from "../../../components/page components/ModalWindowBackdrop.vue";
+import loader from "../Page Parts/Loader.vue";
+import ModalWindowBackdrop from "../Page Parts/Modal.vue";
 import {isLogin} from "../../../assets/js/config.js";
 import vClickOutside from 'click-outside-vue3'
 import {Waypoint} from "vue-waypoint";
@@ -1007,7 +1006,7 @@ export default {
 
           })
           .catch((error) => {
-            console.log(error)
+            console.error(error)
           });
 
 
@@ -1058,7 +1057,7 @@ export default {
 
           })
           .catch((error) => {
-            console.log(error)
+            console.error(error)
           });
 
 
@@ -1102,19 +1101,19 @@ export default {
             }
             else {
               this.reviewTextError = 'Вы заполнили не все поля, или заполнили их не правильно. Пожалуйста проверьте правильность введенных данных'
-              console.log(result)
+
             }
 
           })
           .catch((error) => {
-            console.log('reerreer')
+            console.error(error)
           });
 
 
 
     },
     onClickOutside (event) {
-      console.log(event.target)
+
       if (event.target.classList[0] !== 'filter') {
         this.showSort = false
         this.arrowDate = 'up'
