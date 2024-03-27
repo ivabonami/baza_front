@@ -16,7 +16,7 @@
         </svg>
       </div>
 
-      <div class="image" v-if="this.$props.image !== null">
+      <div class="image" v-if="this.$props.image">
         <img :src="this.$props.image" alt="">
       </div>
 

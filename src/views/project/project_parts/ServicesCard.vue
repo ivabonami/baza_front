@@ -37,17 +37,16 @@
         {{ $props.description }}
       </p>
       <div class="" v-else>
-        <textarea type="text" v-model="projectDescription" ref="projectDescription"></textarea>
+        <textarea v-model="projectDescription" ref="projectDescription"></textarea>
 
       </div>
     </div>
 
     <button class="btn btn-delete"
             v-if="$props.isOwner === true"
+            v-on:click.stop
             v-on:click="() => {
-              this.toDelete = true
-              this.counter++
-              this.$emit('updated', $props.id)
+              this.$emit('deleteService', $props.id)
 
             }">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="19" viewBox="0 0 16 19" fill="none">
@@ -60,6 +59,7 @@
 
     <button class="btn btn-edit"
             v-if="$props.isOwner === true"
+            v-on:click.stop
             v-on:click="() => {
               this.$emit('editService', true)
 

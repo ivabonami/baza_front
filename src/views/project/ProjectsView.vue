@@ -93,7 +93,7 @@
         <div class="tabs-links">
           <div class="left">
             <button
-                v-if="this.products.length > 0"
+                v-if="this.allowShopFront === true"
                 v-on:click="switchTabs('services')"
                 class="fresh" ref="services"
                 :class="{
@@ -166,7 +166,13 @@
                    v-if="this.tab === 'editService'">
 
                 <edit-service
-                v-bind="this.service">
+                v-bind:product="this.editProduct"
+
+                v-on:updated="(emit) => {
+                      this.tab = 'services'
+                      this.$router.push(`?highlight=${emit}`)
+                    }"
+                >
 
                 </edit-service>
 
@@ -178,7 +184,9 @@
 
               <project-reviews
                   v-bind:isAdmin="this.isAdmin"
-                  v-bind:project="this.project">
+                  v-bind:project="this.project"
+
+              >
 
               </project-reviews>
 
@@ -194,6 +202,7 @@
                       this.tab = 'description'
                       this.getProjectFullInfo()
                     }"
+
                     v-bind:project="this.project">
 
                 </edit-project>
@@ -216,8 +225,26 @@
                         v-bind:isOwner="isOwner || isAdmin"
                         v-bind:clickable="false"
 
+                        v-on:deleteService="(emit) => {
+                          this.showModal = true
+                          this.waitForDeleteProductId = item.id
+                          this.modal = {
+                            iconType: 'warning',
+                            heading: `Вы собираетесь удалить услугу`,
+                            description: `Вы уверены что хотите удалить ${item.name} ?`,
+                            descriptionType: 'text',
+                            confirm: true
+                          }
+                        }"
+
                         v-on:editService="(emit) => {
                           this.tab = 'editService'
+                          this.editProduct = {
+                            name: item.name,
+                            image: item.avatarFilePath,
+                            description: item.description,
+                            id: item.id
+                          }
                         }"
                         v-on:click="() => {
                           this.showModal = true
@@ -285,7 +312,7 @@
               <add-service
                   v-bind:projectId="project.id"
                   v-on:added="() => {
-                    this.tab = 'services'
+
                     this.showModal = true
                     this.modal = {
                       iconType: 'ok',
@@ -297,8 +324,7 @@
                       confirm: false
 
                     }
-                    this.getProducts()
-                    this.highlightProject()
+
                   }"
 
               >
@@ -361,7 +387,11 @@
   </div>
   <modal-window-backdrop
       v-if="showModal === true"
-      v-on:changeModal="(emitShowModal) => {this.showModal = emitShowModal}"
+      v-on:changeModal="(emitShowModal) => {
+        this.tab = 'services'
+        this.getProducts(6, 0)
+        this.showModal = emitShowModal
+      }"
       v-bind:icon-type="this.modal.iconType"
       v-bind:descriptionType="this.modal.descriptionType"
       v-bind:heading="this.modal.heading"
@@ -374,8 +404,7 @@
       ref="modal"
       tabindex="0"
       v-on:confirmAction="(emit)=> {
-
-        emit === true ? signOut() : this.showModal = false
+        deleteProduct(waitForDeleteProductId)
       }"
 
   >
@@ -404,6 +433,7 @@ export default {
 
   data() {
     return {
+      waitForDeleteProductId: 0,
       modal: {},
       showModal:false,
       allowShopFront: true,
@@ -453,6 +483,9 @@ export default {
       offset: 0,
       emptyResponse: false,
 
+      editProduct: {},
+
+
 
       config
     }
@@ -467,27 +500,7 @@ export default {
     }
   },
   methods: {
-    updateProduct(id, description, name) {
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
 
-
-      fetch(`${config.api.url}products/${id}`, {
-        method: "PUT",
-        headers: myHeaders,
-        body: JSON.stringify({
-          name: name,
-          description: description,
-
-        })
-      })
-          .then((response) => response.json())
-          .then(response => {
-            this.getProducts(this.limit, this.offset)
-          })
-          .catch((error) => {console.error(error)});
-    },
     highlightProject() {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -518,8 +531,11 @@ export default {
       })
           .then((response) => response.json())
           .then(response => {
+            this.limit = 6
+            this.offset = 0
+            this.products = this.products.slice(this.products.length, this.products.length)
             this.getProducts(this.limit, this.offset)
-            this.$refs.service.scrollIntoView({behavior: "smooth", block: "center"})
+            this.$refs.wrapper.scrollIntoView({behavior: "smooth", block: "center"})
           })
           .catch((error) => {console.error(error)});
     },

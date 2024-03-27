@@ -127,6 +127,7 @@
 
       <span class="currentSort"
             ref="categorySort"
+            v-if="this.$route.path === '/'"
             v-click-outside="onClickOutsideCategory"
             v-on:click="() => {
               this.showCategorySort = !this.showCategorySort
@@ -754,6 +755,31 @@ export default {
   }
 }
 
+@media screen and (max-width: 1080px)  {
+  .buttons {
+    flex-wrap: nowrap;
+
+    .btns {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      .currentSort {
+        width: 150px;
+        font-size: 11px;
+      }
+      .sortFilter {
+        &.categories {
+          left: 210px;
+          width: 180px;
+        }
+        .filter {
+          width: 160px;
+          font-size: 11px;
+        }
+      }
+    }
+  }
+}
 @media screen and (max-width: 768px)  {
   .search {
     input[type=search] {
