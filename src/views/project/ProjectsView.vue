@@ -312,6 +312,12 @@
               <add-service
                   v-bind:projectId="project.id"
                   v-on:added="() => {
+                    this.tab = 'services'
+                    this.limit = 6
+                    this.offset = 0
+                    this.products = this.products.splice(this.products.length, this.products.length)
+                    this.getProducts(6, 0)
+                    
 
                     this.showModal = true
                     this.modal = {
@@ -388,12 +394,7 @@
   <modal-window-backdrop
       v-if="showModal === true"
       v-on:changeModal="(emitShowModal) => {
-        this.tab = 'services'
-        this.products = this.products.splice(this.products.length, this.products.length)
-        this.$router.replace({query: ''})
-        this.getProducts(6, 0)
         this.showModal = emitShowModal
-        this.$refs.wrapper.scrollIntoView({top: 0, behavior: 'smooth', block: 'start'})
       }"
       v-bind:icon-type="this.modal.iconType"
       v-bind:descriptionType="this.modal.descriptionType"

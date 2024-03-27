@@ -35,7 +35,7 @@
           <services-card
 
               v-bind:name="item.name"
-              v-bind:image="`http://62.113.96.171:3000/${item.avatarFilePath}`"
+              v-bind:image="`${config.api.url}${item.avatarFilePath}`"
               v-bind:id="item.id"
               v-bind:projectId="item.ProjectId"
               v-bind:isOwner="false"
@@ -59,7 +59,7 @@
 import { ref } from 'vue'
 import servicesCard from "../../views/project/project_parts/ServicesCard.vue";
 import loader from "../reusable/loader.vue";
-
+import config from "../../assets/js/config.js";
 
 
 export default {
@@ -73,6 +73,7 @@ export default {
       tab: 'recommended',
       products: [],
       loading: true,
+      config
     }
   },
   methods: {

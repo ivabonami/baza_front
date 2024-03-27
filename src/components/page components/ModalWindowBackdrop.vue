@@ -1,5 +1,13 @@
 <template>
-  <div class="modal box-shadow" ref="modal" :class="{large: this.$props.large}">
+  <div class="modal box-shadow" ref="modal" :class="{large: this.$props.large}"
+       v-scroll-lock="false">
+    <div class="close"
+         ref="modalBackdrop"
+         @click="$emit('changeModal', false)">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M1 1L23.1778 23.1778M23.1778 1L1 23.1778" stroke="black"/>
+      </svg>
+    </div>
     <div class="modal-header">
       <div class="icon">
         <Vue3Lottie :animationData="user" :height="120" :width="120" :loop="1" v-if="$props.iconType === 'user'" />
@@ -8,13 +16,7 @@
 
 
       </div>
-      <div class="close box-shadow"
-           ref="modalBackdrop"
-           @click="$emit('changeModal', false)">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M1 1L23.1778 23.1778M23.1778 1L1 23.1778" stroke="black"/>
-        </svg>
-      </div>
+
 
       <div class="image" v-if="this.$props.image">
         <img :src="this.$props.image" alt="">
@@ -103,10 +105,12 @@ import { Vue3Lottie } from 'vue3-lottie'
 import ok from '/src/assets/lottie/ok.json'
 import warning from '/src/assets/lottie/warning.json'
 import user from '/src/assets/lottie/user.json'
-
+import VScrollLock from "v-scroll-lock";
+import { useScrollLock } from '@vueuse/core'
+import {ref} from "vue";
 export default {
   name: "ModalWindowBackdrop.vue",
-  components: {signInView, Vue3Lottie},
+  components: {signInView, Vue3Lottie, VScrollLock},
 
   props: ['close', 'large', 'image', 'iconType', 'exit', 'heading', 'descriptionType', "description", "show", 'confirmAction', 'textApprove', 'tab'],
   emits: ['close'],
@@ -114,16 +118,20 @@ export default {
   data (props) {
     return {
       modalShow: props.show,
-      forceReload: true
+      forceReload: true,
+
     }
   },
   setup() {
+
     return {
       ok, warning, user
     }
   },
 
   mounted() {
+    const body = document.getElementsByTagName('body')[0];
+    body.style.overflowY = 'hidden'
 
     window.addEventListener("keydown", (e) => {
       {
@@ -134,6 +142,11 @@ export default {
       }
     })
   },
+  beforeUnmount() {
+    const body = document.getElementsByTagName('body')[0];
+    body.style.overflowY = 'scroll'
+  },
+
 
   methods: {
     changeModal () {
@@ -189,6 +202,22 @@ export default {
   overflow: hidden;
   transition: .3s ease;
 }
+
+::-webkit-scrollbar {
+  display: none;
+}
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: red;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b30000;
+}
+
 .modal {
   position: fixed;
   z-index: 25;
@@ -196,6 +225,9 @@ export default {
   border-radius: 30px;
   width: 250px;
   padding: 20px;
+  max-height: 85vh;
+  overflow-y: auto;
+  overflow-x: hidden;
   top: 50%;
   left: 50%;
   text-align: center;
@@ -204,7 +236,7 @@ export default {
 
   &.large {
     width: 75%;
-    max-width: 500px;
+    max-width: 300px;
     .h2 {
       text-align: left;
     }
@@ -220,8 +252,11 @@ export default {
     justify-content: center;
     .image {
       width: 100%;
+      height: 160px;
+      overflow: hidden;
       img {
         width: 100%;
+
       }
     }
 
@@ -233,11 +268,10 @@ export default {
     }
   }
   .close {
-    position: absolute;
-    right: -20px;
+    position: fixed;
+    right: 5px;
     cursor: pointer;
-    top: -16px;
-    background-color: #fff;
+    top: 4px;
     padding: 14px 15px;
     margin-bottom: 0;
     border-radius: 50px;

@@ -1,19 +1,22 @@
 <template>
-  <div class="service-card box-shadow can-be-hovered" v-if="$props.name !== ''" :class="{
+  <div class="service-card box-shadow can-be-hovered"
+
+       v-if="$props.name !== ''" :class="{
           deleted: this.toDelete,
-          highlight: highlight,
+          highlight: this.highlighted,
           editable: this.editable,
 
         }"
         v-on:mouseover="() => {
-          highlight = false
+            this.highlighted = false
 
         }"
        v-on:keydown.enter=""
        v-on:click="() => {
              if ($props.clickable === true) {
-               this.$router.push(`/project/${$props.projectId}?highlight=${$props.id}`)
-               this.$emit('high', $props.id)
+               this.$router.push(`/project/${$props.projectId}`)
+               this.highlight.id = $props.id
+
              }
 
             }">
@@ -83,6 +86,7 @@
 <script>
 import { ref, watch } from "vue";
 import config from "../../../assets/js/config.js";
+import {highlight} from "../../../assets/js/productController.js";
 
 export default {
   name: "ServicesCard.vue",
@@ -90,14 +94,16 @@ export default {
 
   data() {
     return {
+      highlight,
+      highlighted: false,
       project: {
         name: '',
         description: '',
-        image: ''
-      },
+        image: '',
 
+      },
+      clickedProduct: 0,
       editable: false,
-      highlight: false,
       toDelete: false,
       counter: 0,
       projectName: '',
@@ -108,16 +114,11 @@ export default {
   mounted() {
     this.projectName = this.$props.name
     this.projectDescription = this.$props.description
+    console.log('clicked: ', highlight.id)
+    highlight.id === this.$props.id ? this.highlighted = true : this.highlighted = false
 
-    this.highlightProject()
   },
   methods: {
-    highlightProject() {
-
-       if (this.productId === parseInt(this.$route.query.highlight)) {
-         this.highlight = true
-       }
-    },
     checkForm () {
       this.errors = []
 

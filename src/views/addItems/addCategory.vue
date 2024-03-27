@@ -9,9 +9,9 @@
     <loading v-model:active="isLoading"
              v-bind:color="red"
              :is-full-page="fullPage"/>
-    <h1>
+    <h3>
       Добавить категорию
-    </h1>
+    </h3>
 
     <div class="form">
       <input type="text"
