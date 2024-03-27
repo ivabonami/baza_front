@@ -21,7 +21,7 @@
             up: arrowDate === 'up',
             down: arrowDate === 'down'
           }" class="arrow"
-                         viewBox="0 0 15.96 8.57"><path class="b" d="M.6,8.57c-.15,0-.31-.06-.42-.18-.23-.23-.23-.61,0-.85L7.56,.17c.23-.22,.62-.22,.85,0l7.38,7.38c.23,.23,.23,.61,0,.85-.23,.24-.61,.23-.85,0L7.98,1.44,1.02,8.4c-.12,.12-.27,.18-.42,.18Z"/></svg>
+             viewBox="0 0 15.96 8.57"><path class="b" d="M.6,8.57c-.15,0-.31-.06-.42-.18-.23-.23-.23-.61,0-.85L7.56,.17c.23-.22,.62-.22,.85,0l7.38,7.38c.23,.23,.23,.61,0,.85-.23,.24-.61,.23-.85,0L7.98,1.44,1.02,8.4c-.12,.12-.27,.18-.42,.18Z"/></svg>
 
       </span>
       <div class="sortFilter box-shadow" v-if="this.showSort === true" ref="sortFilter">
@@ -49,8 +49,6 @@
 
         </span>
         <div class="sep"></div>
-
-
         <span class="filter" :class="{active: this.activeSortName === 'Сначала старые'}" v-on:click=" () => {
                 if (this.activeSortName !== 'Сначала старые') {
                   this.activeSortName = 'Сначала старые'
@@ -127,11 +125,49 @@
 
       </div>
 
+      <span class="currentSort"
+            ref="categorySort"
+            v-click-outside="onClickOutsideCategory"
+            v-on:click="() => {
+              this.showCategorySort = !this.showCategorySort
+              this.arrowCategory === 'down' ? this.arrowCategory = 'up' : this.arrowCategory = 'down'
+
+
+            }">
+        Категории поиска
+        <svg id="a" xmlns="http://www.w3.org/2000/svg" :class="{
+            up: arrowCategory === 'up',
+            down: arrowCategory === 'down'
+          }" class="arrow"
+             viewBox="0 0 15.96 8.57"><path class="b" d="M.6,8.57c-.15,0-.31-.06-.42-.18-.23-.23-.23-.61,0-.85L7.56,.17c.23-.22,.62-.22,.85,0l7.38,7.38c.23,.23,.23,.61,0,.85-.23,.24-.61,.23-.85,0L7.98,1.44,1.02,8.4c-.12,.12-.27,.18-.42,.18Z"/></svg>
+
+      </span>
+      <div class="sortFilter categories box-shadow categorySelector" v-if="this.showCategorySort === true" ref="showCategorySort">
+        <div class="categorySelector input" v-for="category of store.categories" v-on:change="() => {
+          this.getLimit = 5
+          this.getOffset = 0
+          this.projects = this.projects.slice(this.projects.length, this.projects.length)
+          this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit)
+        }">
+          <input type="checkbox" v-model="categoriesFilter" :id="category.id" class="categorySelector" :value="category.id" hidden>
+          <label :for="category.id" class="categorySelector" >
+            {{category.name}}
+            <svg id="a" v-if="categoriesFilter.includes(category.id)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213.47 166.37">
+              <path class="b" d="M77.45,100.37c1.51-1.42,2.84-2.62,4.11-3.88,30.17-30.16,60.34-60.34,90.51-90.51,7.98-7.98,13.68-7.98,21.67,0,5.07,5.06,10.18,10.09,15.17,15.23,5.98,6.15,6.09,12.43,.13,18.4-40.72,40.81-81.48,81.58-122.26,122.32-5.99,5.98-12.81,5.91-18.88-.14-21.01-20.94-41.98-41.91-62.92-62.91-6.66-6.68-6.63-12.84-.04-19.51,5.27-5.33,10.57-10.64,15.91-15.91,6.67-6.58,12.78-6.56,19.5,.13,11.11,11.05,22.16,22.15,33.25,33.21,1.15,1.15,2.39,2.22,3.84,3.57Z"/>
+            </svg>
+          </label>
+          <div class="sep"></div>
+
+        </div>
+
+
+      </div>
+
 
     </div>
 
     <div class="search"
-         v-on:keyup="() => {
+         v-on:input="() => {
       this.getOffset = 0
       this.projects = this.projects.slice(this.projects.length, this.projects.length)
 
@@ -264,6 +300,8 @@ import AnimateHeight from 'vue-animate-height';
 
 import 'vue-loading-overlay/dist/css/index.css';
 import loader from "../../components/reusable/loader.vue";
+import {store} from "../../assets/js/store.js";
+import config from "../../assets/js/config.js";
 
 export default {
   name: "AllProjectsWithSort.vue",
@@ -275,6 +313,7 @@ export default {
 
       loaded: false,
       showSort: false,
+      showCategorySort: false,
       category: {},
       projects: [],
       recommend: ref(),
@@ -284,7 +323,7 @@ export default {
       activeSortName: 'Популярные',
       activeSortTab: 'random',
       arrowDate: 'up',
-      arrowRating: 'up',
+      arrowCategory: 'up',
 
       globalOffset: 0,
       globalLimit: 0,
@@ -304,8 +343,10 @@ export default {
       fadeAnimate: false,
       projectCardAnimate: false,
       height: 0,
+      categoriesFilter: [],
 
-      timer: ref(null)
+      timer: ref(null),
+      store
     }
   },
   directives: {
@@ -352,6 +393,16 @@ export default {
       }
 
     },
+    onClickOutsideCategory (event) {
+
+      if (event.target.classList[0] !== 'categorySelector' ) {
+        this.showCategorySort = false
+        this.arrowCategory = 'up'
+      } else {
+
+      }
+
+    },
     handleScroll () {
 
       if (this.$refs.loadmore.getBoundingClientRect().bottom < window.innerHeight) {
@@ -368,23 +419,19 @@ export default {
       console.log('category:', category)
 
 
-      let url = ``
+      let url = `${config.api.url}projects?isPayedFirst=true&sort=${sort}&offset=${offset}&limit=${limit}`
 
-      if (this.$route.path !== '/' &&  this.searchQuery === '' ) {
-        url = `http://62.113.96.171:3000/projects?isPayedFirst=true&sort=${sort}&offset=${offset}&limit=${limit}&categoryIds=[${category}]`
+      if (this.$route.path !== '/') {
+        url += `&categoryIds=[${category}]`
 
-      } else if (this.$route.path !== '/' && this.searchQuery !== '') {
-        url = `http://62.113.96.171:3000/projects?isPayedFirst=true&sort=${sort}&offset=${offset}&limit=${limit}&categoryIds=[${category}]&search=${this.searchQuery}`
-
-      } else if(this.$route.path === '/' && this.searchQuery === '') {
-        url = `http://62.113.96.171:3000/projects?isPayedFirst=true&sort=${sort}&offset=${offset}&limit=${limit}`
-
-      } else if(this.$route.path === '/' && this.searchQuery !== '') {
-        url = `http://62.113.96.171:3000/projects?isPayedFirst=true&sort=${sort}&offset=${offset}&limit=${limit}&search=${this.searchQuery}`
       }
-      else {
-        url = `http://62.113.96.171:3000/projects?isPayedFirst=true&sort=${sort}&offset=${offset}&limit=${limit}`
+      if (this.searchQuery !== '') {
+        url += `&search=${this.searchQuery}`
       }
+      if (this.categoriesFilter.length > 0) {
+        url += `&categoryIds=[${this.categoriesFilter}]`
+      }
+
 
       fetch(url, {
         method: "GET",
@@ -480,6 +527,41 @@ export default {
       background-color: #fff;
       z-index: 10;
       top: 45px;
+
+      &.categories {
+        left: 255px;
+        width: 240px;
+
+
+        .input {
+          margin-top: 5px;
+          margin-bottom: 5px;
+
+
+          .sep {
+            margin-top: 5px;
+          }
+
+
+
+
+
+          label {
+            padding: 5px;
+            font-size: 14px;
+            width: 100%;
+            display: flex;
+            box-sizing: border-box;
+            justify-content: space-between;
+
+          }
+          svg {
+            width: 15px;
+            height: 15px;
+          }
+        }
+
+      }
 
 
 
@@ -673,29 +755,48 @@ export default {
 }
 
 @media screen and (max-width: 768px)  {
+  .search {
+    input[type=search] {
+      width: 100%;
+    }
+  }
   .projects-wrapper {
     display: flex;
 
   }
+
   .list-wrapper {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     width: 100%;
     justify-content: center;
+    align-items: stretch;
 
     .project {
       width: 48%;
+
+
     }
   }
   .buttons {
+    flex-wrap: wrap;
+
     .btns {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
       .currentSort {
         width: 165px;
         font-size: 12px;
       }
       .sortFilter {
+        &.categories {
+          left: 210px;
+          width: 180px;
+        }
         .filter {
+          width: 160px;
           font-size: 12px;
         }
       }

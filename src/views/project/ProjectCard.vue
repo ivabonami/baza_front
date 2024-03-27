@@ -895,6 +895,7 @@ export default {
     padding: 10px;
     margin-bottom: 50px;
 
+
     .avatar {
       width: 40vw;
       height: 40vw;
@@ -975,15 +976,26 @@ export default {
       }
       .project-bottom {
         flex-wrap: wrap;
-        margin-bottom: 20px;
+        margin-bottom: 0px;
 
         .links {
           margin-top: 10px;
           text-align: left;
+          gap: 0;
           width: 100%;
+          display: grid;
+          flex-wrap: wrap;
+
           .category {
             text-align: left;
             width: 100%;
+          }
+          .admin-menu-toggler {
+            position: relative;
+            top: -20px;
+            height: 0;
+            justify-self: end;
+
           }
         }
         .stats {
