@@ -20,6 +20,7 @@ export function signOut() {
     localStorage.removeItem('token')
     localStorage.removeItem('role')
     localStorage.removeItem('expired')
+    router.push('/')
     router.go()
 }
 export function refreshToken () {

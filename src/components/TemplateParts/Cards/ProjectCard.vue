@@ -26,7 +26,7 @@
 
 
         <<div class="favorite"
-              v-if="this.isFavourite === false && this.isLoggined === true"
+              v-if="this.isFavourite === false && this.isLogin === true"
               v-on:click="() => {
                addFavorite($props.project.id)
                this.isFavourite = true
@@ -35,7 +35,7 @@
       </div>
 
         <div class="favorite"
-             v-else-if="this.isFavourite === true && this.isLoggined === true"
+             v-else-if="this.isFavourite === true && this.isLogin === true"
              v-on:click="() => {
                deleteFavorite($props.project.id)
                this.isFavourite = false
@@ -71,8 +71,7 @@
                         red: $props.project.ratingAvg > 1 && $props.project.ratingAvg <= 2,
                         badRed: $props.project.ratingAvg >= 0 && $props.project.ratingAvg <= 1,
                           }">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" style="color: rgb(255, 255, 255);"><path fill="currentColor" d="M9.358 6.136C10.53 4.046 11.117 3 12 3s1.47 1.045 2.643 3.136c.259.462.484 1.038.925 1.354.42.302 1.006.332 1.502.422 2.356.429 3.534.643 3.842 1.457q.034.09.057.182c.208.847-.632 1.581-2.316 3.313-.527.541-.766.798-.872 1.149-.097.325-.05.677.044 1.381.323 2.42.482 3.762-.21 4.31-1.24.98-3.24-.742-4.359-1.259C12.638 18.16 12.33 18 12 18s-.638.16-1.256.445c-1.12.517-3.119 2.24-4.358 1.258-.693-.547-.528-1.889-.205-4.309.094-.704.14-1.056.043-1.381-.105-.351-.345-.607-.872-1.15-1.684-1.73-2.529-2.465-2.32-3.312q.021-.093.056-.182c.308-.814 1.486-1.028 3.842-1.457.496-.09 1.083-.12 1.502-.422.441-.316.666-.893.926-1.354"></path></svg>
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" ><path fill-rule="evenodd" d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z"></path></svg>
                   {{ $props.project.ratingAvg }}
                 </span>
                 <span class="text" v-else title="Проект пока не имеет оценок, но это не значит что он плохой или хороший.">
@@ -264,11 +263,12 @@ import ProjectsView from "../../pages/ProjectDetailed.vue";
 import modalWindowBackdrop from "../Page Parts/Modal.vue";
 import { onClickOutside } from '@vueuse/core'
 import { ref } from "vue";
+import config from "../../../assets/js/config.js";
 
 export default {
   name: "ProjectCard.vue",
   components: { ProjectsView, modalWindowBackdrop },
-  props: ['project', 'fadeAnimate'],
+  props: ['project', 'fadeAnimate', 'favorite'],
   emits: ['updated'],
 
   setup(props, emits) {
@@ -290,7 +290,7 @@ export default {
       reviewsLength: 0,
       adminDropDownShow: false,
       counter: 0,
-      isLoggined: false,
+      isLogin: false,
       reviewsCount: 0,
       isFavourite: false
 
@@ -303,9 +303,9 @@ export default {
   },
   mounted() {
     this.checkIsAdmin()
-    this.$props.project.favorite === 1 ? this.isFavourite = true : this.isFavourite = false
+    this.$props.project.favorite === 1 || this.$props.favorite === true ? this.isFavourite = true : this.isFavourite = false
 
-    localStorage.getItem('token') === null ? this.isLoggined = false : this.isLoggined = true
+    localStorage.getItem('token') === null ? this.isLogin = false : this.isLogin = true
   },
   methods: {
 
@@ -352,7 +352,10 @@ export default {
         )
       })
           .then((response) => response.json())
-          .then((res) => { this.isFavourite = false })
+          .then((res) => {
+            this.$emit('favoriteRemoved', projectId)
+            this.isFavourite = false
+          })
           .catch((error) => {console.error(error)});
     },
     closeOnEsc() {
@@ -410,11 +413,10 @@ export default {
       myHeaders.append("Content-Type", "application/json");
       this.adminDropDownShow = false
 
-      fetch(`http://62.113.96.171:3000/projects/${projectId}`, {
+      fetch(`${config.api.url}projects/${projectId}`, {
         method: "PUT",
         headers: myHeaders,
         body: JSON.stringify({
-          isReviewed: true,
           payed: status
         })
       })
@@ -581,7 +583,7 @@ export default {
 
   box-sizing: border-box;
   margin-bottom: 30px;
-  border: 1px solid #eaeaea;
+  border: 1px solid transparent;
   transition:.3s ease;
 
   &:hover {
@@ -623,12 +625,12 @@ export default {
 
   &.paid {
     background-color: #edf1fc;
-    border: 2px solid rgba(0,60,215,.5);
+    border: 2px solid transparent;
 
 
     .advanced-fields {
       background-color: #f0f6ff;
-      border: 2px solid rgba(0,60,215,.5);
+      border: 2px solid transparent;
     }
 
     &:hover {
@@ -761,13 +763,13 @@ export default {
               color: #000;
               font-weight: 700;
               border-radius: 5px;
-              font-size: 16px;
+              font-size: 14px;
 
               svg {
-                width: 15px;
-                height: 15px;
+                width: 12px;
+                height: 12px;
                 position: relative;
-                top: 2px;
+
                 margin-right: 0px;
 
                 path {
@@ -964,7 +966,7 @@ export default {
           width: 100%;
           text-align: left;
           justify-content: center;
-          font-size: 18px;
+          font-size: 14px;
           display: -webkit-box;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 3;

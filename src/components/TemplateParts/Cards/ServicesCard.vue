@@ -1,5 +1,5 @@
 <template>
-  <div class="service-card box-shadow can-be-hovered"
+  <div class="service-card box-shadow can-be-hovered" ref="card"
 
        v-if="$props.name !== ''" :class="{
           deleted: this.toDelete,
@@ -102,6 +102,7 @@ export default {
         image: '',
 
       },
+      cardWidth: null,
       clickedProduct: 0,
       editable: false,
       toDelete: false,
@@ -116,7 +117,10 @@ export default {
     this.projectDescription = this.$props.description
     highlight.id === this.$props.id ? this.highlighted = true : this.highlighted = false
 
+    this.cardWidth = this.$refs.card.clientWidth
+
   },
+
   methods: {
     checkForm () {
       this.errors = []
@@ -177,6 +181,8 @@ export default {
 
 .service-card {
   width: 100%;
+  min-width: 250px;
+  max-width: 300px;
   margin-bottom: 5px;
   position: relative;
   border-radius: 20px;

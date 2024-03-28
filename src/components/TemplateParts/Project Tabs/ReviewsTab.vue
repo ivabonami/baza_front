@@ -1440,8 +1440,8 @@ export default {
       align-items: center;
 
       svg {
-        width: 15px;
-        height: 15px;
+        width: 12px;
+        height: 12px;
         margin-left: 5px;
         cursor: pointer;
         position: relative;
@@ -1511,8 +1511,8 @@ export default {
     font-size: 14px;
 
     svg {
-      width: 10px;
-      height: 10px;
+      width: 12px;
+      height: 12px;
       margin-right: 2px;
       path {
         fill: #000;
@@ -1623,7 +1623,7 @@ export default {
 
   .currentSort {
     width: 220px;
-    border: 1px solid #0a58ca;
+    border: 1px solid transparent;
     outline: none;
     color: #000;
     background-color: #fff;

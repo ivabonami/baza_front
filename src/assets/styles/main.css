@@ -22,7 +22,7 @@ h3 {
   font-family: "Montserrat", sans-serif;
   font-size: 18px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 600;
   line-height: normal;
 }
 
@@ -91,9 +91,6 @@ body {
 
 .projects-wrapper {
   margin-top: 0px;
-}
-.projects-wrapper .advanced {
-  display: flex;
 }
 
 .header {
@@ -344,144 +341,6 @@ a {
   transform: translateX(5px);
 }
 
-form.add-project {
-  margin-top: 30px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1%;
-}
-form.add-project .left, form.add-project .right {
-  width: 49%;
-}
-form.add-project textarea {
-  width: 100%;
-  resize: none;
-}
-form.add-project .bottom {
-  width: 100%;
-}
-form.add-project .bottom {
-  margin-top: 30px;
-}
-form.add-project .bottom .top-head {
-  display: flex;
-  justify-content: start;
-  gap: 30px;
-}
-form.add-project .bottom .top-head .add {
-  background-color: rgb(0, 115, 236);
-  color: #fff;
-  transition: 0.3s ease;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-radius: 5px;
-}
-form.add-project .bottom .top-head .add:hover {
-  cursor: pointer;
-  opacity: 0.8;
-}
-form.add-project .bottom .added-project-links {
-  margin-top: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: start;
-}
-form.add-project .bottom label {
-  display: flex;
-}
-form.add-project .bottom label input {
-  width: 100%;
-}
-form.add-project input[type=text] {
-  font-size: 16px;
-  margin-top: 10px;
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: 1px solid #eaeaea;
-  width: 70%;
-  font-family: "Montserrat", "Arial", Serif;
-}
-form.add-project input[type=file] {
-  margin-top: 0px;
-  height: auto;
-  padding: 10px 20px;
-  border: 1px solid #eaeaea;
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  outline: none;
-  text-decoration: none;
-  font-size: 14px;
-  color: #000;
-  text-align: center;
-  background-color: #fff;
-  line-height: 22px;
-  border-radius: 5px;
-  transition: background-color 0.2s;
-  width: 70%;
-}
-form.add-project textarea {
-  background-color: #fff;
-  font-size: 16px;
-  border-radius: 5px;
-  padding: 10px 20px;
-  border: 1px solid #eaeaea;
-  font-family: "Montserrat", "Arial", Serif;
-}
-form.add-project label {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  align-items: flex-start;
-}
-form.add-project label span {
-  width: 100%;
-}
-form.add-project .project-link {
-  width: 30%;
-  display: flex;
-  align-items: stretch;
-  flex-wrap: wrap;
-}
-form.add-project .project-link input {
-  width: 100%;
-}
-form.add-project .project-link.always {
-  align-self: center;
-}
-form.add-project .project-link.always input {
-  width: 100% !important;
-  border-radius: 5px;
-}
-form.add-project .project-link .delete, form.add-project .project-link .important {
-  font-size: 12px;
-  padding-left: 10px;
-}
-form.add-project .project-link .delete:hover {
-  outline: none;
-  color: #d05555;
-}
-form.add-project .project-link input {
-  font-size: 16px;
-  margin-top: 0;
-  padding: 10px 20px;
-  border: 1px solid #eaeaea;
-  border-radius: 5px;
-  width: 100%;
-  font-family: "Montserrat", "Arial", Serif;
-  outline: none;
-}
-form.add-project .project-link input:hover, form.add-project .project-link input:focus {
-  outline: none;
-}
-form.add-project .helper {
-  margin-top: 5px;
-  font-size: 10px;
-}
-
 button.back {
   border-radius: 10px;
   padding: 3px 5px;
@@ -499,10 +358,40 @@ button.back svg {
 .form-wrapper {
   margin-top: 20px;
 }
+.form-wrapper h3 {
+  margin-bottom: 10px;
+}
 .form-wrapper .advanced {
   display: flex;
-  gap: 30px;
+  gap: 10px;
   margin-top: 10px;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.form-wrapper .advanced .help {
+  width: 100%;
+  color: #000;
+  font-family: "Montserrat", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  margin-bottom: 10px;
+  opacity: 1;
+  display: block;
+}
+.form-wrapper .advanced .help .heading {
+  font-weight: 600;
+  margin-bottom: -10px;
+  display: block;
+  font-size: 20px;
+}
+.form-wrapper .advanced .help.description {
+  margin-bottom: 20px;
+}
+.form-wrapper .advanced .input-wrapper {
+  width: 30%;
 }
 .form-wrapper .advanced input {
   width: 100%;
@@ -514,9 +403,32 @@ button.back svg {
   border-radius: 5px;
   position: relative;
 }
+.form-wrapper .input-wrapper .help {
+  color: #000;
+  font-family: "Montserrat", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  margin-bottom: 10px;
+  opacity: 1;
+  display: block;
+}
+.form-wrapper .input-wrapper .help .heading {
+  font-weight: 600;
+  margin-bottom: -10px;
+  display: block;
+  font-size: 20px;
+}
+.form-wrapper .input-wrapper .help.description {
+  margin-bottom: 20px;
+}
+.form-wrapper .input-wrapper .input {
+  position: relative;
+}
 .form-wrapper .input-wrapper.double {
   display: flex;
-  gap: 15px;
+  gap: 30px;
   position: relative;
 }
 .form-wrapper .input-wrapper.double .left, .form-wrapper .input-wrapper.double .right {
@@ -528,7 +440,8 @@ button.back svg {
   gap: 15px;
   position: relative;
   flex-wrap: wrap;
-  align-items: start;
+  justify-content: space-between;
+  align-items: end;
 }
 .form-wrapper .input-wrapper.triple .left, .form-wrapper .input-wrapper.triple .middle, .form-wrapper .input-wrapper.triple .right {
   position: relative;
@@ -536,15 +449,14 @@ button.back svg {
 }
 .form-wrapper .input-wrapper .field-name {
   position: absolute;
-  font-size: 12px;
+  font-size: 14px;
   background-color: #fff;
-  color: #0a58ca;
+  color: #545454;
   left: 10px;
-  top: -9px;
+  top: 5px;
   padding-left: 5px;
   padding-right: 5px;
   border-radius: 5px;
-  border: 1px solid #0a58ca;
   z-index: 20;
 }
 .form-wrapper .input-wrapper.categories {
@@ -556,7 +468,10 @@ button.back svg {
   width: 100%;
 }
 .form-wrapper .input-wrapper .category {
+  margin-top: 10px;
+  font-size: 18px;
   border: 1px solid transparent;
+  margin-right: 20px;
 }
 .form-wrapper .input-wrapper .loaded {
   color: #10c44c;
@@ -572,9 +487,9 @@ button.back svg {
 }
 .form-wrapper .fake-input {
   position: relative;
-  padding: 10px;
+  padding: 0;
   border-radius: 5px;
-  border: 1px solid var(--new-dark, rgb(0, 115, 236));
+  border: 1px solid transparent;
   background: var(--neutral, #FFF);
 }
 .form-wrapper .fake-input .name {
@@ -595,19 +510,23 @@ button.back svg {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  padding: 10px;
+  width: 100%;
 }
 .form-wrapper .fake-input input[type=file]::file-selector-button {
   border-radius: 5px;
   border: 1px solid var(--new-dark, rgb(0, 115, 236));
   background: #FFF;
-  padding: 5px 10px;
+  width: auto;
+  box-sizing: border-box;
+  padding: 10px;
   color: rgb(0, 115, 236);
   font-family: "Montserrat", sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
-  line-height: normal;
   padding-left: 25px;
+  line-height: normal;
 }
 .form-wrapper .fake-input input[type=file]::before {
   content: url("./../../assets/images/upload.svg");
@@ -634,12 +553,16 @@ button.back svg {
   line-height: normal;
   padding-left: 25px;
 }
+.form-wrapper input[type=checkbox] {
+  width: 16px;
+  height: 16px;
+}
 .form-wrapper input[type=text] {
   border-radius: 5px;
-  border: 1px solid var(--new-dark, rgb(0, 115, 236));
+  border: 1px solid transparent;
   background: var(--neutral, #FFF);
   color: #000;
-  padding: 10px 15px;
+  padding: 10px;
   width: 100%;
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
@@ -663,10 +586,10 @@ button.back svg {
 }
 .form-wrapper input[type=number] {
   border-radius: 5px;
-  border: 1px solid var(--new-dark, rgb(0, 115, 236));
+  border: 1px solid transparent;
   background: var(--neutral, #FFF);
   color: #000;
-  padding: 10px 15px;
+  padding: 10px;
   width: 100%;
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
@@ -675,11 +598,17 @@ button.back svg {
   font-weight: 400;
   line-height: normal;
 }
+.form-wrapper input[type=number]:focus {
+  outline: none;
+}
+.form-wrapper input[type=number]::placeholder {
+  opacity: 0.3;
+}
 .form-wrapper textarea {
   border-radius: 5px;
-  border: 1px solid var(--new-dark, rgb(0, 115, 236));
+  border: 1px solid transparent;
   background: var(--neutral, #FFF);
-  padding: 10px 15px;
+  padding: 10px;
   font-family: "Montserrat", sans-serif;
   font-size: 16px;
   font-style: normal;
@@ -782,20 +711,6 @@ button.back svg {
   line-height: normal;
   opacity: 0.5;
 }
-.links-wrapper .help {
-  color: #000;
-  font-family: "Montserrat", sans-serif;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1;
-  margin-top: 7px;
-  opacity: 0.5;
-  display: block;
-}
-.links-wrapper .help.description {
-  margin-bottom: 20px;
-}
 
 .back {
   cursor: pointer;
@@ -841,6 +756,7 @@ button.back svg {
   }
   .form-wrapper .input-wrapper.triple {
     flex-wrap: wrap;
+    align-items: end;
     justify-content: space-between;
   }
   .form-wrapper .input-wrapper.triple .left, .form-wrapper .input-wrapper.triple .middle {

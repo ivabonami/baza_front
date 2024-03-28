@@ -20,8 +20,7 @@ h1 {
   font-family: 'Montserrat', sans-serif;
   font-size: 18px;
   font-style: normal;
-  font-weight: 400;
-
+  font-weight: 600;
   line-height: normal;
 
 }
@@ -102,10 +101,7 @@ body {
 .projects-wrapper {
   margin-top: 0px;
 
-  .advanced {
-    display: flex;
 
-  }
 
 }
 footer {
@@ -393,161 +389,6 @@ a {
   transform: translateX(5px);
 }
 
-
-form.add-project {
-  margin-top: 30px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1%;
-  .left, .right {
-    width: 49%;
-
-  }
-  textarea {
-    width: 100%;
-    resize: none;
-  }
-  .bottom {
-    width: 100%;
-  }
-  .bottom {
-    margin-top: 30px;
-    .top-head {
-      display: flex;
-      justify-content: start;
-      gap: 30px;
-      .add {
-
-
-        background-color: rgb(0, 115, 236);
-        color: #fff;
-        transition: .3s ease;
-        padding-left: 5px;
-        padding-right: 5px;
-        border-radius: 5px;
-        &:hover {
-        cursor: pointer;
-        opacity: .8;
-       }
-      }
-
-
-    }
-
-    .added-project-links {
-      margin-top: 10px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: start;
-    }
-    label {
-      display: flex;
-      input {
-        width: 100%;
-      }
-    }
-
-  }
-
-  input[type=text] {
-    font-size: 16px;
-    margin-top: 10px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: 1px solid #eaeaea;
-    width: 70%;
-    font-family: "Montserrat", "Arial", Serif;
-
-
-  }
-  input[type=file] {
-    margin-top: 0px;
-    height: auto;
-    padding: 10px 20px;
-    border: 1px solid #eaeaea;
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    outline: none;
-    text-decoration: none;
-    font-size: 14px;
-    color: #000;
-    text-align: center;
-    background-color: #fff;
-    line-height: 22px;
-    border-radius: 5px;
-    transition: background-color 0.2s;
-    width: 70%;
-
-  }
-  textarea {
-    background-color: #fff;
-    font-size: 16px;
-    border-radius: 5px;
-    padding: 10px 20px;
-    border: 1px solid #eaeaea;
-    font-family: "Montserrat", "Arial", Serif;
-  }
-
-
-  label {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    align-items: flex-start;
-    span {
-      width: 100%;
-    }
-  }
-  .project-link {
-    width: 30%;
-    display: flex;
-    align-items: stretch;
-    flex-wrap: wrap;
-
-    input {
-      width: 100%;
-    }
-    &.always {
-
-      align-self: center;
-      input {
-        width: 100%!important;
-        border-radius: 5px;
-      }
-    }
-    .delete, .important {
-      font-size: 12px;
-      padding-left: 10px;
-    }
-    .delete {
-      &:hover {
-        outline: none;
-        color: #d05555;
-      }
-    }
-    input {
-      font-size: 16px;
-      margin-top: 0;
-      padding: 10px 20px;
-      border: 1px solid #eaeaea;
-      border-radius: 5px;
-      width: 100%;
-      font-family: "Montserrat", "Arial", Serif;
-      outline: none;
-      &:hover, &:focus {
-        outline: none;
-      }
-    }
-  }
-  .helper {
-    margin-top: 5px;
-    font-size: 10px;
-  }
-}
 button.back {
 
   border-radius: 10px;
@@ -565,11 +406,49 @@ button.back {
 }
 .form-wrapper {
   margin-top: 20px;
+  h3 {
+
+    margin-bottom: 10px;
+  }
+
 
   .advanced {
     display: flex;
-    gap: 30px;
+    gap: 10px;
     margin-top: 10px;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .help {
+      width: 100%;
+      color: #000;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1;
+      margin-bottom: 10px;
+
+
+      opacity: 1;
+      display: block;
+
+      .heading {
+        font-weight: 600;
+        margin-bottom: -10px;
+        display: block;
+        font-size: 20px;
+      }
+
+      &.description {
+        margin-bottom: 20px;
+      }
+    }
+
+    .input-wrapper {
+      width: 30%;
+    }
 
     input {
       width: 100%;
@@ -583,10 +462,38 @@ button.back {
     border-radius: 5px;
     position: relative;
 
+    .help {
+      color: #000;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1;
+      margin-bottom: 10px;
+
+
+      opacity: 1;
+      display: block;
+
+      .heading {
+        font-weight: 600;
+        margin-bottom: -10px;
+        display: block;
+        font-size: 20px;
+      }
+
+      &.description {
+        margin-bottom: 20px;
+      }
+    }
+    .input {
+      position: relative;
+    }
+
 
     &.double {
       display: flex;
-      gap: 15px;
+      gap: 30px;
       position: relative;
       .left, .right {
         position: relative;
@@ -600,7 +507,8 @@ button.back {
       gap: 15px;
       position: relative;
       flex-wrap: wrap;
-      align-items: start;
+      justify-content: space-between;
+      align-items: end;
       .left, .middle, .right {
 
         position: relative;
@@ -613,15 +521,14 @@ button.back {
 
     .field-name {
       position: absolute;
-      font-size: 12px;
+      font-size: 14px;
       background-color: #fff;
-      color: #0a58ca;
+      color: #545454;
       left: 10px;
-      top: -9px;
+      top: 5px;
       padding-left: 5px;
       padding-right: 5px;
       border-radius: 5px;
-      border: 1px solid #0a58ca;
       z-index: 20;
 
     }
@@ -638,7 +545,11 @@ button.back {
 
     }
     .category {
+      margin-top: 10px;
+      font-size: 18px;
+
       border: 1px solid transparent;
+      margin-right: 20px;
     }
     .loaded {
       color: #10c44c;
@@ -657,9 +568,9 @@ button.back {
   }
   .fake-input {
     position: relative;
-    padding: 10px;
+    padding: 0;
     border-radius: 5px;
-    border: 1px solid var(--new-dark, rgb(0, 115, 236));
+    border: 1px solid transparent;
     background: var(--neutral, #FFF);
 
     .name {
@@ -674,6 +585,8 @@ button.back {
       opacity: .5;
     }
 
+
+
     input[type='file'] {
       color: rgb(0, 115, 236);
 
@@ -682,19 +595,23 @@ button.back {
       font-style: normal;
       font-weight: 400;
       line-height: normal;
+      padding: 10px;
+      width: 100%;
 
       &::file-selector-button {
         border-radius: 5px;
         border: 1px solid var(--new-dark, rgb(0, 115, 236));
         background: #FFF;
-        padding: 5px 10px;
+        width: auto;
+        box-sizing: border-box;
+        padding: 10px;
         color: rgb(0, 115, 236);
         font-family: 'Montserrat', sans-serif;
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
-        line-height: normal;
         padding-left: 25px;
+        line-height: normal;
 
       }
 
@@ -730,13 +647,17 @@ button.back {
     }
   }
 
+  input[type='checkbox'] {
+    width: 16px;
+    height: 16px;
 
+  }
   input[type='text'] {
     border-radius: 5px;
-    border: 1px solid var(--new-dark, rgb(0, 115, 236));
+    border: 1px solid transparent;
     background: var(--neutral, #FFF);
     color: #000;
-    padding: 10px 15px;
+    padding: 10px;
     width: 100%;
     box-sizing: border-box;
 
@@ -763,28 +684,38 @@ button.back {
     }
   }
 
-  input[type=number] {
+
+
+  input[type='number'] {
     border-radius: 5px;
-    border: 1px solid var(--new-dark, rgb(0, 115, 236));
+    border: 1px solid transparent;
     background: var(--neutral, #FFF);
     color: #000;
-    padding: 10px 15px;
+    padding: 10px;
     width: 100%;
     box-sizing: border-box;
+
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
 
+    &:focus {
+      outline: none;
+    }
 
+
+    &::placeholder {
+      opacity: .3;
+    }
   }
 
   textarea {
     border-radius: 5px;
-    border: 1px solid var(--new-dark, rgb(0, 115, 236));
+    border: 1px solid transparent;
     background: var(--neutral, #FFF);
-    padding: 10px 15px;
+    padding: 10px;
 
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
@@ -907,22 +838,7 @@ button.back {
     }
 
   }
-  .help {
-    color: #000;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1;
-    margin-top: 7px;
 
-    opacity: 0.5;
-    display: block;
-
-    &.description {
-      margin-bottom: 20px;
-    }
-  }
 }
 .back {
   cursor: pointer;
@@ -991,6 +907,7 @@ button.back {
 
       &.triple {
         flex-wrap: wrap;
+        align-items: end;
         justify-content: space-between;
         .left, .middle {
           width: 47%;

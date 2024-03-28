@@ -4,7 +4,7 @@
     <div class="tabs-links">
       <button
          v-on:click=" () => {
- this.products = this.products.slice(this.products.length, this.products.length)
+           this.products = this.products.slice(this.products.length, this.products.length)
            getProducts('random')
            this.tab = 'recommended'
          }"
@@ -27,13 +27,13 @@
         Новые
       </button>
     </div>
-    <div class="tabs-content-wrapper" >
+    <div class="tabs-content-wrapper" ref="productsWrapper">
       <loader v-if="loading === true"></loader>
       <transition-group name="list" tag="div" class="tabs-content" v-else>
         <div class="shop-view" v-for="item in products" v-if="products.length > 0 && loading === false"
         >
           <services-card
-
+              ref="sliderItem"
               v-bind:name="item.name"
               v-bind:image="`${config.api.url}${item.avatarFilePath}`"
               v-bind:id="item.id"
@@ -46,10 +46,17 @@
         </div>
 
 
+
       </transition-group>
 
     </div>
+    <div class="arrows" v-if="disableSliderArrows === false">
+      <span class="prev" v-on:click="carousel(-1)">PREV</span>
+      <span>_____________________________</span>
+      <span class="next" v-on:click="carousel(1)">NEXT</span>
 
+
+    </div>
 
   </div>
   </transition>
@@ -73,10 +80,52 @@ export default {
       tab: 'recommended',
       products: [],
       loading: true,
+      disableSliderArrows: false,
+      margin: 0,
+      currentMargin: 0,
       config
     }
   },
   methods: {
+    carousel (slideCount) {
+      const items = this.$refs.sliderItem,
+          maxSlides = items.length,
+          wrapper = this.$refs.productsWrapper
+      let slideWidth = 0
+
+      let maxLeft = - this.currentMargin + wrapper.clientWidth,
+          maxRight = this.currentMargin + wrapper.clientWidth
+
+      for (let item of items) {
+        slideWidth = item.cardWidth
+      }
+      const sliderWidth = (items.length * (slideWidth + 20))
+
+      if (slideCount > 0) {
+
+        if (maxLeft < sliderWidth) {
+          this.currentMargin -= (slideWidth + 20)
+          this.margin = `${(this.currentMargin)}px`
+          console.log('nice')
+        } else {
+          this.currentMargin = 0
+          this.margin = `${(this.currentMargin)}px`
+          console.log('ended')
+        }
+        console.log(maxLeft, sliderWidth)
+      } else {
+
+        if (this.currentMargin >= 0) {
+
+        } else {
+          this.currentMargin += (slideWidth + 20)
+          this.margin = `${(this.currentMargin)}px`
+        }
+      }
+
+
+    },
+
     switchTabs(tab) {
       this.tab = tab
     },
@@ -94,11 +143,15 @@ export default {
         headers: myHeaders,
       };
 
-      fetch(`${config.api.url}products?limit=4&sort=${sort}`, requestOptions)
+      fetch(`${config.api.url}products?limit=8&sort=${sort}`, requestOptions)
           .then((response) => response.json())
           .then((result) => {
             for (let product of result.products) {
               this.products.push(product)
+            }
+
+            if (this.products.length < 5) {
+              this.disableSliderArrows = true
             }
 
             this.loading = false
@@ -111,6 +164,7 @@ export default {
   mounted() {
     this.getProducts('random')
 
+
   },
 
 
@@ -118,15 +172,25 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.tabs-content-wrapper {
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+
+
+}
 
 .tabs-content {
-  width: 100%;
+  width: auto;
+  position: relative;
   justify-content: start;
   margin-top: 30px;
   min-height: 270px;
   gap: 20px;
   display: flex;
   flex-wrap: nowrap;
+  left: v-bind('margin');
+  transition: .3s ease;
 
 
   .shop-view {

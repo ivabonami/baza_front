@@ -1,11 +1,6 @@
 <template>
-  <button
-      v-on:click="this.$router.go(-1)"
-      class="back">
-    <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80.52 137.91"><path d="M26.75,68.29c14.02,13.92,26.77,26.57,39.5,39.23,3.54,3.52,7.15,6.98,10.53,10.65,4.87,5.29,4.82,11.95,.1,16.49-4.67,4.49-11.53,4.36-16.53-.62C41.46,115.25,22.61,96.41,3.83,77.51c-4.97-5-5.17-11.48-.22-16.49C22.7,41.7,41.91,22.5,61.2,3.38c4.71-4.67,11.74-4.38,16.15,.11,4.28,4.36,4.32,11.35-.42,16.15-14.74,14.95-29.61,29.77-44.5,44.57-1.41,1.4-3.26,2.36-5.69,4.08Z"/></svg>
-    Назад
-  </button>
-<h3>Добавление проекта</h3>
+
+<h2>Добавление проекта</h2>
 
   <div v-if="userLoggined === false" class="not-registered">
 
@@ -55,190 +50,207 @@
   <div class="add-project form-wrapper" v-else>
     <div class="left">
       <div class="input-wrapper">
-        <div class="field-name">Название проекта *</div>
-        <input
-            type="text"
-            placeholder="Название проекта"
-            v-model="projectName"
-            minlength="5" maxlength="255"
-            ref="projectName"
-            required>
-        <span class="help">
-          Введите название проекта, которое коротко и ясно отражает его суть. От 5 до 255 символов.
-        </span>
+        <label class="help" for="projectName">
+          <span class="heading">Название проекта</span><br>
+          Введите название проекта, которое коротко и ясно отражает его суть.
+        </label>
+        <div class="input">
+          <input
+              type="text"
+              id="projectName"
+              v-model="projectName"
+              minlength="5" maxlength="255"
+              ref="projectName"
+              required>
+        </div>
+
+
       </div>
 
-      <div class="input-wrapper categories" ref="projectMultiCategories">
-        <h3>Категории проекта: </h3>
-        <div class="category"
-             v-for="category of categories"
-             >
+      <div class="input-wrapper">
+        <label class="help" for="projectDescription">
+          <span class="heading">Описание проекта</span><br>
+          Введите описание проекта, включая его цель, описание продаваемых товаров.
+        </label>
+        <div class="input">
+          <textarea
+              required
+              id="projectDescription"
+              ref="projectDescription"
+              v-model="projectDescription" maxlength="65535"></textarea>
+        </div>
 
-          <input :id="category.id"
-                 v-model="projectMultiCategories"
-                 type="checkbox"
-                 :value="category.id"
-                 v-on:change="() => {
+
+      </div>
+
+      <div class="input-wrapper double" ref="projectMultiCategories">
+        <div class="left">
+
+          <label class="help">
+            <span class="heading">Изображения проекта</span><br>
+            Загрузите аватар проекта, размером  110x110 пикселей.<br>
+            Поддерживаемые форматы: jpeg, jpg, png, gif и webp.
+          </label>
+          <div class="input-wrapper">
+
+            <div class="fake-input">
+              <input type="file"
+                     id="projectAvatar"
+                     ref="projectAvatar"
+                     v-on:change="uploadAvatar($event)"
+                     accept="image/*"
+              >
+
+
+            </div>
+            <div class="loader" v-if="avatarLoader === true">
+              <loader></loader>
+            </div>
+            <div class="loaded" v-if="avatarLoaded === true">
+              <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 253.38 253.44"><path d="M0,126.38C-.26,56.92,56.58,1.28,123.91,.02c72.59-1.36,129.81,57.57,129.47,126.88-.35,70.26-56.52,126.6-126.74,126.54C56.09,253.38-.03,197.07,0,126.38Zm126.77,98.16c53.91-.53,96.72-43.12,97.54-96.03,.87-55.79-43.41-98.67-96.02-99.43-55.58-.8-98.84,43.57-99.33,96.68-.5,54.54,43.38,98.59,97.81,98.79Z"/><path d="M68.69,106.26c4.18-.48,7.52,1.96,10.36,5.57,6.17,7.85,12.55,15.53,18.56,23.5,2.58,3.42,4.47,3.9,7.97,1.02,20.29-16.72,40.66-33.34,61.29-49.64,3.14-2.48,7.72-4.19,11.7-4.32,4.75-.16,8.81,2.75,10.45,7.82,1.78,5.5,1.46,10.74-3.21,14.62-11.9,9.89-23.96,19.58-36,29.3-13.59,10.98-27.24,21.89-40.83,32.87-8.04,6.5-15.01,5.95-21.52-2.07-9.86-12.13-19.64-24.34-29.35-36.59-2.97-3.74-5.01-7.83-3.25-12.92,2.23-6.43,6.13-9.24,13.84-9.15Z"/></svg>
+
+              Аватар загружен!
+            </div>
+
+            <label class="help">
+              Загрузите баннер проекта, размером  1060x220 пикселей.<br>
+              Поддерживаемые форматы: jpeg, jpg, png, gif и webp.
+            </label>
+            <div class="fake-input">
+
+              <input type="file"
+                     id="projectBanner"
+                     v-on:change="uploadBanner($event)"
+                     accept="image/*" ref="projectBanner">
+            </div>
+            <div class="loader" v-if="bannerLoader === true">
+              <loader></loader>
+            </div>
+            <div class="loaded" v-if="bannerLoaded === true">
+              <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 253.38 253.44"><path d="M0,126.38C-.26,56.92,56.58,1.28,123.91,.02c72.59-1.36,129.81,57.57,129.47,126.88-.35,70.26-56.52,126.6-126.74,126.54C56.09,253.38-.03,197.07,0,126.38Zm126.77,98.16c53.91-.53,96.72-43.12,97.54-96.03,.87-55.79-43.41-98.67-96.02-99.43-55.58-.8-98.84,43.57-99.33,96.68-.5,54.54,43.38,98.59,97.81,98.79Z"/><path d="M68.69,106.26c4.18-.48,7.52,1.96,10.36,5.57,6.17,7.85,12.55,15.53,18.56,23.5,2.58,3.42,4.47,3.9,7.97,1.02,20.29-16.72,40.66-33.34,61.29-49.64,3.14-2.48,7.72-4.19,11.7-4.32,4.75-.16,8.81,2.75,10.45,7.82,1.78,5.5,1.46,10.74-3.21,14.62-11.9,9.89-23.96,19.58-36,29.3-13.59,10.98-27.24,21.89-40.83,32.87-8.04,6.5-15.01,5.95-21.52-2.07-9.86-12.13-19.64-24.34-29.35-36.59-2.97-3.74-5.01-7.83-3.25-12.92,2.23-6.43,6.13-9.24,13.84-9.15Z"/></svg>
+
+              Баннер загружен!
+            </div>
+
+
+          </div>
+        </div>
+
+        <div class="right">
+
+          <label class="help">
+            <span class="heading">Категории проекта</span><br>
+            Выберите категории, котором относится ваш проект.<br>
+            Можно выбрать несколько категорий.
+          </label>
+          <div class="category"
+               v-for="category of categories"
+          >
+
+            <input :id="category.id"
+                   v-model="projectMultiCategories"
+                   type="checkbox"
+                   :value="category.id"
+                   v-on:change="() => {
                   delete this.errors.projectCategoryErr
                   this.$refs.projectMultiCategories.style.borderColor = 'transparent'
                   this.projectMultiCategories.includes(exchangersCategory) ? exchangerSelected = true : exchangerSelected = false
 
                  }"
-                 class="projectMultiCategories">
-          <label :for="category.id">{{category.name}}</label>
+                   class="projectMultiCategories">
+            <label :for="category.id">{{category.name}}</label>
+          </div>
         </div>
-
-        <span class="help">
-          Выберите категорию, к которой относится проект.
-
-        </span>
-      </div>
-      <div class="input-wrapper double">
-        <div class="left">
-          <div class="fake-input">
-            <div class="field-name">Аватар *</div>
-            <input type="file"
-                   ref="projectAvatar"
-                   v-on:change="uploadAvatar($event)"
-                   accept="image/*"
-            >
-
-
-          </div>
-          <div class="loader" v-if="avatarLoader === true">
-            <loader></loader>
-          </div>
-          <div class="loaded" v-if="avatarLoaded === true">
-            <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 253.38 253.44"><path d="M0,126.38C-.26,56.92,56.58,1.28,123.91,.02c72.59-1.36,129.81,57.57,129.47,126.88-.35,70.26-56.52,126.6-126.74,126.54C56.09,253.38-.03,197.07,0,126.38Zm126.77,98.16c53.91-.53,96.72-43.12,97.54-96.03,.87-55.79-43.41-98.67-96.02-99.43-55.58-.8-98.84,43.57-99.33,96.68-.5,54.54,43.38,98.59,97.81,98.79Z"/><path d="M68.69,106.26c4.18-.48,7.52,1.96,10.36,5.57,6.17,7.85,12.55,15.53,18.56,23.5,2.58,3.42,4.47,3.9,7.97,1.02,20.29-16.72,40.66-33.34,61.29-49.64,3.14-2.48,7.72-4.19,11.7-4.32,4.75-.16,8.81,2.75,10.45,7.82,1.78,5.5,1.46,10.74-3.21,14.62-11.9,9.89-23.96,19.58-36,29.3-13.59,10.98-27.24,21.89-40.83,32.87-8.04,6.5-15.01,5.95-21.52-2.07-9.86-12.13-19.64-24.34-29.35-36.59-2.97-3.74-5.01-7.83-3.25-12.92,2.23-6.43,6.13-9.24,13.84-9.15Z"/></svg>
-
-            Аватар загружен!
-          </div>
-          <span class="help">
-            Загрузите аватар проекта, размеры 110x110px, форматы: jpeg, jpg, gif. webp
-          </span>
-        </div>
-        <div class="right">
-          <div class="fake-input">
-            <div class="field-name">Баннер</div>
-            <input type="file"
-
-                   v-on:change="uploadBanner($event)"
-                   accept="image/*" ref="projectBanner">
-          </div>
-          <div class="loader" v-if="bannerLoader === true">
-            <loader></loader>
-          </div>
-          <div class="loaded" v-if="bannerLoaded === true">
-            <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 253.38 253.44"><path d="M0,126.38C-.26,56.92,56.58,1.28,123.91,.02c72.59-1.36,129.81,57.57,129.47,126.88-.35,70.26-56.52,126.6-126.74,126.54C56.09,253.38-.03,197.07,0,126.38Zm126.77,98.16c53.91-.53,96.72-43.12,97.54-96.03,.87-55.79-43.41-98.67-96.02-99.43-55.58-.8-98.84,43.57-99.33,96.68-.5,54.54,43.38,98.59,97.81,98.79Z"/><path d="M68.69,106.26c4.18-.48,7.52,1.96,10.36,5.57,6.17,7.85,12.55,15.53,18.56,23.5,2.58,3.42,4.47,3.9,7.97,1.02,20.29-16.72,40.66-33.34,61.29-49.64,3.14-2.48,7.72-4.19,11.7-4.32,4.75-.16,8.81,2.75,10.45,7.82,1.78,5.5,1.46,10.74-3.21,14.62-11.9,9.89-23.96,19.58-36,29.3-13.59,10.98-27.24,21.89-40.83,32.87-8.04,6.5-15.01,5.95-21.52-2.07-9.86-12.13-19.64-24.34-29.35-36.59-2.97-3.74-5.01-7.83-3.25-12.92,2.23-6.43,6.13-9.24,13.84-9.15Z"/></svg>
-
-            Аватар загружен!
-          </div>
-          <span class="help">
-          Загрузите аватар проекта, размеры 1060х220px, форматы: jpeg, jpg, gif. webp
-        </span>
-        </div>
-
 
       </div>
 
-
-
-    </div>
-    <div class="input-wrapper">
-      <div class="field-name">Описание проекта *</div>
-      <textarea
-                required
-                ref="projectDescription"
-                v-model="projectDescription" maxlength="65535"></textarea>
-      <span class="help">
-        Предоставьте подробное описание проекта, включая его цель, описание продаваемых товаров, что бы пользователь точно понимал что он покупает.
-        От 30 до 65535 символов.
-      </span>
     </div>
     <div class="advanced" v-if="this.exchangerSelected === true">
+      <label class="help">
+        <span class="heading">Параметры обменника</span><br>
+        Введите параметры и курс обмена для вашего обменника
+      </label>
       <div class="input-wrapper">
-        <label for="min" >Минимальный обмен</label>
+        <label class="help" for="min">
+           Курс обмена
+        </label>
         <input
             type="number"
             id="min"
-            placeholder="Минимальный обмен"
+
             v-model="projectExchangeRate"
             ref="projectExchangeRate"
             max="6">
-        <span class="help">
-          Введите размер минимальной суммы обмена
-        </span>
+
       </div>
 
       <div class="input-wrapper">
-        <label for="rate">Курс обмена</label>
+        <label class="help" for="rate">
+          Минимальный обмен
+        </label>
         <input
             type="number"
             id="rate"
-            placeholder="Курс"
+
             v-model="minValueToExchange"
             ref="minValueToExchange"
             max="6">
-        <span class="help">
-          Введите текущий курс вашего обмена
-        </span>
+
       </div>
 
       <div class="input-wrapper">
-        <label for="res">Резерв</label>
+        <label class="help" for="res">
+          Резерв валюты
+        </label>
         <input
             type="number"
             id="res"
-            placeholder="Резерв"
+
             v-model="projectReserve"
             ref="projectReserve"
             max="6">
-        <span class="help">
-          Введите резерв валюты.
-        </span>
+
       </div>
 
 
     </div>
 
     <div class="bottom">
-      <div class="heading">
-        Ссылки на проект *
-      </div>
+      <h3>Ссылки на проект:</h3>
       <div class="help description">
         Одна ссылка обязательно, максимум 12 ссылок.
       </div>
 
       <div class="input-wrapper triple" >
         <div class="left">
-          <div class="field-name">Имя ссылки</div>
           <div class="leftW" v-if="this.addedLinksCount < 13">
+            <label class="help" for="linkName">
+              Ресурс (пример: WWH, Onion и др.)
+            </label>
             <input
                 v-on:keydown.enter="checkLinks()"
+                id="linkName"
                 type="text"
                 v-model="addName"
                 ref="addName"
                 maxlength="20"
                 required>
-            <span class="help">
-              Название ссылки (например: Зеркало, Onion, WWH и другое)
-            </span>
           </div>
         </div>
         <div class="middle">
           <div class="rightW" v-if="this.addedLinksCount < 13">
-            <div class="field-name">Ссылка</div>
+            <label class="help" for="linkHref">
+              Ссылка на проект
+            </label>
             <input
                 v-on:keydown.enter="checkLinks()"
                 type="text"
                 v-model="addLink"
                 ref="addLink"
-
+                id="linkHref"
                 maxlength="100"
                 required>
-            <span class="help" >
-              Сама ссылка, https://myproject.com и аналогичное
-            </span>
+
           </div>
         </div>
         <div class="right">
@@ -248,15 +260,17 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
               <path opacity="0.3" d="M7.69655 17V0H10.3034V17H7.69655ZM0 9.70283V7.33727H18V9.70283H0Z" fill="black"/>
             </svg>
-            Добавить ссылку в проект
+            Добавить эту ссылку и ввести еще
           </button>
 
         </div>
 
 
-        <div class="links-to-add">
-          <h3 v-if="Object.keys(this.linksToAdd).length > 0">
-            Добавленные ссылки</h3><br>
+        <div class="links-to-add" v-if="Object.keys(this.linksToAdd).length > 0">
+          <span class="help">
+            <span class="heading">Добавленные ссылки</span><br>
+            Здесь отображаются ссылки, которые вы добавляете в проект, в точности как на странице проекта.
+          </span>
           <p class="name" v-for="(link, index) of this.linksToAdd" v-if="Object.keys(this.linksToAdd).length > 0">
 
             <a :href="link.link" target="_blank" title="Проверить работоспособность">
@@ -437,7 +451,7 @@ export default {
         } else {
           this.avatarError = false
           delete this.errors.projectAvatarLengthErr
-          this.$refs.projectAvatar.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+          this.$refs.projectAvatar.parentElement.style.borderColor = 'transparent'
 
           console.dir();
           reader.addEventListener('progress', () => {
@@ -500,7 +514,7 @@ export default {
         } else {
           this.bannerError = false
           delete this.errors.bannerLenghtErr
-          this.$refs.projectBanner.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+          this.$refs.projectBanner.parentElement.style.borderColor = 'transparent'
           this.bannerLoader = true
           fetch(`${config.api.url}image-upload`, {
             method: "POST",
@@ -537,7 +551,7 @@ export default {
 
       this.addName !== '' && this.addLink !== '' ? this.checkLinks() : ''
 
-      if (this.projectCategory === this.exchangersCategory) {
+      if (this.exchangerSelected === true) {
 
         projectType = 'exchanger'
 
@@ -546,13 +560,6 @@ export default {
 
       }
 
-      if (this.projectCategory === this.exchangersCategory) {
-        projectType = 'exchanger'
-
-      } else {
-        projectType = 'project'
-
-      }
 
 
       const project = {
@@ -662,35 +669,39 @@ export default {
     },
 
     checkLinks() {
-      this.checkForm()
 
-      if (this.addName < 3) {
+      if (this.addName < 3 && this.addName.length > 0) {
         this.errors.linkError = 'Имя ссылки не может быть меньше 3х символов'
         this.linkErr = true
         this.$refs.addName.style.borderColor = 'red'
       } else {
         this.linkErr = false
         delete this.errors.linkError
-        this.$refs.addName.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.addName.style.borderColor = 'transparent'
       }
 
-      if (this.addLink < 10 ) {
+      if (this.addLink < 10 && this.addLink.length > 0) {
         this.errors.linkLengthError = 'Сама ссылка не может быть меньше, чем 10 символов'
         this.$refs.addLink.style.borderColor = 'red'
         this.linkErr = true
       } else {
         this.linkErr = false
         delete this.errors.linkLengthError
-        this.$refs.addLink.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.addLink.style.borderColor = 'transparent'
       }
 
-      if (/(http(s?)):\/\/+[a-z0-9._]+\.+[a-z0-9._]/i.test(this.addLink) === true) {
+      if (/(http(s?)):\/\/+[a-z0-9._]+\.+[a-z0-9._]/i.test(this.addLink) === true && this.addLink.length > 0) {
         this.linkErr = false
         delete this.errors.linkTypeError
-      } else {
+      } else if(/(http(s?)):\/\/+[a-z0-9._]+\.+[a-z0-9._]/i.test(this.addLink) === false && this.addLink.length > 0) {
         this.errors.linkTypeError = 'Ссылка не валидная, введите ссылку формата https://example.com'
+        console.log(this.addLink.length)
         this.linkErr = true
         this.$refs.addLink.style.borderColor = 'red'
+      }
+
+      if (this.addLink.length > 0 && this.addName.length > 0) {
+        this.addLinkToProject()
       }
 
       if (this.linkErr === true) {
@@ -698,21 +709,19 @@ export default {
           this.$refs.errors.scrollIntoView({ behavior: 'smooth', block: 'start'})
         }, 20)
       } else {
-
         delete this.errors.linksToAddEmpty
-        this.addLinkToProject()
 
       }
 
     },
     checkForm () {
-      this.addLinkToProject()
+      this.checkLinks()
       if (this.projectName.length < 5) {
         this.errors.projectNameErr = 'Название проекта должно быть не менее 5 символов'
         this.$refs.projectName.style.borderColor = 'red'
       } else {
         delete this.errors.projectNameErr
-        this.$refs.projectName.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.projectName.style.borderColor = 'transparent'
       }
 
       if (this.avatarLoader === true) {
@@ -720,7 +729,7 @@ export default {
         this.$refs.projectAvatar.style.borderColor = 'red'
       } else {
         delete this.errors.avatarLoaderErr
-        this.$refs.projectAvatar.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.projectAvatar.style.borderColor = 'transparent'
       }
 
       if (this.bannerLoader === true) {
@@ -728,7 +737,7 @@ export default {
         this.$refs.projectBanner.style.borderColor = 'red'
       } else {
         delete this.errors.bannerLoaderErr
-        this.$refs.projectBanner.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.projectBanner.style.borderColor = 'transparent'
       }
 
       if (this.projectDescription.length < 30 || this.projectDescription.length > 65535) {
@@ -736,7 +745,7 @@ export default {
         this.$refs.projectDescription.style.borderColor = 'red'
       } else {
         delete  this.errors.descriptionErr
-        this.$refs.projectDescription.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.projectDescription.style.borderColor = 'transparent'
       }
 
       if (this.projectMultiCategories.length === 0) {
@@ -748,15 +757,15 @@ export default {
       }
 
       if (this.linksToAdd.length === 0) {
-        this.$refs.addLink.value.length === 0 ?  this.$refs.addLink.style.borderColor = 'red' : this.$refs.addLink.parentElement.style.borderColor = 'rgb(0, 115, 236)'
-        this.$refs.addName.value.length === 0 ?  this.$refs.addName.style.borderColor = 'red' : this.$refs.addName.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.addLink.value.length === 0 ?  this.$refs.addLink.style.borderColor = 'red' : this.$refs.addLink.parentElement.style.borderColor = 'transparent'
+        this.$refs.addName.value.length === 0 ?  this.$refs.addName.style.borderColor = 'red' : this.$refs.addName.parentElement.style.borderColor = 'transparent'
 
         this.errors.linksToAddEmpty = 'Не добавлено ни одной ссылки'
 
       } else {
         delete this.errors.linksToAddEmpty
-        this.$refs.addLink.parentElement.style.borderColor = 'rgb(0, 115, 236)'
-        this.$refs.addName.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.addLink.parentElement.style.borderColor = 'transparent'
+        this.$refs.addName.parentElement.style.borderColor = 'transparent'
       }
 
 
@@ -766,7 +775,7 @@ export default {
 
       } else {
         delete this.errors.projectAvatarEmpty
-        this.$refs.projectAvatar.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.projectAvatar.parentElement.style.borderColor = 'transparent'
       }
 
       if (this.projectMultiCategories.includes(this.exchangersCategory)) {
@@ -779,7 +788,7 @@ export default {
         }
         else {
           delete this.errors.projectExchangeRateErr
-          this.$refs.projectExchangeRate.style.borderColor = 'rgb(0, 115, 236)'
+          this.$refs.projectExchangeRate.style.borderColor = 'transparent'
         }
 
         if (this.minValueToExchange < 10) {
@@ -791,7 +800,7 @@ export default {
         }
         else {
           delete this.errors.minValueToExchangeErr
-          this.$refs.minValueToExchange.style.borderColor = 'rgb(0, 115, 236)'
+          this.$refs.minValueToExchange.style.borderColor = 'transparent'
         }
 
         if (this.projectReserve < 500 ) {
@@ -809,7 +818,7 @@ export default {
         else {
           delete this.errors.projectReserveErr
           delete this.errors.projectReserveMaxErr
-          this.$refs.projectReserve.style.borderColor = 'rgb(0, 115, 236)'
+          this.$refs.projectReserve.style.borderColor = 'transparent'
         }
 
       }
@@ -871,11 +880,11 @@ export default {
 }
 .add {
   border-radius: 5px;
-  border: 1px solid #DFDFDF;
-  background: #FFF;
+  border: none;
+  background: rgb(0, 115, 236);
   margin-top: 0px;
 
-  color: #000;
+  color: #fff;
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
   font-style: normal;
@@ -884,18 +893,27 @@ export default {
   opacity: 1;
   cursor: pointer;
   height: auto;
-  align-items: center;
+  align-items: start;
   padding: 10px;
   width: 100%;
   position: relative;
-  top: 4px;
+
   svg {
     position: relative;
     top: 2px;
+    margin-right: 10px;
+    width: 15px;
+    height: 15px;
+
+    path {
+      fill: #fff;
+      opacity: 1;
+    }
   }
   transition: .3s ease;
 
   &:hover {
+    transform: translateY(-3px);
     opacity: 1;
   }
 }
@@ -953,67 +971,68 @@ export default {
 
 
 }
+.btn.btn-filled {
+  margin-top: 10px;
+}
 .input-wrapper {
 
 }
-.links {
-  .links-to-add {
-    padding: 0 15px;
-    box-sizing: border-box;
+.links-to-add {
+  margin-top: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+
+  h3 {
+    width: 100%;
+  }
+
+  .name {
+    padding: 10px 15px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-
-    h3 {
-      width: 100%;
+    gap: 10px;
+    align-items: center;
+    border-radius: 5px;
+    background: transparent;
+    width: auto;
+    margin: 10px 0px;
+    background-color: #0a58ca;
+    a {
+      color: #fff;
     }
 
-    .name {
-      padding: 0 15px;
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      border-radius: 5px;
-      background: rgb(0, 115, 236);
-      width: auto;
-      margin: 10px 0px;
-      a {
-        color: #fff;
-      }
+    color: var(--neutral, #FFF);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 36px; /* 257.143% */
+    text-decoration: none;
+    transition: .3s ;
 
-      color: var(--neutral, #FFF);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 600;
-      line-height: 36px; /* 257.143% */
-      text-decoration: none;
-      transition: .3s ;
+  }
 
+  svg {
+    position: relative;
+
+    margin-left: 5px;
+    cursor: pointer;
+    path {
+      transition: .3s ease;
+      fill: #ffffff;
     }
 
-    svg {
-      position: relative;
-
-      margin-left: 5px;
-      cursor: pointer;
+    &:hover {
       path {
-        transition: .3s ease;
-        fill: #ffffff;
+        opacity: .8;
       }
-
-      &:hover {
-        path {
-          opacity: .8;
-        }
-      }
-    }
-
-    p {
-      margin-bottom: 5px;
     }
   }
-}
 
+  p {
+    margin-bottom: 5px;
+  }
+}
 
 </style>

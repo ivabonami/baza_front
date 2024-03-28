@@ -1,8 +1,5 @@
 <template>
 
-<!--  <div class="wrapper" ref="recommend">-->
-<!--      <recommended></recommended>-->
-<!--  </div>-->
   <transition name="list">
     <div class="buttons" v-if="loaded === true">
 
@@ -29,7 +26,7 @@
               v-on:click=" () => {
                 if (this.activeSortName !== 'Популярные') {
                   this.activeSortName = 'Популярные'
-                  this.activeSort = 'random'
+                  this.activeSort = 'Популярные'
                   this.getOffset = 0
 
                   this.clicked = true
@@ -48,7 +45,7 @@
           </svg>
 
         </span>
-        <div class="sep"></div>
+        
         <span class="filter" :class="{active: this.activeSortName === 'Сначала старые'}" v-on:click=" () => {
                 if (this.activeSortName !== 'Сначала старые') {
                   this.activeSortName = 'Сначала старые'
@@ -67,7 +64,7 @@
           </svg>
 
         </span>
-        <div class="sep"></div>
+        
 
         <span class="filter" :class="{active: this.activeSortName === 'Сначала новые'}" v-on:click=" () => {
                 if (this.activeSortName !== 'Сначала новые') {
@@ -85,7 +82,7 @@
           </svg>
 
         </span>
-        <div class="sep"></div>
+        
 
         <span class="filter" :class="{active: this.activeSortName === 'С высоким рейтингом'}" v-on:click=" () => {
                 if (this.activeSortName !== 'С высоким рейтингом') {
@@ -103,7 +100,7 @@
           </svg>
         </span>
 
-        <div class="sep"></div>
+        
 
 
         <span class="filter" :class="{active: this.activeSortName === 'С низким рейтингом'}" v-on:click="() => {
@@ -127,7 +124,7 @@
 
       <span class="currentSort"
             ref="categorySort"
-            v-if="this.$route.path === '/'"
+            v-if="this.$route.path === '/' || this.$route.path === '/favorite'"
             v-click-outside="onClickOutsideCategory"
             v-on:click="() => {
               this.showCategorySort = !this.showCategorySort
@@ -157,7 +154,7 @@
               <path class="b" d="M77.45,100.37c1.51-1.42,2.84-2.62,4.11-3.88,30.17-30.16,60.34-60.34,90.51-90.51,7.98-7.98,13.68-7.98,21.67,0,5.07,5.06,10.18,10.09,15.17,15.23,5.98,6.15,6.09,12.43,.13,18.4-40.72,40.81-81.48,81.58-122.26,122.32-5.99,5.98-12.81,5.91-18.88-.14-21.01-20.94-41.98-41.91-62.92-62.91-6.66-6.68-6.63-12.84-.04-19.51,5.27-5.33,10.57-10.64,15.91-15.91,6.67-6.58,12.78-6.56,19.5,.13,11.11,11.05,22.16,22.15,33.25,33.21,1.15,1.15,2.39,2.22,3.84,3.57Z"/>
             </svg>
           </label>
-          <div class="sep"></div>
+          
 
         </div>
 
@@ -320,9 +317,9 @@ export default {
       recommend: ref(),
       backendNoProjects: true,
 
-      activeSort: 'random',
+      activeSort: '',
       activeSortName: 'Популярные',
-      activeSortTab: 'random',
+      activeSortTab: '',
       arrowDate: 'up',
       arrowCategory: 'up',
 
@@ -416,18 +413,28 @@ export default {
       const category = [parseInt(this.$route.path.replace('/projects-list/', ''))]
 
 
-      let url = `${config.api.url}projects?isPayedFirst=true&sort=${sort}&offset=${offset}&limit=${limit}`
+      let url = `${config.api.url}projects?isPayedFirst=true&offset=${offset}&limit=${limit}`
 
-      if (this.$route.path !== '/') {
-        url += `&categoryIds=[${category}]`
+      if (this.$route.path === '/favorite') {
+        url = `${config.api.url}user/project`
 
+      } else {
+        if (this.$route.path !== '/') {
+          url += `&categoryIds=[${category}]`
+        }
+        if (this.activeSortName !== 'Популярные') {
+          url += `&sort=${sort}`
+        }
+
+        if (this.searchQuery !== '') {
+          url += `&search=${this.searchQuery}`
+        }
+        if (this.categoriesFilter.length > 0) {
+          url += `&categoryIds=[${this.categoriesFilter}]`
+        }
       }
-      if (this.searchQuery !== '') {
-        url += `&search=${this.searchQuery}`
-      }
-      if (this.categoriesFilter.length > 0) {
-        url += `&categoryIds=[${this.categoriesFilter}]`
-      }
+
+
 
 
       fetch(url, {
@@ -494,7 +501,7 @@ export default {
 
     .currentSort {
       width: 220px;
-      border: 1px solid #0a58ca;
+      border: 1px solid transparent;
       outline: none;
       color: #000;
       background-color: #fff;
@@ -666,7 +673,7 @@ export default {
   display: flex;
 
   input[type=search] {
-    border: 1px solid #AFBFC9;
+    border: 1px solid transparent;
     outline: none;
     color: #434F58;
     font-size: 1rem;

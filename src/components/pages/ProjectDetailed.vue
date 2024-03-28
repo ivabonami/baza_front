@@ -1,10 +1,5 @@
 <template v-cloak>
-  <button
-      v-on:click="this.$router.go(-1)"
-      class="back">
-    <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80.52 137.91"><path d="M26.75,68.29c14.02,13.92,26.77,26.57,39.5,39.23,3.54,3.52,7.15,6.98,10.53,10.65,4.87,5.29,4.82,11.95,.1,16.49-4.67,4.49-11.53,4.36-16.53-.62C41.46,115.25,22.61,96.41,3.83,77.51c-4.97-5-5.17-11.48-.22-16.49C22.7,41.7,41.91,22.5,61.2,3.38c4.71-4.67,11.74-4.38,16.15,.11,4.28,4.36,4.32,11.35-.42,16.15-14.74,14.95-29.61,29.77-44.5,44.57-1.41,1.4-3.26,2.36-5.69,4.08Z"/></svg>
-    Назад
-  </button>
+
   <div class="wrapper" ref="wrapper">
     <div class="project">
       <div class="project-banner">
@@ -170,7 +165,6 @@
 
                 v-on:updated="(emit) => {
                       this.tab = 'services'
-                      this.$router.push(`?highlight=${emit}`)
                     }"
                 >
 
@@ -313,7 +307,7 @@
                   v-bind:projectId="project.id"
                   v-on:added="() => {
                     this.tab = 'services'
-                    this.limit = 6
+                    this.limit = 8
                     this.offset = 0
                     this.products = this.products.splice(this.products.length, this.products.length)
                     this.getProducts(6, 0)
@@ -419,13 +413,13 @@
 <script>
 import servicesCard from "../TemplateParts/Cards/ServicesCard.vue";
 import { ref } from 'vue'
-import AddService from "../Controllers/ProductControllers/ProductController_Add.vue";
+import AddService from "../Controllers/ProductControllers/Product_Add.vue";
 import config from '../../assets/js/config.js'
 import { isLogin } from '../../assets/js/config.js'
 import projectDescriptionTab from "../TemplateParts/Project Tabs/DescriptionTab.vue";
 import projectReviews from "../TemplateParts/Project Tabs/ReviewsTab.vue";
-import editProject from "../Controllers/ProjectControllers/ProjectController_Edit.vue";
-import editService from "../Controllers/ProductControllers/ProductController_Edit.vue";
+import editProject from "../Controllers/ProjectControllers/Project_Edit.vue";
+import editService from "../Controllers/ProductControllers/Product_Edit.vue";
 import modalWindowBackdrop from "../TemplateParts/Page Parts/Modal.vue";
 import {Waypoint} from "vue-waypoint";
 
@@ -444,26 +438,17 @@ export default {
       api: config.api.url,
 
       isLogin: isLogin(),
-      editProjectShow: false,
       services: {},
       tab: '',
       favorite: false,
       project: {},
 
-      productName: '',
-      productPhoto: '',
-
-      editMode: false,
       isOwner: false,
 
       projectName: '',
       projectDescription: '',
-      projectCategory: '',
-      dataStars: 0,
-      starsRating: ref(null),
 
       reviews: {},
-      reviewsLength: 0,
 
       isProjectReviewed: false,
       username: '',
@@ -474,22 +459,15 @@ export default {
       allReviewed: true,
       clickedReviewIndex: 0,
 
-
       highlighted: '',
       products: [],
 
       isFavourite: false,
 
-      editTextShow: false,
-      editAddShow: false,
-
-      limit: 6,
+      limit: 8,
       offset: 0,
       emptyResponse: false,
-
       editProduct: {},
-
-
 
       config
     }
@@ -535,7 +513,7 @@ export default {
       })
           .then((response) => response.json())
           .then(response => {
-            this.limit = 6
+            this.limit = 8
             this.offset = 0
             this.products = this.products.slice(this.products.length, this.products.length)
             this.getProducts(this.limit, this.offset)
@@ -548,7 +526,7 @@ export default {
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
 
-      fetch(`http://62.113.96.171:3000/user/project/${projectId}`, {
+      fetch(`${config.api.url}user/project/${projectId}`, {
         method: "POST",
         headers: myHeaders,
         body: JSON.stringify(
@@ -981,13 +959,13 @@ textarea {
           color: #000;
           font-weight: 700;
           border-radius: 5px;
-          font-size: 18px;
+          font-size: 14px;
           text-align: end;
           align-items: center;
 
           svg {
-            width: 15px;
-            height: 15px;
+            width: 12px;
+            height: 12px;
             margin-right: 10px;
 
             path {
@@ -1125,12 +1103,12 @@ textarea {
   .tabs-content {
     width: 100%;
     display: flex;
-    gap: 20px;
+    gap: 15px;
     flex-wrap: wrap;
     justify-content: start;
 
     .shop-view {
-      width: 31%
+      width: 23%
     }
   }
   .card {

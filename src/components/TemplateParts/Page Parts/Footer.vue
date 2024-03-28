@@ -1,6 +1,6 @@
 <template>
 
-  <div class="wrapper">
+  <div class="wrapper box-shadow">
     <div class="top">
       <div class="footer-logo">
         <svg xmlns="http://www.w3.org/2000/svg" width="132" height="103" viewBox="0 0 132 103" fill="none">
