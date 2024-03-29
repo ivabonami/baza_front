@@ -918,6 +918,7 @@ export default {
       font-size: 14px;
       flex-wrap: wrap;
       justify-content: start;
+
       .stat {
         display: block;
         width: 100%;
@@ -1031,5 +1032,20 @@ export default {
     width: 190px;
     right: -11px;
   }
+}
+@media screen and (max-width: 500px){
+  .project {
+    .advanced-fields {
+      position: relative;
+      bottom: 0;
+      width: 100%;
+      left: 0;
+      padding: 10px;
+      margin-top: 20px;
+      margin-bottom: 0;
+
+    }
+  }
+
 }
 </style>

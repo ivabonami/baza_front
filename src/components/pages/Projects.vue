@@ -680,7 +680,7 @@ export default {
     line-height: calc(1em + 8px);
     font-family: "Proxima Nova", sans-serif;
     display: block;
-
+    background-color: #fff;
     width: 100%;
     transition: all .2s ease-in-out;
     border-radius: 10px;
@@ -820,7 +820,7 @@ export default {
       }
       .sortFilter {
         &.categories {
-          left: 210px;
+          left: 190px;
           width: 180px;
         }
         .filter {

@@ -1,5 +1,5 @@
 <template>
-  <div class="service-card box-shadow can-be-hovered" ref="card"
+  <div class="service-card can-be-hovered" ref="card"
 
        v-if="$props.name !== ''" :class="{
           deleted: this.toDelete,
@@ -186,6 +186,7 @@ export default {
   margin-bottom: 5px;
   position: relative;
   border-radius: 20px;
+  height: 100%;
 
   background-color: #ffffff;
 
@@ -234,9 +235,12 @@ export default {
     transition: .3s ease;
 
     &:hover {
-      transform: translateY(-5px);
-      box-shadow: rgba(0, 0, 0, 0.09) 0 13px 22px;
+      .image {
+        img {
 
+        }
+      }
+      background-color: #edf1fc;
     }
   }
 
@@ -299,13 +303,13 @@ export default {
     text-align: center;
 
     img {
-
       width: 100%;
       height: 100%;
       object-fit: cover;
       position: relative;
       top: 50%;
       transform: translateY(-50%);
+
 
     }
   }
@@ -316,6 +320,7 @@ export default {
     display: -webkit-box;
     -webkit-line-clamp: 5;
     line-clamp: 5;
+    text-align: left;
     -webkit-box-orient: vertical;
 
     p {
@@ -347,4 +352,5 @@ export default {
   }
 
 }
+
 </style>

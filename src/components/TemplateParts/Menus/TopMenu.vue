@@ -1,11 +1,14 @@
 <template>
   <div class="links justify-between">
+
     <router-link to="/about-project"
                  class="link"
                  v-slot="{isActive, isExactActive}">О проекте</router-link>
     <router-link to="/advertisement" class="link">Реклама</router-link>
     <router-link to="/guarantee" class="link">Гарант</router-link>
     <router-link to="/contacts" class="link">Контакты</router-link>
+
+
 
     <button class="btn btn-outlined"
             v-on:click="() => {
@@ -107,6 +110,7 @@ export default {
       showModal: this.$emit.showModal,
       isAdmin: false,
       modal: {},
+      showSidebar: false,
       signOut, userInfo, refreshToken
     }
   },

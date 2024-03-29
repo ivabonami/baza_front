@@ -242,7 +242,9 @@
                         }"
                         v-on:click="() => {
                           this.showModal = true
+                          this.highlight = 0
                           this.modal= {
+
                             iconType: 'service',
                             large: true,
                             image: `${config.api.url}${item.avatarFilePath}`,
@@ -422,6 +424,7 @@ import editProject from "../Controllers/ProjectControllers/Project_Edit.vue";
 import editService from "../Controllers/ProductControllers/Product_Edit.vue";
 import modalWindowBackdrop from "../TemplateParts/Page Parts/Modal.vue";
 import {Waypoint} from "vue-waypoint";
+import {highlight} from "../../assets/js/productController.js";
 
 export default {
 
@@ -450,14 +453,9 @@ export default {
 
       reviews: {},
 
-      isProjectReviewed: false,
       username: '',
 
       isAdmin: false,
-      showNotReviewed: false,
-      notReviewedMessageShow: false,
-      allReviewed: true,
-      clickedReviewIndex: 0,
 
       highlighted: '',
       products: [],
@@ -469,7 +467,7 @@ export default {
       emptyResponse: false,
       editProduct: {},
 
-      config
+      config, highlight
     }
   },
   props: ['selectedId', 'highlight', 'tab'],
@@ -1171,6 +1169,8 @@ textarea {
     .tabs-content {
       .shop-view {
         width: 100%;
+        justify-content: center;
+        display: flex;
       }
     }
   }

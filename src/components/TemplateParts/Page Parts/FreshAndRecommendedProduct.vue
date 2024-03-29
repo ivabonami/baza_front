@@ -30,31 +30,28 @@
     <div class="tabs-content-wrapper" ref="productsWrapper">
       <loader v-if="loading === true"></loader>
       <transition-group name="list" tag="div" class="tabs-content" v-else>
-        <div class="shop-view" v-for="item in products" v-if="products.length > 0 && loading === false"
-        >
-          <services-card
-              ref="sliderItem"
-              v-bind:name="item.name"
-              v-bind:image="`${config.api.url}${item.avatarFilePath}`"
-              v-bind:id="item.id"
-              v-bind:projectId="item.ProjectId"
-              v-bind:isOwner="false"
-              v-bind:clickable="true"
-          >
-          </services-card>
 
-        </div>
+        <Carousel v-bind="settings" :breakpoints="breakpoints" :wrap-around="true">
+          <Slide class="shop-view" v-for="item in products" v-if="products.length > 0 && loading === false" >
+            <services-card
+                ref="sliderItem"
+                v-bind:name="item.name"
+                v-bind:image="`${config.api.url}${item.avatarFilePath}`"
+                v-bind:id="item.id"
+                v-bind:projectId="item.ProjectId"
+                v-bind:isOwner="false"
+                v-bind:clickable="true"
+            >
+            </services-card>
+          </Slide>
 
+          <template #addons>
+            <Navigation />
+          </template>
+        </Carousel>
 
 
       </transition-group>
-
-    </div>
-    <div class="arrows" v-if="disableSliderArrows === false">
-      <span class="prev" v-on:click="carousel(-1)">PREV</span>
-      <span>_____________________________</span>
-      <span class="next" v-on:click="carousel(1)">NEXT</span>
-
 
     </div>
 
@@ -67,11 +64,17 @@ import { ref } from 'vue'
 import servicesCard from "../Cards/ServicesCard.vue";
 import loader from "./Loader.vue";
 import config from "../../../assets/js/config.js";
-
+import 'vue3-carousel/dist/carousel.css'
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 
 export default {
   name: "Recommended.vue",
-  components: {servicesCard, loader},
+  components: {servicesCard,
+    loader,
+    Carousel,
+    Slide,
+    Pagination,
+    Navigation,},
 
 
   data() {
@@ -81,50 +84,37 @@ export default {
       products: [],
       loading: true,
       disableSliderArrows: false,
-      margin: 0,
-      currentMargin: 0,
-      config
+      config,
+
+      settings: {
+        itemsToShow: 3.5,
+        snapAlign: 'center',
+        autoplay: 5000,
+      },
+      breakpoints: {
+        320: {
+          itemsToShow: 1,
+          snapAlign: 'center',
+        },
+        400: {
+          itemsToShow: 1.25,
+          snapAlign: 'center',
+        },
+        // 700px and up
+        768: {
+          itemsToShow: 2.3,
+          snapAlign: 'start',
+        },
+        // 1024 and up
+        1024: {
+          itemsToShow: 3.5,
+          snapAlign: 'start',
+        },
+      },
     }
   },
   methods: {
-    carousel (slideCount) {
-      const items = this.$refs.sliderItem,
-          maxSlides = items.length,
-          wrapper = this.$refs.productsWrapper
-      let slideWidth = 0
 
-      let maxLeft = - this.currentMargin + wrapper.clientWidth,
-          maxRight = this.currentMargin + wrapper.clientWidth
-
-      for (let item of items) {
-        slideWidth = item.cardWidth
-      }
-      const sliderWidth = (items.length * (slideWidth + 20))
-
-      if (slideCount > 0) {
-
-        if (maxLeft < sliderWidth) {
-          this.currentMargin -= (slideWidth + 20)
-          this.margin = `${(this.currentMargin)}px`
-          console.log('nice')
-        } else {
-          this.currentMargin = 0
-          this.margin = `${(this.currentMargin)}px`
-          console.log('ended')
-        }
-        console.log(maxLeft, sliderWidth)
-      } else {
-
-        if (this.currentMargin >= 0) {
-
-        } else {
-          this.currentMargin += (slideWidth + 20)
-          this.margin = `${(this.currentMargin)}px`
-        }
-      }
-
-
-    },
 
     switchTabs(tab) {
       this.tab = tab
@@ -174,30 +164,44 @@ export default {
 <style scoped lang="scss">
 .tabs-content-wrapper {
   width: 100%;
-  overflow-x: scroll;
-  overflow-y: hidden;
+}
 
-
+.carousel__next, .carousel__prev {
+  background-color: #fff!important;
+  padding: 10px;
+  border-radius: 200px;
 }
 
 .tabs-content {
-  width: auto;
-  position: relative;
+  width: 100%;
   justify-content: start;
   margin-top: 30px;
   min-height: 270px;
   gap: 20px;
+  box-sizing: border-box;
   display: flex;
   flex-wrap: nowrap;
   left: v-bind('margin');
   transition: .3s ease;
 
+  .carousel {
+    width: 100%;
+
+
+  }
+
 
   .shop-view {
     display: flex;
-    width: 23%;
+    width: 25%;
     gap: 20px;
-
+    min-height: 200px;
+    color: var(--vc-clr-white);
+    font-size: 20px;
+    overflow-y: visible;
+    border-radius: 8px;
+    justify-content: start;
+    align-items: stretch;
   }
 }
 
@@ -205,9 +209,7 @@ export default {
   .tabs-content {
     flex-wrap: wrap;
     .shop-view {
-      flex-wrap: wrap;
       width: 100%;
-      flex-basis: 100%;
     }
   }
 }
