@@ -96,8 +96,8 @@ export default {
           itemsToShow: 1,
           snapAlign: 'center',
         },
-        400: {
-          itemsToShow: 1.25,
+        410: {
+          itemsToShow: 1.5,
           snapAlign: 'center',
         },
         // 700px and up

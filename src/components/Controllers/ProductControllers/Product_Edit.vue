@@ -1,10 +1,13 @@
 <template>
-  <h1>Изменить услугу:</h1>
+  <h2>Изменить услугу:</h2>
 
   <div class="add-project form-wrapper">
     <div class="left">
       <div class="input-wrapper">
-        <div class="field-name">Название услуги</div>
+        <label class="help">
+          <span class="heading">Название услуги</span>
+          Введите название услуги, которое коротко и ясно отражает его суть. От 5 до 255 символов.
+        </label>
         <input
             type="text"
             placeholder="Название проекта"
@@ -12,14 +15,15 @@
             minlength="5" maxlength="255"
             ref="productName"
             required>
-        <span class="help">
-          Введите название услуги, которое коротко и ясно отражает его суть. От 5 до 255 символов.
-        </span>
+
       </div>
 
 
       <div class="input-wrapper">
-        <div class="field-name">Изображение услуги</div>
+        <label class="help">
+          <span class="heading">Изображение услуги</span>
+          Загрузите изображение услуги, размеры 230x170px, форматы: jpeg, jpg, gif. webp.
+        </label>
         <div class="fake-input">
           <input type="file"
                  ref="projectAvatar"
@@ -28,20 +32,19 @@
 
           >
         </div>
-        <span class="help">
-          Загрузите изображение услуги, размеры 230x170px, форматы: jpeg, jpg, gif. webp. Старое изображение будет удалено.
-        </span>
+
       </div>
       <div class="input-wrapper">
-        <div class="field-name">Описание услуги</div>
+        <label class="help">
+          <span class="heading">Описание услуги</span>
+          Предоставьте подробное описание услуги, включая еу цель, описание продаваемого товара, что бы пользователь точно понимал что он покупает.
+        </label>
         <textarea
             required
             ref="productDescription"
             maxlength="65535"
             v-model="product.description"></textarea>
-        <span class="help">
-        Предоставьте подробное описание услуги, включая еу цель, описание продаваемого товара, что бы пользователь точно понимал что он покупает.
-      </span>
+
       </div>
 
 
@@ -177,7 +180,7 @@ export default {
       } else {
         this.avatarError = false
         this.avatarErrorPushed = false
-        this.$refs.projectAvatar.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.projectAvatar.parentElement.style.borderColor = 'transparent'
 
         fetch("http://62.113.96.171:3000/image-upload", {
           method: "POST",
@@ -198,7 +201,7 @@ export default {
         this.$refs.productName.style.borderColor = 'red'
       } else {
         delete this.errors.serviceNameErr
-        this.$refs.productName.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.productName.style.borderColor = 'transparent'
       }
 
       if (this.product.description.length < 30) {
@@ -206,7 +209,7 @@ export default {
         this.$refs.productDescription.style.borderColor = 'red'
       } else {
         delete this.errors.serviceDescriptionErr
-        this.$refs.productDescription.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.productDescription.style.borderColor = 'transparent'
       }
 
       if (this.product.image.length === 0) {
@@ -214,7 +217,7 @@ export default {
         this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
       } else {
         delete this.errors.serviceImageErr
-        this.$refs.projectAvatar.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.projectAvatar.parentElement.style.borderColor = 'transparent'
       }
 
       if (this.avatarError === true) {
@@ -222,7 +225,7 @@ export default {
         this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
       } else {
         delete this.errors.serviceImageTypeErr
-        this.$refs.projectAvatar.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.projectAvatar.parentElement.style.borderColor = 'transparent'
       }
 
       if (this.errors) {
@@ -245,28 +248,7 @@ export default {
   margin-top: 20px;
 }
 
-.add-project {
-  display: flex;
-  gap: 2%;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  .left {
-    width: 100%;
-  }
 
-  .help {
-    color: #000;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1;
-    margin-top: 7px;
-
-    opacity: 1;
-    display: block;
-  }
-}
 
 .errors {
   margin-top: 10px;

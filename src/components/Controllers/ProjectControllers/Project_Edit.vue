@@ -119,7 +119,7 @@
                    v-on:change="() => {
                   delete this.errors.projectCategoryErr
                   this.$refs.projectMultiCategories.style.borderColor = 'transparent'
-                  this.projectMultiCategories.includes(exchangersCategory) ? exchangerSelected = true : exchangerSelected = false
+                  this.projectMultiCategories.includes(exchangersCategory) ? this.exchangerSelected = true : this.exchangerSelected = false
 
                  }"
                    class="projectMultiCategories">
@@ -367,6 +367,7 @@ export default {
   mounted() {
     this.getCategoryList()
 
+
     this.projectName = this.$props.project.name
     this.projectDescription = this.$props.project.description
 
@@ -375,7 +376,10 @@ export default {
     }
     for (let category of store.categories) {
       category.name === 'Обменники' ?  this.exchangersCategory = category.id : ''
+
+      this.projectMultiCategories.includes(this.exchangersCategory) ? this.exchangerSelected = true : this.exchangerSelected = false
     }
+
 
     this.$props.project.bannerFilePath === null ? this.noBanner = true : this.noBanner = false
 
@@ -449,7 +453,7 @@ export default {
         } else {
           this.avatarError = false
           delete this.errors.projectAvatarLengthErr
-          this.$refs.projectAvatar.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+          this.$refs.projectAvatar.parentElement.style.borderColor = 'transparent'
 
           console.dir();
           reader.addEventListener('progress', () => {
@@ -513,7 +517,7 @@ export default {
         } else {
           this.bannerError = false
           delete this.errors.bannerLenghtErr
-          this.$refs.projectBanner.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+          this.$refs.projectBanner.parentElement.style.borderColor = 'transparent'
           this.bannerLoader = true
           fetch(`${config.api.url}image-upload`, {
             method: "POST",
@@ -656,7 +660,7 @@ export default {
       } else {
         this.linkErr = false
         delete this.errors.linkError
-        this.$refs.addName.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.addName.style.borderColor = 'transparent'
       }
 
       if (this.addLink < 10 ) {
@@ -666,7 +670,7 @@ export default {
       } else {
         this.linkErr = false
         delete this.errors.linkLengthError
-        this.$refs.addLink.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.addLink.style.borderColor = 'transparent'
       }
 
       if (/(http(s?)):\/\/+[a-z0-9._]+\.+[a-z0-9._]/i.test(this.addLink) === true) {
@@ -696,7 +700,7 @@ export default {
         this.$refs.projectName.style.borderColor = 'red'
       } else {
         delete this.errors.projectNameErr
-        this.$refs.projectName.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.projectName.style.borderColor = 'transparent'
       }
 
       if (this.avatarLoader === true) {
@@ -704,7 +708,7 @@ export default {
         this.$refs.projectAvatar.style.borderColor = 'red'
       } else {
         delete this.errors.avatarLoaderErr
-        this.$refs.projectAvatar.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.projectAvatar.style.borderColor = 'transparent'
       }
 
       if (this.bannerLoader === true) {
@@ -712,7 +716,7 @@ export default {
         this.$refs.projectBanner.style.borderColor = 'red'
       } else {
         delete this.errors.bannerLoaderErr
-        this.$refs.projectBanner.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.projectBanner.style.borderColor = 'transparent'
       }
 
       if (this.projectDescription.length < 30 || this.projectDescription.length > 65535) {
@@ -720,7 +724,7 @@ export default {
         this.$refs.projectDescription.style.borderColor = 'red'
       } else {
         delete  this.errors.descriptionErr
-        this.$refs.projectDescription.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.projectDescription.style.borderColor = 'transparent'
       }
 
       if (this.projectMultiCategories.length === 0) {
@@ -732,15 +736,15 @@ export default {
       }
 
       if (this.linksToAdd.length === 0) {
-        this.$refs.addLink.value.length === 0 ?  this.$refs.addLink.style.borderColor = 'red' : this.$refs.addLink.parentElement.style.borderColor = 'rgb(0, 115, 236)'
-        this.$refs.addName.value.length === 0 ?  this.$refs.addName.style.borderColor = 'red' : this.$refs.addName.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.addLink.value.length === 0 ?  this.$refs.addLink.style.borderColor = 'red' : this.$refs.addLink.parentElement.style.borderColor = 'transparent'
+        this.$refs.addName.value.length === 0 ?  this.$refs.addName.style.borderColor = 'red' : this.$refs.addName.parentElement.style.borderColor = 'transparent'
 
         this.errors.linksToAddEmpty = 'Не добавлено ни одной ссылки'
 
       } else {
         delete this.errors.linksToAddEmpty
-        this.$refs.addLink.parentElement.style.borderColor = 'rgb(0, 115, 236)'
-        this.$refs.addName.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.addLink.parentElement.style.borderColor = 'transparent'
+        this.$refs.addName.parentElement.style.borderColor = 'transparent'
       }
 
       if (this.projectAvatar.length === 0) {
@@ -749,7 +753,7 @@ export default {
 
       } else {
         delete this.errors.projectAvatarEmpty
-        this.$refs.projectAvatar.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.projectAvatar.parentElement.style.borderColor = 'transparent'
       }
 
       if (this.projectMultiCategories.includes(this.exchangersCategory)) {
@@ -762,7 +766,7 @@ export default {
         }
         else {
           delete this.errors.projectExchangeRateErr
-          this.$refs.projectExchangeRate.style.borderColor = 'rgb(0, 115, 236)'
+          this.$refs.projectExchangeRate.style.borderColor = 'transparent'
         }
 
         if (this.minValueToExchange < 10) {
@@ -774,7 +778,7 @@ export default {
         }
         else {
           delete this.errors.minValueToExchangeErr
-          this.$refs.minValueToExchange.style.borderColor = 'rgb(0, 115, 236)'
+          this.$refs.minValueToExchange.style.borderColor = 'transparent'
         }
 
         if (this.projectReserve < 500 ) {
@@ -792,7 +796,7 @@ export default {
         else {
           delete this.errors.projectReserveErr
           delete this.errors.projectReserveMaxErr
-          this.$refs.projectReserve.style.borderColor = 'rgb(0, 115, 236)'
+          this.$refs.projectReserve.style.borderColor = 'transparent'
         }
 
       }
@@ -955,7 +959,7 @@ export default {
     gap: 10px;
     align-items: center;
     border-radius: 5px;
-    background: rgb(0, 115, 236);
+    background: #0a58ca;
     width: auto;
     margin: 10px 0px;
     margin-right: 10px;

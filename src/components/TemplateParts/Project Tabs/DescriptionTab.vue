@@ -103,7 +103,7 @@ export default {
 
     .this-project-link {
       border-radius: 5px;
-      background: rgb(0, 115, 236);
+      background: #0a58ca;
       padding: 10px 15px;
       width: auto;
       margin-top: 10px;

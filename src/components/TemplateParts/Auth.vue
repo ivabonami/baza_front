@@ -160,14 +160,14 @@ export default {
         this.errors.push('Название услуги должно быть не менее 5 символов')
         this.$refs.projectName.style.borderColor = 'red'
       } else {
-        this.$refs.projectName.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.projectName.style.borderColor = 'transparent'
       }
 
       if (this.projectDescription.length < 30) {
         this.errors.push('Описание услуги не должно быть меньше 30 символов')
         this.$refs.projectDescription.style.borderColor = 'red'
       } else {
-        this.$refs.projectDescription.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.projectDescription.style.borderColor = 'transparent'
       }
 
       if (this.errors.length > 0 ) {
@@ -263,7 +263,7 @@ export default {
 .form {
   .input {
     border-radius: 5px;
-    border: 1px solid rgb(0, 115, 236);
+    border: 1px solid transparent;
     background: var(--neutral, #FFF);
     padding: 10px;
     color: #000;

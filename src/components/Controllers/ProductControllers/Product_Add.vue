@@ -147,7 +147,7 @@ export default {
       } else {
         this.avatarError = false
         this.avatarErrorPushed = false
-        this.$refs.projectAvatar.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.projectAvatar.parentElement.style.borderColor = 'transparent'
 
         fetch("http://62.113.96.171:3000/image-upload", {
           method: "POST",
@@ -168,7 +168,7 @@ export default {
         this.$refs.productName.style.borderColor = 'red'
       } else {
         delete this.errors.serviceNameErr
-        this.$refs.productName.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.productName.style.borderColor = 'transparent'
       }
 
       if (this.productDescription.length < 30) {
@@ -176,7 +176,7 @@ export default {
         this.$refs.productDescription.style.borderColor = 'red'
       } else {
         delete this.errors.serviceDescriptionErr
-        this.$refs.productDescription.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.productDescription.style.borderColor = 'transparent'
       }
 
       if (this.projectAvatar.length === 0) {
@@ -184,7 +184,7 @@ export default {
         this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
       } else {
         delete this.errors.serviceImageErr
-        this.$refs.projectAvatar.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.projectAvatar.parentElement.style.borderColor = 'transparent'
       }
 
       if (this.avatarError === true) {
@@ -192,7 +192,7 @@ export default {
         this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
       } else {
         delete this.errors.serviceImageTypeErr
-        this.$refs.projectAvatar.parentElement.style.borderColor = 'rgb(0, 115, 236)'
+        this.$refs.projectAvatar.parentElement.style.borderColor = 'transparent'
       }
 
       if (this.errors) {

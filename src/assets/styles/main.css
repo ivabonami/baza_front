@@ -171,13 +171,13 @@ a {
 }
 .btn.btn-outlined {
   border-radius: 5px;
-  border: 1px solid var(--new-dark, rgb(0, 115, 236));
+  border: 1px solid var(--new-dark, #0a58ca);
   box-shadow: 0 0 3px rgba(13, 110, 253, 0.25);
   background-color: transparent;
 }
 .btn.btn-submit {
   border-radius: 5px;
-  background: var(--new-dark, rgb(0, 115, 236));
+  background: var(--new-dark, #0a58ca);
   padding: 10px 15px;
   color: #FFF;
   text-align: center;
@@ -190,7 +190,7 @@ a {
 }
 .btn.btn-filled {
   color: #ffffff;
-  background-color: rgb(0, 115, 236);
+  background-color: #0a58ca;
   margin-top: 30px;
   display: inline-block;
   cursor: pointer;
@@ -323,7 +323,7 @@ a {
   opacity: 0.8;
 }
 .tabs-links button.active {
-  border-bottom-color: rgb(0, 115, 236);
+  border-bottom-color: #0a58ca;
 }
 
 .list-move,
@@ -406,19 +406,19 @@ button.back svg {
   position: relative;
 }
 .form-wrapper .input-wrapper .help {
-  color: #000;
+  color: #989898;
   font-family: "Montserrat", sans-serif;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
   line-height: 1;
   margin-bottom: 10px;
-  opacity: 1;
   display: block;
 }
 .form-wrapper .input-wrapper .help .heading {
+  color: black;
+  opacity: 1;
   font-weight: 600;
-  margin-bottom: -10px;
   display: block;
   font-size: 20px;
 }
@@ -506,7 +506,7 @@ button.back svg {
   opacity: 0.5;
 }
 .form-wrapper .fake-input input[type=file] {
-  color: rgb(0, 115, 236);
+  color: transparent;
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
   font-size: 10px;
@@ -518,12 +518,12 @@ button.back svg {
 }
 .form-wrapper .fake-input input[type=file]::file-selector-button {
   border-radius: 5px;
-  border: 1px solid var(--new-dark, rgb(0, 115, 236));
+  border: 1px solid var(--new-dark, transparent);
   background: #FFF;
   width: auto;
   box-sizing: border-box;
   padding: 10px;
-  color: rgb(0, 115, 236);
+  color: transparent;
   font-family: "Montserrat", sans-serif;
   font-size: 12px;
   font-style: normal;
@@ -630,7 +630,7 @@ button.back svg {
 }
 .form-wrapper select {
   border-radius: 5px;
-  border: 1px solid var(--new-dark, rgb(0, 115, 236));
+  border: 1px solid var(--new-dark, transparent);
   background: var(--neutral, #FFF);
   color: #000;
   padding: 10px 15px;

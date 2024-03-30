@@ -623,7 +623,7 @@ export default {
   }
 }
 .btn {
-  color: rgb(0, 115, 236);
+  color: #0a58ca;
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
   font-style: normal;
@@ -632,15 +632,15 @@ export default {
   padding: 5px 10px;
   background-color: #fff;
   border-radius: 100px;
-  border: 1px solid rgb(0, 115, 236);
+  border: 1px solid #0a58ca;
   svg {
     path {
       transition: .3s ease;
-      fill: rgb(0, 115, 236);
+      fill: transparent;
     }
   }
   &.active {
-    background-color: rgb(0, 115, 236);
+    background-color: transparent;
     color: #fff;
     svg {
       path {

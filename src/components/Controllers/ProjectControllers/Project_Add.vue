@@ -881,7 +881,7 @@ export default {
 .add {
   border-radius: 5px;
   border: none;
-  background: rgb(0, 115, 236);
+  background: transparent;
   margin-top: 0px;
 
   color: #fff;
