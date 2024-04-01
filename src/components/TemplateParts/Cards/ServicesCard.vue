@@ -353,5 +353,23 @@ export default {
   }
 
 }
+@media screen and (max-width: 500px) {
+  .service-card {
+    min-width: 180px;
+    width: 190px;
+    max-width: 220px;
+
+    .service-header {
+      p {
+        font-size: 14px;
+        margin-top: 10px;
+        line-height: 18px;
+      }
+    }
+    .service-description {
+      font-size: 14px;
+    }
+  }
+}
 
 </style>

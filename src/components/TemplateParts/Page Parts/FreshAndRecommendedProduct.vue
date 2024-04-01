@@ -88,17 +88,17 @@ export default {
 
       settings: {
         itemsToShow: 3.5,
-        snapAlign: 'center',
+        snapAlign: 'start',
         autoplay: 5000,
       },
       breakpoints: {
         320: {
-          itemsToShow: 1,
-          snapAlign: 'center',
+          itemsToShow: 2,
+          snapAlign: 'start',
         },
         410: {
-          itemsToShow: 1.5,
-          snapAlign: 'center',
+          itemsToShow: 2,
+          snapAlign: 'start',
         },
         // 700px and up
         768: {

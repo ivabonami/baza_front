@@ -1,4 +1,7 @@
 import './assets/styles/main.css'
+import './assets/styles/fonts.css'
+
+
 import {createApp, watch} from "vue";
 import App from './App.vue'
 

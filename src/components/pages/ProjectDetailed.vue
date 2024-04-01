@@ -15,9 +15,9 @@
           <p class="ownerText">
             Владелец: <b><span ref="owner"></span></b>
           </p>
-          <p class="ratingText">
+          <p class="ratingText" v-if="this.tab !== 'testimonials'">
             Рейтинг:
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <svg xmlns="http://www.w3.org/2000/svg" v-if="project.ratingAvg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path
                   d="M8.93325 0.7084L10.1489 4.61808C10.2802 5.04057 10.6571 5.32648 11.0822 5.32648H15.0168C15.9674 5.32648 16.3627 6.59722 15.5936 7.18118L12.4105 9.59732C12.0665 9.85835 11.9227 10.3211 12.054 10.7436L13.2697 14.6533C13.5635 15.5978 12.5287 16.3833 11.7597 15.7996L8.57651 13.3835C8.23253 13.1224 7.7669 13.1224 7.42292 13.3835L4.23977 15.7996C3.47071 16.3833 2.43593 15.5978 2.72972 14.6533L3.94542 10.7436C4.07671 10.3211 3.93294 9.85835 3.58896 9.59732L0.406373 7.18088C-0.362688 6.59722 0.0326187 5.32618 0.983169 5.32618H4.91752C5.3426 5.32618 5.71947 5.04028 5.85077 4.61778L7.06675 0.7084C7.36053 -0.236133 8.63947 -0.236133 8.93325 0.7084Z"/>
             </svg>
@@ -853,7 +853,7 @@ textarea {
 
     .owner {
       position: absolute;
-      z-index: 20;
+      z-index: 15;
       text-align: right;
       right: 10px;
       bottom: 10px;
@@ -914,8 +914,8 @@ textarea {
         overflow: hidden;
 
         figure {
-          width: 110px;
-          height: 110px;
+          width: 100%;
+          height: 100%;
           text-align: center;
           margin: 0;
           display: block;
@@ -924,7 +924,7 @@ textarea {
 
         .cover img {
           object-fit: cover;
-          min-height: 100%;
+          height: 100%;
           width: inherit;
         }
 
@@ -1141,7 +1141,6 @@ textarea {
   background-color: #fff;
   width: fit-content;
   border-radius: 15px;
-
   padding: 10px 20px;
   display: flex;
   gap: 50px;
@@ -1158,12 +1157,13 @@ textarea {
     display: flex;
     align-items: center;
 
+
     svg {
       width: 18px;
       height: 18px;
       margin-right: 5px;
       path {
-        fill: transparent;
+        fill: #0a58ca;
       }
     }
   }
@@ -1184,14 +1184,31 @@ textarea {
       padding: 0;
     }
     .project-banner {
-      max-height: 160px;
+      max-height: 80px;
+      .owner {
+        p {
+          font-size: 10px;
+        }
+      }
+    }
+    .project-header {
+      margin-top: -5px;
+      .left {
+        .avatar {
+
+          height: 80px;
+          flex-basis: 80px;
+        }
+      }
     }
   }
 
   .cards-wrapper {
     .tabs-content {
+      display: flex;
+
       .shop-view {
-        width: 100%;
+        width: 48%;
         justify-content: center;
         display: flex;
       }
@@ -1200,14 +1217,22 @@ textarea {
   .tabs-links {
     flex-wrap: wrap;
     justify-content: start;
+    width: fit-content;
+
 
     .left {
       order: 2;
-      width: 100%;
-      justify-content: space-between;
+      flex-wrap: nowrap;
       display: flex;
-      flex-wrap: wrap;
+      width: 94vw;
+      box-sizing: border-box;
+      overflow: scroll;
       margin-bottom: 5px;
+
+    }
+    button {
+      font-size: 12px;
+      word-wrap: normal;
     }
     .back {
       order: 1;
@@ -1232,11 +1257,24 @@ textarea {
 
   .tab-stats {
     flex-wrap: wrap;
-    gap: 0;
     box-sizing: border-box;
-    width: 60%;
+    width: 100%;
+    justify-content: start;
+    gap: 0px;
+    background-color: transparent;
+    box-shadow: none;
+
+
+
     .stat {
-      width: 100%;
+      font-size: 14px;
+      margin-right: 50px;
+      width: auto;
+      margin-bottom: 5px;
+
+      svg {
+        margin-right: 5px;
+      }
     }
   }
 

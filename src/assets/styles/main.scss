@@ -1,5 +1,3 @@
-@import url('https://fonts.cdnfonts.com/css/gilroy-bold');
-
 body {
   transition: color, background-color .15s ease;
   background-color: #f4f6f9;
@@ -173,6 +171,7 @@ a {
 }
 
 .btn {
+  white-space: nowrap;
   border: 1px solid transparent;
   border-radius: 5px;
   flex-shrink: 0;
@@ -181,10 +180,11 @@ a {
   text-decoration: none;
   display: flex;
   justify-content: space-around;
+  font-family: 'Montserrat', 'Arial', Serif;
   gap: 10px;
   align-items: center;
   transition: .15s ease;
-  font-size: 12px;
+  font-size: 14px;
   cursor: pointer;
 
   &:hover {
@@ -195,6 +195,12 @@ a {
     border: 1px solid var(--new-dark, #0a58ca);
     box-shadow: 0 0 3px  rgba(13, 110, 253, 0.25);
     background-color: transparent;
+    color: #0a58ca;
+    svg {
+      path {
+        fill: #0a58ca;
+      }
+    }
   }
   &.btn-submit {
     border-radius: 5px;
@@ -339,30 +345,40 @@ a {
 .tabs-links {
 
   color: #000;
+  white-space: nowrap;
 
-  width: fit-content;
+
+   .left {
+     width: 100%;
+     display: flex;
+
+   }
 
   button {
-    margin-right: 10px;
-    &.recommended {
-
-    }
     font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
+    font-size: 18px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
     background-color: transparent;
-    border: none;
-    border-bottom: 5px solid transparent;
-
+    border: 1px solid #cecece;
+    margin-right: 0;
     transition: .3s ease;
     cursor: pointer;
+    padding: 10px;
 
     &:hover {
       opacity: .8;
     }
     &.active {
-      border-bottom-color: #0a58ca;
+      color: #0a58ca;
+      border-color: #0a58ca;
+    }
+
+    &:first-child {
+      border-radius: 10px 0 0 10px;
+    }
+    &:last-child {
+      border-radius: 0 10px 10px 0;
     }
 
   }
@@ -462,7 +478,8 @@ button.back {
     position: relative;
 
     .help {
-      color: #989898;
+
+      color: #989898!important;
       font-family: 'Montserrat', sans-serif;
       font-size: 18px;
       font-style: normal;
@@ -472,11 +489,12 @@ button.back {
       display: block;
 
       .heading {
+        margin-bottom: 5px;
         color: black;
         opacity: 1;
         font-weight: 600;
         display: block;
-        font-size: 20px;
+        font-size: 18px;
       }
 
       &.description {
@@ -585,7 +603,7 @@ button.back {
 
 
     input[type='file'] {
-      color: transparent;
+      color: #0a58ca;
       box-sizing: border-box;
       font-family: 'Montserrat', sans-serif;
       font-size: 10px;
@@ -597,30 +615,30 @@ button.back {
 
       &::file-selector-button {
         border-radius: 5px;
-        border: 1px solid var(--new-dark, transparent);
+        border: 1px solid var(--new-dark, #0a58ca);
         background: #FFF;
         width: auto;
         box-sizing: border-box;
         padding: 10px;
-        color: transparent;
+        color: #0a58ca;
         font-family: 'Montserrat', sans-serif;
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
-        padding-left: 25px;
         line-height: normal;
 
       }
 
-      &::before {
-        content: url("./../../assets/images/upload.svg");
-        width: 15px;
-        height: 15px;
-        position: relative;
-        right: -20px;
-        z-index: 2;
-        top: 2px;
-      }
+      //&::before {
+      //  content: url("./../../assets/images/upload.svg");
+      //  width: 15px;
+      //  height: 15px;
+      //  color: #0a58ca;
+      //  position: relative;
+      //  right: -20px;
+      //  z-index: 2;
+      //  top: 2px;
+      //}
 
       &:disabled {
         opacity: .5;
@@ -1062,6 +1080,68 @@ button.back {
         .right {
           width: 100%;
         }
+      }
+    }
+  }
+  .tabs-links {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    button {
+      word-break: keep-all;
+      font-size: 14px;
+      line-height: 0.8;
+
+
+    }
+
+    .left {
+      overflow-x: scroll;
+      overflow-y: hidden;
+      display: block;
+      width: fit-content;
+
+      &::-webkit-scrollbar {
+        width: 0;
+      }
+    }
+
+    .recommended, .fresh {
+      width: 100%;
+
+      border-bottom: 1px solid #e3e3e3;
+    }
+
+  }
+
+  .form-wrapper {
+    input[type=checkbox] {
+      top: 3px;
+      position: relative;
+    }
+    input[type=text]{
+      font-size: 12px;
+    }
+    textarea {
+      font-size: 12px;
+      height: 200px;
+    }
+
+    .input-wrapper {
+      label {
+        font-size: 12px;
+      }
+      .help {
+        font-size: 12px;
+        .heading {
+          font-size: 14px;
+          margin-bottom: -10px;
+        }
+      }
+      .category {
+        font-size: 12px;
+        margin-top: 0px;
+        margin-bottom: 0px;
       }
     }
   }

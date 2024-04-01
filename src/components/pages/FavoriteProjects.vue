@@ -800,8 +800,9 @@ export default {
       display: flex;
       width: 100%;
       justify-content: space-between;
+
       .currentSort {
-        width: 165px;
+        width: 100%;
         font-size: 12px;
       }
       .sortFilter {

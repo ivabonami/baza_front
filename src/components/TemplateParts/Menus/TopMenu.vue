@@ -1,5 +1,5 @@
 <template>
-  <div class="links justify-between">
+  <div class="links justify-between" v-on:click="this.$emit('mobileClick', false)">
 
     <router-link to="/about-project"
                  class="link"
@@ -11,6 +11,7 @@
 
 
     <button class="btn btn-outlined"
+            v-on:click.stop
             v-on:click="() => {
               this.showModal = !showModal
               this.modal = {
@@ -27,7 +28,7 @@
       </svg>
       Войти
     </button>
-    <div class="loggined" v-else>
+    <div class="loggined" v-else v-on:click.stop>
       <div class="username">
         {{ userInfo.username.slice(0, 2) }}
       </div>

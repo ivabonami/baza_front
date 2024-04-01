@@ -181,12 +181,15 @@
     </div>
 
     <div class="bottom">
-      <h3>Ссылки на проект:</h3>
-      <div class="help description">
-        Одна ссылка обязательно, максимум 12 ссылок.
-      </div>
+
+
 
       <div class="input-wrapper triple" >
+
+        <label class="help">
+          <span class="heading">Ссылки на проект</span><br>
+          Введите ссылки, относящиеся к вашему проекту.
+        </label>
         <div class="left">
           <div class="leftW" v-if="this.addedLinksCount < 13">
             <label class="help" for="linkName">

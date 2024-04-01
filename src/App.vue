@@ -10,6 +10,7 @@ import vClickOutside from "click-outside-vue3";
 
 export default {
   components: { FooterView, SidebarMenu, TopMenu, recommended, addCategory, vClickOutside},
+  emits: ['mobileClick'],
   data() {
     return {
       showMobileMenu: false,
@@ -172,10 +173,10 @@ export default {
 
       </div>
       <div class="mobileMenu leftMenuWrapper" v-if="showLeftMenu === true" v-click-outside="onClickOutside">
-        <sidebar-menu></sidebar-menu>
+        <sidebar-menu v-on:mobileClick="emit => this.showLeftMenu = emit"></sidebar-menu>
       </div>
       <div class="mobileMenu rightMenuWrapper" v-if="showRightMenu === true" v-click-outside="onClickOutside">
-        <top-menu></top-menu>
+        <top-menu v-on:mobileClick="emit => this.showRightMenu = emit"></top-menu>
       </div>
     </header>
 

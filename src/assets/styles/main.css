@@ -1,4 +1,3 @@
-@import url("https://fonts.cdnfonts.com/css/gilroy-bold");
 body {
   transition: color, background-color 0.15s ease;
   background-color: #f4f6f9;
@@ -152,6 +151,7 @@ a {
 }
 
 .btn {
+  white-space: nowrap;
   border: 1px solid transparent;
   border-radius: 5px;
   flex-shrink: 0;
@@ -160,10 +160,11 @@ a {
   text-decoration: none;
   display: flex;
   justify-content: space-around;
+  font-family: "Montserrat", "Arial", Serif;
   gap: 10px;
   align-items: center;
   transition: 0.15s ease;
-  font-size: 12px;
+  font-size: 14px;
   cursor: pointer;
 }
 .btn:hover {
@@ -174,6 +175,10 @@ a {
   border: 1px solid var(--new-dark, #0a58ca);
   box-shadow: 0 0 3px rgba(13, 110, 253, 0.25);
   background-color: transparent;
+  color: #0a58ca;
+}
+.btn.btn-outlined svg path {
+  fill: #0a58ca;
 }
 .btn.btn-submit {
   border-radius: 5px;
@@ -305,25 +310,36 @@ a {
 
 .tabs-links {
   color: #000;
-  width: fit-content;
+  white-space: nowrap;
+}
+.tabs-links .left {
+  width: 100%;
+  display: flex;
 }
 .tabs-links button {
-  margin-right: 10px;
   font-family: "Montserrat", sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   background-color: transparent;
-  border: none;
-  border-bottom: 5px solid transparent;
+  border: 1px solid #cecece;
+  margin-right: 0;
   transition: 0.3s ease;
   cursor: pointer;
+  padding: 10px;
 }
 .tabs-links button:hover {
   opacity: 0.8;
 }
 .tabs-links button.active {
-  border-bottom-color: #0a58ca;
+  color: #0a58ca;
+  border-color: #0a58ca;
+}
+.tabs-links button:first-child {
+  border-radius: 10px 0 0 10px;
+}
+.tabs-links button:last-child {
+  border-radius: 0 10px 10px 0;
 }
 
 .list-move,
@@ -406,7 +422,7 @@ button.back svg {
   position: relative;
 }
 .form-wrapper .input-wrapper .help {
-  color: #989898;
+  color: #989898 !important;
   font-family: "Montserrat", sans-serif;
   font-size: 18px;
   font-style: normal;
@@ -416,11 +432,12 @@ button.back svg {
   display: block;
 }
 .form-wrapper .input-wrapper .help .heading {
+  margin-bottom: 5px;
   color: black;
   opacity: 1;
   font-weight: 600;
   display: block;
-  font-size: 20px;
+  font-size: 18px;
 }
 .form-wrapper .input-wrapper .help.description {
   margin-bottom: 20px;
@@ -506,7 +523,7 @@ button.back svg {
   opacity: 0.5;
 }
 .form-wrapper .fake-input input[type=file] {
-  color: transparent;
+  color: #0a58ca;
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
   font-size: 10px;
@@ -518,27 +535,17 @@ button.back svg {
 }
 .form-wrapper .fake-input input[type=file]::file-selector-button {
   border-radius: 5px;
-  border: 1px solid var(--new-dark, transparent);
+  border: 1px solid var(--new-dark, #0a58ca);
   background: #FFF;
   width: auto;
   box-sizing: border-box;
   padding: 10px;
-  color: transparent;
+  color: #0a58ca;
   font-family: "Montserrat", sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
-  padding-left: 25px;
   line-height: normal;
-}
-.form-wrapper .fake-input input[type=file]::before {
-  content: url("./../../assets/images/upload.svg");
-  width: 15px;
-  height: 15px;
-  position: relative;
-  right: -20px;
-  z-index: 2;
-  top: 2px;
 }
 .form-wrapper .fake-input input[type=file]:disabled {
   opacity: 0.5;
@@ -902,6 +909,55 @@ button.back svg {
   }
   .form-wrapper .input-wrapper.triple .right {
     width: 100%;
+  }
+  .tabs-links {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .tabs-links button {
+    word-break: keep-all;
+    font-size: 14px;
+    line-height: 0.8;
+  }
+  .tabs-links .left {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    display: block;
+    width: fit-content;
+  }
+  .tabs-links .left::-webkit-scrollbar {
+    width: 0;
+  }
+  .tabs-links .recommended, .tabs-links .fresh {
+    width: 100%;
+    border-bottom: 1px solid #e3e3e3;
+  }
+  .form-wrapper input[type=checkbox] {
+    top: 3px;
+    position: relative;
+  }
+  .form-wrapper input[type=text] {
+    font-size: 12px;
+  }
+  .form-wrapper textarea {
+    font-size: 12px;
+    height: 200px;
+  }
+  .form-wrapper .input-wrapper label {
+    font-size: 12px;
+  }
+  .form-wrapper .input-wrapper .help {
+    font-size: 12px;
+  }
+  .form-wrapper .input-wrapper .help .heading {
+    font-size: 14px;
+    margin-bottom: -10px;
+  }
+  .form-wrapper .input-wrapper .category {
+    font-size: 12px;
+    margin-top: 0px;
+    margin-bottom: 0px;
   }
 }
 

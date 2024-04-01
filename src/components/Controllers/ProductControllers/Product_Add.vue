@@ -4,6 +4,10 @@
   <div class="add-project form-wrapper">
     <div class="left">
       <div class="input-wrapper">
+        <label class="help">
+          <span class="heading">Название услуги</span>
+          Введите название услуги, которое коротко и ясно отражает его суть. От 5 до 255 символов.
+        </label>
         <input
             type="text"
             placeholder="Название проекта"
@@ -11,13 +15,15 @@
             minlength="5" maxlength="255"
             ref="productName"
             required>
-        <span class="help">
-          Введите название услуги, которое коротко и ясно отражает его суть. От 5 до 255 символов.
-        </span>
+
       </div>
 
 
       <div class="input-wrapper">
+        <label class="help">
+          <span class="heading">Изображение услуги</span>
+          Загрузите изображение услуги, размеры 230x170px, форматы: jpeg, jpg, gif. webp.
+        </label>
         <div class="fake-input">
           <span class="name">Изображение *</span>
           <input type="file"
@@ -27,19 +33,23 @@
 
           >
         </div>
-        <span class="help">
-          Загрузите изображение услуги, размеры 230x170px, форматы: jpeg, jpg, gif. webp
-        </span>
+
       </div>
 
-      <textarea placeholder="описание проекта *"
-                required
-                ref="productDescription"
-                maxlength="65535"
-                v-model="productDescription"></textarea>
-      <span class="help">
-        Предоставьте подробное описание услуги, включая еу цель, описание продаваемого товара, что бы пользователь точно понимал что он покупает.
-      </span>
+      <div class="input-wrapper">
+        <label class="help">
+          <span class="heading">Описание услуги</span>
+          Предоставьте подробное описание услуги, включая еу цель, описание продаваемого товара, что бы пользователь точно понимал что он покупает.
+        </label>
+
+        <textarea placeholder="описание проекта *"
+                  required
+                  ref="productDescription"
+                  maxlength="65535"
+                  v-model="productDescription"></textarea>
+      </div>
+
+
 
 
       <button class="btn btn-filled"

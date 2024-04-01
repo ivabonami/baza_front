@@ -653,8 +653,8 @@ export default {
     overflow: hidden;
 
     figure {
-      width: 110px;
-      height: 110px;
+      width: 100%;
+      height: 100%;
       text-align: center;
       margin: 0;
       display: block;
@@ -663,8 +663,10 @@ export default {
 
     .cover img {
       object-fit: cover;
-      min-height: 100%;
-      width: inherit;
+      height: 100%;
+      width: auto;
+      margin-left: 50%;
+      transform: translateX(-50%);
     }
 
 
@@ -956,13 +958,17 @@ export default {
           margin-top: 10px;
 
           .stars {
-            position: absolute;
+            position: relative;
 
 
             .project-rating {
               width: 100%;
               display: flex;
               justify-content: start;
+
+              .number {
+                padding: 0;
+              }
 
 
               .text {
@@ -1005,6 +1011,7 @@ export default {
           .category {
             text-align: left;
             width: 100%;
+            display: none;
           }
           .admin-menu-toggler {
             position: relative;
@@ -1034,8 +1041,12 @@ export default {
           .testimonials {
             justify-content: end;
           }
-          .views {
+          .views, .testimonials {
             justify-content: start;
+            svg {
+              width: 15px;
+
+            }
           }
           span {
             font-size: 12px;
@@ -1051,7 +1062,7 @@ export default {
 }
 @media screen and (max-width: 500px){
   .project {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     .project-body {
       .project-top {
         margin-bottom: 0;
