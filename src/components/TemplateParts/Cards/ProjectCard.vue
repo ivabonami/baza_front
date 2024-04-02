@@ -585,7 +585,7 @@ export default {
 
   box-sizing: border-box;
   margin-bottom: 30px;
-  border: 1px solid transparent;
+  border: 1px solid #eaeaea;
   transition:.3s ease;
 
   &:hover {
@@ -627,7 +627,7 @@ export default {
 
   &.paid {
     background-color: #edf1fc;
-    border: 2px solid transparent;
+    border: 1px solid #d8e3e7;
 
 
     .advanced-fields {
