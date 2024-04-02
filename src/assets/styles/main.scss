@@ -281,6 +281,12 @@ a {
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+
+    svg {
+      path {
+        fill: #0a58ca;
+      }
+    }
   }
 }
 
@@ -367,6 +373,7 @@ a {
     border: none;
     background-color: #e8e8e8;
     width: auto;
+    color: black;
 
     &:hover {
       opacity: .8;

@@ -383,6 +383,9 @@ export default {
       cursor: pointer;
       svg {
         width: 100%;
+        path {
+          fill: #0a58ca;
+        }
       }
       &:hover {
         opacity: 1;

@@ -1272,7 +1272,7 @@ textarea {
 
     .stat {
       font-size: 14px;
-      margin-right: 50px;
+      margin-right: 30px;
       width: auto;
       margin-bottom: 5px;
 

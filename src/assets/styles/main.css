@@ -256,6 +256,9 @@ a {
   font-weight: 600;
   line-height: normal;
 }
+.btn.btn-big-pages svg path {
+  fill: #0a58ca;
+}
 
 .theme-switcher {
   width: 30%;
@@ -331,6 +334,7 @@ a {
   border: none;
   background-color: #e8e8e8;
   width: auto;
+  color: black;
 }
 .tabs-links button:hover {
   opacity: 0.8;
