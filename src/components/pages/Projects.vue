@@ -1,4 +1,7 @@
 <template>
+  <h3 v-if="this.$route.path !== '/'">
+    {{ this.categoryName }}
+  </h3>
 
   <transition name="list">
     <div class="buttons" v-if="loaded === true">
@@ -331,6 +334,8 @@ export default {
       lazyProjects: [],
       emptyResponse: false,
 
+      categoryName: 0,
+
       searchQuery: '',
       searchStatus: false,
       clicked: false,
@@ -344,6 +349,7 @@ export default {
       categoriesFilter: [],
 
       timer: ref(null),
+      dinamicWidth: '100%',
       store
     }
   },
@@ -361,6 +367,10 @@ export default {
       this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false, false)
     }
     this.loaded === true ? this.handleScroll() : ''
+
+    this.$route.path === '/' ? this.dinamicWidth = '100%' : this.dinamicWidth = '48%'
+
+
   },
   created() {
     this.isLoading = true
@@ -412,6 +422,7 @@ export default {
 
       const category = [parseInt(this.$route.path.replace('/projects-list/', ''))]
 
+      this.$route.path !== '/' ? this.categoryName = store.categories[store.categories.findIndex(item => item.id === parseInt(category))].name : '' ;
 
       let url = `${config.api.url}projects?isPayedFirst=true&offset=${offset}&limit=${limit}`
 
@@ -667,7 +678,6 @@ export default {
 }
 .search {
   position: relative;
-  width: 100%;
   max-width: 400px;
   justify-self: end;
   display: flex;
@@ -763,7 +773,7 @@ export default {
 
     .btns {
       display: flex;
-      width: 100%;
+      width: auto;
       justify-content: space-between;
       .currentSort {
         width: 150px;
@@ -784,6 +794,7 @@ export default {
 }
 @media screen and (max-width: 768px)  {
   .search {
+    width: v-bind(dinamicWidth);
     input[type=search] {
       width: 100%;
     }
@@ -812,7 +823,7 @@ export default {
 
     .btns {
       display: flex;
-      width: 100%;
+      width: v-bind(dinamicWidth);
       justify-content: space-between;
       .currentSort {
         width: 165px;

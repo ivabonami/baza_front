@@ -749,7 +749,7 @@ export default {
 
     .btns {
       display: flex;
-      width: 100%;
+      width: auto;
       justify-content: space-between;
       .currentSort {
         width: 150px;
@@ -798,7 +798,7 @@ export default {
 
     .btns {
       display: flex;
-      width: 100%;
+      width: auto;
       justify-content: space-between;
 
       .currentSort {

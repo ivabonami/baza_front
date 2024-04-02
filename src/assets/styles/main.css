@@ -311,35 +311,33 @@ a {
 .tabs-links {
   color: #000;
   white-space: nowrap;
+  justify-content: start;
 }
 .tabs-links .left {
   width: 100%;
   display: flex;
+  justify-content: left;
 }
 .tabs-links button {
+  margin-right: 10px;
   font-family: "Montserrat", sans-serif;
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
-  background-color: transparent;
-  border: 1px solid #cecece;
-  margin-right: 0;
   transition: 0.3s ease;
   cursor: pointer;
   padding: 10px;
+  border-radius: 30px;
+  border: none;
+  background-color: #e8e8e8;
+  width: auto;
 }
 .tabs-links button:hover {
   opacity: 0.8;
 }
 .tabs-links button.active {
-  color: #0a58ca;
-  border-color: #0a58ca;
-}
-.tabs-links button:first-child {
-  border-radius: 10px 0 0 10px;
-}
-.tabs-links button:last-child {
-  border-radius: 0 10px 10px 0;
+  color: #ffffff;
+  background-color: black;
 }
 
 .list-move,
@@ -913,7 +911,6 @@ button.back svg {
   .tabs-links {
     width: 100%;
     display: flex;
-    justify-content: space-between;
   }
   .tabs-links button {
     word-break: keep-all;
@@ -928,10 +925,6 @@ button.back svg {
   }
   .tabs-links .left::-webkit-scrollbar {
     width: 0;
-  }
-  .tabs-links .recommended, .tabs-links .fresh {
-    width: 100%;
-    border-bottom: 1px solid #e3e3e3;
   }
   .form-wrapper input[type=checkbox] {
     top: 3px;
@@ -952,7 +945,6 @@ button.back svg {
   }
   .form-wrapper .input-wrapper .help .heading {
     font-size: 14px;
-    margin-bottom: -10px;
   }
   .form-wrapper .input-wrapper .category {
     font-size: 12px;

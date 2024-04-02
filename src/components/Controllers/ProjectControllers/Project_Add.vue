@@ -83,7 +83,7 @@
 
       </div>
 
-      <div class="input-wrapper double" ref="projectMultiCategories">
+      <div class="input-wrapper double">
         <div class="left">
 
           <label class="help">
@@ -136,7 +136,7 @@
           </div>
         </div>
 
-        <div class="right">
+        <div class="right" ref="projectMultiCategories">
 
           <label class="help">
             <span class="heading">Категории проекта</span><br>
@@ -144,6 +144,7 @@
             Можно выбрать несколько категорий.
           </label>
           <div class="category"
+
                v-for="category of categories"
           >
 
@@ -966,6 +967,8 @@ export default {
     width: 100%;
   }
   .right {
+    border: 1px solid transparent;
+    border-radius: 5px;
     width: 100%;
   }
 

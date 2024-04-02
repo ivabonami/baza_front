@@ -94,9 +94,9 @@ export default {
       breakpoints: {
         320: {
           itemsToShow: 2,
-          snapAlign: 'start',
+          snapAlign: 'center',
         },
-        410: {
+        400: {
           itemsToShow: 2,
           snapAlign: 'start',
         },

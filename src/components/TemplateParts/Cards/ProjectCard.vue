@@ -1074,6 +1074,7 @@ export default {
       }
     }
     .advanced-fields {
+      display: none;
       border-color: transparent;
       position: absolute;
       bottom: -20px;

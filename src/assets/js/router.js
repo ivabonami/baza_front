@@ -13,6 +13,7 @@ import allProjectsWithSort from "../../components/pages/Projects.vue";
 import checkProjects from "../../components/pages/CheckProjects.vue";
 import projects from "../../components/pages/Projects.vue";
 import favoriteProjects from "../../components/pages/FavoriteProjects.vue";
+import errorPage from "../../components/pages/errorPage.vue";
 
 const router = createRouter({
 
@@ -47,6 +48,11 @@ const router = createRouter({
             path: '/contacts',
             name: 'Contacts',
             component: ContactsView
+        },
+        {
+            path: "/:pathMatch(.*)*",
+            name: 'ErrorView',
+            component: errorPage
         },
         {
           path: '/project/:id',

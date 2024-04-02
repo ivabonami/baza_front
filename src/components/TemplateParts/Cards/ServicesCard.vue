@@ -195,7 +195,7 @@ export default {
     padding: 0 10px;
   }
   .service-description {
-    padding-bottom: 20px;
+    display: none;
   }
 
   &.editable {
@@ -319,7 +319,7 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 3;
     line-clamp: 5;
     text-align: left;
     -webkit-box-orient: vertical;
@@ -355,9 +355,13 @@ export default {
 }
 @media screen and (max-width: 500px) {
   .service-card {
-    min-width: 180px;
-    width: 190px;
-    max-width: 220px;
+    min-width: 170px;
+    width: 180px;
+    max-width: 200px;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 
     .service-header {
       p {
