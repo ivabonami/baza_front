@@ -42,6 +42,26 @@
              }">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path fill="#F8104B" fill-rule="evenodd" d="M12 22c-.316-.02-.56-.147-.848-.278a23.5 23.5 0 0 1-4.781-2.942C3.777 16.705 1 13.449 1 9a6 6 0 0 1 6-6 6.18 6.18 0 0 1 5 2.568A6.18 6.18 0 0 1 17 3a6 6 0 0 1 6 6c0 4.448-2.78 7.705-5.375 9.78a23.6 23.6 0 0 1-4.78 2.942c-.543.249-.732.278-.845.278" clip-rule="evenodd"></path></svg>
         </div>
+        <div class="mobileRating can-be-hovered" v-on:click="$router.push('/project/' + $props.project.id)">
+
+          <div class="stars">
+            <div class="project-rating">
+
+                <span class="number"
+                      v-if="$props.project.ratingAvg">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" ><path fill-rule="evenodd" d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z"></path></svg>
+                  {{ $props.project.ratingAvg }}
+                </span>
+              <span class="text" v-else title="Проект пока не имеет оценок, но это не значит что он плохой или хороший.">
+                  Нет оценок
+                </span>
+
+            </div>
+
+
+          </div>
+
+        </div>
       </div>
       <div class="project-body" v-on:click="$router.push('/project/' + $props.project.id)">
         <div class="project-top">
@@ -62,16 +82,8 @@
               <div class="project-rating">
 
                 <span class="number"
-                      v-if="$props.project.ratingAvg"
-                      :class="{
-                        goodGreen: $props.project.ratingAvg === 5,
-                        green: $props.project.ratingAvg >= 4 && $props.project.ratingAvg < 5,
-                        yellow: $props.project.ratingAvg > 3 && $props.project.ratingAvg < 4,
-                        orange: $props.project.ratingAvg > 2 && $props.project.ratingAvg <= 3,
-                        red: $props.project.ratingAvg > 1 && $props.project.ratingAvg <= 2,
-                        badRed: $props.project.ratingAvg >= 0 && $props.project.ratingAvg <= 1,
-                          }">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" ><path fill-rule="evenodd" d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z"></path></svg>
+                      v-if="$props.project.ratingAvg">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" ><path fill-rule="evenodd" d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z"></path></svg>
                   {{ $props.project.ratingAvg }}
                 </span>
                 <span class="text" v-else title="Проект пока не имеет оценок, но это не значит что он плохой или хороший.">
@@ -616,6 +628,8 @@ export default {
       svg {
         width: 15px;
         height: 15px;
+        position: relative;
+        top: 3px;
 
         path {
           fill: #818181;
@@ -891,7 +905,9 @@ export default {
   color: #818181;
 
 }
-
+.mobileRating {
+  display: none;
+}
 @media screen and (max-width: 768px)  {
 
 
@@ -902,6 +918,30 @@ export default {
     width: 100%;
     padding: 10px;
     margin-bottom: 50px;
+
+    .mobileRating {
+      display: flex;
+      z-index: 2;
+      position: absolute;
+      background-color: #fff;
+      bottom: -1px;
+      padding: 5px;
+      border-radius: 10px;
+      min-width: 30px;
+      right: -1px;
+
+      .stars {
+        width: 100%;
+        .project-rating {
+          .number {
+            svg {
+              width: 15px;
+              height: 15px;
+            }
+          }
+        }
+      }
+    }
 
 
     .avatar {
@@ -951,33 +991,10 @@ export default {
         justify-content: start;
 
         .rating {
-          width: 100%;
-          display: flex;
-          flex-basis: auto;
-          text-align: left;
-          margin-top: 10px;
-
-          .stars {
-            position: relative;
-
-
-            .project-rating {
-              width: 100%;
-              display: flex;
-              justify-content: start;
-
-              .number {
-                padding: 0;
-              }
-
-
-              .text {
-                text-align: start;
-                padding: 0;
-              }
-            }
-          }
+          display: none;
         }
+
+
 
 
         .name {

@@ -238,7 +238,7 @@ export default {
 
 <style scoped lang="scss">
 .scroll-to-top {
-
+  z-index: 10;
   padding: 1em;
   max-width: 1440px;
   width: 94%;

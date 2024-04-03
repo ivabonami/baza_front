@@ -151,4 +151,20 @@ export default {
   }
 
 }
+@media screen and (max-width: 768px){
+  .project-description-wrapper {
+    .this-project-links {
+      .this-project-link {
+        padding: 10px;
+        a {
+          font-size: 12px;
+          svg {
+            position: relative;
+            top: 2px;
+          }
+        }
+      }
+    }
+  }
+}
 </style>

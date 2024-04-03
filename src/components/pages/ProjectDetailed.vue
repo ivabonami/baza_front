@@ -1128,12 +1128,12 @@ textarea {
   .tabs-content {
     width: 100%;
     display: flex;
-    gap: 15px;
+    gap: 5%;
     flex-wrap: wrap;
     justify-content: start;
 
     .shop-view {
-      width: 23%
+      width: 28%
     }
   }
   .card {
@@ -1147,9 +1147,9 @@ textarea {
   border-radius: 15px;
   padding: 10px 20px;
   display: flex;
-  gap: 50px;
+  gap: 20px;
   align-items: center;
-  margin: 30px auto;
+  margin: 30px 20px;
 
   .stat {
     color: var(--86868B, #494A4E);
@@ -1265,6 +1265,8 @@ textarea {
     width: 100%;
     justify-content: start;
     gap: 0px;
+    margin-left: 0;
+    margin-right: 0;
     background-color: transparent;
     box-shadow: none;
 
@@ -1272,7 +1274,7 @@ textarea {
 
     .stat {
       font-size: 14px;
-      margin-right: 30px;
+      margin-right: 10px;
       width: auto;
       margin-bottom: 5px;
 

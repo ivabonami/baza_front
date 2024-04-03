@@ -678,6 +678,7 @@ export default {
 }
 .search {
   position: relative;
+  width: 100%;
   max-width: 400px;
   justify-self: end;
   display: flex;
