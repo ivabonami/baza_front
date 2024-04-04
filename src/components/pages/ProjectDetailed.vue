@@ -394,7 +394,7 @@
       </div>
 
       <div class="stat">
-        Владелец: <b><span ref="owner"></span></b>
+        Владелец:&ensp;<b> <span ref="owner"></span></b>
       </div>
 
     </div>
@@ -622,7 +622,7 @@ export default {
             this.project = result.project
             this.projectDescription = this.project.description
             this.projectName = this.project.name
-            this.$refs.owner.innerHTML = this.project.userData.username
+            this.$refs.owner.innerHTML = ' ' + this.project.userData.username
             if (this.$refs.owner.innerHTML === localStorage.getItem('username')) {
               this.isOwner = true
             }

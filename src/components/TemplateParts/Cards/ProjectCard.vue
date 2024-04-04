@@ -42,7 +42,7 @@
              }">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path fill="#F8104B" fill-rule="evenodd" d="M12 22c-.316-.02-.56-.147-.848-.278a23.5 23.5 0 0 1-4.781-2.942C3.777 16.705 1 13.449 1 9a6 6 0 0 1 6-6 6.18 6.18 0 0 1 5 2.568A6.18 6.18 0 0 1 17 3a6 6 0 0 1 6 6c0 4.448-2.78 7.705-5.375 9.78a23.6 23.6 0 0 1-4.78 2.942c-.543.249-.732.278-.845.278" clip-rule="evenodd"></path></svg>
         </div>
-        <div class="mobileRating can-be-hovered" v-on:click="$router.push('/project/' + $props.project.id)">
+        <div class="mobileRating can-be-hovered" v-on:click="$router.push('/project/' + $props.project.id)" v-if="$props.project.ratingAvg">
 
           <div class="stars">
             <div class="project-rating">
@@ -629,7 +629,8 @@ export default {
         width: 15px;
         height: 15px;
         position: relative;
-        top: 3px;
+        top: 2px;
+        margin-right: 8px;
 
         path {
           fill: #818181;
@@ -924,11 +925,32 @@ export default {
       z-index: 2;
       position: absolute;
       background-color: #fff;
-      bottom: -1px;
+      bottom: -2px;
       padding: 5px;
-      border-radius: 10px;
+      border-radius: 6px 0 0 0;
       min-width: 30px;
-      right: -1px;
+      right: -2px;
+      font-size: 16px;
+
+      &:after, &:before {
+        content: ' ';
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background-size: cover;
+        background-image: url("/src/assets/images/icons/left.svg");
+
+      }
+
+      &:before {
+        left: -11px;
+        bottom: 0;
+      }
+
+      &:after {
+        right: 2px;
+        bottom: 28px;
+      }
 
       .stars {
         width: 100%;
@@ -1080,9 +1102,10 @@ export default {
 @media screen and (max-width: 500px){
   .project {
     margin-bottom: 10px;
+    gap: 10px;
     .project-body {
       .project-top {
-        margin-bottom: 0;
+        margin-bottom: 5px;
       }
       .project-bottom {
         .links {
