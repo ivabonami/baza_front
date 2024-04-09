@@ -443,10 +443,10 @@ export default {
         this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
 
       } else {
-        if (parseInt(image.size) > 1048576) {
+        if (parseInt(image.size) > 5200000) {
           this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
           this.$refs.projectAvatar.value = null
-          this.errors.projectAvatarLengthErr = 'Слишком большой размер, рекомендуем загружать аватар до 512х512px и весом не более 1024Кб'
+          this.errors.projectAvatarLengthErr = 'Слишком большой размер, рекомендуем загружать аватар до 512х512px и весом не более 5Мб'
           this.avatarErrorPushed = true
 
         } else {
@@ -507,10 +507,17 @@ export default {
         this.$refs.projectBanner.parentElement.style.borderColor = 'red'
       } else {
 
-        if (parseInt(image.size) > 1048576) {
-          this.$refs.projectBanner.parentElement.style.borderColor = 'red'
-          this.$refs.projectBanner.value = null
-          this.errors.bannerLenghtErr = 'Слишком большой размер, рекомендуем загружать баннер до 1060х220px и весом не более 1024Кб'
+        if (parseInt(image.size) > 5200000) {
+          this.showModal = true
+          this.modal = {
+            iconType: 'warning',
+            heading: `Ошибка при загрузке баннера`,
+            description: `Вы хотите добавить слишком большой размер баннера, мы не даем загружать баннер не больше 5 Мб (5000 Кб).`,
+            descriptionType: 'text',
+            exit: true,
+            close: true,
+            confirm: false
+          }
 
         } else {
           this.bannerError = false
@@ -584,7 +591,7 @@ export default {
       myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
 
 
-        fetch(`http://62.113.96.171:3000/projects`, {
+        fetch(`${config.api.url}projects`, {
           method: "POST",
           headers: myHeaders,
           body: JSON.stringify(project)

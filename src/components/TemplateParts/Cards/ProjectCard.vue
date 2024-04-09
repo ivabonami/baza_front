@@ -3,6 +3,7 @@
     <div class="project"
          :class="{
       paid: $props.project.payed,
+      owner: this.username === $props.project.userData.username
     }"
     >
 
@@ -43,12 +44,14 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path fill="#F8104B" fill-rule="evenodd" d="M12 22c-.316-.02-.56-.147-.848-.278a23.5 23.5 0 0 1-4.781-2.942C3.777 16.705 1 13.449 1 9a6 6 0 0 1 6-6 6.18 6.18 0 0 1 5 2.568A6.18 6.18 0 0 1 17 3a6 6 0 0 1 6 6c0 4.448-2.78 7.705-5.375 9.78a23.6 23.6 0 0 1-4.78 2.942c-.543.249-.732.278-.845.278" clip-rule="evenodd"></path></svg>
         </div>
         <div class="mobileRating can-be-hovered" v-on:click="$router.push('/project/' + $props.project.id)" v-if="$props.project.ratingAvg">
+          <svg class="owner" v-if="this.username === $props.project.userData.username" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="Layer_1" style="enable-background:new 0 0 256 256;" version="1.1" viewBox="0 0 256 256" xml:space="preserve"><path d="M245.1,75.9c-5-4.9-11.5-7.5-18.6-7.3c-6.9,0.1-13.3,3-18.1,8.2c-4.8,5.1-7.3,11.8-7.1,18.6c0.2,5.9,2.5,11.4,6.3,15.8  c-10,12.4-19.1,18.2-27.8,17.5c-11.2-0.9-23.1-12.5-35.6-34.8c4.2-3.3,7.3-7.7,8.9-12.9c2.2-7.1,1.1-14.8-2.9-21.8  c-4.3-7.5-12.6-11.7-22.2-11.4c-0.1,0-0.2,0-0.2,0c-9.6-0.3-17.9,3.9-22.2,11.4c-4,7-5,14.8-2.9,21.8c1.6,5.1,4.7,9.6,8.9,12.9  c-12.5,22.2-24.4,33.9-35.6,34.8c-8.7,0.7-17.8-5.1-27.8-17.5c3.8-4.4,6-9.9,6.3-15.8c0.3-6.8-2.3-13.6-7.1-18.6  c-4.8-5.1-11.2-8-18.1-8.2c-7-0.1-13.6,2.5-18.6,7.3c-5,4.9-7.7,11.4-7.7,18.4c0,13.5,10.5,24.6,23.7,25.7l7.5,73.1  c0.9,8.7,8.1,15.2,16.8,15.2h153.5c8.7,0,16-6.5,16.8-15.2l7.5-73.1c13.3-1,23.7-12.1,23.7-25.7C252.8,87.3,250.1,80.8,245.1,75.9z   M227.1,110.2c-0.6,0-1.3-0.1-1.9-0.1c-1.3-0.2-2.6,0.2-3.7,1c-1,0.8-1.7,2-1.8,3.4l-7.9,77.6c-0.4,3.6-3.4,6.3-7,6.3H51.2  c-3.6,0-6.6-2.7-7-6.3l-7.9-77.6c-0.1-1.3-0.8-2.5-1.8-3.4c-0.9-0.7-2-1.1-3.1-1.1c-0.2,0-0.4,0-0.6,0c-0.6,0.1-1.2,0.1-1.9,0.1  c-8.7,0-15.8-7.1-15.8-15.9c0-4.3,1.7-8.3,4.8-11.3c3.1-3,7.2-4.6,11.4-4.5c4.2,0.1,8.1,1.9,11.1,5.1c3,3.1,4.5,7.3,4.4,11.4  c-0.2,4.6-2.4,8.9-6.1,11.8c-2.1,1.7-2.5,4.7-0.9,6.9c13.3,17.7,26.1,25.8,39.1,24.9c15.6-1.2,30.6-15.6,45.7-44  c0.6-1.2,0.8-2.6,0.3-3.8c-0.4-1.3-1.3-2.3-2.5-2.9c-3.9-1.9-6.9-5.5-8.2-9.6c-1.4-4.5-0.7-9.4,2-14c2.4-4.2,7.3-6.6,13.1-6.5  c0.4,0.1,0.8,0.1,1.2,0c5.8-0.1,10.7,2.2,13.1,6.5c2.7,4.7,3.4,9.5,2,14c-1.3,4.2-4.3,7.7-8.2,9.6c-1.2,0.6-2.1,1.6-2.5,2.9  c-0.4,1.3-0.3,2.7,0.3,3.8c15.1,28.4,30.1,42.8,45.7,44c13.1,1,25.9-7.1,39.1-24.9c1.6-2.2,1.2-5.2-0.9-6.9  c-3.7-2.9-5.9-7.2-6.1-11.8c-0.2-4.1,1.4-8.3,4.4-11.4c3-3.2,6.9-5,11.1-5.1h0c4.3-0.1,8.4,1.5,11.4,4.5c3.1,3,4.8,7,4.8,11.3  C242.9,103.1,235.8,110.2,227.1,110.2z"/></svg>
 
           <div class="stars">
-            <div class="project-rating">
 
+            <div class="project-rating">
                 <span class="number"
                       v-if="$props.project.ratingAvg">
+
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" ><path fill-rule="evenodd" d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z"></path></svg>
                   {{ $props.project.ratingAvg }}
                 </span>
@@ -70,6 +73,7 @@
 
 
 
+
             <!--            <img src="./../../assets/images/verified.webp"-->
             <!--                 class="verified"-->
             <!--                 title="Проверенный магазин">-->
@@ -80,6 +84,7 @@
 
             <div class="stars">
               <div class="project-rating">
+                <svg class="owner" v-if="this.username === $props.project.userData.username" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="Layer_1" style="enable-background:new 0 0 256 256;" version="1.1" viewBox="0 0 256 256" xml:space="preserve"><path d="M245.1,75.9c-5-4.9-11.5-7.5-18.6-7.3c-6.9,0.1-13.3,3-18.1,8.2c-4.8,5.1-7.3,11.8-7.1,18.6c0.2,5.9,2.5,11.4,6.3,15.8  c-10,12.4-19.1,18.2-27.8,17.5c-11.2-0.9-23.1-12.5-35.6-34.8c4.2-3.3,7.3-7.7,8.9-12.9c2.2-7.1,1.1-14.8-2.9-21.8  c-4.3-7.5-12.6-11.7-22.2-11.4c-0.1,0-0.2,0-0.2,0c-9.6-0.3-17.9,3.9-22.2,11.4c-4,7-5,14.8-2.9,21.8c1.6,5.1,4.7,9.6,8.9,12.9  c-12.5,22.2-24.4,33.9-35.6,34.8c-8.7,0.7-17.8-5.1-27.8-17.5c3.8-4.4,6-9.9,6.3-15.8c0.3-6.8-2.3-13.6-7.1-18.6  c-4.8-5.1-11.2-8-18.1-8.2c-7-0.1-13.6,2.5-18.6,7.3c-5,4.9-7.7,11.4-7.7,18.4c0,13.5,10.5,24.6,23.7,25.7l7.5,73.1  c0.9,8.7,8.1,15.2,16.8,15.2h153.5c8.7,0,16-6.5,16.8-15.2l7.5-73.1c13.3-1,23.7-12.1,23.7-25.7C252.8,87.3,250.1,80.8,245.1,75.9z   M227.1,110.2c-0.6,0-1.3-0.1-1.9-0.1c-1.3-0.2-2.6,0.2-3.7,1c-1,0.8-1.7,2-1.8,3.4l-7.9,77.6c-0.4,3.6-3.4,6.3-7,6.3H51.2  c-3.6,0-6.6-2.7-7-6.3l-7.9-77.6c-0.1-1.3-0.8-2.5-1.8-3.4c-0.9-0.7-2-1.1-3.1-1.1c-0.2,0-0.4,0-0.6,0c-0.6,0.1-1.2,0.1-1.9,0.1  c-8.7,0-15.8-7.1-15.8-15.9c0-4.3,1.7-8.3,4.8-11.3c3.1-3,7.2-4.6,11.4-4.5c4.2,0.1,8.1,1.9,11.1,5.1c3,3.1,4.5,7.3,4.4,11.4  c-0.2,4.6-2.4,8.9-6.1,11.8c-2.1,1.7-2.5,4.7-0.9,6.9c13.3,17.7,26.1,25.8,39.1,24.9c15.6-1.2,30.6-15.6,45.7-44  c0.6-1.2,0.8-2.6,0.3-3.8c-0.4-1.3-1.3-2.3-2.5-2.9c-3.9-1.9-6.9-5.5-8.2-9.6c-1.4-4.5-0.7-9.4,2-14c2.4-4.2,7.3-6.6,13.1-6.5  c0.4,0.1,0.8,0.1,1.2,0c5.8-0.1,10.7,2.2,13.1,6.5c2.7,4.7,3.4,9.5,2,14c-1.3,4.2-4.3,7.7-8.2,9.6c-1.2,0.6-2.1,1.6-2.5,2.9  c-0.4,1.3-0.3,2.7,0.3,3.8c15.1,28.4,30.1,42.8,45.7,44c13.1,1,25.9-7.1,39.1-24.9c1.6-2.2,1.2-5.2-0.9-6.9  c-3.7-2.9-5.9-7.2-6.1-11.8c-0.2-4.1,1.4-8.3,4.4-11.4c3-3.2,6.9-5,11.1-5.1h0c4.3-0.1,8.4,1.5,11.4,4.5c3.1,3,4.8,7,4.8,11.3  C242.9,103.1,235.8,110.2,227.1,110.2z"/></svg>
 
                 <span class="number"
                       v-if="$props.project.ratingAvg">
@@ -128,6 +133,7 @@
               </svg>
               <span> <span class="descr">Просмотров: </span>{{ $props.project.viewCount === null ? 0 : $props.project.viewCount }} </span>
             </div>
+
             <!--            <div class="date can-be-hovered"  title="Дата создания" v-on:click="$router.push('/project/' + projectId)">-->
             <!--              {{ new Date($props.projectCreateDate).toLocaleString('ru-ru', { day: '2-digit', month: 'short', year: 'numeric' }) }}-->
             <!--            </div>-->
@@ -306,7 +312,8 @@ export default {
       counter: 0,
       isLogin: false,
       reviewsCount: 0,
-      isFavourite: false
+      isFavourite: false,
+      username: '',
 
 
     }
@@ -320,6 +327,8 @@ export default {
     this.$props.project.favorite === 1 || this.$props.favorite === true ? this.isFavourite = true : this.isFavourite = false
 
     localStorage.getItem('token') === null ? this.isLogin = false : this.isLogin = true
+    localStorage.getItem('username') !== '' ? this.username = localStorage.getItem('username') : ''
+
   },
   methods: {
 
@@ -600,6 +609,9 @@ export default {
   border: 1px solid #eaeaea;
   transition:.3s ease;
 
+
+
+
   &:hover {
     box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
   }
@@ -652,6 +664,14 @@ export default {
 
     &:hover {
       box-shadow: 0 0 20px #a3d7fc;
+    }
+  }
+
+  .owner {
+    border: 1px solid #fde488;
+
+    .advanced-fields {
+      border: 1px solid #fde488;
     }
   }
 
@@ -725,9 +745,10 @@ export default {
 
       .name {
         display: flex;
-        align-items: center;
+        align-items: start;
         gap: 20px;
         word-break: break-all;
+
 
         color: var(--secondary, #2B2B2B);
         font-family: 'Montserrat', sans-serif;
@@ -735,6 +756,7 @@ export default {
         font-style: normal;
         font-weight: 700;
         line-height: normal;
+
 
         .verified {
           width: 17px;
@@ -760,6 +782,7 @@ export default {
           font-weight: 400;
           opacity: .6;
         }
+
         .stars {
           .project-rating {
             width: 100%;
@@ -806,6 +829,15 @@ export default {
               border-radius: 5px;
               font-size: 10px;
             }
+          }
+        }
+
+        svg.owner {
+          border-color: transparent;
+          width: 25px;
+          height: 25px;
+          path {
+            fill: black!important;
           }
         }
 
@@ -962,6 +994,18 @@ export default {
             }
           }
         }
+      }
+    }
+
+    svg.owner {
+      border-color: transparent;
+      width: 20px;
+      height: 20px;
+      position: relative;
+      top: -2px;
+      margin-right: 5px;
+      path {
+        fill: black!important;
       }
     }
 

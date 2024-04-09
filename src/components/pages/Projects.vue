@@ -259,7 +259,7 @@
       </transition-group>
       <Waypoint v-if="emptyResponse === false && loaded === true" @change="(way) => {
 
-                if (way.going === 'IN' && way.direction === 'UP' && emptyResponse === false) {
+                if (emptyResponse === false) {
                   lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false)
                 }
 
@@ -347,6 +347,7 @@ export default {
       projectCardAnimate: false,
       height: 0,
       categoriesFilter: [],
+      username: '',
 
       timer: ref(null),
       dinamicWidth: '100%',
@@ -367,6 +368,7 @@ export default {
       this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false, false)
     }
     this.loaded === true ? this.handleScroll() : ''
+
 
     this.$route.path === '/' ? this.dinamicWidth = '100%' : this.dinamicWidth = '48%'
 

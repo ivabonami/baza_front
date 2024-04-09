@@ -72,6 +72,7 @@
 
 <script>
 import {isAdmin} from "../../../assets/js/userService.js";
+import config from "../../../assets/js/config.js";
 export default {
   name: "AddService.vue",
   props: ['projectId'],
@@ -86,7 +87,7 @@ export default {
       addedId: 0,
       avatarError: false,
       avatarErrorPusher: false,
-      isAdmin,
+      isAdmin, config
     }
   },
   mounted() {
@@ -100,7 +101,7 @@ export default {
       myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
       this.counter++
 
-      fetch(`http://62.113.96.171:3000/products`, {
+      fetch(`${config.api.url}products`, {
         method: "POST",
         headers: myHeaders,
         body: JSON.stringify({
@@ -143,6 +144,7 @@ export default {
       formData.append("image-upload", image );
 
       if (e.target.files[0].type !== "image/jpeg" &&
+          e.target.files[0].type !== "image/gif" &&
           e.target.files[0].type !== "image/jpg" &&
           e.target.files[0].type !== "image/png" &&
           e.target.files[0].type !== "image/webp") {
@@ -159,7 +161,7 @@ export default {
         this.avatarErrorPushed = false
         this.$refs.projectAvatar.parentElement.style.borderColor = 'transparent'
 
-        fetch("http://62.113.96.171:3000/image-upload", {
+        fetch(`${config.api.url}image-upload`, {
           method: "POST",
           headers: myHeaders,
           body: formData,

@@ -447,7 +447,7 @@ export default {
         this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
 
       } else {
-        if (parseInt(image.size) > 1048576) {
+        if (parseInt(image.size) > 2621440) {
           this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
           this.$refs.projectAvatar.value = null
           this.errors.projectAvatarLengthErr = 'Слишком большой размер, рекомендуем загружать аватар до 512х512px и весом не более 1024Кб'
@@ -512,7 +512,7 @@ export default {
         this.$refs.projectBanner.parentElement.style.borderColor = 'red'
       } else {
 
-        if (parseInt(image.size) > 1048576) {
+        if (parseInt(image.size) > 2621440) {
           this.$refs.projectBanner.parentElement.style.borderColor = 'red'
           this.$refs.projectBanner.value = null
           this.errors.bannerLenghtErr = 'Слишком большой размер, рекомендуем загружать баннер до 1060х220px и весом не более 1024Кб'
