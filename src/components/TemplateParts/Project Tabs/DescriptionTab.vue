@@ -153,6 +153,13 @@ export default {
 }
 @media screen and (max-width: 768px){
   .project-description-wrapper {
+    .project-links {
+      margin-top: 0px;
+      margin-bottom: 20px;
+    }
+  }
+
+  .project-description-wrapper {
     .this-project-links {
       .this-project-link {
         padding: 10px;

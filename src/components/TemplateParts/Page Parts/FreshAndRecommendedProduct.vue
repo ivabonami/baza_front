@@ -176,7 +176,7 @@ export default {
   width: 100%;
   justify-content: start;
   margin-top: 30px;
-  min-height: 270px;
+
   gap: 20px;
   box-sizing: border-box;
   display: flex;

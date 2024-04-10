@@ -815,7 +815,6 @@ textarea {
 
 
 .tabs-links {
-  margin-bottom: 20px;
   display: flex;
 
   align-items: center;
@@ -893,7 +892,7 @@ textarea {
     align-items: flex-end;
 
     position: relative;
-    margin-top: -30px;
+    margin-top: -50px;
     flex-basis: border-box;
     flex-grow: 1;
     flex-shrink: 1;
@@ -1197,7 +1196,7 @@ textarea {
       }
     }
     .project-header {
-      margin-top: -5px;
+      margin-top: -35px;
       .left {
         .avatar {
 
@@ -1232,7 +1231,8 @@ textarea {
       width: 94vw;
       box-sizing: border-box;
       overflow: scroll;
-      margin-bottom: 5px;
+      padding: 0!important;
+
 
     }
     button {

@@ -1,6 +1,6 @@
 <template>
-  <h3 v-if="this.$route.path !== '/'">
-    {{ this.categoryName }}
+  <h3 v-if="this.$route.path !== '/'" class="page-header">
+    Категория: {{ this.categoryName }}
   </h3>
 
   <transition name="list">
@@ -16,7 +16,15 @@
 
 
             }">
-        {{ this.activeSortName }}
+<svg viewBox="0 0 32 32" class="sort" xmlns="http://www.w3.org/2000/svg"><title/><g data-name="Layer 2" id="Layer_2"><path
+    d="M28,9H11a1,1,0,0,1,0-2H28a1,1,0,0,1,0,2Z"/><path d="M7,9H4A1,1,0,0,1,4,7H7A1,1,0,0,1,7,9Z"/><path
+    d="M21,17H4a1,1,0,0,1,0-2H21a1,1,0,0,1,0,2Z"/><path d="M11,25H4a1,1,0,0,1,0-2h7a1,1,0,0,1,0,2Z"/><path
+    d="M9,11a3,3,0,1,1,3-3A3,3,0,0,1,9,11ZM9,7a1,1,0,1,0,1,1A1,1,0,0,0,9,7Z"/><path
+    d="M23,19a3,3,0,1,1,3-3A3,3,0,0,1,23,19Zm0-4a1,1,0,1,0,1,1A1,1,0,0,0,23,15Z"/><path
+    d="M13,27a3,3,0,1,1,3-3A3,3,0,0,1,13,27Zm0-4a1,1,0,1,0,1,1A1,1,0,0,0,13,23Z"/><path
+    d="M28,17H25a1,1,0,0,1,0-2h3a1,1,0,0,1,0,2Z"/><path d="M28,25H15a1,1,0,0,1,0-2H28a1,1,0,0,1,0,2Z"/></g><g
+    id="frame"></g></svg>
+        <span>{{ this.activeSortName }}</span>
         <svg id="a" xmlns="http://www.w3.org/2000/svg" :class="{
             up: arrowDate === 'up',
             down: arrowDate === 'down'
@@ -135,7 +143,7 @@
 
 
             }">
-        Категории поиска
+<svg height="12px" class="sort" viewBox="0 0 18 12" width="18px" xmlns="http://www.w3.org/2000/svg" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" xmlns:xlink="http://www.w3.org/1999/xlink"><title/><desc/><defs/><g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1"><g fill="#000000" id="Core" transform="translate(-255.000000, -426.000000)"><g id="sort" transform="translate(255.000000, 426.000000)"><path d="M0,12 L6,12 L6,10 L0,10 L0,12 L0,12 Z M0,0 L0,2 L18,2 L18,0 L0,0 L0,0 Z M0,7 L12,7 L12,5 L0,5 L0,7 L0,7 Z" id="Shape"/></g></g></g></svg>        <span>Категории поиска</span>
         <svg id="a" xmlns="http://www.w3.org/2000/svg" :class="{
             up: arrowCategory === 'up',
             down: arrowCategory === 'down'
@@ -513,7 +521,7 @@ export default {
     align-items: center;
 
     .currentSort {
-      width: 220px;
+      width: 245px;
       border: 1px solid transparent;
       outline: none;
       color: #000;
@@ -524,15 +532,30 @@ export default {
       border-radius: 10px;
       padding: 10px 10px;
       display: flex;
-      justify-content: space-between;
+      justify-content: start;
       cursor: pointer;
+      span {
+        position: relative;
+        top: 3px;
+      }
 
       svg {
         position: relative;
         top: 2px;
-        margin-left: 5px;
         width: 15px;
         height: 15px;
+        margin-left: auto;
+
+        &.sort {
+          margin-right: 5px;
+          margin-left: 0;
+          width: 20px;
+          height: 20px;
+          path {
+            fill: black;
+          }
+        }
+
       }
 
     }
@@ -845,5 +868,7 @@ export default {
     }
   }
 }
-
+.page-header {
+  margin-top: 30px;
+}
 </style>

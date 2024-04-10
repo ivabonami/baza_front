@@ -1,5 +1,5 @@
 <template>
-  <h3>Добавить услугу в проект:</h3>
+
 
   <div class="add-project form-wrapper">
     <div class="left">

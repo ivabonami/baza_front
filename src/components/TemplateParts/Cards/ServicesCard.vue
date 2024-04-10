@@ -298,7 +298,7 @@ export default {
     background-color: #ffffff;
     border-radius: 20px;
     width: 100%;
-    height: 160px;
+    height: 220px;
     overflow: hidden;
     display: block;
     text-align: center;
@@ -362,6 +362,11 @@ export default {
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    margin-bottom: 0;
+
+    .image {
+      height: 135px;
+    }
 
     .service-header {
       p {
