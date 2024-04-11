@@ -100,7 +100,7 @@
         <div class="tabs-links">
           <div class="left">
             <button
-                v-if="this.allowShopFront === true"
+                v-if="this.allowShopFront === true && products.length > 0"
                 v-on:click="switchTabs('services')"
                 class="fresh" ref="services"
                 :class="{
@@ -127,7 +127,7 @@
               Отзывы
             </button>
             <button
-                v-if="isOwner && allowShopFront === true || isAdmin && allowShopFront && allowShopFront === true"
+                v-if="isOwner && allowShopFront === true || isAdmin && allowShopFront === true"
                 v-on:click="switchTabs('addService')"
                 class="recommended" ref="description"
                 :class="{
@@ -217,7 +217,7 @@
             <Transition>
             <div class="flex"
 
-                 v-if="this.tab === 'services' && this.products.length > 0 ">
+                 v-if="this.tab === 'services'">
               <div class="cards-wrapper" ref="service">
                 <transition-group name="list" tag="div" class="tabs-content">
                   <div class="shop-view" v-for="item in products" v-if="products.length > 0"
@@ -274,10 +274,13 @@
 
 
 
+
+
                   </div>
 
 
                 </transition-group>
+                <div class="" v-if="this.products.length <= 0"></div>
                 <Waypoint @change="(way) => {
 
                           if (way.going === 'IN' && way.direction === 'UP' && emptyResponse === false) {
@@ -441,6 +444,7 @@ import editService from "../Controllers/ProductControllers/Product_Edit.vue";
 import modalWindowBackdrop from "../TemplateParts/Page Parts/Modal.vue";
 import {Waypoint} from "vue-waypoint";
 import {highlight} from "../../assets/js/productController.js";
+import {userInfo} from "../../assets/js/userService.js";
 
 export default {
 
@@ -483,7 +487,7 @@ export default {
       emptyResponse: false,
       editProduct: {},
 
-      config, highlight
+      config, highlight, userInfo
     }
   },
   props: ['selectedId', 'highlight', 'tab'],
@@ -623,6 +627,10 @@ export default {
             this.projectDescription = this.project.description
             this.projectName = this.project.name
             this.$refs.owner.innerHTML = ' ' + this.project.userData.username
+
+            result.project.userData.username === userInfo.username ? this.isOwner = true : this.isOwner = false
+
+
             if (this.$refs.owner.innerHTML === localStorage.getItem('username')) {
               this.isOwner = true
             }
@@ -658,7 +666,6 @@ export default {
     this.getProducts(this.limit, this.offset)
 
     this.getProjectFullInfo()
-
 
 
     if (localStorage.getItem('role') === 'admin') {

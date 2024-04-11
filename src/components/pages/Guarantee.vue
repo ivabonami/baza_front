@@ -17,7 +17,7 @@
     <br>
     Холд - удержание средств у гаранта во время проведения сделки на n-е время
     <a href="https://t.me/enBaza" class="image-link" target="_blank">
-      <img src="./../../assets/images/banners/guarantee.webp" alt="">
+      <img src="./../../assets/images/banners/group_103.webp" alt="">
     </a>
 
 
