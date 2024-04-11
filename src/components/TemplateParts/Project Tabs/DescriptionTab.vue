@@ -89,7 +89,7 @@ export default {
 .project-description-wrapper {
   flex-basis: 100%;
   .project-links {
-    margin-top: 30px;
+    margin-top: 20px;
     margin-bottom: 30px;
   }
   .this-project-links {

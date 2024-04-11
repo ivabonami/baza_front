@@ -1006,4 +1006,7 @@ export default {
 .btn.btn-filled {
   margin: 10px auto 0;
 }
+.form-wrapper {
+  padding-top: 20px;
+}
 </style>

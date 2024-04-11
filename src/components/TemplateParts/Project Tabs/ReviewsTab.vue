@@ -1359,6 +1359,7 @@ h3 {
 }
 .reviews {
   width: 100%;
+  padding-top: 20px;
   .no-reviews {
     margin-top: 10px;
     margin-bottom: 20px;

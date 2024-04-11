@@ -1126,6 +1126,7 @@ textarea {
   flex-wrap: wrap;
 
   .tabs-content {
+    padding-top: 20px;
     width: 100%;
     display: flex;
     gap: 5%;
