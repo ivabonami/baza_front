@@ -22,7 +22,7 @@
       </div>
 
       <button class="btn btn-submit"
-      v-on:click="CategoryController()">
+      v-on:click="addCategory()">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
           <path d="M7.69655 17V0H10.3034V17H7.69655ZM0 9.70283V7.33727H18V9.70283H0Z" fill="white"/>
         </svg>
@@ -92,7 +92,20 @@
 
   </div>
 
+  <modal-window-backdrop
+      v-if="showModal === true"
+      v-on:changeModal="(emitShowModal) => {this.showModal = emitShowModal}"
+      v-bind:icon-type="this.modal.iconType"
+      v-bind:descriptionType="this.modal.descriptionType"
+      v-bind:heading="this.modal.heading"
+      v-bind:description="this.modal.description"
+      v-bind:close="this.modal.close"
+      v-bind:confirmAction="this.modal.confirm"
+      v-bind:exit="this.modal.exit"
 
+  >
+
+  </modal-window-backdrop>
 
 </template>
 
@@ -102,6 +115,7 @@ import shopsCategories from "./AllCategories.vue";
 import config from "../../../assets/js/config.js";
 import 'vue-loading-overlay/dist/css/index.css';
 import {store} from "../../../assets/js/store.js";
+import {userInfo} from "../../../assets/js/userService.js";
 
 export default {
   name: "addCategory.vue",
@@ -117,11 +131,12 @@ export default {
       deleteStateMessage: '',
       showModal: this.$emit.showModal,
       category: '',
+      modal: {},
       canHasFront: true,
       componentKey: 0,
       isLoading: false,
       fullPage: true,
-      store
+      store, userInfo
     }
   },
   mounted() {
@@ -139,7 +154,7 @@ export default {
     addCategory () {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${config.token}`);
+      myHeaders.append("Authorization", `Bearer ${userInfo.token}`);
 
       const newCategory = {
         name: this.categoryName,
@@ -153,15 +168,30 @@ export default {
       })
           .then((response) => response.json())
           .then((response) => {
-            const catName = this.categoryName;
-            this.addStateMessage = `Категория: ${catName} успешно добавлена!`
-            this.categoryName = ''
-            setTimeout(() => {
-              this.addStateMessage = ''
 
-            }, 10000)
+            if (response.success === false) {
+              this.showModal = true
+              this.modal = {
+                iconType: 'warning',
+                heading: `Ошибка при добавлении категории`,
+                description: `${response.message}`,
+                descriptionType: 'text',
+                close: true,
 
-            store.categories.push(newCategory)
+              }
+
+            } else {
+              const catName = this.categoryName;
+              this.addStateMessage = `Категория: ${catName} успешно добавлена!`
+              this.categoryName = ''
+              setTimeout(() => {
+                this.addStateMessage = ''
+
+              }, 10000)
+
+              store.categories.push(newCategory)
+            }
+
 
           })
           .catch((error) => {console.error(error)});

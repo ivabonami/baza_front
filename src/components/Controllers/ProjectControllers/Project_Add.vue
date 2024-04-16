@@ -1,6 +1,7 @@
 <template>
 
 <h2>Добавление проекта</h2>
+<h3 v-if="this.categories.length <= 0">в данный момент добавление недоступно, отсутствуют категории, пожалуйста добавьте категории.</h3>
 
   <div v-if="userLoggined === false" class="not-registered">
 
@@ -47,7 +48,7 @@
 
   </div>
 
-  <div class="add-project form-wrapper" v-else>
+  <div class="add-project form-wrapper" v-else-if="this.categories.length > 0">
     <div class="left">
       <div class="input-wrapper">
         <label class="help" for="projectName">
@@ -888,11 +889,11 @@ export default {
 }
 .add {
   border-radius: 5px;
-  border: none;
+  border: 1px solid #0a58ca;
   background: transparent;
   margin-top: 0px;
 
-  color: #fff;
+  color: #0a58ca;
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
   font-style: normal;
@@ -914,7 +915,7 @@ export default {
     height: 15px;
 
     path {
-      fill: #fff;
+      fill: #0a58ca;
       opacity: 1;
     }
   }

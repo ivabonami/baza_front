@@ -362,7 +362,7 @@ export default {
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    margin-bottom: 0;
+    margin-bottom: 20px;
 
     .image {
       height: 135px;
