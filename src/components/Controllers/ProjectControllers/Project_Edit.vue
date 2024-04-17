@@ -14,7 +14,7 @@
               type="text"
               id="projectName"
               v-model="projectName"
-              minlength="5" maxlength="255"
+              minlength="1" maxlength="255"
               ref="projectName"
               required>
         </div>
@@ -131,23 +131,23 @@
 
     </div>
     <div class="advanced" v-if="this.exchangerSelected === true">
-      <label class="help">
-        <span class="heading">Параметры обменника</span><br>
-        Введите параметры и курс обмена для вашего обменника
-      </label>
-      <div class="input-wrapper">
-        <label class="help" for="min">
-          Курс обмена
-        </label>
-        <input
-            type="number"
-            id="min"
+<!--      <label class="help">-->
+<!--        <span class="heading">Параметры обменника</span><br>-->
+<!--        Введите параметры и курс обмена для вашего обменника-->
+<!--      </label>-->
+<!--      <div class="input-wrapper">-->
+<!--        <label class="help" for="min">-->
+<!--          Курс обмена-->
+<!--        </label>-->
+<!--        <input-->
+<!--            type="number"-->
+<!--            id="min"-->
 
-            v-model="projectExchangeRate"
-            ref="projectExchangeRate"
-            max="6">
+<!--            v-model="projectExchangeRate"-->
+<!--            ref="projectExchangeRate"-->
+<!--            max="6">-->
 
-      </div>
+<!--      </div>-->
 
       <div class="input-wrapper">
         <label class="help" for="rate">
@@ -195,14 +195,13 @@
             <label class="help" for="linkName">
               Ресурс (пример: WWH, Onion и др.)
             </label>
-            <input
-                v-on:keydown.enter="checkLinks()"
-                id="linkName"
-                type="text"
-                v-model="addName"
-                ref="addName"
-                maxlength="20"
-                required>
+            <select v-model="addName">
+              <option value="Зеркало" selected="selected">Зеркало</option>
+              <option value="Onion">Onion</option>
+              <option value="Blockchain">Blockchain</option>
+              <option value="Канал">Канал</option>
+              <option value="Бот">Бот</option>
+            </select>
           </div>
         </div>
         <div class="middle">
@@ -355,7 +354,7 @@ export default {
       linksToAdd: [],
 
       addLink: '',
-      addName: '',
+      addName: 'Зеркало',
       addedLinksCount: 0,
       linkErr: false,
       goHome: false,
@@ -447,10 +446,10 @@ export default {
         this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
 
       } else {
-        if (parseInt(image.size) > 2621440) {
+        if (parseInt(image.size) > 5200000) {
           this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
           this.$refs.projectAvatar.value = null
-          this.errors.projectAvatarLengthErr = 'Слишком большой размер, рекомендуем загружать аватар до 512х512px и весом не более 1024Кб'
+          this.errors.projectAvatarLengthErr = 'Слишком большой размер, рекомендуем загружать аватар до 512х512px и весом не более 5Мб'
           this.avatarErrorPushed = true
 
         } else {
@@ -512,10 +511,10 @@ export default {
         this.$refs.projectBanner.parentElement.style.borderColor = 'red'
       } else {
 
-        if (parseInt(image.size) > 2621440) {
+        if (parseInt(image.size) > 5200000) {
           this.$refs.projectBanner.parentElement.style.borderColor = 'red'
           this.$refs.projectBanner.value = null
-          this.errors.bannerLenghtErr = 'Слишком большой размер, рекомендуем загружать баннер до 1060х220px и весом не более 1024Кб'
+          this.errors.bannerLenghtErr = `Вы хотите добавить слишком большой размер баннера, мы не даем загружать баннер не больше 5 Мб.`
 
         } else {
           this.bannerError = false
@@ -698,8 +697,8 @@ export default {
 
     },
     checkForm () {
-      if (this.projectName.length < 5) {
-        this.errors.projectNameErr = 'Название проекта должно быть не менее 5 символов'
+      if (this.projectName.length < 1) {
+        this.errors.projectNameErr = 'Название проекта должно быть не менее 1 символов'
         this.$refs.projectName.style.borderColor = 'red'
       } else {
         delete this.errors.projectNameErr

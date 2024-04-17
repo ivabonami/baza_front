@@ -1,6 +1,6 @@
 <template>
   <transition name="list">
-  <div class="tabs" v-if="this.products.length > 0">
+  <div class="tabs">
     <div class="tabs-links">
       <button
          v-on:click=" () => {
@@ -40,7 +40,7 @@
       <loader v-if="loading === true"></loader>
       <transition-group name="list" tag="div" class="tabs-content" v-else>
 
-        <Carousel v-bind="settings" :breakpoints="breakpoints" :wrap-around="true">
+        <Carousel v-bind="settings" :breakpoints="breakpoints" :wrap-around="true" v-if="products.length > 3">
           <Slide class="shop-view" v-for="item in products" v-if="products.length > 0 && loading === false" >
             <services-card
                 ref="sliderItem"
@@ -58,6 +58,19 @@
             <Navigation />
           </template>
         </Carousel>
+
+        <div class="shop-view" v-for="item in products" v-if="products.length <= 3 && loading === false" >
+          <services-card
+              ref="sliderItem"
+              v-bind:name="item.name"
+              v-bind:image="`${config.api.url}${item.avatarFilePath}`"
+              v-bind:id="item.id"
+              v-bind:projectId="item.ProjectId"
+              v-bind:isOwner="false"
+              v-bind:clickable="true"
+          >
+          </services-card>
+        </div>
 
 
       </transition-group>
@@ -99,6 +112,7 @@ export default {
         itemsToShow: 3.5,
         snapAlign: 'start',
         autoplay: 5000,
+        itemsToScroll: 1,
       },
       breakpoints: {
         320: {
@@ -178,6 +192,10 @@ export default {
     display: flex;
     align-items: center;
     margin-right: 10px;
+    background-color: transparent;
+    opacity: .5;
+    transition: .3s ease;
+
     svg {
       width: 15px;
       height: 15px;
@@ -187,13 +205,29 @@ export default {
         fill: black;
       }
     }
+    &.recommended {
+      svg {
+
+        path {
+          fill: blueviolet;
+        }
+      }
+    }
+
+    &.fresh {
+      svg {
+
+        path {
+          fill: darkorange;
+        }
+      }
+    }
 
     &.active {
+      background-color: transparent;
+      opacity: 1;
+      color: #000000;
       svg {
-        path, polygon {
-          stroke: white ;
-          fill: white;
-        }
       }
     }
   }

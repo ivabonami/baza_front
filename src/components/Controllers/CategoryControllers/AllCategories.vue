@@ -18,7 +18,7 @@
                 }"
             v-if="this.editCategoryName === category.id">
         <span class="name" v-else>
-          {{ category.name }} {{ category.id }}
+          {{ category.name }}
         </span>
 
 

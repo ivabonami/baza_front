@@ -50,5 +50,10 @@ export function refreshToken () {
 
 
 localStorage.getItem('token') !== null ? userInfo.expired = VueJwtDecode.decode(localStorage.getItem('token')).exp : localStorage.setItem('expired',  null)
+localStorage.getItem('token') !== null ? localStorage.setItem('role', VueJwtDecode.decode(localStorage.getItem('token')).role) : localStorage.setItem('expired',  null)
 
 localStorage.setItem('expired', userInfo.expired || null)
+
+if (localStorage.getItem('expired') !== null && userInfo.expired > (localStorage.getItem('expired') - 1000)) {
+    refreshToken()
+}

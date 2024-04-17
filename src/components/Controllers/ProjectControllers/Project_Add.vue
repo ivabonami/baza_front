@@ -60,7 +60,7 @@
               type="text"
               id="projectName"
               v-model="projectName"
-              minlength="5" maxlength="255"
+              minlength="1" maxlength="255"
               ref="projectName"
               required>
         </div>
@@ -168,23 +168,23 @@
 
     </div>
     <div class="advanced" v-if="this.exchangerSelected === true">
-      <label class="help">
-        <span class="heading">Параметры обменника</span><br>
-        Введите параметры и курс обмена для вашего обменника
-      </label>
-      <div class="input-wrapper">
-        <label class="help" for="min">
-           Курс обмена
-        </label>
-        <input
-            type="number"
-            id="min"
+<!--      <label class="help">-->
+<!--        <span class="heading">Параметры обменника</span><br>-->
+<!--        Введите параметры и курс обмена для вашего обменника-->
+<!--      </label>-->
+<!--      <div class="input-wrapper">-->
+<!--        <label class="help" for="min">-->
+<!--           Курс обмена-->
+<!--        </label>-->
+<!--        <input-->
+<!--            type="number"-->
+<!--            id="min"-->
 
-            v-model="projectExchangeRate"
-            ref="projectExchangeRate"
-            max="6">
+<!--            v-model="projectExchangeRate"-->
+<!--            ref="projectExchangeRate"-->
+<!--            max="6">-->
 
-      </div>
+<!--      </div>-->
 
       <div class="input-wrapper">
         <label class="help" for="rate">
@@ -227,16 +227,15 @@
         <div class="left">
           <div class="leftW" v-if="this.addedLinksCount < 13">
             <label class="help" for="linkName">
-              Ресурс (пример: WWH, Onion и др.)
+              Ресурс
             </label>
-            <input
-                v-on:keydown.enter="checkLinks()"
-                id="linkName"
-                type="text"
-                v-model="addName"
-                ref="addName"
-                maxlength="20"
-                required>
+            <select v-model="addName">
+              <option value="Зеркало" selected="selected">Зеркало</option>
+              <option value="Onion">Onion</option>
+              <option value="Blockchain">Blockchain</option>
+              <option value="Канал">Канал</option>
+              <option value="Бот">Бот</option>
+            </select>
           </div>
         </div>
         <div class="middle">
@@ -388,7 +387,7 @@ export default {
       linksToAdd: [],
 
       addLink: '',
-      addName: '',
+      addName: 'Зеркало',
       addedLinksCount: 0,
       linkErr: false,
       goHome: false,
@@ -682,11 +681,10 @@ export default {
       if (this.addName < 3 && this.addName.length > 0) {
         this.errors.linkError = 'Имя ссылки не может быть меньше 3х символов'
         this.linkErr = true
-        this.$refs.addName.style.borderColor = 'red'
       } else {
         this.linkErr = false
         delete this.errors.linkError
-        this.$refs.addName.style.borderColor = 'transparent'
+
       }
 
       if (this.addLink < 10 && this.addLink.length > 0) {
@@ -699,19 +697,16 @@ export default {
         this.$refs.addLink.style.borderColor = 'transparent'
       }
 
-      if (/(http(s?)):\/\/+[a-z0-9._]+\.+[a-z0-9._]/i.test(this.addLink) === true && this.addLink.length > 0) {
+      if (/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g.test(this.addLink) === true && this.addLink.length > 0) {
         this.linkErr = false
         delete this.errors.linkTypeError
-      } else if(/(http(s?)):\/\/+[a-z0-9._]+\.+[a-z0-9._]/i.test(this.addLink) === false && this.addLink.length > 0) {
+        this.addLinkToProject()
+      } else if(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g.test(this.addLink) === false && this.addLink.length > 0) {
         this.errors.linkTypeError = 'Ссылка не валидная, введите ссылку формата https://example.com'
-        console.log(this.addLink.length)
         this.linkErr = true
         this.$refs.addLink.style.borderColor = 'red'
       }
 
-      if (this.addLink.length > 0 && this.addName.length > 0) {
-        this.addLinkToProject()
-      }
 
       if (this.linkErr === true) {
         setTimeout(()=> {
@@ -725,8 +720,8 @@ export default {
     },
     checkForm () {
       this.checkLinks()
-      if (this.projectName.length < 5) {
-        this.errors.projectNameErr = 'Название проекта должно быть не менее 5 символов'
+      if (this.projectName.length < 1) {
+        this.errors.projectNameErr = 'Название проекта должно быть не менее 1 символа'
         this.$refs.projectName.style.borderColor = 'red'
       } else {
         delete this.errors.projectNameErr
