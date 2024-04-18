@@ -624,8 +624,9 @@ export default {
 
   box-sizing: border-box;
   margin-bottom: 30px;
-  border: 1px solid #eaeaea;
   transition:.3s ease;
+
+  border: 1px solid #fde488;
 
 
 
@@ -677,12 +678,9 @@ export default {
   }
 
   .owner {
-    border: 1px solid #fde488;
+    border: 1px solid #b9d06b;
 
 
-    .advanced-fields {
-      border: 1px solid #fde488;
-    }
   }
 
   .avatar {

@@ -54,6 +54,8 @@ localStorage.getItem('token') !== null ? localStorage.setItem('role', VueJwtDeco
 
 localStorage.setItem('expired', userInfo.expired || null)
 
-if (localStorage.getItem('expired') !== null && userInfo.expired > (localStorage.getItem('expired') - 1000)) {
-    refreshToken()
+if (localStorage.getItem('expired') !== null &&  Math.round(Date.now() / 1000) > userInfo.expired - 1000) {
+
+} else {
+
 }

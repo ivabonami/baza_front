@@ -344,6 +344,7 @@ import modalWindowBackdrop from "../../TemplateParts/Page Parts/Modal.vue";
 import config from "../../../assets/js/config.js";
 import { ref, watch } from "vue";
 import loader from "../../TemplateParts/Page Parts/Loader.vue";
+import {signOut} from "../../../assets/js/userService.js";
 export default {
   name: "AddProject.vue",
   components: {modalWindowBackdrop,loader},
@@ -429,20 +430,15 @@ export default {
           e.target.files[0].type !== "image/gif" &&
           e.target.files[0].type !== "image/png" &&
           e.target.files[0].type !== "image/webp") {
-        this.avatarError = true
 
-        if (this.avatarError === true) {
-          this.$refs.projectAvatar.value = null
-          this.errors.projectAvatarTypeErr = 'Формат аватарки не поддерживается'
-          this.avatarErrorPushed = true
-        } else {
-          delete this.errors.projectAvatarTypeErr
-        }
-
-
+        this.$refs.projectAvatar.value = null
+        this.errors.projectAvatarTypeErr = 'Формат аватарки не поддерживается'
+        this.avatarErrorPushed = true
         this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
 
       } else {
+        delete this.errors.projectAvatarTypeErr
+
         if (parseInt(image.size) > 5200000) {
           this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
           this.$refs.projectAvatar.value = null
@@ -467,9 +463,15 @@ export default {
           })
               .then((response) => response.json())
               .then((result) => {
-                this.avatarLoader = false
-                this.avatarLoaded = true
-                this.projectAvatar = result.filePath
+
+                if (result.success !== true) {
+                  signOut()
+                }
+                else {
+                  this.avatarLoader = false
+                  this.avatarLoaded = true
+                  this.projectAvatar = result.filePath
+                }
               })
               .catch((error) => console.error(error));
         }
@@ -498,15 +500,11 @@ export default {
           e.target.files[0].type !== "image/png" &&
           e.target.files[0].type !== "image/webp") {
 
-        this.bannerError = true
-        if (this.bannerError === true) {
-          this.$refs.projectBanner.value = null
-          this.errors.bannerTypeErr = 'Формат баннера не поддерживается'
-
-        }
+        this.$refs.projectBanner.value = null
+        this.errors.bannerTypeErr = 'Формат баннера не поддерживается'
         this.$refs.projectBanner.parentElement.style.borderColor = 'red'
       } else {
-
+        delete this.errors.bannerTypeErr
         if (parseInt(image.size) > 5200000) {
           this.showModal = true
           this.modal = {
@@ -532,9 +530,15 @@ export default {
           })
               .then((response) => response.json())
               .then((result) => {
-                this.bannerLoader = false
-                this.bannerLoaded = true
-                this.projectBanner = result.filePath
+                if (result.success !== true) {
+                  signOut()
+                }
+                else {
+                  this.bannerLoader = false
+                  this.bannerLoaded = true
+                  this.projectBanner = result.filePath
+                }
+
               })
               .catch((error) => console.error(error));
         }
@@ -697,11 +701,11 @@ export default {
         this.$refs.addLink.style.borderColor = 'transparent'
       }
 
-      if (/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g.test(this.addLink) === true && this.addLink.length > 0) {
+      if (/(http(s)?:\/\/)?(www\.)?[\p{L}0-9@:%._\+~#=-]{1,255}\.[\p{L}]{2,15}\b([-[\p{L}0-9@:%_\+.~#?&//=]*)/gu.test(this.addLink) === true && this.addLink.length > 0) {
         this.linkErr = false
         delete this.errors.linkTypeError
         this.addLinkToProject()
-      } else if(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g.test(this.addLink) === false && this.addLink.length > 0) {
+      } else if(/(http(s)?:\/\/)?(www\.)?[\p{L}0-9@:%._\+~#=-]{1,255}\.\p{L}{2,15}\b([-[\p{L}0-9@:%_\+.~#?&//=]*)/gu.test(this.addLink) === false && this.addLink.length > 0) {
         this.errors.linkTypeError = 'Ссылка не валидная, введите ссылку формата https://example.com'
         this.linkErr = true
         this.$refs.addLink.style.borderColor = 'red'
@@ -768,8 +772,6 @@ export default {
 
       } else {
         delete this.errors.linksToAddEmpty
-        this.$refs.addLink.parentElement.style.borderColor = 'transparent'
-        this.$refs.addName.parentElement.style.borderColor = 'transparent'
       }
 
 

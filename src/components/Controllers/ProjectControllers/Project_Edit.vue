@@ -310,6 +310,8 @@ import modalWindowBackdrop from "../../TemplateParts/Page Parts/Modal.vue";
 import loader from "../../TemplateParts/Page Parts/Loader.vue";
 import config from "../../../assets/js/config.js";
 import {store} from "../../../assets/js/store.js";
+import {signOut} from "../../../assets/js/userService.js";
+
 
 export default {
   name: "editProject.vue",
@@ -363,7 +365,8 @@ export default {
       avatarLoader: false,
       avatarLoaded: false,
       bannerLoader: false,
-      bannerLoaded: false
+      bannerLoaded: false,
+      signOut
     }
   },
   mounted() {
@@ -432,20 +435,13 @@ export default {
           e.target.files[0].type !== "image/gif" &&
           e.target.files[0].type !== "image/png" &&
           e.target.files[0].type !== "image/webp") {
-        this.avatarError = true
-
-        if (this.avatarError === true) {
-          this.$refs.projectAvatar.value = null
-          this.errors.projectAvatarTypeErr = 'Формат аватарки не поддерживается'
-          this.avatarErrorPushed = true
-        } else {
-          delete this.errors.projectAvatarTypeErr
-        }
-
-
+        this.$refs.projectAvatar.value = null
+        this.errors.projectAvatarTypeErr = 'Формат аватарки не поддерживается'
+        this.avatarErrorPushed = true
         this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
 
       } else {
+        delete this.errors.projectAvatarTypeErr
         if (parseInt(image.size) > 5200000) {
           this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
           this.$refs.projectAvatar.value = null
@@ -470,9 +466,14 @@ export default {
           })
               .then((response) => response.json())
               .then((result) => {
-                this.avatarLoader = false
-                this.avatarLoaded = true
-                this.projectAvatar = result.filePath
+                if (result.status !== 200) {
+                  signOut()
+                }
+                else {
+                  this.avatarLoader = false
+                  this.avatarLoaded = true
+                  this.projectAvatar = result.filePath
+                }
               })
               .catch((error) => console.error(error));
         }
@@ -502,12 +503,8 @@ export default {
           e.target.files[0].type !== "image/png" &&
           e.target.files[0].type !== "image/webp") {
 
-        this.bannerError = true
-        if (this.bannerError === true) {
-          this.$refs.projectBanner.value = null
-          this.errors.bannerTypeErr = 'Формат баннера не поддерживается'
-
-        }
+        this.$refs.projectBanner.value = null
+        this.errors.bannerTypeErr = 'Формат баннера не поддерживается'
         this.$refs.projectBanner.parentElement.style.borderColor = 'red'
       } else {
 
