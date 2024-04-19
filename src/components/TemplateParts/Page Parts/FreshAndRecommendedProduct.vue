@@ -282,14 +282,15 @@ export default {
 
 
   }
-
   &.static-banner {
     display: flex;
     flex-wrap: wrap;
     .shop-view {
-      width: 47%;
+      width: 24%;
     }
   }
+
+
 }
 
 @media screen and (max-width: 768px) {
@@ -298,7 +299,17 @@ export default {
     .shop-view {
       width: 100%;
     }
+
+    &.static-banner {
+      display: flex;
+      flex-wrap: wrap;
+      .shop-view {
+        width: 47%;
+      }
+    }
   }
+
+
 }
 
 </style>
