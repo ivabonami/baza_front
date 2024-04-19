@@ -856,7 +856,8 @@ textarea {
 
   .project-banner {
     width: 100%;
-    height: 220px;
+    height: auto;
+    max-height: 500px;
     overflow: hidden;
     border-radius: 20px;
     position: relative;

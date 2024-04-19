@@ -466,14 +466,9 @@ export default {
           })
               .then((response) => response.json())
               .then((result) => {
-                if (result.status !== 200) {
-                  signOut()
-                }
-                else {
-                  this.avatarLoader = false
-                  this.avatarLoaded = true
-                  this.projectAvatar = result.filePath
-                }
+                this.avatarLoader = false
+                this.avatarLoaded = true
+                this.projectAvatar = result.filePath
               })
               .catch((error) => console.error(error));
         }
@@ -529,6 +524,7 @@ export default {
                 this.bannerLoader = false
                 this.bannerLoaded = true
                 this.projectBanner = result.filePath
+                this.noBanner = false
               })
               .catch((error) => console.error(error));
         }
@@ -743,7 +739,6 @@ export default {
       } else {
         delete this.errors.linksToAddEmpty
         this.$refs.addLink.parentElement.style.borderColor = 'transparent'
-        this.$refs.addName.parentElement.style.borderColor = 'transparent'
       }
 
       if (this.projectAvatar.length === 0) {

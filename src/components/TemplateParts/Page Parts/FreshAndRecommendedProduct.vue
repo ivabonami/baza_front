@@ -38,7 +38,11 @@
     </div>
     <div class="tabs-content-wrapper" ref="productsWrapper">
       <loader v-if="loading === true"></loader>
-      <transition-group name="list" tag="div" class="tabs-content" v-else>
+      <transition-group name="list" tag="div" class="tabs-content"
+                        :class="{
+                            'static-banner': products.length <= 3
+                        }"
+                        v-else>
 
         <Carousel v-bind="settings" :breakpoints="breakpoints" :wrap-around="true" v-if="products.length > 3">
           <Slide class="shop-view" v-for="item in products" v-if="products.length > 0 && loading === false" >
@@ -255,6 +259,8 @@ export default {
   left: v-bind('margin');
   transition: .3s ease;
 
+
+
   .carousel {
     width: 100%;
 
@@ -273,6 +279,16 @@ export default {
     border-radius: 8px;
     justify-content: start;
     align-items: stretch;
+
+
+  }
+
+  &.static-banner {
+    display: flex;
+    flex-wrap: wrap;
+    .shop-view {
+      width: 47%;
+    }
   }
 }
 
