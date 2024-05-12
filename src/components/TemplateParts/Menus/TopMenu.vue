@@ -1,9 +1,5 @@
 <template>
   <div class="links justify-between" v-on:click="this.$emit('mobileClick', false)">
-
-<!--    <router-link to="/about-project"-->
-<!--                 class="link"-->
-<!--                 v-slot="{isActive, isExactActive}">О проекте</router-link>-->
     <router-link to="/guarantee" class="link">Гарант</router-link>
     <router-link to="/advertisement" class="link">Реклама</router-link>
     <router-link to="/contacts" class="link">Контакты</router-link>
@@ -12,14 +8,7 @@
 
     <button class="btn btn-outlined"
             v-on:click.stop
-            v-on:click="() => {
-              this.showModal = !showModal
-              this.modal = {
-                iconType: 'user',
-                descriptionType: 'sign-in'
-              }
-
-            }"
+            v-on:click=""
             v-if="userInfo.username === null"
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="27" height="20" viewBox="0 0 27 20" fill="none">
@@ -63,48 +52,19 @@
   </div>
 
 
-  <modal-window-backdrop
-      v-if="showModal === true"
-      v-on:changeModal="(emitShowModal) => {this.showModal = emitShowModal}"
-      v-bind:icon-type="this.modal.iconType"
-      v-bind:descriptionType="this.modal.descriptionType"
-      v-bind:heading="this.modal.heading"
-      v-bind:description="this.modal.description"
-      v-bind:close="this.modal.close"
-      v-bind:confirmAction="this.modal.confirm"
-      v-bind:exit="this.modal.exit"
-      ref="modal"
-      tabindex="0"
-      v-on:confirmAction="(emit)=> {
-
-        emit === true ? signOut() : this.showModal = false
-      }"
-
-  >
-
-  </modal-window-backdrop>
-
 </template>
 
 <script>
-import modalWindowBackdrop from "../Page Parts/Modal.vue";
+import Modal from "../PageParts/Modal.vue";
 import {signOut, userInfo, refreshToken} from "../../../assets/js/userService.js";
-import {watch} from "vue";
-import {store} from "../../../assets/js/store.js";
+import {modalSetting} from "../../../assets/js/modal.js";
+
+
 export default {
   name: "TopMenu.vue",
-  components: { modalWindowBackdrop },
+  components: { Modal },
 
   emits: ['changeModal'],
-
-  setup() {
-  },
-
-  mounted() {
-
-  },
-  methods: {
-  },
 
   data () {
     return {
@@ -112,7 +72,7 @@ export default {
       isAdmin: false,
       modal: {},
       showSidebar: false,
-      signOut, userInfo, refreshToken
+      signOut, userInfo, refreshToken, modalSetting
     }
   },
 }

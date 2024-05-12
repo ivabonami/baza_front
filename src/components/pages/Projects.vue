@@ -1,29 +1,21 @@
 <template>
-  <h3 v-if="this.$route.path !== '/'" class="page-header">
-    Категория: {{ this.categoryName }}
-  </h3>
+  <div class="wrapper">
+    <div class="row">
+      <h3 v-if="this.$route.path !== '/'" class="page-header">
+        Категория: {{ this.categoryName }}
+      </h3>
 
-  <transition name="list">
-    <div class="buttons" v-if="loaded === true">
 
-    <div class="btns">
+        <div class="buttons" >
+          <div class="btns">
       <span class="currentSort"
             ref="currentSort"
             v-click-outside="onClickOutside"
             v-on:click="() => {
               this.showSort = !this.showSort
               this.arrowDate === 'down' ? this.arrowDate = 'up' : this.arrowDate = 'down'
-
-
             }">
-<svg viewBox="0 0 32 32" class="sort" xmlns="http://www.w3.org/2000/svg"><title/><g data-name="Layer 2" id="Layer_2"><path
-    d="M28,9H11a1,1,0,0,1,0-2H28a1,1,0,0,1,0,2Z"/><path d="M7,9H4A1,1,0,0,1,4,7H7A1,1,0,0,1,7,9Z"/><path
-    d="M21,17H4a1,1,0,0,1,0-2H21a1,1,0,0,1,0,2Z"/><path d="M11,25H4a1,1,0,0,1,0-2h7a1,1,0,0,1,0,2Z"/><path
-    d="M9,11a3,3,0,1,1,3-3A3,3,0,0,1,9,11ZM9,7a1,1,0,1,0,1,1A1,1,0,0,0,9,7Z"/><path
-    d="M23,19a3,3,0,1,1,3-3A3,3,0,0,1,23,19Zm0-4a1,1,0,1,0,1,1A1,1,0,0,0,23,15Z"/><path
-    d="M13,27a3,3,0,1,1,3-3A3,3,0,0,1,13,27Zm0-4a1,1,0,1,0,1,1A1,1,0,0,0,13,23Z"/><path
-    d="M28,17H25a1,1,0,0,1,0-2h3a1,1,0,0,1,0,2Z"/><path d="M28,25H15a1,1,0,0,1,0-2H28a1,1,0,0,1,0,2Z"/></g><g
-    id="frame"></g></svg>
+
         <span>{{ this.activeSortName }}</span>
         <svg id="a" xmlns="http://www.w3.org/2000/svg" :class="{
             up: arrowDate === 'up',
@@ -32,7 +24,7 @@
              viewBox="0 0 15.96 8.57"><path class="b" d="M.6,8.57c-.15,0-.31-.06-.42-.18-.23-.23-.23-.61,0-.85L7.56,.17c.23-.22,.62-.22,.85,0l7.38,7.38c.23,.23,.23,.61,0,.85-.23,.24-.61,.23-.85,0L7.98,1.44,1.02,8.4c-.12,.12-.27,.18-.42,.18Z"/></svg>
 
       </span>
-      <div class="sortFilter box-shadow" v-if="this.showSort === true" ref="sortFilter">
+            <div class="sortFilter box-shadow" v-if="this.showSort === true" ref="sortFilter">
         <span class="filter" :class="{active: this.activeSortName === 'Популярные'}"
               v-on:click=" () => {
                 if (this.activeSortName !== 'Популярные') {
@@ -45,7 +37,7 @@
                   this.activeSortTab = 'random'
                   this.projectCardAnimate = true
 
-                  this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit)
+                  this.getProjects(this.activeSort, this.getOffset, this.getLimit)
                 }
               }
 
@@ -56,8 +48,8 @@
           </svg>
 
         </span>
-        
-        <span class="filter" :class="{active: this.activeSortName === 'Сначала старые'}" v-on:click=" () => {
+
+              <span class="filter" :class="{active: this.activeSortName === 'Сначала старые'}" v-on:click=" () => {
                 if (this.activeSortName !== 'Сначала старые') {
                   this.activeSortName = 'Сначала старые'
                   this.activeSort = 'oldest'
@@ -66,7 +58,7 @@
 
                   this.clicked = true
                   this.activeSortTab = 'oldest'
-                  this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true)
+                  this.getProjects(this.activeSort, this.getOffset, this.getLimit, true)
                 }
               }
               ">Сначала старые
@@ -75,9 +67,9 @@
           </svg>
 
         </span>
-        
 
-        <span class="filter" :class="{active: this.activeSortName === 'Сначала новые'}" v-on:click=" () => {
+
+              <span class="filter" :class="{active: this.activeSortName === 'Сначала новые'}" v-on:click=" () => {
                 if (this.activeSortName !== 'Сначала новые') {
                   this.activeSortName = 'Сначала новые'
                   this.activeSort = 'newest'
@@ -85,7 +77,7 @@
                   this.projects = this.projects.slice(this.projects.length, this.projects.length)
                   this.clicked = true
                   this.activeSortTab = 'newest'
-                  this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true)
+                  this.getProjects(this.activeSort, this.getOffset, this.getLimit, true)
                 }
               }">Сначала новые
            <svg id="a" v-if="this.activeSortName === 'Сначала новые'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213.47 166.37">
@@ -93,9 +85,9 @@
           </svg>
 
         </span>
-        
 
-        <span class="filter" :class="{active: this.activeSortName === 'С высоким рейтингом'}" v-on:click=" () => {
+
+              <span class="filter" :class="{active: this.activeSortName === 'С высоким рейтингом'}" v-on:click=" () => {
                 if (this.activeSortName !== 'С высоким рейтингом') {
                   this.activeSortName = 'С высоким рейтингом'
                   this.activeSort = 'highestRating'
@@ -103,7 +95,7 @@
                   this.projects = this.projects.slice(this.projects.length, this.projects.length)
                   this.clicked = true
                   this.activeSortTab = 'highestRating'
-                  this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true)
+                  this.getProjects(this.activeSort, this.getOffset, this.getLimit, true)
                 }
               }">С высоким рейтингом
            <svg id="a" v-if="this.activeSortName === 'С высоким рейтингом'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213.47 166.37">
@@ -111,10 +103,10 @@
           </svg>
         </span>
 
-        
 
 
-        <span class="filter" :class="{active: this.activeSortName === 'С низким рейтингом'}" v-on:click="() => {
+
+              <span class="filter" :class="{active: this.activeSortName === 'С низким рейтингом'}" v-on:click="() => {
                 if (this.activeSortName !== 'С низким рейтингом') {
                   this.activeSortName = 'С низким рейтингом'
                   this.activeSort = 'lowestRating'
@@ -122,7 +114,7 @@
                   this.projects = this.projects.slice(this.projects.length, this.projects.length)
                   this.clicked = true
                   this.activeSortTab = 'lowestRating'
-                  this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, true)
+                  this.getProjects(this.activeSort, this.getOffset, this.getLimit, true)
                 }
               }">С низким рейтингом
            <svg id="a" v-if="this.activeSortName === 'С низким рейтингом'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213.47 166.37">
@@ -131,202 +123,181 @@
 
         </span>
 
-      </div>
+            </div>
 
-      <span class="currentSort"
-            ref="categorySort"
-            v-if="this.$route.path === '/' || this.$route.path === '/favorite'"
-            v-click-outside="onClickOutsideCategory"
-            v-on:click="() => {
+            <span class="currentSort"
+                  ref="categorySort"
+                  v-if="this.$route.path === '/' || this.$route.path === '/favorite'"
+                  v-click-outside="onClickOutsideCategory"
+                  v-on:click="() => {
               this.showCategorySort = !this.showCategorySort
               this.arrowCategory === 'down' ? this.arrowCategory = 'up' : this.arrowCategory = 'down'
 
 
             }">
-<svg height="12px" class="sort" viewBox="0 0 18 12" width="18px" xmlns="http://www.w3.org/2000/svg" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" xmlns:xlink="http://www.w3.org/1999/xlink"><title/><desc/><defs/><g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1"><g fill="#000000" id="Core" transform="translate(-255.000000, -426.000000)"><g id="sort" transform="translate(255.000000, 426.000000)"><path d="M0,12 L6,12 L6,10 L0,10 L0,12 L0,12 Z M0,0 L0,2 L18,2 L18,0 L0,0 L0,0 Z M0,7 L12,7 L12,5 L0,5 L0,7 L0,7 Z" id="Shape"/></g></g></g></svg>        <span>Категории поиска</span>
-        <svg id="a" xmlns="http://www.w3.org/2000/svg" :class="{
-            up: arrowCategory === 'up',
-            down: arrowCategory === 'down'
-          }" class="arrow"
-             viewBox="0 0 15.96 8.57"><path class="b" d="M.6,8.57c-.15,0-.31-.06-.42-.18-.23-.23-.23-.61,0-.85L7.56,.17c.23-.22,.62-.22,.85,0l7.38,7.38c.23,.23,.23,.61,0,.85-.23,.24-.61,.23-.85,0L7.98,1.44,1.02,8.4c-.12,.12-.27,.18-.42,.18Z"/></svg>
 
       </span>
-      <div class="sortFilter categories box-shadow categorySelector" v-if="this.showCategorySort === true" ref="showCategorySort">
-        <div class="categorySelector input" v-for="category of store.categories" v-on:change="() => {
+            <div class="sortFilter categories box-shadow categorySelector" v-if="this.showCategorySort === true" ref="showCategorySort">
+              <div class="categorySelector input" v-for="category of store.categories" v-on:change="() => {
           this.getLimit = 5
           this.getOffset = 0
           this.projects = this.projects.slice(this.projects.length, this.projects.length)
-          this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit)
+          this.getProjects(this.activeSort, this.getOffset, this.getLimit)
         }">
-          <input type="checkbox" v-model="categoriesFilter" :id="category.id" class="categorySelector" :value="category.id" hidden>
-          <label :for="category.id" class="categorySelector" >
-            {{category.name}}
-            <svg id="a" v-if="categoriesFilter.includes(category.id)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213.47 166.37">
-              <path class="b" d="M77.45,100.37c1.51-1.42,2.84-2.62,4.11-3.88,30.17-30.16,60.34-60.34,90.51-90.51,7.98-7.98,13.68-7.98,21.67,0,5.07,5.06,10.18,10.09,15.17,15.23,5.98,6.15,6.09,12.43,.13,18.4-40.72,40.81-81.48,81.58-122.26,122.32-5.99,5.98-12.81,5.91-18.88-.14-21.01-20.94-41.98-41.91-62.92-62.91-6.66-6.68-6.63-12.84-.04-19.51,5.27-5.33,10.57-10.64,15.91-15.91,6.67-6.58,12.78-6.56,19.5,.13,11.11,11.05,22.16,22.15,33.25,33.21,1.15,1.15,2.39,2.22,3.84,3.57Z"/>
-            </svg>
-          </label>
-          
+                <input type="checkbox" v-model="categoriesFilter" :id="category.id" class="categorySelector" :value="category.id" hidden>
+                <label :for="category.id" class="categorySelector" >
+                  {{category.name}}
+                  <svg id="a" v-if="categoriesFilter.includes(category.id)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213.47 166.37">
+                    <path class="b" d="M77.45,100.37c1.51-1.42,2.84-2.62,4.11-3.88,30.17-30.16,60.34-60.34,90.51-90.51,7.98-7.98,13.68-7.98,21.67,0,5.07,5.06,10.18,10.09,15.17,15.23,5.98,6.15,6.09,12.43,.13,18.4-40.72,40.81-81.48,81.58-122.26,122.32-5.99,5.98-12.81,5.91-18.88-.14-21.01-20.94-41.98-41.91-62.92-62.91-6.66-6.68-6.63-12.84-.04-19.51,5.27-5.33,10.57-10.64,15.91-15.91,6.67-6.58,12.78-6.56,19.5,.13,11.11,11.05,22.16,22.15,33.25,33.21,1.15,1.15,2.39,2.22,3.84,3.57Z"/>
+                  </svg>
+                </label>
+              </div>
+            </div>
+          </div>
 
         </div>
 
 
+      <div class="baza-menu">
+        <div class="categories">
+          <div class="category"
+               v-for="category of store.categories"
+               @click="() => {
+                 this.category = category.id
+                 this.getOffset = 0
+                 this.projects.splice(0, this.projects.length)
+                 this.isLoading = true
+                 getProjects()
+               }"
+
+          >
+            <div class="category-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" v-if="category.name === 'Маркетплейсы'" viewBox="0 0 20 22" fill="none">
+                <path d="M14.1625 8V5C14.1625 2.79086 12.3716 1 10.1625 1C7.95334 1 6.16248 2.79086 6.16248 5V8M1.75448 9.35196L1.15448 15.752C0.983885 17.5717 0.898586 18.4815 1.20053 19.1843C1.46578 19.8016 1.9306 20.3121 2.5205 20.6338C3.192 21 4.10585 21 5.93353 21H14.3914C16.2191 21 17.133 21 17.8045 20.6338C18.3944 20.3121 18.8592 19.8016 19.1244 19.1843C19.4264 18.4815 19.3411 17.5717 19.1705 15.752L18.5705 9.35197C18.4264 7.81535 18.3544 7.04704 18.0088 6.46616C17.7045 5.95458 17.2548 5.54511 16.7171 5.28984C16.1065 5 15.3348 5 13.7914 5L6.53353 5C4.99017 5 4.21849 5 3.6079 5.28984C3.07014 5.54511 2.62049 5.95458 2.31614 6.46616C1.97057 7.04704 1.89854 7.81534 1.75448 9.35196Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" v-if="category.name === 'Форумы'" viewBox="0 0 22 22" fill="none">
+                <path d="M5.09436 10.2288C5.03221 9.82823 4.99996 9.41786 4.99996 9C4.99996 4.58172 8.60525 1 13.0526 1C17.4999 1 21.1052 4.58172 21.1052 9C21.1052 9.99807 20.9213 10.9535 20.5852 11.8345C20.5154 12.0175 20.4804 12.109 20.4646 12.1804C20.4489 12.2512 20.4428 12.301 20.4411 12.3735C20.4394 12.4466 20.4493 12.5272 20.4692 12.6883L20.8717 15.9585C20.9153 16.3125 20.9371 16.4895 20.8782 16.6182C20.8266 16.731 20.735 16.8205 20.6211 16.8695C20.4911 16.9254 20.3146 16.8995 19.9617 16.8478L16.7765 16.3809C16.6101 16.3565 16.527 16.3443 16.4512 16.3448C16.3763 16.3452 16.3245 16.3507 16.2511 16.3661C16.177 16.3817 16.0823 16.4172 15.893 16.4881C15.0097 16.819 14.0524 17 13.0526 17C12.6344 17 12.2237 16.9683 11.8227 16.9073M6.63158 21C9.59648 21 12 18.5376 12 15.5C12 12.4624 9.59648 10 6.63158 10C3.66668 10 1.26316 12.4624 1.26316 15.5C1.26316 16.1106 1.36028 16.6979 1.53955 17.2467C1.61533 17.4787 1.65322 17.5947 1.66566 17.6739C1.67864 17.7567 1.68091 17.8031 1.67608 17.8867C1.67145 17.9668 1.65141 18.0573 1.61134 18.2383L1 21L3.9948 20.591C4.15827 20.5687 4.24 20.5575 4.31137 20.558C4.38652 20.5585 4.42641 20.5626 4.50011 20.5773C4.5701 20.5912 4.67416 20.6279 4.88227 20.7014C5.43059 20.8949 6.01911 21 6.63158 21Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" v-if="category.name === 'Обменники'" viewBox="0 0 22 22" fill="none">
+                <path d="M5 5L7 3M7 3L5 1M7 3H5C2.79086 3 1 4.79086 1 7M17 17L15 19M15 19L17 21M15 19H17C19.2091 19 21 17.2091 21 15M9.18903 5.5C9.85509 2.91216 12.2042 1 15 1C18.3137 1 21 3.68629 21 7C21 9.79574 19.0879 12.1449 16.5001 12.811M13 15C13 18.3137 10.3137 21 7 21C3.68629 21 1 18.3137 1 15C1 11.6863 3.68629 9 7 9C10.3137 9 13 11.6863 13 15Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" v-if="category.name === 'Услуги'" viewBox="0 0 22 22" fill="none">
+                <path d="M10.5 4H10.9344C13.9816 4 15.5053 4 16.0836 4.54729C16.5836 5.02037 16.8051 5.71728 16.6702 6.39221C16.514 7.17302 15.2701 8.05285 12.7823 9.81253L8.71772 12.6875C6.2299 14.4471 4.98599 15.327 4.82984 16.1078C4.69486 16.7827 4.91642 17.4796 5.41636 17.9527C5.99474 18.5 7.51836 18.5 10.5656 18.5H11.5M7 4C7 5.65685 5.65685 7 4 7C2.34315 7 1 5.65685 1 4C1 2.34315 2.34315 1 4 1C5.65685 1 7 2.34315 7 4ZM21 18C21 19.6569 19.6569 21 18 21C16.3431 21 15 19.6569 15 18C15 16.3431 16.3431 15 18 15C19.6569 15 21 16.3431 21 18Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg"  v-if="category.name === 'Другое'"  viewBox="0 0 22 18" fill="none">
+                <path d="M1.5 9H4.88197C5.56717 9 6.19357 9.38713 6.5 10C6.80643 10.6129 7.43283 11 8.11803 11H13.882C14.5672 11 15.1936 10.6129 15.5 10C15.8064 9.38713 16.4328 9 17.118 9H20.5M7.96656 1H14.0334C15.1103 1 15.6487 1 16.1241 1.16396C16.5445 1.30896 16.9274 1.5456 17.2451 1.85675C17.6043 2.2086 17.8451 2.6902 18.3267 3.65337L20.4932 7.9865C20.6822 8.36449 20.7767 8.55348 20.8434 8.75155C20.9026 8.92745 20.9453 9.10847 20.971 9.29226C21 9.49923 21 9.71053 21 10.1331V12.2C21 13.8802 21 14.7202 20.673 15.362C20.3854 15.9265 19.9265 16.3854 19.362 16.673C18.7202 17 17.8802 17 16.2 17H5.8C4.11984 17 3.27976 17 2.63803 16.673C2.07354 16.3854 1.6146 15.9265 1.32698 15.362C1 14.7202 1 13.8802 1 12.2V10.1331C1 9.71053 1 9.49923 1.02897 9.29226C1.05471 9.10847 1.09744 8.92745 1.15662 8.75155C1.22326 8.55348 1.31776 8.36448 1.50675 7.9865L3.67331 3.65337C4.1549 2.69019 4.3957 2.2086 4.75495 1.85675C5.07263 1.5456 5.45551 1.30896 5.87589 1.16396C6.35125 1 6.88969 1 7.96656 1Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="category-name">
+              {{ category.name }}
+            </div>
+
+
+
+          </div>
+
+          <div class="sep"></div>
+          <div class="add-project" @click="this.$router.push('/add-project')">
+            <div class="category-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" fill="none">
+                <path d="M11 7V15M7 11H15M21 11C21 16.5228 16.5228 21 11 21C5.47715 21 1 16.5228 1 11C1 5.47715 5.47715 1 11 1C16.5228 1 21 5.47715 21 11Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="category-name">
+              Добавить проект
+            </div>
+          </div>
+        </div>
+
+        <div class="filters">
+
+        </div>
       </div>
 
+      <div class="projects-wrapper">
+        <div class="projects" >
+          <transition-group name="list"
+                            tag="div"
+                            class="list-wrapper">
+            <div class="list">
+              <project-card
 
-    </div>
+                  v-for="project of projects"
+                  v-if="isLoading === false"
+                  v-bind:project="project"
+                  v-on:deleteConfirmed="(emit) => {
+                    const projectToDelete = this.projects.findIndex(project => project.id === emit)
+                    deleteProject(emit)
+                    console.log(this.projects, projectToDelete)
+                    this.projects.splice(projectToDelete, 1)
 
-    <div class="search"
-         v-on:input="() => {
-      this.getOffset = 0
-      this.projects = this.projects.slice(this.projects.length, this.projects.length)
-
-      this.timerSearch()
-    }">
-      <input type="search" placeholder="Искать продавца или магазин " v-model="searchQuery">
-      <button class="searchQ"
-              v-on:click="() => {
-        this.getOffset = 0
-
-        this.projects = this.projects.slice(this.projects.length, this.projects.length)
-        this.timerSearch()
-      }">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M16.0192 14.6473C16.1135 14.7262 16.2098 14.7948 16.2924 14.877C17.4092 15.9915 18.5222 17.1094 19.6408 18.2221C19.9431 18.5232 20.0764 18.8698 19.9558 19.2845C19.7436 20.0111 18.8578 20.2413 18.3001 19.7087C17.8035 19.2338 17.3256 18.7397 16.8397 18.2531C16.106 17.5185 15.3723 16.7834 14.6301 16.0395C12.2652 17.8276 9.64012 18.4274 6.76629 17.7115C4.56655 17.1634 2.82168 15.9094 1.54672 14.032C-1.02481 10.2472 -0.32677 5.18447 3.17141 2.14558C6.54706 -0.787156 11.7014 -0.704961 15.0583 2.34144C18.456 5.42495 19.0761 10.739 16.0192 14.6478V14.6473ZM2.00159 8.99083C1.99033 12.8366 5.12329 15.9854 8.97682 16.0009C12.8393 16.0169 15.991 12.8846 16.0018 9.01948C16.0126 5.15347 12.8937 2.01689 9.01766 1.99481C5.17352 1.97321 2.01286 5.12482 2.00159 8.99083Z" fill="#6C7AFF"/>
-        </svg>
-      </button>
-
-      <button class="clearQ"
-              v-if="searchQuery !== ''"
-              v-on:click="() => {
-      this.searchQuery = ''
-      this.lazyProjects = []
-      this.getOffset = 0
-      lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit)
-    }">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 14 13" fill="none">
-          <path d="M1 0.5L13 12.5M1 12.5L13 0.5" stroke="#2B2B2B"/>
-        </svg>
-      </button>
-
-    </div>
-
-  </div>
-  </transition>
-  <div class="projects-wrapper" :class="{fadeAnimate: this.projectCardAnimate}" >
+                  }"
+              >
+              </project-card>
 
 
-    <div class="projectsList" >
-      <transition-group name="list" tag="div" class="list-wrapper">
+              <div v-if="this.emptyProjectsResponse === true && isLoading === false && this.projects.length <= 0" class="noProjects">
+                <h3>Нет проектов</h3>
+                <img src="../../assets/images/cat%20sleep.png" alt="">
+                <span>В эту категорию проекты еще не добавлены.</span>
+
+              </div>
+            </div>
 
 
 
-        <div class="project" v-for="project of projects" v-if="loaded === true">
-          <project-card v-if="projects.length > 0"
-              ref='fadeAnimate'
-              v-bind:project="project"
-              v-on:updated="(emit) => {
-
-                this.$refs.currentSort.scrollIntoView({ behavior: 'smooth', block: 'start'})
-                this.projects = this.projects.slice(this.projects.length, this.projects.length)
-                this.getOffset = 0
-
-                this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit)
-
-               }"
-          >
-
-          </project-card>
-
-
-
-
-
-
-        </div>
-
-
-        <div v-if="this.backendNoProjects === true" class="noProjects">
-          <svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58" fill="none">
-            <g clip-path="url(#clip0_380_7664)">
-              <path d="M26.8089 0C28.2705 0 29.7295 0 31.1911 0C31.4772 0.0721778 31.7608 0.172711 32.0521 0.211378C44.129 1.84569 52.2593 8.43964 56.4353 19.8308C57.2473 22.0503 57.4922 24.476 58 26.8089V31.1911C57.9252 31.5185 57.8144 31.8433 57.7809 32.1758C56.6364 43.5309 48.4313 53.4812 37.4448 56.7008C35.4084 57.2963 33.2791 57.5747 31.1911 58H26.8089C26.5202 57.9278 26.2366 57.8196 25.9453 57.7912C14.0515 56.5874 4.02907 48.0343 1.01564 36.4524C0.567111 34.7278 0.332533 32.9466 0 31.1911C0 29.7295 0 28.2705 0 26.8089C0.0747556 26.4815 0.172711 26.1593 0.219111 25.8293C1.85084 14.0927 8.18444 6.02169 19.2302 1.7864C21.6327 0.866133 24.2749 0.577422 26.8089 0ZM3.35111 28.8685C3.35369 43.2628 14.6882 54.6412 29.0284 54.6489C43.1881 54.654 54.6515 43.2061 54.6489 29.0619C54.6489 14.8428 43.2577 3.35369 29.1572 3.35111C14.8377 3.34853 3.34853 14.7114 3.35111 28.8685Z" fill="#C8716B"/>
-              <path d="M29.0079 13.2653C29.8225 13.4999 30.668 13.6623 31.4439 13.9871C32.3719 14.3763 32.756 15.1857 32.6761 16.1833C32.3409 20.416 31.9981 24.6487 31.6527 28.8815C31.5135 30.5905 31.3537 32.2996 31.2093 34.0086C31.0985 35.3388 30.3793 36.0477 29.0775 36.0915C27.7293 36.1379 26.9173 35.4316 26.7936 34.0422C26.2986 28.5309 25.7934 23.0222 25.3397 17.5083C25.0922 14.4975 26.1001 13.4019 29.0079 13.2627V13.2653Z" fill="#C8716B"/>
-              <path d="M28.7914 44.5957C27.2138 44.49 25.9172 43.0052 26.0409 41.4482C26.1672 39.8629 27.6546 38.5611 29.1987 38.69C30.7737 38.8189 32.0806 40.3217 31.9595 41.8581C31.8332 43.4408 30.3767 44.7013 28.794 44.5957H28.7914Z" fill="#C8716B"/>
-            </g>
-            <defs>
-              <clipPath id="clip0_380_7664">
-                <rect width="58" height="58" fill="white"/>
-              </clipPath>
-            </defs>
-          </svg>
-          <span>Нет проектов.</span>
-
-        </div>
-
-
-
-      </transition-group>
-      <Waypoint v-if="emptyResponse === false && loaded === true" @change="(way) => {
-
-                if (emptyResponse === false) {
-                  lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false)
+          </transition-group>
+          <Waypoint v-if="emptyProjectsResponse === false && isLoading === false" @change="(way) => {
+                if (way.going === 'IN') {
+                  getProjects()
                 }
-
               }">
-        <div class="loadmore btn btn-outlined" ref="loadmore"
-             v-if="emptyResponse === false && backendNoProjects === false"
-             v-on:click="() => {
-                       lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false)
-
+            <div class="loadmore btn btn-outlined" ref="loadmore"
+                 v-if="emptyProjectsResponse === false"
+                 v-on:click="() => {
+                       getProjects()
                      }">
-          Загрузить еще
+              Загрузить еще
+            </div>
+          </Waypoint>
+
+          <loader v-if="isLoading === true"></loader>
+
+
+
         </div>
-      </Waypoint>
 
-      <loader v-if="loaded === false"></loader>
-
-
-
+      </div>
     </div>
-
-
-
-
-
-
-
-
   </div>
+
 
 </template>
 
 <script>
-import recommended from "../TemplateParts/Page Parts/FreshAndRecommendedProduct.vue";
+
 import projectCard from "../TemplateParts/Cards/ProjectCard.vue";
-import { ref, defineComponent } from "vue";
+import {ref, defineComponent, watch} from "vue";
 import { Waypoint } from "vue-waypoint";
 import vClickOutside from 'click-outside-vue3'
 import AnimateHeight from 'vue-animate-height';
-
 import 'vue-loading-overlay/dist/css/index.css';
-import loader from "../TemplateParts/Page Parts/Loader.vue";
+import loader from "../TemplateParts/PageParts/Loader.vue";
 import {store} from "../../assets/js/store.js";
-import config from "../../assets/js/config.js";
+import {useFetch} from "../../assets/js/fetchRequest.js";
 
+import {deleteProject} from "../../assets/js/projectController.js";
 export default {
   name: "AllProjectsWithSort.vue",
-  components: {recommended, projectCard, Waypoint, loader, AnimateHeight},
+  components: {projectCard, Waypoint, loader, AnimateHeight},
   emits: ['updated', 'projectDeleted'],
 
   data () {
     return {
-
-      loaded: false,
       showSort: false,
       showCategorySort: false,
-      category: {},
       projects: [],
-      recommend: ref(),
-      backendNoProjects: true,
+      emptyProjectsResponse: true,
 
       activeSort: '',
       activeSortName: 'Популярные',
@@ -334,32 +305,23 @@ export default {
       arrowDate: 'up',
       arrowCategory: 'up',
 
-      globalOffset: 0,
-      globalLimit: 0,
-
       getOffset: 0,
-      getLimit: 5,
+      getLimit: 4,
       lazyProjects: [],
       emptyResponse: false,
 
       categoryName: 0,
 
-      searchQuery: '',
-      searchStatus: false,
       clicked: false,
-
       isLoading: false,
-      fullPage: true,
 
-      fadeAnimate: false,
-      projectCardAnimate: false,
-      height: 0,
       categoriesFilter: [],
       username: '',
 
       timer: ref(null),
       dinamicWidth: '100%',
-      store
+      category: 0,
+      store, deleteProject
     }
   },
   directives: {
@@ -370,38 +332,15 @@ export default {
   },
 
   mounted() {
-    this.height = 1250
-
-    if (this.lazyProjects.length < 1) {
-      this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false, false)
-    }
-    this.loaded === true ? this.handleScroll() : ''
-
+    this.isLoading = true
+    this.getProjects()
 
     this.$route.path === '/' ? this.dinamicWidth = '100%' : this.dinamicWidth = '48%'
 
 
   },
-  created() {
-    this.isLoading = true
-  },
-  updated() {
-
-      this.isLoading = false
-  },
-
-
 
   methods: {
-    timerSearch() {
-      clearTimeout(this.timer);
-
-      this.timer = setTimeout(() => {
-        this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit)
-      }, 600);
-
-    },
-
     onClickOutside (event) {
       if (event.target.classList[0] !== 'filter') {
         this.showSort = false
@@ -409,7 +348,6 @@ export default {
       } else {
 
       }
-
     },
     onClickOutsideCategory (event) {
 
@@ -421,82 +359,24 @@ export default {
       }
 
     },
-    handleScroll () {
 
+    getProjects () {
+      let url = `projects?isPayedFirst=true&offset=${this.getOffset}&limit=${this.getLimit}`
+      this.category > 0 ? url += `&categoryIds=[${this.category}]` : url
 
-    },
-    lazyProjectLoad (sort, offset, limit) {
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+      this.projects.length <= 0 ? this.isLoading = true : this.isLoading = false
 
-      const category = [parseInt(this.$route.path.replace('/projects-list/', ''))]
+      useFetch(url, 'GET')
+          .then(result => {
 
-      this.$route.path !== '/' ? this.categoryName = store.categories[store.categories.findIndex(item => item.id === parseInt(category))].name : '' ;
-
-      let url = `${config.api.url}projects?isPayedFirst=true&offset=${offset}&limit=${limit}`
-
-      if (this.$route.path === '/favorite') {
-        url = `${config.api.url}user/project`
-
-      } else {
-        if (this.$route.path !== '/') {
-          url += `&categoryIds=[${category}]`
-        }
-        if (this.activeSortName !== 'Популярные') {
-          url += `&sort=${sort}`
-        }
-
-        if (this.searchQuery !== '') {
-          url += `&search=${this.searchQuery}`
-        }
-        if (this.categoriesFilter.length > 0) {
-          url += `&categoryIds=[${this.categoriesFilter}]`
-        }
-      }
-
-
-
-
-      fetch(url, {
-        method: "GET",
-        headers: myHeaders,
-      })
-          .then((response) => response.json())
-          .then((result) => {
-            result.projects.length === 0 && offset === 0 ? this.backendNoProjects = true : this.backendNoProjects = false
-
-            if (this.$route.path === '/') {
-              for (let project of result.projects) {
-                this.projects.push(project)
-
-              }
-
-
-
-              result.projects.length < this.getLimit ? this.emptyResponse = true : this.emptyResponse = false
-
-            } else {
-
-              for (let project of result.projects) {
-                this.projects.push(project)
-
-              }
-
-              result.projects.length < limit ? this.emptyResponse = true : this.emptyResponse = false
+            for (let project of result.projects) {
+              this.projects.push(project)
             }
 
-            this.loaded = true
-            this.projectCardAnimate = true
+            result.projects.length === 0 ? this.emptyProjectsResponse = true : this.emptyProjectsResponse = false
 
-            setTimeout(() => {
-              this.projectCardAnimate = false
-            }, 200)
-
-
+            this.isLoading = false
           })
-          .catch((error) => {console.error(error)});
-
 
       this.getOffset += this.getLimit
 
@@ -507,15 +387,105 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.baza-menu {
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+
+  .categories {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: visible;
+    .sep {
+      width: 1px;
+      height: 100%;
+      background-color: #D8D8D8;
+    }
+    svg {
+      margin-bottom: 5px;
+      height: 25px;
+    }
+
+    .category, .add-project {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 5px;
+      padding: 5px 10px;
+      transition: .3s ease;
+      cursor: pointer;
+
+      .category-icon {
+        width: 100%;
+        svg {
+          position: relative;
+          left:50%;
+          transform: translateX(-50%);
+        }
+
+      }
+      .category-name {
+        color: #000;
+        font-family: "PT Sans Caption";
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        text-align: center;
+        padding-bottom: 5px;
+        transition: .3s ease;
+        border-bottom: 2px solid transparent;
+      }
+
+      &:hover {
+        .category-name  {
+          border-bottom-color: #7c7c7c;
+        }
+      }
+    }
+    .add-project {
+      white-space: nowrap;
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+
+      .category-icon {
+        width: 100%;
+        svg {
+          position: relative;
+          left:50%;
+          transform: translateX(-50%);
+        }
+
+      }
+      .category-name {
+        width: 100%;
+        color: #000;
+        font-family: "PT Sans Caption";
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        text-align: center;
+      }
+    }
+  }
+
+}
 .buttons {
   display: flex;
   gap: 10px;
+  padding: 5px;
   margin-top: 30px;
   margin-bottom: 20px;
   justify-content: space-between;
 
   .btns {
-    display: flex;
+    display: none;
     gap: 10px;
     position: relative;
     align-items: center;
@@ -647,20 +617,36 @@ export default {
   text-align: center;
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
+  margin-top: 10px;
+  justify-content: center;
+  h3 {
+    width: 100%;
+  }
+
+  img {
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+  }
 
   svg {
+    margin-left: 50%;
+    transform: translateX(-50%);
     width: 100px;
     height: 100px;
     margin-bottom: 30px;
     flex-basis: 100%;
 
-    path {
-      fill: #c8b26b;
-    }
   }
   span {
-    color: #c8b26b;
+    color: #000;
     flex-basis: 100%;
+    font-family: "PT Sans Caption";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
   }
 }
 .arrow {
@@ -701,72 +687,6 @@ export default {
 
   }
 }
-.search {
-  position: relative;
-  width: 100%;
-  max-width: 400px;
-  justify-self: end;
-  display: flex;
-
-  input[type=search] {
-    border: 1px solid transparent;
-    outline: none;
-    color: #434F58;
-    font-size: 1rem;
-    line-height: calc(1em + 8px);
-    font-family: "Proxima Nova", sans-serif;
-    display: block;
-    background-color: #fff;
-    width: 100%;
-    transition: all .2s ease-in-out;
-    border-radius: 10px;
-    padding: 0.4375rem 0.5rem;
-
-    &::-webkit-search-cancel-button {
-      display: none;
-    }
-
-    &::placeholder {
-      color: #2B2B2B;
-      opacity: .5;
-    }
-
-    &:hover, &:focus {
-      outline: none;
-    }
-
-  }
-  .searchQ {
-    position: absolute;
-    right: 9px;
-    cursor: pointer;
-    width: 20px;
-    top: 8px;
-
-    border: none;
-    background-color: #ffffff;
-    box-sizing: unset;
-
-
-    svg {
-      path {
-        fill: lightgray;
-      }
-    }
-
-  }
-  .clearQ {
-    position: absolute;
-    right: 40px;
-    cursor: pointer;
-    width: 20px;
-    top: 12px;
-    border: none;
-    background-color: transparent;
-    background-color: #ffffff;
-
-  }
-}
 .btn-sort-switcher {
   border: 1px solid #AFBFC9;
   outline: none;
@@ -784,12 +704,32 @@ export default {
   }
 }
 .projects-wrapper {
+  width: 100%;
+  min-height: 200px;
   padding-bottom: 30px;
   transition: max-height 3.25s ease;
 
-  .projectsList {
+  .projects {
     width: 100%;
     transition: .3s ease;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1%;
+
+    .list-wrapper {
+      width: 100%;
+      justify-content: start;
+      align-items: start;
+
+      .list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        flex-flow: row wrap;
+        gap: 1%;
+      }
+
+    }
   }
 }
 
@@ -827,23 +767,19 @@ export default {
   }
   .projects-wrapper {
     display: flex;
-
-  }
-
-  .list-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    width: 100%;
-    justify-content: center;
-    align-items: stretch;
-
-    .project {
-      width: 48%;
-
-
+    .projects {
+      .list-wrapper {
+        .list {
+          justify-content: center;
+        }
+      }
     }
+
+
+
+
   }
+
   .buttons {
     flex-wrap: wrap;
 

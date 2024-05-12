@@ -14,6 +14,8 @@ import checkProjects from "../../components/pages/CheckProjects.vue";
 import projects from "../../components/pages/Projects.vue";
 import favoriteProjects from "../../components/pages/FavoriteProjects.vue";
 import errorPage from "../../components/pages/errorPage.vue";
+import searchPage from "../../components/pages/SearchPage.vue";
+import project_Edit from "../../components/Controllers/ProjectControllers/Project_Edit.vue";
 
 const router = createRouter({
 
@@ -30,6 +32,11 @@ const router = createRouter({
             component: AboutProjectView,
         },
         {
+            path: '/search',
+            name: 'search',
+            component: searchPage,
+        },
+        {
             path: '/advertisement',
             name: 'Advertisement',
             component: AdvertisementView,
@@ -38,11 +45,6 @@ const router = createRouter({
             path: '/guarantee',
             name: 'Guarantee',
             component: GuaranteeView,
-        },
-        {
-            path: '/projects-list/:id',
-            name: 'New projects view',
-            component: allProjectsWithSort
         },
         {
             path: '/contacts',
@@ -71,6 +73,12 @@ const router = createRouter({
         {
             path: '/add-project',
             component: addProject
+        },
+        {
+            path: '/edit-project',
+            name: 'ProjectEdit',
+            component: project_Edit,
+            props: true
         },
         {
             path: '/favorite',

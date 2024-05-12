@@ -135,7 +135,7 @@
 </template>
 
 <script>
-import modalWindowBackdrop from "../../TemplateParts/Page Parts/Modal.vue";
+import Modal from "../../TemplateParts/PageParts/Modal.vue";
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 import config from "../../../assets/js/config.js";
@@ -165,7 +165,7 @@ export default {
       store
     }
   },
-  components: { modalWindowBackdrop, Loading },
+  components: { Modal, Loading },
   created() {
     this.isLoading = true
   },

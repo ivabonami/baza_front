@@ -16,9 +16,7 @@
              if ($props.clickable === true) {
                this.$router.push(`/project/${$props.projectId}`)
                this.highlight.id = $props.id
-
              }
-
             }">
     <div class="image">
       <img :src="$props.image" alt=""
@@ -81,6 +79,16 @@
       </div>
     </div>
   </div>
+
+  <modal v-if="this.modal.show === true"
+         v-on:changeModal="(emitShowModal) => {
+      }"
+         v-bind:modal="this.modal"
+         v-on:modalShow="(emit)=> {
+           this.modal.show = emit
+      }">
+
+  </modal>
 </template>
 
 <script>
@@ -88,8 +96,11 @@ import { ref, watch } from "vue";
 import config from "../../../assets/js/config.js";
 import {highlight} from "../../../assets/js/productController.js";
 
+
 export default {
   name: "ServicesCard.vue",
+  components: {},
+
   props: ['name', 'image', 'description', 'id', 'isOwner', 'highlight', 'clickable', 'projectId', 'productId'],
 
   data() {
@@ -109,7 +120,12 @@ export default {
       counter: 0,
       projectName: '',
       projectDescription: '',
-      errors: []
+      errors: [],
+
+      modal: {}
+
+
+
     }
   },
   mounted() {
@@ -118,6 +134,14 @@ export default {
     highlight.id === this.$props.id ? this.highlighted = true : this.highlighted = false
 
     this.cardWidth = this.$refs.card.clientWidth
+
+    this.modal = {
+      show: true,
+      type: 'error',
+
+      headline: 'Ошибка',
+      description: `Произошла техническая или какая-то другая ошибка. Пожалуйста, повторите действие позже и сообщите администратору о проблеме. Код ошибки: PIDOR666`,
+    }
 
   },
 
@@ -181,18 +205,24 @@ export default {
 
 .service-card {
   width: 100%;
-  min-width: 250px;
-  max-width: 300px;
+  min-width: 210px;
+  max-width: 210px;
   margin-bottom: 5px;
   position: relative;
   border-radius: 20px;
   height: 100%;
-  border: 1px solid #dcdcdc;
-
+  cursor: pointer;
+  transition: .3s ease;
   background-color: #ffffff;
 
   p {
-    padding: 0 10px;
+    color: #000;
+    margin: 10px 0!important;
+    font-family: "PT Sans Caption";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
   }
   .service-description {
     display: none;
@@ -203,46 +233,9 @@ export default {
     box-sizing: content-box;
     border-color: #e3eaff;
   }
+  &:hover {
+    transform: scale(1.04);
 
-  input[type=text] {
-    font-size: 14px;
-    margin-top: 10px;
-    padding: 5px 10px;
-    font-weight: 600;
-    border-radius: 5px;
-    border: 1px solid #eaeaea;
-    width: 100%;
-    box-sizing: border-box;
-    font-family: "Montserrat", "Arial", Serif;
-    margin-bottom: 10px;
-  }
-
-  textarea {
-    background-color: #fff;
-    font-size: 14px;
-    border-radius: 5px;
-    padding: 5px 10px;
-    border: 1px solid #eaeaea;
-    width: 100%;
-    min-height: 150px;
-    height: fit-content;
-    box-sizing: border-box;
-    resize: none;
-    font-family: "Montserrat", "Arial", Serif;
-  }
-
-  &.can-be-hovered {
-    cursor: pointer;
-    transition: .3s ease;
-
-    &:hover {
-      .image {
-        img {
-
-        }
-      }
-      background-color: #edf1fc;
-    }
   }
 
   &.notNormal {
@@ -298,7 +291,7 @@ export default {
     background-color: #ffffff;
     border-radius: 20px;
     width: 100%;
-    height: 220px;
+    height: 210px;
     overflow: hidden;
     display: block;
     text-align: center;

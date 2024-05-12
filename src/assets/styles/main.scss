@@ -1,40 +1,4 @@
-body {
-  transition: color, background-color .15s ease;
-  background-color: #f4f6f9;
-  padding-top: 30px;
-}
-h1, h2, h3, h4, h5, h6, p {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-h1 {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 25px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
 
-}h3 {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-
-}
-p {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-body {
-  margin: 0;
-  padding: 0;
-
-  font-family: 'Montserrat', sans-serif;
-}
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -107,11 +71,6 @@ footer {
 
 }
 .header {
-  margin-top: 30px;
-
-  .box {
-    background-color: white;
-  }
 
   .d-flex {
     display: flex;

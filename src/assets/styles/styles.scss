@@ -1,0 +1,389 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans+Caption:wght@400;700&display=swap');
+
+
+body {
+  transition: color, background-color .15s ease;
+  background-color: #fff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+$lightgray: #D8D8D8;
+$gray: #A8A8A8;
+
+h1, h2, h3, h4, h5, h6, p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h1 {
+  font-family: "PT Sans Caption", sans-serif;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+}h3 {
+   font-family: "PT Sans Caption", sans-serif;
+   font-size: 18px;
+   font-style: normal;
+   font-weight: 600;
+   line-height: normal;
+
+ }
+p {
+  font-family: "PT Sans Caption", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+
+.global-wrapper {
+  width: 100%;
+
+  .wrapper {
+    max-width: 1100px;
+    width: 100%;
+
+    margin: 0 auto;
+
+  }
+
+}
+.back {
+  background-color: transparent;
+  border: none;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 5px;
+  transition: .3s ease;
+  cursor: pointer;
+
+  color: var(--gray, #A8A8A8);
+  font-family: "PT Sans Caption";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  svg {
+    width: 15px;
+    height: 15px;
+    transition: .3s ease;
+    path {
+      fill: #A8A8A8;
+    }
+  }
+
+  &:hover {
+    color: #000;
+    svg {
+      margin-right: 5px;
+      path {
+        fill: #000;
+      }
+    }
+  }
+}
+.main {
+
+}
+.row {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.d-flex {
+  display: flex;
+  width: 100%;
+
+  &.justify-between {
+    justify-content: space-between;
+  }
+}
+
+input[type='text'] {
+  color: #000;
+  text-align: left;
+  border-radius: 10px;
+  border: 1px solid var(--gray-2, #D8D8D8);
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+
+  font-family: "PT Sans Caption";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  &::-webkit-search-cancel-button {
+    display: none;
+  }
+
+  &::placeholder {
+    color: #2B2B2B;
+    opacity: .5;
+  }
+
+  &:hover, &:focus {
+    outline: none;
+  }
+}
+
+input[type='file'] {
+  color: #000;
+  text-align: left;
+  border-radius: 10px;
+  border: 1px solid var(--gray-2, #D8D8D8);
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+
+  font-family: "PT Sans Caption";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  &::-webkit-search-cancel-button {
+    display: none;
+  }
+
+  &::placeholder {
+    color: #2B2B2B;
+    opacity: .5;
+  }
+
+  &:hover, &:focus {
+    outline: none;
+  }
+}
+
+input[type='checkbox'] {
+  color: #000;
+  text-align: left;
+  border-radius: 10px;
+  border: 1px solid var(--gray-2, #D8D8D8);
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+
+  font-family: "PT Sans Caption";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  &::-webkit-search-cancel-button {
+    display: none;
+  }
+
+  &::placeholder {
+    color: #2B2B2B;
+    opacity: .5;
+  }
+
+  &:hover, &:focus {
+    outline: none;
+  }
+}
+textarea {
+  color: #000;
+  text-align: left;
+  border-radius: 10px;
+  border: 1px solid var(--gray-2, #D8D8D8);
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  resize: none;
+  height: 235px;
+
+  font-family: "PT Sans Caption";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  &::-webkit-search-cancel-button {
+    display: none;
+  }
+
+  &::placeholder {
+    color: #2B2B2B;
+    opacity: .5;
+  }
+
+  &:hover, &:focus {
+    outline: none;
+  }
+}
+.baza-button {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+
+  transition: .3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &.primary {
+    border-radius: 10px;
+    background: var(--yellow, #FFC700);
+    color: #000;
+    text-align: center;
+    font-family: "PT Sans Caption";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    &:hover {
+      box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.25);
+    }
+  }
+
+  &.special {
+    color: #000;
+    font-family: "PT Sans Caption", sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    background: $lightgray;
+    opacity: .6;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &.outline {
+    border-radius: 10px;
+    border: 2px solid var(--yellow, #FFC700);
+
+    color: #000;
+    text-align: center;
+    font-family: "PT Sans Caption";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    width: 100%;
+
+    &:hover {
+      box-shadow: 0px 3px 6px 0px #FFC700;
+    }
+
+    &.red {
+      border-color: #984a5a;
+
+      &:hover {
+        color: #fff;
+        background-color: #984a5a;
+        box-shadow: 0px 3px 6px 0px rgba(208, 208, 208, 0.44);;
+      }
+    }
+  }
+
+  &.signin {
+    color: #126DF7;
+    font-family: "PT Sans Caption", sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    text-transform: capitalize;
+
+    border: 2px solid transparent;
+
+    svg {
+      margin-left: 5px;
+      width: 16px;
+      height: 16px;
+      path {
+        stroke-width: 1px;
+        stroke: #126DF7;
+      }
+    }
+
+    &:hover {
+      border-color: #126DF7;
+    }
+  }
+
+  &.signout {
+    color: #126DF7;
+    font-family: "PT Sans Caption", sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    text-transform: capitalize;
+    transition: .3s ease;
+    border: 2px solid transparent;
+
+    svg {
+      margin-left: 5px;
+      width: 16px;
+      height: 16px;
+      path {
+        stroke-width: 1px;
+        stroke: #126DF7;
+        transition: .3s ease;
+      }
+    }
+
+    &:hover {
+      border-color: #984a5a;
+      color: #984a5a;
+
+      svg {
+        path {
+          stroke: #984a5a
+        }
+      }
+    }
+  }
+}
+
+
+//animations
+
+.list-enter-from {
+  opacity: 0;
+  translate: 0 50px;
+}
+.list-enter-to {
+  opacity: 1;
+  translate: 0 0;
+}
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.3s;
+}
+.list-leave-from { opacity: 1; }
+.list-leave-to { opacity: 0; }

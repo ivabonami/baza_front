@@ -1,9 +1,11 @@
 <template>
   <div class="projects-wrapper" :class="{fadeAnimate: this.projectCardAnimate}" >
     <div class="projectsList" >
+      <h3>Ваши любимые проекты</h3>
       <transition-group name="list" tag="div" class="list-wrapper">
-        <div class="project" v-for="project of projects" v-if="loaded === true">
-          <project-card v-if="projects.length > 0"
+          <project-card
+                        v-for="project of projects"
+                        v-if="loaded === true && projects.length > 0"
                         ref='fadeAnimate'
                         v-bind:project="project"
                         v-bind:favorite="true"
@@ -26,13 +28,6 @@
           >
 
           </project-card>
-
-
-
-
-
-
-        </div>
 
 
 <!--        <div v-if="this.projects.length <= 0 " class="no-projects">-->
@@ -90,7 +85,7 @@
 </template>
 
 <script>
-import recommended from "../TemplateParts/Page Parts/FreshAndRecommendedProduct.vue";
+import recommended from "../TemplateParts/PageParts/FreshAndRecommendedProduct.vue";
 import projectCard from "../TemplateParts/Cards/ProjectCard.vue";
 import { ref, defineComponent } from "vue";
 import { Waypoint } from "vue-waypoint";
@@ -98,7 +93,7 @@ import vClickOutside from 'click-outside-vue3'
 import AnimateHeight from 'vue-animate-height';
 
 import 'vue-loading-overlay/dist/css/index.css';
-import loader from "../TemplateParts/Page Parts/Loader.vue";
+import loader from "../TemplateParts/PageParts/Loader.vue";
 import {store} from "../../assets/js/store.js";
 import config from "../../assets/js/config.js";
 
@@ -225,7 +220,6 @@ export default {
             //
               for (let project of result.projects) {
                 this.projects.push(project)
-                console.log(project)
 
               }
             //
@@ -253,6 +247,16 @@ export default {
 </script>
 
 <style scoped lang="scss">
+h3 {
+  color: #000;
+  font-family: "PT Sans Caption";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-bottom: 10px;
+  margin-top: 40px;
+}
 .buttons {
   display: flex;
   gap: 10px;
@@ -529,6 +533,13 @@ export default {
   .projectsList {
     width: 100%;
     transition: .3s ease;
+    .list-wrapper {
+      display: flex;
+      gap: 1%;
+      .project {
+        width: 100%;
+      }
+    }
   }
 }
 
@@ -557,6 +568,7 @@ export default {
     }
   }
 }
+
 @media screen and (max-width: 768px)  {
   .search {
     input[type=search] {
@@ -569,12 +581,10 @@ export default {
   }
 
   .list-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
     width: 100%;
     justify-content: center;
     align-items: stretch;
+
 
     .project {
       width: 48%;

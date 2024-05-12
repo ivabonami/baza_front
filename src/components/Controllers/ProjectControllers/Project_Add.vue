@@ -317,37 +317,17 @@
   </div>
 
 
-
-  <modal-window-backdrop
-      v-if="showModal === true"
-      v-on:changeModal="(emitShowModal) => {
-        this.showModal = emitShowModal
-        this.goHome === true ? this.$router.push('/') : ''
-      }"
-
-      v-bind:tab="this.modal.tab"
-      v-bind:icon-type="this.modal.iconType"
-      v-bind:descriptionType="this.modal.descriptionType"
-      v-bind:heading="this.modal.heading"
-      v-bind:description="this.modal.description"
-      v-bind:close="this.modal.close"
-      v-bind:confirmAction="this.modal.confirm"
-      v-bind:exit="this.modal.exit"
-
-  >
-
-  </modal-window-backdrop>
 </template>
 
 <script>
-import modalWindowBackdrop from "../../TemplateParts/Page Parts/Modal.vue";
+import Modal from "../../TemplateParts/PageParts/Modal.vue";
 import config from "../../../assets/js/config.js";
 import { ref, watch } from "vue";
-import loader from "../../TemplateParts/Page Parts/Loader.vue";
+import loader from "../../TemplateParts/PageParts/Loader.vue";
 import {signOut} from "../../../assets/js/userService.js";
 export default {
   name: "AddProject.vue",
-  components: {modalWindowBackdrop,loader},
+  components: {loader},
   emits: ['changeModal'],
 
   data () {

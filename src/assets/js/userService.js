@@ -2,60 +2,35 @@ import VueJwtDecode from "vue-jwt-decode";
 import {reactive} from "vue";
 import {router} from "./router.js";
 import config from "./config.js";
+import {useFetch} from "./fetchRequest.js";
+
+let token = null
+localStorage.getItem('token') !== null ? token = VueJwtDecode.decode(localStorage.getItem('token')) : token = null
 
 export const userInfo = reactive(
     {
         token: localStorage.getItem('token') || null,
         username: localStorage.getItem('username') || null,
-        expired: localStorage.getItem('expired') || null,
-        role: localStorage.getItem('role') || null
-    }
+        expired: token ? token.exp : null,
+        role: token ? token.role : null,
 
+        searchQuery: ''
+    }
 )
-export const isAdmin = () => {
-    return userInfo.role === 'admin'
-}
 export function signOut() {
-    localStorage.removeItem('username')
-    localStorage.removeItem('token')
-    localStorage.removeItem('role')
-    localStorage.removeItem('expired')
+    localStorage.clear()
     router.push('/')
     router.go()
 }
+
+console.log(token)
+userInfo.token === 'undefined' ? signOut() : ''
+
 export function refreshToken () {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", `Bearer ${userInfo.token}`);
-
-    const raw = JSON.stringify({
-        "token": userInfo.token
-    });
-
-    const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-
-    };
-
-    fetch(`${config.api.url}refresh`, requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-            userInfo.token = result.token
-            localStorage.setItem('token', result.token)
+    useFetch('refresh', "POST", {"token": userInfo.token})
+        .then(result => {
+            console.log(result)
+            localStorage.setItem("token", result.token)
         })
-        .catch((error) => console.error(error));
-}
-
-
-localStorage.getItem('token') !== null ? userInfo.expired = VueJwtDecode.decode(localStorage.getItem('token')).exp : localStorage.setItem('expired',  null)
-localStorage.getItem('token') !== null ? localStorage.setItem('role', VueJwtDecode.decode(localStorage.getItem('token')).role) : localStorage.setItem('expired',  null)
-
-localStorage.setItem('expired', userInfo.expired || null)
-
-if (localStorage.getItem('expired') !== null &&  Math.round(Date.now() / 1000) > userInfo.expired - 1000) {
-
-} else {
 
 }

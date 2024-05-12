@@ -73,6 +73,7 @@ export default {
 .no-projects {
   margin-top: 10px;
   display: flex;
+  gap: 1%;
   flex-wrap: wrap;
   justify-content: center;
   font-weight: bold;

@@ -71,7 +71,6 @@
 </template>
 
 <script>
-import {isAdmin} from "../../../assets/js/userService.js";
 import config from "../../../assets/js/config.js";
 export default {
   name: "AddService.vue",
@@ -87,7 +86,7 @@ export default {
       addedId: 0,
       avatarError: false,
       avatarErrorPusher: false,
-      isAdmin, config
+      config
     }
   },
   mounted() {
@@ -106,7 +105,7 @@ export default {
         headers: myHeaders,
         body: JSON.stringify({
           name: this.productName,
-          isReviewed: isAdmin(),
+          isReviewed: false,
           avatarFilePath: this.projectAvatar,
           description: this.productDescription,
           projectId: this.$props.projectId,

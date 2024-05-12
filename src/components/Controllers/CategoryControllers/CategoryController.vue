@@ -92,26 +92,11 @@
 
   </div>
 
-  <modal-window-backdrop
-      v-if="showModal === true"
-      v-on:changeModal="(emitShowModal) => {this.showModal = emitShowModal}"
-      v-bind:icon-type="this.modal.iconType"
-      v-bind:descriptionType="this.modal.descriptionType"
-      v-bind:heading="this.modal.heading"
-      v-bind:description="this.modal.description"
-      v-bind:close="this.modal.close"
-      v-bind:confirmAction="this.modal.confirm"
-      v-bind:exit="this.modal.exit"
-
-  >
-
-  </modal-window-backdrop>
 
 </template>
 
 <script>
-import modalWindowBackdrop from "../../TemplateParts/Page Parts/Modal.vue";
-import shopsCategories from "./AllCategories.vue";
+import Modal from "../../TemplateParts/PageParts/Modal.vue";
 import config from "../../../assets/js/config.js";
 import 'vue-loading-overlay/dist/css/index.css';
 import {store} from "../../../assets/js/store.js";
@@ -119,7 +104,7 @@ import {userInfo} from "../../../assets/js/userService.js";
 
 export default {
   name: "addCategory.vue",
-  components: { modalWindowBackdrop, shopsCategories },
+  components: {  },
 
   emits: ['confirmAction', 'forceReload'],
 

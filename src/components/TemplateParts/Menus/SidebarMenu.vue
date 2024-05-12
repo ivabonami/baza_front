@@ -136,7 +136,6 @@ export default  {
 
   mounted() {
     this.checkAdmin()
-    console.log('ligin: ', isLogin())
   },
 
   updated() {

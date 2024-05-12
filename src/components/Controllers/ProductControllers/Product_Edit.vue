@@ -88,11 +88,11 @@
 
 <script>
 import config from "../../../assets/js/config.js";
-import modalWindowBackdrop from "../../TemplateParts/Page Parts/Modal.vue";
+import Modal from "../../TemplateParts/PageParts/Modal.vue";
 export default {
   name: "editService.vue",
   props: ['product'],
-  components: {modalWindowBackdrop},
+  components: {},
   data () {
     return {
       modal: {},
