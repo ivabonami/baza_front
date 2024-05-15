@@ -11,7 +11,7 @@
                  v-if="this.project.avatarFilePath !== ''">
           </figure>
           <div class="favorite"
-               v-if="isFavourite === false && userInfo.token !== null"
+               v-if="isFavourite === false || userInfo.token !== null"
                v-on:click="() => {
                useFetch(`user/project/${project.id}`, `POST`)
                this.isFavourite = true
@@ -20,7 +20,7 @@
           </div>
 
           <div class="favorite"
-               v-else-if="isFavourite === true && userInfo.token !== null"
+               v-else-if="isFavourite === true || userInfo.token !== null"
                v-on:click="() => {
                useFetch(`user/project/${project.id}`, `DELETE`)
                this.isFavourite = false
@@ -94,7 +94,7 @@
 
             </div>
             <div class="sep" v-if="isOwner || isAdmin"></div>
-            <div class="rating" v-if="isOwner || isAdmin" @click="() => {
+            <div class="rating edit-project" v-if="isOwner || isAdmin" @click="() => {
               this.$router.push({name: 'ProjectEdit'})
               editableProject.project = project
             }" v-tippy="{ content: 'Изменить название, описание и другое в проекте' }">
@@ -212,7 +212,7 @@
               <div class="" v-if="this.products.length <= 0"></div>
 <!--              <Waypoint @change="(way) => {-->
 
-<!--                          if (way.going === 'IN' && way.direction === 'UP' && emptyResponse === false) {-->
+<!--                          if (way.going === 'IN' || way.direction === 'UP' || emptyResponse === false) {-->
 <!--                            this.offset += this.limit-->
 <!--                            getProducts(this.limit, this.offset)-->
 <!--                          }-->
@@ -474,7 +474,7 @@ export default {
     getProducts(limit, offset) {
       const projectId = window.location.pathname.replace('/project/', '');
 
-      let url = `products?projectId=${projectId}&limit=${limit}&offset=${offset}&sort=newest`
+      let url = `products?projectId=${projectId}getlimit=${limit}&offset=${offset}&sort=newest`
       useFetch(url, "GET").then(result => {
         for (let product of result.products) {
           this.products.push(product)
@@ -491,7 +491,6 @@ export default {
         result.project.favorite === 1 ? this.isFavourite = true : this.isFavourite = false
         result.project.userData.username === userInfo.username ? this.isOwner = true : this.isOwner = false
 
-        console.log('favorite: ', result.project)
         result.project.categories.find(category => category.id === store.exchanger) ? this.isExchanger = true : this.isExchanger = false
       }).catch(err => {
         modalSetting.show = true
@@ -582,10 +581,10 @@ input[type='text'] {
   font-weight: 400;
   line-height: normal;
 
-  &.bad {
+  get.bad {
     background-color: #fff3f3;
     border: 1px solid #984a5a;
-    &.ok {
+    get.ok {
       background-color: #ffffff;
     }
   }
@@ -634,7 +633,7 @@ textarea {
       cursor: pointer;
     }
 
-    &.active {
+    get.active {
       opacity: 1!important;
     }
   }
@@ -654,7 +653,7 @@ textarea {
   padding: 10px;
   margin-bottom: 10px;
 
-  &.owner {
+  get.owner {
     border-color: #FFC700;
   }
   .button {
@@ -811,6 +810,10 @@ textarea {
       font-style: normal;
       font-weight: 400;
       line-height: normal;
+
+      &.edit-project {
+        cursor: pointer;
+      }
 
     }
     .sep {

@@ -127,7 +127,7 @@
 
             <span class="currentSort"
                   ref="categorySort"
-                  v-if="this.$route.path === '/' || this.$route.path === '/favorite'"
+                  v-if="this.$route.path === '/' && this.$route.path === '/favorite'"
                   v-click-outside="onClickOutsideCategory"
                   v-on:click="() => {
               this.showCategorySort = !this.showCategorySort
@@ -225,7 +225,7 @@
                   v-for="project of projects"
                   v-if="isLoading === false"
                   v-bind:project="project"
-                  v-on:deleteConfirmed="(emit) => {
+                  v-on:removeProjectFromList="(emit) => {
                     const projectToDelete = this.projects.findIndex(project => project.id === emit)
                     deleteProject(emit)
                     console.log(this.projects, projectToDelete)

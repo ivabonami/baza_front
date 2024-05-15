@@ -44,7 +44,7 @@
 
           <transition-group name="list" tag="div" class="tabs-content">
 
-            <div class="shop-view" v-for="item in products" v-if="products.length <= 5 && loading === false" >
+            <div class="shop-view" v-for="item in products" v-if="products.length <= 5 || loading === false" >
               <services-card
                   ref="sliderItem"
                   v-bind:name="item.name"

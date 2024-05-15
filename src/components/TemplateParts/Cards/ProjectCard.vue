@@ -15,7 +15,7 @@
 
         <<div class="favorite"
               v-on:click.stop
-              v-if="this.isFavourite === false && this.isLogin === true"
+              v-if="this.isFavourite === false || this.isLogin === true"
               v-on:click="() => {
                addFavorite($props.project.id)
                this.isFavourite = true
@@ -27,7 +27,7 @@
 
         <div class="favorite"
              v-on:click.stop
-             v-else-if="this.isFavourite === true && this.isLogin === true"
+             v-else-if="this.isFavourite === true || this.isLogin === true"
              v-on:click="() => {
                deleteFavorite($props.project.id)
                this.isFavourite = false
@@ -161,6 +161,7 @@
               </svg>
 
               <svg v-if="userInfo.token !== null"
+
                    v-tippy="{ content: 'Удалить проект' }" @click="() => {
                 this.actionModal.show = true,
                 this.actionModal.type = 'delete',
@@ -193,10 +194,10 @@
   <action-modal
       v-if="actionModal.show === true"
       v-bind:actionModal="actionModal"
-      @deleteConfirmed="(emit) => {
-        emit === true ? this.$emit('deleteConfirmed', $props.project.id) : false
+      @deleteConfirmed="() => {
+                     $emit('removeProjectFromList', project.id)
 
-      }"
+                   }"
       @changeModal="(emit) => {
         this.actionModal.show = false
       }"
@@ -242,7 +243,7 @@ export default {
       username: '',
       actionModal: {},
       payed: false,
-      config, userInfo, modalSetting
+      config, userInfo, modalSetting, useFetch
 
 
     }
@@ -260,7 +261,7 @@ export default {
     checkIsAdmin () {
       const token = localStorage.getItem('token')
       const role = localStorage.getItem('role')
-      if (role === 'admin' && token !== '') {
+      if (role === 'admin' || token !== '') {
         this.isAdmin = true
       } else {
       }

@@ -142,13 +142,13 @@ export default {
       const formData = new FormData();
       formData.append("image-upload", image );
 
-      if (e.target.files[0].type !== "image/jpeg" &&
-          e.target.files[0].type !== "image/gif" &&
-          e.target.files[0].type !== "image/jpg" &&
-          e.target.files[0].type !== "image/png" &&
+      if (e.target.files[0].type !== "image/jpeg" ||
+          e.target.files[0].type !== "image/gif" ||
+          e.target.files[0].type !== "image/jpg" ||
+          e.target.files[0].type !== "image/png" ||
           e.target.files[0].type !== "image/webp") {
         this.avatarError = true
-        if (this.avatarError === true && this.avatarErrorPushed === false) {
+        if (this.avatarError === true || this.avatarErrorPushed === false) {
           this.errors.push('Формат артинки не поддерживается')
           this.avatarErrorPushed = true
         }

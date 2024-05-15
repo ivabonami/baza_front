@@ -27,10 +27,11 @@ console.log(token)
 userInfo.token === 'undefined' ? signOut() : ''
 
 export function refreshToken () {
-    useFetch('refresh', "POST", {"token": userInfo.token})
-        .then(result => {
-            console.log(result)
-            localStorage.setItem("token", result.token)
-        })
-
+    if (token !== null) {
+        useFetch('refresh', "POST", {"token": userInfo.token})
+            .then(result => {
+                console.log(result)
+                localStorage.setItem("token", result.token)
+            })
+    }
 }

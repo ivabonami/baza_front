@@ -52,13 +52,13 @@ import signInView from "../Auth.vue";
 import VScrollLock from "v-scroll-lock";
 import {modalSetting} from "../../../assets/js/modal.js";
 import {watch} from "vue";
-
+import {useFetch} from "../../../assets/js/fetchRequest.js";
 
 export default {
   name: "actionModal.vue",
   props: ['actionModal'],
   data() {
-    return {}
+    return {useFetch}
   },
   components: {},
   mounted() {

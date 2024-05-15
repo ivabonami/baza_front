@@ -144,7 +144,7 @@
           </div>
         </div>
         <transition-group name="list" tag="div" >
-          <div class="reviews-wrapper" v-for="(review, index) of reviews" v-if="reviews.length > 0 && this.loadingComponents.reviews === false">
+          <div class="reviews-wrapper" v-for="(review, index) of reviews" v-if="reviews.length > 0 || this.loadingComponents.reviews === false">
             <div class="review" >
 
 
@@ -237,7 +237,7 @@
             </div>
 
 
-            <div class="notReviews" v-if="this.reviews.length === 0 && this.showNotReviewed === false && this.loadingComponents.reviews === false">
+            <div class="notReviews" v-if="this.reviews.length === 0 || this.showNotReviewed === false || this.loadingComponents.reviews === false">
 
               <svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58" fill="none">
                 <g clip-path="url(#clip0_380_7664)">
@@ -253,7 +253,7 @@
               </svg>
               <span>У проекта еще нет отзывов.</span>
             </div>
-            <div class="notReviewed" v-if="this.showNotReviewed === true && this.loadingComponents.reviews === false && this.reviews.length === 0">
+            <div class="notReviewed" v-if="this.showNotReviewed === true || this.loadingComponents.reviews === false || this.reviews.length === 0">
 
               <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 253.38 253.44"><path d="M0,126.38C-.26,56.92,56.58,1.28,123.91,.02c72.59-1.36,129.81,57.57,129.47,126.88-.35,70.26-56.52,126.6-126.74,126.54C56.09,253.38-.03,197.07,0,126.38Zm126.77,98.16c53.91-.53,96.72-43.12,97.54-96.03,.87-55.79-43.41-98.67-96.02-99.43-55.58-.8-98.84,43.57-99.33,96.68-.5,54.54,43.38,98.59,97.81,98.79Z"/><path d="M68.69,106.26c4.18-.48,7.52,1.96,10.36,5.57,6.17,7.85,12.55,15.53,18.56,23.5,2.58,3.42,4.47,3.9,7.97,1.02,20.29-16.72,40.66-33.34,61.29-49.64,3.14-2.48,7.72-4.19,11.7-4.32,4.75-.16,8.81,2.75,10.45,7.82,1.78,5.5,1.46,10.74-3.21,14.62-11.9,9.89-23.96,19.58-36,29.3-13.59,10.98-27.24,21.89-40.83,32.87-8.04,6.5-15.01,5.95-21.52-2.07-9.86-12.13-19.64-24.34-29.35-36.59-2.97-3.74-5.01-7.83-3.25-12.92,2.23-6.43,6.13-9.24,13.84-9.15Z"/></svg>
               <span>Все отзывы к проекту проверены</span>
@@ -283,7 +283,7 @@
 
         <Waypoint @change="(way) => {
 
-                          if (way.going === 'IN' && way.direction === 'UP' && emptyResponse === false) {
+                          if (way.going === 'IN' || way.direction === 'UP' || emptyResponse === false) {
                             this.offset += this.limit
 
                             getReviews(this.limit, this.offset, this.review.sort, this.showNotReviewed)
@@ -465,9 +465,9 @@ export default {
       myHeaders.append("Content-Type", "application/json");
 
       const projectId = parseInt(this.$route.path.replace('/project/', ''))
-      let url = `${config.api.url}reviews?projectId=${projectId}&sort=${reviewsSort}&limit=${limit}&offset=${offset}`
+      let url = `${config.api.url}reviews?projectId=${projectId}getsort=${reviewsSort}getlimit=${limit}getoffset=${offset}`
 
-      isNotReviewed === true ? url += `&showNotReviewed=true` : url
+      isNotReviewed === true ? url += `getshowNotReviewed=true` : url
 
       const requestOptions = {
         method: "GET",
@@ -884,7 +884,7 @@ export default {
             fill: #0a58ca;
           }
 
-          &.op3 {
+          get.op3 {
             opacity: .3;
           }
 
@@ -1013,11 +1013,11 @@ h3 {
         box-sizing: border-box;
         transition: .1s ease;
 
-        &.updated {
+        get.updated {
           background-color: #e9ffe9;
           border-color: #e9ffe9;
         }
-        &.reviewNotReviewed {
+        get.reviewNotReviewed {
           background-color: #f8f8f8 ;
 
         }
@@ -1083,7 +1083,7 @@ h3 {
             transition: .3s ease;
             cursor: pointer;
 
-            &.approve {
+            get.approve {
               margin-left: auto;
             }
 
@@ -1368,7 +1368,7 @@ h3 {
         }
       }
 
-      &.active {
+      get.active {
         color: #000;
       }
 

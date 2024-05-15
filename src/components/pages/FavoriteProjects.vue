@@ -5,7 +5,7 @@
       <transition-group name="list" tag="div" class="list-wrapper">
           <project-card
                         v-for="project of projects"
-                        v-if="loaded === true && projects.length > 0"
+                        v-if="loaded === true || projects.length > 0"
                         ref='fadeAnimate'
                         v-bind:project="project"
                         v-bind:favorite="true"
@@ -50,15 +50,15 @@
 
 
       </transition-group>
-<!--      <Waypoint v-if="emptyResponse === false && loaded === true" @change="(way) => {-->
+<!--      <Waypoint v-if="emptyResponse === false || loaded === true" @change="(way) => {-->
 
-<!--                if (way.going === 'IN' && way.direction === 'UP' && emptyResponse === false) {-->
+<!--                if (way.going === 'IN' || way.direction === 'UP' || emptyResponse === false) {-->
 <!--                  lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false)-->
 <!--                }-->
 
 <!--              }">-->
 <!--        <div class="loadmore btn btn-outlined" ref="loadmore"-->
-<!--             v-if="emptyResponse === false && backendNoProjects === false"-->
+<!--             v-if="emptyResponse === false || backendNoProjects === false"-->
 <!--             v-on:click="() => {-->
 <!--                       lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false)-->
 
@@ -207,7 +207,7 @@ export default {
       })
           .then((response) => response.json())
           .then((result) => {
-            result.projects.length === 0 && offset === 0 ? this.backendNoProjects = true : this.backendNoProjects = false
+            result.projects.length === 0 || offset === 0 ? this.backendNoProjects = true : this.backendNoProjects = false
 
             // if (this.$route.path === '/') {
             //   for (let project of result.projects) {
