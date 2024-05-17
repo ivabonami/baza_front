@@ -266,27 +266,27 @@
 
       </div>
     </div>
+    <div class="buttons">
+      <button
+          @click="checkForm()"
+          class="baza-button primary">
+        Добавить проект
+      </button>
+
+      <button
+          @click="$router.go(-1)"
+          class="baza-button gray">
+        Отменить
+      </button>
+    </div>
   </div>
 
   <div class="errors" v-if="Object.keys(errors).length > 0">
     <h2>Исправьте ошибки</h2>
     <span v-for="(error) of errors">{{ error }} <br></span>
   </div>
-  <div class="buttons">
-    <button
-        @click="checkForm()"
-        class="baza-button primary">
-      Добавить проект
-    </button>
 
-    <button
-        @click="$router.go(-1)"
-        class="baza-button gray">
-      Отменить
-    </button>
-  </div>
 
-  {{ project }}
 </template>
 
 <script>
@@ -1027,5 +1027,34 @@ export default {
     min-width: 30%;
   }
 }
+@media screen and (max-width: 500px){
+  .form-wrapper {
+    padding-left: 10px;
+    padding-right: 10px;
+    flex-wrap: wrap;
+    .input-wrapper {
+      .fake-input {
+        width: 100%;
+        label {
+          width: 100%;
+        }
+      }
+    }
 
+    .left, .right, .input-wrapper {
+      width: 100%;
+      flex-wrap: wrap;
+
+      .images, .link {
+        width: 100%;
+      }
+
+    }
+  }
+  .links {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 30px;
+  }
+}
 </style>

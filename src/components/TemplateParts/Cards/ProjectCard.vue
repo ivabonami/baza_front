@@ -684,7 +684,24 @@ export default {
 }
 @media screen and (max-width: 500px){
   .project {
-    width: 100%;
+    width: 48%;
+    .project-body {
+      .project-links {
+        gap: 0px;
+        align-items: center;
+        margin-bottom: 10px;
+        .link-wrapper {
+
+          .link {
+
+            padding: 2px 4px;
+            .link-name {
+              font-size: 11px;
+            }
+          }
+        }
+      }
+    }
   }
 
 }

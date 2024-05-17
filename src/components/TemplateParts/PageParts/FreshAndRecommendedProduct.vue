@@ -283,10 +283,21 @@ export default {
 }
 
 @media screen and (max-width: 768px) {
+  .tabs {
+    height: auto;
+    padding: 10px;
+    .tabs-links {
+      margin-top: 0;
+    }
+  }
+  .tabs-content-wrapper {
+
+    height: 200px;
+  }
   .tabs-content {
     flex-wrap: wrap;
     .shop-view {
-      width: 100%;
+      width: 47%;
     }
 
     &.static-banner {

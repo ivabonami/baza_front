@@ -463,4 +463,17 @@ textarea:hover, textarea:focus {
   display: none;
 }
 
+@media screen and (max-width: 500px) {
+  .wrapper {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  h3 {
+    font-size: 18px !important;
+  }
+  .back {
+    padding-left: 10px;
+  }
+}
+
 /*# sourceMappingURL=styles.css.map */

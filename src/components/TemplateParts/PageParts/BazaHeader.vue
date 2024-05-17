@@ -235,8 +235,30 @@ input {
   .search {
     display: none;
   }
+  .left {
+    width: 23%;
+    img {
+      width: 100%;
+    }
+  }
   .right {
-    display: none;
+    width: 75%;
+  }
+  .nav {
+    button {
+      margin-left: 5px;
+      padding: 5px;
+      overflow: hidden;
+      width: 80px;
+    }
+    a {
+      margin-left: 5px;
+      font-size: 12px;
+
+    }
+    .favorites {
+      margin-left: 5px;
+    }
   }
 }
 

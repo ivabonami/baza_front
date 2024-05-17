@@ -92,7 +92,7 @@ export default {
     <section class="main wrapper">
         <div class="content">
           <button
-              v-if="historyCount > 1 || this.$route.path !== '/'"
+              v-if="historyCount > 1 && this.$route.path !== '/'"
               v-on:click="this.$router.go(-1)"
               class="back">
             <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80.52 137.91"><path d="M26.75,68.29c14.02,13.92,26.77,26.57,39.5,39.23,3.54,3.52,7.15,6.98,10.53,10.65,4.87,5.29,4.82,11.95,.1,16.49-4.67,4.49-11.53,4.36-16.53-.62C41.46,115.25,22.61,96.41,3.83,77.51c-4.97-5-5.17-11.48-.22-16.49C22.7,41.7,41.91,22.5,61.2,3.38c4.71-4.67,11.74-4.38,16.15,.11,4.28,4.36,4.32,11.35-.42,16.15-14.74,14.95-29.61,29.77-44.5,44.57-1.41,1.4-3.26,2.36-5.69,4.08Z"/></svg>
@@ -125,9 +125,10 @@ export default {
         <footer-view></footer-view>
       </div>
     </footer>
-    <div class="scroll-to-top" v-if="showScrollTopButton === true" ref="scrollToTop">
-      <svg id="a" xmlns="http://www.w3.org/2000/svg" class="arrow"  v-on:click="scrollToTop()"
-           viewBox="0 0 15.96 8.57"><path class="b" d="M.6,8.57c-.15,0-.31-.06-.42-.18-.23-.23-.23-.61,0-.85L7.56,.17c.23-.22,.62-.22,.85,0l7.38,7.38c.23,.23,.23,.61,0,.85-.23,.24-.61,.23-.85,0L7.98,1.44,1.02,8.4c-.12,.12-.27,.18-.42,.18Z"/></svg>
+    <div class="scroll-to-top" v-if="showScrollTopButton === true" ref="scrollToTop" @click="scrollToTop()">
+      <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13 7L7 1L1 7" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
 
     </div>
   </div>
@@ -146,27 +147,34 @@ header {
   z-index: 10;
   padding: 1em;
   max-width: 1440px;
-  width: 94%;
   margin: 0 auto 20px;
   display: flex;
   justify-content: end;
   box-sizing: border-box;
   right: 0;
-  position: sticky;
-  top: 20px;
+  z-index: 30;
+  position: fixed;
   bottom: 20px;
   transition: .3s ease;
 
+
   svg {
-    background-color: #0a58ca;
-    padding: 10px;
-    border-radius: 40px;
-    width: 20px;
-    height: 20px;
+    box-sizing: border-box;
     cursor: pointer;
+
     path {
-      fill: #ffffff;
+      stroke: black;
+      background-color: #FFC700;
+      padding: 15px;
+      border-radius: 20px;
     }
+  }
+
+}
+@media screen and (max-width: 500px){
+  header {
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }
 </style>

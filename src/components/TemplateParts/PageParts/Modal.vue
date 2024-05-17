@@ -692,6 +692,23 @@ export default {
     width: 100%;
   }
 }
+@media screen and (max-width: 500px) {
+  .modal {
+    width: calc(100% - 20px);
+    box-sizing: border-box;
 
+    &.large {
+      width: calc(300px);
+
+      .info-modal {
+        flex-wrap: wrap;
+        .body {
+          padding: 0px;
+        }
+      }
+
+    }
+  }
+}
 
 </style>

@@ -576,7 +576,13 @@ h3 {
     }
   }
   .projects-wrapper {
+    margin-top: 0;
+    h3 {
+      margin-top: 0;
+    }
     display: flex;
+    padding-left: 10px;
+    padding-right: 10px;
 
   }
 
@@ -584,6 +590,7 @@ h3 {
     width: 100%;
     justify-content: center;
     align-items: stretch;
+    flex-wrap: wrap;
 
 
     .project {

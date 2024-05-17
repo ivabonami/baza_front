@@ -770,6 +770,9 @@ export default {
     .projects {
       .list-wrapper {
         .list {
+          padding-left: 10px;
+          padding-right: 10px;
+          gap: 10px;
           justify-content: center;
         }
       }
@@ -799,6 +802,19 @@ export default {
         .filter {
           width: 160px;
           font-size: 12px;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 500px){
+  .projects-wrapper {
+    display: flex;
+
+    .projects {
+      .list-wrapper {
+        .list {
+          justify-content: center;
         }
       }
     }

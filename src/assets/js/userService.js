@@ -30,8 +30,9 @@ export function refreshToken () {
     if (token !== null) {
         useFetch('refresh', "POST", {"token": userInfo.token})
             .then(result => {
-                console.log(result)
+                console.log(result.status)
                 localStorage.setItem("token", result.token)
             })
+            .catch(err => signOut())
     }
 }
