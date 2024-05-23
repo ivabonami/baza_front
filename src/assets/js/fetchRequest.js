@@ -28,6 +28,7 @@ export function useFetch(path, method, requestBody) {
 
                 error.response.status === 401 ? modalSetting.description = `Вы не авторизованы!` : modalSetting.description = `Произошла техническая или какая-то другая ошибка. Пожалуйста, повторите действие позже и, по возможности, 
             сообщите администратору о проблеме. Код ошибки: ${error}`
+                error.response.data.message === 'This user already rated this project.' ? modalSetting.description = `Вы уже оставляли отзыв, возможно он еще не опубликован` : ''
             })
     }
     else if (method === 'PUT'){

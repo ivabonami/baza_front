@@ -28,6 +28,7 @@
               </svg>
             </span>
           </button>
+
         </div>
       </div>
       <div class="right">
@@ -35,7 +36,6 @@
           <router-link to="/guarantee" class="link">Гарант</router-link>
           <router-link to="/advertisement" class="link">Реклама</router-link>
           <router-link to="/contacts" class="link">Контакты</router-link>
-
           <button class="baza-button signin"
                   v-if="userInfo.token === null"
                   @click="() => {
@@ -84,11 +84,13 @@
 </template>
 
 <script>
-import {userInfo} from "../../../assets/js/userService.js";
+import {refreshToken, userInfo} from "../../../assets/js/userService.js";
 import {useFetch} from "../../../assets/js/fetchRequest.js";
 import {modalSetting} from "../../../assets/js/modal.js";
 import { directive } from 'vue-tippy'
 import 'tippy.js/dist/tippy.css'
+
+
 export default {
   name: "BazaHeader.vue",
   components: {modalSetting},
@@ -96,7 +98,7 @@ export default {
   data() {
     return {
       searchQuery: '',
-      userInfo, modalSetting
+      userInfo, modalSetting, refreshToken
     }
   },
   directives: {

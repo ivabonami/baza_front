@@ -26,6 +26,8 @@ export function signOut() {
 console.log(token)
 userInfo.token === 'undefined' ? signOut() : ''
 
+userInfo.expired > Math.floor(Date.now() / 1000) && userInfo.expired !== null ? refreshToken() : ''
+
 export function refreshToken () {
     if (token !== null) {
         useFetch('refresh', "POST", {"token": userInfo.token})
@@ -36,3 +38,4 @@ export function refreshToken () {
             .catch(err => signOut())
     }
 }
+

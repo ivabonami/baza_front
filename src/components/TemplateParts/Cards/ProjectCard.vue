@@ -15,7 +15,7 @@
 
         <<div class="favorite"
               v-on:click.stop
-              v-if="this.isFavourite === false || this.isLogin === true"
+              v-if="this.isFavourite === false && this.isLogin === true"
               v-on:click="() => {
                addFavorite($props.project.id)
                this.isFavourite = true
@@ -27,10 +27,11 @@
 
         <div class="favorite"
              v-on:click.stop
-             v-else-if="this.isFavourite === true || this.isLogin === true"
+             v-else-if="this.isFavourite === true && this.isLogin === true"
              v-on:click="() => {
-               deleteFavorite($props.project.id)
+               // deleteFavorite($props.project.id)
                this.isFavourite = false
+               this.$emit('favoriteRemoved', project.id)
              }">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><path fill="#F8104B" fill-rule="evenodd" d="M12 22c-.316-.02-.56-.147-.848-.278a23.5 23.5 0 0 1-4.781-2.942C3.777 16.705 1 13.449 1 9a6 6 0 0 1 6-6 6.18 6.18 0 0 1 5 2.568A6.18 6.18 0 0 1 17 3a6 6 0 0 1 6 6c0 4.448-2.78 7.705-5.375 9.78a23.6 23.6 0 0 1-4.78 2.942c-.543.249-.732.278-.845.278" clip-rule="evenodd"></path></svg>
         </div>
@@ -248,75 +249,21 @@ export default {
 
     }
   },
-  updated() {
 
-    // onClickOutside(this.$refs.dropdown, event => this.adminDropDownShow = false)
-  },
   mounted() {
     this.$props.project.favorite === 1 || this.$props.favorite === true ? this.isFavourite = true : this.isFavourite = false
+    this.userInfo.token !== null ? this.isLogin = true : this.isLogin = false
     this.payed = this.$props.project.payed
   },
   methods: {
 
-    checkIsAdmin () {
-      const token = localStorage.getItem('token')
-      const role = localStorage.getItem('role')
-      if (role === 'admin' || token !== '') {
-        this.isAdmin = true
-      } else {
-      }
-    },
-
     addFavorite(projectId) {
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
-
-      fetch(`http://62.113.96.171:3000/user/project/${projectId}`, {
-        method: "POST",
-        headers: myHeaders,
-        body: JSON.stringify(
-            {
-              status: 'favorite'
-            }
-        )
-      })
-          .then((response) => response.json())
-          .then((res) => { res })
-          .catch((error) => {console.error(error)});
+      useFetch(`user/project/${projectId}`, "POST" )
     },
 
     deleteFavorite(projectId) {
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
-
-      fetch(`http://62.113.96.171:3000/user/project/${projectId}`, {
-        method: "DELETE",
-        headers: myHeaders,
-        body: JSON.stringify(
-            {
-              status: 'favorite'
-            }
-        )
-      })
-          .then((response) => response.json())
-          .then((res) => {
-            this.$emit('favoriteRemoved', projectId)
-            this.isFavourite = false
-          })
-          .catch((error) => {console.error(error)});
+      useFetch(`user/project/${projectId}`, "DELETE" )
     },
-    closeOnEsc() {
-      document.addEventListener('keydown', (e) => {
-        e.key === 'Escape' ? this.adminDropDownShow = false : this.adminDropDownShow = true
-      })
-      document.addEventListener('click', (e) => {
-        this.adminDropDownShow = false
-      })
-
-    },
-
 
     updateProjectPayedStatus (projectId, status) {
       useFetch(`projects/${projectId}`, "PUT", {payed: status})
@@ -325,27 +272,6 @@ export default {
             console.log(result)
           })
 
-      //
-      // const myHeaders = new Headers();
-      // myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
-      // myHeaders.append("Content-Type", "application/json");
-      // this.adminDropDownShow = false
-      //
-      // fetch(`${config.api.url}projects/${projectId}`, {
-      //   method: "PUT",
-      //   headers: myHeaders,
-      //   body: JSON.stringify({
-      //     payed: status
-      //   })
-      // })
-      //     .then((response) => response.json())
-      //     .then((result) => {
-      //
-      //       this.projects = result.projects
-      //       this.$emit('updated', projectId)
-      //
-      //     })
-      //     .catch((error) => {console.error(error)});
     }
   }
 }
@@ -357,13 +283,12 @@ export default {
   cursor: pointer;
   border-radius: 10px;
   border: 1px solid #ececec;
-  background: #FFF;
   margin-bottom: 10px;
   transition: .3s ease;
   padding: 10px;
-  padding-bottom: 10px;
   z-index: 0;
   position: relative;
+  background-color: white;
 
   &.paid {
     border: 1px solid #FFC700;
@@ -371,6 +296,28 @@ export default {
   .owner {
     border: 1px solid #b9d06b;
   }
+
+  &.paid {
+    --borderWidth: 3px;
+    background: #fff9ed;
+    position: relative;
+    border-color:  #FFC700;
+  }
+
+
+
+  @keyframes animatedgradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
 
   .avatar {
     width: 100%;

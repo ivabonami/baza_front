@@ -10,10 +10,8 @@
                         v-bind:project="project"
                         v-bind:favorite="true"
                         v-on:favoriteRemoved="(emit) => {
-
-                          console.log(emit)
-                          const removedProject = this.projects.findIndex(item => item.id === emit)
-                          this.projects.splice(removedProject,1)
+                          console.log(this.projects.indexOf(project))
+                          removeFromList(this.projects.indexOf(project))
 
                         }"
                         v-on:updated="(emit) => {
@@ -22,7 +20,7 @@
                 this.projects = this.projects.slice(this.projects.length, this.projects.length)
                 this.getOffset = 0
 
-                this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit)
+                this.getProjects(this.activeSort, this.getOffset, this.getLimit)
 
                }"
           >
@@ -53,14 +51,14 @@
 <!--      <Waypoint v-if="emptyResponse === false || loaded === true" @change="(way) => {-->
 
 <!--                if (way.going === 'IN' || way.direction === 'UP' || emptyResponse === false) {-->
-<!--                  lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false)-->
+<!--                  getProjects(this.activeSort, this.getOffset, this.getLimit, false)-->
 <!--                }-->
 
 <!--              }">-->
 <!--        <div class="loadmore btn btn-outlined" ref="loadmore"-->
 <!--             v-if="emptyResponse === false || backendNoProjects === false"-->
 <!--             v-on:click="() => {-->
-<!--                       lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false)-->
+<!--                       getProjects(this.activeSort, this.getOffset, this.getLimit, false)-->
 
 <!--                     }">-->
 <!--          Загрузить еще-->
@@ -96,6 +94,7 @@ import 'vue-loading-overlay/dist/css/index.css';
 import loader from "../TemplateParts/PageParts/Loader.vue";
 import {store} from "../../assets/js/store.js";
 import config from "../../assets/js/config.js";
+import {useFetch} from "../../assets/js/fetchRequest.js";
 
 export default {
   name: "FavoriteProjects.vue",
@@ -105,42 +104,8 @@ export default {
   data () {
     return {
 
-      loaded: false,
-      showSort: false,
-      showCategorySort: false,
-      category: {},
       projects: [],
-      recommend: ref(),
-      backendNoProjects: true,
 
-      activeSort: 'random',
-      activeSortName: 'Популярные',
-      activeSortTab: 'random',
-      arrowDate: 'up',
-      arrowCategory: 'up',
-
-      globalOffset: 0,
-      globalLimit: 0,
-
-      getOffset: 0,
-      getLimit: 5,
-      lazyProjects: [],
-      emptyResponse: false,
-
-      searchQuery: '',
-      searchStatus: false,
-      clicked: false,
-
-      isLoading: false,
-      fullPage: true,
-
-      fadeAnimate: false,
-      projectCardAnimate: false,
-      height: 0,
-      categoriesFilter: [],
-
-      timer: ref(null),
-      store
     }
   },
   directives: {
@@ -152,7 +117,7 @@ export default {
 
   mounted() {
     this.height = 1250
-    this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit, false, false)
+    this.getProjects(this.activeSort, this.getOffset, this.getLimit, false, false)
     this.loaded === true ? this.handleScroll() : ''
   },
   created() {
@@ -166,80 +131,18 @@ export default {
 
 
   methods: {
-    timerSearch() {
-      clearTimeout(this.timer);
 
-      this.timer = setTimeout(() => {
-        this.lazyProjectLoad(this.activeSort, this.getOffset, this.getLimit)
-      }, 600);
-
+    removeFromList(index) {
+      this.projects.splice(1, 1)
     },
 
-    onClickOutside (event) {
-      if (event.target.classList[0] !== 'filter') {
-        this.showSort = false
-        this.arrowDate = 'up'
-      } else {
+    getProjects (sort, offset, limit) {
 
-      }
+      useFetch(`user/project`, "GET")
+          .then(result => {
 
-    },
-    onClickOutsideCategory (event) {
-
-      if (event.target.classList[0] !== 'categorySelector' ) {
-        this.showCategorySort = false
-        this.arrowCategory = 'up'
-      } else {
-
-      }
-    },
-
-    lazyProjectLoad (sort, offset, limit) {
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
-
-      let url = `${config.api.url}user/project`
-
-      fetch(url, {
-        method: "GET",
-        headers: myHeaders,
-      })
-          .then((response) => response.json())
-          .then((result) => {
-            result.projects.length === 0 || offset === 0 ? this.backendNoProjects = true : this.backendNoProjects = false
-
-            // if (this.$route.path === '/') {
-            //   for (let project of result.projects) {
-            //     this.projects.push(project)
-            //
-            //   }
-            //   result.projects.length < this.getLimit ? this.emptyResponse = true : this.emptyResponse = false
-            //
-            // } else {
-            //
-              for (let project of result.projects) {
-                this.projects.push(project)
-
-              }
-            //
-            //   result.projects.length < limit ? this.emptyResponse = true : this.emptyResponse = false
-            // }
-
-            this.loaded = true
-            this.projectCardAnimate = true
-
-            setTimeout(() => {
-              this.projectCardAnimate = false
-            }, 200)
-
-
+            this.projects = result.projects
           })
-          .catch((error) => {console.error(error)});
-
-
-      this.getOffset += this.getLimit
-
     },
 
   }

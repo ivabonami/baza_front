@@ -68,11 +68,6 @@ export default {
 
   updated() {
     this.historyCount = window.history.length
-    if (userInfo.expired - 3000 < Math.floor(Date.now() / 1000) || localStorage.getItem('role' !== '')) {
-      refreshToken()
-    } else {
-
-    }
 
 
   },
