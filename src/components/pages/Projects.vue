@@ -6,158 +6,6 @@
       </h3>
 
 
-        <div class="buttons" >
-          <div class="btns">
-      <span class="currentSort"
-            ref="currentSort"
-            v-click-outside="onClickOutside"
-            v-on:click="() => {
-              this.showSort = !this.showSort
-              this.arrowDate === 'down' ? this.arrowDate = 'up' : this.arrowDate = 'down'
-            }">
-
-        <span>{{ this.activeSortName }}</span>
-        <svg id="a" xmlns="http://www.w3.org/2000/svg" :class="{
-            up: arrowDate === 'up',
-            down: arrowDate === 'down'
-          }" class="arrow"
-             viewBox="0 0 15.96 8.57"><path class="b" d="M.6,8.57c-.15,0-.31-.06-.42-.18-.23-.23-.23-.61,0-.85L7.56,.17c.23-.22,.62-.22,.85,0l7.38,7.38c.23,.23,.23,.61,0,.85-.23,.24-.61,.23-.85,0L7.98,1.44,1.02,8.4c-.12,.12-.27,.18-.42,.18Z"/></svg>
-
-      </span>
-            <div class="sortFilter box-shadow" v-if="this.showSort === true" ref="sortFilter">
-        <span class="filter" :class="{active: this.activeSortName === 'Популярные'}"
-              v-on:click=" () => {
-                if (this.activeSortName !== 'Популярные') {
-                  this.activeSortName = 'Популярные'
-                  this.activeSort = 'Популярные'
-                  this.getOffset = 0
-
-                  this.clicked = true
-                  this.projects = this.projects.slice(this.projects.length, this.projects.length)
-                  this.activeSortTab = 'random'
-                  this.projectCardAnimate = true
-
-                  this.getProjects(this.activeSort, this.getOffset, this.getLimit)
-                }
-              }
-
-              ">Популярные
-
-          <svg id="a" v-if="this.activeSortName === 'Популярные'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213.47 166.37">
-            <path class="b" d="M77.45,100.37c1.51-1.42,2.84-2.62,4.11-3.88,30.17-30.16,60.34-60.34,90.51-90.51,7.98-7.98,13.68-7.98,21.67,0,5.07,5.06,10.18,10.09,15.17,15.23,5.98,6.15,6.09,12.43,.13,18.4-40.72,40.81-81.48,81.58-122.26,122.32-5.99,5.98-12.81,5.91-18.88-.14-21.01-20.94-41.98-41.91-62.92-62.91-6.66-6.68-6.63-12.84-.04-19.51,5.27-5.33,10.57-10.64,15.91-15.91,6.67-6.58,12.78-6.56,19.5,.13,11.11,11.05,22.16,22.15,33.25,33.21,1.15,1.15,2.39,2.22,3.84,3.57Z"/>
-          </svg>
-
-        </span>
-
-              <span class="filter" :class="{active: this.activeSortName === 'Сначала старые'}" v-on:click=" () => {
-                if (this.activeSortName !== 'Сначала старые') {
-                  this.activeSortName = 'Сначала старые'
-                  this.activeSort = 'oldest'
-                  this.getOffset = 0
-                   this.projects = this.projects.slice(this.projects.length, this.projects.length )
-
-                  this.clicked = true
-                  this.activeSortTab = 'oldest'
-                  this.getProjects(this.activeSort, this.getOffset, this.getLimit, true)
-                }
-              }
-              ">Сначала старые
-           <svg id="a" v-if="this.activeSortName === 'Сначала старые'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213.47 166.37">
-            <path class="b" d="M77.45,100.37c1.51-1.42,2.84-2.62,4.11-3.88,30.17-30.16,60.34-60.34,90.51-90.51,7.98-7.98,13.68-7.98,21.67,0,5.07,5.06,10.18,10.09,15.17,15.23,5.98,6.15,6.09,12.43,.13,18.4-40.72,40.81-81.48,81.58-122.26,122.32-5.99,5.98-12.81,5.91-18.88-.14-21.01-20.94-41.98-41.91-62.92-62.91-6.66-6.68-6.63-12.84-.04-19.51,5.27-5.33,10.57-10.64,15.91-15.91,6.67-6.58,12.78-6.56,19.5,.13,11.11,11.05,22.16,22.15,33.25,33.21,1.15,1.15,2.39,2.22,3.84,3.57Z"/>
-          </svg>
-
-        </span>
-
-
-              <span class="filter" :class="{active: this.activeSortName === 'Сначала новые'}" v-on:click=" () => {
-                if (this.activeSortName !== 'Сначала новые') {
-                  this.activeSortName = 'Сначала новые'
-                  this.activeSort = 'newest'
-                  this.getOffset = 0
-                  this.projects = this.projects.slice(this.projects.length, this.projects.length)
-                  this.clicked = true
-                  this.activeSortTab = 'newest'
-                  this.getProjects(this.activeSort, this.getOffset, this.getLimit, true)
-                }
-              }">Сначала новые
-           <svg id="a" v-if="this.activeSortName === 'Сначала новые'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213.47 166.37">
-            <path class="b" d="M77.45,100.37c1.51-1.42,2.84-2.62,4.11-3.88,30.17-30.16,60.34-60.34,90.51-90.51,7.98-7.98,13.68-7.98,21.67,0,5.07,5.06,10.18,10.09,15.17,15.23,5.98,6.15,6.09,12.43,.13,18.4-40.72,40.81-81.48,81.58-122.26,122.32-5.99,5.98-12.81,5.91-18.88-.14-21.01-20.94-41.98-41.91-62.92-62.91-6.66-6.68-6.63-12.84-.04-19.51,5.27-5.33,10.57-10.64,15.91-15.91,6.67-6.58,12.78-6.56,19.5,.13,11.11,11.05,22.16,22.15,33.25,33.21,1.15,1.15,2.39,2.22,3.84,3.57Z"/>
-          </svg>
-
-        </span>
-
-
-              <span class="filter" :class="{active: this.activeSortName === 'С высоким рейтингом'}" v-on:click=" () => {
-                if (this.activeSortName !== 'С высоким рейтингом') {
-                  this.activeSortName = 'С высоким рейтингом'
-                  this.activeSort = 'highestRating'
-                  this.getOffset = 0
-                  this.projects = this.projects.slice(this.projects.length, this.projects.length)
-                  this.clicked = true
-                  this.activeSortTab = 'highestRating'
-                  this.getProjects(this.activeSort, this.getOffset, this.getLimit, true)
-                }
-              }">С высоким рейтингом
-           <svg id="a" v-if="this.activeSortName === 'С высоким рейтингом'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213.47 166.37">
-            <path class="b" d="M77.45,100.37c1.51-1.42,2.84-2.62,4.11-3.88,30.17-30.16,60.34-60.34,90.51-90.51,7.98-7.98,13.68-7.98,21.67,0,5.07,5.06,10.18,10.09,15.17,15.23,5.98,6.15,6.09,12.43,.13,18.4-40.72,40.81-81.48,81.58-122.26,122.32-5.99,5.98-12.81,5.91-18.88-.14-21.01-20.94-41.98-41.91-62.92-62.91-6.66-6.68-6.63-12.84-.04-19.51,5.27-5.33,10.57-10.64,15.91-15.91,6.67-6.58,12.78-6.56,19.5,.13,11.11,11.05,22.16,22.15,33.25,33.21,1.15,1.15,2.39,2.22,3.84,3.57Z"/>
-          </svg>
-        </span>
-
-
-
-
-              <span class="filter" :class="{active: this.activeSortName === 'С низким рейтингом'}" v-on:click="() => {
-                if (this.activeSortName !== 'С низким рейтингом') {
-                  this.activeSortName = 'С низким рейтингом'
-                  this.activeSort = 'lowestRating'
-                  this.getOffset = 0
-                  this.projects = this.projects.slice(this.projects.length, this.projects.length)
-                  this.clicked = true
-                  this.activeSortTab = 'lowestRating'
-                  this.getProjects(this.activeSort, this.getOffset, this.getLimit, true)
-                }
-              }">С низким рейтингом
-           <svg id="a" v-if="this.activeSortName === 'С низким рейтингом'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213.47 166.37">
-            <path class="b" d="M77.45,100.37c1.51-1.42,2.84-2.62,4.11-3.88,30.17-30.16,60.34-60.34,90.51-90.51,7.98-7.98,13.68-7.98,21.67,0,5.07,5.06,10.18,10.09,15.17,15.23,5.98,6.15,6.09,12.43,.13,18.4-40.72,40.81-81.48,81.58-122.26,122.32-5.99,5.98-12.81,5.91-18.88-.14-21.01-20.94-41.98-41.91-62.92-62.91-6.66-6.68-6.63-12.84-.04-19.51,5.27-5.33,10.57-10.64,15.91-15.91,6.67-6.58,12.78-6.56,19.5,.13,11.11,11.05,22.16,22.15,33.25,33.21,1.15,1.15,2.39,2.22,3.84,3.57Z"/>
-          </svg>
-
-        </span>
-
-            </div>
-
-            <span class="currentSort"
-                  ref="categorySort"
-                  v-if="this.$route.path === '/' && this.$route.path === '/favorite'"
-                  v-click-outside="onClickOutsideCategory"
-                  v-on:click="() => {
-              this.showCategorySort = !this.showCategorySort
-              this.arrowCategory === 'down' ? this.arrowCategory = 'up' : this.arrowCategory = 'down'
-
-
-            }">
-
-      </span>
-            <div class="sortFilter categories box-shadow categorySelector" v-if="this.showCategorySort === true" ref="showCategorySort">
-              <div class="categorySelector input" v-for="category of store.categories" v-on:change="() => {
-          this.getLimit = 5
-          this.getOffset = 0
-          this.projects = this.projects.slice(this.projects.length, this.projects.length)
-          this.getProjects(this.activeSort, this.getOffset, this.getLimit)
-        }">
-                <input type="checkbox" v-model="categoriesFilter" :id="category.id" class="categorySelector" :value="category.id" hidden>
-                <label :for="category.id" class="categorySelector" >
-                  {{category.name}}
-                  <svg id="a" v-if="categoriesFilter.includes(category.id)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213.47 166.37">
-                    <path class="b" d="M77.45,100.37c1.51-1.42,2.84-2.62,4.11-3.88,30.17-30.16,60.34-60.34,90.51-90.51,7.98-7.98,13.68-7.98,21.67,0,5.07,5.06,10.18,10.09,15.17,15.23,5.98,6.15,6.09,12.43,.13,18.4-40.72,40.81-81.48,81.58-122.26,122.32-5.99,5.98-12.81,5.91-18.88-.14-21.01-20.94-41.98-41.91-62.92-62.91-6.66-6.68-6.63-12.84-.04-19.51,5.27-5.33,10.57-10.64,15.91-15.91,6.67-6.58,12.78-6.56,19.5,.13,11.11,11.05,22.16,22.15,33.25,33.21,1.15,1.15,2.39,2.22,3.84,3.57Z"/>
-                  </svg>
-                </label>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-
       <div class="baza-menu">
         <div class="categories">
           <div class="category"
@@ -197,20 +45,153 @@
           </div>
 
           <div class="sep"></div>
-          <div class="add-project" @click="this.$router.push('/add-project')">
+          <div class="add-project" @click="this.$router.push('/add-project')" v-tippy="{content: 'Доавить свой проект'}">
             <div class="category-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" fill="none">
                 <path d="M11 7V15M7 11H15M21 11C21 16.5228 16.5228 21 11 21C5.47715 21 1 16.5228 1 11C1 5.47715 5.47715 1 11 1C16.5228 1 21 5.47715 21 11Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
             <div class="category-name">
-              Добавить проект
+              Добавить
+            </div>
+          </div>
+
+          <div class="add-project" @click="this.$router.push('/check-projects')" v-if="userInfo.role === 'admin'" v-tippy="{content: 'Проверить неопубликованные проекты'}">
+            <div class="category-icon">
+              <svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 1.26953V5.40007C11 5.96012 11 6.24015 11.109 6.45406C11.2049 6.64222 11.3578 6.7952 11.546 6.89108C11.7599 7.00007 12.0399 7.00007 12.6 7.00007H16.7305M13 12H5M13 16H5M7 8H5M11 1H5.8C4.11984 1 3.27976 1 2.63803 1.32698C2.07354 1.6146 1.6146 2.07354 1.32698 2.63803C1 3.27976 1 4.11984 1 5.8V16.2C1 17.8802 1 18.7202 1.32698 19.362C1.6146 19.9265 2.07354 20.3854 2.63803 20.673C3.27976 21 4.11984 21 5.8 21H12.2C13.8802 21 14.7202 21 15.362 20.673C15.9265 20.3854 16.3854 19.9265 16.673 19.362C17 18.7202 17 17.8802 17 16.2V7L11 1Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+
+            </div>
+            <div class="category-name">
+              Проекты
+            </div>
+          </div>
+
+          <div class="add-project" @click="this.$router.push('/check-testimonials')" v-if="userInfo.role === 'admin'" v-tippy="{content: 'Проверить отзывы'}">
+            <div class="category-icon">
+              <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 6.00224C8.1762 5.50136 8.52397 5.07901 8.98173 4.80998C9.43949 4.54095 9.9777 4.4426 10.501 4.53237C11.0243 4.62213 11.499 4.89421 11.8409 5.30041C12.1829 5.70661 12.37 6.22072 12.3692 6.75168C12.3692 8.25056 10.1209 9 10.1209 9M10.1499 12H10.1599M5 16V18.3355C5 18.8684 5 19.1348 5.10923 19.2716C5.20422 19.3906 5.34827 19.4599 5.50054 19.4597C5.67563 19.4595 5.88367 19.2931 6.29976 18.9602L8.68521 17.0518C9.17252 16.662 9.41617 16.4671 9.68749 16.3285C9.9282 16.2055 10.1844 16.1156 10.4492 16.0613C10.7477 16 11.0597 16 11.6837 16H14.2C15.8802 16 16.7202 16 17.362 15.673C17.9265 15.3854 18.3854 14.9265 18.673 14.362C19 13.7202 19 12.8802 19 11.2V5.8C19 4.11984 19 3.27976 18.673 2.63803C18.3854 2.07354 17.9265 1.6146 17.362 1.32698C16.7202 1 15.8802 1 14.2 1H5.8C4.11984 1 3.27976 1 2.63803 1.32698C2.07354 1.6146 1.6146 2.07354 1.32698 2.63803C1 3.27976 1 4.11984 1 5.8V12C1 12.93 1 13.395 1.10222 13.7765C1.37962 14.8117 2.18827 15.6204 3.22354 15.8978C3.60504 16 4.07003 16 5 16Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+
+            </div>
+            <div class="category-name">
+              Отзывы
             </div>
           </div>
         </div>
 
         <div class="filters">
+          <div class="filter" @click="this.sort.show = !this.sort.show">
+            <div class="current-filter">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M5.66667 8H2.24444C1.80885 8 1.59105 8 1.42467 8.08477C1.27833 8.15934 1.15934 8.27833 1.08477 8.42467C1 8.59105 1 8.80885 1 9.24444V13.7556C1 14.1912 1 14.409 1.08477 14.5753C1.15934 14.7217 1.27833 14.8407 1.42467 14.9152C1.59105 15 1.80885 15 2.24444 15H5.66667M5.66667 15H10.3333M5.66667 15L5.66667 5.35556C5.66667 4.91996 5.66667 4.70216 5.75144 4.53579C5.82601 4.38944 5.94499 4.27045 6.09134 4.19588C6.25772 4.11111 6.47551 4.11111 6.91111 4.11111H9.08889C9.52449 4.11111 9.74228 4.11111 9.90866 4.19588C10.055 4.27045 10.174 4.38944 10.2486 4.53579C10.3333 4.70216 10.3333 4.91996 10.3333 5.35556V15M10.3333 15H13.7556C14.1912 15 14.4089 15 14.5753 14.9152C14.7217 14.8407 14.8407 14.7217 14.9152 14.5753C15 14.4089 15 14.1912 15 13.7556V2.24444C15 1.80885 15 1.59105 14.9152 1.42467C14.8407 1.27833 14.7217 1.15934 14.5753 1.08477C14.409 1 14.1912 1 13.7556 1H11.5778C11.1422 1 10.9244 1 10.758 1.08477C10.6117 1.15934 10.4927 1.27833 10.4181 1.42467C10.3333 1.59105 10.3333 1.80885 10.3333 2.24444V4.88889" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="sort-name">{{ this.sort.name }}</span>
 
+            </div>
+
+            <div class="filters-list sort" v-if="this.sort.show === true">
+              <span class="filter-name"
+                    :class="{active: this.sort.name === 'Популярные'}"
+                    @click="() => {
+                this.sort.name = 'Популярные'
+                this.sort.filter = 'newest'
+                this.sort.show = false
+                this.getOffset = 0
+                getProjects()
+              }">Популярные</span>
+              <span class="filter-name"
+                    :class="{active: this.sort.name === 'Высокий рейтинг'}"
+                    @click="() => {
+                this.sort.name = 'Высокий рейтинг'
+                this.sort.filter = 'highestRating'
+                this.sort.show = false
+                this.projects.splice(0, this.projects.length)
+                this.getOffset = 0
+                getProjects()
+              }">Высокий рейтинг</span>
+              <span class="filter-name"
+                    :class="{active: this.sort.name === 'Низкий рейтинг'}"
+                    @click="() => {
+                this.sort.name = 'Низкий рейтинг'
+                this.sort.filter = 'lowestRating'
+                this.sort.show = false
+                this.projects.splice(0, this.projects.length)
+                this.getOffset = 0
+                getProjects()
+              }">Низкий рейтинг</span>
+              <span class="filter-name"
+                    :class="{active: this.sort.name === 'Сначала новые'}"
+                    @click="() => {
+                this.sort.name = 'Сначала новые'
+                this.sort.filter = 'newest'
+                this.sort.show = false
+                this.projects.splice(0, this.projects.length)
+                this.getOffset = 0
+                getProjects()
+              }">Сначала новые</span>
+              <span class="filter-name"
+                    :class="{active: this.sort.name === 'Сначала старые'}"
+                    @click="() => {
+                this.sort.name = 'Сначала старые'
+                this.sort.filter = 'oldest'
+                this.sort.show = false
+                this.projects.splice(0, this.projects.length)
+                this.getOffset = 0
+                getProjects()
+              }">Сначала старые</span>
+              <span class="filter-name"
+                    :class="{active: this.sort.name === 'Мне повезет!'}"
+                    @click="() => {
+                this.sort.name = 'Мне повезет!'
+                this.sort.filter = 'random'
+                this.sort.show = false
+                this.projects.splice(0, this.projects.length)
+                this.getOffset = 0
+                getProjects()
+              }">Мне повезет!</span>
+            </div>
+          </div>
+
+          <div class="filter" @click="sortCategories.show = !sortCategories.show">
+            <span class="current-filter">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16" fill="none">
+                <path d="M10.8 6.25V8.63C10.8 9.02204 10.8 9.21806 10.7237 9.36779C10.6566 9.49951 10.5495 9.60659 10.4178 9.6737C10.2681 9.75 10.072 9.75 9.68 9.75L1 9.75M8 9.75V12.13C8 12.522 8 12.7181 7.92371 12.8678C7.85659 12.9995 7.74951 13.1066 7.61779 13.1737C7.46806 13.25 7.27204 13.25 6.88 13.25H1M1 1L1 15M1 6.25L12.48 6.25C12.872 6.25 13.0681 6.25 13.2178 6.1737C13.3495 6.10659 13.4566 5.99951 13.5237 5.86779C13.6 5.71806 13.6 5.52204 13.6 5.13V3.87C13.6 3.47796 13.6 3.28195 13.5237 3.13221C13.4566 3.00049 13.3495 2.89341 13.2178 2.8263C13.0681 2.75 12.872 2.75 12.48 2.75L1 2.75L1 6.25Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Категории
+            </span>
+
+            <div class="filters-list categories" v-if="sortCategories.show === true">
+              <span class="filter-name"
+
+                    :class="{active: sortCategories.categoriesIds.indexOf(category.id) >= 0 }"
+                    v-for="category of store.categories"
+                    @click="() => {
+
+                      if (sortCategories.categoriesIds.indexOf(category.id) >= 0) {
+                        sortCategories.categoriesIds.splice(sortCategories.categoriesIds.indexOf(category.id), 1)
+                      } else {
+                        sortCategories.categoriesIds.push(category.id)
+                      }
+
+                      this.projects.splice(0, this.projects.length)
+                      this.getOffset = 0
+
+              }">
+                {{category.name}}
+              </span>
+            </div>
+
+          </div>
+
+          <div class="mask"
+               @click="() => {
+                 this.sort.show = false
+                 this.sortCategories.show = false
+                 console.log(123)
+               }"
+               v-if="this.sort.show === true || sortCategories.show === true"></div>
         </div>
       </div>
 
@@ -285,8 +266,12 @@ import 'vue-loading-overlay/dist/css/index.css';
 import loader from "../TemplateParts/PageParts/Loader.vue";
 import {store} from "../../assets/js/store.js";
 import {useFetch} from "../../assets/js/fetchRequest.js";
+import { directive } from 'vue-tippy'
+import 'tippy.js/dist/tippy.css'
+
 
 import {deleteProject} from "../../assets/js/projectController.js";
+import {userInfo} from "../../assets/js/userService.js";
 export default {
   name: "AllProjectsWithSort.vue",
   components: {projectCard, Waypoint, loader, AnimateHeight},
@@ -294,38 +279,29 @@ export default {
 
   data () {
     return {
-      showSort: false,
-      showCategorySort: false,
       projects: [],
       emptyProjectsResponse: true,
 
-      activeSort: '',
-      activeSortName: 'Популярные',
-      activeSortTab: '',
-      arrowDate: 'up',
-      arrowCategory: 'up',
+      sort: {
+        name: "Популярные",
+        show: false,
+        arrow: 'up',
+        filter: 'newest'
+      },
+      sortCategories: {
+        categoriesIds: [],
+        show: false
+      },
 
       getOffset: 0,
       getLimit: 4,
-      lazyProjects: [],
-      emptyResponse: false,
-
-      categoryName: 0,
-
-      clicked: false,
       isLoading: false,
 
-      categoriesFilter: [],
-      username: '',
-
-      timer: ref(null),
-      dinamicWidth: '100%',
-      category: 0,
-      store, deleteProject
+      store, deleteProject, userInfo
     }
   },
   directives: {
-    clickOutside: vClickOutside.directive
+    tippy: directive,
   },
   setup () {
 
@@ -337,6 +313,13 @@ export default {
 
     this.$route.path === '/' ? this.dinamicWidth = '100%' : this.dinamicWidth = '48%'
 
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        this.sort.show = false
+        this.sortCategories.show = false
+
+      }
+    })
 
   },
 
@@ -345,24 +328,16 @@ export default {
       if (event.target.classList[0] !== 'filter') {
         this.showSort = false
         this.arrowDate = 'up'
-      } else {
-
       }
-    },
-    onClickOutsideCategory (event) {
-
-      if (event.target.classList[0] !== 'categorySelector' ) {
-        this.showCategorySort = false
-        this.arrowCategory = 'up'
-      } else {
-
-      }
-
     },
 
     getProjects () {
-      let url = `projects?isPayedFirst=true&offset=${this.getOffset}&limit=${this.getLimit}`
+      let url = `projects?isPayedFirst=true&offset=${this.getOffset}&limit=${this.getLimit}&sort=${this.sort.filter}`
       this.category > 0 ? url += `&categoryIds=[${this.category}]` : url
+
+      if(this.sortCategories.categoriesIds.length > 0) {
+        url += `&categoryIds=[${this.sortCategories.categoriesIds}]`
+      }
 
       this.projects.length <= 0 ? this.isLoading = true : this.isLoading = false
 
@@ -396,7 +371,6 @@ export default {
     display: flex;
     justify-content: start;
     align-items: center;
-    gap: 10px;
     width: 100%;
     overflow-x: auto;
     overflow-y: visible;
@@ -421,10 +395,15 @@ export default {
 
       .category-icon {
         width: 100%;
+        margin-bottom: -10px;
         svg {
           position: relative;
           left:50%;
           transform: translateX(-50%);
+
+          path {
+            stroke-width: 1px;
+          }
         }
 
       }
@@ -754,6 +733,89 @@ export default {
           width: 160px;
           font-size: 11px;
         }
+      }
+    }
+  }
+}
+.filters {
+  margin-left: 30px;
+  position: relative;
+  width: 40%;
+  display: flex;
+  gap: 10px;
+
+  .mask {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 29;
+  }
+
+  .filter {
+    width: 100%;
+    margin-top: 2%;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid var(--gray-2, #D8D8D8);
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: .3s ease;
+
+    &:hover {
+      border-color: #6B6B6B;
+    }
+
+    .current-filter {
+      font-size: 12px;
+
+      display: flex;
+      width: 100%;
+      align-items: center;
+      gap: 10px;
+
+    }
+  }
+
+
+
+  .filters-list {
+    position: absolute;
+    display: block;
+    z-index: 30;
+    background-color: white;
+    border-radius: 10px;
+    width: 150px;
+    top: 50px;
+    border: 1px solid var(--gray-2, #D8D8D8);
+    box-shadow: 0px 3px 6px 0px rgba(39, 37, 37, 0.20);
+
+
+    &.categories {
+      right: 0;
+    }
+    &.sort {
+      left: 0;
+    }
+    .filter-name {
+      width: 100%;
+      padding: 10px;
+      display: block;
+      font-size: 12px;
+      border-radius: 10px;
+
+      &.active {
+        font-weight: 900;
+        background-color: #fff0d2;
+      }
+
+      &:hover {
+        background-color: #fff0d2;
       }
     }
   }

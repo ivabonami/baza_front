@@ -162,11 +162,11 @@ export default {
 <style scoped lang="scss">
 .tabs {
   width: 100%;
-  height: 340px;
+  height: 370px;
 }
 .tabs-links {
   display: flex;
-  margin-top: 12px;
+  margin-bottom: 15px;
 
   button {
     color: #000;
@@ -227,7 +227,8 @@ export default {
 }
 .tabs-content-wrapper {
   width: 100%;
-  height: 300px;
+  height: 340px;
+
 }
 
 .carousel__next, .carousel__prev {
@@ -240,7 +241,6 @@ export default {
   width: 100%;
   justify-content: start;
   margin-top: 10px;
-
   gap: 20px;
   box-sizing: border-box;
   display: flex;
