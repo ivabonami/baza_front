@@ -493,9 +493,7 @@ export default {
             if (result.success === true) {
               modalSetting.show = true
               modalSetting.headline = `Вы добавили проект!`
-              modalSetting.description = () => {
-                this.userInfo.role === 'admin' ? `Проект ${this.project.name} успешно добавлен.` : `Проект ${this.project.name} успешно добавлен, ожидайте модерации`
-              }
+              modalSetting.description = `Проект ${this.project.name} успешно добавлен.`
               modalSetting.type = 'ok'
               modalSetting.modalSize = 'small'
             }
@@ -674,10 +672,17 @@ export default {
       width: 100%;
       padding: 0;
 
+
       span {
         position: absolute;
         bottom: 10px;
         left: 25px;
+        white-space: nowrap;
+        width:300px;
+
+        overflow:hidden;
+
+        text-overflow: ellipsis;
       }
       svg {
         bottom: 10px;

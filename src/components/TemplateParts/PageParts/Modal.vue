@@ -60,7 +60,7 @@
            modalSetting.description = ''
            modalSetting.image = ''
            modalSetting.modalSize = 'small'
-           this.$router.go(-1)
+           this.$route.path === '/edit-project' ? this.$router.go(-1) : ''
          }">
           Отлично, спасибо
         </button>
@@ -110,6 +110,33 @@
         }">
 
             Удалить проект
+          </button>
+          <button class="baza-button special" @click="modalSetting.show = false">
+            Отмена
+          </button>
+        </div>
+
+      </div>
+
+      <div class="info-modal" v-if="modalSetting.type === 'deleteCategory'">
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56" fill="none">
+            <path d="M36.1 19.9L19.9 36.1M19.9 19.9L36.1 36.1M55 28C55 42.9117 42.9117 55 28 55C13.0883 55 1 42.9117 1 28C1 13.0883 13.0883 1 28 1C42.9117 1 55 13.0883 55 28Z" stroke="#9A2929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2>
+          {{ modalSetting.headline }}
+        </h2>
+        <p>
+          {{ modalSetting.description }}
+        </p>
+        <div class="buttons">
+          <button class="baza-button outline red" @click="() => {
+
+            deleteCategory(modalSetting.categoryToDelete)
+        }">
+
+            Удалить категорию
           </button>
           <button class="baza-button special" @click="modalSetting.show = false">
             Отмена
@@ -362,6 +389,8 @@ import VScrollLock from "v-scroll-lock";
 import {modalSetting} from "../../../assets/js/modal.js";
 import {watch} from "vue";
 import AddTestimonial from "../../Controllers/ProjectControllers/addTestimonial.vue";
+import {useFetch} from "../../../assets/js/fetchRequest.js";
+import {store} from "../../../assets/js/store.js";
 
 export default {
   name: "Modal.vue",
@@ -374,7 +403,8 @@ export default {
         clearNet: [],
         darknet: [],
         blockchain: [],
-        other: []
+        other: [],
+        store,
       }
 
     }
@@ -425,6 +455,22 @@ export default {
     changeModal () {
       this.modalShow = !this.modalShow
     },
+
+    deleteCategory(id) {
+
+
+      useFetch(`categories/${id}`, "DELETE")
+          .then(result => {
+            const index = store.categories.findIndex(item => item.id === id)
+            store.categories.splice(index, 1)
+
+            modalSetting.show = true
+            modalSetting.headline = `Успешно!`
+            modalSetting.description = `Вы успешно удалили категорию!`
+            modalSetting.type = 'ok'
+            modalSetting.modalSize = 'small'
+          })
+    }
 
   }
 }

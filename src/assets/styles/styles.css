@@ -330,37 +330,6 @@ textarea:hover, textarea:focus {
 .baza-button.signin:hover {
   border-color: #126DF7;
 }
-.baza-button.signout {
-  color: #126DF7;
-  font-family: "PT Sans Caption", sans-serif;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  text-transform: capitalize;
-  transition: 0.3s ease;
-  border: 2px solid transparent;
-}
-.baza-button.signout svg {
-  margin-left: 5px;
-  width: 16px;
-  height: 16px;
-}
-.baza-button.signout svg path {
-  stroke-width: 1px;
-  stroke: #126DF7;
-  transition: 0.3s ease;
-}
-.baza-button.signout:hover {
-  border-color: #984a5a;
-  color: #984a5a;
-}
-.baza-button.signout:hover svg path {
-  stroke: #984a5a;
-}
 .baza-button.gray {
   border-radius: 10px;
   border: 2px solid var(--gray-2, #D8D8D8);

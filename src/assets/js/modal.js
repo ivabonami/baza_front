@@ -7,6 +7,14 @@ export const modalSetting = reactive({
     description: '', //description
 
     image: '',
-    modalSize: ''
+    modalSize: '',
+    categoryToDelete: 0,
+    testimonialEditMode: false,
+
+    testimonial: {
+        rating: 0,
+        text: '',
+        id: 0
+    }
 
 })

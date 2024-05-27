@@ -3,92 +3,129 @@
     <loading v-model:active="isLoading"
              v-bind:color="red"
              :is-full-page="fullPage"/>
-    <h3>
+
+
+    <div class="categories">
+      <h2>
+        Активные категории
+      </h2>
+      <div class="category-list">
+
+
+        <div class="category"
+             v-for="category of store.categories">
+          <div class="category-name">
+            <svg xmlns="http://www.w3.org/2000/svg" v-if="category.name === 'Маркетплейсы'" width="20" height="22" viewBox="0 0 20 22" fill="none">
+              <path d="M14.1625 8V5C14.1625 2.79086 12.3716 1 10.1625 1C7.95334 1 6.16248 2.79086 6.16248 5V8M1.75448 9.35196L1.15448 15.752C0.983885 17.5717 0.898586 18.4815 1.20053 19.1843C1.46578 19.8016 1.9306 20.3121 2.5205 20.6338C3.192 21 4.10585 21 5.93353 21H14.3914C16.2191 21 17.133 21 17.8045 20.6338C18.3944 20.3121 18.8592 19.8016 19.1244 19.1843C19.4264 18.4815 19.3411 17.5717 19.1705 15.752L18.5705 9.35197C18.4264 7.81535 18.3544 7.04704 18.0088 6.46616C17.7045 5.95458 17.2548 5.54511 16.7171 5.28984C16.1065 5 15.3348 5 13.7914 5L6.53353 5C4.99017 5 4.21849 5 3.6079 5.28984C3.07014 5.54511 2.62049 5.95458 2.31614 6.46616C1.97057 7.04704 1.89854 7.81534 1.75448 9.35196Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
+            <svg xmlns="http://www.w3.org/2000/svg" v-else-if="category.name === 'Услуги'"  width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <path d="M10.5 4H10.9344C13.9816 4 15.5053 4 16.0836 4.54729C16.5836 5.02037 16.8051 5.71728 16.6702 6.39221C16.514 7.17302 15.2701 8.05285 12.7823 9.81253L8.71772 12.6875C6.2299 14.4471 4.98599 15.327 4.82984 16.1078C4.69486 16.7827 4.91642 17.4796 5.41636 17.9527C5.99474 18.5 7.51836 18.5 10.5656 18.5H11.5M7 4C7 5.65685 5.65685 7 4 7C2.34315 7 1 5.65685 1 4C1 2.34315 2.34315 1 4 1C5.65685 1 7 2.34315 7 4ZM21 18C21 19.6569 19.6569 21 18 21C16.3431 21 15 19.6569 15 18C15 16.3431 16.3431 15 18 15C19.6569 15 21 16.3431 21 18Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
+            <svg xmlns="http://www.w3.org/2000/svg" v-else-if="category.name === 'Форумы'"  width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <path d="M5.09436 10.2288C5.03221 9.82823 4.99996 9.41786 4.99996 9C4.99996 4.58172 8.60525 1 13.0526 1C17.4999 1 21.1052 4.58172 21.1052 9C21.1052 9.99807 20.9213 10.9535 20.5852 11.8345C20.5154 12.0175 20.4804 12.109 20.4646 12.1804C20.4489 12.2512 20.4428 12.301 20.4411 12.3735C20.4394 12.4466 20.4493 12.5272 20.4692 12.6883L20.8717 15.9585C20.9153 16.3125 20.9371 16.4895 20.8782 16.6182C20.8266 16.731 20.735 16.8205 20.6211 16.8695C20.4911 16.9254 20.3146 16.8995 19.9617 16.8478L16.7765 16.3809C16.6101 16.3565 16.527 16.3443 16.4512 16.3448C16.3763 16.3452 16.3245 16.3507 16.2511 16.3661C16.177 16.3817 16.0823 16.4172 15.893 16.4881C15.0097 16.819 14.0524 17 13.0526 17C12.6344 17 12.2237 16.9683 11.8227 16.9073M6.63158 21C9.59648 21 12 18.5376 12 15.5C12 12.4624 9.59648 10 6.63158 10C3.66668 10 1.26316 12.4624 1.26316 15.5C1.26316 16.1106 1.36028 16.6979 1.53955 17.2467C1.61533 17.4787 1.65322 17.5947 1.66566 17.6739C1.67864 17.7567 1.68091 17.8031 1.67608 17.8867C1.67145 17.9668 1.65141 18.0573 1.61134 18.2383L1 21L3.9948 20.591C4.15827 20.5687 4.24 20.5575 4.31137 20.558C4.38652 20.5585 4.42641 20.5626 4.50011 20.5773C4.5701 20.5912 4.67416 20.6279 4.88227 20.7014C5.43059 20.8949 6.01911 21 6.63158 21Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
+            <svg xmlns="http://www.w3.org/2000/svg" v-else-if="category.name === 'Обменники'"  width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <path d="M5 5L7 3M7 3L5 1M7 3H5C2.79086 3 1 4.79086 1 7M17 17L15 19M15 19L17 21M15 19H17C19.2091 19 21 17.2091 21 15M9.18903 5.5C9.85509 2.91216 12.2042 1 15 1C18.3137 1 21 3.68629 21 7C21 9.79574 19.0879 12.1449 16.5001 12.811M13 15C13 18.3137 10.3137 21 7 21C3.68629 21 1 18.3137 1 15C1 11.6863 3.68629 9 7 9C10.3137 9 13 11.6863 13 15Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
+            <svg xmlns="http://www.w3.org/2000/svg" v-else  width="22" height="18" viewBox="0 0 22 18" fill="none">
+              <path d="M1.5 9H4.88197C5.56717 9 6.19357 9.38713 6.5 10C6.80643 10.6129 7.43283 11 8.11803 11H13.882C14.5672 11 15.1936 10.6129 15.5 10C15.8064 9.38713 16.4328 9 17.118 9H20.5M7.96656 1H14.0334C15.1103 1 15.6487 1 16.1241 1.16396C16.5445 1.30896 16.9274 1.5456 17.2451 1.85675C17.6043 2.2086 17.8451 2.6902 18.3267 3.65337L20.4932 7.9865C20.6822 8.36449 20.7767 8.55348 20.8434 8.75155C20.9026 8.92745 20.9453 9.10847 20.971 9.29226C21 9.49923 21 9.71053 21 10.1331V12.2C21 13.8802 21 14.7202 20.673 15.362C20.3854 15.9265 19.9265 16.3854 19.362 16.673C18.7202 17 17.8802 17 16.2 17H5.8C4.11984 17 3.27976 17 2.63803 16.673C2.07354 16.3854 1.6146 15.9265 1.32698 15.362C1 14.7202 1 13.8802 1 12.2V10.1331C1 9.71053 1 9.49923 1.02897 9.29226C1.05471 9.10847 1.09744 8.92745 1.15662 8.75155C1.22326 8.55348 1.31776 8.36448 1.50675 7.9865L3.67331 3.65337C4.1549 2.69019 4.3957 2.2086 4.75495 1.85675C5.07263 1.5456 5.45551 1.30896 5.87589 1.16396C6.35125 1 6.88969 1 7.96656 1Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
+
+            <input type="text"
+                   v-if="editMode === category.id"
+                   v-model="category.name"
+            >
+            <span class="name" v-else>
+              {{ category.name }}
+            </span>
+          </div>
+
+
+
+          <div class="edit-menu">
+            <div class="edit" @click="editMode = category.id" v-if="editMode !==  category.id">
+              <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none">
+                <path d="M1.13619 6.77432C1.15283 6.62457 1.16115 6.54969 1.1838 6.47971C1.2039 6.41761 1.2323 6.35853 1.26823 6.30404C1.30873 6.24263 1.362 6.18936 1.46854 6.08282L6.25134 1.30002C6.65137 0.899992 7.29995 0.899992 7.69998 1.30002C8.10001 1.70006 8.10001 2.34864 7.69998 2.74867L2.91718 7.53146C2.81064 7.638 2.75737 7.69128 2.69596 7.73177C2.64147 7.7677 2.58238 7.7961 2.52029 7.8162C2.45031 7.83885 2.37543 7.84717 2.22568 7.86381L1 8L1.13619 6.77432Z" stroke="#D8D8D8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Редактировать
+            </div>
+
+            <div class="edit" @click="editCategory(category.id, category.name)" v-if="editMode === category.id">
+              <svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 1V4.4C5 4.96005 5 5.24008 5.10899 5.45399C5.20487 5.64215 5.35785 5.79513 5.54601 5.89101C5.75992 6 6.03995 6 6.6 6H13.4C13.9601 6 14.2401 6 14.454 5.89101C14.6422 5.79513 14.7951 5.64215 14.891 5.45399C15 5.24008 15 4.96005 15 4.4V2M15 19V12.6C15 12.0399 15 11.7599 14.891 11.546C14.7951 11.3578 14.6422 11.2049 14.454 11.109C14.2401 11 13.9601 11 13.4 11H6.6C6.03995 11 5.75992 11 5.54601 11.109C5.35785 11.2049 5.20487 11.3578 5.10899 11.546C5 11.7599 5 12.0399 5 12.6V19M19 7.32548V14.2C19 15.8802 19 16.7202 18.673 17.362C18.3854 17.9265 17.9265 18.3854 17.362 18.673C16.7202 19 15.8802 19 14.2 19H5.8C4.11984 19 3.27976 19 2.63803 18.673C2.07354 18.3854 1.6146 17.9265 1.32698 17.362C1 16.7202 1 15.8802 1 14.2V5.8C1 4.11984 1 3.27976 1.32698 2.63803C1.6146 2.07354 2.07354 1.6146 2.63803 1.32698C3.27976 1 4.11984 1 5.8 1H12.6745C13.1637 1 13.4083 1 13.6385 1.05526C13.8425 1.10425 14.0376 1.18506 14.2166 1.29472C14.4184 1.4184 14.5914 1.59135 14.9373 1.93726L18.0627 5.06274C18.4086 5.40865 18.5816 5.5816 18.7053 5.78343C18.8149 5.96237 18.8957 6.15746 18.9447 6.36154C19 6.59171 19 6.8363 19 7.32548Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+
+              Сохранить
+            </div>
+
+            <div class="delete" @click="() => {
+                modalSetting.show = true
+                modalSetting.type = 'deleteCategory'
+                modalSetting.headline = `Вы уверены? `
+                modalSetting.description = `Вы хотите удалить категорию ${category.name}! Действие необратимо`
+                modalSetting.categoryToDelete = category.id
+            }">
+              <svg xmlns="http://www.w3.org/2000/svg" width="8" height="9" viewBox="0 0 8 9" fill="none">
+                <path d="M5.33333 2.4V2.12C5.33333 1.72796 5.33333 1.53194 5.26067 1.38221C5.19676 1.25049 5.09477 1.14341 4.96933 1.0763C4.82672 1 4.64004 1 4.26667 1H3.73333C3.35996 1 3.17328 1 3.03067 1.0763C2.90523 1.14341 2.80324 1.25049 2.73933 1.38221C2.66667 1.53194 2.66667 1.72796 2.66667 2.12V2.4M1 2.4H7M6.33333 2.4V6.32C6.33333 6.90806 6.33333 7.20208 6.22434 7.42669C6.12847 7.62426 5.97549 7.78489 5.78732 7.88556C5.57341 8 5.29339 8 4.73333 8H3.26667C2.70661 8 2.42659 8 2.21268 7.88556C2.02451 7.78489 1.87153 7.62426 1.77566 7.42669C1.66667 7.20208 1.66667 6.90806 1.66667 6.32V2.4" stroke="#D8D8D8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Удалить
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+
+    </div>
+
+
+    <h2 class="mt">
       Добавить категорию
-    </h3>
+    </h2>
 
     <div class="form">
-      <input type="text"
-             v-model="categoryName"
-             maxlength="25"
-             placeholder="Название категории">
+
+      <div class="input-wrapper">
+        <label class="help" for="projectName">
+          Добавить новую категорию
+          <svg xmlns="http://www.w3.org/2000/svg" v-tippy="{content: 'Введите название категории, до 255 символов'}" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M7.95281 10.8V8M7.95281 5.2H7.95993M15.0758 8C15.0758 11.866 11.8868 15 7.95281 15C4.01886 15 0.829773 11.866 0.829773 8C0.829773 4.13401 4.01886 1 7.95281 1C11.8868 1 15.0758 4.13401 15.0758 8Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </label>
+        <div class="input">
+          <input
+              type="text"
+              id="projectName"
+              v-model="categoryName"
+              minlength="1" maxlength="255"
+              ref="projectName"
+              required>
+        </div>
+      </div>
       <div class="allowFront">
         <input type="checkbox"
                v-model="canHasFront"
                id="checkbox"
                checked
         >
-        <label for="checkbox">Может иметь витрину?</label>
+        <label class="checkmark"  for="checkbox"></label>
+        <label for="checkbox" class="text">Наличие витрины</label>
       </div>
 
-      <button class="btn btn-submit"
-      v-on:click="addCategory()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
-          <path d="M7.69655 17V0H10.3034V17H7.69655ZM0 9.70283V7.33727H18V9.70283H0Z" fill="white"/>
-        </svg>
+      <button class="baza-button primary"
+              @click="addCategory()">
         Добавить категорию
       </button>
 
     </div>
-    <div class="state-message">
-      {{ addStateMessage }}
-    </div>
-
-    <div class="categories">
-      <h1>
-        Список категорий
-      </h1>
-      <div class="category-list">
-
-        <shops-categories
-            v-on:someChanges="(emit) => {  }"
-            v-bind:is-editable="true">
-
-        </shops-categories>
 
 
-        <div class="category"
-             v-for="category of categories">
-          <span class="name">
-            {{ category.name }}
-          </span>
-<!--          <span class="id">-->
-<!--            / id: {{ category.id }}-->
-<!--          </span>-->
-
-              <span class="delete"
-                    v-on:click="() => {
-            showModal = !showModal;
-            this.category = {
-              id: category.id,
-              name: category.name
-            }
-          }">
-               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="19" viewBox="0 0 16 19" fill="none">
-              <path
-                  d="M14.3066 10.5404C14.3066 11.9891 14.3153 13.4375 14.3039 14.8862C14.2936 16.1901 13.6839 17.1536 12.5161 17.7756C12.0391 18.0298 11.517 18.1295 10.9784 18.1303C8.71443 18.1341 6.45046 18.1469 4.18689 18.1264C2.73366 18.1133 1.69388 17.4252 1.0885 16.1337C0.912373 15.7578 0.853533 15.3464 0.853928 14.9299C0.854717 11.9041 0.859851 8.878 0.849189 5.85224C0.847214 5.26656 1.28595 4.90264 1.80919 4.96677C2.1575 5.00926 2.48526 5.32683 2.50777 5.6726C2.5133 5.75604 2.51014 5.83988 2.51014 5.92371C2.51014 8.87877 2.51922 11.8338 2.50501 14.7889C2.50027 15.7489 3.24584 16.5096 4.25087 16.5003C6.46823 16.4795 8.68639 16.4787 10.9042 16.5003C11.9171 16.5104 12.6615 15.7458 12.6563 14.7746C12.6397 11.7875 12.65 8.79996 12.6504 5.81284C12.6504 5.25729 13.0382 4.91461 13.6021 4.96831C13.9248 4.99883 14.2265 5.26424 14.281 5.57833C14.3027 5.70428 14.3054 5.83447 14.3054 5.96273C14.307 7.48875 14.3066 9.01437 14.3062 10.5404H14.3066Z"
-                  fill="#494A4E"/>
-              <path
-                  d="M7.58574 4.10691C5.35494 4.10691 3.12415 4.10691 0.893745 4.10691C0.435265 4.10691 0.177395 3.92263 0.0316763 3.49418C-0.102195 3.10128 0.205828 2.58746 0.625212 2.51483C0.747237 2.49358 0.873605 2.48817 0.998394 2.48779C1.98525 2.48586 2.9725 2.48161 3.95936 2.49049C4.15918 2.49242 4.22276 2.43254 4.21723 2.23744C4.20459 1.78698 4.21052 1.33613 4.21447 0.885667C4.21921 0.358323 4.55764 0.00830615 5.09747 0.00560182C6.74894 -0.00212483 8.40081 -0.00135216 10.0523 0.00482915C10.6032 0.00676082 10.9424 0.35446 10.9471 0.89378C10.9507 1.34424 10.9554 1.79509 10.9448 2.24556C10.9404 2.42945 10.9989 2.49126 11.1908 2.4901C12.2041 2.48238 13.2174 2.48701 14.2307 2.48624C14.4732 2.48624 14.7003 2.5214 14.8855 2.69641C15.1627 2.95834 15.2306 3.26779 15.0821 3.62979C14.9621 3.92147 14.671 4.10613 14.3176 4.10652C12.0738 4.10729 9.82996 4.10691 7.58613 4.10691H7.58574ZM7.59995 1.64017C7.09329 1.64017 6.58624 1.64365 6.07958 1.63786C5.94334 1.63631 5.88766 1.6819 5.89319 1.81596C5.8999 1.97667 5.89635 2.13777 5.89438 2.29887C5.8928 2.42366 5.93979 2.48817 6.07958 2.48779C7.07987 2.48508 8.08055 2.48508 9.08083 2.48779C9.22063 2.48817 9.26762 2.42366 9.26604 2.29887C9.26406 2.14434 9.25893 1.98942 9.26801 1.83527C9.2771 1.68306 9.2147 1.63477 9.06109 1.63708C8.57417 1.64481 8.08687 1.63979 7.59995 1.63979V1.64017Z"
-                  fill="#494A4E"/>
-              <path
-                  d="M8.42743 10.3022C8.42743 9.34373 8.42545 8.38485 8.42861 7.42636C8.4298 7.0493 8.68925 6.7186 9.03242 6.63979C9.46088 6.54127 9.83091 6.69001 10.0098 7.05587C10.0667 7.17254 10.09 7.31587 10.0904 7.44722C10.0955 9.34527 10.0904 11.2429 10.0959 13.141C10.0975 13.6822 9.70572 13.9975 9.26264 14.0044C8.78126 14.0118 8.42901 13.6359 8.42782 13.1205C8.42585 12.1813 8.42743 11.2418 8.42743 10.3026V10.3022Z"
-                  fill="#494A4E"/>
-              <path
-                  d="M6.73258 10.3095C6.73258 11.268 6.73495 12.2268 6.731 13.1853C6.72982 13.5234 6.50986 13.8375 6.21842 13.9441C5.85511 14.0766 5.50207 13.9897 5.25289 13.7096C5.08979 13.5265 5.0661 13.3066 5.0661 13.0779C5.06689 11.2251 5.0661 9.37222 5.0665 7.51937C5.0665 7.48731 5.0665 7.45486 5.06729 7.42279C5.08269 6.93601 5.4227 6.60377 5.90013 6.60995C6.37559 6.61613 6.72863 6.95881 6.7314 7.434C6.73614 8.39249 6.73298 9.35136 6.73258 10.3099V10.3095Z"
-                  fill="#494A4E"/>
-            </svg>
-            Удалить
-              </span>
-
-
-        </div>
-      </div>
-      <div class="state">
-        {{deleteStateMessage}}
-      </div>
-
-    </div>
 
   </div>
 
@@ -96,32 +133,27 @@
 </template>
 
 <script>
-import Modal from "../../TemplateParts/PageParts/Modal.vue";
-import config from "../../../assets/js/config.js";
 import 'vue-loading-overlay/dist/css/index.css';
 import {store} from "../../../assets/js/store.js";
 import {userInfo} from "../../../assets/js/userService.js";
+import {useFetch} from "../../../assets/js/fetchRequest.js";
+import {modalSetting} from "../../../assets/js/modal.js";
+import { directive } from 'vue-tippy'
+import 'tippy.js/dist/tippy.css'
 
 export default {
   name: "addCategory.vue",
   components: {  },
 
   emits: ['confirmAction', 'forceReload'],
-
+  directives: {
+    tippy: directive,
+  },
   data () {
     return {
-      categoryName: '',
-      categories: '',
-      addStateMessage: '',
-      deleteStateMessage: '',
-      showModal: this.$emit.showModal,
-      category: '',
-      modal: {},
+      editMode: 0,
       canHasFront: true,
-      componentKey: 0,
-      isLoading: false,
-      fullPage: true,
-      store, userInfo
+      store, userInfo, modalSetting
     }
   },
   mounted() {
@@ -137,52 +169,26 @@ export default {
   methods: {
 
     addCategory () {
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${userInfo.token}`);
-
       const newCategory = {
         name: this.categoryName,
         allowShopfront: this.canHasFront
       }
 
-      fetch(`${config.api.url}categories`, {
-        method: "POST",
-        headers: myHeaders,
-        body: JSON.stringify(newCategory),
-      })
-          .then((response) => response.json())
-          .then((response) => {
-
-            if (response.success === false) {
-              this.showModal = true
-              this.modal = {
-                iconType: 'warning',
-                heading: `Ошибка при добавлении категории`,
-                description: `${response.message}`,
-                descriptionType: 'text',
-                close: true,
-
-              }
-
-            } else {
-              const catName = this.categoryName;
-              this.addStateMessage = `Категория: ${catName} успешно добавлена!`
-              this.categoryName = ''
-              setTimeout(() => {
-                this.addStateMessage = ''
-
-              }, 10000)
-
-              store.categories.push(newCategory)
-            }
-
-
+      useFetch(`categories`, "POST", newCategory)
+          .then(result => {
+            store.categories.push(newCategory)
+            this.categoryName = ''
           })
-          .catch((error) => {console.error(error)});
-
 
     },
+
+    editCategory(id, newName) {
+      useFetch(`categories/${id}`, "PUT", {name: newName})
+          .then(result => {
+            console.log(result)
+            this.editMode = 0
+          })
+    }
 
 
   }
@@ -196,7 +202,7 @@ export default {
   color: #0b5348;
 }
 .form {
-  display: flex;
+  width: 300px;
   gap: 30px;
   align-items: center;
   margin-bottom: 30px;
@@ -211,18 +217,72 @@ export default {
   flex-wrap: wrap;
   width: 100%;
   box-sizing: border-box;
+  gap: 10px;
 
   .category {
-    width: 45%;
+    width: 30%;
     margin-top: 10px;
     display: flex;
     align-items: center;
-    gap: 10px;
+
     padding: 10px;
+    justify-content: space-between;
+
+    .category-name {
+      flex-wrap: nowrap;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+
+      span {
+        width: 110px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      input {
+        width: 120px;
+        padding: 2px 10px;
+        position: relative;
+        font-size: 12px;
+        margin: 0;
+      }
+    }
 
 
-    &:hover {
-      background-color: rgba(108, 122, 255, 0.1);
+    .edit-menu {
+      gap: 20px;
+      display: flex;
+      cursor: pointer;
+
+
+      .edit, .delete {
+        color: var(--gray-2, #D8D8D8);
+        font-family: "PT Sans Caption";
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        transition: .3s ease;
+
+        &:hover {
+          color: #6B6B6B;
+
+          svg {
+            path {
+              stroke: #6B6B6B;
+            }
+          }
+        }
+
+        svg {
+          path {
+            stroke-width: 1px;
+            stroke: var(--gray-2, #D8D8D8);
+            transition: .3s ease;
+          }
+        }
+      }
     }
 
 
@@ -236,13 +296,71 @@ export default {
 .allowFront {
   padding-left: 10px;
   display: flex;
-  width: 40%;
+  width: 100%;
+  justify-content: start;
+  position: relative;
+
   input {
-    transform: scale(1.5);
+    transform: scale(1.1);
+    width: 25px;
+    margin-right: 20px;
+    height: 25px;
+    display: none;
   }
-  label {
-    font-size: 14px;
-    margin-left: 10px;
+
+  .text {
+    color: #000;
+    font-family: "PT Sans Caption";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding: 0px 30px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #000000;
+  }
+
+  /* On mouse-over, add a grey background color */
+  input ~ .checkmark {
+    background-color: #c5c5c5;
+  }
+
+  /* When the checkbox is checked, add a blue background */
+   input:checked ~ .checkmark {
+    background-color: #ffdc50;
+  }
+
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  /* Show the checkmark when checked */
+  input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  /* Style the checkmark/indicator */
+  .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid #000000;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
   }
 }
 
@@ -266,5 +384,7 @@ export default {
 
 
 }
-
+.mt {
+  margin-top: 30px;
+}
 </style>

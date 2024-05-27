@@ -44,13 +44,29 @@
     <textarea
         v-model="review.text"
         maxlength="2000"
-        placeholder="Этот магаз держит хороший парень, я vel sagittis mi, at vehicula eros. Duis fermentum pulvinar quam, ac congue augue euismod vitae. Nulla eu ante vel arcu interdum ultricies sed et eros. Nullam non vulputate dui, non imperdiet purus. Cras tempus urna."></textarea>
+        placeholder="Текст отзыва, не обязательно"></textarea>
     <div class="reviewTextError" v-if="errors !== ''">
       {{ review.error }}
     </div>
     <div class="buttons">
       <button class="baza-button primary" v-on:click="(event) => {
-        if (review.rating <= 0) {
+
+        if (editMode === true) {
+          useFetch(`reviews/${review.id}`, 'PUT', {
+            rating: review.rating,
+            comment: review.text,
+            projectId: review.projectId
+
+          }).then(result => {
+            modalSetting.show = true
+            modalSetting.headline = `Отзыв обновлен`
+            modalSetting.description = `Вы успешно обновили отзыв к проекту ${review.projectName}`
+            modalSetting.type = 'ok'
+            modalSetting.modalSize = 'small'
+
+          })
+        } else {
+          if (review.rating <= 0) {
           review.error = 'Выставите рейтинг'
         } else {
           delete review.error
@@ -60,15 +76,24 @@
             projectId: review.projectId
 
           })
-          .then(result => console.log(result))
+          .then(result => {
+            modalSetting.show = true
+            modalSetting.headline = `Вы опубликовали отзыв!`
+            modalSetting.description = `Вы успешно опубликовали отзыв к проекту ${review.projectName}`
+            modalSetting.type = 'ok'
+            modalSetting.modalSize = 'small'
+
+          })
           .catch(err => {
             console.log(err)
           })
         }
+        }
+
       }"
       >
 
-        <span v-if="this.editReview === false">Отправить</span>
+        <span v-if="this.editMode === true">Отправить</span>
         <span  v-else>Оставить отзыв</span>
       </button>
       <button class="baza-button "
@@ -84,6 +109,8 @@
 
 <script>
 import {useFetch} from "../../../assets/js/fetchRequest.js";
+import {watch} from "vue";
+import {modalSetting} from "../../../assets/js/modal.js";
 export default {
   name: "addTestimonial.vue",
   data() {
@@ -91,24 +118,32 @@ export default {
       review: {
         text: '',
         rating: 0,
+        id: 0,
         error: '',
         projectId: window.location.pathname.replace('/project/', '')
       },
+      editMode: false,
       errors: {},
-      useFetch
+      useFetch, modalSetting
     }
+  },
+  setup() {
+    watch(modalSetting, (value, oldValue) => {
+    }, { immediate: true })
   },
   components: {},
   methods: {
     setReviewRating(count) {
-
-
-
       this.review.rating = count
     }
   },
-  updated() {
-
+  mounted() {
+    if (modalSetting.testimonialEditMode === true) {
+      this.review.text = modalSetting.testimonial.text
+      this.review.rating = modalSetting.testimonial.rating
+      this.review.id = modalSetting.testimonial.id
+      this.editMode = true
+    }
   },
 }
 </script>

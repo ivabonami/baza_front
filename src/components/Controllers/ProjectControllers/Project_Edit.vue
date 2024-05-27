@@ -250,9 +250,9 @@
           <circle cx="3" cy="3" r="3" fill="#8B4BDD"/>
         </svg>
       </div>
-      <div class="link-name">
+      <a class="link-name" :href="link.link" target="_blank">
 
-        <span v-tippy="{content: `Ссылка: ${link.link}, нажмите, что бы проверить работоспособность`}">
+        <span v-tippy="{content: `Ссылка: ${link.link}, нажмите, что бы проверить работоспособность`}" >
         {{ link.name }}
         </span>
         <svg width="14" height="16" viewBox="0 0 14 16"
@@ -264,7 +264,7 @@
         </svg>
 
 
-      </div>
+      </a>
     </div>
     <div class="errors" v-for="(error) of errors">
       <h2>Исправьте ошибки</h2>
@@ -428,7 +428,7 @@ export default {
           useFetch('image-upload', "POST", formData)
               .then(result => {
                 this.images.avatar.uploaded = true
-                this.projectAvatar = result.filePath
+                this.project.avatarFilePath = result.filePath
               })
         }
 
@@ -477,7 +477,7 @@ export default {
           useFetch('image-upload', "POST", formData)
               .then(result => {
                 this.images.banner.uploaded = true
-                this.projectBanner = result.filePath
+                this.project.bannerFilePath = result.filePath
               })
         }
 
@@ -531,25 +531,28 @@ export default {
 
     },
     checkLinks() {
-      if (this.addLink < 10 ) {
+      if (this.$refs.addLink.length < 10 ) {
         this.errors.linkLengthError = 'Сама ссылка не может быть меньше, чем 10 символов'
         this.$refs.classList.add('error')
         this.linkErr = true
       } else {
+
+        if (/^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(this.link.link) === true) {
+          this.linkErr = false
+          this.$refs.addLink.classList.remove('error')
+          delete this.errors.linkTypeError
+        } else {
+          this.errors.linkTypeError = 'Ссылка не валидная, введите ссылку формата https://example.com' + this.link.link
+          this.linkErr = true
+          this.$refs.addLink.classList.add('error')
+        }
+
         this.linkErr = false
         delete this.errors.linkLengthError
         this.$refs.addLink.classList.remove('error')
       }
 
-      if (/(http(s?)):\/\/+[a-z0-9._]+\.+[a-z0-9._]/i.test(this.link.link) === true) {
-        this.linkErr = false
-        this.$refs.addLink.classList.remove('error')
-        delete this.errors.linkTypeError
-      } else {
-        this.errors.linkTypeError = 'Ссылка не валидная, введите ссылку формата https://example.com' + this.link.link
-        this.linkErr = true
-        this.$refs.addLink.classList.add('error')
-      }
+
 
       if (this.linkErr === true) {
 
@@ -699,6 +702,12 @@ export default {
         position: absolute;
         bottom: 10px;
         left: 25px;
+        white-space: nowrap;
+        width:300px;
+
+        overflow:hidden;
+
+        text-overflow: ellipsis;
       }
       svg {
         bottom: 10px;

@@ -188,8 +188,13 @@
 
 
                     <div class="item edit" v-on:click="() => {
-                                editComment(review.comment, review.rating, review.id, review.isReviewed)
-                                this.clickedReviewIndex = index
+                                modalSetting.show = true
+                                modalSetting.type = 'testimonial'
+                                modalSetting.headline = 'Оцените проект'
+                                modalSetting.testimonialEditMode = true
+                                modalSetting.testimonial.text = review.comment
+                                modalSetting.testimonial.id = review.id
+                                modalSetting.testimonial.rating = review.rating
 
                             }">
                       <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none">
@@ -201,7 +206,7 @@
                     <div class="item delete" v-on:click="() => {
                           this.reviewToDeleteId = review.id
                           this.reviewToDeleteUsername = review.userData.username
-                          deleteReview()
+                          deleteReviewConfirmed(reviewToDeleteId)
                         }">
                       <svg xmlns="http://www.w3.org/2000/svg" width="8" height="9" viewBox="0 0 8 9" fill="none">
                         <path d="M5.33333 2.4V2.12C5.33333 1.72796 5.33333 1.53194 5.26067 1.38221C5.19676 1.25049 5.09477 1.14341 4.96933 1.0763C4.82672 1 4.64004 1 4.26667 1H3.73333C3.35996 1 3.17328 1 3.03067 1.0763C2.90523 1.14341 2.80324 1.25049 2.73933 1.38221C2.66667 1.53194 2.66667 1.72796 2.66667 2.12V2.4M1 2.4H7M6.33333 2.4V6.32C6.33333 6.90806 6.33333 7.20208 6.22434 7.42669C6.12847 7.62426 5.97549 7.78489 5.78732 7.88556C5.57341 8 5.29339 8 4.73333 8H3.26667C2.70661 8 2.42659 8 2.21268 7.88556C2.02451 7.78489 1.87153 7.62426 1.77566 7.42669C1.66667 7.20208 1.66667 6.90806 1.66667 6.32V2.4" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -286,6 +291,8 @@ import Modal from "../PageParts/Modal.vue";
 import vClickOutside from 'click-outside-vue3'
 import {Waypoint} from "vue-waypoint";
 import {userInfo} from "../../../assets/js/userService.js";
+import {useFetch} from "../../../assets/js/fetchRequest.js";
+import {modalSetting} from "../../../assets/js/modal.js";
 
 
 export default {
@@ -346,54 +353,11 @@ export default {
 
       limit: 5,
       offset: 0,
-      emptyResponse: false, userInfo
+      emptyResponse: false, userInfo, modalSetting
     }
   },
   components: {loader, vClickOutside, Waypoint },
   methods: {
-
-    reviewSended(target) {
-      this.isProjectReviewed = true
-
-
-      setTimeout(() => {
-        this.isProjectReviewed = false
-      }, 2000)
-    },
-
-    getReviewsCount() {
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      const projectId = window.location.pathname.replace('/project/', '');
-
-
-      const requestOptions = {
-        method: "GET",
-        headers: myHeaders,
-      };
-
-      fetch(`${config.api.url}reviews-count?projectId=${projectId}`, requestOptions)
-          .then((response) => response.json())
-          .then((result) => {
-            this.reviewedCount = result.ratingCount
-            this.totalReviews = result.totalReviews
-            const lastDigit = (num) => num % 10
-
-            if (lastDigit(this.totalReviews) === 1) {
-              this.reviewedText = 'Оценил'
-              this.reviewedHumanText = 'человек'
-            } else if (lastDigit(this.totalReviews) === 5 || lastDigit(this.totalReviews) === 6 || lastDigit(this.totalReviews) === 7 || lastDigit(this.totalReviews) === 8 || lastDigit(this.totalReviews) === 9 || lastDigit(this.totalReviews) === 0){
-              this.reviewedText = 'Оценило'
-              this.reviewedHumanText = 'человек'
-            }
-            else {
-              this.reviewedText = 'Оценило'
-              this.reviewedHumanText = 'человека'
-            }
-
-          })
-          .catch((error) => console.error(error));
-    },
 
     deleteReview (id, username) {
 
@@ -409,22 +373,19 @@ export default {
 
     },
     deleteReviewConfirmed() {
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
 
-      fetch(`${config.api.url}reviews/${this.reviewToDeleteId}`, {
-        method: "DELETE",
-        headers: myHeaders,
-      })
-          .then((response) => response.json())
-          .then(() => {
-            this.isProjectReviewed = false
-            this.getReviews(this.limit, this.offset)
+
+      useFetch(`reviews/${this.reviewToDeleteId}`, "DELETE")
+          .then(result => {
+            const index = this.reviews.findIndex(item => item.id === this.reviewToDeleteId)
+            this.reviews.splice(index, 1)
           })
-          .catch((error) => {console.error(error)});
+
     },
     getReviews (limit, offset, reviewsSort, isNotReviewed) {
+
+
+
       this.loadingComponents.reviews = true
       reviewsSort === ''? reviewsSort = 'newest' : reviewsSort
       const myHeaders = new Headers();
@@ -432,7 +393,7 @@ export default {
       myHeaders.append("Content-Type", "application/json");
 
       const projectId = parseInt(this.$route.path.replace('/project/', ''))
-      let url = `${config.api.url}reviews?projectId=${projectId}getsort=${reviewsSort}getlimit=${limit}getoffset=${offset}`
+      let url = `${config.api.url}reviews?projectId=${projectId}&sort=${reviewsSort}&limit=${limit}&offset=${offset}`
 
       isNotReviewed === true ? url += `getshowNotReviewed=true` : url
 
@@ -748,7 +709,6 @@ export default {
   },
   mounted() {
     this.getReviews(this.limit, this.offset, this.review.sort, false)
-    this.getReviewsCount()
 
     this.starsCount = Math.round(this.$props.project.ratingAvg)
 
