@@ -175,7 +175,7 @@ h3 {
 
     .currentSort {
       width: 220px;
-      border: 1px solid transparent;
+      border: 1px solid #7C7C7C;
       outline: none;
       color: #000;
       background-color: #fff;
@@ -489,18 +489,19 @@ h3 {
 
   }
 
-  .list-wrapper {
+  .projects-wrapper .projectsList .list-wrapper {
     width: 100%;
     justify-content: center;
     align-items: stretch;
     flex-wrap: wrap;
 
 
-    .project {
-      width: 48%;
+
+  }
+  .project {
+    width: 48%;
 
 
-    }
   }
   .buttons {
     flex-wrap: wrap;

@@ -23,18 +23,23 @@
               <svg xmlns="http://www.w3.org/2000/svg" v-if="category.name === 'Маркетплейсы'" viewBox="0 0 20 22" fill="none">
                 <path d="M14.1625 8V5C14.1625 2.79086 12.3716 1 10.1625 1C7.95334 1 6.16248 2.79086 6.16248 5V8M1.75448 9.35196L1.15448 15.752C0.983885 17.5717 0.898586 18.4815 1.20053 19.1843C1.46578 19.8016 1.9306 20.3121 2.5205 20.6338C3.192 21 4.10585 21 5.93353 21H14.3914C16.2191 21 17.133 21 17.8045 20.6338C18.3944 20.3121 18.8592 19.8016 19.1244 19.1843C19.4264 18.4815 19.3411 17.5717 19.1705 15.752L18.5705 9.35197C18.4264 7.81535 18.3544 7.04704 18.0088 6.46616C17.7045 5.95458 17.2548 5.54511 16.7171 5.28984C16.1065 5 15.3348 5 13.7914 5L6.53353 5C4.99017 5 4.21849 5 3.6079 5.28984C3.07014 5.54511 2.62049 5.95458 2.31614 6.46616C1.97057 7.04704 1.89854 7.81534 1.75448 9.35196Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <svg xmlns="http://www.w3.org/2000/svg" v-if="category.name === 'Форумы'" viewBox="0 0 22 22" fill="none">
+              <svg xmlns="http://www.w3.org/2000/svg" v-else-if="category.name === 'Форумы'" viewBox="0 0 22 22" fill="none">
                 <path d="M5.09436 10.2288C5.03221 9.82823 4.99996 9.41786 4.99996 9C4.99996 4.58172 8.60525 1 13.0526 1C17.4999 1 21.1052 4.58172 21.1052 9C21.1052 9.99807 20.9213 10.9535 20.5852 11.8345C20.5154 12.0175 20.4804 12.109 20.4646 12.1804C20.4489 12.2512 20.4428 12.301 20.4411 12.3735C20.4394 12.4466 20.4493 12.5272 20.4692 12.6883L20.8717 15.9585C20.9153 16.3125 20.9371 16.4895 20.8782 16.6182C20.8266 16.731 20.735 16.8205 20.6211 16.8695C20.4911 16.9254 20.3146 16.8995 19.9617 16.8478L16.7765 16.3809C16.6101 16.3565 16.527 16.3443 16.4512 16.3448C16.3763 16.3452 16.3245 16.3507 16.2511 16.3661C16.177 16.3817 16.0823 16.4172 15.893 16.4881C15.0097 16.819 14.0524 17 13.0526 17C12.6344 17 12.2237 16.9683 11.8227 16.9073M6.63158 21C9.59648 21 12 18.5376 12 15.5C12 12.4624 9.59648 10 6.63158 10C3.66668 10 1.26316 12.4624 1.26316 15.5C1.26316 16.1106 1.36028 16.6979 1.53955 17.2467C1.61533 17.4787 1.65322 17.5947 1.66566 17.6739C1.67864 17.7567 1.68091 17.8031 1.67608 17.8867C1.67145 17.9668 1.65141 18.0573 1.61134 18.2383L1 21L3.9948 20.591C4.15827 20.5687 4.24 20.5575 4.31137 20.558C4.38652 20.5585 4.42641 20.5626 4.50011 20.5773C4.5701 20.5912 4.67416 20.6279 4.88227 20.7014C5.43059 20.8949 6.01911 21 6.63158 21Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <svg xmlns="http://www.w3.org/2000/svg" v-if="category.name === 'Обменники'" viewBox="0 0 22 22" fill="none">
+              <svg xmlns="http://www.w3.org/2000/svg" v-else-if="category.name === 'Обменники'" viewBox="0 0 22 22" fill="none">
                 <path d="M5 5L7 3M7 3L5 1M7 3H5C2.79086 3 1 4.79086 1 7M17 17L15 19M15 19L17 21M15 19H17C19.2091 19 21 17.2091 21 15M9.18903 5.5C9.85509 2.91216 12.2042 1 15 1C18.3137 1 21 3.68629 21 7C21 9.79574 19.0879 12.1449 16.5001 12.811M13 15C13 18.3137 10.3137 21 7 21C3.68629 21 1 18.3137 1 15C1 11.6863 3.68629 9 7 9C10.3137 9 13 11.6863 13 15Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <svg xmlns="http://www.w3.org/2000/svg" v-if="category.name === 'Услуги'" viewBox="0 0 22 22" fill="none">
+              <svg xmlns="http://www.w3.org/2000/svg" v-else-if="category.name === 'Услуги'" viewBox="0 0 22 22" fill="none">
                 <path d="M10.5 4H10.9344C13.9816 4 15.5053 4 16.0836 4.54729C16.5836 5.02037 16.8051 5.71728 16.6702 6.39221C16.514 7.17302 15.2701 8.05285 12.7823 9.81253L8.71772 12.6875C6.2299 14.4471 4.98599 15.327 4.82984 16.1078C4.69486 16.7827 4.91642 17.4796 5.41636 17.9527C5.99474 18.5 7.51836 18.5 10.5656 18.5H11.5M7 4C7 5.65685 5.65685 7 4 7C2.34315 7 1 5.65685 1 4C1 2.34315 2.34315 1 4 1C5.65685 1 7 2.34315 7 4ZM21 18C21 19.6569 19.6569 21 18 21C16.3431 21 15 19.6569 15 18C15 16.3431 16.3431 15 18 15C19.6569 15 21 16.3431 21 18Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <svg xmlns="http://www.w3.org/2000/svg"  v-if="category.name === 'Другое'"  viewBox="0 0 22 18" fill="none">
+              <svg xmlns="http://www.w3.org/2000/svg"  v-else-if="category.name === 'Другое'"  viewBox="0 0 22 18" fill="none">
                 <path d="M1.5 9H4.88197C5.56717 9 6.19357 9.38713 6.5 10C6.80643 10.6129 7.43283 11 8.11803 11H13.882C14.5672 11 15.1936 10.6129 15.5 10C15.8064 9.38713 16.4328 9 17.118 9H20.5M7.96656 1H14.0334C15.1103 1 15.6487 1 16.1241 1.16396C16.5445 1.30896 16.9274 1.5456 17.2451 1.85675C17.6043 2.2086 17.8451 2.6902 18.3267 3.65337L20.4932 7.9865C20.6822 8.36449 20.7767 8.55348 20.8434 8.75155C20.9026 8.92745 20.9453 9.10847 20.971 9.29226C21 9.49923 21 9.71053 21 10.1331V12.2C21 13.8802 21 14.7202 20.673 15.362C20.3854 15.9265 19.9265 16.3854 19.362 16.673C18.7202 17 17.8802 17 16.2 17H5.8C4.11984 17 3.27976 17 2.63803 16.673C2.07354 16.3854 1.6146 15.9265 1.32698 15.362C1 14.7202 1 13.8802 1 12.2V10.1331C1 9.71053 1 9.49923 1.02897 9.29226C1.05471 9.10847 1.09744 8.92745 1.15662 8.75155C1.22326 8.55348 1.31776 8.36448 1.50675 7.9865L3.67331 3.65337C4.1549 2.69019 4.3957 2.2086 4.75495 1.85675C5.07263 1.5456 5.45551 1.30896 5.87589 1.16396C6.35125 1 6.88969 1 7.96656 1Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
+
+              <svg width="21" height="20" v-else viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.49999 1L5.49999 19M16.5 1L13.5 19M19.5 6H2.5M18.5 14H1.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+
             </div>
             <div class="category-name">
               {{ category.name }}
@@ -372,6 +377,7 @@ export default {
       transition: .3s ease;
       cursor: pointer;
 
+
       .category-icon {
         width: 100%;
         margin-bottom: -10px;
@@ -387,6 +393,7 @@ export default {
 
       }
       .category-name {
+        white-space: nowrap;
         color: #000;
         font-family: "PT Sans Caption";
         font-size: 14px;
@@ -394,6 +401,7 @@ export default {
         font-weight: 400;
         line-height: normal;
         text-align: center;
+        width: 100%;
         padding-bottom: 5px;
         transition: .3s ease;
         border-bottom: 2px solid transparent;
@@ -540,7 +548,7 @@ export default {
 
       .filter {
         display: flex;
-        padding: 10px;
+        padding: 5px;
         font-size: 14px;
         align-items: center;
         justify-content: space-between;
@@ -722,6 +730,7 @@ export default {
   width: 40%;
   display: flex;
   gap: 10px;
+  align-items: center;
 
   .mask {
     width: 100%;
@@ -736,8 +745,7 @@ export default {
 
   .filter {
     width: 100%;
-    margin-top: 2%;
-    height: 80%;
+    height: 60%;
     display: flex;
     align-items: center;
     border-radius: 10px;
@@ -771,15 +779,16 @@ export default {
     border-radius: 10px;
     width: 150px;
     top: 50px;
+
     border: 1px solid var(--gray-2, #D8D8D8);
     box-shadow: 0px 3px 6px 0px rgba(39, 37, 37, 0.20);
 
 
     &.categories {
-      right: 0;
+      right: 5%;
     }
     &.sort {
-      left: 0;
+      right: 50%;
     }
     .filter-name {
       width: 100%;
@@ -798,6 +807,13 @@ export default {
       }
     }
   }
+}
+.sort-name {
+  color: #000;
+  font-family: "PT Sans Caption";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
 }
 @media screen and (max-width: 768px)  {
   .search {
@@ -826,6 +842,7 @@ export default {
   .filters .filter .sort-name {
     display: none;
   }
+
   .buttons {
     flex-wrap: wrap;
 
@@ -861,6 +878,17 @@ export default {
         }
       }
     }
+  }
+  .filters {
+    justify-content: center;
+    .filter {
+      .current-filter {
+        text-align: center;
+        justify-content: center;
+        width: 100%;
+      }
+    }
+
   }
 }
 .page-header {

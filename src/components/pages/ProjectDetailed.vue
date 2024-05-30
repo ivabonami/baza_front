@@ -62,10 +62,10 @@
           <div class="project-stats">
 
             <div class="rating" v-tippy="{ content: 'Рейтинг проекта' }" >
-              <svg v-if="project.ratingAvg !== null" xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none">
+              <svg v-if="projectRating !== null" xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none">
                 <path d="M4.15752 0.412463C4.26756 0.178639 4.32258 0.0617278 4.39727 0.0243745C4.46225 -0.00812482 4.53775 -0.00812482 4.60273 0.0243745C4.67742 0.0617278 4.73244 0.178639 4.84248 0.412463L5.88643 2.6308C5.91891 2.69983 5.93516 2.73435 5.95889 2.76115C5.97991 2.78487 6.00512 2.8041 6.03312 2.81775C6.06474 2.83318 6.10105 2.83875 6.17367 2.84988L8.50883 3.20789C8.75473 3.24559 8.87768 3.26444 8.93458 3.32743C8.98409 3.38224 9.00737 3.45756 8.99794 3.53241C8.98711 3.61844 8.8981 3.70938 8.72007 3.89126L7.03097 5.61689C6.97832 5.67068 6.95199 5.69758 6.935 5.72958C6.91996 5.75791 6.91031 5.78904 6.90659 5.82124C6.90239 5.8576 6.9086 5.8956 6.92102 5.97158L7.31957 8.40896C7.36161 8.66604 7.38263 8.79457 7.34313 8.87085C7.30876 8.93722 7.24767 8.98376 7.17688 8.99753C7.09551 9.01335 6.98546 8.95265 6.76537 8.83125L4.67777 7.67972C4.61273 7.64384 4.5802 7.6259 4.54594 7.61885C4.5156 7.61261 4.4844 7.61261 4.45406 7.61885C4.4198 7.6259 4.38728 7.64384 4.32223 7.67972L2.23463 8.83125C2.01454 8.95265 1.90449 9.01335 1.82312 8.99753C1.75233 8.98376 1.69124 8.93722 1.65687 8.87085C1.61737 8.79457 1.63839 8.66604 1.68043 8.40896L2.07898 5.97158C2.0914 5.8956 2.09761 5.8576 2.09341 5.82124C2.08969 5.78904 2.08004 5.75791 2.065 5.72958C2.04801 5.69758 2.02168 5.67068 1.96903 5.61689L0.279927 3.89126C0.101901 3.70938 0.0128882 3.61844 0.00205647 3.53241C-0.00736774 3.45756 0.0159145 3.38224 0.0654208 3.32743C0.122321 3.26444 0.245272 3.24559 0.491175 3.20789L2.82633 2.84988C2.89895 2.83875 2.93526 2.83318 2.96688 2.81775C2.99488 2.8041 3.02009 2.78487 3.04111 2.76115C3.06484 2.73435 3.08109 2.69983 3.11357 2.6308L4.15752 0.412463Z" fill="#A8A8A8"/>
               </svg>
-              {{ project.ratingAvg || 'Нет оценок' }}
+              {{ projectRating || 'Нет оценок' }}
             </div>
 
             <div class="sep"></div>
@@ -161,7 +161,25 @@
         <div class="tabs-body">
 
           <div class="products"  v-if="products.length > 0">
-            <h3>Витрина</h3>
+            <div class="block-heading">
+              <div class="left">
+                <h3>Витрина</h3>
+                <div class="action" v-if="isOwner === true || isAdmin === true">
+                  <button class="action-button"
+                          @click="() => {
+                            modalSetting.show = true
+                            modalSetting.type = 'service'
+                            modalSetting.headline = 'Добавить услугу'
+                          }"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                      <path d="M6 4V8M4 6H8M11 6C11 8.76142 8.76142 11 6 11C3.23858 11 1 8.76142 1 6C1 3.23858 3.23858 1 6 1C8.76142 1 11 3.23858 11 6Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Добавить услугу
+                  </button>
+                </div>
+              </div>
+            </div>
             <div class="cards-wrapper" ref="service">
               <transition-group name="list" tag="div" class="tabs-content">
                 <div class="shop-view" v-for="item in products" v-if="products.length > 0"
@@ -169,21 +187,16 @@
                   <services-card
                       v-bind:productId="item.id"
                       v-bind:name="item.name"
+                      v-bind:description="item.description"
                       v-bind:image="`${config.api.url}${item.avatarFilePath}`"
                       v-bind:id="item.id"
                       v-bind:projectId="item.ProjectId"
                       v-bind:isOwner="isOwner || isAdmin"
 
-                      @deleteService="(emit) => {
-                          this.showModal = true
-                          this.waitForDeleteProductId = item.id
-                          this.modal = {
-                            iconType: 'warning',
-                            heading: `Вы собираетесь удалить услугу`,
-                            description: `Вы уверены что хотите удалить ${item.name} ?`,
-                            descriptionType: 'text',
-                            confirm: true
-                          }
+                      @productDeleted="(emit) => {
+                          this.products.splice(this.products.indexOf(item), 1)
+
+                          console.log(this.products.indexOf(item))
                         }"
 
                       @editService="(emit) => {
@@ -195,6 +208,10 @@
                             id: item.id
                           }
                         }"
+                      @serviceAdded="() => {
+                        this.offset = 0
+                        getProducts( this.limit,this.offset)
+                      }"
                       @click="() => {
                         console.log(item)
                         modalSetting.show = true
@@ -237,8 +254,9 @@
             <div class="block-heading">
               <div class="left">
                 <h3>Отзывы</h3>
-                <div class="action">
+                <div class="action" v-if="userInfo.token !== null">
                   <button class="action-button"
+
                           @click="() => {
                             modalSetting.show = true
                             modalSetting.type = 'testimonial'
@@ -256,7 +274,7 @@
               <div class="right">
                 <div class="stars">
                   <div class="star"
-                       v-for="star of project.ratingAvg"
+                       v-for="star of projectRating"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18" fill="none">
                       <path d="M8.70843 0.823678C8.93892 0.356738 9.05416 0.123269 9.21061 0.0486752C9.34673 -0.0162251 9.50487 -0.0162251 9.64099 0.0486752C9.79744 0.123269 9.91268 0.356738 10.1432 0.823677L12.3298 5.25364C12.3979 5.3915 12.4319 5.46042 12.4816 5.51394C12.5257 5.56132 12.5785 5.59971 12.6371 5.62698C12.7033 5.65778 12.7794 5.6689 12.9315 5.69113L17.8228 6.40607C18.3378 6.48135 18.5954 6.519 18.7146 6.6448C18.8183 6.75425 18.867 6.90466 18.8473 7.05414C18.8246 7.22594 18.6382 7.40754 18.2653 7.77074L14.7272 11.2168C14.6169 11.3242 14.5618 11.3779 14.5262 11.4418C14.4947 11.4984 14.4745 11.5606 14.4667 11.6249C14.4579 11.6975 14.4709 11.7734 14.4969 11.9251L15.3317 16.7925C15.4198 17.3059 15.4638 17.5625 15.3811 17.7149C15.3091 17.8474 15.1811 17.9403 15.0328 17.9678C14.8624 17.9994 14.6319 17.8782 14.1709 17.6358L9.79816 15.3362C9.66191 15.2645 9.59379 15.2287 9.52202 15.2146C9.45848 15.2022 9.39312 15.2022 9.32957 15.2146C9.2578 15.2287 9.18968 15.2645 9.05344 15.3362L4.6807 17.6358C4.2197 17.8782 3.98919 17.9994 3.81875 17.9678C3.67046 17.9403 3.5425 17.8474 3.47052 17.7149C3.38778 17.5625 3.43181 17.3058 3.51986 16.7925L4.35467 11.9251C4.38069 11.7734 4.39371 11.6975 4.3849 11.6249C4.3771 11.5606 4.35689 11.4984 4.32539 11.4418C4.2898 11.3779 4.23466 11.3242 4.12437 11.2168L0.586341 7.77074C0.213444 7.40754 0.0269959 7.22594 0.00430753 7.05414C-0.0154326 6.90466 0.0333348 6.75425 0.137032 6.6448C0.256216 6.519 0.513753 6.48135 1.02882 6.40607L5.92009 5.69113C6.07221 5.6689 6.14826 5.65778 6.2145 5.62698C6.27315 5.59971 6.32594 5.56132 6.36997 5.51394C6.41969 5.46042 6.45371 5.3915 6.52175 5.25364L8.70843 0.823678Z" fill="black"/>
@@ -419,6 +437,7 @@ export default {
       modal: {},
       api: config.api.url,
       project: {},
+      projectRating: 0,
       products: [],
       actionModal: {
         show: false
@@ -490,7 +509,7 @@ export default {
 
         result.project.favorite === 1 ? this.isFavourite = true : this.isFavourite = false
         result.project.userData.username === userInfo.username ? this.isOwner = true : this.isOwner = false
-
+        this.projectRating = Math.round(this.project.ratingAvg)
         result.project.categories.find(category => category.id === store.exchanger) ? this.isExchanger = true : this.isExchanger = false
       }).catch(err => {
         modalSetting.show = true
@@ -506,6 +525,8 @@ export default {
     this.getProducts(this.limit, this.offset)
     this.getProjectFullInfo()
     userInfo.role === 'admin' ? this.isAdmin = true : this.isAdmin = false
+
+
   }
 }
 </script>
@@ -903,62 +924,65 @@ textarea {
     padding: 10px;
     .tabs-body {
       .project-reviews {
-        .block-heading {
-          display: flex;
-          align-items: center;
-          .left {
-            width: 70%;
-            display: flex;
-            gap: 20px;
-            align-items: end;
-            .action {
 
-              .action-button {
-                cursor: pointer;
-                background: none;
-                border: none;
-                color: var(--gray, #A8A8A8);
-                font-family: "PT Sans Caption";
-                font-size: 12px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: normal;
-              }
-
-            }
-
-          }
-          .right {
-            width: 30%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            svg {
-              width: 18px;
-              height: 18px;
-            }
-
-            .stars {
-              display: flex;
-              gap: 4px;
-              align-items: center;
-            }
-            .rating-avg {
-              color: #000;
-              text-align: right;
-              font-family: "PT Sans Caption";
-              font-size: 24px;
-              font-style: normal;
-              font-weight: 400;
-              line-height: normal;
-            }
-          }
-        }
 
       }
     }
 
+  }
+
+  .block-heading {
+    display: flex;
+    align-items: center;
+    .left {
+      width: 75%;
+      display: flex;
+      gap: 20px;
+      align-items: end;
+      .action {
+
+        .action-button {
+          cursor: pointer;
+          background: none;
+          border: none;
+          color: var(--gray, #A8A8A8);
+          font-family: "PT Sans Caption";
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+        }
+
+      }
+
+    }
+    .right {
+      width: 25%;
+      display: flex;
+      align-items: center;
+      justify-content: end;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .stars {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        margin-right: 20px;
+      }
+      .rating-avg {
+        color: #000;
+        text-align: right;
+        font-family: "PT Sans Caption";
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+    }
   }
 
   .recommend-project {
@@ -1018,6 +1042,7 @@ h3 {
   gap: 20px;
   flex-wrap: wrap;
 
+
   .tabs-content {
     padding-top: 20px;
     width: 100%;
@@ -1027,7 +1052,7 @@ h3 {
     gap: 20px;
 
     .shop-view {
-
+      width: 18.5%;
     }
   }
   .card {
@@ -1141,6 +1166,18 @@ h3 {
     .project-body {
       padding-left: 10px;
       padding-right: 10px;
+      .tabs-body {
+        .project-reviews {
+          .block-heading {
+            .left {
+              width: 60%;
+            }
+            .right {
+              width: 40%;
+            }
+          }
+        }
+      }
     }
   }
 

@@ -60,7 +60,7 @@
            modalSetting.description = ''
            modalSetting.image = ''
            modalSetting.modalSize = 'small'
-           this.$route.path === '/edit-project' ? this.$router.go(-1) : ''
+           this.$route.path === '/edit-project' ? this.$router.go(-1) : this.$router.go()
          }">
           Отлично, спасибо
         </button>
@@ -172,7 +172,23 @@
           <h2>
             {{ modalSetting.headline }}
           </h2>
-          <add-testimonial></add-testimonial>
+          <add-testimonial @dataAdded="$emit('dataAdded', true)"></add-testimonial>
+
+        </div>
+
+
+      </div>
+
+      <div class="info-modal" v-if="modalSetting.type === 'service'">
+        <div class="image">
+          <img :src="modalSetting.image" alt="">
+        </div>
+
+        <div class="body">
+          <h2>
+            {{ modalSetting.headline }}
+          </h2>
+          <product_-add @dataAdded="$emit('dataAdded', true)"></product_-add>
 
         </div>
 
@@ -391,10 +407,11 @@ import {watch} from "vue";
 import AddTestimonial from "../../Controllers/ProjectControllers/addTestimonial.vue";
 import {useFetch} from "../../../assets/js/fetchRequest.js";
 import {store} from "../../../assets/js/store.js";
+import product_Add from "../../Controllers/ProductControllers/Product_Add.vue";
 
 export default {
   name: "Modal.vue",
-  components: {AddTestimonial, signInView, VScrollLock},
+  components: {AddTestimonial, signInView, VScrollLock, product_Add},
 
   data () {
     return {

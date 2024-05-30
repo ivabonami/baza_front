@@ -55,9 +55,12 @@
           useFetch(`reviews/${review.id}`, 'PUT', {
             rating: review.rating,
             comment: review.text,
-            projectId: review.projectId
+            projectId: review.projectId,
+
+
 
           }).then(result => {
+            this.$emit('dataAdded', true)
             modalSetting.show = true
             modalSetting.headline = `Отзыв обновлен`
             modalSetting.description = `Вы успешно обновили отзыв к проекту ${review.projectName}`
@@ -65,6 +68,8 @@
             modalSetting.modalSize = 'small'
 
           })
+
+
         } else {
           if (review.rating <= 0) {
           review.error = 'Выставите рейтинг'
@@ -77,11 +82,29 @@
 
           })
           .then(result => {
-            modalSetting.show = true
-            modalSetting.headline = `Вы опубликовали отзыв!`
-            modalSetting.description = `Вы успешно опубликовали отзыв к проекту ${review.projectName}`
-            modalSetting.type = 'ok'
-            modalSetting.modalSize = 'small'
+
+            if (result.success === true) {
+              modalSetting.show = true
+              modalSetting.headline = `Вы опубликовали отзыв!`
+              modalSetting.description = `Вы успешно опубликовали отзыв к проекту ${review.projectName}`
+              modalSetting.type = 'ok'
+              modalSetting.modalSize = 'small'
+
+              projectReviews[0].push({
+                rating: review.rating,
+                comment: review.text,
+                projectId: review.projectId,
+                isReviewed: true,
+                createdAt: new Date(),
+                userData: {
+                  username: userInfo.username
+                }
+              })
+              console.log(projectReviews[0])
+            }
+
+
+
 
           })
           .catch(err => {
@@ -111,6 +134,9 @@
 import {useFetch} from "../../../assets/js/fetchRequest.js";
 import {watch} from "vue";
 import {modalSetting} from "../../../assets/js/modal.js";
+import {projectReviews} from "../../../assets/js/reviews.js";
+import {userInfo} from "../../../assets/js/userService.js";
+
 export default {
   name: "addTestimonial.vue",
   data() {
@@ -124,11 +150,14 @@ export default {
       },
       editMode: false,
       errors: {},
-      useFetch, modalSetting
+      useFetch, modalSetting, projectReviews, userInfo
     }
   },
   setup() {
     watch(modalSetting, (value, oldValue) => {
+    }, { immediate: true })
+
+    watch(projectReviews, (value, oldValue) => {
     }, { immediate: true })
   },
   components: {},

@@ -3,50 +3,14 @@
     <loader v-if="this.loadingComponents.wrapper === true"></loader>
     <div class="left" v-else>
       <div class="reviews">
-        <div class="sort">
-
-
-<!--          <div v-if="userInfo.role === 'admin'" class="check">-->
-<!--            <button class="btn btn-outlined"-->
-<!--                    v-on:click="() => {-->
-<!--                                  this.reviews = this.reviews.splice(this.reviews.length, this.reviews.length)-->
-<!--                                  this.offset = 0-->
-<!--                                  this.limit = 5-->
-<!--                                  this.showNotReviewed = true-->
-<!--                                  this.loadingComponents.reviews = true-->
-<!--                                  this.editReview = false-->
-<!--                                  getReviews(this.limit, this.offset,'newest', this.showNotReviewed)-->
-<!--                                }"-->
-<!--                    v-if="this.showNotReviewed === false">-->
-<!--             Проверить отзывы-->
-<!--            </button>-->
-
-<!--            <button class="btn btn-outlined"-->
-<!--                    v-on:click="() => {-->
-<!--                      this.reviews = this.reviews.splice(this.reviews.length, this.reviews.length)-->
-<!--                      this.offset = 0-->
-<!--                      this.limit = 5-->
-<!--                      this.loadingComponents.reviews = true-->
-<!--                      this.editReview = false-->
-
-<!--                      this.showNotReviewed = false-->
-<!--                      getReviews(this.limit,this.offset,'newest', this.showNotReviewed)-->
-<!--                                }"-->
-<!--                    v-if="this.showNotReviewed === true">-->
-<!--              Показать проверенные-->
-<!--            </button>-->
-
-<!--          </div>-->
-        </div>
 
 
         <div class="sort-icon">
 
 
-          <div class="btns" v-if="reviews.length > 1">
+          <div class="btns" v-if="projectReviews[0].length > 1">
       <span class="currentSort"
             ref="currentSort"
-            v-click-outside="onClickOutside"
             v-on:click="() => {
               this.showSort = !this.showSort
               this.arrowDate === 'down' ? this.arrowDate = 'up' : this.arrowDate = 'down'
@@ -143,9 +107,9 @@
             </div>
           </div>
         </div>
-        <transition-group name="list" tag="div" >
-          <div class="reviews-wrapper" v-for="(review, index) of reviews" v-if="reviews.length > 0 || this.loadingComponents.reviews === false">
-            <div class="review" >
+        <transition-group name="list" tag="div">
+          <div class="reviews-wrapper" >
+            <div class="review" v-for="(review, index) of projectReviews[0]" v-if="projectReviews[0].length > 0 || this.loadingComponents.reviews === false">
 
 
               <div class="review-body" ref="clickedReview" >
@@ -206,7 +170,12 @@
                     <div class="item delete" v-on:click="() => {
                           this.reviewToDeleteId = review.id
                           this.reviewToDeleteUsername = review.userData.username
-                          deleteReviewConfirmed(reviewToDeleteId)
+                          this.actionModal.show = true,
+                          this.actionModal.type = 'delete',
+                          this.actionModal.headline = 'Удалить отзыв?',
+                          this.actionModal.description = 'Вы уверены что хотите удалить отзыв пользователя ' + review.userData.username + '?',
+                          this.actionModal.itemToDeleteId = $props.project.id
+
                         }">
                       <svg xmlns="http://www.w3.org/2000/svg" width="8" height="9" viewBox="0 0 8 9" fill="none">
                         <path d="M5.33333 2.4V2.12C5.33333 1.72796 5.33333 1.53194 5.26067 1.38221C5.19676 1.25049 5.09477 1.14341 4.96933 1.0763C4.82672 1 4.64004 1 4.26667 1H3.73333C3.35996 1 3.17328 1 3.03067 1.0763C2.90523 1.14341 2.80324 1.25049 2.73933 1.38221C2.66667 1.53194 2.66667 1.72796 2.66667 2.12V2.4M1 2.4H7M6.33333 2.4V6.32C6.33333 6.90806 6.33333 7.20208 6.22434 7.42669C6.12847 7.62426 5.97549 7.78489 5.78732 7.88556C5.57341 8 5.29339 8 4.73333 8H3.26667C2.70661 8 2.42659 8 2.21268 7.88556C2.02451 7.78489 1.87153 7.62426 1.77566 7.42669C1.66667 7.20208 1.66667 6.90806 1.66667 6.32V2.4" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -228,7 +197,6 @@
                          v-if="review.isReviewed === true"
                          v-on:click="() => {
                                 disapproveReview(review.id, review.rating, review.comment)
-                                getReviews()
                             }">
                       <svg xmlns="http://www.w3.org/2000/svg" width="10" height="9" viewBox="0 0 10 9" fill="none">
                         <path d="M4.48905 1.81368C4.65419 1.79031 4.82454 1.77778 5 1.77778C7.07432 1.77778 8.43548 3.52966 8.89277 4.22265C8.94812 4.30653 8.97579 4.34847 8.99128 4.41315C9.00291 4.46173 9.00291 4.53837 8.99126 4.58695C8.97576 4.65163 8.9479 4.69384 8.89216 4.77828C8.77032 4.96284 8.58456 5.22221 8.33846 5.50351M2.85615 2.44474C1.97763 3.01511 1.38122 3.80754 1.10762 4.22205C1.05202 4.30628 1.02423 4.3484 1.00873 4.41308C0.997094 4.46165 0.997089 4.53828 1.00872 4.58686C1.02421 4.65154 1.05188 4.69348 1.10722 4.77735C1.56451 5.47034 2.92567 7.22222 5 7.22222C5.8364 7.22222 6.55685 6.9374 7.14885 6.55201M1.34301 1L8.65699 8M4.13804 3.67504C3.91744 3.88617 3.781 4.17783 3.781 4.5C3.781 5.14433 4.32677 5.66667 5 5.66667C5.33662 5.66667 5.64136 5.53608 5.86196 5.32496" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -246,7 +214,7 @@
           </div>
         </transition-group>
 
-          <div v-if="reviews.length <= 0" class="no-reviews">
+          <div v-if="projectReviews[0].length <= 0" class="no-reviews">
 
             <h3>Нет отзывов</h3>
             <img src="../../../assets/images/cat%20sleep.png" alt="">
@@ -280,33 +248,43 @@
     </div>
 
   </div>
+  <action-modal
+      v-if="actionModal.show === true"
+      v-bind:actionModal="actionModal"
+      @deleteConfirmed="(emit) => {
+        deleteReviewConfirmed(reviewToDeleteId)
+      }"
+  ></action-modal>
 
 </template>
 
 <script>
 import config from "../../../assets/js/config.js";
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import loader from "../PageParts/Loader.vue";
-import Modal from "../PageParts/Modal.vue";
-import vClickOutside from 'click-outside-vue3'
+import actionModal from "../PageParts/actionModal.vue";
 import {Waypoint} from "vue-waypoint";
 import {userInfo} from "../../../assets/js/userService.js";
 import {useFetch} from "../../../assets/js/fetchRequest.js";
 import {modalSetting} from "../../../assets/js/modal.js";
+import {projectReviews} from "../../../assets/js/reviews.js";
+
+
 
 
 export default {
   name: "projectReviews.vue",
   props: ['isAdmin', 'project', ],
 
-  directives: {
-    clickOutside: vClickOutside.directive
-  },
+
   data() {
     return {
       loadingComponents: {
         reviews: false,
         wrapper: true,
+      },
+      actionModal: {
+        show: false
       },
       showSort: false,
 
@@ -339,7 +317,7 @@ export default {
       totalReviews: 0,
 
       review: {
-        sort:'newest',
+        sort: 'newest',
         text: ref(String),
         editMode: false,
         id: ref(null),
@@ -353,37 +331,23 @@ export default {
 
       limit: 5,
       offset: 0,
-      emptyResponse: false, userInfo, modalSetting
+      emptyResponse: false, userInfo, modalSetting, projectReviews
     }
   },
-  components: {loader, vClickOutside, Waypoint },
+  components: {loader, Waypoint, actionModal },
   methods: {
-
-    deleteReview (id, username) {
-
-      this.modalShow = true
-      this.modalSettings = {
-        iconType: 'warning',
-        heading: `Вы собираетесь удалить отзыв от пользователя ${this.reviewToDeleteUsername}`,
-        description: `Вы уверены что хотите это сделать?`,
-        descriptionType: 'text',
-        close: false,
-        confirm: true
-      }
-
-    },
     deleteReviewConfirmed() {
 
 
       useFetch(`reviews/${this.reviewToDeleteId}`, "DELETE")
           .then(result => {
-            const index = this.reviews.findIndex(item => item.id === this.reviewToDeleteId)
-            this.reviews.splice(index, 1)
+            const index = projectReviews[0].findIndex(item => item.id === this.reviewToDeleteId)
+            projectReviews[0].splice(index, 1)
+
           })
 
     },
     getReviews (limit, offset, reviewsSort, isNotReviewed) {
-
 
 
       this.loadingComponents.reviews = true
@@ -395,7 +359,7 @@ export default {
       const projectId = parseInt(this.$route.path.replace('/project/', ''))
       let url = `${config.api.url}reviews?projectId=${projectId}&sort=${reviewsSort}&limit=${limit}&offset=${offset}`
 
-      isNotReviewed === true ? url += `getshowNotReviewed=true` : url
+      isNotReviewed === true ? url += `&showNotReviewed=true` : url
 
       const requestOptions = {
         method: "GET",
@@ -417,237 +381,23 @@ export default {
               this.loadingComponents.wrapper = false
 
 
+
               for (let review of this.reviews) {
-
                 localStorage.getItem('username') === review.userData.username ? this.isProjectReviewed = true : ''
-
               }
 
             }
+
+              projectReviews.push(result.reviews)
+
+
+            console.log(result)
+
             result.reviews.length < this.limit ? this.emptyResponse = true : this.emptyResponse = false
           })
           .catch((error) => console.error(error));
     },
 
-    editComment(text, dataStars, id, reviewed) {
-      this.editReview = true
-      this.dataStars = dataStars
-
-      setTimeout(()=> {
-        this.$refs.sendForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        this.reviewText = text
-        this.reviewID = id
-        this.isReviewed = reviewed
-
-        this.setOpacity()
-      }, 20)
-
-    },
-
-    clearTextarea () {
-      this.reviewText = ''
-      this.dataStars = 0
-      this.setOpacity()
-    },
-    sendReview () {
-      const review = {
-        rating: this.dataStars,
-        comment: this.reviewText,
-        projectId: this.$props.project.id,
-        isReviewed: this.$props.isAdmin
-      };
-
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
-
-      fetch(`${config.api.url}reviews`, {
-        method: "POST",
-        headers: myHeaders,
-        body: JSON.stringify(review)
-      })
-          .then((response) => response.json())
-          .then((result) => {
-            if (result.success === true) {
-              this.dataStars = 0;
-              this.reviewText = '';
-
-              this.modalShow = true
-              if (this.isAdmin === true) {
-                this.modalSettings = {
-                  iconType: 'ok',
-                  heading: 'Отзыв успешно добавлен!',
-                  description: `Спасибо ${this.username}! Поскольку ты админ то он уже опубликован!`,
-                  descriptionType: 'text',
-                  close: true,
-
-                }
-              } else {
-                this.modalSettings = {
-                  iconType: 'ok',
-                  heading: 'Отзыв успешно добавлен!',
-                  description: `Спасибо ${this.username}! Мы получили твой отзыв, ожидай одобрения администратором!`,
-                  descriptionType: 'text',
-                  close: true,
-
-                }
-              }
-              this.getReviews(this.limit, this.offset)
-              this.getReviewsCount()
-
-            } else if (result.message === "This user already rated this project.") {
-              this.reviewTextError = 'Вы уже оставляли отзыв к этому проекту, но он еще не проверен модератором. Пожалуйста, ожидайте одобрения.'
-              this.reviewText = ''
-              this.dataStars = 0
-            }
-            else {
-              this.reviewTextError = 'Вы заполнили не все поля, или заполнили их не правильно. Пожалуйста проверьте правильность введенных данных'
-
-            }
-
-          })
-          .catch((error) => {console.error(error)});
-
-    },
-    updateReview (id, reviewed) {
-
-      const review = {
-        rating: this.dataStars,
-        comment: this.reviewText,
-        isReviewed: reviewed || false
-      };
-
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
-
-      fetch(`${config.api.url}reviews/${id}`, {
-        method: "PUT",
-        headers: myHeaders,
-        body: JSON.stringify(review)
-      })
-
-          .then((response) => response.json())
-          .then((result) => {
-            if (result.success === true) {
-              this.showNotReviewed === true ? this.getReviews(this.limit, this.offset, this.review.sort, true) : this.getReviews(this.limit, this.offset, this.review.sort, false)
-
-              this.reviewTextError = ''
-              this.editReview = false
-
-              if (this.isAdmin === true) {
-                this.modalShow = true
-                this.modalSettings = {
-                  iconType: 'ok',
-                  heading: 'Отзыв успешно обновлен!',
-                  description: `Спасибо ${this.username}! Отзыв обновлен!`,
-                  descriptionType: 'text',
-                  close: true,
-
-                }
-
-                this.editReview = false
-                this.dataStars = 0
-                this.reviewText = ''
-
-              } else {
-                this.modalShow = true
-                this.modalSettings = {
-                  iconType: 'ok',
-                  heading: 'Отзыв успешно обновлен!',
-                  description: `Спасибо ${this.username}! Отзыв обновлен, но он должен пройти модерацию. Пожалуйста ожидайте!`,
-                  descriptionType: 'text',
-                  close: true,
-
-                }
-
-                this.editReview = false
-                this.dataStars = 0
-                this.reviewText = ''
-              }
-
-
-
-              this.dataStars = 0;
-              this.reviewText = '';
-              this.reviewID = null;
-              this.isReviewed = false;
-
-
-              this.$refs.clickedReview[this.clickedReviewIndex].scrollIntoView( { behavior: 'smooth', block: 'center' })
-              this.$refs.clickedReview[this.clickedReviewIndex].classList.add('updated')
-
-              setTimeout(() => {
-                this.$refs.clickedReview[this.clickedReviewIndex].classList.remove('updated')
-              }, 1500)
-
-
-
-            }
-            else {
-              this.reviewTextError = 'Вы заполнили не все поля, или заполнили их не правильно. Пожалуйста проверьте правильность введенных данных'
-
-            }
-
-          })
-          .catch((error) => {
-            console.error(error)
-          });
-
-
-
-    },
-
-    approveReview (id, rating, comment) {
-      const review = {
-        rating: rating,
-        comment: comment,
-        isReviewed: true
-      };
-
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
-
-      fetch(`${config.api.url}reviews/${id}`, {
-        method: "PUT",
-        headers: myHeaders,
-        body: JSON.stringify(review)
-      })
-
-          .then((response) => response.json())
-          .then((result) => {
-            if (result.success === true) {
-              this.modalShow = true
-              this.modalSettings = {
-                iconType: 'ok',
-                heading: 'Отзыв успешно одобрен!',
-                description: `Спасибо ${this.username}! Отзыв одобрен и опубликован!`,
-                descriptionType: 'text',
-                close: true,
-
-              }
-
-              this.isProjectReviewed = false
-              this.editReview = false
-              window.scrollTo( { top: 400, behavior: 'smooth' })
-              this.reviewTextError = ''
-              this.dataStars =''
-              this.showNotReviewed === true ? this.getReviews(this.limit, this.offset, this.review.sort, true) : this.getReviews(this.limit, this.offset, this.review.sort, false)
-            }
-            else {
-              this.reviewTextError = 'Вы заполнили не все поля, или заполнили их не правильно. Пожалуйста проверьте правильность введенных данных'
-
-            }
-
-          })
-          .catch((error) => {
-            console.error(error)
-          });
-
-
-
-    },
     disapproveReview (id, rating, comment) {
       const review = {
         rating: rating,
@@ -655,64 +405,40 @@ export default {
         isReviewed: false
       };
 
+      const index = projectReviews[0].findIndex(item => item.id === this.reviewToDeleteId)
+      projectReviews[0].splice(index, 1)
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
 
-      fetch(`${config.api.url}reviews/${id}`, {
-        method: "PUT",
-        headers: myHeaders,
-        body: JSON.stringify(review)
-      })
-
-          .then((response) => response.json())
-          .then((result) => {
-            if (result.success === true) {
-
-              this.isProjectReviewed = false
-              this.editReview = false
-              this.reviewTextError = ''
-              this.dataStars =''
-              this.showNotReviewed === true ? this.getReviews(this.limit, this.offset, this.review.sort, true) : this.getReviews(this.limit, this.offset, this.review.sort, false)
-
-              this.modalShow = true
-              this.modalSettings = {
-                iconType: 'ok',
-                heading: 'Отзыв снят с публикации',
-                description: `Спасибо ${this.username}! Отзыв снят с публикации!`,
-                descriptionType: 'text',
-                close: true,
-              }
-            }
-            else {
-              this.reviewTextError = 'Вы заполнили не все поля, или заполнили их не правильно. Пожалуйста проверьте правильность введенных данных'
-
-            }
-
+      useFetch(`reviews/${id}`, 'PUT', review)
+          .then(result => {
+            this.getReviews(this.limit, 0, this.review.sort, true)
           })
-          .catch((error) => {
-            console.error(error)
-          });
 
 
 
-    },
-    onClickOutside (event) {
 
-      if (event.target.classList[0] !== 'filter') {
-        this.showSort = false
-        this.arrowDate = 'up'
-      } else {
 
-      }
     },
   },
   mounted() {
+
     this.getReviews(this.limit, this.offset, this.review.sort, false)
 
     this.starsCount = Math.round(this.$props.project.ratingAvg)
 
   },
+
+  beforeUnmount() {
+    projectReviews.splice(0, projectReviews.length)
+  },
+
+  setup () {
+    watch(projectReviews, (value, oldValue) => {
+
+    }, { immediate: true })
+  }
 }
 </script>
 
@@ -925,20 +651,26 @@ h3 {
   width: 100%;
   padding-top: 20px;
 
-
+  .reviews-wrapper-wrapper {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 2%;
+  }
   .reviews-wrapper {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 4%;
     width: 100%;
 
     .review {
-      width: 49%;
+      width: 46%;
 
       .review-body {
         width: 100%;
         box-sizing: border-box;
         transition: .1s ease;
+        margin-bottom: 20px;
 
         get.updated {
           background-color: #e9ffe9;
@@ -1245,7 +977,7 @@ h3 {
 
   .currentSort {
     width: 220px;
-    border: 1px solid transparent;
+    border: 1px solid #cccccc;
     outline: none;
     color: #000;
     background-color: #fff;
@@ -1402,5 +1134,15 @@ h3 {
 {
   opacity: 0;
   max-height: 0;
+}
+
+@media screen and (max-width: 500px){
+  .reviews {
+    .reviews-wrapper {
+      .review {
+        width: 100%;
+      }
+    }
+  }
 }
 </style>

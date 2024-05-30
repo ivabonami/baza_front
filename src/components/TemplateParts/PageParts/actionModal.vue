@@ -28,11 +28,13 @@
           <button class="baza-button outline red" @click="() => {
             $props.actionModal.show = false
             this.$emit('deleteConfirmed', true)
+
+
         }">
 
-            Удалить проект
+            Удалить
           </button>
-          <button class="baza-button special" @click="$emit('changeModal', false)">
+          <button class="baza-button special" @click="$props.actionModal.show = false">
             Отмена
           </button>
         </div>
@@ -44,7 +46,7 @@
 
   <div class="backdrop"
        v-if="$props.actionModal.show === true"
-       @click="$emit('changeModal', false)"> </div>
+       @click="$props.actionModal.show = false"> </div>
 </template>
 
 <script>
@@ -53,12 +55,13 @@ import VScrollLock from "v-scroll-lock";
 import {modalSetting} from "../../../assets/js/modal.js";
 import {watch} from "vue";
 import {useFetch} from "../../../assets/js/fetchRequest.js";
+import {projectReviews} from "../../../assets/js/reviews.js";
 
 export default {
   name: "actionModal.vue",
   props: ['actionModal'],
   data() {
-    return {useFetch}
+    return {useFetch, projectReviews}
   },
   components: {},
   mounted() {
@@ -74,6 +77,8 @@ export default {
       }
     })
   },
+
+
 
   beforeUnmount() {
     const body = document.getElementsByTagName('body')[0];

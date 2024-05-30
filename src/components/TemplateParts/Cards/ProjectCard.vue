@@ -299,7 +299,6 @@ export default {
 
   &.paid {
     --borderWidth: 3px;
-    background: #fff9ed;
     position: relative;
     border-color:  #FFC700;
   }

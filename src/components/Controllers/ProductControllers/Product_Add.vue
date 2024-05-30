@@ -3,43 +3,54 @@
 
   <div class="add-project form-wrapper">
     <div class="left">
-      <div class="input-wrapper">
-        <label class="help">
-          <span class="heading">Название услуги</span><br>
-          Введите название услуги, которое коротко и ясно отражает его суть. От 5 до 255 символов.
-        </label>
-        <input
-            type="text"
-            placeholder="Название проекта"
-            v-model="productName"
-            minlength="5" maxlength="255"
-            ref="productName"
-            required>
 
+      <div class="input-wrapper">
+        <label class="help" for="projectName">
+          Название услуги
+          <svg xmlns="http://www.w3.org/2000/svg" v-tippy="{content: 'Введите название услуги, которое коротко и ясно отражает его суть. От 5 до 255 символов.'}" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M7.95281 10.8V8M7.95281 5.2H7.95993M15.0758 8C15.0758 11.866 11.8868 15 7.95281 15C4.01886 15 0.829773 11.866 0.829773 8C0.829773 4.13401 4.01886 1 7.95281 1C11.8868 1 15.0758 4.13401 15.0758 8Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </label>
+        <div class="input">
+          <input
+              type="text"
+              id="projectName"
+              v-model="productName"
+              minlength="1" maxlength="255"
+              ref="projectName"
+              required>
+        </div>
       </div>
-
-
-      <div class="input-wrapper">
+      <div class="input-wrapper mb">
         <label class="help">
-          <span class="heading">Изображение услуги</span><br>
-          Загрузите изображение услуги, размеры 230x170px, форматы: jpeg, jpg, gif. webp.
+          Изображение услуги
+          <svg xmlns="http://www.w3.org/2000/svg" v-tippy="{content: 'Загрузите изображение услуги, размеры 230x170px, форматы: jpeg, jpg, gif. webp.'}" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M7.95281 10.8V8M7.95281 5.2H7.95993M15.0758 8C15.0758 11.866 11.8868 15 7.95281 15C4.01886 15 0.829773 11.866 0.829773 8C0.829773 4.13401 4.01886 1 7.95281 1C11.8868 1 15.0758 4.13401 15.0758 8Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </label>
-        <div class="fake-input">
-          <span class="name">Изображение *</span>
+        <div class="fake-input" >
           <input type="file"
+                 id="projectAvatar"
+                 name="projectAvatar"
                  ref="projectAvatar"
                  v-on:change="uploadAvatar($event)"
                  accept="image/*"
-
           >
+          <label for="projectAvatar">
+            <span class="input-file-btn">Выберите файл</span>
+            <span class="input-file-text">Максимум 5мб</span>
+          </label>
+
         </div>
 
       </div>
 
       <div class="input-wrapper">
-        <label class="help">
-          <span class="heading">Описание услуги</span><br>
-          Предоставьте подробное описание услуги, включая еу цель, описание продаваемого товара, что бы пользователь точно понимал что он покупает.
+        <label class="help" for="projectName">
+          Описание услуги
+          <svg xmlns="http://www.w3.org/2000/svg" v-tippy="{content: 'Предоставьте подробное описание услуги, включая еу цель, описание продаваемого товара, что бы пользователь точно понимал что он покупает.'}" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M7.95281 10.8V8M7.95281 5.2H7.95993M15.0758 8C15.0758 11.866 11.8868 15 7.95281 15C4.01886 15 0.829773 11.866 0.829773 8C0.829773 4.13401 4.01886 1 7.95281 1C11.8868 1 15.0758 4.13401 15.0758 8Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </label>
 
         <textarea placeholder="описание проекта *"
@@ -52,19 +63,16 @@
 
 
 
-      <button class="btn btn-filled"
+      <button class="baza-button primary"
               v-on:click="checkForm()">
         Добавить услугу
       </button>
 
     </div>
 
-    <div class="errors" ref="errors" v-if="Object.keys(this.errors).length > 0">
-      <h3>Устраните ошибки:</h3>
-      <div class="error" v-for="(error, index) of errors" >
-        {{ error }}
-
-      </div>
+    <div class="errors" v-if="Object.keys(errors).length > 0">
+      <h2>Исправьте ошибки</h2>
+      <span v-for="(error) of errors">{{ error }} <br></span>
     </div>
 
   </div>
@@ -72,9 +80,18 @@
 
 <script>
 import config from "../../../assets/js/config.js";
+import { directive } from 'vue-tippy'
+import 'tippy.js/dist/tippy.css'
+import {useFetch} from "../../../assets/js/fetchRequest.js";
+import {modalSetting} from "../../../assets/js/modal.js";
+
 export default {
   name: "AddService.vue",
   props: ['projectId'],
+
+  directives: {
+    tippy: directive,
+  },
 
   data () {
     return {
@@ -108,7 +125,7 @@ export default {
           isReviewed: false,
           avatarFilePath: this.projectAvatar,
           description: this.productDescription,
-          projectId: this.$props.projectId,
+          projectId: window.location.pathname.replace('/project/', ''),
 
         })
       })
@@ -116,8 +133,13 @@ export default {
           .then(response => {
             if (response.success === true) {
 
-              this.counter++
-              this.$emit('added',this.counter )
+              modalSetting.show = true
+              modalSetting.headline = `Вы добавили услугу!`
+              modalSetting.description = `Услуга ${this.productName} успешно добавлена!`
+              modalSetting.type = 'ok'
+              modalSetting.modalSize = 'small'
+
+
 
             }
             else {
@@ -131,86 +153,82 @@ export default {
 
 
     uploadAvatar(e){
-      this.projectAvatar = e.target;
+      this.avatarLoaded = false
       const image = e.target.files[0]
-
-
-      const myHeaders = new Headers();
-      // myHeaders.append("Content-Type", "image/webp");
-      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+      const reader = new FileReader();
 
       const formData = new FormData();
       formData.append("image-upload", image );
 
-      if (e.target.files[0].type !== "image/jpeg" ||
-          e.target.files[0].type !== "image/gif" ||
-          e.target.files[0].type !== "image/jpg" ||
-          e.target.files[0].type !== "image/png" ||
-          e.target.files[0].type !== "image/webp") {
-        this.avatarError = true
-        if (this.avatarError === true || this.avatarErrorPushed === false) {
-          this.errors.push('Формат артинки не поддерживается')
-          this.avatarErrorPushed = true
-        }
+      if (image.type !== "image/jpeg" &&
+          image.type !== "image/jpg" &&
+          image.type !== "image/gif" &&
+          image.type !== "image/png" &&
+          image.type !== "image/webp") {
+        this.$refs.projectAvatar.value = null
+        this.errors.projectAvatarTypeErr = 'Формат аватарки не поддерживается'
+        this.avatarErrorPushed = true
         this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
-        console.dir(e.target.files[0].type)
 
       } else {
-        this.avatarError = false
-        this.avatarErrorPushed = false
-        this.$refs.projectAvatar.parentElement.style.borderColor = 'transparent'
+        delete this.errors.projectAvatarTypeErr
 
-        fetch(`${config.api.url}image-upload`, {
-          method: "POST",
-          headers: myHeaders,
-          body: formData,
-          redirect: "follow"
-        })
-            .then((response) => response.json())
-            .then((result) => this.projectAvatar = result.filePath)
-            .catch((error) => console.error(error));
+        if (parseInt(image.size) > 5200000) {
+          this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
+          this.$refs.projectAvatar.value = null
+          this.errors.projectAvatarLengthErr = 'Слишком большой размер, рекомендуем загружать аватар до 512х512px и весом не более 5Мб'
+          this.avatarErrorPushed = true
+
+        } else {
+          this.avatarError = false
+          delete this.errors.projectAvatarLengthErr
+          this.$refs.projectAvatar.parentElement.style.borderColor = 'transparent'
+
+          reader.addEventListener('progress', () => {
+
+          })
+          useFetch('image-upload', "POST", formData)
+              .then(result => {
+                this.projectAvatar = result.filePath
+              })
+        }
+
+
+
       }
+
     },
 
     checkForm () {
+      this.errors
 
       if (this.productName.length < 4) {
         this.errors.serviceNameErr = 'Название услуги должно быть не менее 4 символов'
-        this.$refs.productName.style.borderColor = 'red'
       } else {
         delete this.errors.serviceNameErr
-        this.$refs.productName.style.borderColor = 'transparent'
       }
 
       if (this.productDescription.length < 30) {
         this.errors.serviceDescriptionErr = 'Описание услуги должно быть не менее 30 символов'
-        this.$refs.productDescription.style.borderColor = 'red'
       } else {
         delete this.errors.serviceDescriptionErr
-        this.$refs.productDescription.style.borderColor = 'transparent'
       }
 
       if (this.projectAvatar.length === 0) {
         this.errors.serviceImageErr = 'Изображение не загружено'
-        this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
       } else {
         delete this.errors.serviceImageErr
-        this.$refs.projectAvatar.parentElement.style.borderColor = 'transparent'
       }
 
       if (this.avatarError === true) {
         this.errors.serviceImageTypeErr = 'Формат изображения не поддерживается'
-        this.$refs.projectAvatar.parentElement.style.borderColor = 'red'
       } else {
         delete this.errors.serviceImageTypeErr
-        this.$refs.projectAvatar.parentElement.style.borderColor = 'transparent'
       }
 
       if (this.errors) {
         if (Object.keys(this.errors).length > 0) {
-          setTimeout(() => {
-            this.$refs.errors.scrollIntoView({behavior: 'smooth', block: 'start'})
-          }, 20)
+
         } else {
           this.addProduct();
           this.showModal = true
@@ -222,6 +240,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+textarea {
+  height: 150px;
+}
+.mb {
+  margin-bottom: 10px;
+}
 .btn {
   margin-top: 20px;
 }
