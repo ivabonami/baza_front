@@ -58,6 +58,12 @@
               <path d="M14.5455 8.92543C14.9195 8.26103 15.2313 7.66151 15.4236 7.20521C16.3573 4.98947 15.434 2.44077 13.1769 1.40112C10.9199 0.361478 8.65341 1.4395 7.65871 3.52093C5.75657 2.2157 3.21918 2.40739 1.81989 4.44424C0.420593 6.48108 0.859754 9.14203 2.77629 10.594C3.6461 11.253 5.36636 12.2242 6.98596 13.0884M15.2972 10.7499C14.8751 8.482 12.9454 6.82334 10.5156 7.27415C8.08592 7.72497 6.51488 9.91708 6.84335 12.299C7.10725 14.2127 8.56392 18.7027 9.12641 20.394C9.20316 20.6248 9.24154 20.7402 9.31753 20.8206C9.38372 20.8907 9.47174 20.9416 9.56554 20.9638C9.67322 20.9894 9.79235 20.9649 10.0306 20.916C11.7765 20.5575 16.3933 19.574 18.1826 18.8457C20.4096 17.9392 21.5589 15.4841 20.6981 13.153C19.8372 10.8219 17.4723 9.98151 15.2972 10.7499Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
 
+            <div class="add-project" @click="this.$router.push('/add-project')" v-tippy="{content: 'Доавить свой проект'}">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" fill="none">
+                <path d="M11 7V15M7 11H15M21 11C21 16.5228 16.5228 21 11 21C5.47715 21 1 16.5228 1 11C1 5.47715 5.47715 1 11 1C16.5228 1 21 5.47715 21 11Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+
             <button class="baza-button user-menu" @click="dropdownShow = !dropdownShow">
               {{ userInfo.username }}
 
@@ -279,6 +285,11 @@ input {
     align-items: center;
     gap: 10px;
     position: relative;
+    .favorites-icon, .add-project svg {
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+    }
 
     .user-menu {
       color: #126DF7;
@@ -297,6 +308,7 @@ input {
         transform: translateY(0);
 
         svg {
+
           path {
             stroke: #0a58ca;
           }

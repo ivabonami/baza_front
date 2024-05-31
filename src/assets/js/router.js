@@ -17,6 +17,7 @@ import errorPage from "../../components/pages/errorPage.vue";
 import searchPage from "../../components/pages/SearchPage.vue";
 import project_Edit from "../../components/Controllers/ProjectControllers/Project_Edit.vue";
 import checkTestimonials from "../../components/pages/CheckTestimonials.vue";
+import product_Edit from "../../components/Controllers/ProductControllers/Product_Edit.vue";
 
 const router = createRouter({
 
@@ -79,6 +80,13 @@ const router = createRouter({
             path: '/edit-project',
             name: 'ProjectEdit',
             component: project_Edit,
+            props: true
+        },
+
+        {
+            path: '/edit-product',
+            name: 'product-edit',
+            component: product_Edit,
             props: true
         },
         {

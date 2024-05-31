@@ -50,16 +50,16 @@
           </div>
 
           <div class="sep"></div>
-          <div class="add-project" @click="this.$router.push('/add-project')" v-tippy="{content: 'Доавить свой проект'}">
-            <div class="category-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" fill="none">
-                <path d="M11 7V15M7 11H15M21 11C21 16.5228 16.5228 21 11 21C5.47715 21 1 16.5228 1 11C1 5.47715 5.47715 1 11 1C16.5228 1 21 5.47715 21 11Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div class="category-name">
-              Добавить
-            </div>
-          </div>
+<!--          <div class="add-project" @click="this.$router.push('/add-project')" v-tippy="{content: 'Доавить свой проект'}">-->
+<!--            <div class="category-icon">-->
+<!--              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" fill="none">-->
+<!--                <path d="M11 7V15M7 11H15M21 11C21 16.5228 16.5228 21 11 21C5.47715 21 1 16.5228 1 11C1 5.47715 5.47715 1 11 1C16.5228 1 21 5.47715 21 11Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--              </svg>-->
+<!--            </div>-->
+<!--            <div class="category-name">-->
+<!--              Добавить-->
+<!--            </div>-->
+<!--          </div>-->
         </div>
 
         <div class="filters">

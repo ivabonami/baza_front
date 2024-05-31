@@ -160,7 +160,7 @@
 
         <div class="tabs-body">
 
-          <div class="products"  v-if="products.length > 0">
+          <div class="products"  v-if="products.length > 0 || isOwner === true || isAdmin === true">
             <div class="block-heading">
               <div class="left">
                 <h3>Витрина</h3>

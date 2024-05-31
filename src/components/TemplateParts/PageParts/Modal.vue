@@ -179,6 +179,7 @@
 
       </div>
 
+
       <div class="info-modal" v-if="modalSetting.type === 'service'">
         <div class="image">
           <img :src="modalSetting.image" alt="">
