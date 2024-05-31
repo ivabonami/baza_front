@@ -576,7 +576,7 @@ export default {
       }
     }
 
-    height: 100%;
+
     .project-bottom {
       position: absolute;
       bottom: 5px;
