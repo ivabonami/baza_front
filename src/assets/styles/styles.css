@@ -2,6 +2,8 @@
 body {
   transition: color, background-color 0.15s ease;
   background-color: #fff;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 * {
@@ -164,7 +166,7 @@ select {
   line-height: normal;
 }
 
-input.error {
+input.error, textarea.error {
   border-color: #984a5a;
 }
 
@@ -246,108 +248,10 @@ textarea:hover, textarea:focus {
   outline: none;
 }
 
-.baza-button {
+button {
   cursor: pointer;
-  background-color: transparent;
   border: none;
-  border-radius: 10px;
-  padding: 10px;
-  transition: 0.3s ease;
-}
-.baza-button:hover {
-  transform: translateY(-2px);
-}
-.baza-button.primary {
-  border-radius: 10px;
-  background: var(--yellow, #FFC700);
-  color: #000;
-  text-align: center;
-  font-family: "PT Sans Caption";
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-.baza-button.primary:hover {
-  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.25);
-}
-.baza-button.special {
-  color: #000;
-  font-family: "PT Sans Caption", sans-serif;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  background: #D8D8D8;
-  opacity: 0.6;
-}
-.baza-button.special:hover {
-  opacity: 1;
-}
-.baza-button.outline {
-  border-radius: 10px;
-  border: 2px solid var(--yellow, #FFC700);
-  color: #000;
-  text-align: center;
-  font-family: "PT Sans Caption";
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  width: 100%;
-}
-.baza-button.outline:hover {
-  box-shadow: 0px 3px 6px 0px #FFC700;
-}
-.baza-button.outline.red {
-  border-color: #984a5a;
-}
-.baza-button.outline.red:hover {
-  color: #fff;
-  background-color: #984a5a;
-  box-shadow: 0px 3px 6px 0px rgba(208, 208, 208, 0.44);
-}
-.baza-button.signin {
-  color: #126DF7;
-  font-family: "PT Sans Caption", sans-serif;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  text-transform: capitalize;
-  border: 2px solid transparent;
-}
-.baza-button.signin svg {
-  margin-left: 5px;
-  width: 16px;
-  height: 16px;
-}
-.baza-button.signin svg path {
-  stroke-width: 1px;
-  stroke: #126DF7;
-}
-.baza-button.signin:hover {
-  border-color: #126DF7;
-}
-.baza-button.gray {
-  border-radius: 10px;
-  border: 2px solid var(--gray-2, #D8D8D8);
-  color: var(--gray, #A8A8A8);
-  text-align: center;
-  font-family: "PT Sans Caption";
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  transition: 0.3s ease;
-}
-.baza-button.gray:hover {
-  border-radius: 10px;
-  border: 2px solid var(--gray, #A8A8A8);
-  box-shadow: 0px 3px 6px 0px rgba(39, 37, 37, 0.2);
-  color: black;
+  transition: 0.15s ease;
 }
 
 .list-enter-from {
@@ -373,43 +277,6 @@ textarea:hover, textarea:focus {
   opacity: 0;
 }
 
-.input-file-btn {
-  margin-top: 10px;
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  outline: none;
-  text-decoration: none;
-  font-size: 14px;
-  vertical-align: middle;
-  color: rgb(0, 0, 0);
-  text-align: center;
-  border-radius: 4px;
-  background-color: #FFC700;
-  line-height: 22px;
-  height: 40px;
-  padding: 10px 20px;
-  box-sizing: border-box;
-  border: none;
-  margin: 0;
-  transition: background-color 0.2s;
-}
-
-.input-file-text {
-  padding: 0 10px;
-  line-height: 40px;
-  display: inline-block;
-}
-
-.input-file input[type=file] {
-  position: absolute;
-  z-index: -1;
-  opacity: 0;
-  display: block;
-  width: 0;
-  height: 0;
-}
-
 /* Focus */
 .input-file input[type=file]:focus + .input-file-btn {
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
@@ -431,6 +298,48 @@ textarea:hover, textarea:focus {
 
 .fake-input input {
   display: none;
+}
+
+.form-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  gap: 2%;
+}
+.form-wrapper .input-wrapper {
+  position: relative;
+}
+.form-wrapper .input-wrapper.mb {
+  margin-bottom: 30px;
+}
+.form-wrapper .input-wrapper .loaded {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  color: #85c86b;
+  height: 0;
+  margin: 0;
+  width: 100%;
+  padding: 0;
+  bottom: -35px;
+}
+.form-wrapper .input-wrapper .loaded span {
+  position: absolute;
+  bottom: 10px;
+  left: 25px;
+  white-space: nowrap;
+  width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.form-wrapper .input-wrapper .loaded svg {
+  bottom: 10px;
+  position: absolute;
+  width: 18px;
+  height: 18px;
+}
+.form-wrapper .input-wrapper .loaded svg path {
+  fill: #85c86b;
 }
 
 @media screen and (max-width: 500px) {

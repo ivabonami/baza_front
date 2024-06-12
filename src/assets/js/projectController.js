@@ -1,4 +1,4 @@
-import {useFetch} from "./fetchRequest.js";
+import {useFetch} from "./controllers/requestsControl.js";
 import {modalSetting} from "./modal.js";
 import {reactive} from "vue";
 

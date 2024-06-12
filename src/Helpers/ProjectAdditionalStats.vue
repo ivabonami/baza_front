@@ -1,0 +1,65 @@
+<template>
+  <div class="additional-stat">
+    <div class="additional-stat_heading">
+      <div class="additional-stat_icon">
+        <slot name="icon" />
+      </div>
+        <div class="additional-stat_header">
+          <slot name="header" />
+        </div>
+    </div>
+    <div class="additional-stat_helper">
+      <slot name="helper"/>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "ProjectAdditionalStats.vue",
+  data() {
+    return {}
+  },
+
+  components: {},
+
+  methods: {},
+
+  mounted() {
+
+  }
+
+}
+</script>
+
+<style scoped lang="scss">
+.additional-stat {
+  margin-bottom: -10px;
+
+  .additional-stat_heading {
+    display: flex;
+    gap: 8px;
+
+    .additional-stat_header {
+      color: #000;
+      font-family: "PT Sans Caption";
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 20px; /* 125% */
+    }
+    .additional-stat_icon {
+      width: 10px;
+      height: 10px;
+    }
+  }
+  .additional-stat_helper {
+    color: var(--gray, #A8A8A8);
+    font-family: "PT Sans Caption";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 166.667% */
+  }
+}
+</style>

@@ -1,0 +1,409 @@
+<template>
+  <div class="popup"
+       v-if="modal.show"
+       :class="{show: modal.show}">
+
+    <div class="popup_header">
+      <slot name="header"></slot>
+    </div>
+
+    <div class="popup_body">
+      <input-text
+          :input="inputs.productName"
+          :data="inputs.productName.data"
+          @data="emit => {
+            this.product.name = emit
+            Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
+            delete this.notice.text.nameLength
+          }"
+          @error="emit => {
+            this.product.name = null
+            this.notice.color = 'red'
+            this.notice.text.nameLength = emit
+            Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
+          }"
+      />
+
+      <input-file
+          :input="inputs.productImage"
+          @data="emit => {
+            this.product.file = emit
+            delete this.notice.text.imageErros
+            Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
+          }"
+          @error="emit => {
+            this.product.file = null
+            this.notice.color = 'red'
+            this.notice.text.imageErros = emit
+            Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
+          }"
+      />
+
+
+      <input-textarea
+          :input="inputs.productDescription"
+          :data="inputs.productDescription.data"
+          @data="emit => {
+            this.product.description = emit
+            delete this.notice.text.descriptionLength
+            Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
+
+          }"
+          @error="emit => {
+            this.product.description = null
+            this.notice.color = 'red'
+            this.notice.text.descriptionLength = emit
+            Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
+
+          }"
+      />
+    </div>
+
+
+    <div class="popup_buttons" >
+      <div class="popup_buttons_button">
+        <button-primary
+            v-show="!loading"
+            @close="() => {
+              this.product.projectId = $props.projectId
+
+              if (Object.keys(this.notice.text).length <= 0) {
+                this.$props.options === null ? addNewProduct(product) : updateExistProduct(product)
+              } else {
+
+              }
+
+            }"
+        >
+          <template #default>
+            <slot name="buttonConfirm"></slot>
+          </template>
+        </button-primary>
+
+        <loader-small v-show="loading" />
+      </div>
+
+      <div class="popup_buttons_button">
+        <button-secondary-gray
+            @pressed="closeModal()"
+        >
+          <template #default>
+            <slot name="buttonSecondary"></slot>
+          </template>
+        </button-secondary-gray>
+
+      </div>
+
+
+    </div>
+
+
+    <div class="popup_close" @click="closeModal()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M13 1L1 13M1 1L13 13" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="backdrop"
+       @click="closeModal()"
+       :class="{show: modal.show}"></div>
+
+  <notice :notice="notice"
+          @closeNotice="emit => notice.show = emit"
+  />
+</template>
+
+<script>
+import ButtonPrimary from "../Buttons/ButtonPrimary.vue";
+import ButtonSecondaryGray from "../Buttons/ButtonSecondaryGray.vue";
+import inputText from "../Inputs/InputText.vue";
+import inputTextarea from "../Inputs/InputTextarea.vue";
+import notice from "./Notice.vue";
+import {checkInputData} from "../../assets/js/fieldDataController.js";
+import inputFile from "../Inputs/InputFile.vue";
+import {addProduct, updateProduct} from "../../API/products.js";
+import loaderSmall from "../Loaders/LoaderSmall.vue";
+
+export default {
+  name: "Popup.vue",
+  props: {
+    modal: {
+      show: true,
+      data: null
+    },
+    options: {
+      buttonConfirmText: null,
+      product: null
+    },
+    mode: null,
+    projectId: null
+
+  },
+
+  data() {
+    return {
+      data: {
+        name: null,
+        description: null,
+        imageFilePath: null
+      },
+      notice: {
+        show: false,
+        color: null,
+        text: {}
+      },
+      checkInputData,
+      loading: false,
+
+      product: {
+        name: null,
+        description: null,
+        avatarFilePath: null,
+        file: null
+      },
+
+      inputs: {
+        productName: {
+          name: 'Название',
+          placeholder: 'От 5 до 255 символов',
+          tooltip: 'На главной странице и на странице проекта отображаются только первые 90 символов, будьте внимательны.',
+          min: 5,
+          max: 255,
+          data: null
+        },
+
+        productImage: {
+          name: 'Изображение',
+          tooltip: 'Рекомендуем размеры от 200х200px, соотношение сторон 1:1, требуемый формат: png, jpeg, jpg, gif. webp.',
+          data: null
+        },
+
+        productDescription: {
+          name: 'Описание',
+          placeholder: 'От 30 символов.',
+          min: 30,
+          max: 65535,
+          data: null
+        }
+
+      }
+    }
+  },
+  components: {
+    ButtonPrimary,
+    ButtonSecondaryGray,
+    inputText,
+    inputTextarea,
+    notice,
+    inputFile,
+    loaderSmall
+  },
+  watch: {
+    options: (val, oldVal) => {
+      console.log(val)
+    },
+    mode: (val, oldVal) => {
+      console.log(val)
+    }
+  },
+  mounted() {
+    if (this.$props.modal.show === true) {
+      document.body.style.overflow = 'hidden hidden'
+      window.addEventListener('keydown', (e) => {
+        e.key === 'Escape' ? this.closeModal() : null
+      })
+    } else {
+      document.body.style.overflow = 'hidden scroll'
+    }
+    this.$props.options ? this.product = this.$props.options : console.log(this.$props)
+
+    this.inputs.productName.data = this.product.name || null
+    this.inputs.productDescription.data = this.product.description || null
+    this.inputs.productImage.data = this.product.avatarFilePath || null
+
+    console.log(this.$props)
+
+  },
+  methods: {
+
+    // TODO PUT PROJECT (FULL)
+
+    closeModal() {
+      this.$emit('closeModal', true)
+
+      document.body.style.overflow = 'hidden scroll'
+    },
+    async addNewProduct(product) {
+
+      if (!product.name) {
+        this.notice.show = true
+        this.notice.color = 'red'
+        this.notice.text.nameLength = `Название должно содержать не менее 5 символов`
+
+      }
+      if (!product.description) {
+        this.notice.show = true
+        this.notice.color = 'red'
+        this.notice.text.descriptionLength = `Описание должно содержать не менее 30 символов`
+      }
+      if (!product.file) {
+        this.notice.show = true
+        this.notice.color = 'red'
+        this.notice.text.imageErros = `Загрузите изображение`
+      }
+
+      if (Object.keys(this.notice.text).length <= 0) {
+        product.projectId = this.$props.projectId
+
+        addProduct(product).then(result => {
+          this.closeModal()
+
+          this.notice.show = true
+          this.notice.color = 'green'
+          this.notice.text = {
+            success: 'Добавлено успешно.'
+          }
+          this.$emit('productAdded', product)
+        }).catch(error => {
+          this.notice.show = true
+          this.notice.color = 'red'
+          this.notice.text = {
+            error: error
+          }
+        })
+      }
+
+
+
+
+    },
+    async updateExistProduct(product) {
+      if (!product.name) {
+        this.notice.show = true
+        this.notice.color = 'red'
+        this.notice.text.nameLength = `Название должно содержать не менее 5 символов`
+
+      }
+      if (!product.description) {
+        this.notice.show = true
+        this.notice.color = 'red'
+        this.notice.text.descriptionLength = `Описание должно содержать не менее 30 символов`
+      }
+      if (!product.file) {
+        this.notice.show = true
+        this.notice.color = 'red'
+        this.notice.text.imageErros = `Загрузите изображение`
+      }
+
+      if (Object.keys(this.notice.text).length <= 0) {
+        product.projectId = this.$props.projectId
+
+        updateProduct(product).then(result => {
+          this.closeModal()
+
+          this.notice.show = true
+          this.notice.color = 'green'
+          this.notice.text = {
+            success: 'Добавлено успешно.'
+          }
+          this.$emit('productUpdated', product)
+        }).catch(error => {
+          this.notice.show = true
+          this.notice.color = 'red'
+          this.notice.text = {
+            error: error
+          }
+        })
+      }
+    }
+  }
+}
+</script>
+
+<style scoped lang="scss">
+
+.popup {
+  border-radius: 10px;
+  border: 1px solid var(--gray-2, #D8D8D8);
+  background: #FFF;
+  padding: 15px;
+  position: fixed;
+  z-index: 51;
+  width: 300px;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  scale: 0;
+  transition: .15s ease;
+
+  visibility: hidden;
+  opacity: 0;
+
+  &.show {
+    scale: 1;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .popup_icon {
+    margin-bottom: 20px;
+  }
+
+  .popup_header {
+    color: #000;
+    font-family: "PT Sans Caption";
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 20px;
+  }
+  .popup_text {
+    color: var(--gray, #A8A8A8);
+    font-family: "PT Sans Caption";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 20px;
+    word-wrap: break-word;
+  }
+  .popup_buttons {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+  }
+  .popup_close {
+    position: absolute;
+    right: 14px;
+    top: 14px;
+    cursor: pointer;
+  }
+}
+.backdrop {
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  height: 100%;
+  width: 100%;
+  z-index: 50;
+
+  background: rgba(217, 217, 217, 0.60);
+  backdrop-filter: blur(3px);
+
+  visibility: hidden;
+  opacity: 0;
+
+
+  &.show {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+</style>

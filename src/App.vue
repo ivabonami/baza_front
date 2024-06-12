@@ -1,20 +1,15 @@
 <script>
-import SidebarMenu from "./components/TemplateParts/Menus/SidebarMenu.vue";
-import TopMenu from "./components/TemplateParts/Menus/TopMenu.vue";
-import FooterView from "./components/TemplateParts/PageParts/Footer.vue";
-import recommended from "./components/TemplateParts/PageParts/FreshAndRecommendedProduct.vue";
-import addCategory from "./components/Controllers/CategoryControllers/CategoryController.vue";
+import FooterView from "./Layouts/BaseFooter.vue";
+import recommended from "./Blocks/ProductsCarousel.vue";
+import addCategory from "./Blocks/Controllers/CategoryController.vue";
 
-
-import modal from "./components/TemplateParts/PageParts/Modal.vue";
-import {userInfo, refreshToken} from "./assets/js/userService.js";
 import vClickOutside from "click-outside-vue3";
-import bazaHeader from "./components/TemplateParts/PageParts/BazaHeader.vue";
+import bazaHeader from "./Layouts/BaseHeader.vue";
 import {modalSetting} from "./assets/js/modal.js";
-import {watch} from "vue";
+import {watch, ref} from "vue";
 
 export default {
-  components: { FooterView, SidebarMenu, modal, TopMenu, recommended, addCategory, vClickOutside, bazaHeader},
+  components: { FooterView, recommended, addCategory, vClickOutside, bazaHeader},
   emits: ['mobileClick'],
   data() {
     return {
@@ -27,9 +22,7 @@ export default {
       showScrollTopButton: false,
 
       historyCount: 0,
-      userInfo,
-      refreshToken,
-      modalSetting
+      modalSetting, ref
     }
   },
   directives: {
@@ -61,14 +54,11 @@ export default {
     window.addEventListener('scroll', this.handleScroll);
     document.querySelector('.preloader').style.display = 'none'
     this.isLoaded = true
-
     window.innerWidth >= 768 ? this.showMobileMenu = true : this.showMobileMenu = false
-
   },
 
   updated() {
     this.historyCount = window.history.length
-
 
   },
 
@@ -115,11 +105,11 @@ export default {
 
       </div>
     </section>
-    <footer class="footer ">
-      <div class="row">
-        <footer-view></footer-view>
-      </div>
-    </footer>
+<!--    <footer class="footer ">-->
+<!--      <div class="row">-->
+<!--        <footer-view></footer-view>-->
+<!--      </div>-->
+<!--    </footer>-->
     <div class="scroll-to-top" v-if="showScrollTopButton === true" ref="scrollToTop" @click="scrollToTop()">
       <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M13 7L7 1L1 7" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
