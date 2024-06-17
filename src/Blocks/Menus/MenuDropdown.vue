@@ -8,6 +8,7 @@
                  :to="link.path"
                  data-dropdown="dropdown"
                  @mouseup="closeDropdown"
+                 v-if="isAdmin"
     >
       <object :data="link.icon"
               type="image/svg+xml"></object>
@@ -32,6 +33,7 @@
   <popup-action
       v-show="modal.show === true"
       @closeModal="modal.show = false"
+      @actionConfirmed="signOut()"
       :modal="modal"
   >
     <template #header>
@@ -52,14 +54,16 @@
 
 <script>
 import {adminMenu} from "../../Store/adminMenu.js";
-import {ref} from "vue";
+import {reactive, ref, watch} from "vue";
 import popupAction from "../../components/Popups/PopupAction.vue";
+import {signOut} from "../../API/user.js";
+import {userInfo} from "../../Store/userInfo.js";
 
 export default {
   name: "DropdownMenu.vue",
   props: {
     dropdown: {
-      show: ref(true)
+      show: false
     }
   },
 
@@ -68,14 +72,23 @@ export default {
       menu: {},
       modal: {
         show: ref(false)
-      }
+      },
+
+      isAdmin: false,
+
+      signOut
     }
   },
 
   components: {popupAction},
 
   methods: {
+    changeAdminProperty(role) {
+      this.isAdmin = userInfo.role === "admin";
+    },
     getMenuItems() {
+      this.isAdmin = userInfo.role === "admin";
+
       this.loading = true
       try {
         this.menu = adminMenu
@@ -87,6 +100,7 @@ export default {
 
     closeDropdown() {
       this.$emit('isOpen', false)
+
     },
     closeByEsc (event) {
       if (event.key === 'Escape') {
@@ -106,10 +120,15 @@ export default {
     this.getMenuItems()
     document.addEventListener('keydown', e => this.closeByEsc(e))
     document.addEventListener('mousedown', e => this.closeByOutsideClick(e))
+
+    this.isAdmin = userInfo.role === "admin";
   },
   beforeUnmount() {
     document.removeEventListener('keydown',e => this.closeByEsc(e))
     document.removeEventListener('mousedown', e => this.closeByOutsideClick(e))
+  },
+  updated() {
+    this.isAdmin = userInfo.role === "admin";
   }
 
 }

@@ -12,10 +12,10 @@ export function uploadImage (file) {
     formData.append("image-upload", file );
 
     return axios.post(`${apiUrl}/image-upload`, formData, {headers}).then(result => {
-        refreshToken().then(result => result).catch(error => error)
+        userInfo.expired && Math.round(Date.now() / 1000) + 3600 > userInfo.expired ? refreshToken() : null
         return result
     }).catch((error) => {
-        refreshToken().then(result => result).catch(error => error)
+        userInfo.expired && Math.round(Date.now() / 1000) + 3600 > userInfo.expired ? refreshToken() : null
         return error.response.data.message
     })
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="service-card">
+  <div class="service-card" :class="{highlighted: false}">
     <div class="service-card_image">
       <img :src="api.url + $props.item.avatarFilePath" alt="name">
     </div>
@@ -12,6 +12,7 @@
 <script>
 import { ref, watch } from "vue";
 import {api} from "../assets/js/config.js";
+import {productsStore} from "../Store/productsStore.js";
 
 
 export default {
@@ -27,22 +28,27 @@ export default {
       id: ref(Number),
       name: ref(String),
 
-    }
+    },
+    highlighted: ref(Boolean)
   },
   components: {},
 
   data() {
     return {
       text: null,
-      api
+      api,
+      productsStore
     }
   },
   mounted() {
     this.textTransform()
+    //todo highlight
+    console.log(productsStore.products.find(product => product.id = this.$props.item.id))
   },
   watch: {
     item: function(newVal, oldVal) {
       this.textTransform()
+      console.log(productsStore.products.find(product => product.id = this.$props.item.id))
     }
   },
   methods: {
@@ -56,8 +62,12 @@ export default {
 
 <style scoped lang="scss">
 .service-card {
-  width: 210px;
+  width: 208px;
   cursor: pointer;
+  border-radius: 20px;
+  background: #FFF;
+
+  padding: 14px;
 
   .service-card_image {
     aspect-ratio: 1/1;
@@ -70,6 +80,8 @@ export default {
     align-items: center;
     justify-content: center;
 
+
+
     img {
       max-height: 100%;
       position: relative;
@@ -80,17 +92,18 @@ export default {
 
   }
   .service-card_text {
-    color: #000;
     font-family: "PT Sans Caption";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
     -webkit-line-clamp: 3;
     position: relative;
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     height: 65px;
+    word-break: break-word;
+    color: #191B2A;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
     line-height: normal;
   }
 

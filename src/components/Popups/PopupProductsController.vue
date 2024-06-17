@@ -9,6 +9,7 @@
 
     <div class="popup_body">
       <input-text
+
           :input="inputs.productName"
           :data="inputs.productName.data"
           @data="emit => {
@@ -24,8 +25,10 @@
           }"
       />
 
+
       <input-file
           :input="inputs.productImage"
+          v-if="!$props.options || this.oldImage"
           @data="emit => {
             this.product.file = emit
             delete this.notice.text.imageErros
@@ -39,6 +42,22 @@
           }"
       />
 
+      <div class="popup_body_image" v-else-if="$props.options.avatarFilePath">
+        <img :src="api.url + $props.options.avatarFilePath" alt="">
+        <button-action @click="() => {
+          this.oldImage = $props.options.avatarFilePath
+          $props.options.avatarFilePath = null
+        }">
+          <template #text>
+            Заменить
+          </template>
+          <template #icon>
+            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none">
+              <path d="M1.13619 6.77432C1.15283 6.62457 1.16115 6.54969 1.1838 6.47971C1.2039 6.41761 1.2323 6.35853 1.26823 6.30404C1.30873 6.24263 1.362 6.18936 1.46854 6.08282L6.25134 1.30002C6.65137 0.899992 7.29995 0.899992 7.69998 1.30002C8.10001 1.70006 8.10001 2.34864 7.69998 2.74867L2.91718 7.53146C2.81064 7.638 2.75737 7.69128 2.69596 7.73177C2.64147 7.7677 2.58238 7.7961 2.52029 7.8162C2.45031 7.83885 2.37543 7.84717 2.22568 7.86381L1 8L1.13619 6.77432Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </template>
+        </button-action>
+      </div>
 
       <input-textarea
           :input="inputs.productDescription"
@@ -85,7 +104,10 @@
 
       <div class="popup_buttons_button">
         <button-secondary-gray
-            @pressed="closeModal()"
+            @pressed="() => {
+              closeModal()
+              this.oldImage ? $props.options.avatarFilePath = this.oldImage : null
+            }"
         >
           <template #default>
             <slot name="buttonSecondary"></slot>
@@ -124,6 +146,10 @@ import {checkInputData} from "../../assets/js/fieldDataController.js";
 import inputFile from "../Inputs/InputFile.vue";
 import {addProduct, updateProduct} from "../../API/products.js";
 import loaderSmall from "../Loaders/LoaderSmall.vue";
+import {api} from "../../assets/js/config.js";
+import buttonAction from "../Buttons/ButtonAction.vue";
+
+
 
 export default {
   name: "Popup.vue",
@@ -153,6 +179,7 @@ export default {
         color: null,
         text: {}
       },
+      oldImage: null,
       checkInputData,
       loading: false,
 
@@ -185,9 +212,11 @@ export default {
           min: 30,
           max: 65535,
           data: null
-        }
+        },
 
-      }
+
+      },
+      api
     }
   },
   components: {
@@ -197,7 +226,8 @@ export default {
     inputTextarea,
     notice,
     inputFile,
-    loaderSmall
+    loaderSmall,
+    buttonAction
   },
   watch: {
     options: (val, oldVal) => {
@@ -222,7 +252,7 @@ export default {
     this.inputs.productDescription.data = this.product.description || null
     this.inputs.productImage.data = this.product.avatarFilePath || null
 
-    console.log(this.$props)
+    console.log(this.$props.options)
 
   },
   methods: {
@@ -235,7 +265,7 @@ export default {
       document.body.style.overflow = 'hidden scroll'
     },
     async addNewProduct(product) {
-
+      this.loading = true
       if (!product.name) {
         this.notice.show = true
         this.notice.color = 'red'
@@ -264,6 +294,7 @@ export default {
           this.notice.text = {
             success: 'Добавлено успешно.'
           }
+          this.loading = false
           this.$emit('productAdded', product)
         }).catch(error => {
           this.notice.show = true
@@ -271,6 +302,7 @@ export default {
           this.notice.text = {
             error: error
           }
+          this.loading = false
         })
       }
 
@@ -279,6 +311,7 @@ export default {
 
     },
     async updateExistProduct(product) {
+      this.loading = true
       if (!product.name) {
         this.notice.show = true
         this.notice.color = 'red'
@@ -290,7 +323,7 @@ export default {
         this.notice.color = 'red'
         this.notice.text.descriptionLength = `Описание должно содержать не менее 30 символов`
       }
-      if (!product.file) {
+      if (!product.file && !this.$props.options.avatarFilePath) {
         this.notice.show = true
         this.notice.color = 'red'
         this.notice.text.imageErros = `Загрузите изображение`
@@ -301,12 +334,14 @@ export default {
 
         updateProduct(product).then(result => {
           this.closeModal()
+          console.log(result)
 
           this.notice.show = true
           this.notice.color = 'green'
           this.notice.text = {
             success: 'Добавлено успешно.'
           }
+          this.loading = false
           this.$emit('productUpdated', product)
         }).catch(error => {
           this.notice.show = true
@@ -314,6 +349,7 @@ export default {
           this.notice.text = {
             error: error
           }
+          this.loading = false
         })
       }
     }
@@ -380,6 +416,14 @@ export default {
     right: 14px;
     top: 14px;
     cursor: pointer;
+  }
+  .popup_body_image {
+    width: 100%;
+
+    img {
+      width: 100%;
+      border-radius: 10px;
+    }
   }
 }
 .backdrop {

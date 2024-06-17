@@ -20,8 +20,9 @@
       <div class="popup_buttons_button">
         <button-primary
             @close="() => {
-              signOut()
+
               closeModal()
+              $emit('actionConfirmed', true)
             }"
         >
           <template #default>

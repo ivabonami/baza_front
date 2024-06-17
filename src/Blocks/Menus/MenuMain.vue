@@ -89,14 +89,14 @@ export default {
 
   .categories-menu_items {
     display: flex;
-    gap: 40px;
+    gap: 30px;
     margin-bottom: 10px;
 
     .categories-menu_items_item {
       text-align: center;
       color: #000;
       font-family: "PT Sans Caption";
-      font-size: 14px;
+      font-size: 12px;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
@@ -104,6 +104,7 @@ export default {
       transition: .15s ease;
       border-bottom: 1px solid transparent;
       white-space: nowrap;
+
 
       &:hover {
         border-bottom-color: rgba(0,0,0,.3);

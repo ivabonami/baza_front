@@ -38,7 +38,7 @@
 
         </div>
 <!--        todo редактирование проекта -->
-        <button-action>
+        <button-action v-if="isAdmin" >
           <template #text>
             Редактировать
           </template>
@@ -129,6 +129,7 @@ import iconRating from "../assets/icons/icon-rating.svg"
 import iconCategories from "../assets/icons/icon-categories.svg"
 import iconEye from "../assets/icons/icon-eye.svg"
 import iconTestimonial from "../assets/icons/icon-testimonial.svg"
+import {userInfo} from "../Store/userInfo.js";
 
 
 export default {
@@ -145,6 +146,7 @@ export default {
         show: false,
 
       },
+      userInfo,
       stats: {
         ratingAvg: {
           stat: null,
@@ -168,7 +170,8 @@ export default {
         },
 
       },
-      api
+      api,
+      isAdmin: false
     }
   },
   directives: {
@@ -212,10 +215,17 @@ export default {
     project: function(newVal, oldVal) {
       this.setStats()
 
+      if (userInfo.username) {
+        userInfo.username === this.$props.project.userData.username ? this.isAdmin = true :  this.isAdmin = false
+        userInfo.role === 'admin' ? this.isAdmin = true :  this.isAdmin = false
+      } else {
+        this.isAdmin = false
+      }
     }
   },
 
   mounted() {
+
 
 
   }

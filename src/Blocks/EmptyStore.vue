@@ -3,22 +3,58 @@
     <h3>
       <slot name="header"/>
     </h3>
-    <img src="../assets/images/cat%20sleep.png" alt="">
     <span>
       <slot name="text"/>
     </span>
+
+    <div class="button-wrapper">
+      <button-primary
+          v-show="$props.showButtonForUsers && userInfo.token || $props.showButton && userInfo.role === 'admin'"
+          @close="console.log(123)"
+          :style="'filled'">
+        <template #default>
+          <slot name="buttonText" />
+        </template>
+      </button-primary>
+    </div>
+
+
+
+    <div class="bg-icons">
+      <div class="left">
+        <slot name="left-icon" />
+
+      </div>
+      <div class="right">
+        <slot name="right-icon" />
+      </div>
+
+    </div>
+
 
   </div>
 </template>
 
 <script>
+import buttonPrimary from "../components/Buttons/ButtonPrimary.vue";
+import {userInfo} from "../Store/userInfo.js";
+
 export default {
   name: "EmptyStore.vue",
+  props: {
+    showButton: false,
+    showButtonForUsers: true,
+
+  },
   data() {
-    return {}
+    return {
+      userInfo
+    }
   },
 
-  components: {},
+  components: {
+    buttonPrimary
+  },
 
   methods: {},
 
@@ -33,43 +69,63 @@ export default {
 .empty-store {
   width: 100%;
   text-align: center;
-  margin-top: 50px;
+
+  border-radius: 10px;
+  background: #FFF;
+  border: 1px dashed #D8D8D8;
+  padding: 25px;
+  position: relative;
+  z-index: 1;
 
   h3 {
     width: 100%;
-    color: #000;
+
     font-family: "PT Sans Caption";
-    font-size: 18px;
+    color: #C9C9C9;
+
+    font-size: 12px;
     font-style: normal;
-    font-weight: 700;
+    font-weight: 400;
     line-height: normal;
-    text-align: center;
+    margin-bottom: 0px;
   }
 
-  img {
-    display: inline-block;
-    width: 150px;
-    height: 150px;
-  }
-
-  svg {
-    margin-left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 100px;
-    margin-bottom: 30px;
-    flex-basis: 100%;
+  .button-wrapper {
+    width: 20%;
+    margin: 12px auto 0;
 
   }
   span {
     color: #000;
-    width: 100%;
     font-family: "PT Sans Caption";
     font-size: 16px;
     font-style: normal;
-    display: block;
-    font-weight: 400;
+    font-weight: 700;
     line-height: normal;
+  }
+
+  .bg-icons {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    z-index: -1;
+
+    display: flex;
+    align-items: end;
+    padding: 0;
+    .left {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+    }
+    .right {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
   }
 }
 </style>

@@ -7,7 +7,7 @@
          v-tippy="{content: tippyPayedContent, theme: 'light'}"
          @click.stop
          v-show="userInfo.role === 'admin'"
-         @click="changePayedStatus($props.projectId, !isPayed)">
+         @click="$emit('projectChangePayedStatus', !$props.isPayed)">
       <svg width="14" height="22" viewBox="0 0 14 22" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M1 15C1 17.2091 2.79086 19 5 19H9C11.2091 19 13 17.2091 13 15C13 12.7909 11.2091 11 9 11H5C2.79086 11 1 9.20914 1 7C1 4.79086 2.79086 3 5 3H9C11.2091 3 13 4.79086 13 7M7 1V21" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
@@ -56,8 +56,7 @@
     </div>
   </div>
 
-<!--  todo вынести на мейн компонент, тут багует-->
-<!--  todo допилить удаление-->
+
 
 
 </template>
@@ -67,7 +66,6 @@ import buttonFavorite from "../components/Buttons/ButtonFavorite.vue";
 import { directive } from 'vue-tippy'
 import 'tippy.js/themes/light.css'
 import {userInfo} from "../Store/userInfo.js";
-import {changePayedStatus} from "../API/projects.js";
 
 
 export default {
@@ -86,7 +84,6 @@ export default {
       },
       tippyPayedContent: 'Выделить проект',
       userInfo,
-      changePayedStatus,
     }
   },
 

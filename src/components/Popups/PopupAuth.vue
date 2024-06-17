@@ -14,7 +14,7 @@
     <sign-up
         @errors="emit => {
           this.notice.show = true
-          this.errors = emit
+          this.notice.text = emit
         }"
         @closePopup="closeModal()"
         @success="() => {
@@ -25,7 +25,7 @@
     <sign-in
         @errors="emit => {
           this.notice.show = true
-          this.errors = emit
+          this.notice.text = emit
         }"
         @closePopup="closeModal()"
         @success="() => {
@@ -35,7 +35,7 @@
         v-else
     />
 
-    <div class="popup_auth_switch">
+    <div class="popup_auth_switch" @click="console.log(errors)">
       <span v-if="modal.type === true">Есть аккаунт? <span @click="modal.type = !modal.type">Войти</span></span>
       <span v-else>Нет аккаунта? <span @click="modal.type = !modal.type">Зарегистрироваться</span></span>
     </div>
@@ -51,7 +51,9 @@
        @click="closeModal()"
        :class="{show: modal.show}"></div>
 
-  <notice :notice="notice" :errors="errors" />
+  <notice :notice="notice"
+          @closeNotice="emit => notice.show = emit"
+  />
 </template>
 
 <script>
@@ -71,10 +73,11 @@ export default {
       modal: {
         show: false
       },
-      errors: {},
       notice: {
-        show: true
-      }
+        show: false,
+        color: null,
+        text: {}
+      },
     }
   },
   components: {ButtonPrimary, signIn, signUp, notice},

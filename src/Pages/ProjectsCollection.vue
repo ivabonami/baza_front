@@ -131,6 +131,8 @@ export default {
   mounted() {
     if (projectsStore.projects.length <= 0) {
       this.collectProjects()
+    } else {
+      this.options.offset = projectsStore.projects.length
     }
 
   },
@@ -194,19 +196,24 @@ export default {
       margin-bottom: 20px;
       padding: 10px;
       border: 1px solid transparent;
-      border-radius: 10px;
+      border-radius: 20px;
       transition: .15s ease;
+      background-color: #fff;
+
+      box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
 
       &.payed {
-        border: 1px solid #FFC700;
-
+        border-color: #1254FF;
 
       }
 
-
-
       &:hover {
-        box-shadow: 0px 0px 12px 0px rgba(39, 37, 37, 0.20);
+        border-color: #191B2A;
+
+        &.payed {
+          border: 1px solid var(--Linear, #1440a6);
+
+        }
 
       }
     }

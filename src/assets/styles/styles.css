@@ -1,9 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=PT+Sans+Caption:wght@400;700&display=swap");
 body {
   transition: color, background-color 0.15s ease;
-  background-color: #fff;
   overflow-x: hidden;
   overflow-y: scroll;
+  background-color: #F8F7FC;
 }
 
 * {

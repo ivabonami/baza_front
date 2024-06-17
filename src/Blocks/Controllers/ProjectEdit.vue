@@ -289,7 +289,6 @@
 </template>
 
 <script>
-import Modal from "../../components/Popups/Modal.vue";
 import loader from "../../Layouts/BaseLoader.vue";
 import config from "../../assets/js/config.js";
 import {store} from "../../assets/js/services/categoriesService.js";

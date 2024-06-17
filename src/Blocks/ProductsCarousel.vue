@@ -56,6 +56,9 @@
       >
         <router-link
             :to="`/project/${item.ProjectId}`"
+            @click="() => {
+              productsStore.products.find(product => product.id = item.id).highlighted = true
+            }"
             v-for="item in productsStore.products"
             class="products-carousel_items_item">
           <services-card
@@ -225,7 +228,8 @@ export default {
 
   .products-carousel_items {
     display: flex;
-    gap: 36px;
+    gap: 14px;
+    position: relative;
 
     .products-carousel_items_item {
       width: 210px;

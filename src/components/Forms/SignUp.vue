@@ -6,7 +6,7 @@
           placeholder: 'Юзернейм',
           tooltip: 'Ваш юзернейм, от 1 до 255 символов',
           min: 1,
-          max: 255,
+          max: 255
         }"
         :error="{error: this.errors.username}"
         @data="emit => user.username = emit"

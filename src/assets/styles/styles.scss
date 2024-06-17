@@ -2,9 +2,9 @@
 
 body {
   transition: color, background-color .15s ease;
-  background-color: #fff;
   overflow-x: hidden;
   overflow-y: scroll;
+  background-color: #F8F7FC;
 }
 
 * {
@@ -47,6 +47,7 @@ p {
 
 .global-wrapper {
   width: 100%;
+
 
   .wrapper {
     max-width: 1100px;

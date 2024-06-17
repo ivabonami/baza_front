@@ -23,7 +23,7 @@ export default {
 
 <style scoped lang="scss">
 .base-button {
-  padding: 9px 13px;
+  padding: 8px 12px;
   border-radius: 10px;
   width: 100%;
 
@@ -31,7 +31,7 @@ export default {
     color: #000;
     text-align: center;
     font-family: "PT Sans Caption";
-    font-size: 16px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;

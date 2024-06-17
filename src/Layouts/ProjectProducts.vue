@@ -1,14 +1,15 @@
 <template>
-  <div class="project-products">
+  <div class="project-products" :style="{minHeight: this.height}">
     <div class="project-products_heading">
       <h2>Витрина</h2>
       <button-action
+          v-if="userInfo.role === 'admin' || isAdmin"
           @click="() => {
             modalProductController.show = true
             productControllerOptions.mode = 'add'
             productControllerOptions.buttonConfirmText = 'Добавить услугу'
             productControllerOptions.product = null
-            productControllerOptions.projectId = $props.projectId
+            productControllerOptions.projectId = this.$props.project.id
 
           }"
       >
@@ -22,10 +23,16 @@
         </template>
       </button-action>
     </div>
-    <div class="project-products_items" v-show="!loading || products.length > 0">
+    <div class="project-products_items"
+
+         ref="projectProducts"
+         v-show="!loading || products.length > 0">
       <div v-for="product of products"
            class="project-products_items_item">
         <product-card
+            :highlighted="() => {
+              productsStore.products.find(item => item.id = product.id).highlighted || false
+            }"
             :item="product"
             @click="() => {
               modalShowFullInfo.show = !modalShowFullInfo.show
@@ -33,7 +40,7 @@
 
             }"
         />
-        <div class="project-products_admin-menu">
+        <div class="project-products_admin-menu" v-if="userInfo.role === 'admin' || userInfo.username === $props.project.userData.username">
           <button-action
               @pressed="() => {
                 productControllerOptions.mode = 'edit'
@@ -93,6 +100,29 @@
       </Waypoint>
     </div>
 
+    <empty-store
+        :show-button="true"
+        :show-button-for-users="false"
+        @click="() => {
+            modalProductController.show = true
+            productControllerOptions.mode = 'add'
+            productControllerOptions.buttonConfirmText = 'Добавить услугу'
+            productControllerOptions.product = null
+            productControllerOptions.projectId = this.$props.projectId
+
+          }"
+        v-show="!loading && products.length <= 0">
+      <template #header>
+        В этом проекте, пока что, отстутствуют товары и услуги
+      </template>
+      <template #text>
+        ожидайте обновлений
+      </template>
+      <template #buttonText>
+        Добавить услугу
+      </template>
+    </empty-store>
+
     <base-loader v-show="loading" />
   </div>
 
@@ -125,6 +155,7 @@
       :mode="productControllerOptions.mode"
       @closeModal="modalProductController.show = false"
       @productAdded="emit => onProductAdded(emit)"
+      @productUpdated="emit => onProductUpdated(emit)"
   >
     <template #header>
       Добавить на витрину
@@ -174,13 +205,15 @@ import baseLoader from "./BaseLoader.vue";
 import popupProductsController from "../components/Popups/PopupProductsController.vue";
 import {userInfo} from "../Store/userInfo.js";
 import popupDelete from "../components/Popups/PopupDelete.vue";
+import emptyStore from "../Blocks/EmptyStore.vue";
+import {productsStore} from "../Store/productsStore.js";
 
 
 
 export default {
   name: "ProjectProducts.vue",
   props: {
-    projectId: null
+    project: null
   },
   data() {
     return {
@@ -210,11 +243,13 @@ export default {
         buttonConfirmText: null,
         product: null
       },
-
+      productsStore,
+      height: 'auto',
       showLoadMore: false,
       loading: false,
       api,
-      userInfo
+      userInfo,
+      isAdmin: false
     }
   },
 
@@ -226,20 +261,30 @@ export default {
     buttonPrimary,
     baseLoader,
     popupProductsController,
-    popupDelete
+    popupDelete,
+    emptyStore
   },
 
   watch: {
-    projectId: function (newVal, oldVal) {
+    project: function (newVal, oldVal) {
       this.collectProducts()
-    }
+
+      if (userInfo.username) {
+        userInfo.username === this.$props.project.userData.username ? this.isAdmin = true :  this.isAdmin = false
+      } else {
+        this.isAdmin = false
+      }
+    },
+
   },
 
   methods: {
 
     collectProducts() {
       this.loading = true
-      this.options.projectId = this.$props.projectId
+      this.options.projectId = this.$props.project.id
+
+
 
       getProducts(this.options).then(result => {
         for (const product of result.data.products) {
@@ -247,6 +292,7 @@ export default {
         }
         result.data.products.length < this.options.limit ? this.showLoadMore = false : this.showLoadMore = true
         this.loading = false
+        this.height = this.$refs.projectProducts.offsetHeight + 'px'
       })
     },
     onProductAdded () {
@@ -254,7 +300,8 @@ export default {
       this.products.length % 5 === 0 ? this.options.limit = this.products.length : this.options.limit = this.products.length + 1
       this.products.splice(0, this.products.length)
 
-
+      this.loading = true
+      this.height = this.$refs.projectProducts.offsetHeight + 'px'
       getProducts(this.options).then(result => {
         for (const product of result.data.products) {
           this.products.push(product)
@@ -264,16 +311,40 @@ export default {
         this.loading = false
       })
     },
+    onProductUpdated(product) {
+      this.options.offset = 0
+      this.products.length % 5 === 0 ? this.options.limit = this.products.length : this.options.limit = this.products.length + 1
+      this.products.splice(0, this.products.length)
+
+      this.loading = true
+      this.height = this.$refs.projectProducts.offsetHeight + 'px'
+      getProducts(this.options).then(result => {
+        for (const product of result.data.products) {
+          this.products.push(product)
+        }
+        result.data.products.length < this.options.limit ? this.showLoadMore = false : this.showLoadMore = true
+        this.options.limit = 5
+        this.loading = false
+      })
+
+
+    },
     deleteProduct(product) {
       const productToDelete = this.products.findIndex(item => item.id === product.id)
       this.products.splice(productToDelete, 1)
+
 
       deleteProduct(product).then(result => console.log(result))
     }
   },
 
   mounted() {
-    this.productControllerOptions.projectId = this.$props.projectId
+    this.productControllerOptions.projectId = this.$props.project.id
+
+
+
+
+
   }
 
 }
@@ -282,7 +353,7 @@ export default {
 <style scoped lang="scss">
 .project-products {
   margin-top: 30px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 
   .project-products_heading {
     color: #000;
@@ -294,8 +365,14 @@ export default {
 
     display: flex;
     gap: 20px;
-    align-items: normal;
-    margin-bottom: 12px;
+
+    align-items: center;
+    margin-bottom: 8px;
+
+    h2 {
+      margin-top: -10px;
+    }
+
   }
 
   .project-products_items {

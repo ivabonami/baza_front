@@ -8,7 +8,7 @@
   <input type="text"
          :minlength="$props.input.min"
          :maxlength="$props.input.max"
-         :class="{error: error}"
+         :class="{error: $props.error === true}"
          v-model="inputData"
          @change="checkField()"
          :id="$props.input.name"
@@ -31,6 +31,7 @@ export default {
       max: 255,
 
     },
+    error: null,
     data: null
   },
   data() {
@@ -44,7 +45,11 @@ export default {
   watch: {
     data: function (newVal, oldVal) {
       this.setData()
+    },
+    error: function (newVal, oldVal) {
+      console.log(newVal)
     }
+
   },
 
   directives: {

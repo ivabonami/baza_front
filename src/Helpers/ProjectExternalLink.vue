@@ -81,7 +81,7 @@ export default {
   .project-external_text {
     color: #000;
     font-family: "PT Sans Caption";
-    font-size: 14px;
+    font-size: 12px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;

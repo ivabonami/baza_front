@@ -47,7 +47,8 @@ export async function updateProduct(product) {
         'Authorization': `Bearer ${userInfo.token}`
     };
 
-    let image = await uploadImage(product.file)
+    let image = product.file ? await (await uploadImage(product.file)).data.filePath : product.avatarFilePath
+    console.log(product)
 
     if (image === 'Invalid token') {
         signOut()
@@ -56,7 +57,7 @@ export async function updateProduct(product) {
         return await axios.put(`${apiUrl}/products/${product.id}`, {
             name: product.name,
             description: product.description,
-            avatarFilePath: image.data.filePath,
+            avatarFilePath: image,
             projectId: product.projectId
         },{headers}).then(result => result).catch(error => error)
     }

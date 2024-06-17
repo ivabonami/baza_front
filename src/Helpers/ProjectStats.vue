@@ -31,10 +31,14 @@ export default {
   flex-wrap: nowrap;
 
   .stat_icon {
-    margin-top: -3px;
+    width: auto;
+    height: 12px;
+    align-self: center;
+    display: flex;
+
     svg {
-      width: 9px;
-      height: 9px;
+      width: 12px;
+      height: 12px;
 
       path {
         stroke-width: 1px;
@@ -43,9 +47,10 @@ export default {
     }
   }
   .stat_text {
-    color: var(--gray, #A8A8A8);
-    font-family: "PT Sans Caption";
-    font-size: 14px;
+    color: #1E1E1E;
+
+    font-family: Inter;
+    font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
