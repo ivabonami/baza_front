@@ -11,6 +11,7 @@
       <InputRating
           :input="inputs.reviewRating"
           :error="inputs.errors"
+          :data="this.$props.data"
           @data="emit => data.rating = emit"
           @error="emit => emit"
       >
@@ -31,13 +32,7 @@
         <button-primary
             v-show="!loading"
             @close="() => {
-              onReviewAdd()
-
-              if (Object.keys(this.notice.text).length <= 0) {
-
-              } else {
-
-              }
+              onReviewAdd(this.$props.mode)
 
             }"
         >
@@ -92,7 +87,7 @@ import loaderSmall from "../Loaders/LoaderSmall.vue";
 import {api} from "../../assets/js/config.js";
 import buttonAction from "../Buttons/ButtonAction.vue";
 import InputRating from "../Inputs/InputRating.vue";
-import {addReview} from "../../API/reviews.js";
+import {addReview, editReview} from "../../API/reviews.js";
 
 
 
@@ -108,6 +103,7 @@ export default {
       buttonConfirmText: null,
       product: null
     },
+    data: {},
     mode: null,
     projectId: null
 
@@ -163,9 +159,12 @@ export default {
   },
   watch: {
     options: (val, oldVal) => {
-      console.log(val)
+
     },
     mode: (val, oldVal) => {
+      console.log(val)
+    },
+    data: (val, oldVal) => {
       console.log(val)
     }
   },
@@ -178,12 +177,15 @@ export default {
     } else {
       document.body.style.overflow = 'hidden scroll'
     }
-
+    this.inputs.reviewRating.data = this.$props.data.rating
+    this.data.projectId = this.$props.data.projectId
+    this.inputs.reviewComment.data = this.$props.data.comment
 
   },
   methods: {
-    onReviewAdd() {
+    onReviewAdd(mode) {
       this.data.projectId = this.$props.projectId
+
       if (this.data.rating <= 0) {
         this.notice.show = true
         this.notice.text.ratingError = 'Вам нужно выбрать оценку от 1 до 5'
@@ -191,21 +193,35 @@ export default {
         this.notice.show = false
         delete this.notice.text.ratingError
 
-        addReview(this.data).then(result => {
+        if (mode === "add") {
+          addReview(this.data).then(result => {
+            if (result.response.data.success === false) {
+              this.notice.show = true
+              result.response.data.message === "This user already rated this project." ? this.notice.text.fetchError = "Вы уже оставляли отзыв к проекту, дождитесь проверки модератора" : null
 
-          console.log(result.response.data)
-          if (result.response.data.success === false) {
-            this.notice.show = true
-            result.response.data.message === "This user already rated this project." ? this.notice.text.fetchError = "Вы уде оставляли отзыв к проекту, дождитесь проверки модератора" : null
+            } else {
+              this.closeModal()
+            }
+          })
+        } else {
+          this.data.ProjectId = this.$props.data.ProjectId
+          this.data.id = this.$props.data.id
+          this.data.UserId = this.$props.data.userData.id
 
-          } else {
-            this.closeModal()
-          }
-        })
+          console.log(this.data)
+
+          editReview(this.data).then(result => {
+
+            console.log(result.response.data)
+          })
+        }
+
+
       }
 
 
     },
+
     closeModal() {
       this.$emit('closeModal', true)
 

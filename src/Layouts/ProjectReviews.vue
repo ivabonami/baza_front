@@ -83,6 +83,9 @@
           </span>
         </div>
         <div class="rating">
+          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11" fill="none">
+            <path d="M5.08141 0.504121C5.2159 0.218337 5.28315 0.0754451 5.37444 0.029791C5.45386 -0.00993033 5.54614 -0.00993033 5.62556 0.029791C5.71685 0.0754451 5.7841 0.218337 5.91859 0.504121L7.19452 3.21543C7.23423 3.29979 7.25408 3.34198 7.28309 3.37473C7.30878 3.40373 7.33959 3.42723 7.37381 3.44392C7.41246 3.46277 7.45684 3.46958 7.5456 3.48319L10.3997 3.92075C10.7002 3.96683 10.8505 3.98987 10.92 4.06686C10.9805 4.13385 11.009 4.22591 10.9975 4.31739C10.9842 4.42254 10.8755 4.53369 10.6579 4.75598L8.59341 6.86508C8.52906 6.93083 8.49688 6.9637 8.47612 7.00282C8.45773 7.03745 8.44594 7.0755 8.44139 7.11485C8.43625 7.15929 8.44384 7.20573 8.45903 7.2986L8.94615 10.2776C8.99753 10.5918 9.02321 10.7489 8.97494 10.8422C8.93293 10.9233 8.85827 10.9802 8.77174 10.997C8.67229 11.0163 8.53779 10.9421 8.26879 10.7937L5.71727 9.38632C5.63777 9.34247 5.59803 9.32054 5.55615 9.31192C5.51907 9.3043 5.48093 9.3043 5.44385 9.31192C5.40198 9.32054 5.36223 9.34247 5.28273 9.38632L2.73121 10.7937C2.46221 10.9421 2.32771 11.0163 2.22826 10.997C2.14173 10.9802 2.06707 10.9233 2.02506 10.8422C1.97679 10.7489 2.00248 10.5918 2.05385 10.2776L2.54097 7.2986C2.55616 7.20573 2.56375 7.15929 2.55861 7.11485C2.55406 7.0755 2.54227 7.03745 2.52388 7.00282C2.50312 6.9637 2.47094 6.93083 2.40659 6.86508L0.342133 4.75598C0.124546 4.53369 0.0157523 4.42254 0.00251347 4.31739C-0.00900502 4.22591 0.019451 4.13385 0.0799588 4.06686C0.149504 3.98987 0.299777 3.96683 0.600324 3.92075L3.4544 3.48319C3.54316 3.46958 3.58754 3.46277 3.62619 3.44392C3.66041 3.42723 3.69122 3.40373 3.71691 3.37473C3.74592 3.34198 3.76577 3.29979 3.80548 3.21543L5.08141 0.504121Z" fill="black"/>
+          </svg>
           {{ review.rating }}
         </div>
 
@@ -93,7 +96,40 @@
       </div>
 
       <div class="menu">
-        testimonial menu like edit/disapprove/delete
+        <button-action
+            @click="() => { onEditReview(review) }"
+        >
+          <template #text>
+            Редактировать
+          </template>
+          <template #icon>
+            <svg data-v-76b04a54="" xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none" style="width: 15px; height: 15px;"><path data-v-76b04a54="" d="M1.13619 6.77432C1.15283 6.62457 1.16115 6.54969 1.1838 6.47971C1.2039 6.41761 1.2323 6.35853 1.26823 6.30404C1.30873 6.24263 1.362 6.18936 1.46854 6.08282L6.25134 1.30002C6.65137 0.899992 7.29995 0.899992 7.69998 1.30002C8.10001 1.70006 8.10001 2.34864 7.69998 2.74867L2.91718 7.53146C2.81064 7.638 2.75737 7.69128 2.69596 7.73177C2.64147 7.7677 2.58238 7.7961 2.52029 7.8162C2.45031 7.83885 2.37543 7.84717 2.22568 7.86381L1 8L1.13619 6.77432Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </template>
+        </button-action>
+
+        <button-action
+            @click="() => { onDeleteReview(review) }"
+        >
+          <template #text>
+            Удалить
+          </template>
+          <template #icon>
+            <svg data-v-76b04a54="" xmlns="http://www.w3.org/2000/svg" width="10" height="11" viewBox="0 0 10 11" fill="none" style="width: 15px; height: 15px;"><path data-v-76b04a54="" d="M6.77778 2.8V2.44C6.77778 1.93595 6.77778 1.68393 6.68089 1.49141C6.59567 1.32206 6.45969 1.18438 6.29244 1.09809C6.10229 1 5.85338 1 5.35556 1H4.64444C4.14662 1 3.89771 1 3.70756 1.09809C3.54031 1.18438 3.40433 1.32206 3.31911 1.49141C3.22222 1.68393 3.22222 1.93595 3.22222 2.44V2.8M1 2.8H9M8.11111 2.8V7.84C8.11111 8.59607 8.11111 8.97411 7.96579 9.26289C7.83796 9.51691 7.63398 9.72343 7.3831 9.85286C7.09788 10 6.72451 10 5.97778 10H4.02222C3.27549 10 2.90212 10 2.6169 9.85286C2.36602 9.72343 2.16204 9.51691 2.03421 9.26289C1.88889 8.97411 1.88889 8.59607 1.88889 7.84V2.8" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </template>
+        </button-action>
+
+        <button-action
+            @click="() => { onDisapproveReview(review) }"
+        >
+          <template #text>
+            Снять с публикации
+          </template>
+          <template #icon>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 10 9" fill="none">
+              <path d="M4.48905 1.81368C4.65419 1.79031 4.82454 1.77778 5 1.77778C7.07432 1.77778 8.43548 3.52966 8.89277 4.22265C8.94812 4.30653 8.97579 4.34847 8.99128 4.41315C9.00291 4.46173 9.00291 4.53837 8.99126 4.58695C8.97576 4.65163 8.9479 4.69384 8.89216 4.77828C8.77032 4.96284 8.58456 5.22221 8.33846 5.50351M2.85615 2.44474C1.97763 3.01511 1.38122 3.80754 1.10762 4.22205C1.05202 4.30628 1.02423 4.3484 1.00873 4.41308C0.997094 4.46165 0.997089 4.53828 1.00872 4.58686C1.02421 4.65154 1.05188 4.69348 1.10722 4.77735C1.56451 5.47034 2.92567 7.22222 5 7.22222C5.8364 7.22222 6.55685 6.9374 7.14885 6.55201M1.34301 1L8.65699 8M4.13804 3.67504C3.91744 3.88617 3.781 4.17783 3.781 4.5C3.781 5.14433 4.32677 5.66667 5 5.66667C5.33662 5.66667 5.64136 5.53608 5.86196 5.32496" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </template>
+        </button-action>
       </div>
 
     </div>
@@ -105,6 +141,7 @@
       :options="modalReviewsController.product"
       :projectId="$props.project.id"
       :mode="modalReviewsController.mode"
+      :data="this.reviewToEdit"
       @closeModal="modalReviewsController.show = false"
       @productAdded="emit => emit"
       @productUpdated="emit => emit"
@@ -127,10 +164,8 @@ import emptyStore from "../Blocks/EmptyStore.vue";
 import buttonAction from "../components/Buttons/ButtonAction.vue";
 import popupReviewsController from "../components/Popups/PopupReviewsController.vue";
 import {projectReviewsStore} from "../Store/projectReviews.js";
-import {getReviews} from "../API/reviews.js";
+import {disapproveReview, getReviews, deleteReview, editReview} from "../API/reviews.js";
 import {userInfo} from "../Store/userInfo.js";
-
-
 
 
 
@@ -149,6 +184,7 @@ export default {
         review: null,
         buttonConfirmText: "Добавить отзыв"
       },
+      reviewToEdit: null,
       projectReviewsStore,
       userInfo
 
@@ -163,11 +199,27 @@ export default {
 
   methods: {
 
+    onEditReview(review) {
+      this.modalReviewsController.show = true
+      this.modalReviewsController.mode = 'edit'
+      this.modalReviewsController.buttonConfirmText = 'Изменить отзыв'
+      this.reviewToEdit = review
+      this.modalReviewsController.projectId = this.$props.project.id
+
+    },
+    onDeleteReview(review) {
+      deleteReview(review)
+
+    },
+    onDisapproveReview(review) {
+      disapproveReview(review)
+
+    }
+
 
   },
   watch: {
     project: function (newVal, oldVal) {
-      console.log(newVal)
       getReviews({projectId: newVal.id})
     },
   },
@@ -225,6 +277,58 @@ export default {
         margin-bottom: 20px;
       }
     }
+  }
+}
+.project-reviews_items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+
+  .project-reviews_items_item {
+    width: 49%;
+    .project-reviews_items_item_heading {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      .info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #000;
+        font-family: "PT Sans Caption";
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+
+      }
+      .rating {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+
+        color: #000;
+        text-align: right;
+        font-family: "PT Sans Caption";
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+
+      }
+    }
+
+    .menu {
+      display: flex;
+      width: 100%;
+      gap: 10px;
+
+      button:nth-child(3) {
+        margin-left: auto;
+      }
+    }
+
   }
 }
 </style>

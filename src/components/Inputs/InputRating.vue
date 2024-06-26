@@ -47,6 +47,7 @@ export default {
       tooltip: null,
       min: 0,
       max: 255,
+      data: null
 
     },
     error: null,
@@ -67,6 +68,11 @@ export default {
   watch: {
     data: function (newVal, oldVal) {
       this.setData()
+      this.changeRating(newVal)
+    },
+    input: function (newVal, oldVal) {
+      this.setData()
+      console.log(newVal)
     },
     error: function (newVal, oldVal) {
       console.log(newVal)
@@ -95,6 +101,13 @@ export default {
 
   mounted() {
     this.setData()
+    if (this.$props.data !== null) {
+      this.setData()
+      this.changeRating(this.$props.data.rating - 1)
+    }
+    console.log(this.$props.data.rating)
+  },
+  updated() {
 
   }
 

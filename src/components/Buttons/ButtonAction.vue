@@ -43,9 +43,10 @@ export default {
   gap: 10px;
   background-color: transparent;
   border: none;
+  margin-bottom: 5px;
 
   .base-button_icon {
-    margin-top: 4px;
+
   }
 
   span {
@@ -56,12 +57,15 @@ export default {
     font-weight: 400;
     line-height: normal;
     transition: .15s ease;
+    padding-right: 6px;
+    padding-left: 0;
   }
 
   &:hover {
 
     span {
-      padding-left: 5px;
+      padding-right: 0;
+      padding-left: 6px;
     }
   }
 }
