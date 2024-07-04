@@ -764,55 +764,8 @@ h3 {
   }
 
 }
-@media screen and (max-width: 500px) {
-  .project {
-    .project-header {
-      flex-wrap: wrap;
-      .avatar {
-        width: 120px;
-      }
-      .button {
-        margin-left: 0;
-        width: 100%;
-      }
-      .baza-button {
-        width: 100%;
-        box-sizing: border-box;
-        margin-left: 0;
-      }
-    }
-    .project-info {
-      width: calc(100% - 130px);
-      .project-stats {
-        flex-wrap: wrap;
-        gap: 1px;
+@media screen and (max-width: 768px) {
 
-        .sep {
-          display: none;
-        }
-
-        .rating {
-          min-width: 47%;
-        }
-      }
-    }
-    .project-body {
-      padding-left: 10px;
-      padding-right: 10px;
-      .tabs-body {
-        .project-reviews {
-          .block-heading {
-            .left {
-              width: 60%;
-            }
-            .right {
-              width: 40%;
-            }
-          }
-        }
-      }
-    }
-  }
 
 
 }

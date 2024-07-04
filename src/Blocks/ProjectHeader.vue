@@ -320,4 +320,46 @@ export default {
   }
 
 }
+
+@media screen and (max-width: 768px){
+  .project-header {
+    flex-wrap: wrap;
+
+    .project-header_links {
+      width: 100%;
+      flex-basis: 100%;
+      margin-top: 10px;
+    }
+
+    .project-header_avatar {
+      width: 100%;
+    }
+
+    .project-header_info {
+      width: 100%;
+      flex-basis: 100%;
+      flex-wrap: wrap;
+
+      .project-header_info_stats {
+        flex-basis: 100%;
+        width: 100%;
+
+        .project-header_info_header {
+          width: 100%;
+        }
+      }
+
+      .project-header_info_stats_exchanger {
+        width: 100%;
+        flex-basis: 100%;
+        .project-header_info_stats_exchanger_item {
+          justify-content: space-around;
+          margin-top: 5px;
+          margin-bottom: 5px;
+        }
+      }
+
+    }
+  }
+}
 </style>

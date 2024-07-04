@@ -342,6 +342,7 @@ export default {
     .project-card_name {
       font-family: "PT Sans Caption";
       color: #1E1E1E;
+      word-break: break-word;
       font-size: 16px;
       font-style: normal;
       font-weight: 400;

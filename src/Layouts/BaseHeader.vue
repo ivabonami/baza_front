@@ -165,6 +165,16 @@ export default {
       margin-left: 5px;
     }
   }
+
+}
+
+@media screen and (max-width: 768px){
+  .search {
+    display: none;
+  }
+  .nav {
+    display: none;
+  }
 }
 
 </style>

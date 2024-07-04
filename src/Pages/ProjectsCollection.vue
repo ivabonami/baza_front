@@ -221,10 +221,22 @@ export default {
 }
 
 @media screen and (max-width: 1024px) {
-
+  .projects-collection_wrapper {
+    .projects-collection_items {
+      .projects-collection_items_item {
+        width: 32%;
+      }
+    }
+  }
 }
 @media screen and (max-width: 768px)  {
-
+  .projects-collection_wrapper {
+    .projects-collection_items {
+      .projects-collection_items_item {
+        width: 49%;
+      }
+    }
+  }
 }
 @media screen and (max-width: 500px){
 

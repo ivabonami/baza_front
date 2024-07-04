@@ -151,7 +151,7 @@
       v-if="modalProductController.show"
       :modal="modalProductController"
       :options="productControllerOptions.product"
-      :projectId="$props.projectId"
+      :projectId="$props.project.id"
       :mode="productControllerOptions.mode"
       @closeModal="modalProductController.show = false"
       @productAdded="emit => onProductAdded(emit)"
@@ -354,6 +354,7 @@ export default {
 .project-products {
   margin-top: 30px;
   margin-bottom: 10px;
+  padding: 10px;
 
   .project-products_heading {
     color: #000;

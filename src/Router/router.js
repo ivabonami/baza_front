@@ -81,7 +81,12 @@ const router = createRouter({
         {
             path: '/check-projects',
             component: checkProjects
-        }
+        },
+
+        {
+            path: '/check-testimonials',
+        },
+
 
     ]
 })

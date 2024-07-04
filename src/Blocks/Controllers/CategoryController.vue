@@ -1,8 +1,5 @@
 <template>
   <div class="form-wrapper">
-    <loading v-model:active="isLoading"
-             v-bind:color="red"
-             :is-full-page="fullPage"/>
 
 
     <div class="categories">
@@ -91,37 +88,7 @@
 
     <div class="form">
 
-      <div class="input-wrapper">
-        <label class="help" for="projectName">
-          Добавить новую категорию
-          <svg xmlns="http://www.w3.org/2000/svg" v-tippy="{content: 'Введите название категории, до 255 символов', theme: 'light'}" width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M7.95281 10.8V8M7.95281 5.2H7.95993M15.0758 8C15.0758 11.866 11.8868 15 7.95281 15C4.01886 15 0.829773 11.866 0.829773 8C0.829773 4.13401 4.01886 1 7.95281 1C11.8868 1 15.0758 4.13401 15.0758 8Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </label>
-        <div class="input">
-          <input
-              type="text"
-              id="projectName"
-              v-model="categoryName"
-              minlength="1" maxlength="255"
-              ref="projectName"
-              required>
-        </div>
-      </div>
-      <div class="allowFront">
-        <input type="checkbox"
-               v-model="canHasFront"
-               id="checkbox"
-               checked
-        >
-        <label class="checkmark"  for="checkbox"></label>
-        <label for="checkbox" class="text">Наличие витрины</label>
-      </div>
-
-      <button class="baza-button primary"
-              @click="addCategory()">
-        Добавить категорию
-      </button>
+      В РАЗРАБОТКЕ
 
     </div>
 
@@ -140,10 +107,17 @@ import {useFetch} from "../../assets/js/controllers/requestsControl.js";
 import {modalSetting} from "../../assets/js/modal.js";
 import { directive } from 'vue-tippy'
 import 'tippy.js/dist/tippy.css'
+import inputText from "../../components/Inputs/InputText.vue";
+import buttonPrimary from "../../components/Buttons/ButtonPrimary.vue";
+
+
 
 export default {
   name: "addCategory.vue",
-  components: {  },
+  components: {
+    inputText,
+    buttonPrimary
+  },
 
   emits: ['confirmAction', 'forceReload'],
   directives: {
@@ -202,7 +176,7 @@ export default {
   color: #0b5348;
 }
 .form {
-  width: 300px;
+  width: 100%;
   gap: 30px;
   align-items: center;
   margin-bottom: 30px;

@@ -1,38 +1,63 @@
 <template>
   <div class="wrapper">
     <h3 v-if="projects.length < 0">Проекты, требующие проверки: </h3>
-    <project-card v-for="project of projects"
 
-                  v-bind:project="project"
-                  v-on:projectUpdated="() => {
+    <div class="projects" >
+      <div class="project" v-for="project of projects">
+        <project-card
+            v-bind:project="project"
+            v-on:projectUpdated="() => {
                     this.getProjects()
                     this.getProjects()
                   }"
+        >
 
-    >
-
-
-    </project-card>
-
-    <div class="no-projects" v-if="projects.length >= 0">
-
-      <h3>Нет непроверенных проектов</h3>
-      <img src="../assets/images/cat%20sleep.png" alt="">
+        </project-card>
+      </div>
     </div>
+
+
+    <empty-store
+        :show-button="true"
+        :show-button-for-users="false"
+        v-show="!loading && projects.length <= 0">
+      <template #header>
+        В этом проекте, пока что, отстутствуют товары и услуги
+      </template>
+      <template #text>
+        ожидайте обновлений
+      </template>
+      <template #buttonText>
+        Добавить услугу
+      </template>
+    </empty-store>
+
+    <base-loader v-show="loading" />
+
+
   </div>
 
 </template>
 
 <script>
 import projectCard from "../Blocks/ProjectCard.vue";
+import emptyStore from "../Blocks/EmptyStore.vue";
+import baseLoader from "../Layouts/BaseLoader.vue";
+
+
 export default {
   name: "checkProjects.vue",
   data() {
     return {
-      projects: {}
+      projects: {},
+      loading: true
     }
   },
-  components: {projectCard},
+  components: {
+    projectCard,
+    emptyStore,
+    baseLoader
+  },
   mounted() {
     this.getProjects()
   },
@@ -49,6 +74,7 @@ export default {
           .then((response) => response.json())
           .then((result) => {
             this.projects = result.projects
+            this.loading = false
           })
           .catch((error) => {console.error(error)});
     },
@@ -59,29 +85,39 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.no-projects {
-  margin-top: 10px;
-  display: flex;
-  gap: 1%;
-  flex-wrap: wrap;
-  justify-content: center;
-  font-weight: bold;
-  text-align: center;
-  h3 {
+.wrapper {
+  width: 100%;
+  .projects {
+    display: flex;
     width: 100%;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    .project {
+      width: 24%;
+    }
   }
 
-  img {
-    width: 20%;
-    display: inline-block;
+}
+@media screen and (max-width: 1024px){
+  .wrapper {
+    padding: 10px;
+    .projects {
+      .project {
+        width: 32%;
+      }
+    }
+
   }
-  span {
+}
 
-    flex-basis: 100%;
-  }
-
-  span {
-
+@media screen and (max-width: 500px){
+  .wrapper {
+    .projects {
+      .project {
+        width: 48%;
+      }
+    }
 
   }
 }

@@ -128,4 +128,10 @@ export default {
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .empty-store .button-wrapper {
+    width: 50%;
+  }
+}
 </style>

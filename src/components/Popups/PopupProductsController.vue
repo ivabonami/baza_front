@@ -84,9 +84,11 @@
         <button-primary
             v-show="!loading"
             @close="() => {
-              this.product.projectId = $props.projectId
+
+              console.log(product)
 
               if (Object.keys(this.notice.text).length <= 0) {
+                this.product.projectId = $props.projectId
                 this.$props.options === null ? addNewProduct(product) : updateExistProduct(product)
               } else {
 
@@ -270,17 +272,20 @@ export default {
         this.notice.show = true
         this.notice.color = 'red'
         this.notice.text.nameLength = `Название должно содержать не менее 5 символов`
+        this.loading = false
 
       }
       if (!product.description) {
         this.notice.show = true
         this.notice.color = 'red'
         this.notice.text.descriptionLength = `Описание должно содержать не менее 30 символов`
+        this.loading = false
       }
       if (!product.file) {
         this.notice.show = true
         this.notice.color = 'red'
         this.notice.text.imageErros = `Загрузите изображение`
+        this.loading = false
       }
 
       if (Object.keys(this.notice.text).length <= 0) {

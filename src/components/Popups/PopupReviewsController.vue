@@ -103,12 +103,14 @@ export default {
       buttonConfirmText: null,
       product: null
     },
-    data: {},
+    data: {
+      userData: ''
+    },
     mode: null,
     projectId: null
 
   },
-
+// TODO EDIT TESTIMONIAL, EDIT PROJECT, CHECK TESTIMONIALS (FINISH BUGS)
   data() {
     return {
       data: {
@@ -165,7 +167,8 @@ export default {
       console.log(val)
     },
     data: (val, oldVal) => {
-      console.log(val)
+      this.inputs.reviewRating.data = this.$props.data.rating
+      this.inputs.reviewComment.data = this.$props.data.comment
     }
   },
   mounted() {
@@ -177,14 +180,15 @@ export default {
     } else {
       document.body.style.overflow = 'hidden scroll'
     }
-    this.inputs.reviewRating.data = this.$props.data.rating
-    this.data.projectId = this.$props.data.projectId
-    this.inputs.reviewComment.data = this.$props.data.comment
+
+
+
 
   },
   methods: {
     onReviewAdd(mode) {
       this.data.projectId = this.$props.projectId
+
 
       if (this.data.rating <= 0) {
         this.notice.show = true
@@ -202,11 +206,12 @@ export default {
             } else {
               this.closeModal()
             }
+            this.closeModal()
           })
         } else {
           this.data.ProjectId = this.$props.data.ProjectId
           this.data.id = this.$props.data.id
-          this.data.UserId = this.$props.data.userData.id
+          this.data.userData.id = this.$props.data.userData.id
 
           console.log(this.data)
 

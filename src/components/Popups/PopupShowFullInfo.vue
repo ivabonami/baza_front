@@ -158,5 +158,13 @@ export default {
     opacity: 1;
   }
 }
-
+@media screen and (max-width: 768px){
+  .popup {
+    width: 90%;
+    flex-wrap: wrap;
+    .popup_body {
+      width: 100%;
+    }
+  }
+}
 </style>

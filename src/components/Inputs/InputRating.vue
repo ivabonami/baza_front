@@ -100,12 +100,12 @@ export default {
   },
 
   mounted() {
-    this.setData()
+
     if (this.$props.data !== null) {
       this.setData()
       this.changeRating(this.$props.data.rating - 1)
     }
-    console.log(this.$props.data.rating)
+
   },
   updated() {
 
