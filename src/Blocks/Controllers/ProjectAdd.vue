@@ -24,7 +24,6 @@
           :data="inputs.name.data"
           @data="emit => {
             project.name = emit
-            console.log(emit)
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
             delete this.notice.text.nameLength
           }"
@@ -60,17 +59,18 @@
 
         <input-file
             :input="inputs.avatar"
+            :data="project.avatar"
             @data="emit => {
-          this.project.avatar = emit
-          delete this.notice.text.imageErros
-          Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
-        }"
+              this.project.avatar = emit
+              delete this.notice.text.imageErros
+              Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
+            }"
             @error="emit => {
-          this.project.avatar = null
-          this.notice.color = 'red'
-          this.notice.text.imageErros = emit
-          Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
-        }"
+              this.project.avatar = null
+              this.notice.color = 'red'
+              this.notice.text.imageErros = emit
+              Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
+            }"
         />
 
         <input-file
@@ -106,7 +106,6 @@
               :input="inputs.links.link"
               @data="emit => {
                 linkToAdd.link = emit
-                console.log(emit)
                 Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
                 delete this.notice.text.linkErr
               }"
@@ -136,14 +135,13 @@
             :data="inputs.categories.data"
             @categoryIds="emit => {
               project.categoryIds = emit
-              console.log(emit)
               Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
               delete this.notice.text.nameLength
             }"
 
             @exchangerSelected="emit => {
               this.exchangerSelected = emit
-              console.log(this.exchangerSelected, emit)
+
             }"
         />
       </div>
@@ -157,7 +155,7 @@
               :data="inputs.reserve.data"
               @data="emit => {
             project.reserve = emit
-            console.log(emit)
+
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
             delete this.notice.text.reserveErr
           }"
@@ -175,7 +173,7 @@
               :data="inputs.minValueToExchange.data"
               @data="emit => {
             project.minValueToExchange = emit
-            console.log(emit)
+
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
             delete this.notice.text.minValueToExchangeErr
           }"
@@ -270,6 +268,8 @@ import popupInfo from "../../components/Popups/PopupInfo.vue";
 import signIn from "../../components/Forms/SignIn.vue";
 import {userInfo} from "../../Store/userInfo.js";
 import projectExternalLink from "../../Helpers/ProjectExternalLink.vue";
+import buttonAction from "../../components/Buttons/ButtonAction.vue";
+import {apiUrl} from "../../assets/js/config.js";
 
 export default {
   name: "Project_Add.vue",
@@ -286,7 +286,8 @@ export default {
     inputNumber,
     popupInfo,
     signIn,
-    projectExternalLink
+    projectExternalLink,
+    buttonAction
 
 
   },
@@ -301,6 +302,7 @@ export default {
         categoryIds: [],
         links: []
       },
+      apiUrl,
       exchangerSelected: false,
       linkToAdd: {
         name: "Зеркало",

@@ -110,7 +110,7 @@ export default {
     projectId: null
 
   },
-// TODO EDIT PROJECT, CHECK TESTIMONIALS (FINISH BUGS)
+
   data() {
     return {
       data: {
@@ -164,7 +164,7 @@ export default {
 
     },
     mode: (val, oldVal) => {
-      console.log(val)
+
     },
     data: (newVal, oldVal) => {
       this.inputs.reviewRating.data = this.$props.dataReview.rating
@@ -211,7 +211,7 @@ export default {
         if (mode === "add") {
           addReview(this.data).then(result => {
             if (result.response.status === 400) {
-              console.log(result.response.data.message, 'response')
+
               this.notice.show = true
               if (result.response.data.message === "This user already rated this project.") {
                 this.notice.text.fetchError = "Вы уже оставляли отзыв к проекту, дождитесь проверки модератора"

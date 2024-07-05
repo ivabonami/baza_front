@@ -85,8 +85,6 @@
             v-show="!loading"
             @close="() => {
 
-              console.log(product)
-
               if (Object.keys(this.notice.text).length <= 0) {
                 this.product.projectId = $props.projectId
                 this.$props.options === null ? addNewProduct(product) : updateExistProduct(product)
@@ -233,10 +231,10 @@ export default {
   },
   watch: {
     options: (val, oldVal) => {
-      console.log(val)
+
     },
     mode: (val, oldVal) => {
-      console.log(val)
+
     }
   },
   mounted() {
@@ -254,12 +252,9 @@ export default {
     this.inputs.productDescription.data = this.product.description || null
     this.inputs.productImage.data = this.product.avatarFilePath || null
 
-    console.log(this.$props.options)
 
   },
   methods: {
-
-    // TODO PUT PROJECT (FULL)
 
     closeModal() {
       this.$emit('closeModal', true)
@@ -339,7 +334,6 @@ export default {
 
         updateProduct(product).then(result => {
           this.closeModal()
-          console.log(result)
 
           this.notice.show = true
           this.notice.color = 'green'

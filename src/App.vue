@@ -63,6 +63,9 @@ export default {
   },
 
 }
+
+// TODO апрув проектов
+// TODO проверить и апрувнуть отзыв
 </script>
 
 <template>

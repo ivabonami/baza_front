@@ -167,4 +167,12 @@ export default {
   }
 
 }
+@media screen and (max-width: 500px){
+  .filter {
+    .filter_current {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+}
 </style>

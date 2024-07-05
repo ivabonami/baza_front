@@ -68,7 +68,7 @@ export default {
 
   watch: {
     favoriteProjects: function (newVal, oldVal) {
-      console.log(newVal)
+
     }
   },
 

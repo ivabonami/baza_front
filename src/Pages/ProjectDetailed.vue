@@ -25,8 +25,6 @@
 
         </project-products>
 
-<!--        todo project-review -->
-
 
         <project-reviews :project="project">
 
@@ -64,8 +62,6 @@ import projectProducts from "../Layouts/ProjectProducts.vue";
 
 import {useFetch} from "../assets/js/controllers/requestsControl.js";
 
-// TODO обновлять рейтинг при удалении отзыва реактивно
-// TODO Любимые проекты (не удаляется из списка любимых)
 export default {
 
   name: "ProjectsView.vue",

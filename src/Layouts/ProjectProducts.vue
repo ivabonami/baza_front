@@ -340,7 +340,7 @@ export default {
       this.products.splice(productToDelete, 1)
 
 
-      deleteProduct(product).then(result => console.log(result))
+      deleteProduct(product).then(result => result)
     }
   },
 

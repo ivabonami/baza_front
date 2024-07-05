@@ -139,7 +139,7 @@ export default {
 
   methods: {
     changeFavoriteStatus(projectId, status) {
-      console.log(projectId, status)
+
     },
     linkBuilder () {
       let link = `?`
@@ -167,7 +167,7 @@ export default {
 
         this.options.offset += this.options.limit
         this.isLoading = false
-      }).catch(e => console.log(e))
+      }).catch(e => e)
 
     },
 

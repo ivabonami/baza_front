@@ -47,7 +47,7 @@ export default {
       this.setData()
     },
     error: function (newVal, oldVal) {
-      console.log(newVal)
+
     }
 
   },
@@ -75,7 +75,7 @@ export default {
           this.$emit('error', 'Ссылка не валидна')
 
         } else {
-          console.log(this.error)
+
           this.error = false
           this.$emit('data', this.inputData)
 

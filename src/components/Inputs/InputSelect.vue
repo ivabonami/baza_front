@@ -52,10 +52,10 @@ export default {
       this.setData()
     },
     error: function (newVal, oldVal) {
-      console.log(newVal)
+
     },
     linksCategories: function (newVal, oldVal) {
-      console.log(newVal)
+
     }
 
   },

@@ -24,7 +24,7 @@
           :data="inputs.name.data"
           @data="emit => {
             project.name = emit
-            console.log(emit)
+
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
             delete this.notice.text.nameLength
           }"
@@ -35,7 +35,6 @@
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
           }"
       />
-
       <input-textarea
           :input="inputs.description"
           :data="inputs.description.data"
@@ -58,34 +57,78 @@
     <div class="right">
       <div class="images-box">
 
-        <input-file
-            :input="inputs.avatar"
-            @data="emit => {
-          this.project.avatar = emit
-          delete this.notice.text.imageErros
-          Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
-        }"
-            @error="emit => {
-          this.project.avatar = null
-          this.notice.color = 'red'
-          this.notice.text.imageErros = emit
-          Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
-        }"
-        />
+        <div class="old-avatar" v-if="project.avatarFilePath">
+          <img
+
+              :src="apiUrl + '/' + project.avatarFilePath"
+              alt="">
+
+          <button-action
+              @click="project.avatarFilePath = null"
+          >
+            <template #text>
+              Удалить аватар
+            </template>
+            <template #icon>
+              <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none">
+                <path d="M1.13619 6.77432C1.15283 6.62457 1.16115 6.54969 1.1838 6.47971C1.2039 6.41761 1.2323 6.35853 1.26823 6.30404C1.30873 6.24263 1.362 6.18936 1.46854 6.08282L6.25134 1.30002C6.65137 0.899992 7.29995 0.899992 7.69998 1.30002C8.10001 1.70006 8.10001 2.34864 7.69998 2.74867L2.91718 7.53146C2.81064 7.638 2.75737 7.69128 2.69596 7.73177C2.64147 7.7677 2.58238 7.7961 2.52029 7.8162C2.45031 7.83885 2.37543 7.84717 2.22568 7.86381L1 8L1.13619 6.77432Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </template>
+          </button-action>
+        </div>
+
+
 
         <input-file
-            :input="inputs.banner"
+            v-if="!project.avatarFilePath"
+            :input="inputs.avatar"
             @data="emit => {
-          this.project.banner = emit
-          delete this.notice.text.imageErros
-          Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
-        }"
+              this.project.avatar = emit
+              delete this.notice.text.imageErros
+              Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
+            }"
             @error="emit => {
-          this.project.banner = null
-          this.notice.color = 'red'
-          this.notice.text.imageErros = emit
-          Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
-        }"
+              this.project.avatar = null
+              this.notice.color = 'red'
+              this.notice.text.imageErros = emit
+              Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
+            }"
+        />
+
+        <div class="old-avatar" v-if="project.bannerFilePath">
+          <img
+
+              :src="apiUrl + '/' + project.bannerFilePath"
+              alt="">
+
+          <button-action
+              @click="project.bannerFilePath = null"
+          >
+            <template #text>
+              Удалить баннер
+            </template>
+            <template #icon>
+              <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none">
+                <path d="M1.13619 6.77432C1.15283 6.62457 1.16115 6.54969 1.1838 6.47971C1.2039 6.41761 1.2323 6.35853 1.26823 6.30404C1.30873 6.24263 1.362 6.18936 1.46854 6.08282L6.25134 1.30002C6.65137 0.899992 7.29995 0.899992 7.69998 1.30002C8.10001 1.70006 8.10001 2.34864 7.69998 2.74867L2.91718 7.53146C2.81064 7.638 2.75737 7.69128 2.69596 7.73177C2.64147 7.7677 2.58238 7.7961 2.52029 7.8162C2.45031 7.83885 2.37543 7.84717 2.22568 7.86381L1 8L1.13619 6.77432Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </template>
+          </button-action>
+        </div>
+
+        <input-file
+            v-if="!project.bannerFilePath"
+            :input="inputs.banner"
+                @data="emit => {
+              this.project.banner = emit
+              delete this.notice.text.imageErros
+              Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
+            }"
+            @error="emit => {
+              this.project.banner = null
+              this.notice.color = 'red'
+              this.notice.text.imageErros = emit
+              Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
+            }"
         />
 
 
@@ -106,7 +149,7 @@
               :input="inputs.links.link"
               @data="emit => {
                 linkToAdd.link = emit
-                console.log(emit)
+
                 Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
                 delete this.notice.text.linkErr
               }"
@@ -136,14 +179,14 @@
             :data="inputs.categories.data"
             @categoryIds="emit => {
               project.categoryIds = emit
-              console.log(emit)
+
               Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
               delete this.notice.text.nameLength
             }"
 
             @exchangerSelected="emit => {
               this.exchangerSelected = emit
-              console.log(this.exchangerSelected, emit)
+
             }"
         />
       </div>
@@ -157,7 +200,7 @@
               :data="inputs.reserve.data"
               @data="emit => {
             project.reserve = emit
-            console.log(emit)
+
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
             delete this.notice.text.reserveErr
           }"
@@ -175,7 +218,6 @@
               :data="inputs.minValueToExchange.data"
               @data="emit => {
             project.minValueToExchange = emit
-            console.log(emit)
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
             delete this.notice.text.minValueToExchangeErr
           }"
@@ -233,7 +275,7 @@
 
   >
     <template #header>
-      Проект успешно добавлен
+      Проект успешно изменен
     </template>
 
     <template #icon>
@@ -264,12 +306,14 @@ import inputCategories from "../../components/Inputs/InputCategories.vue";
 import inputLink from "../../components/Inputs/InputLink.vue";
 import inputNumber from "../../components/Inputs/InputNumber.vue";
 import {categoriesStore} from "../../Store/categories.js";
-import {addProject} from "../../API/project.js";
+import {editProject} from "../../API/project.js";
 import popupInfo from "../../components/Popups/PopupInfo.vue";
 import signIn from "../../components/Forms/SignIn.vue";
 import {userInfo} from "../../Store/userInfo.js";
 import {getProjectInfo} from "../../API/projects.js";
 import projectExternalLink from "../../Helpers/ProjectExternalLink.vue";
+import {apiUrl} from "../../assets/js/config.js";
+import buttonAction from "../../components/Buttons/ButtonAction.vue";
 
 export default {
   name: "Project_Add.vue",
@@ -286,7 +330,8 @@ export default {
     inputNumber,
     popupInfo,
     signIn,
-    projectExternalLink
+    projectExternalLink,
+    buttonAction
 
   },
 
@@ -300,6 +345,7 @@ export default {
       },
       isOwner: false,
       userInfo,
+      apiUrl,
 
       inputs: {
         name: {
@@ -355,7 +401,7 @@ export default {
         },
 
         avatar: {
-          name: 'Изображение',
+          name: 'Новый аватар',
           tooltip: 'Рекомендуем размеры от 200х200px, соотношение сторон 1:1, требуемый формат: png, jpeg, jpg, gif. webp.',
           data: null
         },
@@ -395,7 +441,7 @@ export default {
       newVal === false ? delete this.project.reserve : null
     },
     project: function (newVal, oldVal) {
-      console.log(newVal)
+
     }
   },
 
@@ -436,19 +482,27 @@ export default {
 
       this.project.name < 1 ? this.notice.text.nameEmpty = 'Название не может быть пустым' : delete this.notice.text.nameEmpty
       this.project.description < 1 ? this.notice.text.descriptionEmpty = 'Описание не может быть пустым' : delete this.notice.text.descriptionEmpty
-      this.project.categoryIds.length < 1 ? this.notice.text.categoriesEmpty = 'Проект должен иметь хотя бы 1 категорию' : delete this.notice.text.categoriesEmpty
+      this.project.categories.length < 1 ? this.notice.text.categoriesEmpty = 'Проект должен иметь хотя бы 1 категорию' : delete this.notice.text.categoriesEmpty
       this.project.links.length < 1 && this.linkToAdd.link.length <= 0 ? this.notice.text.linksEmpty = 'Проект должен иметь хотя бы 1 ссылку' : delete this.notice.text.linksEmpty
-      !this.project.avatar ? this.notice.text.avatarFilePathEmpty = 'Загрузите аватар' : delete this.notice.text.avatarFilePathEmpty
-      !this.project.minValueToExchange && this.project.categoryIds.includes(categoriesStore.exchanger.id) ? this.notice.text.minValueToExchangeErr2 = 'У обменника должно быть заполнено поле минимального обмена' : delete this.notice.text.minValueToExchangeErr2
-      !this.project.reserve && this.project.categoryIds.includes(categoriesStore.exchanger.id) ? this.notice.text.reserveErr2 = 'У обменника должно быть заполнено поле резерв' : delete this.notice.text.reserveErr2
+      !this.project.avatar && !this.project.avatarFilePath ? this.notice.text.avatarFilePathEmpty = 'Загрузите аватар' : delete this.notice.text.avatarFilePathEmpty
       this.linkToAdd.link.length > 0 ? this.addLinkToProject() : null
+
+      if (this.exchangerSelected) {
+        !this.project.minValueToExchange ? this.notice.text.minValueToExchangeErr2 = 'У обменника должно быть заполнено поле минимального обмена' : delete this.notice.text.minValueToExchangeErr2
+        !this.project.reserve ? this.notice.text.reserveErr2 = 'У обменника должно быть заполнено поле резерв' : delete this.notice.text.reserveErr2
+
+      } else {
+        delete this.notice.text.minValueToExchangeErr2
+        delete this.notice.text.reserveErr2
+      }
 
 
       Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
 
       if(Object.keys(this.notice.text).length <= 0) {
 
-        addProject(this.project).then(result => {
+        editProject(this.project, this.project.id).then(result => {
+
           this.modal.show = true
         }).catch(error => this.notice.text = error)
 
@@ -464,9 +518,13 @@ export default {
       this.inputs.name.data = this.project.name
       this.inputs.description.data = this.project.description
       this.project.links = this.project.links
+      this.project.avatarFilePath = this.project.avatarFilePath
+      this.project.userData = result.data.project.userData
 
       userInfo.username === this.project.userData.username ? this.isOwner = true : this.isOwner = false
       userInfo.role === 'admin' ? this.isOwner = true : this.isOwner = false
+
+      this.project.categories.find(item => item.id === categoriesStore.exchanger.id) ? this.exchangerSelected = true : this.exchangerSelected = false
 
       for (let category of this.project.categories) {
         this.inputs.categories.data.push(category.id)
@@ -498,6 +556,7 @@ export default {
     flex-wrap: wrap;
     box-sizing: border-box;
 
+
     .images-box, .links-box {
       width: 50%;
     }
@@ -505,6 +564,7 @@ export default {
       display: flex;
       gap: 5px;
       flex-wrap: wrap;
+      height: 100px;
 
       div {
 
@@ -589,6 +649,14 @@ textarea {
   display: flex;
   gap: 2%;
 
+}
+
+.images-box {
+  img {
+    width: 100px;
+    aspect-ratio: 1 / 1 ;
+    border-radius: 20px;
+  }
 }
 @media screen and (max-width: 500px){
   .form-wrapper {

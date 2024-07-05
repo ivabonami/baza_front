@@ -73,10 +73,10 @@ export default {
     },
     input: function (newVal, oldVal) {
       this.setData()
-      console.log(newVal)
+
     },
     error: function (newVal, oldVal) {
-      console.log(newVal)
+
     }
 
   },

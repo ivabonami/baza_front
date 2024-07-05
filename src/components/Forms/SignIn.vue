@@ -102,7 +102,7 @@ export default {
 
                 this.$emit('errors', {responseError: message})
                 this.loading = false
-                console.log(err)
+
               } else {
                 this.$emit('errors', err.message)
               }

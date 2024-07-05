@@ -48,7 +48,7 @@ export async function updateProduct(product) {
     };
 
     let image = product.file ? await (await uploadImage(product.file)).data.filePath : product.avatarFilePath
-    console.log(product)
+
 
     if (image === 'Invalid token') {
         refreshToken

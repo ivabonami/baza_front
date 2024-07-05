@@ -23,6 +23,21 @@
           </svg>
         </template>
       </button-action>
+
+      <div class="project-rating">
+        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18" fill="none">
+          <path d="M8.70843 0.823678C8.93892 0.356738 9.05416 0.123269 9.21061 0.0486752C9.34673 -0.0162251 9.50487 -0.0162251 9.64099 0.0486752C9.79744 0.123269 9.91268 0.356738 10.1432 0.823677L12.3298 5.25364C12.3979 5.3915 12.4319 5.46042 12.4816 5.51394C12.5257 5.56132 12.5785 5.59971 12.6371 5.62698C12.7033 5.65778 12.7794 5.6689 12.9315 5.69113L17.8228 6.40607C18.3378 6.48135 18.5954 6.519 18.7146 6.6448C18.8183 6.75425 18.867 6.90466 18.8473 7.05414C18.8246 7.22594 18.6382 7.40754 18.2653 7.77074L14.7272 11.2168C14.6169 11.3242 14.5618 11.3779 14.5262 11.4418C14.4947 11.4984 14.4745 11.5606 14.4667 11.6249C14.4579 11.6975 14.4709 11.7734 14.4969 11.9251L15.3317 16.7925C15.4198 17.3059 15.4638 17.5625 15.3811 17.7149C15.3091 17.8474 15.1811 17.9403 15.0328 17.9678C14.8624 17.9994 14.6319 17.8782 14.1709 17.6358L9.79816 15.3362C9.66191 15.2645 9.59379 15.2287 9.52202 15.2146C9.45848 15.2022 9.39312 15.2022 9.32957 15.2146C9.2578 15.2287 9.18968 15.2645 9.05344 15.3362L4.6807 17.6358C4.2197 17.8782 3.98919 17.9994 3.81875 17.9678C3.67046 17.9403 3.5425 17.8474 3.47052 17.7149C3.38778 17.5625 3.43181 17.3058 3.51986 16.7925L4.35467 11.9251C4.38069 11.7734 4.39371 11.6975 4.3849 11.6249C4.3771 11.5606 4.35689 11.4984 4.32539 11.4418C4.2898 11.3779 4.23466 11.3242 4.12437 11.2168L0.586341 7.77074C0.213444 7.40754 0.0269959 7.22594 0.00430753 7.05414C-0.0154326 6.90466 0.0333348 6.75425 0.137032 6.6448C0.256216 6.519 0.513753 6.48135 1.02882 6.40607L5.92009 5.69113C6.07221 5.6689 6.14826 5.65778 6.2145 5.62698C6.27315 5.59971 6.32594 5.56132 6.36997 5.51394C6.41969 5.46042 6.45371 5.3915 6.52175 5.25364L8.70843 0.823678Z" fill="#D8D8D8"/>
+        </svg>
+
+        <span class="rating">
+          {{ project.ratingAvg }}
+        </span>
+
+        <span class="onThe">
+          оценок проекта: {{ project.reviewsCount }}
+        </span>
+
+      </div>
     </div>
   </div>
 
@@ -151,6 +166,7 @@
       @productUpdated="emit => emit"
       @reviewAdded="emit => {
         modalInfo.show = true
+        project.reviewsCount++
       }"
   >
     <template #header>
@@ -169,7 +185,10 @@
       v-if="modalDelete"
       :modal="modalDelete"
       @closeModal="modalDelete.show = false"
-      @deleteConfirmed="deleteReview(reviewToDelete)"
+      @deleteConfirmed="() => {
+        deleteReview(reviewToDelete)
+        project.reviewsCount--
+      }"
 
   >
     <template #header>
@@ -191,6 +210,7 @@
       v-if="modalInfo.show"
       @closeModal="() => {
         modalInfo.show = false
+        projectReviewsStore.reviews.splice(0, projectReviewsStore.reviews.length)
         getReviews({projectId: $props.project.id})
       }"
 
@@ -335,6 +355,37 @@ export default {
       margin-top: -10px;
     }
 
+    .project-rating {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-wrap: wrap;
+      justify-content: end;
+
+      svg {
+        path {
+          fill: #FFC700;
+        }
+      }
+      .onThe {
+        font-size: 12px;
+        width: 100%;
+        text-align: right;
+      }
+
+      .rating {
+        color: #000;
+        text-align: right;
+        font-family: "PT Sans Caption";
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 0;
+
+      }
+    }
+
   }
 
   .project-products_items {
@@ -368,7 +419,7 @@ export default {
   gap: 30px;
 
   .project-reviews_items_item {
-    width: 49%;
+    width: 48%;
     .project-reviews_items_item_heading {
       display: flex;
       justify-content: space-between;

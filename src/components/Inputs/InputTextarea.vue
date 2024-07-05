@@ -50,6 +50,7 @@ export default {
   watch: {
     data: function (newVal, oldVal) {
       this.setData(newVal)
+
     }
   },
 
@@ -74,7 +75,7 @@ export default {
   },
 
   mounted() {
-
+    this.setData(this.$props.data)
   }
 
 }
@@ -101,7 +102,7 @@ textarea {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  height: 130px;
+  height: 180px;
 
   &::placeholder {
     color: #D8D8D8;

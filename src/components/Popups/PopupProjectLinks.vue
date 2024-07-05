@@ -119,7 +119,7 @@ export default {
 
 
     this.$nextTick(() => {
-      console.log(this.$props)
+
       this.linksSpread(this.$props.data)
     });
 
@@ -161,7 +161,7 @@ export default {
 
         }
       } catch (e) {
-        console.log(e)
+
       }
 
 

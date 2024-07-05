@@ -38,7 +38,6 @@
           </svg>
 
         </div>
-<!--        todo редактирование проекта -->
         <button-action v-if="isAdmin" @click="this.$router.push({name: 'ProjectEdit'})">
           <template #text>
             Редактировать
@@ -202,7 +201,7 @@ export default {
       this.stats.categories.stat = this.$props.project.categories[0].name
 
       if (this.$props.project.categories.length > 1) {
-        this.stats.categories.stat += ` и еще ${this.$props.project.categories.length - 1}`
+        this.stats.categories.stat += ` + ${this.$props.project.categories.length - 1}`
         this.stats.categories.tooltip = 'Категории проекта: '
         for (const [index, category] of this.$props.project.categories.entries()) {
 
@@ -244,6 +243,7 @@ export default {
   border-radius: 10px;
   border: 1px solid var(--gray-2, #D8D8D8);
   display: flex;
+  padding: 0 10px;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
@@ -281,7 +281,7 @@ export default {
       gap: 10px;
       align-items: center;
       flex-wrap: wrap;
-      flex-basis: 60%;
+      flex-basis: 70%;
       width: 100%;
 
 

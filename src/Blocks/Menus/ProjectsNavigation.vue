@@ -57,4 +57,21 @@ export default {
   padding: 0 10px;
   gap: 40px;
 }
+@media screen and (max-width: 500px){
+
+  .project-navigation {
+    flex-wrap: wrap;
+    gap: 0;
+    margin-bottom: 10px;
+
+    .categories-menu {
+      margin-bottom: 0;
+      width: 100%;
+    }
+    .filter {
+      width: 100%;
+    }
+  }
+
+}
 </style>

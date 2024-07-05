@@ -1,31 +1,20 @@
 <template>
-  <label>
-    {{ $props.input.name }}
-    <svg v-show="input.tooltip" xmlns="http://www.w3.org/2000/svg" v-tippy="{content: $props.input.tooltip, theme: 'light'}" width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M7.95281 10.8V8M7.95281 5.2H7.95993M15.0758 8C15.0758 11.866 11.8868 15 7.95281 15C4.01886 15 0.829773 11.866 0.829773 8C0.829773 4.13401 4.01886 1 7.95281 1C11.8868 1 15.0758 4.13401 15.0758 8Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </label>
-  <div class="categories-flex">
-    <div class="category"
-         v-for="category of categoriesStore.categories"
-    >
 
+  <div class="checkbox-flex">
+    <div class="checkbox"
+         :class="{selected: selected}"
+         @click="() => {
+      this.selected = !selected
+      this.$emit('checkboxChanged', selected)
 
-      <div class="category-checkbox"  @click="checkField(category)"
-      >
-      <span class="selected"
-            v-show="this.selectedCategories.indexOf(category.id) >= 0"
-      >
-
+    }">
       <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="0.468079" width="20.3515" height="20" rx="5" fill="#FFC700"/>
-      <path d="M5.55597 9.75L9.08634 14L15.7317 6" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="0.468079" width="20.3515" height="20" rx="5" />
+        <path d="M5.55597 9.75L9.08634 14L15.7317 6" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-
-
+      <span class="checkbox" >
+        {{ $props.input.data }}
       </span>
-        {{ category.name }}
-      </div>
 
     </div>
   </div>
@@ -55,7 +44,7 @@ export default {
   },
   data() {
     return {
-      selectedCategories: [],
+      selected: false,
       checkInputData,
       error: false,
       categoriesStore
@@ -81,11 +70,12 @@ export default {
   methods: {
     setData () {
       this.$props.input.data ? this.selectedCategories = this.$props.input.data : null
+      this.selected = this.$props.input.checked
     },
     checkField(value) {
 
       this.selectedCategories.indexOf(value.id) < 0 ? this.selectedCategories.push(value.id) : this.selectedCategories.splice(this.selectedCategories.indexOf(value.id), 1)
-      this.$emit('categoryIds', this.selectedCategories)
+      this.$emit('data', this.selectedCategories)
 
       this.selectedCategories.includes(categoriesStore.exchanger.id) ? this.$emit('exchangerSelected', true) : this.$emit('exchangerSelected', false)
     }
@@ -114,35 +104,54 @@ label {
 }
 
 
-.categories-flex {
+.checkbox-flex {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+
 }
-.category-checkbox {
+.checkbox {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
   position: relative;
-  padding: 3px;
-  width: 100%;
   cursor: pointer;
+  justify-content: left;
 
   .category {
     width: 100%;
 
   }
-  span {
-    padding-left: 20px;
+  svg {
+    margin-right: 10px;
+    rect {
+      stroke: #6B6B6B;
+      stroke-width: 1px;
+    }
+    path {
+      stroke-width: 0;
+    }
   }
 
-  &.checked {
-   svg {
-     path {
-       background: #dadada;
-     }
-   }
+  &.selected {
+    svg {
+      rect {
+        fill: #FFC700;
+        stroke-width: 0;
+      }
+      path {
+        stroke-width: 2;
+      }
+    }
   }
+  span {
+    padding-left: 30px;
+    display: flex;
+    align-items: center;
+
+
+  }
+
 
   svg {
 

@@ -11,7 +11,6 @@
             if (this.sort !== null) {
               this.sort = null
               this.collectProducts()
-              console.log(this.sort)
             }
           }"
       >
@@ -31,7 +30,6 @@
             if (this.sort !== 'newest') {
               this.sort = 'newest'
               this.collectProducts()
-              console.log(this.sort)
             }
           }"
       >
@@ -195,7 +193,7 @@ export default {
           }
 
 
-        }).catch(e => console.log(e))
+        }).catch(e => e)
       }
     },
 

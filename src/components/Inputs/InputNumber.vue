@@ -47,7 +47,7 @@ export default {
       this.setData()
     },
     error: function (newVal, oldVal) {
-      console.log(newVal)
+
     }
 
   },

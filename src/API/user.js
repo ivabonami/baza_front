@@ -28,8 +28,8 @@ export function refreshToken() {
     };
 
     axios.post(`${apiUrl}/refresh`, {"token": userInfo.token}, {headers})
-        .then(r => console.log(r))
-        .catch(e => console.log(e))
+        .then(r => r)
+        .catch(e => e)
 
 }
 userInfo.expired && Math.round(Date.now() / 1000) + 3600 > userInfo.expired ? refreshToken() : null

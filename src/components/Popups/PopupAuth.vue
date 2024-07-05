@@ -35,7 +35,7 @@
         v-else
     />
 
-    <div class="popup_auth_switch" @click="console.log(errors)">
+    <div class="popup_auth_switch">
       <span v-if="modal.type === true">Есть аккаунт? <span @click="modal.type = !modal.type">Войти</span></span>
       <span v-else>Нет аккаунта? <span @click="modal.type = !modal.type">Зарегистрироваться</span></span>
     </div>

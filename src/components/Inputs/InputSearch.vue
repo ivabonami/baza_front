@@ -4,6 +4,8 @@
     <input type="search"
            v-on:keydown.enter="searchProjects()"
            autocomplete=""
+           id="search"
+           name="search"
            placeholder="Найти проект"
            v-model="search.query">
 
@@ -64,7 +66,7 @@ export default {
         this.errors.emptyQuery = 'Нельзя искать пустоту, введите запрос'
         this.notice.show = true
       }
-      console.log(this.search.query)
+
     }
   },
 

@@ -47,8 +47,6 @@ export async function useFetch(path, method, requestBody) {
     else if (method === 'PUT'){
         return axios.put(config.api.url + path, requestBody, {headers}).then(response => response.data)
             .catch(error => {
-
-                console.log('err', )
                 modalSetting.show = true
                 modalSetting.type = 'error'
                 modalSetting.headline = 'Ошибка'

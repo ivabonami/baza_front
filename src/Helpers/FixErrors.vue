@@ -19,7 +19,7 @@ export default {
   },
   components: {},
   mounted() {
-    console.log('errors', this.$props.errors)
+
   },
 }
 </script>
