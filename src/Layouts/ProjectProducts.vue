@@ -5,6 +5,8 @@
       <button-action
           v-if="userInfo.role === 'admin' || isAdmin"
           @click="() => {
+
+
             modalProductController.show = true
             productControllerOptions.mode = 'add'
             productControllerOptions.buttonConfirmText = 'Добавить услугу'
@@ -104,11 +106,15 @@
         :show-button="true"
         :show-button-for-users="false"
         @click="() => {
-            modalProductController.show = true
-            productControllerOptions.mode = 'add'
-            productControllerOptions.buttonConfirmText = 'Добавить услугу'
-            productControllerOptions.product = null
-            productControllerOptions.projectId = this.$props.projectId
+
+          if (userInfo.token) {
+               modalProductController.show = true
+              productControllerOptions.mode = 'add'
+              productControllerOptions.buttonConfirmText = 'Добавить услугу'
+              productControllerOptions.product = null
+              productControllerOptions.projectId = this.$props.projectId
+            }
+
 
           }"
         v-show="!loading && products.length <= 0">
@@ -354,7 +360,6 @@ export default {
 .project-products {
   margin-top: 30px;
   margin-bottom: 10px;
-  padding: 10px;
 
   .project-products_heading {
     color: #000;
@@ -378,7 +383,7 @@ export default {
 
   .project-products_items {
     display: flex;
-    gap: 7px;
+    gap: 4px;
     flex-wrap: wrap;
     justify-content: space-between;
 

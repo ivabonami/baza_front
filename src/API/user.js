@@ -27,12 +27,9 @@ export function refreshToken() {
         'Authorization': `Bearer ${userInfo.token}`
     };
 
-    return axios.post(`${apiUrl}/refresh`, {"token": userInfo.token}, {headers}).then(result => {
-        localStorage.setItem('token', result.token)
-    })
-        .catch(error => {
-            signOut()
-        })
+    axios.post(`${apiUrl}/refresh`, {"token": userInfo.token}, {headers})
+        .then(r => console.log(r))
+        .catch(e => console.log(e))
 
 }
 userInfo.expired && Math.round(Date.now() / 1000) + 3600 > userInfo.expired ? refreshToken() : null

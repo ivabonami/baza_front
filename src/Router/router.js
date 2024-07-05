@@ -59,14 +59,14 @@ const router = createRouter({
           component: ProjectsView,
         },
         {
-            path: '/add-project',
-            component: addProject
+          path: '/project/:id/edit',
+          component: project_Edit,
+            name: 'ProjectEdit',
+            props: true
         },
         {
-            path: '/edit-project',
-            name: 'ProjectEdit',
-            component: project_Edit,
-            props: true
+            path: '/add-project',
+            component: addProject
         },
 
         {

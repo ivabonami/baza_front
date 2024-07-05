@@ -220,7 +220,7 @@ export default {
   height: v-bind(height + 'px');
 
   .products-carousel_switch {
-    margin-bottom: 20px;
+
     display: flex;
     gap: 20px;
     align-items: center;

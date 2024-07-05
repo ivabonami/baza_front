@@ -4,7 +4,7 @@
     <div class="projects" v-for="project of projects">
 
       <project-card
-          v-bind:project="project">
+          :project="project">
 
       </project-card>
     </div>

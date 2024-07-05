@@ -47,10 +47,9 @@ export default {
     }
   }
   .stat_text {
-    color: #1E1E1E;
-
-    font-family: Inter;
-    font-size: 16px;
+    color: var(--gray, #A8A8A8);
+    font-family: "PT Sans Caption";
+    font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;

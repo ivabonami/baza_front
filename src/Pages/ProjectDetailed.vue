@@ -111,31 +111,6 @@ export default {
 
   methods: {
 
-
-    // deleteProduct(id) {
-    //   const myHeaders = new Headers();
-    //   myHeaders.append("Content-Type", "application/json");
-    //   myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
-    //
-    //
-    //   fetch(`${config.api.url}products/${id}`, {
-    //     method: "DELETE",
-    //     headers: myHeaders
-    //   })
-    //       .then((response) => response.json())
-    //       .then(response => {
-    //         this.limit = 8
-    //         this.offset = 0
-    //         this.products = this.products.slice(this.products.length, this.products.length)
-    //         this.getProducts(this.limit, this.offset)
-    //         this.$refs.wrapper.scrollIntoView({behavior: "smooth", block: "center"})
-    //       })
-    //       .catch((error) => {
-    //         console.error(error)
-    //       });
-    // },
-    //
-    //
     getProjectFullInfo() {
       const projectId = window.location.pathname.replace('/project/', '');
 
@@ -305,7 +280,6 @@ textarea {
   gap: 10px;
   border-radius: 10px;
   border: 1px solid var(--gray-2, #D8D8D8);
-  padding: 10px;
   margin-bottom: 10px;
 
   get.owner {

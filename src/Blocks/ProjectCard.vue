@@ -15,6 +15,7 @@
             :inFavorite="$props.project.favorite"
             :isPayed="$props.project.payed"
             :projectName="$props.project.name"
+            :project="$props.project"
 
             @projectChangePayedStatus="emit => {
               payedModal.show = true
@@ -23,6 +24,7 @@
               payedModal.name = $props.project.name
 
             }"
+            @favoriteChanged="emit => $emit('favoriteChanged', emit)"
             @deleteProject="deleteModal.show = true"
         />
 
@@ -221,9 +223,6 @@ import popupDelete from "../components/Popups/PopupDelete.vue";
 import {changePayedStatus, removeProject} from "../API/projects.js";
 import popupAction from "../components/Popups/PopupAction.vue";
 
-
-
-// todo ваш проект под избранным
 export default {
   name: "ProjectCard.vue",
 

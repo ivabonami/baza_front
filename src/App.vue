@@ -125,8 +125,7 @@ export default {
 <style scoped lang="scss">
 
 header {
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding: 10px 15px;
 }
 .scroll-to-top {
   z-index: 10;

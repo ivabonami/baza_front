@@ -32,6 +32,8 @@
       <button-favorite
           :inFavorite="$props.inFavorite"
           :project-id="$props.projectId"
+          :project="$props.project"
+          @favoriteChanged="$emit('favoriteChanged', $props.projectId)"
       />
     </div>
 
@@ -75,7 +77,8 @@ export default {
     inFavorite: 0,
     projectOwner: null,
     isPayed: false,
-    projectName: null
+    projectName: null,
+    project: {}
   },
   data() {
     return {

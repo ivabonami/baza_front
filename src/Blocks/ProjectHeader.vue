@@ -2,10 +2,11 @@
   <div class="project-header">
     <div class="project-header_avatar">
       <img :src="api.url + $props.project.avatarFilePath" alt="">
-      <div class="project-header_avatar_favorite">
+      <div class="project-header_avatar_favorite" v-show="userInfo.token">
         <button-favorite
             :inFavorite="$props.project.favorite || 0"
             :projectId="$props.project.id"
+            :project="$props.project"
         />
       </div>
 
@@ -32,13 +33,13 @@
             </template>
           </project-stats>
 
-          <svg xmlns="http://www.w3.org/2000/svg" width="3" height="3" viewBox="0 0 3 3" fill="none">
+          <svg xmlns="http://www.w3.org/2000/svg" width="3"  v-if="isAdmin"  height="3" viewBox="0 0 3 3" fill="none">
             <circle cx="1.5" cy="1.5" r="1.5" fill="#A8A8A8"/>
           </svg>
 
         </div>
 <!--        todo редактирование проекта -->
-        <button-action v-if="isAdmin" >
+        <button-action v-if="isAdmin" @click="this.$router.push({name: 'ProjectEdit'})">
           <template #text>
             Редактировать
           </template>
@@ -50,10 +51,10 @@
         </button-action>
 
       </div>
-      <div class="project-header_info_stats_exchanger" >
-<!--           -->
+      <div class="project-header_info_stats_exchanger" v-if="$props.project.type === 'exchanger'">
 
-        <div v-show="$props.project.type === 'exchanger'"
+
+        <div
             class="project-header_info_stats_exchanger_item">
           <project-additional-stats>
             <template #header>
@@ -93,7 +94,6 @@
       <button-primary
           @click="() => {
           modal.show = true
-          data
         }"
           :style="'filled'">
         <template #default>
@@ -111,6 +111,7 @@
       @closeModal="modal.show = false"
   />
 
+
 </template>
 
 <script>
@@ -121,6 +122,7 @@ import buttonFavorite from "../components/Buttons/ButtonFavorite.vue";
 import projectStats from "../Helpers/ProjectStats.vue";
 import projectAdditionalStats from "../Helpers/ProjectAdditionalStats.vue";
 
+
 import {directive} from 'vue-tippy'
 import 'tippy.js/dist/tippy.css'
 import buttonAction from "../components/Buttons/ButtonAction.vue";
@@ -130,6 +132,8 @@ import iconCategories from "../assets/icons/icon-categories.svg"
 import iconEye from "../assets/icons/icon-eye.svg"
 import iconTestimonial from "../assets/icons/icon-testimonial.svg"
 import {userInfo} from "../Store/userInfo.js";
+import projectEdit from "./Controllers/ProjectEdit.vue";
+import {categoriesStore} from "../Store/categories.js";
 
 
 export default {
@@ -146,6 +150,7 @@ export default {
         show: false,
 
       },
+      categoriesStore,
       userInfo,
       stats: {
         ratingAvg: {
@@ -178,6 +183,7 @@ export default {
     tippy: directive,
   },
   components: {
+    projectEdit,
     buttonPrimary,
     popupProjectLinks,
     buttonFavorite,
@@ -237,7 +243,6 @@ export default {
 .project-header {
   border-radius: 10px;
   border: 1px solid var(--gray-2, #D8D8D8);
-  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;

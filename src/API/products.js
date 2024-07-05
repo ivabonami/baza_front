@@ -28,7 +28,7 @@ export async function addProduct(product) {
     let image = await uploadImage(product.file)
 
     if (image === 'Invalid token') {
-        signOut()
+        refreshToken
         return {error: 'Невалидный токен, пожалуйста залогиньтесь заново.'}
     } else {
         return await axios.post(`${apiUrl}/products`, {
@@ -51,7 +51,7 @@ export async function updateProduct(product) {
     console.log(product)
 
     if (image === 'Invalid token') {
-        signOut()
+        refreshToken
         return {error: 'Невалидный токен, пожалуйста залогиньтесь заново.'}
     } else {
         return await axios.put(`${apiUrl}/products/${product.id}`, {

@@ -1,7 +1,21 @@
 <template>
 
+  <div class="sign-in" v-if="!userInfo.token">
+    <sign-in
+        @errors="emit => {
+          this.notice.show = true
+          this.notice.text = emit
+        }"
 
-  <div class="add-project form-wrapper">
+        @success="() => {
+          this.modal.show = false
+        }"
+
+    />
+  </div>
+
+
+  <div class="add-project form-wrapper" v-else>
 
 
     <div class="left">
@@ -178,12 +192,20 @@
 
     </div>
 
+    <div class="links">
+      <div class="link" v-for="link of project.links">
+        <project-external-link
+            :link="link"
+            :edit="true"
+            @removeLink="emit => {
+              project.links.splice(project.links.findIndex(item => item.link === emit), 1)
+
+            }"
+        />
+      </div>
 
 
-  </div>
-  <div class="links">
-
-
+    </div>
     <div class="buttons">
       <button-primary
           @click="checkForm"
@@ -195,7 +217,9 @@
 
 
     </div>
+
   </div>
+
 
 
   <notice :notice="notice" :errors="errors"
@@ -243,7 +267,9 @@ import inputNumber from "../../components/Inputs/InputNumber.vue";
 import {categoriesStore} from "../../Store/categories.js";
 import {addProject} from "../../API/project.js";
 import popupInfo from "../../components/Popups/PopupInfo.vue";
-
+import signIn from "../../components/Forms/SignIn.vue";
+import {userInfo} from "../../Store/userInfo.js";
+import projectExternalLink from "../../Helpers/ProjectExternalLink.vue";
 
 export default {
   name: "Project_Add.vue",
@@ -258,7 +284,10 @@ export default {
     inputCategories,
     inputLink,
     inputNumber,
-    popupInfo
+    popupInfo,
+    signIn,
+    projectExternalLink
+
 
   },
   emits: ['changeModal'],
@@ -277,6 +306,8 @@ export default {
         name: "Зеркало",
         link: ''
       },
+      userInfo,
+
       inputs: {
         name: {
           name: 'Название',
@@ -455,8 +486,20 @@ export default {
     }
     .links-box {
       display: flex;
-      gap: 10px;
+      gap: 5px;
       flex-wrap: wrap;
+
+      div {
+
+        &:nth-child(1) {
+          width: 35%;
+        }
+
+        &:nth-child(2) {
+          width: 63%;
+        }
+
+      }
 
 
     }
@@ -497,127 +540,10 @@ textarea {
 .links {
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
+  margin-top: 20px;
 
-  .link {
-    margin-right: 5px;
-    margin-bottom: 5px;
-    border-radius: 30px;
-    background: var(--lightgray, #F2F5F7);
-    cursor: pointer;
-    padding: 5px 10px;
-    display: flex;
-    gap: 3px;
-    align-items: center;
 
-    a {
-      color: #000;
-      font-family: "PT Sans Caption";
-      font-size: 12px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
-    }
-
-    .dot {
-
-      svg {
-        width: 5px;
-        height: 5px;
-        position: relative;
-        top: -2px;
-
-        circle {
-          transition: .3s ease;
-          fill: #7c7c7c;
-        }
-      }
-    }
-    &.mirror {
-      svg {
-        circle {
-          fill: #FFC700;
-        }
-      }
-
-    }
-    &.darknet {
-      svg {
-        circle {
-          fill: #8B4BDD;
-        }
-      }
-
-    }
-    &.blockchain {
-      svg {
-        circle {
-          fill: #B7DD4B;
-        }
-      }
-
-    }
-    &.telegram {
-      svg {
-        circle {
-          fill: #4BBADD;
-        }
-      }
-
-    }
-    .link-name {
-      color: #000;
-      font-family: "PT Sans Caption";
-      font-size: 12px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
-      transition: .3s ease;
-
-      svg {
-        position: relative;
-        top: 2px;
-        width: 10px;
-        height: 12px;
-        margin-left: 5px;
-
-        path {
-          stroke: black;
-        }
-      }
-    }
-
-    transition: .3s ease;
-    border: 1px solid transparent;
-
-    &:hover {
-      background-color: #7c7c7c;
-      .link-name {
-        color: #fff;
-      }
-      .dot {
-        svg {
-          circle {
-            fill: #fff;
-          }
-        }
-      }
-
-      &.mirror {
-        background-color: #FFC700;
-      }
-
-      &.darknet {
-        background-color: #8B4BDD;
-
-      }
-      &.blockchain {
-        background-color: #B7DD4B;
-      }
-      &.telegram {
-        background-color: #4BBADD;
-      }
-    }
-  }
 }
 .errors {
   padding: 10px;

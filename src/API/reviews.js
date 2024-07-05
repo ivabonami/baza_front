@@ -30,8 +30,12 @@ export async function addReview(review) {
         'Authorization': `Bearer ${userInfo.token}`
     };
 
+
+
     return await axios.post(`${apiUrl}/reviews`, review, {headers})
-        .then(result => result).catch(error => error)
+        .then(result => {
+
+        }).catch(error => error)
 }
 
 export async function editReview(review) {
@@ -39,8 +43,12 @@ export async function editReview(review) {
         'Authorization': `Bearer ${userInfo.token}`
     };
 
-    return await axios.put(`${apiUrl}/reviews/${review.projectId}`, review, {headers})
-        .then(result => result).catch(error => error)
+    return await axios.put(`${apiUrl}/reviews/${review.id}`, review, {headers})
+        .then(result => {
+            const review = projectReviewsStore.reviews.find(item => item.id === result.data.updatedReview.id)
+            review.comment = result.data.updatedReview.comment
+            review.rating = result.data.updatedReview.rating
+        }).catch(error => error)
 }
 
 export async function deleteReview(review) {
@@ -48,8 +56,11 @@ export async function deleteReview(review) {
         'Authorization': `Bearer ${userInfo.token}`
     };
 
+
     return await axios.delete(`${apiUrl}/reviews/${review.id}`, {headers})
-        .then(result => result).catch(error => error)
+        .then(result => {
+            projectReviewsStore.reviews.splice(projectReviewsStore.reviews.findIndex(item => item.id === review.id))
+        }).catch(error => error)
 }
 
 export async function approveReview(review) {

@@ -14,12 +14,14 @@
 <script>
 import {ref} from "vue";
 import {addFavorite, removeFavorite} from "../../API/favorite.js";
+import {favoriteProjects} from "../../Store/favoriteProjects.js";
 
 export default {
   name: "ButtonFavorite.vue",
   props: {
     inFavorite: 0,
-    projectId: ref(Number)
+    projectId: ref(Number),
+    project: {}
   },
   data() {
     return {
@@ -35,6 +37,8 @@ export default {
         addFavorite(this.projectId).then(result => {
           this.$emit('favoriteChanged', this.inFavorite === 0 ? 1 : 0)
           this.favoriteStatus = !this.favoriteStatus
+          this.$props.project.favorite = 1
+          favoriteProjects.push(this.$props.project)
         }).catch(e => {
 
         })

@@ -24,7 +24,7 @@ export async function addProject(project) {
 
 
     if (avatar === 'Invalid token' || banner === 'Invalid token') {
-        signOut()
+        refreshToken
 
         console.log(avatar)
         console.log(banner)

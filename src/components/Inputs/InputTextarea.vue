@@ -49,7 +49,7 @@ export default {
 
   watch: {
     data: function (newVal, oldVal) {
-      this.setData()
+      this.setData(newVal)
     }
   },
 
@@ -67,8 +67,9 @@ export default {
         this.$emit('error', checkData)
       }
     },
-    setData () {
+    setData (value) {
       this.$props.input.data ? this.inputData = this.$props.input.data : null
+      this.$props.input.data ? this.inputData = value : null
     },
   },
 

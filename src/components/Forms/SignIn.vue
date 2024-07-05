@@ -3,7 +3,7 @@
   <div class="auth" @keydown.enter="signIn" @keydown.esc="$emit('closePopup', true)">
     <InputText
         :input="{
-          name: 'username',
+          name: 'Юзернейм',
           placeholder: 'Юзернейм',
           tooltip: 'Ваш юзернейм, от 1 до 255 символов',
           min: 1,

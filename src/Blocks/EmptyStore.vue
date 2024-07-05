@@ -10,7 +10,7 @@
     <div class="button-wrapper">
       <button-primary
           v-show="$props.showButtonForUsers && userInfo.token || $props.showButton && userInfo.role === 'admin'"
-          @close="console.log(123)"
+          @close="$emit('buttonPressed', true)"
           :style="'filled'">
         <template #default>
           <slot name="buttonText" />

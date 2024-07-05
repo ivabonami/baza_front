@@ -43,7 +43,7 @@ export default {
   mounted() {
     this.textTransform()
     //todo highlight
-    console.log(productsStore.products.find(product => product.id = this.$props.item.id))
+    // console.log(productsStore.products.find(product => product.id = this.$props.item.id))
   },
   watch: {
     item: function(newVal, oldVal) {

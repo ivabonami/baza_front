@@ -11,7 +11,7 @@
       <InputRating
           :input="inputs.reviewRating"
           :error="inputs.errors"
-          :data="this.$props.data"
+          :data="inputs.reviewRating.data"
           @data="emit => data.rating = emit"
           @error="emit => emit"
       >
@@ -75,6 +75,7 @@
   <notice :notice="notice"
           @closeNotice="emit => notice.show = emit"
   />
+
 </template>
 
 <script>
@@ -88,9 +89,8 @@ import {api} from "../../assets/js/config.js";
 import buttonAction from "../Buttons/ButtonAction.vue";
 import InputRating from "../Inputs/InputRating.vue";
 import {addReview, editReview} from "../../API/reviews.js";
-
-
-
+import {userInfo} from "../../Store/userInfo.js";
+import {projectReviewsStore} from "../../Store/projectReviews.js";
 
 export default {
   name: "Popup.vue",
@@ -103,20 +103,20 @@ export default {
       buttonConfirmText: null,
       product: null
     },
-    data: {
-      userData: ''
+    dataReview: {
+      userData: {}
     },
     mode: null,
     projectId: null
 
   },
-// TODO EDIT TESTIMONIAL, EDIT PROJECT, CHECK TESTIMONIALS (FINISH BUGS)
+// TODO EDIT PROJECT, CHECK TESTIMONIALS (FINISH BUGS)
   data() {
     return {
       data: {
         rating: null,
         comment: null,
-        projectId: null
+        projectId: null,
       },
       notice: {
         show: false,
@@ -157,7 +157,7 @@ export default {
     notice,
     loaderSmall,
     buttonAction,
-    InputRating
+    InputRating,
   },
   watch: {
     options: (val, oldVal) => {
@@ -166,12 +166,23 @@ export default {
     mode: (val, oldVal) => {
       console.log(val)
     },
-    data: (val, oldVal) => {
-      this.inputs.reviewRating.data = this.$props.data.rating
-      this.inputs.reviewComment.data = this.$props.data.comment
+    data: (newVal, oldVal) => {
+      this.inputs.reviewRating.data = this.$props.dataReview.rating
+      this.data.rating = this.inputs.reviewRating.data
+      this.inputs.reviewComment.data = this.$props.dataReview.comment
+      this.data.comment = this.inputs.reviewComment.data
+
     }
   },
   mounted() {
+    if (this.$props.dataReview) {
+      this.inputs.reviewRating.data = this.$props.dataReview.rating
+      this.data.rating = this.inputs.reviewRating.data
+      this.inputs.reviewComment.data = this.$props.dataReview.comment
+      this.data.comment = this.inputs.reviewComment.data
+    }
+
+
     if (this.$props.modal.show === true) {
       document.body.style.overflow = 'hidden hidden'
       window.addEventListener('keydown', (e) => {
@@ -199,25 +210,33 @@ export default {
 
         if (mode === "add") {
           addReview(this.data).then(result => {
-            if (result.response.data.success === false) {
+            if (result.response.status === 400) {
+              console.log(result.response.data.message, 'response')
               this.notice.show = true
-              result.response.data.message === "This user already rated this project." ? this.notice.text.fetchError = "Вы уже оставляли отзыв к проекту, дождитесь проверки модератора" : null
+              if (result.response.data.message === "This user already rated this project.") {
+                this.notice.text.fetchError = "Вы уже оставляли отзыв к проекту, дождитесь проверки модератора"
+              }
+              if (result.response.data.message === "Error creating review SequelizeValidationError: notNull Violation: Review.rating cannot be null") {
+                this.notice.text.fetchError = "Вы не указали рейтинг проекта"
+              }
 
             } else {
+
               this.closeModal()
+
             }
+
+          }).catch(error => {
+            this.$emit('reviewAdded', this.data)
             this.closeModal()
           })
         } else {
-          this.data.ProjectId = this.$props.data.ProjectId
-          this.data.id = this.$props.data.id
-          this.data.userData.id = this.$props.data.userData.id
-
-          console.log(this.data)
+          this.data.ProjectId = this.$props.dataReview.ProjectId
+          this.data.id = this.$props.dataReview.id
 
           editReview(this.data).then(result => {
 
-            console.log(result.response.data)
+            this.closeModal()
           })
         }
 
@@ -306,6 +325,7 @@ export default {
     }
   }
 }
+
 .backdrop {
   position: fixed;
   right: 0;

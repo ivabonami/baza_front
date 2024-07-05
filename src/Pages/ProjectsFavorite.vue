@@ -1,49 +1,37 @@
 <template>
-  <div class="projects-wrapper" :class="{fadeAnimate: this.projectCardAnimate}" >
+  <div class="projects-wrapper" >
     <div class="projectsList" >
       <h3>Ваши любимые проекты</h3>
 
+      <empty-store
+          :show-button="true"
+          :show-button-for-users="false"
+          @buttonPressed="this.$router.push('/')"
+          v-if="favoriteProjects.length <= 0">
+        <template #header>
+          Вы еще не добавили проектов в избранное
+        </template>
+        <template #text>
+          добавьте нужные проекты в избранное, что бы находить их быстрее
+        </template>
+        <template #buttonText>
+          Посмотреть проекты
+        </template>
+      </empty-store>
+
       <div class="projects">
-        <div class="project" v-for="project of projects">
+        <div class="project" v-for="project of favoriteProjects">
           <project-card
-
-              v-if="loaded === true || projects.length > 0"
-              ref='fadeAnimate'
-              v-bind:project="project"
-              v-bind:favorite="true"
-              v-on:favoriteRemoved="(emit) => {
-                          console.log(this.projects.indexOf(project))
-                          removeFromList(this.projects.indexOf(project))
-
-                        }"
-              v-on:updated="(emit) => {
-
-                this.$refs.currentSort.scrollIntoView({ behavior: 'smooth', block: 'start'})
-                this.projects = this.projects.slice(this.projects.length, this.projects.length)
-                this.getOffset = 0
-
-                this.getProjects(this.activeSort, this.getOffset, this.getLimit)
-
-               }"
+              :project="project"
+              @favoriteChanged="emit => removeFromList(emit)"
           >
 
           </project-card>
+
         </div>
       </div>
 
-
-
-
-
-
     </div>
-
-
-
-
-
-
-
 
   </div>
 
@@ -52,65 +40,52 @@
 <script>
 import recommended from "../Blocks/ProductsCarousel.vue";
 import projectCard from "../Blocks/ProjectCard.vue";
-import { ref, defineComponent } from "vue";
 import { Waypoint } from "vue-waypoint";
-import vClickOutside from 'click-outside-vue3'
-import AnimateHeight from 'vue-animate-height';
-
 import 'vue-loading-overlay/dist/css/index.css';
 import loader from "../Layouts/BaseLoader.vue";
-import {store} from "../assets/js/services/categoriesService.js";
-import config from "../assets/js/config.js";
-import {useFetch} from "../assets/js/controllers/requestsControl.js";
+import emptyStore from "../Blocks/EmptyStore.vue";
+
+import {favoriteProjects} from "../Store/favoriteProjects.js";
+import {getFavoriteProjects} from "../API/projects.js";
 
 export default {
   name: "FavoriteProjects.vue",
-  components: {recommended, projectCard, Waypoint, loader, AnimateHeight},
+  components: {
+    recommended,
+    projectCard,
+    Waypoint,
+    loader,
+    emptyStore},
   emits: ['updated', 'projectDeleted'],
 
   data () {
     return {
 
-      projects: [],
+      favoriteProjects
 
     }
   },
-  directives: {
-    clickOutside: vClickOutside.directive
-  },
-  setup () {
 
+  watch: {
+    favoriteProjects: function (newVal, oldVal) {
+      console.log(newVal)
+    }
   },
 
   mounted() {
-    this.height = 1250
-    this.getProjects(this.activeSort, this.getOffset, this.getLimit, false, false)
-    this.loaded === true ? this.handleScroll() : ''
+
+    favoriteProjects.length <= 0 ? getFavoriteProjects() : null
   },
   created() {
-    this.isLoading = true
-  },
-  updated() {
 
-    this.isLoading = false
   },
+
 
 
 
   methods: {
 
-    removeFromList(index) {
-      this.projects.splice(1, 1)
-    },
 
-    getProjects (sort, offset, limit) {
-
-      useFetch(`user/project`, "GET")
-          .then(result => {
-
-            this.projects = result.projects
-          })
-    },
 
   }
 }

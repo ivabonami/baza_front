@@ -54,6 +54,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  padding: 0 10px;
   gap: 40px;
 }
 </style>

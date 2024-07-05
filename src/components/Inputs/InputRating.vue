@@ -24,6 +24,7 @@
   </div>
 
   <input type="number"
+         hidden
          :minlength="$props.input.min"
          :maxlength="$props.input.max"
          :class="{error: $props.error === true}"
@@ -68,7 +69,7 @@ export default {
   watch: {
     data: function (newVal, oldVal) {
       this.setData()
-      this.changeRating(newVal)
+      this.changeRating(newVal - 1)
     },
     input: function (newVal, oldVal) {
       this.setData()

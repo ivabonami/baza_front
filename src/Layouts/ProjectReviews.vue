@@ -31,11 +31,15 @@
       :show-button="true"
       :show-button-for-users="false"
       @click="() => {
-            modalReviewsController.show = true
-            modalReviewsController.mode = 'add'
-            modalReviewsController.buttonConfirmText = 'Оставить отзыв'
-            modalReviewsController.product = null
-            modalReviewsController.projectId = this.$props.project.id
+
+            if (userInfo.token) {
+              modalReviewsController.show = true
+              modalReviewsController.mode = 'add'
+              modalReviewsController.buttonConfirmText = 'Оставить отзыв'
+              modalReviewsController.product = null
+              modalReviewsController.projectId = this.$props.project.id
+            }
+
 
           }">
     <template #header>
@@ -95,7 +99,7 @@
         {{ review.comment }}
       </div>
 
-      <div class="menu">
+      <div class="menu" v-show="userInfo.role === 'admin'">
         <button-action
             @click="() => { onEditReview(review) }"
         >
@@ -118,18 +122,18 @@
           </template>
         </button-action>
 
-        <button-action
-            @click="() => { onDisapproveReview(review) }"
-        >
-          <template #text>
-            Снять с публикации
-          </template>
-          <template #icon>
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 10 9" fill="none">
-              <path d="M4.48905 1.81368C4.65419 1.79031 4.82454 1.77778 5 1.77778C7.07432 1.77778 8.43548 3.52966 8.89277 4.22265C8.94812 4.30653 8.97579 4.34847 8.99128 4.41315C9.00291 4.46173 9.00291 4.53837 8.99126 4.58695C8.97576 4.65163 8.9479 4.69384 8.89216 4.77828C8.77032 4.96284 8.58456 5.22221 8.33846 5.50351M2.85615 2.44474C1.97763 3.01511 1.38122 3.80754 1.10762 4.22205C1.05202 4.30628 1.02423 4.3484 1.00873 4.41308C0.997094 4.46165 0.997089 4.53828 1.00872 4.58686C1.02421 4.65154 1.05188 4.69348 1.10722 4.77735C1.56451 5.47034 2.92567 7.22222 5 7.22222C5.8364 7.22222 6.55685 6.9374 7.14885 6.55201M1.34301 1L8.65699 8M4.13804 3.67504C3.91744 3.88617 3.781 4.17783 3.781 4.5C3.781 5.14433 4.32677 5.66667 5 5.66667C5.33662 5.66667 5.64136 5.53608 5.86196 5.32496" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </template>
-        </button-action>
+<!--        <button-action-->
+<!--            @click="() => { onDisapproveReview(review) }"-->
+<!--        >-->
+<!--          <template #text>-->
+<!--            Снять с публикации-->
+<!--          </template>-->
+<!--          <template #icon>-->
+<!--            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 10 9" fill="none">-->
+<!--              <path d="M4.48905 1.81368C4.65419 1.79031 4.82454 1.77778 5 1.77778C7.07432 1.77778 8.43548 3.52966 8.89277 4.22265C8.94812 4.30653 8.97579 4.34847 8.99128 4.41315C9.00291 4.46173 9.00291 4.53837 8.99126 4.58695C8.97576 4.65163 8.9479 4.69384 8.89216 4.77828C8.77032 4.96284 8.58456 5.22221 8.33846 5.50351M2.85615 2.44474C1.97763 3.01511 1.38122 3.80754 1.10762 4.22205C1.05202 4.30628 1.02423 4.3484 1.00873 4.41308C0.997094 4.46165 0.997089 4.53828 1.00872 4.58686C1.02421 4.65154 1.05188 4.69348 1.10722 4.77735C1.56451 5.47034 2.92567 7.22222 5 7.22222C5.8364 7.22222 6.55685 6.9374 7.14885 6.55201M1.34301 1L8.65699 8M4.13804 3.67504C3.91744 3.88617 3.781 4.17783 3.781 4.5C3.781 5.14433 4.32677 5.66667 5 5.66667C5.33662 5.66667 5.64136 5.53608 5.86196 5.32496" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--            </svg>-->
+<!--          </template>-->
+<!--        </button-action>-->
       </div>
 
     </div>
@@ -141,10 +145,13 @@
       :options="modalReviewsController.product"
       :projectId="$props.project.id"
       :mode="modalReviewsController.mode"
-      :data="this.reviewToEdit"
+      :dataReview="reviewToEdit"
       @closeModal="modalReviewsController.show = false"
       @productAdded="emit => emit"
       @productUpdated="emit => emit"
+      @reviewAdded="emit => {
+        modalInfo.show = true
+      }"
   >
     <template #header>
       Оставить отзыв
@@ -156,6 +163,58 @@
       Закрыть
     </template>
   </popup-reviews-controller>
+
+  <popup-delete
+      @click.stop
+      v-if="modalDelete"
+      :modal="modalDelete"
+      @closeModal="modalDelete.show = false"
+      @deleteConfirmed="deleteReview(reviewToDelete)"
+
+  >
+    <template #header>
+      Удалить отзыв?
+    </template>
+    <template #text @click.stop>
+      Вы действительно хотите удалить отзыв?
+    </template>
+    <template #buttonConfirm @click.stop>
+      Да, удалить
+    </template>
+    <template #buttonSecondary>
+      Отменить
+    </template>
+  </popup-delete>
+
+  <popup-info
+      :modal="modalInfo"
+      v-if="modalInfo.show"
+      @closeModal="() => {
+        modalInfo.show = false
+        getReviews({projectId: $props.project.id})
+      }"
+
+
+  >
+    <template #header>
+      Отзыв успешно добавлен
+    </template>
+
+    <template #icon>
+      <svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58" fill="none">
+        <path d="M56 26.5314V29.0154C55.9967 34.8378 54.1113 40.5031 50.6252 45.1664C47.139 49.8297 42.2389 53.2411 36.6555 54.892C31.0721 56.5428 25.1046 56.3446 19.6431 54.3268C14.1815 52.3091 9.51857 48.5799 6.34959 43.6955C3.18062 38.8111 1.67544 33.0332 2.05853 27.2235C2.44162 21.4138 4.69246 15.8835 8.47535 11.4575C12.2583 7.03156 17.3705 3.94699 23.0497 2.66385C28.7289 1.38071 34.6707 1.96776 39.989 4.33745M56 7.4L29 34.427L20.9 26.327" stroke="#2E7E36" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </template>
+
+    <template #text>
+      <span v-if="userInfo.role === 'admin'">Спасибо за добавление отзыва.</span>
+      <span v-else>Спасибо за добавление отзыва, он появится после проверки модератором.</span>
+    </template>
+
+    <template #button>
+      Жду модерацию
+    </template>
+  </popup-info>
   
 </template>
 
@@ -166,6 +225,8 @@ import popupReviewsController from "../components/Popups/PopupReviewsController.
 import {projectReviewsStore} from "../Store/projectReviews.js";
 import {disapproveReview, getReviews, deleteReview, editReview} from "../API/reviews.js";
 import {userInfo} from "../Store/userInfo.js";
+import popupDelete from "../components/Popups/PopupDelete.vue";
+import popupInfo from "../components/Popups/PopupInfo.vue";
 
 
 
@@ -184,9 +245,22 @@ export default {
         review: null,
         buttonConfirmText: "Добавить отзыв"
       },
+      modalDelete: {
+        show: false,
+        review: null,
+        buttonConfirmText: "Добавить отзыв"
+      },
+      getReviews,
+
+      modalInfo: {
+        show: false,
+
+      },
       reviewToEdit: null,
       projectReviewsStore,
-      userInfo
+      userInfo,
+      deleteReview,
+      reviewToDelete: null
 
     }
   },
@@ -194,7 +268,9 @@ export default {
   components: {
     emptyStore,
     buttonAction,
-    popupReviewsController
+    popupReviewsController,
+    popupDelete,
+    popupInfo
   },
 
   methods: {
@@ -208,8 +284,8 @@ export default {
 
     },
     onDeleteReview(review) {
-      deleteReview(review)
-
+      this.modalDelete.show = true
+      this.reviewToDelete = review
     },
     onDisapproveReview(review) {
       disapproveReview(review)
@@ -263,7 +339,7 @@ export default {
 
   .project-products_items {
     display: flex;
-    gap: 7px;
+    gap: 4px;
     flex-wrap: wrap;
     justify-content: space-between;
 
@@ -283,7 +359,7 @@ export default {
 
 @media screen and (max-width: 768px){
   .project-products .project-products_items .project-products_items_item {
-    width: 43%;
+    width: 42%;
   }
 }
 .project-reviews_items {
@@ -330,12 +406,21 @@ export default {
       display: flex;
       width: 100%;
       gap: 10px;
+      margin-top: 10px;
 
       button:nth-child(3) {
         margin-left: auto;
       }
     }
 
+  }
+}
+
+@media screen and (max-width: 768px){
+  .project-reviews_items {
+    .project-reviews_items_item {
+      width: 100%;
+    }
   }
 }
 </style>
