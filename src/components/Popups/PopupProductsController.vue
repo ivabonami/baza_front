@@ -362,7 +362,7 @@ export default {
   border-radius: 10px;
   border: 1px solid var(--gray-2, #D8D8D8);
   background: #FFF;
-  padding: 15px;
+  padding: 15px 20px 20px 15px;
   position: fixed;
   z-index: 51;
   width: 300px;
@@ -412,8 +412,8 @@ export default {
   }
   .popup_close {
     position: absolute;
-    right: 14px;
-    top: 14px;
+    right: 22px;
+    top: 22px;
     cursor: pointer;
   }
   .popup_body_image {

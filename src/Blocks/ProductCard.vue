@@ -1,11 +1,12 @@
 <template>
-  <div class="service-card" :class="{highlighted: false}">
+  <div class="service-card" :class="{highlighted: $props.highlighted}" @mouseover="highlightedProject.splice(0, highlightedProject.length)">
     <div class="service-card_image">
       <img :src="api.url + $props.item.avatarFilePath" alt="name">
     </div>
     <div class="service-card_text">
       {{ text }}
     </div>
+
   </div>
 </template>
 
@@ -13,6 +14,7 @@
 import { ref, watch } from "vue";
 import {api} from "../assets/js/config.js";
 import {productsStore} from "../Store/productsStore.js";
+import {highlightedProject} from "../Store/highlightedProject.js";
 
 
 export default {
@@ -37,6 +39,7 @@ export default {
     return {
       text: null,
       api,
+      highlightedProject,
       productsStore
     }
   },
@@ -65,6 +68,10 @@ export default {
   background: #FFF;
 
   padding: 14px;
+
+  &.highlighted {
+    background: #fff7d6;
+  }
 
   .service-card_image {
     aspect-ratio: 1/1;

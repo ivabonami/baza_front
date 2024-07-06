@@ -178,7 +178,6 @@ export default {
 <style scoped lang="scss">
 .projects-collection_wrapper {
   width: 100%;
-  padding: 0 10px;
 
   .projects-collection_items {
     display: flex;

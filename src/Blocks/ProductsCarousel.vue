@@ -55,7 +55,7 @@
         <router-link
             :to="`/project/${item.ProjectId}`"
             @click="() => {
-              productsStore.products.find(product => product.id = item.id).highlighted = true
+              highlightedProject.push(item)
             }"
             v-for="item in productsStore.products"
             class="products-carousel_items_item">
@@ -100,7 +100,7 @@ import {productsStore} from "../Store/productsStore.js";
 import {getProducts} from "../API/products.js";
 import buttonSwitch from "../components/Buttons/ButtonSwitch.vue";
 import baseLoader from "../Layouts/BaseLoader.vue";
-
+import {highlightedProject} from "../Store/highlightedProject.js";
 
 
 
@@ -123,7 +123,7 @@ export default {
       sort: null,
       productsStore,
       height: null,
-      getProducts
+      highlightedProject
     }
   },
   setup() {
@@ -263,5 +263,9 @@ export default {
   }
 }
 
-
+@media screen and (max-width: 500px){
+  .products-carousel .products-carousel_items .products-carousel_items_item {
+    width: 175px;
+  }
+}
 </style>

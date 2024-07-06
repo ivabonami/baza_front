@@ -1,17 +1,23 @@
 <template>
 
   <div class="sign-in" v-if="!userInfo.token">
-    <sign-in
-        @errors="emit => {
-          this.notice.show = true
-          this.notice.text = emit
-        }"
+    <popup-auth
+        v-show="popup.auth.show === true"
+        @closeModal="popup.auth.show = false"
+        v-bind:modal="popup.auth" />
 
-        @success="() => {
-          this.modal.show = false
-        }"
+    <div class="need-auth" @click="popup.auth.show = true">
+      <h2 >Вы не авторизованы, войдите в аккаунт</h2>
+      <button-primary
+          @click="addLinkToProject"
+          :style="'filled'">
+        <template #default>
+          Войти
+        </template>
+      </button-primary>
+    </div>
 
-    />
+
   </div>
 
 
@@ -270,6 +276,7 @@ import {userInfo} from "../../Store/userInfo.js";
 import projectExternalLink from "../../Helpers/ProjectExternalLink.vue";
 import buttonAction from "../../components/Buttons/ButtonAction.vue";
 import {apiUrl} from "../../assets/js/config.js";
+import popupAuth from "../../components/Popups/PopupAuth.vue";
 
 export default {
   name: "Project_Add.vue",
@@ -285,7 +292,7 @@ export default {
     inputLink,
     inputNumber,
     popupInfo,
-    signIn,
+    popupAuth,
     projectExternalLink,
     buttonAction
 
@@ -295,6 +302,11 @@ export default {
 
   data () {
     return {
+      popup: {
+        auth: {
+          show: false
+        }
+      },
       project: {
         name: '',
         description: null,
@@ -324,8 +336,8 @@ export default {
           name: 'Минимальный обмен в рублях',
           placeholder: 'От 1 до 30 символов',
           tooltip: 'На главной странице и на странице проекта отображаются только первые 90 символов, будьте внимательны.',
-          min: 1,
-          max: 10000,
+          min: 500,
+          max: 10000000,
           data: null
         },
         reserve: {
@@ -333,7 +345,7 @@ export default {
           placeholder: 'От 1 до 30  символов',
           tooltip: 'На главной странице и на странице проекта отображаются только первые 90 символов, будьте внимательны.',
           min: 1,
-          max: 10000,
+          max: 10000000,
           data: null
         },
 
@@ -404,6 +416,9 @@ export default {
     }
   },
 
+  mounted() {
+    !userInfo.token ? this.popup.auth.show = true : null
+  },
 
   methods: {
 
@@ -607,7 +622,17 @@ textarea {
     margin-top: 30px;
   }
 }
+.sign-in {
+  .need-auth {
+    max-width: 300px;
+    margin: 0 auto;
+    text-align: center;
 
+    h2 {
+      margin-bottom: 20px;
+    }
+  }
+}
 @media screen and (max-width: 768px){
   .add-project .right {
     .images-box, .links-box {

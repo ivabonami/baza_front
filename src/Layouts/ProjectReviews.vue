@@ -4,18 +4,23 @@
     <div class="project-reviews_heading">
       <h2>Отзывы</h2>
       <button-action
-          v-if="!projectReviewsStore.reviews.find(review => review.userData.username === userInfo.username) && userInfo.username"
+          v-if="!projectReviewsStore.reviews.find(review => review.userData.username === userInfo.username)"
           @click="() => {
-            modalReviewsController.show = true
-            modalReviewsController.mode = 'add'
-            modalReviewsController.buttonConfirmText = 'Оставить отзыв'
-            modalReviewsController.product = null
-            modalReviewsController.projectId = this.$props.project.id
+            if (userInfo.username) {
+              modalReviewsController.show = true
+              modalReviewsController.mode = 'add'
+              modalReviewsController.buttonConfirmText = 'Оставить отзыв'
+              modalReviewsController.product = null
+              modalReviewsController.projectId = this.$props.project.id
+            } else {
+              modalAuth.show = true
+            }
+
 
           }"
       >
         <template #text>
-          Добавить
+          Оставить
         </template>
         <template #icon>
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -235,7 +240,11 @@
       Жду модерацию
     </template>
   </popup-info>
-  
+
+  <popup-auth
+      v-if="modalAuth.show === true"
+      @closeModal="modalAuth.show = false"
+      v-bind:modal="modalAuth" />
 </template>
 
 <script>
@@ -247,6 +256,7 @@ import {disapproveReview, getReviews, deleteReview, editReview} from "../API/rev
 import {userInfo} from "../Store/userInfo.js";
 import popupDelete from "../components/Popups/PopupDelete.vue";
 import popupInfo from "../components/Popups/PopupInfo.vue";
+import popupAuth from "../components/Popups/PopupAuth.vue";
 
 
 
@@ -264,6 +274,9 @@ export default {
         show: false,
         review: null,
         buttonConfirmText: "Добавить отзыв"
+      },
+      modalAuth: {
+        show: false
       },
       modalDelete: {
         show: false,
@@ -290,7 +303,8 @@ export default {
     buttonAction,
     popupReviewsController,
     popupDelete,
-    popupInfo
+    popupInfo,
+    popupAuth
   },
 
   methods: {
@@ -335,7 +349,6 @@ export default {
 .project-reviews {
   margin-top: 40px;
   margin-bottom: 10px;
-  padding: 10px;
 
   .project-reviews_heading {
     color: #000;

@@ -530,6 +530,8 @@ export default {
         this.inputs.categories.data.push(category.id)
       }
 
+      result.data.project.reserve ? this.inputs.reserve.data = result.data.project.reserve : null
+      result.data.project.minValueToExchange ? this.inputs.minValueToExchange.data = result.data.project.minValueToExchange : null
     })
 
   }

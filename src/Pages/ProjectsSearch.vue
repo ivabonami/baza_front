@@ -3,10 +3,14 @@
     <h2>Результаты для запроса: {{this.$route.query.q}}</h2>
     <div class="projects" v-for="project of projects">
 
-      <project-card
-          :project="project">
+      <div class="project">
+        <project-card
+            :project="project"
 
-      </project-card>
+        />
+      </div>
+
+
     </div>
   </div>
 </template>
@@ -49,6 +53,10 @@ export default {
   .projects {
     display: flex;
     width: 100%;
+
+    .project {
+      width: 24%;
+    }
   }
 }
 </style>

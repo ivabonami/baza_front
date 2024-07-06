@@ -4,6 +4,7 @@
     <input type="search"
            v-on:keydown.enter="searchProjects()"
            id="search"
+           autocomplete="off"
            name="search"
            placeholder="Найти проект"
            v-model="search.query">

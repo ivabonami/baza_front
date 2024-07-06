@@ -13,18 +13,16 @@
 
       <div class="category-checkbox"  @click="checkField(category)"
       >
-      <span class="selected"
-            v-show="this.selectedCategories.indexOf(category.id) >= 0"
-      >
-
-      <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="0.468079" width="20.3515" height="20" rx="5" fill="#FFC700"/>
-      <path d="M5.55597 9.75L9.08634 14L15.7317 6" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-
-
-      </span>
+        <svg width="21" height="20"
+             :class="{selected: this.selectedCategories.indexOf(category.id) >= 0}"
+             viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0.468079" width="20.3515" height="20" rx="5" fill="#FFC700"/>
+          <path d="M5.55597 9.75L9.08634 14L15.7317 6" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      <span class="checkbox"  >
         {{ category.name }}
+      </span>
+
       </div>
 
     </div>
@@ -133,26 +131,35 @@ label {
 
   }
   span {
-    padding-left: 20px;
+
   }
 
-  &.checked {
-   svg {
-     path {
-       background: #dadada;
-     }
-   }
-  }
 
   svg {
 
     width: 20px;
-    top: 0;
-    left: 0;
-    position: absolute;
+
+    rect {
+      fill: transparent;
+      stroke-width: 1px;
+      stroke: #6B6B6B;
+      transition: .15s ease;
+    }
 
     path {
+      transition: .15s ease;
       stroke: #000;
+      stroke-width: 0;
+    }
+
+    &.selected {
+      rect {
+        fill: #FFC700;
+        stroke-width: 0;
+      }
+      path {
+        stroke-width: 2px;
+      }
     }
 
 

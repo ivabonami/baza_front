@@ -1,6 +1,6 @@
 <template>
 
-  <div class="auth" @keydown.enter="signIn" @keydown.esc="$emit('closePopup', true)">
+  <form class="auth" @keydown.enter="signIn" @keydown.esc="$emit('closePopup', true)">
     <InputText
         :input="{
           name: 'Юзернейм',
@@ -44,7 +44,7 @@
     </button-primary>
 
     <loaderSmall v-else></loaderSmall>
-  </div>
+  </form>
 </template>
 
 <script>

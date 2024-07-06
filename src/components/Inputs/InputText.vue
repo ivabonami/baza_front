@@ -6,6 +6,7 @@
     </svg>
   </label>
   <input type="text"
+
          :name="$props.input.name"
          :minlength="$props.input.min"
          :maxlength="$props.input.max"

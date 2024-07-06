@@ -1,5 +1,5 @@
 <template>
-  <div class="auth" @keydown.enter="" @keydown.esc="$emit('closePopup', true)">
+  <form class="auth" @keydown.enter="" @keydown.esc="$emit('closePopup', true)">
     <InputText
         :input="{
           name: 'username',
@@ -59,7 +59,7 @@
     </button-primary>
 
     <loaderSmall v-else></loaderSmall>
-  </div>
+  </form>
 </template>
 
 <script>

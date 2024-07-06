@@ -32,9 +32,7 @@
       <div v-for="product of products"
            class="project-products_items_item">
         <product-card
-            :highlighted="() => {
-              productsStore.products.find(item => item.id = product.id).highlighted || false
-            }"
+            :highlighted="highlightedProject.length > 0 ? highlightedProject[0].id === product.id : false"
             :item="product"
             @click="() => {
               modalShowFullInfo.show = !modalShowFullInfo.show
@@ -42,6 +40,7 @@
 
             }"
         />
+
         <div class="project-products_admin-menu" v-if="userInfo.role === 'admin' || userInfo.username === $props.project.userData.username">
           <button-action
               @pressed="() => {
@@ -125,7 +124,7 @@
         ожидайте обновлений
       </template>
       <template #buttonText>
-        Добавить услугу
+        Добавить
       </template>
     </empty-store>
 
@@ -164,7 +163,7 @@
       @productUpdated="emit => onProductUpdated(emit)"
   >
     <template #header>
-      Добавить на витрину
+      Добавить
     </template>
     <template #buttonConfirm>
       {{ productControllerOptions.buttonConfirmText }}
@@ -214,7 +213,7 @@ import popupDelete from "../components/Popups/PopupDelete.vue";
 import emptyStore from "../Blocks/EmptyStore.vue";
 import {productsStore} from "../Store/productsStore.js";
 
-
+import {highlightedProject} from "../Store/highlightedProject.js";
 
 export default {
   name: "ProjectProducts.vue",
@@ -228,6 +227,7 @@ export default {
         show: false,
         data: {}
       },
+      highlightedProject,
       modalProductController: {
         show: false
       },

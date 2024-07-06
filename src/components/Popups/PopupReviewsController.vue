@@ -221,12 +221,13 @@ export default {
               }
 
             } else {
-
+              this.notice.show = false
               this.closeModal()
 
             }
 
           }).catch(error => {
+            this.notice.show = false
             this.$emit('reviewAdded', this.data)
             this.closeModal()
           })
@@ -235,7 +236,7 @@ export default {
           this.data.id = this.$props.dataReview.id
 
           editReview(this.data).then(result => {
-
+            this.notice.show = false
             this.closeModal()
           })
         }

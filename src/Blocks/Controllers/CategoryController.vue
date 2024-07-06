@@ -230,9 +230,14 @@ export default {
       } else {
         addCategory(this.categoryName, this.allowShopfront).then(result => {
           getCategories().then(result => {
+            console.log()
             categoriesStore.categories = result.data.categories
             categoriesStore.exchanger = result.data.categories.find(item => item.name === "Обменники")
           })
+        }).catch(err => {
+          this.notice.show = true
+          err.response.data.message === "Invalid token" ? this.notice.text.axiosErr = "Токен не валдиный, перелогиньтесь" : this.notice.text.axiosErr = err.response.data.message
+
         })
       }
     }
