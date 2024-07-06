@@ -383,14 +383,8 @@ export default {
 
   .project-products_items {
     display: flex;
-    gap: 4px;
+    gap: 5px;
     flex-wrap: wrap;
-    justify-content: space-between;
-
-    &::after {
-      content: "";
-      flex: auto;
-    }
 
     .project-products_items_item {
       .project-products_admin-menu {

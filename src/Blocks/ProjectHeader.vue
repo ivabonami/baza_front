@@ -16,7 +16,18 @@
       <div class="project-header_info_stats">
         <div class="project-header_info_header">
           <slot name="project-name"></slot>
+          <svg xmlns="http://www.w3.org/2000/svg"
+               @click="() => {
+                 modalInfo.show = true
+                 modalInfo.data = project
+               }"
+               v-tippy="{content: 'О проекте', theme: 'light'}"
+               width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M12 16V12M12 8H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="#D8D8D8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+
         </div>
+
 
         <div v-for="(stat, index) of stats"
              v-tippy="{content: stat.tooltip, theme: 'light'}"
@@ -111,6 +122,28 @@
   />
 
 
+
+  <popup-show-full-info
+      v-if="modalInfo.show"
+      :modal="modalInfo"
+      @closeModal="modalInfo.show = false"
+  >
+    <template #header>
+      {{ modalInfo.data.name }}
+    </template>
+
+    <template #text>
+      {{ modalInfo.data.description }}
+    </template>
+
+    <template #image>
+      <img :src="api.url + modalInfo.data.avatarFilePath"
+           style="height: 100%;"
+           :alt="modalInfo.data.name">
+    </template>
+
+  </popup-show-full-info>
+
 </template>
 
 <script>
@@ -133,6 +166,8 @@ import iconTestimonial from "../assets/icons/icon-testimonial.svg"
 import {userInfo} from "../Store/userInfo.js";
 import projectEdit from "./Controllers/ProjectEdit.vue";
 import {categoriesStore} from "../Store/categories.js";
+import popupShowFullInfo from "../components/Popups/PopupShowFullInfo.vue";
+
 
 
 export default {
@@ -148,6 +183,9 @@ export default {
       modal: {
         show: false,
 
+      },
+      modalInfo: {
+        show: false
       },
       categoriesStore,
       userInfo,
@@ -188,7 +226,8 @@ export default {
     buttonFavorite,
     projectStats,
     buttonAction,
-    projectAdditionalStats
+    projectAdditionalStats,
+    popupShowFullInfo
 
   },
 
@@ -302,6 +341,13 @@ export default {
         font-weight: 700;
         line-height: normal;
         margin-bottom: -5px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        svg {
+
+        }
 
       }
     }
