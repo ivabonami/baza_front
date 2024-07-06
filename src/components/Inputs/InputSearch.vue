@@ -3,7 +3,6 @@
 
     <input type="search"
            v-on:keydown.enter="searchProjects()"
-           autocomplete=""
            id="search"
            name="search"
            placeholder="Найти проект"

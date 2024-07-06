@@ -38,6 +38,15 @@ export async function addReview(review) {
         }).catch(error => error)
 }
 
+
+export function showNotReviewed() {
+    const headers = {
+        'Authorization': `Bearer ${userInfo.token}`
+    };
+
+    return axios.get(`${apiUrl}/reviews?showNotReviewed=true`, {headers})
+}
+
 export async function editReview(review) {
     const headers = {
         'Authorization': `Bearer ${userInfo.token}`

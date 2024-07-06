@@ -7,9 +7,10 @@ import vClickOutside from "click-outside-vue3";
 import bazaHeader from "./Layouts/BaseHeader.vue";
 import {modalSetting} from "./assets/js/modal.js";
 import {watch, ref} from "vue";
+import baseFooter from "./Layouts/BaseFooter.vue";
 
 export default {
-  components: { FooterView, recommended, addCategory, vClickOutside, bazaHeader},
+  components: { FooterView, recommended, addCategory, vClickOutside, bazaHeader, baseFooter},
   emits: ['mobileClick'],
   data() {
     return {
@@ -64,8 +65,6 @@ export default {
 
 }
 
-// TODO апрув проектов
-// TODO проверить и апрувнуть отзыв
 </script>
 
 <template>
@@ -122,6 +121,10 @@ export default {
   </div>
 
   <modal v-if="modalSetting.show === true"></modal>
+
+
+  <base-footer />
+
 
 </template>
 

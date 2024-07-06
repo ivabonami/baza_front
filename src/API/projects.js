@@ -34,6 +34,16 @@ export function changePayedStatus(projectId, status) {
     return axios.put(`${apiUrl}/projects/${projectId}`, {payed: status},{headers})
 }
 
+export function approveProject(project) {
+    const headers = {
+        'Authorization': `Bearer ${userInfo.token}`
+    };
+
+    project.isReviewed = true
+
+    return axios.put(`${apiUrl}/projects/${project.id}`, {isReviewed: true},{headers})
+}
+
 
 export function removeProject(projectId, options, offset) {
     const headers = {

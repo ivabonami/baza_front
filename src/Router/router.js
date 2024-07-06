@@ -14,6 +14,8 @@ import favoriteProjects from "../Pages/ProjectsFavorite.vue";
 import errorPage from "../Pages/Static/ErrorPage.vue";
 import searchPage from "../Pages/ProjectsSearch.vue";
 import project_Edit from "../Blocks/Controllers/ProjectEdit.vue";
+import ProjectReviews from "../Layouts/ProjectReviews.vue";
+import ReviewsCheck from "../Pages/ReviewsCheck.vue";
 
 const router = createRouter({
 
@@ -59,11 +61,16 @@ const router = createRouter({
           component: ProjectsView,
         },
         {
+          path: '/check-testimonials',
+          component: ReviewsCheck,
+        },
+        {
           path: '/project/:id/edit',
           component: project_Edit,
             name: 'ProjectEdit',
             props: true
         },
+
         {
             path: '/add-project',
             component: addProject
