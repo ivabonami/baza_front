@@ -195,7 +195,7 @@ export default {
       width: 24%;
       margin-bottom: 20px;
       padding: 10px;
-      border: 1px solid transparent;
+      border: 2px solid transparent;
       border-radius: 20px;
       transition: .15s ease;
       background-color: #fff;
@@ -211,7 +211,7 @@ export default {
         border-color: #191B2A;
 
         &.payed {
-          border: 1px solid var(--Linear, #1440a6);
+          border: 2px solid var(--Linear, #031e59);
 
         }
 

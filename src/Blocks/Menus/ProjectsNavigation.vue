@@ -27,7 +27,7 @@ export default {
   props: {
     sort: {
       name: 'Популярные',
-      sort: 'newest'
+      sort: 'popular'
     },
 
   },
@@ -50,6 +50,7 @@ export default {
 
 <style scoped lang="scss">
 .project-navigation {
+  margin-top: -50px;
   display: flex;
   align-items: center;
   justify-content: space-between;

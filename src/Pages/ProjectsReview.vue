@@ -44,7 +44,7 @@
         ожидайте обновлений
       </template>
       <template #buttonText>
-        Добавить услугу
+        Добавить
       </template>
     </empty-store>
 

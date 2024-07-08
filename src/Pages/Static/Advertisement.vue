@@ -23,7 +23,7 @@
   <br>
   Не упустите возможность расширить свой бизнес вместе с нами! Разместите свой магазин на BAZA уже сегодня.
   <a href="https://t.me/enBaza" class="image-link" target="_blank">
-    <img src="../../assets/images/banners/guarantee.webp" alt="">
+    <img src="../../assets/images/banners/ads.png" alt="">
   </a>
 
 

@@ -292,8 +292,8 @@ export default {
   },
   methods: {
     normalizeProjectName(name) {
-      if (name.length > 63) {
-        return name.substring(0, 60) + '...'
+      if (name.length > 43) {
+        return name.substring(0, 43) + '...'
       } else {
         return name
       }
@@ -347,6 +347,8 @@ export default {
       font-weight: 400;
       line-height: normal;
       margin-bottom: 10px;
+      padding-left: 10px;
+      padding-right: 10px;
 
     }
     .project-card_stats {
@@ -354,6 +356,8 @@ export default {
       gap: 10px;
       align-items: center;
       margin-top: 10px;
+      padding-left: 10px;
+      padding-right: 10px;
 
 
     }

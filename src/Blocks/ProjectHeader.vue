@@ -285,7 +285,7 @@ export default {
   padding: 10px 10px;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 20px;
   margin-bottom: 10px;
 
   .project-header_avatar {

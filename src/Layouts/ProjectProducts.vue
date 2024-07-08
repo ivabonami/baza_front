@@ -9,7 +9,7 @@
 
             modalProductController.show = true
             productControllerOptions.mode = 'add'
-            productControllerOptions.buttonConfirmText = 'Добавить услугу'
+            productControllerOptions.buttonConfirmText = 'Добавить'
             productControllerOptions.product = null
             productControllerOptions.projectId = this.$props.project.id
 
@@ -109,7 +109,7 @@
           if (userInfo.token) {
                modalProductController.show = true
               productControllerOptions.mode = 'add'
-              productControllerOptions.buttonConfirmText = 'Добавить услугу'
+              productControllerOptions.buttonConfirmText = 'Добавить'
               productControllerOptions.product = null
               productControllerOptions.projectId = this.$props.projectId
             }

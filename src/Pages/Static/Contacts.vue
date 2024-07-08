@@ -1,6 +1,6 @@
 <template>
   <h1>Контакты</h1>
-  <img src="../../assets/images/banners/contacts.jpg" alt="">
+  <img src="../../assets/images/banners/contacts.png" alt="">
   <div class="project-links">
     <a href="https://t.me/enBaza" class="btn btn-big-pages" target="_blank">
       <svg xmlns="http://www.w3.org/2000/svg" width="35" height="30" viewBox="0 0 35 30" fill="none">

@@ -226,7 +226,7 @@ export default {
 
   .products-carousel_items {
     display: flex;
-    gap: 14px;
+    gap: 28px;
     position: relative;
 
     .products-carousel_items_item {
