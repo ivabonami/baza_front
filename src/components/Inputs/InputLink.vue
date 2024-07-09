@@ -44,7 +44,7 @@ export default {
 
   watch: {
     data: function (newVal, oldVal) {
-      this.setData()
+      this.inputData = newVal
     },
     error: function (newVal, oldVal) {
 

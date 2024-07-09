@@ -382,6 +382,7 @@ export default {
 @media screen and (max-width: 768px){
   .project-header {
     flex-wrap: wrap;
+    gap: 10px;
 
     .project-header_links {
       width: 100%;

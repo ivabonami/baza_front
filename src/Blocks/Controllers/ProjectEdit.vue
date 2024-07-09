@@ -95,7 +95,7 @@
             }"
         />
 
-        <div class="old-avatar" v-if="project.bannerFilePath">
+        <div class="old-banner" v-if="project.bannerFilePath">
           <img
 
               :src="apiUrl + '/' + project.bannerFilePath"
@@ -147,9 +147,10 @@
         <div>
           <input-link
               :input="inputs.links.link"
+              :data="inputs.links.link.data"
               @data="emit => {
                 linkToAdd.link = emit
-
+                inputs.links.link.data = emit
                 Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
                 delete this.notice.text.linkErr
               }"
@@ -448,7 +449,6 @@ export default {
 
     addLinkToProject() {
 
-      console.log(this.linkToAdd)
 
       if (this.linkToAdd.name === null || this.linkToAdd.link === null || this.linkToAdd.name.length < 0 || this.linkToAdd.link.length < 0) {
 
@@ -459,6 +459,7 @@ export default {
             link: this.linkToAdd.link
           }
           this.project.links.push(link)
+          this.inputs.links.link.data = ''
         } else {
 
         }
@@ -654,10 +655,20 @@ textarea {
 }
 
 .images-box {
-  img {
-    width: 100px;
-    aspect-ratio: 1 / 1 ;
-    border-radius: 20px;
+  .old-avatar {
+    img {
+      width: 100px;
+      aspect-ratio: 1 / 1 ;
+      border-radius: 20px;
+    }
+  }
+  .old-banner {
+
+    img {
+      border-radius: 20px;
+      width: 100%;
+
+    }
   }
 }
 @media screen and (max-width: 500px){
@@ -696,10 +707,15 @@ textarea {
     .images-box, .links-box {
       width: 100%;
     }
+
+    .categories-box {
+      margin-top: 30px;
+    }
   }
 
   .buttons {
     width: 100%;
   }
+
 }
 </style>

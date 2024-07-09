@@ -556,12 +556,27 @@ export default {
     }
 
   }
+
 }
 
 @media screen and (max-width: 768px){
   .project-reviews_items {
     .project-reviews_items_item {
       width: 100%;
+    }
+  }
+
+  .project-reviews {
+    .project-reviews_heading {
+      .project-rating {
+        gap: 2px;
+        svg {
+          width: 14px;
+        }
+        .onThe {
+          font-size: 10px;
+        }
+      }
     }
   }
 }

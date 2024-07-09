@@ -110,8 +110,10 @@
         <div>
           <input-link
               :input="inputs.links.link"
+              :data="inputs.links.link.data"
               @data="emit => {
                 linkToAdd.link = emit
+                inputs.links.link.data = emit
                 Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
                 delete this.notice.text.linkErr
               }"
@@ -433,6 +435,7 @@ export default {
             link: this.linkToAdd.link
           }
           this.project.links.push(link)
+          this.linkToAdd.link = ''
         } else {
 
         }
@@ -634,9 +637,13 @@ textarea {
   }
 }
 @media screen and (max-width: 768px){
+
   .add-project .right {
     .images-box, .links-box {
       width: 100%;
+    }
+    .categories-box {
+      margin-top: 30px;
     }
   }
 
