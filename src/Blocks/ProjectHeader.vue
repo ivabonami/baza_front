@@ -68,7 +68,7 @@
             class="project-header_info_stats_exchanger_item">
           <project-additional-stats>
             <template #header>
-              {{ $props.project.minValueToExchange }} р.
+              {{ $props.project.minValueToExchange }} ₽
             </template>
             <template #icon>
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -82,7 +82,7 @@
 
           <project-additional-stats>
             <template #header>
-              {{ $props.project.reserve }} р.
+              {{ normalizeReserveSumm($props.project.reserve) }} ₽
             </template>
             <template #icon>
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -249,10 +249,16 @@ export default {
 
 
       }
+    },
+    normalizeReserveSumm(summ) {
+      let number = summ.toString()
+      if (number.length > 6) {
+        number = number.substring(0, number.length - 6) + ',' + number.substring(1, number.length - 5) + 'млн'
+      } else if (number.length > 3) {
+        number = number.substring(0, number.length - 3) + 'т'
+      }
 
-
-
-
+      return number
     }
   },
   watch: {
@@ -310,7 +316,7 @@ export default {
     }
   }
   .project-header_info {
-    flex-basis: 75%;
+    flex-basis: 68%;
     display: flex;
     gap: 20px;
     width: 75%;
@@ -333,6 +339,7 @@ export default {
       .project-header_info_header {
         flex-basis: 100%;
         word-wrap: break-word;
+        word-break: break-word;
         color: #000;
         font-family: "PT Sans Caption";
         font-size: 18px;

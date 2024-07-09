@@ -124,7 +124,7 @@ export default {
 
 @media screen and (max-width: 768px){
   .service-card {
-    width: 180px;
+    width: 170px;
   }
 }
 </style>

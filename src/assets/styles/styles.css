@@ -12,6 +12,20 @@ body {
   text-decoration: none;
 }
 
+.link-btn {
+  color: black;
+  background-color: #FFC700;
+  padding: 10px 30px;
+  border-radius: 10px;
+  transition: 0.3s ease;
+}
+.link-btn:hover {
+  border-radius: 10px;
+  background: var(--yellow, #FFC700);
+  transform: translateX(-4px);
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.25);
+}
+
 h1, h2, h3, h4, h5, h6, p {
   margin-top: 0;
   margin-bottom: 0;

@@ -100,6 +100,7 @@ export default {
     font-family: "PT Sans Caption";
     font-size: 16px;
     font-style: normal;
+    word-break: break-word;
     font-weight: 700;
     line-height: normal;
   }
@@ -112,6 +113,7 @@ export default {
     right: 0;
     bottom: -4px;
     z-index: -1;
+    overflow: hidden;
 
     display: flex;
     align-items: end;

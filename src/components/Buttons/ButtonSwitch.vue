@@ -49,7 +49,7 @@ export default {
   }
 
   &.active {
-    background-color: #fff6d6;
+    background-color: #F2F5F7;
     cursor: default;
   }
 

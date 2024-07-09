@@ -209,7 +209,7 @@ export default {
   gap: 30px;
 
   .project-reviews_items_item {
-    width: 48%;
+    width: 100%;
     .project-reviews_items_item_body {
       word-break: break-word;
     }

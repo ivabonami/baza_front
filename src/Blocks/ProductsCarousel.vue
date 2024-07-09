@@ -51,17 +51,19 @@
           ref="carouselItemsWrapper"
           class="products-carousel_items"
           :style="carousel.styles"
+
       >
         <router-link
             :to="`/project/${item.ProjectId}`"
             @click="() => {
               highlightedProject.push(item)
             }"
-            v-for="item in productsStore.products"
+            v-for="(item, index) in productsStore.products"
             class="products-carousel_items_item">
           <services-card
               ref="sliderItem"
               :item="item"
+              v-if="index < 5"
           >
           </services-card>
         </router-link>
@@ -213,7 +215,6 @@ export default {
 
 .products-carousel {
   width: 100%;
-  overflow: hidden;
   position: relative;
   height: v-bind(height + 'px');
 
@@ -225,6 +226,7 @@ export default {
   }
 
   .products-carousel_items {
+    margin-top: 10px;
     display: flex;
     gap: 28px;
     position: relative;

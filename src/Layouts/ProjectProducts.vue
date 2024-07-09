@@ -383,7 +383,7 @@ export default {
 
   .project-products_items {
     display: flex;
-    gap: 5px;
+    gap: 2.5%;
     flex-wrap: wrap;
 
     .project-products_items_item {

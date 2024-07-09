@@ -54,10 +54,7 @@ export default {
           name: 'Популярные',
           sort: 'popularity'
         },
-        {
-          name: 'Непопулярные',
-          sort: 'unpopularity'
-        },
+
         {
           name: 'Сначала новые',
           sort: 'newest'

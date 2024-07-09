@@ -259,8 +259,6 @@
 
   </div>
 
-  не работают категории и замена фото
-
 
 
   <notice :notice="notice" :errors="errors"
@@ -450,7 +448,9 @@ export default {
 
     addLinkToProject() {
 
-      if (this.linkToAdd.name === null || this.linkToAdd.link === null || this.linkToAdd.name.length > 0 || this.linkToAdd.link.length > 0) {
+      console.log(this.linkToAdd)
+
+      if (this.linkToAdd.name === null || this.linkToAdd.link === null || this.linkToAdd.name.length < 0 || this.linkToAdd.link.length < 0) {
 
       } else {
         if (this.project.links.length < 12) {
