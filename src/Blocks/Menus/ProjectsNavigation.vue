@@ -27,7 +27,7 @@ export default {
   props: {
     sort: {
       name: 'Популярные',
-      sort: 'popular'
+      sort: 'popularity'
     },
 
   },

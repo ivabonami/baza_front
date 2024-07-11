@@ -68,7 +68,7 @@
             class="project-header_info_stats_exchanger_item">
           <project-additional-stats>
             <template #header>
-              {{ $props.project.minValueToExchange }} ₽
+              {{ normalizeReserveSumm($props.project.minValueToExchange) }} ₽
             </template>
             <template #icon>
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -253,7 +253,7 @@ export default {
     normalizeReserveSumm(summ) {
       let number = summ.toString()
       if (number.length > 6) {
-        number = number.substring(0, number.length - 6) + ',' + number.substring(1, number.length - 5) + 'млн'
+        number = number.substring(0, number.length - 6) + 'млн'
       } else if (number.length > 3) {
         number = number.substring(0, number.length - 3) + 'т'
       }

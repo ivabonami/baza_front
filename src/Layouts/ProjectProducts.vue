@@ -394,4 +394,10 @@ export default {
     }
   }
 }
+
+@media screen and (max-width: 500px){
+  .project-products_items {
+    justify-content: space-between;
+  }
+}
 </style>

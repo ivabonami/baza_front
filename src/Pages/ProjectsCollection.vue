@@ -2,7 +2,7 @@
   <div class="projects-collection_wrapper">
 
     <projects-navigation
-        :sort="this.options.sort"
+        :sort="this.sorts"
         @sortChanged="(emit) => {
           this.options.sort = emit
           projectsStore.projects.splice(0, projectsStore.projects.length)
@@ -100,14 +100,42 @@ export default {
 
   data () {
     return {
+      sorts: [
+        {
+          name: 'Популярные',
+          sort: 'popularity'
+        },
 
+        {
+          name: 'Сначала новые',
+          sort: 'newest'
+        },
+        {
+          name: 'Сначала старые',
+          sort: 'oldest'
+        },
+        {
+          name: 'С высоким рейтингом',
+          sort: 'highestRating'
+        },
+        {
+          name: 'С низким рейтингом',
+          sort: 'lowestRating'
+        },
+        {
+          name: 'Мне повезет',
+          sort: 'random'
+        },
+
+      ],
       options: {
         isPayedFirst: true,
         limit: 4,
         offset: 0,
+
         sort: {
           name: 'Популярные',
-          sort: 'newest'
+          sort: 'popularity'
         },
         categoryIds: 0
       },

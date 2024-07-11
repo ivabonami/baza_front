@@ -223,6 +223,7 @@ export default {
     display: flex;
     gap: 20px;
     align-items: center;
+    margin-bottom: 20px;
   }
 
   .products-carousel_items {
@@ -266,8 +267,15 @@ export default {
 }
 
 @media screen and (max-width: 500px){
-  .products-carousel .products-carousel_items .products-carousel_items_item {
-    width: 175px;
+  .products-carousel .products-carousel_items {
+    width: 105%;
+    overflow: hidden;
+    margin: 0 -10px 0 -10px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    .products-carousel_items_item {
+      width: 175px;
+    }
   }
 }
 </style>

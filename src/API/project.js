@@ -20,6 +20,12 @@ export async function addProject(project) {
         links: project.links
     }
 
+    if (project.reserve || project.minValueToExchange ) {
+        projectToAdd.type = 'exchanger'
+        projectToAdd.exchangeRate = 20
+    }
+
+
     let avatar = await uploadImage(project.avatar)
     let banner = project.banner ? await uploadImage(project.banner) : null
 
@@ -53,6 +59,12 @@ export async function editProject(project, projectId) {
         categoryIds: project.categoryIds,
         links: project.links
     }
+
+    if (project.reserve || project.minValueToExchange ) {
+        projectToAdd.type = 'exchanger'
+        projectToAdd.exchangeRate = 20
+    }
+
 
 
     project.avatar ? projectToAdd.avatarFilePath = (await uploadImage(project.avatar)).data.filePath : projectToAdd.avatarFilePath = project.avatarFilePath

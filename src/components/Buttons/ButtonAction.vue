@@ -43,7 +43,6 @@ export default {
   gap: 10px;
   background-color: transparent;
   border: none;
-  margin-bottom: 5px;
 
   .base-button_icon {
 

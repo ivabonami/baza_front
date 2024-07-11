@@ -307,13 +307,20 @@ export default {
 .project-card_wrapper {
   width: 100%;
   cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
 
   &.payed {
     border: 1px solid #FFC700;
 
 
   }
-
+  .project-card_body {
+    display: flex;
+    flex-wrap: wrap;
+    align-self: end;
+  }
 
   .project-card_avatar {
     width: 100%;
@@ -338,6 +345,7 @@ export default {
 
 
   .project-card_body {
+
     .project-card_name {
       font-family: "PT Sans Caption";
       color: #1E1E1E;
@@ -360,11 +368,13 @@ export default {
       padding-right: 10px;
 
 
+
     }
     .project-card_links {
       display: flex;
       flex-wrap: wrap;
       gap: 5px;
+      width: 100%;
       margin-left: -0px;
 
       .project-card_links_link {

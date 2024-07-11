@@ -12,29 +12,28 @@
         width: 100%;
         margin-top: 100px;
         text-align: center;
+
       }
-      .pulse-loader {
-        width: 50px;
-        height: 50px;
-        border-radius: 100px;
-        animation: pulse 3s infinite;
-        background-color: black;
-        margin-bottom: 50px;
-        display: inline-block;
-        margin: 0 auto;
-      
+      .loader {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 50px;
+          margin-bottom: 50px;
+
       }
 
-      @keyframes pulse {
-        0%, 100% {
-          transform: scale(1);
-        }
-        25%, 75% {
-          transform: scale(1.13);
-        }
-        50% {
-          transform: scale(1.05);
-        }
+      .loader svg {
+          width: 50px;
+          height: 50px;
+          animation: spin 1.5s linear infinite;
+      }
+
+      @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
       }
       
 
@@ -43,9 +42,15 @@
   </head>
   <body class="theme">
     <div class="preloader">
-      <div class="pulse-loader"></div>
-      <p>
-        Market is loading</p>
+        <div class="logo">
+            <img src="./src/assets/images/logo.png" alt="">
+        </div>
+      <div class="loader">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11 1.25V3.75M11 17V21M4.75 11H1.25M20.25 11H18.75M17.4571 17.4571L16.75 16.75M17.6642 4.41579L16.25 5.83M3.92157 18.0784L6.75 15.25M4.12868 4.20868L6.25 6.33" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+      </div>
+      <p>Загрузка</p>
     </div>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>

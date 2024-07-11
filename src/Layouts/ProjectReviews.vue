@@ -56,6 +56,17 @@
 
       </div>
     </div>
+    <div class="filter">
+      <sort
+          :sort="sort"
+          @sortChanged="(emit) => {
+            projectReviewsStore.reviews.splice(0, projectReviewsStore.reviews.length)
+            this.selectedSort = emit
+            getReviews({projectId: this.$props.project.id, sort: this.selectedSort.sort})
+
+          }"
+      />
+    </div>
   </div>
 
   <empty-store
@@ -274,7 +285,7 @@ import popupDelete from "../components/Popups/PopupDelete.vue";
 import popupInfo from "../components/Popups/PopupInfo.vue";
 import popupAuth from "../components/Popups/PopupAuth.vue";
 
-
+import sort from "../Helpers/Sort.vue";
 
 export default {
   name: "ProjectReviews.vue",
@@ -282,8 +293,6 @@ export default {
     project: {
       name: null,
       id: null,
-
-
     }
   },
   data() {
@@ -300,6 +309,30 @@ export default {
         show: false,
         review: null,
         buttonConfirmText: "Добавить отзыв"
+      },
+
+      sort: [
+        {
+          name: 'Сначала новые',
+          sort: 'newest'
+        },
+        {
+          name: 'Сначала старые',
+          sort: 'oldest'
+        },
+        {
+          name: 'С высоким рейтингом',
+          sort: 'highestRating'
+        },
+        {
+          name: 'С низким рейтингом',
+          sort: 'lowestRating'
+        },
+
+      ],
+      selectedSort: {
+        name: 'Сначала новые',
+        sort: 'newest'
       },
       getReviews,
 
@@ -322,7 +355,8 @@ export default {
     popupReviewsController,
     popupDelete,
     popupInfo,
-    popupAuth
+    popupAuth,
+    sort
   },
 
   methods: {
@@ -355,7 +389,7 @@ export default {
   },
   watch: {
     project: function (newVal, oldVal) {
-      getReviews({projectId: newVal.id})
+      getReviews({projectId: newVal.id, sort: this.selectedSort.sort})
 
       for (let i = 0; i < this.project.ratingAvg; i++) {
         this.$refs.stars.childNodes[i].classList.add('active')
@@ -383,6 +417,11 @@ export default {
 .project-reviews {
   margin-top: 40px;
   margin-bottom: 10px;
+
+  .filter {
+    margin-left: auto;
+    width: 150px;
+  }
 
   .project-reviews_heading {
     color: #000;
@@ -466,11 +505,15 @@ export default {
 
 @media screen and (max-width: 768px){
   .project-products .project-products_items {
+    justify-content: space-between;
 
     .project-products_items_item {
       width: 40%;
     }
   }
+}
+.filter {
+  margin: 0 auto;
 }
 .project-reviews_items {
   display: flex;
@@ -563,6 +606,14 @@ export default {
   .project-reviews_items {
     .project-reviews_items_item {
       width: 100%;
+
+      .project-reviews_items_item_heading {
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+      .menu {
+        margin: 0;
+      }
     }
   }
 

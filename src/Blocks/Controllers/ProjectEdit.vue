@@ -150,8 +150,8 @@
               :data="inputs.links.link.data"
               @data="emit => {
                 linkToAdd.link = emit
-                inputs.links.link.data = emit
-                Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
+                inputs.links.link.data = null
+                Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false,
                 delete this.notice.text.linkErr
               }"
 
@@ -349,9 +349,9 @@ export default {
       inputs: {
         name: {
           name: 'Название',
-          placeholder: 'От 5 до 255 символов',
+          placeholder: 'От 4 до 255 символов',
           tooltip: 'На главной странице и на странице проекта отображаются только первые 90 символов, будьте внимательны.',
-          min: 5,
+          min: 4,
           max: 255,
           data: null
         },

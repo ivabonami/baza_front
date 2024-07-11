@@ -4,7 +4,7 @@
       <img :src="api.url + $props.item.avatarFilePath" alt="name">
     </div>
     <div class="service-card_text">
-      {{ text }}
+      {{ normalizeText($props.item.description) }}
     </div>
 
   </div>
@@ -44,17 +44,18 @@ export default {
     }
   },
   mounted() {
-    this.textTransform()
+
   },
   watch: {
     item: function(newVal, oldVal) {
-      this.textTransform()
+
     }
   },
   methods: {
-    textTransform() {
-      this.text = this.$props.item.name.substring(0,90)
-      this.text > 90 ? this.text += '...' : null
+    normalizeText(text) {
+      if (text) {
+        return text.substring(0, 29) + '...'
+      }
     }
   }
 }
@@ -68,7 +69,7 @@ export default {
   background: #FFF;
   box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
   padding: 14px;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 
   &.highlighted {
     background: #fff7d6;
@@ -103,7 +104,6 @@ export default {
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    height: 65px;
     word-break: break-word;
     color: #191B2A;
     font-size: 16px;
