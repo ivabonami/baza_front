@@ -72,7 +72,7 @@ export async function editProject(project, projectId) {
 
     return await axios.put(`${apiUrl}/projects/${projectId}`, projectToAdd,{headers}).then(result => {
 
-        let projectToReplace = projectsStore.projects.findIndex(item => item.id = projectId)
+        let projectToReplace = projectsStore.projects.findIndex(item => item.id === projectId)
 
         result.data.updatedProject.userData = project.userData
         projectsStore.projects[projectToReplace] = result.data.updatedProject
