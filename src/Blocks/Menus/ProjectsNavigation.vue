@@ -50,7 +50,7 @@ export default {
 
 <style scoped lang="scss">
 .project-navigation {
-  margin-top: -50px;
+  margin-top: -30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -64,13 +64,16 @@ export default {
     flex-wrap: wrap;
     gap: 0;
     margin-bottom: 10px;
+    align-items: center;
+    justify-content: space-between;
 
     .categories-menu {
       margin-bottom: 0;
-      width: 100%;
+      width: 80%;
     }
     .filter {
-      width: 100%;
+      width: 15%;
+      margin-top: 15px;
     }
   }
 

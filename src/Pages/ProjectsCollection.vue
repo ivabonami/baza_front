@@ -231,8 +231,8 @@ export default {
       box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
 
       &.payed {
-        border-color: #1254FF;
-
+        background: linear-gradient(#fff, #fff 0) padding-box,
+        linear-gradient( to bottom , #1254FF 70%, #CAA0FF) border-box;
       }
 
       &:hover {

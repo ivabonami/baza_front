@@ -126,10 +126,10 @@ export default {
     border-radius: 10px;
     border: 1px solid var(--lightgray, #F2F5F7);
     background: #FFF;
-    width: 230px;
+    width: 180px;
     position: absolute;
     z-index: 10;
-    right: 0;
+    left: 0;
     margin-top: 5px;
 
 
@@ -142,6 +142,7 @@ export default {
       cursor: pointer;
       overflow: hidden;
       gap: 15px;
+      font-size: 14px;
 
       &.active {
         cursor: default;
@@ -158,7 +159,11 @@ export default {
 @media screen and (max-width: 500px){
   .filter {
     .filter_current {
-      margin: 0 auto;
+      width: 45px;
+
+    }
+    .sort {
+      display: none;
     }
   }
 }

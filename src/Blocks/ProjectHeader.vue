@@ -51,7 +51,7 @@
         </div>
         <button-action v-if="isAdmin" @click="this.$router.push({name: 'ProjectEdit'})">
           <template #text>
-            Редактировать
+            <span class="hideOnMobile">Редактировать</span>
           </template>
           <template #icon>
             <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none">
@@ -205,11 +205,11 @@ export default {
           icon: iconEye,
           tooltip: 'Просмотров у проекта'
         },
-        categories: {
-          stat: null,
-          icon: iconCategories,
-          tooltip: 'Категория проекта'
-        },
+        // categories: {
+        //   stat: null,
+        //   icon: iconCategories,
+        //   tooltip: 'Категория проекта'
+        // },
 
       },
       api,
@@ -237,18 +237,18 @@ export default {
       this.stats.reviewsCount.stat = this.$props.project.reviewsCount
       this.stats.ratingAvg.stat = this.$props.project.ratingAvg
 
-      this.stats.categories.stat = this.$props.project.categories[0].name
+      // this.stats.categories.stat = this.$props.project.categories[0].name
 
-      if (this.$props.project.categories.length > 1) {
-        this.stats.categories.stat += ` + ${this.$props.project.categories.length - 1}`
-        this.stats.categories.tooltip = 'Категории проекта: '
-        for (const [index, category] of this.$props.project.categories.entries()) {
-
-          index !== this.$props.project.categories.length - 1 ? this.stats.categories.tooltip += `${category.name}, ` : this.stats.categories.tooltip += `${category.name}`
-        }
-
-
-      }
+      // if (this.$props.project.categories.length > 1) {
+      //   this.stats.categories.stat += ` + ${this.$props.project.categories.length - 1}`
+      //   this.stats.categories.tooltip = 'Категории проекта: '
+      //   for (const [index, category] of this.$props.project.categories.entries()) {
+      //
+      //     index !== this.$props.project.categories.length - 1 ? this.stats.categories.tooltip += `${category.name}, ` : this.stats.categories.tooltip += `${category.name}`
+      //   }
+      //
+      //
+      // }
     },
     normalizeReserveSumm(summ) {
       let number = summ.toString()
@@ -378,11 +378,20 @@ export default {
   }
 
 }
-
+.hideOnMobile {
+  display: block;
+}
 @media screen and (max-width: 768px){
+  .hideOnMobile {
+    width: 30px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
   .project-header {
     flex-wrap: wrap;
     gap: 10px;
+    align-items: start;
 
     .project-header_links {
       width: 100%;
@@ -391,20 +400,24 @@ export default {
     }
 
     .project-header_avatar {
-      width: 100%;
+
+      flex-basis: 20%;
+      align-items: start;
     }
 
     .project-header_info {
-      width: 100%;
-      flex-basis: 100%;
+      flex-basis: 75%;
       flex-wrap: wrap;
+      gap: 0;
 
       .project-header_info_stats {
         flex-basis: 100%;
         width: 100%;
+        gap: 10px;
 
         .project-header_info_header {
           width: 100%;
+          font-size: 16px;
         }
       }
 
@@ -412,9 +425,7 @@ export default {
         width: 100%;
         flex-basis: 100%;
         .project-header_info_stats_exchanger_item {
-          justify-content: space-around;
-          margin-top: 5px;
-          margin-bottom: 5px;
+          justify-content: start;
         }
       }
 

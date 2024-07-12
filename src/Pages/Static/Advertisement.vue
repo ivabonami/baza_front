@@ -25,6 +25,8 @@ h1 {
 }
 .image-link {
   transition: .3s ease;
+  width: 100%;
+  display: block;
   img {
     transition: .3s ease;
   }

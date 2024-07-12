@@ -128,23 +128,17 @@ export default {
   margin-top: 40px;
   margin-bottom: 14px;
   overflow: hidden;
-  padding-left: 20px;
-  padding-right: 20px;
   width: 100%;
+  display: flex;
 
   position: relative;
 
   .nav {
-    position: absolute;
     z-index: 2;
     &.next {
-      right: 0;
-      bottom: 10px;
 
     }
     &.prev {
-      left: 0;
-      bottom: 3px;
 
     }
 
@@ -175,6 +169,8 @@ export default {
     padding-left: 10px;
     padding-right: 10px;
     justify-content: space-between;
+    width: 100%;
+    overflow: hidden;
 
 
 

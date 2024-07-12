@@ -39,6 +39,8 @@ export default {
 <style scoped lang="scss">
 .image-link {
   transition: .3s ease;
+  width: 100%;
+  display: block;
   img {
     transition: .3s ease;
   }

@@ -144,6 +144,7 @@ export default {
     gap: 10px;
 
     .project {
+      padding-bottom: 30px;
       width: 24%;
     }
   }

@@ -69,4 +69,15 @@ export default {
     }
   }
 }
+@media screen and (max-width: 768px){
+  .stat {
+    &.rating {
+      .stat-text {
+        font-size: 12px;
+      }
+    }
+
+  }
+}
+
 </style>

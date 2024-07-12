@@ -4,7 +4,7 @@
       <img :src="api.url + $props.item.avatarFilePath" alt="name">
     </div>
     <div class="service-card_text">
-      {{ normalizeText($props.item.description) }}
+      {{ normalizeText($props.item.name) }}
     </div>
 
   </div>
@@ -54,7 +54,7 @@ export default {
   methods: {
     normalizeText(text) {
       if (text) {
-        return text.substring(0, 29) + '...'
+        return text.length > 29 ? text.substring(0, 29) + '...' : text
       }
     }
   }
@@ -124,7 +124,7 @@ export default {
 
 @media screen and (max-width: 768px){
   .service-card {
-    width: 170px;
+    width: 100%;
   }
 }
 </style>

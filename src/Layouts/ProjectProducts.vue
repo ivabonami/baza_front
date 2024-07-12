@@ -398,6 +398,9 @@ export default {
 @media screen and (max-width: 500px){
   .project-products_items {
     justify-content: space-between;
+    .project-products_items_item {
+      width: 48%;
+    }
   }
 }
 </style>

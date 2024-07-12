@@ -319,7 +319,7 @@ export default {
   .project-card_body {
     display: flex;
     flex-wrap: wrap;
-    align-self: end;
+    align-self: start;
   }
 
   .project-card_avatar {
@@ -357,6 +357,7 @@ export default {
       margin-bottom: 10px;
       padding-left: 10px;
       padding-right: 10px;
+      height: 35px;
 
     }
     .project-card_stats {
