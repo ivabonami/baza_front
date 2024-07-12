@@ -125,8 +125,6 @@ export default {
 
 <style scoped lang="scss">
 .categories-menu {
-  margin-top: 40px;
-  margin-bottom: 14px;
   overflow: hidden;
   width: 100%;
   display: flex;
@@ -164,7 +162,6 @@ export default {
   .categories-menu_items {
     display: flex;
     gap: 30px;
-    margin-bottom: 10px;
     position: relative;
     padding-left: 10px;
     padding-right: 10px;

@@ -449,8 +449,9 @@ export default {
 
     addLinkToProject() {
 
+      console.log(this.linkToAdd.link.length)
 
-      if (this.linkToAdd.name === null || this.linkToAdd.link === null || this.linkToAdd.name.length < 0 || this.linkToAdd.link.length < 0) {
+      if (this.linkToAdd.name === null || !this.linkToAdd.link) {
 
       } else {
         if (this.project.links.length < 12) {
@@ -459,7 +460,9 @@ export default {
             link: this.linkToAdd.link
           }
           this.project.links.push(link)
+          this.linkToAdd.link = ''
           this.inputs.links.link.data = ''
+
         } else {
 
         }

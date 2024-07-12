@@ -201,7 +201,7 @@ input[type='text'] {
   width: 100%;
   box-sizing: border-box;
 
-  font-family: 'Montserrat', sans-serif;
+  font-family: "PT Sans Caption";
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -233,7 +233,7 @@ textarea {
   background: var(--neutral, #FFF);
   padding: 10px 15px;
 
-  font-family: 'Montserrat', sans-serif;
+  font-family: "PT Sans Caption";
   font-size: 14px;
   font-style: normal;
   height: 280px;

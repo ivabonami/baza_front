@@ -223,14 +223,15 @@ export default {
     display: flex;
     gap: 20px;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 
   .products-carousel_items {
     margin-top: 10px;
     display: flex;
-    gap: 28px;
+    gap: 20px;
     position: relative;
+    align-items: stretch;
 
     .products-carousel_items_item {
       width: 210px;
@@ -272,7 +273,7 @@ export default {
     overflow: hidden;
     margin: 0 -10px 0 -10px;
     padding-left: 10px;
-    padding-bottom: 20px;
+    padding-bottom: 30px;
     .products-carousel_items_item {
       width: 175px;
     }

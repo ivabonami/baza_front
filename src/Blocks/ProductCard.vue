@@ -54,7 +54,7 @@ export default {
   methods: {
     normalizeText(text) {
       if (text) {
-        return text.length > 29 ? text.substring(0, 29) + '...' : text
+        return text
       }
     }
   }
@@ -81,7 +81,7 @@ export default {
     width: 100%;
     overflow: hidden;
     margin-bottom: 10px;
-    background: lightgray 50% / cover no-repeat;
+    background: #fff 50% / cover no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -99,17 +99,23 @@ export default {
   }
   .service-card_text {
     font-family: "PT Sans Caption";
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     position: relative;
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     word-break: break-word;
     color: #191B2A;
+    height: 40px;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    text-overflow: ellipsis;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    display: -webkit-box;
+    line-clamp: 3;
   }
 
   &:hover {

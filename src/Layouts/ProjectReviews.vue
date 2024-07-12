@@ -30,13 +30,13 @@
       </button-action>
       <div class="filter">
         <sort
-            :sort="sort"
-            v-if="projectReviewsStore.reviews.length > 0"
+            :sort="sorts"
+            v-show="projectReviewsStore.reviews.length > 0"
             @sortChanged="(emit) => {
-            projectReviewsStore.reviews.splice(0, projectReviewsStore.reviews.length)
-            this.selectedSort = emit
-            getReviews({projectId: this.$props.project.id, sort: this.selectedSort.sort})
-          }"
+              projectReviewsStore.reviews.splice(0, projectReviewsStore.reviews.length)
+              this.selectedSort = emit
+              getReviews({projectId: this.$props.project.id, sort: this.selectedSort.sort})
+            }"
         />
       </div>
       <div class="project-rating" ref="stars">
@@ -159,35 +159,37 @@
             {{ normalizeData(review.createdAt) }}
           </div>
 
-          <div class="menu" v-show="userInfo.role === 'admin'">
-            <button-action
-                @click="() => { onEditReview(review) }"
-            >
-              <template #text>
-                Редактировать
-              </template>
-              <template #icon>
-                <svg data-v-76b04a54="" xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none" style="width: 15px; height: 15px;"><path data-v-76b04a54="" d="M1.13619 6.77432C1.15283 6.62457 1.16115 6.54969 1.1838 6.47971C1.2039 6.41761 1.2323 6.35853 1.26823 6.30404C1.30873 6.24263 1.362 6.18936 1.46854 6.08282L6.25134 1.30002C6.65137 0.899992 7.29995 0.899992 7.69998 1.30002C8.10001 1.70006 8.10001 2.34864 7.69998 2.74867L2.91718 7.53146C2.81064 7.638 2.75737 7.69128 2.69596 7.73177C2.64147 7.7677 2.58238 7.7961 2.52029 7.8162C2.45031 7.83885 2.37543 7.84717 2.22568 7.86381L1 8L1.13619 6.77432Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-              </template>
-            </button-action>
 
-            <button-action
-                @click="() => { onDeleteReview(review) }"
-            >
-              <template #text>
-                Удалить
-              </template>
-              <template #icon>
-                <svg data-v-76b04a54="" xmlns="http://www.w3.org/2000/svg" width="10" height="11" viewBox="0 0 10 11" fill="none" style="width: 15px; height: 15px;"><path data-v-76b04a54="" d="M6.77778 2.8V2.44C6.77778 1.93595 6.77778 1.68393 6.68089 1.49141C6.59567 1.32206 6.45969 1.18438 6.29244 1.09809C6.10229 1 5.85338 1 5.35556 1H4.64444C4.14662 1 3.89771 1 3.70756 1.09809C3.54031 1.18438 3.40433 1.32206 3.31911 1.49141C3.22222 1.68393 3.22222 1.93595 3.22222 2.44V2.8M1 2.8H9M8.11111 2.8V7.84C8.11111 8.59607 8.11111 8.97411 7.96579 9.26289C7.83796 9.51691 7.63398 9.72343 7.3831 9.85286C7.09788 10 6.72451 10 5.97778 10H4.02222C3.27549 10 2.90212 10 2.6169 9.85286C2.36602 9.72343 2.16204 9.51691 2.03421 9.26289C1.88889 8.97411 1.88889 8.59607 1.88889 7.84V2.8" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-              </template>
-            </button-action>
-
-          </div>
 
         </div>
 
         <div class="project-reviews_items_item_body" v-if="review.comment">
           {{ review.comment }}
+        </div>
+
+        <div class="menu" v-if="userInfo.role === 'admin'">
+          <button-action
+              @click="() => { onEditReview(review) }"
+          >
+            <template #text>
+              Редактировать
+            </template>
+            <template #icon>
+              <svg data-v-76b04a54="" xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none" style="width: 15px; height: 15px;"><path data-v-76b04a54="" d="M1.13619 6.77432C1.15283 6.62457 1.16115 6.54969 1.1838 6.47971C1.2039 6.41761 1.2323 6.35853 1.26823 6.30404C1.30873 6.24263 1.362 6.18936 1.46854 6.08282L6.25134 1.30002C6.65137 0.899992 7.29995 0.899992 7.69998 1.30002C8.10001 1.70006 8.10001 2.34864 7.69998 2.74867L2.91718 7.53146C2.81064 7.638 2.75737 7.69128 2.69596 7.73177C2.64147 7.7677 2.58238 7.7961 2.52029 7.8162C2.45031 7.83885 2.37543 7.84717 2.22568 7.86381L1 8L1.13619 6.77432Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </template>
+          </button-action>
+
+          <button-action
+              @click="() => { onDeleteReview(review) }"
+          >
+            <template #text>
+              Удалить
+            </template>
+            <template #icon>
+              <svg data-v-76b04a54="" xmlns="http://www.w3.org/2000/svg" width="10" height="11" viewBox="0 0 10 11" fill="none" style="width: 15px; height: 15px;"><path data-v-76b04a54="" d="M6.77778 2.8V2.44C6.77778 1.93595 6.77778 1.68393 6.68089 1.49141C6.59567 1.32206 6.45969 1.18438 6.29244 1.09809C6.10229 1 5.85338 1 5.35556 1H4.64444C4.14662 1 3.89771 1 3.70756 1.09809C3.54031 1.18438 3.40433 1.32206 3.31911 1.49141C3.22222 1.68393 3.22222 1.93595 3.22222 2.44V2.8M1 2.8H9M8.11111 2.8V7.84C8.11111 8.59607 8.11111 8.97411 7.96579 9.26289C7.83796 9.51691 7.63398 9.72343 7.3831 9.85286C7.09788 10 6.72451 10 5.97778 10H4.02222C3.27549 10 2.90212 10 2.6169 9.85286C2.36602 9.72343 2.16204 9.51691 2.03421 9.26289C1.88889 8.97411 1.88889 8.59607 1.88889 7.84V2.8" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </template>
+          </button-action>
+
         </div>
       </div>
 
@@ -321,8 +323,10 @@ export default {
         review: null,
         buttonConfirmText: "Добавить отзыв"
       },
+      months: ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'],
 
-      sort: [
+      sorts: [
+
         {
           name: 'Сначала новые',
           sort: 'newest'
@@ -374,7 +378,7 @@ export default {
 
     normalizeData(date) {
       let projectDate = new Date(date)
-      return `${projectDate.getDay()}.${projectDate.getMonth()}.${projectDate.getFullYear()}`
+      return `${projectDate.getDay()} ${this.months[projectDate.getMonth() - 1]} ${projectDate.getFullYear()}`
     },
 
     onEditReview(review) {
@@ -428,7 +432,7 @@ export default {
   margin-bottom: 10px;
 
   .filter {
-    margin-top: -8px;
+    margin-top: -2px;
     width: 150px;
   }
 
@@ -526,7 +530,7 @@ export default {
 
   .project-reviews_heading {
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     h2 {
       margin-top: 0;
       font-size: 20px;
@@ -566,12 +570,15 @@ export default {
     }
     .project-reviews_items_item_data {
       width: 100%;
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
     }
 
     .project-reviews_items_item_body {
       word-break: break-word;
       color: #191B2A;
-      font-family: Inter;
+      font-family: "PT Sans Caption";
       font-size: 14px;
       font-style: normal;
       font-weight: 400;
@@ -582,10 +589,18 @@ export default {
       justify-content: start;
       width: 100%;
       align-items: center;
-      gap: 20px;
+      gap: 10px;
 
       span {
-        width: 80px;
+        width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        position: relative;
+        display: inline-block;
+        text-align: left;
+        text-decoration: none;
+        white-space: nowrap;
+        font-weight: bold;
       }
 
       .info {
@@ -599,16 +614,18 @@ export default {
         font-weight: 400;
         line-height: normal;
 
+
       }
       .date {
         color: #B3B4C9;
+        font-size: 14px;
       }
       .rating {
         display: flex;
-        justify-content: center;
+        justify-content: end;
         align-items: start;
-        gap: 5px;
-
+        gap: 2px;
+        margin-left: auto;
         color: #000;
         text-align: right;
         font-family: "PT Sans Caption";
@@ -652,8 +669,11 @@ export default {
       .project-reviews_items_item_heading {
         flex-wrap: wrap;
         gap: 5px;
+        span {
+          width: 70px;
+        }
         .rating {
-          margin-right: 20px;
+
         }
       }
       .menu {
@@ -666,14 +686,20 @@ export default {
     .project-reviews_heading {
       .project-rating {
         gap: 2px;
+        .rating {
+          font-size: 16px;
+        }
         svg {
-          width: 14px;
+          width: 12px;
         }
         .onThe {
           font-size: 10px;
         }
       }
     }
+  }
+  .project-reviews_items .project-reviews_items_item .project-reviews_items_item_heading .date {
+    font-size: 14px;
   }
 }
 </style>

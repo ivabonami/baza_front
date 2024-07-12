@@ -402,5 +402,16 @@ export default {
       width: 48%;
     }
   }
+  .project-products {
+    .project-products_heading {
+      h2 {
+        margin-top: 0;
+        font-size: 20px;
+        line-height: 1.5;
+        position: relative;
+        top: -2px;
+      }
+    }
+  }
 }
 </style>

@@ -47,7 +47,7 @@
           {{ review.comment }}
         </div>
 
-        <div class="menu" v-show="userInfo.role === 'admin'">
+        <div class="menu" v-if="userInfo.role === 'admin'">
           <button-action
               @click="() => {
                 this.modalAction.show = true

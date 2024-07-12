@@ -15,7 +15,9 @@
 
       <div class="project-header_info_stats">
         <div class="project-header_info_header">
-          <slot name="project-name"></slot>
+          <span class="project-name">
+            <slot name="project-name"></slot>
+          </span>
           <svg xmlns="http://www.w3.org/2000/svg"
                @click="() => {
                  modalInfo.show = true
@@ -253,9 +255,9 @@ export default {
     normalizeReserveSumm(summ) {
       let number = summ.toString()
       if (number.length > 6) {
-        number = number.substring(0, number.length - 6) + 'млн'
+        number = number.substring(0, number.length - 6) + 'м+'
       } else if (number.length > 3) {
-        number = number.substring(0, number.length - 3) + 'т'
+        number = number.substring(0, number.length - 3) + 'к+'
       }
 
       return number
@@ -337,6 +339,7 @@ export default {
       }
 
       .project-header_info_header {
+
         flex-basis: 100%;
         word-wrap: break-word;
         word-break: break-word;
@@ -345,14 +348,33 @@ export default {
         font-size: 18px;
         font-style: normal;
         width: 100%;
-        font-weight: 700;
-        line-height: normal;
+        font-weight: 600;
         margin-bottom: -5px;
         display: flex;
-        align-items: center;
+        align-items: start;
         gap: 10px;
+        line-height: 1;
+
+
+
+        .project-name {
+          -webkit-line-clamp: 3;
+          position: relative;
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          height: 45px;
+          display: -moz-box;
+          -moz-box-orient: vertical;
+          display: -webkit-box;
+          line-clamp: 3;
+          flex-basis: 90%;
+        }
 
         svg {
+          position: relative;
+          top: -5px;
+          padding-left: 5px;
 
         }
 

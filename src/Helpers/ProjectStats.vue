@@ -32,13 +32,13 @@ export default {
 
   .stat_icon {
     width: auto;
-    height: 12px;
+    height: 14px;
     align-self: center;
     display: flex;
 
     svg {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
 
       path {
         stroke-width: 1px;
@@ -52,7 +52,7 @@ export default {
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: normal;
+    line-height: 1;
   }
 
   &.rating {

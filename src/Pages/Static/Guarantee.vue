@@ -62,7 +62,7 @@ img {
 ul {
   li {
     color: #000;
-    font-family: "Montserrat", sans-serif;
+    font-family: "PT Sans Caption";
     font-size: 14px;
     font-style: normal;
     font-weight: 400;

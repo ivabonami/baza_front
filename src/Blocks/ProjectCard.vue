@@ -33,7 +33,7 @@
       <div class="project-card_body">
 
         <div class="project-card_name">
-          {{ normalizeProjectName($props.project.name) }}
+          {{ $props.project.name }}
         </div>
 
 
@@ -81,7 +81,7 @@
 
           <project-stats v-if="$props.project.reviewsCount > 0">
             <template #text>
-              {{ $props.project.reviewsCount }}
+              {{ normalizeInt($props.project.reviewsCount) }}
             </template>
             <template #icon>
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -92,7 +92,7 @@
 
           <project-stats v-if="$props.project.viewCount > 0">
             <template #text>
-              {{ $props.project.viewCount }}
+              {{ normalizeInt($props.project.viewCount) }}
             </template>
             <template #icon>
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -104,7 +104,7 @@
 
 <!--          <project-stats v-if="$props.project.type === 'exchanger'">-->
 <!--            <template #text>-->
-<!--              {{ $props.project.reserve }}₽-->
+<!--              {{ normalizeInt($props.project.reserve) }} ₽-->
 <!--            </template>-->
 <!--            <template #icon>-->
 <!--              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12" viewBox="0 0 14 12" fill="none">-->
@@ -117,16 +117,6 @@
 <!--            </template>-->
 <!--          </project-stats>-->
 
-<!--          <project-stats v-if="$props.project.type === 'exchanger'">-->
-<!--            <template #text>-->
-<!--              {{ $props.project.minValueToExchange }}₽-->
-<!--            </template>-->
-<!--            <template #icon>-->
-<!--              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="11" viewBox="0 0 12 11" fill="none">-->
-<!--                <path d="M6.43288 2.08234C6.43288 2.62671 5.14209 3.06801 3.54981 3.06801C1.95754 3.06801 0.666748 2.62671 0.666748 2.08234M6.43288 2.08234C6.43288 1.53798 5.14209 1.09668 3.54981 1.09668C1.95754 1.09668 0.666748 1.53798 0.666748 2.08234M6.43288 2.08234V4.27897C5.79257 4.45975 5.38449 4.73325 5.38449 5.03933M0.666748 2.08234V7.99632C0.666748 8.54069 1.95754 8.98198 3.54981 8.98198C4.2468 8.98198 4.88601 8.89743 5.38449 8.75669V5.03933M0.666748 4.05367C0.666748 4.59804 1.95754 5.03933 3.54981 5.03933C4.2468 5.03933 4.88601 4.95478 5.38449 4.81403M0.666748 6.025C0.666748 6.56936 1.95754 7.01066 3.54981 7.01066C4.2468 7.01066 4.88601 6.9261 5.38449 6.78536M11.1506 5.03933C11.1506 5.5837 9.85983 6.025 8.26755 6.025C6.67528 6.025 5.38449 5.5837 5.38449 5.03933M11.1506 5.03933C11.1506 4.49497 9.85983 4.05367 8.26755 4.05367C6.67528 4.05367 5.38449 4.49497 5.38449 5.03933M11.1506 5.03933V8.98198C11.1506 9.52635 9.85983 9.96765 8.26755 9.96765C6.67528 9.96765 5.38449 9.52635 5.38449 8.98198V5.03933M11.1506 7.01066C11.1506 7.55502 9.85983 7.99632 8.26755 7.99632C6.67528 7.99632 5.38449 7.55502 5.38449 7.01066" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>-->
-<!--              </svg>-->
-<!--            </template>-->
-<!--          </project-stats>-->
 
         </div>
 
@@ -298,6 +288,16 @@ export default {
         return name
       }
 
+    },
+    normalizeInt(summ) {
+      let number = summ.toString()
+      if (number.length > 6) {
+        number = number.substring(0, number.length - 6) + 'м+'
+      } else if (number.length > 3) {
+        number = number.substring(0, number.length - 3) + 'к+'
+      }
+
+      return number
     }
   }
 }
@@ -345,19 +345,29 @@ export default {
 
 
   .project-card_body {
+    width: 100%;
 
     .project-card_name {
       font-family: "PT Sans Caption";
-      color: #1E1E1E;
+      -webkit-line-clamp: 2;
+      position: relative;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
       word-break: break-word;
+      color: #191B2A;
+      height: 38px;
       font-size: 16px;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
-      margin-bottom: 10px;
-      padding-left: 10px;
-      padding-right: 10px;
-      height: 35px;
+      text-overflow: ellipsis;
+      display: -moz-box;
+      -moz-box-orient: vertical;
+      display: -webkit-box;
+      line-clamp: 3;
+      margin-bottom: 5px;
+      width: 100%;
 
     }
     .project-card_stats {
@@ -365,8 +375,6 @@ export default {
       gap: 10px;
       align-items: center;
       margin-top: 10px;
-      padding-left: 10px;
-      padding-right: 10px;
 
 
 
@@ -403,7 +411,11 @@ export default {
 
 @media screen and (max-width: 786px){
   .project-card_wrapper .project-card_body .project-card_name {
-    font-size: 13px;
+    font-size: 14px;
+  }
+  .project-card_wrapper .project-card_body .project-card_links .show-more {
+    padding: 2px;
+    font-size: 11px;
   }
 }
 </style>

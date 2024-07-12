@@ -98,7 +98,7 @@ export default {
   gap: 5px;
   background-color: #F2F5F7;
   border-radius: 30px;
-  padding: 5px 10px;
+  padding: 5px;
   width: auto;
   box-sizing: border-box;
   transition: .3s ease;
@@ -164,6 +164,17 @@ export default {
     &:hover {
       background-color: rgb(75, 186, 221, .15);
     }
+  }
+}
+
+@media screen and (max-width: 768px){
+  .project-external {
+    padding: 2px;
+
+    .project-external_text {
+      font-size: 11px;
+    }
+
   }
 }
 </style>

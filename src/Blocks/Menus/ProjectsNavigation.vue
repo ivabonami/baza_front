@@ -50,22 +50,25 @@ export default {
 
 <style scoped lang="scss">
 .project-navigation {
-  margin-top: -30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   padding: 0 10px;
   gap: 40px;
+
+
 }
 @media screen and (max-width: 500px){
 
   .project-navigation {
     flex-wrap: wrap;
     gap: 0;
-    margin-bottom: 10px;
     align-items: center;
     justify-content: space-between;
+    margin-top: -20px;
 
     .categories-menu {
       margin-bottom: 0;
@@ -73,7 +76,6 @@ export default {
     }
     .filter {
       width: 15%;
-      margin-top: 15px;
     }
   }
 
