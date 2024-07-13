@@ -119,7 +119,7 @@ export default {
   .projects-wrapper {
     .projects {
       .project {
-        width: 48%;
+        width: 47%;
       }
     }
 

@@ -35,6 +35,7 @@
              v-tippy="{content: stat.tooltip, theme: 'light'}"
              v-show="stat.stat"
              class="project-header_info_stats_stat">
+
           <project-stats
 
           >
@@ -207,11 +208,11 @@ export default {
           icon: iconEye,
           tooltip: 'Просмотров у проекта'
         },
-        // categories: {
-        //   stat: null,
-        //   icon: iconCategories,
-        //   tooltip: 'Категория проекта'
-        // },
+        categories: {
+          stat: null,
+          icon: iconCategories,
+          tooltip: 'Категория проекта'
+        },
 
       },
       api,
@@ -239,18 +240,18 @@ export default {
       this.stats.reviewsCount.stat = this.$props.project.reviewsCount
       this.stats.ratingAvg.stat = this.$props.project.ratingAvg
 
-      // this.stats.categories.stat = this.$props.project.categories[0].name
+      this.stats.categories.stat = this.$props.project.categories[0].name
 
-      // if (this.$props.project.categories.length > 1) {
-      //   this.stats.categories.stat += ` + ${this.$props.project.categories.length - 1}`
-      //   this.stats.categories.tooltip = 'Категории проекта: '
-      //   for (const [index, category] of this.$props.project.categories.entries()) {
-      //
-      //     index !== this.$props.project.categories.length - 1 ? this.stats.categories.tooltip += `${category.name}, ` : this.stats.categories.tooltip += `${category.name}`
-      //   }
-      //
-      //
-      // }
+      if (this.$props.project.categories.length > 1) {
+        this.stats.categories.stat += ` + ${this.$props.project.categories.length - 1}`
+        this.stats.categories.tooltip = 'Категории проекта: '
+        for (const [index, category] of this.$props.project.categories.entries()) {
+
+          index !== this.$props.project.categories.length - 1 ? this.stats.categories.tooltip += `${category.name}, ` : this.stats.categories.tooltip += `${category.name}`
+        }
+
+
+      }
     },
     normalizeReserveSumm(summ) {
       let number = summ.toString()
@@ -363,12 +364,12 @@ export default {
           overflow: hidden;
           display: -webkit-box;
           -webkit-box-orient: vertical;
-          height: 45px;
+          height: 48px;
           display: -moz-box;
           -moz-box-orient: vertical;
           display: -webkit-box;
           line-clamp: 3;
-          flex-basis: 90%;
+          max-width: 90%;
         }
 
         svg {

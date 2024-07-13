@@ -283,5 +283,26 @@ export default {
     opacity: 1;
   }
 }
-
+@media screen and (max-width: 768px){
+  .popup {
+    width: 90%;
+    flex-wrap: wrap;
+    max-height: 90vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-bottom: 10px;
+    .popup_body {
+      width: 100%;
+      .popup_image {
+        width: 140px;
+      }
+      .popup_header {
+        font-size: 14px;
+      }
+      .popup_text {
+        font-size: 12px;
+      }
+    }
+  }
+}
 </style>
