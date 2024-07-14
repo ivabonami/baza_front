@@ -16,17 +16,18 @@
       <div class="project-header_info_stats">
         <div class="project-header_info_header">
           <span class="project-name">
-            <slot name="project-name"></slot>
-          </span>
-          <svg xmlns="http://www.w3.org/2000/svg"
-               @click="() => {
+            {{ normalizedName }}
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 @click="() => {
                  modalInfo.show = true
                  modalInfo.data = project
                }"
-               v-tippy="{content: 'О проекте', theme: 'light'}"
-               width="24" height="24" viewBox="0 0 24 24" fill="none">
+                 v-tippy="{content: 'О проекте', theme: 'light'}"
+                 width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M12 16V12M12 8H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="#D8D8D8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
+          </span>
+
 
         </div>
 
@@ -192,6 +193,7 @@ export default {
       },
       categoriesStore,
       userInfo,
+      normalizedName: null,
       stats: {
         ratingAvg: {
           stat: null,
@@ -253,6 +255,7 @@ export default {
 
       }
     },
+
     normalizeReserveSumm(summ) {
       let number = summ.toString()
       if (number.length > 6) {
@@ -267,6 +270,10 @@ export default {
   watch: {
     project: function(newVal, oldVal) {
       this.setStats()
+
+      this.$props.project.name.length > 80 ?  this.normalizedName = this.$props.project.name.substring(0, 80) + '...' :  this.normalizedName = this.$props.project.name
+
+
 
       if (userInfo.username) {
         userInfo.username === this.$props.project.userData.username ? this.isAdmin = true :  this.isAdmin = false
@@ -359,23 +366,28 @@ export default {
 
 
         .project-name {
-          -webkit-line-clamp: 3;
+          -webkit-line-clamp: 2;
           position: relative;
           overflow: hidden;
           display: -webkit-box;
           -webkit-box-orient: vertical;
-          height: 48px;
           display: -moz-box;
           -moz-box-orient: vertical;
           display: -webkit-box;
-          line-clamp: 3;
+          line-clamp: 2;
           max-width: 90%;
+          line-height: 1.2;
         }
 
         svg {
+          display: inline-block;
+          width: 22px;
           position: relative;
-          top: -5px;
+          top: 3px;
+          height: 22px;
           padding-left: 5px;
+          padding-top: 0;
+          padding-bottom: 0;
 
         }
 

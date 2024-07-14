@@ -69,7 +69,7 @@ export default {
       }
     })
 
-    this.selected = this.$props.sort[1]
+    this.selected = this.$props.sort[0]
 
 
 
