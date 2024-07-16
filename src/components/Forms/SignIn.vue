@@ -33,6 +33,18 @@
       </template>
     </InputPassword>
 
+<!--    <vue-recaptcha v-show="showRecaptcha" sitekey="6LfWihEqAAAAAAgmfyKysbx3kTXLMTndalr1JGqX"-->
+<!--                   size="normal"-->
+<!--                   theme="light"-->
+<!--                   hl="ru"-->
+<!--                   :loading-timeout="loadingTimeout"-->
+<!--                   @verify="recaptchaVerified"-->
+<!--                   @expire="recaptchaExpired"-->
+<!--                   @fail="recaptchaFailed"-->
+<!--                   @error="recaptchaError"-->
+<!--                   ref="vueRecaptcha">-->
+<!--    </vue-recaptcha>-->
+
 
     <button-primary
         v-if="loading === false"
@@ -55,22 +67,40 @@ import {signIn} from "../../API/user.js";
 import loaderSmall from "../Loaders/LoaderSmall.vue";
 import {setInfo} from "../../Store/userInfo.js";
 
+import vueRecaptcha from 'vue3-recaptcha2';
 
 
 export default {
   name: "SignIn.vue",
+
   data() {
     return {
       user: {
         username: null,
         password: null
       },
+      secretKey: '6LfWihEqAAAAAB8F4PoqvhtqXWMFXJFExpp2AyEA',
+      recaptchaSuccess: false,
       errors: {},
       loading: false,
+      showRecaptcha: true,
+      loadingTimeout: 30000 // 30 seconds
     }
   },
-  components: {InputText, InputPassword, buttonPrimary, loaderSmall},
+  components: {InputText, InputPassword, buttonPrimary, loaderSmall, vueRecaptcha},
   methods: {
+
+    recaptchaVerified(response) {
+      this.recaptchaSuccess = true
+    },
+    recaptchaExpired() {
+      this.$refs.vueRecaptcha.reset();
+    },
+    recaptchaFailed() {
+    },
+    recaptchaError(reason) {
+      console.log(reason)
+    },
     signIn() {
 
       if (this.user.username === null || this.user.username.length < 0  || this.user.username === '') {
@@ -83,6 +113,12 @@ export default {
       } else {
         delete this.errors.password
       }
+      //
+      // if (this.recaptchaSuccess !== true) {
+      //   this.errors.recaptcha = "Пройдите капчу"
+      // } else {
+      //   delete this.errors.recaptcha
+      // }
 
       if (Object.keys(this.errors).length > 0) {
         this.$emit('errors', this.errors)

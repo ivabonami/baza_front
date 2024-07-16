@@ -4,7 +4,6 @@ import PrimeVue from 'primevue/config';
 import 'primevue/resources/themes/aura-light-green/theme.css'
 
 
-
 import {createApp, watch} from "vue";
 import App from './App.vue'
 
