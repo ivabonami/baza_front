@@ -1,6 +1,6 @@
 import axios from "axios";
 import {apiUrl} from "../assets/js/config.js";
-import {userInfo} from "../Store/userInfo.js";
+import {setInfo, userInfo} from "../Store/userInfo.js";
 import {useFetch} from "../assets/js/controllers/requestsControl.js";
 import {getToken} from "../assets/js/services/userService.js";
 
@@ -28,10 +28,13 @@ export function refreshToken() {
     };
 
     axios.post(`${apiUrl}/refresh`, {"token": userInfo.token}, {headers})
-        .then(r => r)
-        .catch(e => e)
+        .then(result => {
+            localStorage.setItem('token', result.data.token)
+            setInfo(result.data.token, localStorage.getItem('username') )
+        })
+        .catch(e => signOut())
 
 }
-userInfo.expired && Math.round(Date.now() / 1000) + 3600 > userInfo.expired ? refreshToken() : null
+// userInfo.expired && Math.round(Date.now() / 1000) + 3600 > userInfo.expired ? refreshToken() : null
 
-// 1718306653
+refreshToken()

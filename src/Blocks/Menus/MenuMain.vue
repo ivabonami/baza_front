@@ -7,14 +7,15 @@
       </svg>
 
     </div>
-    <div class="categories-menu_items"  :style="styles">
+    <div class="categories-menu_items" ref="categoriesWrapper" :style="styles" v-if=" categoriesStore.categories.length > 0">
 
       <div ref="categoryBox" class="categories-menu_items_item"
+
            @click="$emit('projectsCategory', category.id)"
            :class="{active: $props.activeCategory === category.id}"
            v-for="(category, index) of categories">
 
-        <div v-if="index < 8">
+        <div>
           <div class="category-icon">
             <svg xmlns="http://www.w3.org/2000/svg" v-if="category.name === 'Маркетплейсы'" viewBox="0 0 20 22" fill="none">
               <path d="M14.1625 8V5C14.1625 2.79086 12.3716 1 10.1625 1C7.95334 1 6.16248 2.79086 6.16248 5V8M1.75448 9.35196L1.15448 15.752C0.983885 17.5717 0.898586 18.4815 1.20053 19.1843C1.46578 19.8016 1.9306 20.3121 2.5205 20.6338C3.192 21 4.10585 21 5.93353 21H14.3914C16.2191 21 17.133 21 17.8045 20.6338C18.3944 20.3121 18.8592 19.8016 19.1244 19.1843C19.4264 18.4815 19.3411 17.5717 19.1705 15.752L18.5705 9.35197C18.4264 7.81535 18.3544 7.04704 18.0088 6.46616C17.7045 5.95458 17.2548 5.54511 16.7171 5.28984C16.1065 5 15.3348 5 13.7914 5L6.53353 5C4.99017 5 4.21849 5 3.6079 5.28984C3.07014 5.54511 2.62049 5.95458 2.31614 6.46616C1.97057 7.04704 1.89854 7.81534 1.75448 9.35196Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
@@ -62,7 +63,7 @@
       </div>
 
     </div>
-    <div class="nav next" @click="nextItem" v-if="categoriesStore.categories.length > 8">
+    <div class="nav next" @click="nextItem" v-if="scrollActive">
       <svg width="33" height="44" viewBox="0 0 33 44" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="-0.5" y="0.5" width="32" height="43" rx="16" transform="matrix(-1 0 0 1 32 0)" stroke="#191B2A"/>
         <path d="M14.0029 26.2103C14.0023 26.107 14.02 26.0045 14.0548 25.9089C14.0896 25.8132 14.1409 25.7262 14.2057 25.6528L17.4167 22.0568C17.4822 21.9838 17.5343 21.897 17.5698 21.8013C17.6053 21.7056 17.6236 21.603 17.6236 21.4993C17.6236 21.3957 17.6053 21.2931 17.5698 21.1974C17.5343 21.1017 17.4822 21.0149 17.4167 20.9419L14.2057 17.3458C14.074 17.198 14 16.9975 14 16.7884C14 16.5793 14.074 16.3788 14.2057 16.2309C14.3375 16.0831 14.5161 16 14.7024 16C14.7947 16 14.886 16.0204 14.9712 16.06C15.0564 16.0996 15.1339 16.1577 15.1991 16.2309L18.403 19.8348C18.7861 20.2823 19 20.8788 19 21.4993C19 22.1199 18.7861 22.7164 18.403 23.1639L15.1991 26.7678C15.1341 26.8413 15.0567 26.8998 14.9714 26.9396C14.8862 26.9795 14.7948 27 14.7024 27C14.6101 27 14.5186 26.9795 14.4334 26.9396C14.3481 26.8998 14.2708 26.8413 14.2057 26.7678C14.1409 26.6944 14.0896 26.6074 14.0548 26.5117C14.02 26.4161 14.0023 26.3136 14.0029 26.2103Z" fill="black"/>
@@ -85,7 +86,9 @@ export default {
       styles: null,
       categories: null,
       categoriesStore,
-      step: 0
+      step: 0,
+      visibleItems: 0,
+      scrollActive: false
     }
   },
 
@@ -98,6 +101,8 @@ export default {
       const category = this.categories.shift()
       this.categories.push(category)
       this.step++
+
+      const clientWidth = this.$refs.categoriesWrapper.clientWidth
 
 
     },
@@ -112,11 +117,20 @@ export default {
   mounted() {
 
     this.categories = categoriesStore.categories
+    this.$nextTick(() => {
+      let itemsWidth = 0
+      for (let item of this.$refs.categoryBox) {
+        itemsWidth += item.clientWidth
+        this.$refs.categoriesWrapper.clientWidth < itemsWidth ? this.scrollActive = true : this.scrollActive = false
+      }
+    })
   },
+
 
   watch: {
     categoriesStore: function (newVal, oldVal) {
       this.categories = newVal.categories
+
     }
   }
 
@@ -161,7 +175,7 @@ export default {
 
   .categories-menu_items {
     display: flex;
-    gap: 30px;
+    gap: 18px;
     position: relative;
     padding-left: 10px;
     padding-right: 10px;

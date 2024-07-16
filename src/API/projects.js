@@ -40,7 +40,6 @@ export function approveProject(project) {
     };
 
     project.isReviewed = true
-
     return axios.put(`${apiUrl}/projects/${project.id}`, {isReviewed: true},{headers})
 }
 
@@ -50,9 +49,8 @@ export function removeProject(projectId, options, offset) {
         'Authorization': `Bearer ${userInfo.token}`
     };
     projectsStore.projects.splice(projectsStore.projects.findIndex(item => item.id === projectId), 1)
-
-    options = options.replace(/limit=[0-9]/i, 'limit=1')
-    options = options.replace(/offset=[0-9]/i, `offset=${offset}`)
+    options ? options = options.replace(/limit=[0-9]/i, 'limit=1') : null
+    options ? options = options.replace(/offset=[0-9]/i, `offset=${offset}`) : null
     getProjects(options).then(result => projectsStore.projects.push(result.data.projects[0]))
 
 

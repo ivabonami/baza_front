@@ -133,7 +133,10 @@
       @click.stop
       :modal="deleteModal"
       @closeModal="deleteModal.show = false"
-      @deleteConfirmed="removeProject($props.project.id, $props.options, $props.offset)"
+      @deleteConfirmed="() => {
+        removeProject($props.project.id, $props.options, $props.offset)
+        this.$emit('projectDeleted', $props.project.id)
+      }"
 
   >
     <template #header>
