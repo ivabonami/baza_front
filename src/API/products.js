@@ -16,7 +16,7 @@ export function getProducts(options) {
     }
 
     link = link.slice(0, -1)
-    return axios.get(`${apiUrl}/products${link}`).then(result => result).catch(error => error)
+    return axios.get(`${apiUrl}products${link}`).then(result => result).catch(error => error)
 
 }
 
@@ -31,7 +31,7 @@ export async function addProduct(product) {
         refreshToken
         return {error: 'Невалидный токен, пожалуйста залогиньтесь заново.'}
     } else {
-        return await axios.post(`${apiUrl}/products`, {
+        return await axios.post(`${apiUrl}products`, {
             name: product.name,
             description: product.description,
             avatarFilePath: image.data.filePath,
@@ -54,7 +54,7 @@ export async function updateProduct(product) {
         refreshToken
         return {error: 'Невалидный токен, пожалуйста залогиньтесь заново.'}
     } else {
-        return await axios.put(`${apiUrl}/products/${product.id}`, {
+        return await axios.put(`${apiUrl}products/${product.id}`, {
             name: product.name,
             description: product.description,
             avatarFilePath: image,
@@ -69,7 +69,7 @@ export async function deleteProduct(product) {
     const headers = {
         'Authorization': `Bearer ${userInfo.token}`
     };
-    return await axios.delete(`${apiUrl}/products/${product.id}`,{headers}).then(result => result).catch(error => error)
+    return await axios.delete(`${apiUrl}products/${product.id}`,{headers}).then(result => result).catch(error => error)
 
 
 }

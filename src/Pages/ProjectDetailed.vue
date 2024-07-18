@@ -1,7 +1,7 @@
 <template v-cloak>
 
   <div class="wrapper" ref="wrapper">
-    <div class="project">
+    <div class="project" v-if="Object.keys(project).length > 0">
 
       <project-header
           :project="project"
@@ -36,7 +36,22 @@
 
       </div>
 
+
+    <empty-store
+        :show-button="false"
+        :show-button-for-users="false"
+        v-else>
+      <template #header>
+        Проект с этим ID отсутствует
+      </template>
+      <template #text>
+        проверьте правильность URL
+      </template>
+    </empty-store>
+
     </div>
+
+
 
 
 
@@ -61,6 +76,7 @@ import {projectsStore} from "../Store/projectsStore.js";
 import projectProducts from "../Layouts/ProjectProducts.vue";
 
 import {useFetch} from "../assets/js/controllers/requestsControl.js";
+import emptyStore from "../Blocks/EmptyStore.vue";
 
 export default {
 
@@ -72,7 +88,8 @@ export default {
     Waypoint,
 
     projectHeader,
-    projectProducts
+    projectProducts,
+    emptyStore
   },
   emits: ['updated', 'high'],
 

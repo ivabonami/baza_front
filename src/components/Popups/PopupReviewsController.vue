@@ -72,7 +72,7 @@
        @click="closeModal()"
        :class="{show: modal.show}"></div>
 
-  <notice :notice="notice"
+  <notice v-if="notice.show" :notice="notice"
           @closeNotice="emit => notice.show = emit"
   />
 
@@ -85,15 +85,13 @@ import inputTextarea from "../Inputs/InputTextarea.vue";
 import notice from "./Notice.vue";
 import {checkInputData} from "../../assets/js/fieldDataController.js";
 import loaderSmall from "../Loaders/LoaderSmall.vue";
-import {api} from "../../assets/js/config.js";
-import buttonAction from "../Buttons/ButtonAction.vue";
+import {api} from "./../../assets/js/config.js";
+import ButtonAction from "../Buttons/ButtonAction.vue";
 import InputRating from "../Inputs/InputRating.vue";
 import {addReview, editReview} from "../../API/reviews.js";
-import {userInfo} from "../../Store/userInfo.js";
-import {projectReviewsStore} from "../../Store/projectReviews.js";
 
 export default {
-  name: "Popup.vue",
+  name: "PopupReviewController.vue",
   props: {
     modal: {
       show: true,
@@ -156,7 +154,7 @@ export default {
     inputTextarea,
     notice,
     loaderSmall,
-    buttonAction,
+    ButtonAction,
     InputRating,
   },
   watch: {

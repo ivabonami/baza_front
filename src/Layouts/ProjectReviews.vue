@@ -416,7 +416,7 @@ export default {
   },
 
   mounted() {
-    // getReviews({projectId: this.$props.project.id})
+    getReviews({projectId: this.$props.project.id})
 
 
 

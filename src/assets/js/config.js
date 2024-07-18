@@ -1,8 +1,9 @@
 export const api = {
-    url: 'http://62.113.96.171:3000/'
+    url: import.meta.env.VITE_API_LINK
 }
-export const apiUrl = 'http://62.113.96.171:3000'
+export const apiUrl = import.meta.env.VITE_API_LINK
 
 export default {
     api, apiUrl
 }
+console.log(import.meta.env.VITE_API_LINK)

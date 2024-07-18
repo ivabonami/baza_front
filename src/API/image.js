@@ -11,7 +11,7 @@ export function uploadImage (file) {
     const formData = new FormData();
     formData.append("image-upload", file );
 
-    return axios.post(`${apiUrl}/image-upload`, formData, {headers}).then(result => {
+    return axios.post(`${apiUrl}image-upload`, formData, {headers}).then(result => {
         userInfo.expired && Math.round(Date.now() / 1000) + 3600 > userInfo.expired ? refreshToken() : null
         return result
     }).catch((error) => {

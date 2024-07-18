@@ -211,35 +211,6 @@ export default {
 
     },
 
-    updateCategoryList(categoryName, id) {
-
-      const myHeaders = new Headers();
-      myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
-      myHeaders.append("Content-Type", "application/json");
-
-      const newCategoryName = {
-        "name": categoryName
-      }
-
-      fetch("http://62.113.96.171:3000/categories/" + id, {
-        method: "PUT",
-        headers: myHeaders,
-        body: JSON.stringify(newCategoryName)
-
-
-      })
-          .then((response) => response.json())
-          .then((result) => {
-
-            const index = store.categories.findIndex(item => item.id === id)
-            store.categories[index].name = categoryName
-          })
-          .catch((error) => {console.error(error)});
-
-
-
-
-    },
 
     deleteCategory(categoryId) {
       const myHeaders = new Headers();

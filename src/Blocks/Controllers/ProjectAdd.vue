@@ -2,7 +2,7 @@
 
   <div class="sign-in" v-if="!userInfo.token">
     <popup-auth
-        v-show="popup.auth.show === true"
+        v-if="popup.auth.show === true"
         @closeModal="popup.auth.show = false"
         v-bind:modal="popup.auth" />
 
@@ -228,7 +228,7 @@
 
 
 
-  <notice :notice="notice" :errors="errors"
+  <notice v-if="notice.show" :notice="notice" :errors="errors"
           @closeNotice="notice.show = false"
   />
 

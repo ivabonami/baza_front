@@ -144,7 +144,7 @@
     </template>
   </popup-action>
 
-  <notice :notice="notice" :errors="errors" @closeNotice="notice.show = false" />
+  <notice v-if="notice.show" :notice="notice" :errors="errors" @closeNotice="notice.show = false" />
 
 </template>
 
@@ -172,7 +172,7 @@ export default {
     notice
   },
 
-  emits: ['confirmAction', 'forceReload'],
+  emits: ['confirmAction'],
   directives: {
     tippy: directive,
   },

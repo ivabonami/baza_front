@@ -8,7 +8,7 @@ export function getProjects(options) {
     const headers = {
         'Authorization': `Bearer ${userInfo.token}`
     };
-    return axios.get(`${apiUrl}/projects${options}`, {headers})
+    return axios.get(`${apiUrl}projects${options}`, {headers})
 
 }
 
@@ -17,7 +17,7 @@ export function getProjectInfo(projectId) {
         'Authorization': `Bearer ${userInfo.token}`
     };
 
-    return axios.get(`${apiUrl}/projects/${projectId}`, {headers})
+    return axios.get(`${apiUrl}projects/${projectId}`, {headers})
 }
 
 export function changePayedStatus(projectId, status) {
@@ -31,7 +31,7 @@ export function changePayedStatus(projectId, status) {
     projectsStore.projects.splice(projectsStore.projects.findIndex(item => item.id === projectId), 1)
     status === true ? projectsStore.projects.unshift(project) : projectsStore.projects.push(project)
 
-    return axios.put(`${apiUrl}/projects/${projectId}`, {payed: status},{headers})
+    return axios.put(`${apiUrl}projects/${projectId}`, {payed: status},{headers})
 }
 
 export function approveProject(project) {
@@ -40,7 +40,7 @@ export function approveProject(project) {
     };
 
     project.isReviewed = true
-    return axios.put(`${apiUrl}/projects/${project.id}`, {isReviewed: true},{headers})
+    return axios.put(`${apiUrl}projects/${project.id}`, {isReviewed: true},{headers})
 }
 
 
@@ -54,7 +54,7 @@ export function removeProject(projectId, options, offset) {
     getProjects(options).then(result => projectsStore.projects.push(result.data.projects[0]))
 
 
-    return axios.delete(`${apiUrl}/projects/${projectId}`, {headers})
+    return axios.delete(`${apiUrl}projects/${projectId}`, {headers})
 }
 
 export function getFavoriteProjects(options) {

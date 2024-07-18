@@ -262,7 +262,7 @@
 
 
 
-  <notice :notice="notice" :errors="errors"
+  <notice v-if="notice.show" :notice="notice" :errors="errors"
           @closeNotice="notice.show = false"
   />
 

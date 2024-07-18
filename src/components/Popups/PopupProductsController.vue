@@ -131,7 +131,7 @@
        @click="closeModal()"
        :class="{show: modal.show}"></div>
 
-  <notice :notice="notice"
+  <notice v-if="notice.show" :notice="notice"
           @closeNotice="emit => notice.show = emit"
   />
 </template>

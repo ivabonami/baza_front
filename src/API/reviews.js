@@ -14,7 +14,7 @@ export function getReviews(options) {
         }
     }
     link = link.slice(0, -1)
-    return axios.get(`${apiUrl}/reviews${link}`, {headers}).then(result => {
+    return axios.get(`${apiUrl}reviews${link}`, {headers}).then(result => {
 
         for (let review of result.data.reviews) {
             projectReviewsStore.reviews.push(review)
@@ -32,7 +32,7 @@ export async function addReview(review) {
 
 
 
-    return await axios.post(`${apiUrl}/reviews`, review, {headers})
+    return await axios.post(`${apiUrl}reviews`, review, {headers})
         .then(result => {
 
         }).catch(error => error)
@@ -44,7 +44,7 @@ export function showNotReviewed() {
         'Authorization': `Bearer ${userInfo.token}`
     };
 
-    return axios.get(`${apiUrl}/reviews?showNotReviewed=true`, {headers})
+    return axios.get(`${apiUrl}reviews?showNotReviewed=true`, {headers})
 }
 
 export async function editReview(review) {
@@ -52,7 +52,7 @@ export async function editReview(review) {
         'Authorization': `Bearer ${userInfo.token}`
     };
 
-    return await axios.put(`${apiUrl}/reviews/${review.id}`, review, {headers})
+    return await axios.put(`${apiUrl}reviews/${review.id}`, review, {headers})
         .then(result => {
             const review = projectReviewsStore.reviews.find(item => item.id === result.data.updatedReview.id)
             review.comment = result.data.updatedReview.comment
@@ -66,7 +66,7 @@ export async function deleteReview(review) {
     };
 
 
-    return await axios.delete(`${apiUrl}/reviews/${review.id}`, {headers})
+    return await axios.delete(`${apiUrl}reviews/${review.id}`, {headers})
         .then(result => {
             projectReviewsStore.reviews.splice(projectReviewsStore.reviews.findIndex(item => item.id === review.id))
         }).catch(error => error)
@@ -78,7 +78,7 @@ export async function approveReview(review) {
     };
     review.isReviewed = true
 
-    return await axios.put(`${apiUrl}/reviews/${review.id}`, review, {headers})
+    return await axios.put(`${apiUrl}reviews/${review.id}`, review, {headers})
         .then(result => result).catch(error => error)
 }
 
@@ -88,6 +88,6 @@ export async function disapproveReview(review) {
     };
     review.isReviewed = false
 
-    return await axios.put(`${apiUrl}/reviews/${review.id}`, review, {headers})
+    return await axios.put(`${apiUrl}reviews/${review.id}`, review, {headers})
         .then(result => result).catch(error => error)
 }

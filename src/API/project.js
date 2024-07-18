@@ -40,7 +40,7 @@ export async function addProject(project) {
         project.banner ? projectToAdd.bannerFilePath = banner.data.filePath : null
 
 
-        return await axios.post(`${apiUrl}/projects`, projectToAdd,{headers}).then(result => result).catch(error => error)
+        return await axios.post(`${apiUrl}projects`, projectToAdd,{headers}).then(result => result).catch(error => error)
     }
 
 }
@@ -70,7 +70,7 @@ export async function editProject(project, projectId) {
     project.avatar ? projectToAdd.avatarFilePath = (await uploadImage(project.avatar)).data.filePath : projectToAdd.avatarFilePath = project.avatarFilePath
     project.banner ? projectToAdd.bannerFilePath = (await uploadImage(project.banner)).data.filePath : projectToAdd.bannerFilePath = project.bannerFilePath || null
 
-    return await axios.put(`${apiUrl}/projects/${projectId}`, projectToAdd,{headers}).then(result => {
+    return await axios.put(`${apiUrl}projects/${projectId}`, projectToAdd,{headers}).then(result => {
 
         let projectToReplace = projectsStore.projects.findIndex(item => item.id === projectId)
 

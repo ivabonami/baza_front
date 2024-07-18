@@ -4,21 +4,6 @@ import {userInfo} from "../../../Store/userInfo.js";
 import axios from "axios";
 import {apiUrl} from "../config.js";
 
-export function getToken() {
-    try {
-
-        userInfo.token = localStorage.getItem('token') || null
-        userInfo.expired = VueJwtDecode.decode(userInfo.token).exp || null
-        userInfo.role = VueJwtDecode.decode(userInfo.token).role || null
-        userInfo.username = localStorage.getItem('username') || null
-
-    } catch (e) {
-        refreshToken()
-
-    }
-}
-getToken()
-
 export function signOut() {
     localStorage.clear()
     userInfo.token = null

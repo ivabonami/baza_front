@@ -5,6 +5,8 @@
         notice.color"
        v-if="$props.notice.text">
 
+    <div class="timer"></div>
+
     <ul>
       <li v-for="error of $props.notice.text">{{ error }}</li>
     </ul>
@@ -44,13 +46,38 @@ export default {
     window.addEventListener('keydown', (e) => {
       e.key === 'Escape' ?  this.closeNotice() : null
     })
+
+    setTimeout(() => {
+      console.log('pizda')
+      this.$props.notice.show = false
+    }, 5000)
   }
 
 }
 </script>
 
 <style scoped lang="scss">
+.timer {
+  width: 100%;
+  height: 5px;
+  background-color: #4b0f1b;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  animation: toLeft 5s ease-in;
+}
+@keyframes toLeft {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+
+}
 .notice {
+  overflow: hidden;
   position: fixed;
   z-index: 52;
   bottom: 10px;

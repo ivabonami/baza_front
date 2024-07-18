@@ -30,9 +30,4 @@ export function setInfo(token, username) {
         }
 }
 
-try {
-        setInfo(localStorage.getItem('token'), localStorage.getItem('username'))
-} catch (e) {
-        localStorage.clear()
-}
-
+localStorage.getItem('token') ? setInfo(localStorage.getItem('token'), localStorage.getItem('username')) : null
