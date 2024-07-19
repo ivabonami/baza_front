@@ -50,6 +50,7 @@ export default {
 
 <style scoped lang="scss">
 .project-navigation {
+  box-sizing: border-box;
   margin-top: 20px;
   margin-bottom: 20px;
   display: flex;

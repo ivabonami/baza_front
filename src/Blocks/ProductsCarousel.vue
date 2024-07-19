@@ -59,11 +59,14 @@
               highlightedProject.push(item)
             }"
             v-for="(item, index) in productsStore.products"
+            v-show="index < 5"
+            :key="index"
             class="products-carousel_items_item">
           <services-card
+
               ref="sliderItem"
               :item="item"
-              v-if="index < 5"
+
           >
           </services-card>
         </router-link>
@@ -214,6 +217,7 @@ export default {
 
 .products-carousel {
   width: 100%;
+  min-height: 275px;
   position: relative;
   height: v-bind(height + 'px');
 
@@ -226,12 +230,13 @@ export default {
   }
 
   .products-carousel_items {
+
     margin-top: 10px;
     display: flex;
     gap: 20px;
     position: relative;
     align-items: stretch;
-
+    width: 100%;
     .products-carousel_items_item {
       width: 18.5%;
 

@@ -4,7 +4,7 @@ import {setInfo, userInfo} from "../Store/userInfo.js";
 import {useFetch} from "../assets/js/controllers/requestsControl.js";
 
 export function signIn(data) {
-    return axios.post(`${apiUrl}login`, data).then(result => result).catch(err => err)
+    return axios.post(`${apiUrl}login`, data)
 }
 
 export function signUp(data) {
@@ -28,7 +28,6 @@ export function refreshToken() {
 
     axios.post(`${apiUrl}refresh`, {"token": userInfo.token}, {headers})
         .then(result => {
-            console.log(result)
             localStorage.setItem('token', result.data.token)
             setInfo(result.data.token, localStorage.getItem('username') )
         })

@@ -100,23 +100,17 @@ export default {
 
       </div>
     </section>
-<!--    <footer class="footer ">-->
-<!--      <div class="row">-->
-<!--        <footer-view></footer-view>-->
-<!--      </div>-->
-<!--    </footer>-->
     <div class="scroll-to-top" v-if="showScrollTopButton === true" ref="scrollToTop" @click="scrollToTop()">
       <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M13 7L7 1L1 7" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
 
     </div>
+    <base-footer />
   </div>
 
-  <modal v-if="modalSetting.show === true"></modal>
 
 
-  <base-footer />
 
 
 </template>

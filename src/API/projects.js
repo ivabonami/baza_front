@@ -62,7 +62,7 @@ export function getFavoriteProjects(options) {
         'Authorization': `Bearer ${userInfo.token}`
     };
 
-    axios.get(`${apiUrl}/user/project`, {headers}).then(result => {
+    axios.get(`${apiUrl}user/project`, {headers}).then(result => {
         for (let project of result.data.projects) {
             favoriteProjects.push(project)
         }

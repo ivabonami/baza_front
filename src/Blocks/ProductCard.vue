@@ -1,7 +1,8 @@
 <template>
   <div class="service-card" :class="{highlighted: $props.highlighted}" @mouseover="highlightedProject.splice(0, highlightedProject.length)">
     <div class="service-card_image">
-      <img :src="api.url + $props.item.avatarFilePath" alt="name">
+      <img :src="api.url + $props.item.avatarFilePath" alt="name" v-show="imgLoaded" @load="imgLoaded = true">
+      <loader-small v-if="!imgLoaded" />
     </div>
     <div class="service-card_text">
       {{ normalizeText($props.item.name) }}
@@ -15,6 +16,7 @@ import { ref, watch } from "vue";
 import {api} from "../assets/js/config.js";
 import {productsStore} from "../Store/productsStore.js";
 import {highlightedProject} from "../Store/highlightedProject.js";
+import loaderSmall from "../components/Loaders/LoaderSmall.vue";
 
 
 export default {
@@ -33,10 +35,13 @@ export default {
     },
     highlighted: ref(Boolean)
   },
-  components: {},
+  components: {
+    loaderSmall
+  },
 
   data() {
     return {
+      imgLoaded: false,
       text: null,
       api,
       highlightedProject,
@@ -77,6 +82,7 @@ export default {
   }
 
   .service-card_image {
+
     aspect-ratio: 1/1;
     border-radius: 10px;
     width: 100%;

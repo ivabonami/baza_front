@@ -1,296 +1,298 @@
 <template>
 
-  <div class="sign-in" v-if="!isOwner">
-    <sign-in
-        @errors="emit => {
+  <div>
+    <div class="sign-in" v-if="!isOwner">
+      <sign-in
+          @errors="emit => {
           this.notice.show = true
           this.notice.text = emit
         }"
 
-        @success="() => {
+          @success="() => {
           this.modal.show = false
         }"
 
-    />
-  </div>
+      />
+    </div>
 
 
-  <div class="add-project form-wrapper" v-else>
+    <div class="add-project form-wrapper" v-else>
 
 
-    <div class="left">
-      <input-text
-          :input="inputs.name"
-          :data="inputs.name.data"
-          @data="emit => {
+      <div class="left">
+        <input-text
+            :input="inputs.name"
+            :data="inputs.name.data"
+            @data="emit => {
             project.name = emit
 
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
             delete this.notice.text.nameLength
           }"
-          @error="emit => {
+            @error="emit => {
             project.name = null
             this.notice.color = 'red'
             this.notice.text.nameLength = emit
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
           }"
-      />
-      <input-textarea
-          :input="inputs.description"
-          :data="inputs.description.data"
-          @data="emit => {
+        />
+        <input-textarea
+            :input="inputs.description"
+            :data="inputs.description.data"
+            @data="emit => {
             this.project.description = emit
             delete this.notice.text.descriptionLength
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
 
           }"
-          @error="emit => {
+            @error="emit => {
             this.project.description = null
             this.notice.color = 'red'
             this.notice.text.descriptionLength = emit
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
 
           }"
-      />
-    </div>
+        />
+      </div>
 
-    <div class="right">
-      <div class="images-box">
+      <div class="right">
+        <div class="images-box">
 
-        <div class="old-avatar" v-if="project.avatarFilePath">
-          <img
+          <div class="old-avatar" v-if="project.avatarFilePath">
+            <img
 
-              :src="apiUrl + project.avatarFilePath"
-              alt="">
+                :src="apiUrl + project.avatarFilePath"
+                alt="">
 
-          <button-action
-              @click="project.avatarFilePath = null"
-          >
-            <template #text>
-              Удалить аватар
-            </template>
-            <template #icon>
-              <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none">
-                <path d="M1.13619 6.77432C1.15283 6.62457 1.16115 6.54969 1.1838 6.47971C1.2039 6.41761 1.2323 6.35853 1.26823 6.30404C1.30873 6.24263 1.362 6.18936 1.46854 6.08282L6.25134 1.30002C6.65137 0.899992 7.29995 0.899992 7.69998 1.30002C8.10001 1.70006 8.10001 2.34864 7.69998 2.74867L2.91718 7.53146C2.81064 7.638 2.75737 7.69128 2.69596 7.73177C2.64147 7.7677 2.58238 7.7961 2.52029 7.8162C2.45031 7.83885 2.37543 7.84717 2.22568 7.86381L1 8L1.13619 6.77432Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </template>
-          </button-action>
-        </div>
+            <button-action
+                @click="project.avatarFilePath = null"
+            >
+              <template #text>
+                Удалить аватар
+              </template>
+              <template #icon>
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none">
+                  <path d="M1.13619 6.77432C1.15283 6.62457 1.16115 6.54969 1.1838 6.47971C1.2039 6.41761 1.2323 6.35853 1.26823 6.30404C1.30873 6.24263 1.362 6.18936 1.46854 6.08282L6.25134 1.30002C6.65137 0.899992 7.29995 0.899992 7.69998 1.30002C8.10001 1.70006 8.10001 2.34864 7.69998 2.74867L2.91718 7.53146C2.81064 7.638 2.75737 7.69128 2.69596 7.73177C2.64147 7.7677 2.58238 7.7961 2.52029 7.8162C2.45031 7.83885 2.37543 7.84717 2.22568 7.86381L1 8L1.13619 6.77432Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </template>
+            </button-action>
+          </div>
 
 
 
-        <input-file
-            v-if="!project.avatarFilePath"
-            :input="inputs.avatar"
-            @data="emit => {
+          <input-file
+              v-if="!project.avatarFilePath"
+              :input="inputs.avatar"
+              @data="emit => {
               this.project.avatar = emit
               delete this.notice.text.imageErros
               Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
             }"
-            @error="emit => {
+              @error="emit => {
               this.project.avatar = null
               this.notice.color = 'red'
               this.notice.text.imageErros = emit
               Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
             }"
-        />
+          />
 
-        <div class="old-banner" v-if="project.bannerFilePath">
-          <img
+          <div class="old-banner" v-if="project.bannerFilePath">
+            <img
 
-              :src="apiUrl + project.bannerFilePath"
-              alt="">
+                :src="apiUrl + project.bannerFilePath"
+                alt="">
 
-          <button-action
-              @click="project.bannerFilePath = null"
-          >
-            <template #text>
-              Удалить баннер
-            </template>
-            <template #icon>
-              <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none">
-                <path d="M1.13619 6.77432C1.15283 6.62457 1.16115 6.54969 1.1838 6.47971C1.2039 6.41761 1.2323 6.35853 1.26823 6.30404C1.30873 6.24263 1.362 6.18936 1.46854 6.08282L6.25134 1.30002C6.65137 0.899992 7.29995 0.899992 7.69998 1.30002C8.10001 1.70006 8.10001 2.34864 7.69998 2.74867L2.91718 7.53146C2.81064 7.638 2.75737 7.69128 2.69596 7.73177C2.64147 7.7677 2.58238 7.7961 2.52029 7.8162C2.45031 7.83885 2.37543 7.84717 2.22568 7.86381L1 8L1.13619 6.77432Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </template>
-          </button-action>
-        </div>
+            <button-action
+                @click="project.bannerFilePath = null"
+            >
+              <template #text>
+                Удалить баннер
+              </template>
+              <template #icon>
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none">
+                  <path d="M1.13619 6.77432C1.15283 6.62457 1.16115 6.54969 1.1838 6.47971C1.2039 6.41761 1.2323 6.35853 1.26823 6.30404C1.30873 6.24263 1.362 6.18936 1.46854 6.08282L6.25134 1.30002C6.65137 0.899992 7.29995 0.899992 7.69998 1.30002C8.10001 1.70006 8.10001 2.34864 7.69998 2.74867L2.91718 7.53146C2.81064 7.638 2.75737 7.69128 2.69596 7.73177C2.64147 7.7677 2.58238 7.7961 2.52029 7.8162C2.45031 7.83885 2.37543 7.84717 2.22568 7.86381L1 8L1.13619 6.77432Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </template>
+            </button-action>
+          </div>
 
-        <input-file
-            v-if="!project.bannerFilePath"
-            :input="inputs.banner"
-                @data="emit => {
+          <input-file
+              v-if="!project.bannerFilePath"
+              :input="inputs.banner"
+              @data="emit => {
               this.project.banner = emit
               delete this.notice.text.imageErros
               Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
             }"
-            @error="emit => {
+              @error="emit => {
               this.project.banner = null
               this.notice.color = 'red'
               this.notice.text.imageErros = emit
               Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
             }"
-        />
-
-
-
-
-      </div>
-
-      <div class="links-box">
-        <div>
-          <input-select
-              :input="inputs.links.name"
-              @data="emit => linkToAdd.name = emit"
-
           />
+
+
+
+
         </div>
-        <div>
-          <input-link
-              :input="inputs.links.link"
-              :data="inputs.links.link.data"
-              @data="emit => {
+
+        <div class="links-box">
+          <div>
+            <input-select
+                :input="inputs.links.name"
+                @data="emit => linkToAdd.name = emit"
+
+            />
+          </div>
+          <div>
+            <input-link
+                :input="inputs.links.link"
+                :data="inputs.links.link.data"
+                @data="emit => {
                 linkToAdd.link = emit
                 inputs.links.link.data = null
                 Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false,
                 delete this.notice.text.linkErr
               }"
 
-              @error="emit => {
+                @error="emit => {
                 linkToAdd.link = null
                 this.notice.color = 'red'
                 this.notice.text.linkErr = emit
                 Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
 
               }"
-          />
+            />
+          </div>
+
+          <button-primary
+              @click="addLinkToProject"
+              :style="'filled'">
+            <template #default>
+              Вставить ссылку в проект
+            </template>
+          </button-primary>
         </div>
 
-        <button-primary
-            @click="addLinkToProject"
-            :style="'filled'">
-          <template #default>
-            Вставить ссылку в проект
-          </template>
-        </button-primary>
-      </div>
-
-      <div class="categories-box">
-        <input-categories
-            :input="inputs.categories"
-            :data="inputs.categories.data"
-            @categoryIds="emit => {
+        <div class="categories-box">
+          <input-categories
+              :input="inputs.categories"
+              :data="inputs.categories.data"
+              @categoryIds="emit => {
               project.categoryIds = emit
 
               Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
               delete this.notice.text.nameLength
             }"
 
-            @exchangerSelected="emit => {
+              @exchangerSelected="emit => {
               this.exchangerSelected = emit
 
             }"
-        />
-      </div>
+          />
+        </div>
 
-      <div class="exchanger-box"
-           v-if="exchangerSelected"
-      >
-        <div>
-          <input-number
-              :input="inputs.reserve"
-              :data="inputs.reserve.data"
-              @data="emit => {
+        <div class="exchanger-box"
+             v-if="exchangerSelected"
+        >
+          <div>
+            <input-number
+                :input="inputs.reserve"
+                :data="inputs.reserve.data"
+                @data="emit => {
             project.reserve = emit
 
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
             delete this.notice.text.reserveErr
           }"
-              @error="emit => {
+                @error="emit => {
             project.reserve = null
             this.notice.color = 'red'
             this.notice.text.reserveErr = emit
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
           }"
-          />
-        </div>
-        <div>
-          <input-number
-              :input="inputs.minValueToExchange"
-              :data="inputs.minValueToExchange.data"
-              @data="emit => {
+            />
+          </div>
+          <div>
+            <input-number
+                :input="inputs.minValueToExchange"
+                :data="inputs.minValueToExchange.data"
+                @data="emit => {
             project.minValueToExchange = emit
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
             delete this.notice.text.minValueToExchangeErr
           }"
-              @error="emit => {
+                @error="emit => {
             project.minValueToExchange = null
             this.notice.color = 'red'
             this.notice.text.minValueToExchangeErr = emit
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
           }"
-          />
+            />
+          </div>
+
         </div>
 
       </div>
 
-    </div>
+      <div class="links">
+        <div class="link" v-for="link of project.links">
+          <project-external-link
+              :link="link"
+              :edit="true"
+              @removeLink="emit => project.links.splice(project.links.findIndex(item => item.link === emit), 1)"
+          />
+        </div>
 
-    <div class="links">
-      <div class="link" v-for="link of project.links">
-        <project-external-link
-            :link="link"
-            :edit="true"
-            @removeLink="emit => project.links.splice(project.links.findIndex(item => item.link === emit), 1)"
-        />
+
+      </div>
+      <div class="buttons">
+        <button-primary
+            @click="checkForm"
+            :style="'filled'">
+          <template #default>
+            Изменить проект
+          </template>
+        </button-primary>
+
+
       </div>
 
-
-    </div>
-    <div class="buttons">
-      <button-primary
-          @click="checkForm"
-          :style="'filled'">
-        <template #default>
-          Изменить проект
-        </template>
-      </button-primary>
-
-
     </div>
 
+
+
+    <notice v-if="notice.show" :notice="notice" :errors="errors"
+            @closeNotice="notice.show = false"
+    />
+
+    <popup-info
+        :modal="modal"
+        v-if="modal.show"
+        @closeModal="this.$router.push('/')"
+
+
+    >
+      <template #header>
+        Проект успешно изменен
+      </template>
+
+      <template #icon>
+        <svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58" fill="none">
+          <path d="M56 26.5314V29.0154C55.9967 34.8378 54.1113 40.5031 50.6252 45.1664C47.139 49.8297 42.2389 53.2411 36.6555 54.892C31.0721 56.5428 25.1046 56.3446 19.6431 54.3268C14.1815 52.3091 9.51857 48.5799 6.34959 43.6955C3.18062 38.8111 1.67544 33.0332 2.05853 27.2235C2.44162 21.4138 4.69246 15.8835 8.47535 11.4575C12.2583 7.03156 17.3705 3.94699 23.0497 2.66385C28.7289 1.38071 34.6707 1.96776 39.989 4.33745M56 7.4L29 34.427L20.9 26.327" stroke="#2E7E36" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </template>
+
+      <template #text>
+        Спасибо за добавление проекта "{{ project.name }}". В ближайшее время модератор проверит ваш проект и он появится в результатах выдачи
+      </template>
+
+      <template #button>
+        Жду модерацию
+      </template>
+    </popup-info>
   </div>
-
-
-
-  <notice v-if="notice.show" :notice="notice" :errors="errors"
-          @closeNotice="notice.show = false"
-  />
-
-  <popup-info
-      :modal="modal"
-      v-if="modal.show"
-      @closeModal="this.$router.push('/')"
-
-
-  >
-    <template #header>
-      Проект успешно изменен
-    </template>
-
-    <template #icon>
-      <svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58" fill="none">
-        <path d="M56 26.5314V29.0154C55.9967 34.8378 54.1113 40.5031 50.6252 45.1664C47.139 49.8297 42.2389 53.2411 36.6555 54.892C31.0721 56.5428 25.1046 56.3446 19.6431 54.3268C14.1815 52.3091 9.51857 48.5799 6.34959 43.6955C3.18062 38.8111 1.67544 33.0332 2.05853 27.2235C2.44162 21.4138 4.69246 15.8835 8.47535 11.4575C12.2583 7.03156 17.3705 3.94699 23.0497 2.66385C28.7289 1.38071 34.6707 1.96776 39.989 4.33745M56 7.4L29 34.427L20.9 26.327" stroke="#2E7E36" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </template>
-
-    <template #text>
-      Спасибо за добавление проекта "{{ project.name }}". В ближайшее время модератор проверит ваш проект и он появится в результатах выдачи
-    </template>
-
-    <template #button>
-      Жду модерацию
-    </template>
-  </popup-info>
 </template>
 
 <script>
@@ -448,8 +450,6 @@ export default {
   methods: {
 
     addLinkToProject() {
-
-      console.log(this.linkToAdd.link.length)
 
       if (this.linkToAdd.name === null || !this.linkToAdd.link) {
 

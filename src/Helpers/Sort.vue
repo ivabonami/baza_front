@@ -24,7 +24,6 @@
              if ($props.sort.name !== sort.name) {
                $emit('sortChanged', sort)
                this.selected = sort
-               console.log(sort, this.selected)
                closeDropdown()
              }
 

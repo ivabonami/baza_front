@@ -73,6 +73,7 @@ import projectExternalLink from "../../Helpers/ProjectExternalLink.vue";
 
 export default {
   name: "Popup.vue",
+  emits: ['closeModal'],
   props: {
     modal: {
       show: true

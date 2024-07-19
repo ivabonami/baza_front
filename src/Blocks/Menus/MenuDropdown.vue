@@ -18,7 +18,7 @@
     </router-link>
 
     <a class="dropdown_link sign-out"
-       @click="modal.show = true"
+       @click="this.$emit('signOut', true)"
        data-dropdown="dropdown">
       <svg xmlns="http://www.w3.org/2000/svg" width="15" height="14" viewBox="0 0 15 14" fill="none">
         <path d="M11.4 4.33333L14 7M14 7L11.4 9.66667M14 7H5.55M9.45 1.80269C8.62141 1.29218 7.65941 1 6.63333 1C3.52213 1 1 3.68629 1 7C1 10.3137 3.52213 13 6.63333 13C7.65941 13 8.62141 12.7078 9.45 12.1973" stroke="#841717" stroke-linecap="round" stroke-linejoin="round"/>
@@ -29,38 +29,20 @@
 
     </a>
 
+
   </div>
-  <popup-action
-      v-show="modal.show === true"
-      @closeModal="modal.show = false"
-      @actionConfirmed="signOut()"
-      :modal="modal"
-  >
-    <template #header>
-      Выйти?
-    </template>
-    <template #text>
-      Вы собиратесь выйти из аккаунта, подтвердите действие.
-    </template>
-    <template #buttonConfirm>
-      Выйти
-    </template>
-    <template #buttonSecondary>
-      Отменить
-    </template>
-  </popup-action>
+
 
 </template>
 
 <script>
 import {adminMenu} from "../../Store/adminMenu.js";
-import {reactive, ref, watch} from "vue";
 import popupAction from "../../components/Popups/PopupAction.vue";
-import {signOut} from "../../API/user.js";
 import {userInfo} from "../../Store/userInfo.js";
 
 export default {
   name: "DropdownMenu.vue",
+  emits: ['isOpen', 'signOut'],
   props: {
     dropdown: {
       show: false
@@ -70,13 +52,8 @@ export default {
   data() {
     return {
       menu: {},
-      modal: {
-        show: ref(false)
-      },
-
       isAdmin: false,
 
-      signOut
     }
   },
 

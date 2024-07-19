@@ -361,7 +361,7 @@ export default {
   .project-products_heading {
     color: #000;
     font-family: "PT Sans Caption";
-    font-size: 20px;
+
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -373,7 +373,8 @@ export default {
     margin-bottom: 8px;
 
     h2 {
-      margin-top: -10px;
+      font-size: 20px;
+      margin-top: -5px;
     }
 
   }

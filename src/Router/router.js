@@ -57,16 +57,18 @@ const router = createRouter({
             component: errorPage
         },
         {
-          path: '/project/:id',
-          component: ProjectsView,
+            path: '/project/:id',
+            name:'ProjectView',
+            component: ProjectsView,
         },
         {
-          path: '/check-testimonials',
-          component: ReviewsCheck,
+            path: '/check-testimonials',
+            name: 'ReviewsCheck',
+            component: ReviewsCheck,
         },
         {
-          path: '/project/:id/edit',
-          component: project_Edit,
+            path: '/project/:id/edit',
+            component: project_Edit,
             name: 'ProjectEdit',
             props: true
         },

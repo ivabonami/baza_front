@@ -15,6 +15,7 @@
 import {ref} from "vue";
 import {addFavorite, removeFavorite} from "../../API/favorite.js";
 import {favoriteProjects} from "../../Store/favoriteProjects.js";
+import {projectsStore} from "../../Store/projectsStore.js";
 
 export default {
   name: "ButtonFavorite.vue",
@@ -38,7 +39,6 @@ export default {
           this.$emit('favoriteChanged', this.inFavorite === 0 ? 1 : 0)
           this.favoriteStatus = !this.favoriteStatus
           this.$props.project.favorite = 1
-          favoriteProjects.push(this.$props.project)
         }).catch(e => {
 
         })
@@ -46,6 +46,7 @@ export default {
         removeFavorite(this.projectId).then(result => {
           this.$emit('favoriteChanged', this.inFavorite === 0 ? 1 : 0)
           this.favoriteStatus = !this.favoriteStatus
+          projectsStore.projects.find(item => item.id === projectId).favorite = 0
         }).catch(e => {
 
         })

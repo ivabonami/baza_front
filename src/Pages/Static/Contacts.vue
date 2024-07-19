@@ -1,22 +1,24 @@
 <template>
-  <h1>Контакты</h1>
+  <div>
+    <h1>Контакты</h1>
 
-  <a href="https://t.me/enBaza" class="image-link" target="_blank">
-    <img src="../../assets/images/banners/contacts.png" alt="">
-  </a>
-
-
-  <div class="project-links">
-    <a href="https://t.me/enBaza" class="link-btn" target="_blank">
-
-      Связаться с нами
-    </a>
-    <a href="https://t.me/+KP0MMZ2fcqA3YzQy" class="link-btn" target="_blank">
-
-      Наш канал в Telegram
+    <a href="https://t.me/enBaza" class="image-link" target="_blank">
+      <img src="../../assets/images/banners/contacts.png" alt="">
     </a>
 
 
+    <div class="project-links">
+      <a href="https://t.me/enBaza" class="link-btn" target="_blank">
+
+        Связаться с нами
+      </a>
+      <a href="https://t.me/+KP0MMZ2fcqA3YzQy" class="link-btn" target="_blank">
+
+        Наш канал в Telegram
+      </a>
+
+
+    </div>
   </div>
 
 </template>

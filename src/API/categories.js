@@ -6,7 +6,6 @@ import {store} from "../assets/js/services/categoriesService.js";
 
 export function getCategories() {
     return axios.get(`${apiUrl}categories`).then(result => result.data).then(response => {
-        console.log(response)
         categoriesStore.categories = response.categories
         categoriesStore.exchanger = response.categories.find(item => item.name === "Обменники")
     }).catch(err => err)

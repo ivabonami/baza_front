@@ -406,7 +406,6 @@ export default {
 
       for (let i = 0; i < this.project.ratingAvg; i++) {
         this.$refs.stars.childNodes[i].classList.add('active')
-        console.log(this.$refs.stars.childNodes[i])
       }
     },
   },
@@ -420,7 +419,6 @@ export default {
 
     for (let i = 0; i < this.project.ratingAvg; i++) {
       this.$refs.stars.childNodes[i].classList.add('active')
-      console.log(this.$refs.stars.childNodes[i])
     }
   }
 

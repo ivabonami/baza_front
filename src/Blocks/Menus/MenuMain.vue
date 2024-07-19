@@ -110,7 +110,6 @@ export default {
       const category = this.categories.pop()
       this.categories.unshift(category)
       this.step--
-      console.log(category, this.categories)
     }
   },
 

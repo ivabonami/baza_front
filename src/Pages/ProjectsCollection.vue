@@ -19,9 +19,10 @@
 
     <transition-group name="list">
       <div class="projects-collection_items"
-           v-show="!isLoading || projectsStore.projects.length > 0">
+           v-if="!isLoading || projectsStore.projects.length > 0">
 
         <div v-for="project of projectsStore.projects"
+             :key="project"
              :class="{payed: project.payed}"
              class="projects-collection_items_item">
 
@@ -203,13 +204,14 @@ export default {
 
 <style scoped lang="scss">
 .projects-collection_wrapper {
+  min-height: 300px;
   width: 100%;
 
   .projects-collection_items {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    gap: 1.1%;
+    gap: 1%;
     flex-flow: row wrap;
     justify-content: space-between;
     &::after {

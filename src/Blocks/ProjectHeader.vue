@@ -1,7 +1,11 @@
 <template>
   <div class="project-header">
     <div class="project-header_avatar">
-      <img :src="api.url + $props.project.avatarFilePath" alt="">
+      <img :src="api.url + $props.project.avatarFilePath"
+           v-show="avatarLoaded"
+           @load="avatarLoaded = true"
+           alt="">
+      <loader-small v-if="!avatarLoaded"/>
       <div class="project-header_avatar_favorite" v-show="userInfo.token">
         <button-favorite
             :inFavorite="$props.project.favorite || 0"
@@ -17,16 +21,18 @@
         <div class="project-header_info_header">
           <span class="project-name">
             {{ normalizedName }}
-            <svg xmlns="http://www.w3.org/2000/svg"
-                 @click="() => {
+
+          </span>
+
+          <svg xmlns="http://www.w3.org/2000/svg"
+               @click="() => {
                  modalInfo.show = true
                  modalInfo.data = project
                }"
-                 v-tippy="{content: 'О проекте', theme: 'light'}"
-                 width="24" height="24" viewBox="0 0 24 24" fill="none">
+               v-tippy="{content: 'О проекте', theme: 'light'}"
+               width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M12 16V12M12 8H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="#D8D8D8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          </span>
 
 
         </div>
@@ -169,6 +175,7 @@ import {userInfo} from "../Store/userInfo.js";
 import projectEdit from "./Controllers/ProjectEdit.vue";
 import {categoriesStore} from "../Store/categories.js";
 import popupShowFullInfo from "../components/Popups/PopupShowFullInfo.vue";
+import loaderSmall from "../components/Loaders/LoaderSmall.vue";
 
 
 
@@ -189,6 +196,7 @@ export default {
       modalInfo: {
         show: false
       },
+      avatarLoaded: false,
       categoriesStore,
       userInfo,
       normalizedName: null,
@@ -230,7 +238,8 @@ export default {
     projectStats,
     buttonAction,
     projectAdditionalStats,
-    popupShowFullInfo
+    popupShowFullInfo,
+    loaderSmall
 
   },
 
@@ -392,7 +401,6 @@ export default {
           display: inline-block;
           width: 22px;
           position: relative;
-          top: 3px;
           height: 22px;
           padding-left: 5px;
           padding-top: 0;

@@ -96,6 +96,11 @@ export default {
   opacity: 0;
   scale: 0;
   transition: .15s;
+  ul {
+    li {
+      font-family: "PT Sans Caption";
+    }
+  }
 
   &.red {
     background-color: rgba(154, 41, 41, 0.7);

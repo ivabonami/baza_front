@@ -37,6 +37,7 @@ import ButtonPrimary from "../Buttons/ButtonPrimary.vue";
 
 export default {
   name: "Popup.vue",
+  emits: ['closeModal', 'actionConfirmed'],
   props: ['modal'],
 
   data() {

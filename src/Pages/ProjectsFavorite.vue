@@ -23,7 +23,7 @@
         <div class="project" v-for="project of favoriteProjects">
           <project-card
               :project="project"
-              @favoriteChanged="emit => removeFromList(emit)"
+              @favoriteChanged="emit => changeStatus(emit)"
           >
 
           </project-card>
@@ -46,6 +46,7 @@ import emptyStore from "../Blocks/EmptyStore.vue";
 
 import {favoriteProjects} from "../Store/favoriteProjects.js";
 import {getFavoriteProjects} from "../API/projects.js";
+import {projectsStore} from "../Store/projectsStore.js";
 
 export default {
   name: "FavoriteProjects.vue",
@@ -73,7 +74,7 @@ export default {
 
   mounted() {
 
-    favoriteProjects.length <= 0 ? getFavoriteProjects() : null
+    getFavoriteProjects()
   },
   created() {
 
@@ -83,7 +84,10 @@ export default {
 
 
   methods: {
-
+    changeStatus(projectId) {
+      console.log(projectsStore.projects.find(item => item.id === projectId))
+      projectsStore.projects.find(item => item.id === projectId).favorite = 0
+    }
 
 
   }

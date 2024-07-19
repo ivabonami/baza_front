@@ -1,61 +1,61 @@
 <template>
-  <div class="popup"
-       v-show="modal.show === true"
-       :class="{show: modal.show}">
-    <div class="popup_icon">
-      <svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58" fill="none">
-        <path d="M29 39.8V29M29 18.2H29.027M56 29C56 43.9117 43.9117 56 29 56C14.0883 56 2 43.9117 2 29C2 14.0883 14.0883 2 29 2C43.9117 2 56 14.0883 56 29Z" stroke="#DBAE0E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
 
-    <div class="popup_header">
-      <slot name="header"></slot>
-    </div>
+    <div class="popup"
+         v-show="modal.show === true"
+         :class="{show: modal.show}">
+      <div class="popup_icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58" fill="none">
+          <path d="M29 39.8V29M29 18.2H29.027M56 29C56 43.9117 43.9117 56 29 56C14.0883 56 2 43.9117 2 29C2 14.0883 14.0883 2 29 2C43.9117 2 56 14.0883 56 29Z" stroke="#DBAE0E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
 
-    <div class="popup_text">
-      <slot name="text"></slot>
-    </div>
+      <div class="popup_header">
+        <slot name="header"></slot>
+      </div>
 
-    <div class="popup_buttons">
-      <div class="popup_buttons_button">
-        <button-primary
-            @close="() => {
+      <div class="popup_text">
+        <slot name="text"></slot>
+      </div>
 
-              closeModal()
+      <div class="popup_buttons">
+        <div class="popup_buttons_button">
+          <button-primary
+              @close="() => {
               $emit('actionConfirmed', true)
             }"
-        >
-          <template #default>
-            <slot name="buttonConfirm"></slot>
-          </template>
-        </button-primary>
+          >
+            <template #default>
+              <slot name="buttonConfirm"></slot>
+            </template>
+          </button-primary>
+        </div>
+
+        <div class="popup_buttons_button">
+          <button-secondary-gray
+              @pressed="closeModal()"
+          >
+            <template #default>
+              <slot name="buttonSecondary"></slot>
+            </template>
+          </button-secondary-gray>
+
+        </div>
+
+
       </div>
 
-      <div class="popup_buttons_button">
-        <button-secondary-gray
-            @pressed="closeModal()"
-        >
-          <template #default>
-            <slot name="buttonSecondary"></slot>
-          </template>
-        </button-secondary-gray>
 
+      <div class="popup_close" @click="closeModal()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M13 1L1 13M1 1L13 13" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
-
-
     </div>
 
+    <div class="backdrop"
+         @click="closeModal()"
+         :class="{show: modal.show}"></div>
 
-    <div class="popup_close" @click="closeModal()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M13 1L1 13M1 1L13 13" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-  </div>
-
-  <div class="backdrop"
-       @click="closeModal()"
-       :class="{show: modal.show}"></div>
 </template>
 
 <script>
@@ -66,6 +66,7 @@ import {signOut} from "../../API/user.js";
 
 export default {
   name: "Popup.vue",
+  emits: ['closeModal', 'actionConfirmed'],
   props: {
     modal: {
       show: true
@@ -92,7 +93,6 @@ export default {
   methods: {
     closeModal() {
       this.$emit('closeModal', true)
-
       document.body.style.overflow = 'hidden scroll'
     }
   }
@@ -109,7 +109,6 @@ export default {
   position: fixed;
   z-index: 51;
   width: 300px;
-
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -118,6 +117,7 @@ export default {
 
   visibility: hidden;
   opacity: 0;
+
 
   &.show {
     scale: 1;
@@ -169,7 +169,7 @@ export default {
 
   height: 100%;
   width: 100%;
-  z-index: 50;
+  z-index: 30;
 
   background: rgba(217, 217, 217, 0.60);
   backdrop-filter: blur(3px);

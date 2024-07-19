@@ -45,6 +45,9 @@
         </button-auth>
 
         <dropdown-menu
+            @signOut="() => {
+              modal.show = true
+            }"
             @isOpen="emit => dropdown.show = emit"
             v-show="dropdown.show"
             :dropdown="dropdown" />
@@ -59,6 +62,29 @@
 
 
     </div>
+
+    <popup-action
+        v-show="modal.show === true"
+        @closeModal="modal.show = false"
+        @actionConfirmed="() => {
+          signOut()
+          this.modal.show = false
+        }"
+        :modal="modal"
+    >
+      <template #header>
+        Выйти?
+      </template>
+      <template #text>
+        Вы собиратесь выйти из аккаунта, подтвердите действие.
+      </template>
+      <template #buttonConfirm>
+        Выйти
+      </template>
+      <template #buttonSecondary>
+        Отменить
+      </template>
+    </popup-action>
   </div>
 </template>
 
@@ -76,6 +102,8 @@ import dropdownMenu from "../Blocks/Menus/MenuDropdown.vue";
 import iconsMenu from "../Blocks/Menus/MenuIcons.vue";
 import menuHeader from "../Blocks/Menus/MenuHeader.vue";
 import inputSearch from "../components/Inputs/InputSearch.vue";
+import popupAction from "../components/Popups/PopupAction.vue";
+import {ref} from "vue";
 
 export default {
   name: "BazaHeader.vue",
@@ -85,7 +113,8 @@ export default {
     dropdownMenu,
     iconsMenu,
     menuHeader,
-    inputSearch
+    inputSearch,
+    popupAction
   },
 
   data() {
@@ -99,6 +128,9 @@ export default {
 
       dropdown: {
         show: false
+      },
+      modal: {
+        show: ref(false)
       },
 
       staticPages,

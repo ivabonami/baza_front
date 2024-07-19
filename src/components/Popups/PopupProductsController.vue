@@ -153,6 +153,7 @@ import buttonAction from "../Buttons/ButtonAction.vue";
 
 export default {
   name: "Popup.vue",
+  emits: ['closeModal', 'productAdded', 'productUpdated'],
   props: {
     modal: {
       show: true,
@@ -246,7 +247,7 @@ export default {
     } else {
       document.body.style.overflow = 'hidden scroll'
     }
-    this.$props.options ? this.product = this.$props.options : console.log(this.$props)
+    this.$props.options ? this.product = this.$props.options : null
 
     this.inputs.productName.data = this.product.name || null
     this.inputs.productDescription.data = this.product.description || null

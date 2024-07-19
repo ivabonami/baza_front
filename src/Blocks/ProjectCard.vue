@@ -1,12 +1,13 @@
 <template>
 
-    <div @click="this.$router.push(`/project/${$props.project.id}`)"
+    <div @click="this.$router.push({ name: 'ProjectView', params: {'id': $props.project.id }})"
 
         class="project-card_wrapper"
     >
 
       <div class="project-card_avatar">
-        <img :src="config.api.url + $props.project.avatarFilePath" :alt="$props.project.name">
+        <img :src="config.api.url + $props.project.avatarFilePath" v-show="imgLoaded" :alt="$props.project.name" @load="imgLoaded = true">
+        <loader-small v-if="!imgLoaded"/>
 
         <project-card-overlay
             @click.stop
@@ -215,6 +216,7 @@ import popupDelete from "../components/Popups/PopupDelete.vue";
 
 import {changePayedStatus, removeProject} from "../API/projects.js";
 import popupAction from "../components/Popups/PopupAction.vue";
+import loaderSmall from "../components/Loaders/LoaderSmall.vue";
 
 export default {
   name: "ProjectCard.vue",
@@ -232,7 +234,8 @@ export default {
     projectExternalLink,
     popupProjectLinks,
     popupDelete,
-    popupAction
+    popupAction,
+    loaderSmall
   },
 
   setup() {
@@ -246,6 +249,7 @@ export default {
   },
   data () {
     return {
+      imgLoaded: false,
       favorite: false,
       isAdmin: false,
       reviewsLength: 0,

@@ -1,15 +1,17 @@
 <template>
-  <h1>Реклама</h1>
+  <div>
+    <h1>Реклама</h1>
 
-  <a href="https://t.me/enBaza" class="image-link" target="_blank">
-    <img src="../../assets/images/banners/ads.png" alt="">
-  </a>
+    <a href="https://t.me/enBaza" class="image-link" target="_blank">
+      <img src="../../assets/images/banners/ads.png" alt="">
+    </a>
 
 
-  <a href="https://t.me/enBaza" class="link-btn" target="_blank">
+    <a href="https://t.me/enBaza" class="link-btn" target="_blank">
 
-    Реклама на проекте BAZA
-  </a>
+      Реклама на проекте BAZA
+    </a>
+  </div>
 
 </template>
 

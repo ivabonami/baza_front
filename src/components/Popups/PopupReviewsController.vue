@@ -92,6 +92,7 @@ import {addReview, editReview} from "../../API/reviews.js";
 
 export default {
   name: "PopupReviewController.vue",
+  emits: ['reviewEdit', 'closeModal'],
   props: {
     modal: {
       show: true,

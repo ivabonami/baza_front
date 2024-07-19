@@ -1,8 +1,6 @@
-<template v-cloak>
-
+<template >
   <div class="wrapper" ref="wrapper">
-    <div class="project" v-if="Object.keys(project).length > 0">
-
+    <div class="project" v-if="project.name && !loading">
       <project-header
           v-if="project.name"
           :project="project"
@@ -16,7 +14,11 @@
       <div class="project-banner">
         <img :src="api + project.bannerFilePath"
              alt=""
+             v-show="bannerLoaded"
+             @load="bannerLoaded = true"
              v-if="project.bannerFilePath !== null">
+
+        <loader-small  v-if="!bannerLoaded"/>
 
       </div>
 
@@ -37,11 +39,12 @@
 
       </div>
 
+    <loaderSmall v-else-if="loading" />
 
     <empty-store
         :show-button="false"
         :show-button-for-users="false"
-        v-else>
+        v-else-if="!project.name && !loading">
       <template #header>
         Проект с этим ID отсутствует
       </template>
@@ -78,6 +81,7 @@ import projectProducts from "../Layouts/ProjectProducts.vue";
 
 import {useFetch} from "../assets/js/controllers/requestsControl.js";
 import emptyStore from "../Blocks/EmptyStore.vue";
+import loaderSmall from "../components/Loaders/LoaderSmall.vue";
 
 export default {
 
@@ -87,7 +91,7 @@ export default {
     projectDescriptionTab,
     ProjectReviews,
     Waypoint,
-
+    loaderSmall,
     projectHeader,
     projectProducts,
     emptyStore
@@ -101,6 +105,7 @@ export default {
       project: {},
       projectRating: 0,
       products: [],
+      loading: false,
       actionModal: {
         show: false
       },
@@ -113,6 +118,8 @@ export default {
       offset: 0,
       emptyResponse: false,
       editProduct: {},
+      bannerLoaded: false,
+
 
       config, highlight, userInfo, modalSetting, store, editableProject, useFetch
     }
@@ -135,9 +142,11 @@ export default {
         result.project.userData.username === userInfo.username ? this.isOwner = true : this.isOwner = false
         this.projectRating = Math.round(this.project.ratingAvg)
         result.project.categories.find(category => category.id === store.exchanger) ? this.isExchanger = true : this.isExchanger = false
+
+        this.loading = false
       }).catch(err => {
-        modalSetting.show = true
-        modalSetting.type = 'error'
+
+        this.loading = false
       })
 
 
@@ -146,9 +155,11 @@ export default {
 
   },
   mounted() {
-    this.getProjectFullInfo()
-    userInfo.role === 'admin' ? this.isAdmin = true : this.isAdmin = false
-
+    this.loading = true
+    this.$nextTick(() => {
+      this.getProjectFullInfo()
+      userInfo.role === 'admin' ? this.isAdmin = true : this.isAdmin = false
+    })
 
   }
 }
@@ -501,6 +512,7 @@ textarea {
 
   .project-banner {
     width: 100%;
+    min-height: 100px;
     height: auto;
     max-height: 500px;
     overflow: hidden;

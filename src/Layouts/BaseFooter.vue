@@ -66,7 +66,8 @@ export default {
 
 <style scoped lang="scss">
 .wrapper {
-  margin-top: -130px;
+  min-height: 100px;
+  margin-top: auto;
   align-items: center;
   display: flex;
   flex-wrap: wrap;

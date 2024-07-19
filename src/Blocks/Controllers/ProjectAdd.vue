@@ -1,5 +1,6 @@
 <template>
 
+<div>
   <div class="sign-in" v-if="!userInfo.token">
     <popup-auth
         v-if="popup.auth.show === true"
@@ -257,6 +258,7 @@
       Жду модерацию
     </template>
   </popup-info>
+</div>
 </template>
 
 <script>
@@ -425,8 +427,6 @@ export default {
   methods: {
 
     addLinkToProject() {
-
-      console.log(this.linkToAdd.link.length)
 
       if (this.linkToAdd.name === null || !this.linkToAdd.link) {
 
