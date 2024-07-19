@@ -418,8 +418,10 @@ export default {
   mounted() {
     getReviews({projectId: this.$props.project.id})
 
-
-
+    for (let i = 0; i < this.project.ratingAvg; i++) {
+      this.$refs.stars.childNodes[i].classList.add('active')
+      console.log(this.$refs.stars.childNodes[i])
+    }
   }
 
 

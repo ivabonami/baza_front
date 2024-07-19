@@ -97,7 +97,6 @@
 <script>
 import {ref, watch} from 'vue'
 import servicesCard from "./ProductCard.vue";
-import 'vue3-carousel/dist/carousel.css'
 import {productsStore} from "../Store/productsStore.js";
 import {getProducts} from "../API/products.js";
 import buttonSwitch from "../components/Buttons/ButtonSwitch.vue";
@@ -234,7 +233,7 @@ export default {
     align-items: stretch;
 
     .products-carousel_items_item {
-      width: 210px;
+      width: 18.5%;
 
     }
   }

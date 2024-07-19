@@ -30,8 +30,6 @@
 
 
         </div>
-
-
         <div v-for="(stat, index) of stats"
              v-tippy="{content: stat.tooltip, theme: 'light'}"
              v-show="stat.stat"
@@ -285,7 +283,18 @@ export default {
   },
 
   mounted() {
+    this.setStats()
 
+    this.$props.project.name.length > 80 ?  this.normalizedName = this.$props.project.name.substring(0, 80) + '...' :  this.normalizedName = this.$props.project.name
+
+
+
+    if (userInfo.username) {
+      userInfo.username === this.$props.project.userData.username ? this.isAdmin = true :  this.isAdmin = false
+      userInfo.role === 'admin' ? this.isAdmin = true :  this.isAdmin = false
+    } else {
+      this.isAdmin = false
+    }
 
 
   }

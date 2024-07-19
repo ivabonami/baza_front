@@ -2,15 +2,13 @@
 import FooterView from "./Layouts/BaseFooter.vue";
 import recommended from "./Blocks/ProductsCarousel.vue";
 import addCategory from "./Blocks/Controllers/CategoryController.vue";
-
-import vClickOutside from "click-outside-vue3";
 import bazaHeader from "./Layouts/BaseHeader.vue";
 import {modalSetting} from "./assets/js/modal.js";
 import {watch, ref} from "vue";
 import baseFooter from "./Layouts/BaseFooter.vue";
 
 export default {
-  components: { FooterView, recommended, addCategory, vClickOutside, bazaHeader, baseFooter},
+  components: { FooterView, recommended, addCategory, bazaHeader, baseFooter},
   emits: ['mobileClick'],
   data() {
     return {
@@ -25,9 +23,6 @@ export default {
       historyCount: 0,
       modalSetting, ref
     }
-  },
-  directives: {
-    clickOutside: vClickOutside.directive
   },
   setup() {
     watch(modalSetting, (value, oldValue) => {
@@ -95,9 +90,7 @@ export default {
 
           <router-view v-slot="{ Component, route }">
             <transition name="list" mode="out-in">
-              <div :key="route">
-                <component :is="Component"></component>
-              </div>
+              <component :is="Component" :key="route"></component>
 
             </transition>
           </router-view>

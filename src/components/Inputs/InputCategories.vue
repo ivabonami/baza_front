@@ -118,6 +118,7 @@ label {
   gap: 10px;
 }
 .category-checkbox {
+  font-family: "PT Sans Caption";
   display: flex;
   align-items: center;
   gap: 5px;

@@ -69,6 +69,7 @@ export default {
 .empty-store {
   width: 100%;
   text-align: center;
+  box-sizing: border-box;
 
   border-radius: 10px;
   background: #FFF;

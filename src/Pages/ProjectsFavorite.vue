@@ -41,7 +41,6 @@
 import recommended from "../Blocks/ProductsCarousel.vue";
 import projectCard from "../Blocks/ProjectCard.vue";
 import { Waypoint } from "vue-waypoint";
-import 'vue-loading-overlay/dist/css/index.css';
 import loader from "../Layouts/BaseLoader.vue";
 import emptyStore from "../Blocks/EmptyStore.vue";
 

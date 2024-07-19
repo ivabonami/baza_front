@@ -48,7 +48,6 @@ export default {
     })
 
     setTimeout(() => {
-      console.log('pizda')
       this.$props.notice.show = false
     }, 5000)
   }

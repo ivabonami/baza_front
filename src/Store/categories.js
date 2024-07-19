@@ -6,7 +6,4 @@ export const categoriesStore = reactive({
     exchanger: null,
 })
 
-getCategories().then(result => {
-    categoriesStore.categories = result.data.categories
-    categoriesStore.exchanger = result.data.categories.find(item => item.name === "Обменники")
-})
+getCategories()

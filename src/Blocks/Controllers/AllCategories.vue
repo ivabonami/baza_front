@@ -135,9 +135,6 @@
 </template>
 
 <script>
-import Modal from "../../components/Popups/Modal.vue";
-import Loading from 'vue-loading-overlay';
-import 'vue-loading-overlay/dist/css/index.css';
 import config from "../../assets/js/config.js";
 import {reactive, watch} from "vue";
 import {store} from "../../assets/js/services/categoriesService.js";

@@ -26,7 +26,6 @@
       </button-action>
     </div>
     <div class="project-products_items"
-
          ref="projectProducts"
          v-show="!loading || products.length > 0">
       <div v-for="product of products"
@@ -343,14 +342,12 @@ export default {
       deleteProduct(product).then(result => result)
     }
   },
-
   mounted() {
+    this.collectProducts(this.options)
+  },
+
+  updated() {
     this.productControllerOptions.projectId = this.$props.project.id
-
-
-
-
-
   }
 
 }
@@ -382,11 +379,14 @@ export default {
   }
 
   .project-products_items {
+    width: 100%;
     display: flex;
-    gap: 2.5%;
+    gap: 1.2%;
     flex-wrap: wrap;
 
+
     .project-products_items_item {
+      width: 19%;
       .project-products_admin-menu {
         margin-top: 10px;
         margin-bottom: 20px;

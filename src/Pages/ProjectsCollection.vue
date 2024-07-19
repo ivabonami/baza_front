@@ -81,8 +81,6 @@ import {getProjects} from "../API/projects.js";
 import {projectsStore} from "../Store/projectsStore.js";
 
 import { Waypoint } from "vue-waypoint";
-import 'vue-loading-overlay/dist/css/index.css';
-
 import { directive } from 'vue-tippy'
 import 'tippy.js/dist/tippy.css'
 
@@ -220,7 +218,7 @@ export default {
     }
 
     .projects-collection_items_item {
-      width: 24%;
+      width: 22%;
       margin-bottom: 20px;
       padding: 10px;
       border: 2px solid transparent;

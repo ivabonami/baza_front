@@ -63,7 +63,8 @@ export default {
 
 <style scoped lang="scss">
 .service-card {
-  width: 190px;
+  box-sizing: border-box;
+  width: 100%;
   cursor: pointer;
   border-radius: 20px;
   background: #FFF;

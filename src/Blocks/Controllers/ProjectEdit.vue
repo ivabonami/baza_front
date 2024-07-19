@@ -60,7 +60,7 @@
         <div class="old-avatar" v-if="project.avatarFilePath">
           <img
 
-              :src="apiUrl + '/' + project.avatarFilePath"
+              :src="apiUrl + project.avatarFilePath"
               alt="">
 
           <button-action
@@ -98,7 +98,7 @@
         <div class="old-banner" v-if="project.bannerFilePath">
           <img
 
-              :src="apiUrl + '/' + project.bannerFilePath"
+              :src="apiUrl + project.bannerFilePath"
               alt="">
 
           <button-action
@@ -621,6 +621,7 @@ textarea {
   height: 220px;
 }
 .links {
+  gap: 10px;
   display: flex;
   flex-wrap: wrap;
   width: 100%;

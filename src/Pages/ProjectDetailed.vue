@@ -4,9 +4,10 @@
     <div class="project" v-if="Object.keys(project).length > 0">
 
       <project-header
+          v-if="project.name"
           :project="project"
       >
-        <template #project-name>
+        <template>
           {{ project.name }}
         </template>
       </project-header>

@@ -4,6 +4,7 @@
     <empty-store
         :show-button="true"
         :show-button-for-users="false"
+        @buttonPressed="this.$router.push('/')"
         v-else-if="!loading && reviews.length <= 0">
       <template #header>
         Нет непроверенных отзывов!
@@ -12,7 +13,7 @@
         вы проверили все отзывы, непроверенных нет!
       </template>
       <template #buttonText>
-        <span @click="this.$router.push('/')">
+        <span>
           На главную страницу
         </span>
 

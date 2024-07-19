@@ -7,7 +7,7 @@
       </svg>
 
     </div>
-    <div class="categories-menu_items" ref="categoriesWrapper" :style="styles" v-if=" categoriesStore.categories.length > 0">
+    <div class="categories-menu_items" ref="categoriesWrapper" :style="styles" v-if="categoriesStore.categories">
 
       <div ref="categoryBox" class="categories-menu_items_item"
 
@@ -117,13 +117,17 @@ export default {
   mounted() {
 
     this.categories = categoriesStore.categories
-    this.$nextTick(() => {
+  },
+  updated() {
+    this.categories = categoriesStore.categories
+    if (this.$refs.categoryBox) {
       let itemsWidth = 0
       for (let item of this.$refs.categoryBox) {
         itemsWidth += item.clientWidth
         this.$refs.categoriesWrapper.clientWidth < itemsWidth ? this.scrollActive = true : this.scrollActive = false
       }
-    })
+    }
+
   },
 
 
