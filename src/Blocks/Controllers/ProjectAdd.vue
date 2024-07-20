@@ -29,13 +29,13 @@
       <input-text
           :input="inputs.name"
           :data="inputs.name.data"
-          @data="emit => {
-            project.name = emit
+          @returnData="emit => {
+            this.project.name = emit
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
             delete this.notice.text.nameLength
           }"
-          @error="emit => {
-            project.name = null
+          @returnError="emit => {
+            this.project.name = null
             this.notice.color = 'red'
             this.notice.text.nameLength = emit
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
@@ -45,7 +45,7 @@
       <input-textarea
           :input="inputs.description"
           :data="inputs.description.data"
-          @data="emit => {
+          @returnedData="emit => {
             this.project.description = emit
             delete this.notice.text.descriptionLength
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
@@ -112,14 +112,14 @@
           <input-link
               :input="inputs.links.link"
               :data="inputs.links.link.data"
-              @data="emit => {
+              @returnData="emit => {
                 linkToAdd.link = emit
                 inputs.links.link.data = emit
                 Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
                 delete this.notice.text.linkErr
               }"
 
-              @error="emit => {
+              @returnError="emit => {
                 linkToAdd.link = null
                 this.notice.color = 'red'
                 this.notice.text.linkErr = emit
@@ -255,7 +255,7 @@
     </template>
 
     <template #button>
-      Жду модерацию
+      На главную
     </template>
   </popup-info>
 </div>

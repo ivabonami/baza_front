@@ -1,32 +1,34 @@
 <template>
-  <div class="popup" :class="{show: modal.show}">
-    <div class="popup_image">
-      <slot name="image"></slot>
+  <div>
+    <div class="popup" :class="{show: this.$props.modal.show}">
+      <div class="popup_image">
+        <slot name="image"></slot>
+      </div>
+
+      <div class="popup_body">
+        <div class="popup_header">
+          <slot name="header"></slot>
+        </div>
+
+        <div class="popup_text">
+          <slot name="text"></slot>
+        </div>
+
+
+        <div class="popup_close" @click="closeModal()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M13 1L1 13M1 1L13 13" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+
     </div>
 
-    <div class="popup_body">
-      <div class="popup_header">
-        <slot name="header"></slot>
-      </div>
-
-      <div class="popup_text">
-        <slot name="text"></slot>
-      </div>
-
-
-      <div class="popup_close" @click="closeModal()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path d="M13 1L1 13M1 1L13 13" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-    </div>
-
-
+    <div class="backdrop"
+         @click="closeModal()"
+         :class="{show: this.$props.modal.show}"></div>
   </div>
-
-  <div class="backdrop"
-       @click="closeModal()"
-       :class="{show: modal.show}"></div>
 </template>
 
 <script>
@@ -34,11 +36,11 @@
 export default {
   name: "Popup.vue",
   props: ['modal'],
+  emits: ['closeModal'],
 
   data() {
     return {
-      modal: {
-        show: false,
+      modalSettings: {
         data: []
       }
     }
@@ -46,12 +48,10 @@ export default {
   components: {},
 
   mounted() {
-    this.modal.show = this.$props.modal.show
     document.body.style.overflow = 'hidden hidden'
   },
   methods: {
     closeModal() {
-      this.modal.show = false
       this.$emit('closeModal', true)
 
       document.body.style.overflow = 'hidden scroll'

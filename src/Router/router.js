@@ -6,7 +6,7 @@ import AboutProjectView from "../Pages/Static/About.vue";
 import ContactsView from "../Pages/Static/Contacts.vue";
 import ProjectsView from "../Pages/ProjectDetailed.vue";
 import ServicesCard from "../Blocks/ProductCard.vue";
-import addProject from "../Blocks/Controllers/ProjectAdd.vue";
+import projectAdd from "../Blocks/Controllers/ProjectAdd.vue";
 import addCategory from "../Blocks/Controllers/CategoryController.vue";
 import allProjectsWithSort from "../Pages/ProjectsCollection.vue";
 import checkProjects from "../Pages/ProjectsReview.vue";
@@ -75,7 +75,7 @@ const router = createRouter({
 
         {
             path: '/add-project',
-            component: addProject
+            component: projectAdd
         },
 
         {

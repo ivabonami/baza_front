@@ -1,6 +1,8 @@
 <template>
 <div class="project-navigation">
   <menu-main
+      v-if="categoriesStore.categories"
+      :categories="categoriesStore.categories"
       :activeCategory="currentCategory"
       @projectsCategory="emit => {
         $emit('categoryChanged', emit)
@@ -21,6 +23,7 @@
 <script>
 import menuMain from "./MenuMain.vue";
 import sort from "../../Helpers/Sort.vue";
+import {categoriesStore} from "../../Store/categories.js";
 
 export default {
   name: "ProjectsNavigation.vue",
@@ -34,12 +37,12 @@ export default {
   data() {
     return {
       currentCategory: 0,
+      categoriesStore
     }
   },
 
   components: {menuMain, sort},
 
-  methods: {},
 
   mounted() {
 

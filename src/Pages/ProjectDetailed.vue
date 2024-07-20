@@ -11,7 +11,7 @@
       </project-header>
 
 
-      <div class="project-banner">
+      <div class="project-banner" v-if="project.bannerFilePath">
         <img :src="api + project.bannerFilePath"
              alt=""
              v-show="bannerLoaded"
@@ -124,7 +124,7 @@ export default {
       config, highlight, userInfo, modalSetting, store, editableProject, useFetch
     }
   },
-  props: ['selectedId', 'highlight', 'tab'],
+  props: ['selectedId', 'tab'],
   setup() {
     watch(projectsStore, (value, oldValue) => {
     }, {immediate: true})
@@ -300,6 +300,7 @@ textarea {
 }
 
 .project-header {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -508,6 +509,7 @@ textarea {
 
 .project {
   width: 100%;
+  box-sizing: border-box;
 
 
   .project-banner {

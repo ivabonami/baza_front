@@ -113,6 +113,30 @@ export default {
 
     .project {
       width: 24%;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 2px solid transparent;
+      border-radius: 20px;
+      transition: .15s ease;
+      background-color: #fff;
+
+      box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
+
+      &.payed {
+        background: linear-gradient(#fff, #fff 0) padding-box,
+        linear-gradient( to bottom , #1254FF 70%, #CAA0FF) border-box;
+      }
+
+      &:hover {
+        border-color: #191B2A;
+
+        &.payed {
+          border: 2px solid var(--Linear, #031e59);
+
+        }
+
+      }
     }
   }
 

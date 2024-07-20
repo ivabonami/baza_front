@@ -8,7 +8,7 @@
   <input type="text"
          :minlength="$props.input.min"
          :maxlength="$props.input.max"
-         :class="{error: $props.error === true}"
+         :class="{error: this.$props.error === true}"
          v-model="inputData"
          @change="checkField()"
          :id="$props.input.name"
@@ -22,6 +22,7 @@ import {checkInputData} from "../../assets/js/fieldDataController.js";
 
 export default {
   name: "InputLink.vue",
+  emits: ['returnData', 'returnError'],
   props: {
     input: {
       name: null,
@@ -38,17 +39,13 @@ export default {
     return {
       inputData: null,
       checkInputData,
-      error: false,
     }
   },
 
   watch: {
-    data: function (newVal, oldVal) {
+    input: function (newVal, oldVal) {
       this.inputData = newVal
     },
-    error: function (newVal, oldVal) {
-
-    }
 
   },
 
@@ -60,24 +57,20 @@ export default {
 
   methods: {
     setData () {
-      this.$props.input.data ? this.inputData = this.$props.input.data : null
+      // this.$props.input.data ? this.inputData = this.$props.input.data : null
     },
     checkField() {
 
       if (this.inputData < 10 ) {
-        this.error = true
-        this.$emit('error', 'Ссылка пустая')
+        this.$emit('returnError', 'Ссылка пустая')
 
       } else {
 
         if (/^(?:(?:(?:https?|ftp|http):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(this.inputData) === false) {
-          this.error = true
-          this.$emit('error', 'Ссылка не валидна')
+          this.$emit('returnError', 'Ссылка не валидна')
 
         } else {
-
-          this.error = false
-          this.$emit('data', this.inputData)
+          this.$emit('returnData', this.inputData)
 
         }
 

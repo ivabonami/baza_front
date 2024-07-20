@@ -48,6 +48,7 @@
         v-if="!loading && Object.keys(productsStore.products).length > 0"
         name="list">
       <div
+          :key="1"
           ref="carouselItemsWrapper"
           class="products-carousel_items"
           :style="carousel.styles"
@@ -230,7 +231,6 @@ export default {
   }
 
   .products-carousel_items {
-
     margin-top: 10px;
     display: flex;
     gap: 20px;
@@ -238,6 +238,7 @@ export default {
     align-items: stretch;
     width: 100%;
     .products-carousel_items_item {
+      box-sizing: border-box;
       width: 18.5%;
 
     }

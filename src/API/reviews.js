@@ -2,6 +2,7 @@ import axios from "axios";
 import {apiUrl} from "../assets/js/config.js";
 import {userInfo} from "../Store/userInfo.js";
 import {projectReviewsStore} from "../Store/projectReviews.js";
+import re from "floating-vue";
 
 export function getReviews(options) {
     const headers = {
@@ -64,12 +65,9 @@ export async function deleteReview(review) {
     const headers = {
         'Authorization': `Bearer ${userInfo.token}`
     };
-
-
+    projectReviewsStore.reviews.splice(projectReviewsStore.reviews.findIndex(item => item.id === review.id), 1)
     return await axios.delete(`${apiUrl}reviews/${review.id}`, {headers})
-        .then(result => {
-            projectReviewsStore.reviews.splice(projectReviewsStore.reviews.findIndex(item => item.id === review.id))
-        }).catch(error => error)
+        .then(result => result).catch(error => error)
 }
 
 export async function approveReview(review) {

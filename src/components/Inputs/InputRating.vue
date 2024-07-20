@@ -27,7 +27,7 @@
          hidden
          :minlength="$props.input.min"
          :maxlength="$props.input.max"
-         :class="{error: $props.error === true}"
+         :class="{error: this.$props.error === true}"
          v-model="this.rating"
          @change="this.$emit('data', this.rating)"
          :id="$props.input.name"
@@ -41,6 +41,7 @@ import {checkInputData} from "../../assets/js/fieldDataController.js";
 
 export default {
   name: "InputText.vue",
+  emits: ['returnedError', 'data'],
   props: {
     input: {
       name: null,
@@ -59,7 +60,7 @@ export default {
     return {
       inputData: null,
       checkInputData,
-      error: false,
+      hasError: false,
       stars: 5,
       rating: 0,
       hovered: 0

@@ -45,7 +45,7 @@
 export default {
   name: "SortSlot.vue",
   props: {
-    sort: []
+    sort: Array
   },
   data() {
     return {

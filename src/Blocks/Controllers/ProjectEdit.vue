@@ -1,35 +1,20 @@
 <template>
 
   <div>
-    <div class="sign-in" v-if="!isOwner">
-      <sign-in
-          @errors="emit => {
-          this.notice.show = true
-          this.notice.text = emit
-        }"
-
-          @success="() => {
-          this.modal.show = false
-        }"
-
-      />
-    </div>
-
-
-    <div class="add-project form-wrapper" v-else>
+    <div class="add-project form-wrapper">
 
 
       <div class="left">
         <input-text
             :input="inputs.name"
             :data="inputs.name.data"
-            @data="emit => {
+            @returnData="emit => {
             project.name = emit
 
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
             delete this.notice.text.nameLength
           }"
-            @error="emit => {
+            @returnError="emit => {
             project.name = null
             this.notice.color = 'red'
             this.notice.text.nameLength = emit
@@ -39,19 +24,19 @@
         <input-textarea
             :input="inputs.description"
             :data="inputs.description.data"
-            @data="emit => {
+            @returnedData="emit => {
             this.project.description = emit
             delete this.notice.text.descriptionLength
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
 
           }"
-            @error="emit => {
-            this.project.description = null
-            this.notice.color = 'red'
-            this.notice.text.descriptionLength = emit
-            Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
+            @returnedError="emit => {
+              this.project.description = null
+              this.notice.color = 'red'
+              this.notice.text.descriptionLength = emit
+              Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
 
-          }"
+            }"
         />
       </div>
 
@@ -149,14 +134,14 @@
             <input-link
                 :input="inputs.links.link"
                 :data="inputs.links.link.data"
-                @data="emit => {
+                @returnData="emit => {
                 linkToAdd.link = emit
                 inputs.links.link.data = null
                 Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false,
                 delete this.notice.text.linkErr
               }"
 
-                @error="emit => {
+                @returnError="emit => {
                 linkToAdd.link = null
                 this.notice.color = 'red'
                 this.notice.text.linkErr = emit
@@ -289,7 +274,7 @@
       </template>
 
       <template #button>
-        Жду модерацию
+        Вернуться к проекту
       </template>
     </popup-info>
   </div>
@@ -504,7 +489,6 @@ export default {
       Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
 
       if(Object.keys(this.notice.text).length <= 0) {
-
         editProject(this.project, this.project.id).then(result => {
 
           this.modal.show = true

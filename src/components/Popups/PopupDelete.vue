@@ -66,7 +66,7 @@ import {signOut} from "../../API/user.js";
 
 export default {
   name: "Popup.vue",
-  emits: ['closeModal', 'actionConfirmed'],
+  emits: ['closeModal', 'actionConfirmed', 'deleteConfirmed', 'click'],
   props: {
     modal: {
       show: true

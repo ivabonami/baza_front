@@ -9,8 +9,9 @@
           min: 1,
           max: 255,
         }"
+        :tabindex="1"
         :error="{error: this.errors.username}"
-        @data="emit => user.username = emit"
+        @returnData="emit => user.username = emit"
     >
       <template >
         Юзернейм
@@ -25,8 +26,9 @@
           min: 1,
           max: 255,
         }"
+        :tabindex="2"
         :error="{error: this.errors.password}"
-        @data="emit => user.password = emit"
+        @returnData="emit => user.password = emit"
     >
       <template #labelName>
         Пароль
@@ -58,6 +60,7 @@ import {setInfo} from "../../Store/userInfo.js";
 
 export default {
   name: "SignIn.vue",
+  emits: ['errors', 'success'],
 
   data() {
     return {

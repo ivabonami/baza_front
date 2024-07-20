@@ -1,35 +1,37 @@
 <template>
-  <div class="popup" :class="{show: modal.show}">
-    <div class="popup_icon">
-      <slot class="icon" name="icon"></slot>
+  <div>
+    <div class="popup" :class="{show: $props.modal.show}">
+      <div class="popup_icon">
+        <slot class="icon" name="icon"></slot>
+      </div>
+
+      <div class="popup_header">
+        <slot name="header"></slot>
+      </div>
+
+      <div class="popup_text">
+        <slot name="text"></slot>
+      </div>
+
+      <div class="popup_button">
+        <button-primary @close="closeModal()">
+          <template #default>
+            <slot name="button"></slot>
+          </template>
+        </button-primary>
+      </div>
+
+      <div class="popup_close" @click="closeModal()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M13 1L1 13M1 1L13 13" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
     </div>
 
-    <div class="popup_header">
-      <slot name="header"></slot>
-    </div>
-
-    <div class="popup_text">
-      <slot name="text"></slot>
-    </div>
-
-    <div class="popup_button">
-      <button-primary @close="closeModal()">
-        <template #default>
-          <slot name="button"></slot>
-        </template>
-      </button-primary>
-    </div>
-
-    <div class="popup_close" @click="closeModal()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M13 1L1 13M1 1L13 13" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
+    <div class="backdrop"
+         @click="closeModal()"
+         :class="{show: $props.modal.show}"></div>
   </div>
-
-  <div class="backdrop"
-       @click="closeModal()"
-       :class="{show: modal.show}"></div>
 </template>
 
 <script>
@@ -42,19 +44,15 @@ export default {
 
   data() {
     return {
-      modal: {
-        show: false
-      }
+
     }
   },
   components: {ButtonPrimary},
   mounted() {
-    this.modal.show = this.$props.modal.show
     document.body.style.overflow = 'hidden hidden'
   },
   methods: {
     closeModal() {
-      this.modal.show = false
       this.$emit('closeModal', true)
 
       document.body.style.overflow = 'hidden scroll'

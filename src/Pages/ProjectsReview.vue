@@ -100,6 +100,7 @@ import {apiUrl} from "../assets/js/config.js";
 
 export default {
   name: "checkProjects.vue",
+  emits: ['productAdded', 'productUpdated', 'reviewAdded',],
   data() {
     return {
       projects: {},

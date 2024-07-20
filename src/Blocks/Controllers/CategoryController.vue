@@ -97,8 +97,7 @@
           <input-text
               :input="inputs.name"
               :data="inputs.name.data"
-              @data="emit => this.categoryName  = emit"
-              @error="emit"
+              @returnData="emit => this.categoryName  = emit"
           />
         </div>
         <div>
@@ -106,7 +105,6 @@
               :input="inputs.front"
               :data="inputs.front.data"
               @checkboxChanged="emit => this.allowShopfront = emit"
-              @error="emit"
           />
         </div>
 
@@ -127,7 +125,10 @@
     <popup-action
         v-show="modal.show === true"
         @closeModal="modal.show = false"
-        @actionConfirmed="deleteCategory(modal.deleteCatId)"
+        @actionConfirmed="() => {
+          deleteCategory(modal.deleteCatId)
+          modal.show = false
+        }"
         :modal="modal"
     >
       <template #header>
@@ -172,7 +173,7 @@ export default {
     notice
   },
 
-  emits: ['confirmAction'],
+  emits: [],
   directives: {
     tippy: directive,
   },

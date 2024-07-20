@@ -80,6 +80,7 @@ export default {
     projectName: null,
     project: {}
   },
+  emits: ['projectChangePayedStatus', 'pressed', 'favoriteChanged', 'deleteProject'],
   data() {
     return {
       modal: {

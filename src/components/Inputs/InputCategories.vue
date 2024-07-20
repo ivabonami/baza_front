@@ -39,6 +39,7 @@ import {categoriesStore} from "../../Store/categories.js";
 
 export default {
   name: "InputCategories.vue",
+  emits: ['categoryIds', 'exchangerSelected'],
   props: {
     input: {
       name: null,
@@ -48,14 +49,12 @@ export default {
       max: 255,
 
     },
-    error: null,
     data: null
   },
   data() {
     return {
       selectedCategories: [],
       checkInputData,
-      error: false,
       categoriesStore
     }
   },
@@ -64,9 +63,6 @@ export default {
     data: function (newVal, oldVal) {
       this.setData()
     },
-    error: function (newVal, oldVal) {
-
-    }
 
   },
 

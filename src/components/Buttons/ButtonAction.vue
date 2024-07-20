@@ -18,6 +18,7 @@
 <script>
 export default {
   name: "ButtonAction.vue",
+  emits: ['pressed'],
   props: {
     active: false
   },

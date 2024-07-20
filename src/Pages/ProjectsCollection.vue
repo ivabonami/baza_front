@@ -211,7 +211,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    gap: 1%;
+    gap: 1.1%;
     flex-flow: row wrap;
     justify-content: space-between;
     &::after {
@@ -220,7 +220,8 @@ export default {
     }
 
     .projects-collection_items_item {
-      width: 22%;
+      box-sizing: border-box;
+      width: 24%;
       margin-bottom: 20px;
       padding: 10px;
       border: 2px solid transparent;

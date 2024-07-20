@@ -34,7 +34,7 @@
 
           <span class="edit"
                 v-else
-                v-on:click="() => {
+                @click="() => {
                   updateCategoryList(newCategoryName, category.id)
                   $emit('someChanges', editCategoryName)
                   this.editCategoryName = 0
@@ -43,7 +43,7 @@
           </span>
 
           <span class="delete"
-            v-on:click="() => {
+            @click="() => {
             showModal = !showModal;
             this.category = {
               id: category.id,

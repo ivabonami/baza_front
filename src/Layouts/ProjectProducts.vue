@@ -105,7 +105,7 @@
         :show-button-for-users="false"
         @click="() => {
 
-          if (userInfo.token) {
+          if (userInfo.role === 'admin' || userInfo.username === $props.project.userData.username) {
                modalProductController.show = true
               productControllerOptions.mode = 'add'
               productControllerOptions.buttonConfirmText = 'Добавить'
@@ -219,6 +219,7 @@ export default {
   props: {
     project: null
   },
+  emits: ['productAdded', 'productUpdated', 'reviewAdded'],
   data() {
     return {
       products: [],
@@ -382,8 +383,14 @@ export default {
   .project-products_items {
     width: 100%;
     display: flex;
-    gap: 1.2%;
+    gap: 2%;
     flex-wrap: wrap;
+    box-sizing: border-box;
+
+    &:after {
+      content: '';
+      flex: auto;
+    }
 
 
     .project-products_items_item {
@@ -396,13 +403,22 @@ export default {
   }
 }
 
-@media screen and (max-width: 500px){
-  .project-products_items {
+@media screen and (max-width: 1000px) {
+  .project-products .project-products_items {
+    justify-content: space-between;
+    .project-products_items_item {
+      width: 32%;
+    }
+  }
+}
+@media screen and (max-width: 768px){
+  .project-products .project-products_items {
     justify-content: space-between;
     .project-products_items_item {
       width: 48%;
     }
   }
+
   .project-products {
     .project-products_heading {
       h2 {

@@ -1,89 +1,90 @@
 <template>
-  <div class="popup"
-       v-if="modal.show"
-       :class="{show: modal.show}">
+  <div>
+    <div class="popup"
+         v-if="modal.show"
+         :class="{show: modal.show}">
 
-    <div class="popup_header">
-      <slot name="header"></slot>
-    </div>
+      <div class="popup_header">
+        <slot name="header"></slot>
+      </div>
 
-    <div class="popup_body">
-      <input-text
+      <div class="popup_body">
+        <input-text
 
-          :input="inputs.productName"
-          :data="inputs.productName.data"
-          @data="emit => {
-            this.product.name = emit
-            Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
-            delete this.notice.text.nameLength
-          }"
-          @error="emit => {
-            this.product.name = null
-            this.notice.color = 'red'
-            this.notice.text.nameLength = emit
-            Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
-          }"
-      />
+            :input="inputs.productName"
+            :data="inputs.productName.data"
+            @returnData="emit => {
+              this.product.name = emit
+              Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
+              delete this.notice.text.nameLength
+            }"
+            @returnError="emit => {
+              this.product.name = null
+              this.notice.color = 'red'
+              this.notice.text.nameLength = emit
+              Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
+            }"
+        />
 
 
-      <input-file
-          :input="inputs.productImage"
-          v-if="!$props.options || this.oldImage"
-          @data="emit => {
+        <input-file
+            :input="inputs.productImage"
+            v-if="!$props.options || this.oldImage"
+            @data="emit => {
             this.product.file = emit
             delete this.notice.text.imageErros
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
           }"
-          @error="emit => {
+            @error="emit => {
             this.product.file = null
             this.notice.color = 'red'
             this.notice.text.imageErros = emit
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
           }"
-      />
+        />
 
-      <div class="popup_body_image" v-else-if="$props.options.avatarFilePath">
-        <img :src="api.url + $props.options.avatarFilePath" alt="">
-        <button-action @click="() => {
+        <div class="popup_body_image" v-else-if="$props.options.avatarFilePath">
+          <img :src="api.url + $props.options.avatarFilePath" alt="">
+          <button-action @click="() => {
           this.oldImage = $props.options.avatarFilePath
-          $props.options.avatarFilePath = null
+          this.$props.options.avatarFilePath = null
         }">
-          <template #text>
-            Заменить
-          </template>
-          <template #icon>
-            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none">
-              <path d="M1.13619 6.77432C1.15283 6.62457 1.16115 6.54969 1.1838 6.47971C1.2039 6.41761 1.2323 6.35853 1.26823 6.30404C1.30873 6.24263 1.362 6.18936 1.46854 6.08282L6.25134 1.30002C6.65137 0.899992 7.29995 0.899992 7.69998 1.30002C8.10001 1.70006 8.10001 2.34864 7.69998 2.74867L2.91718 7.53146C2.81064 7.638 2.75737 7.69128 2.69596 7.73177C2.64147 7.7677 2.58238 7.7961 2.52029 7.8162C2.45031 7.83885 2.37543 7.84717 2.22568 7.86381L1 8L1.13619 6.77432Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </template>
-        </button-action>
-      </div>
+            <template #text>
+              Заменить
+            </template>
+            <template #icon>
+              <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none">
+                <path d="M1.13619 6.77432C1.15283 6.62457 1.16115 6.54969 1.1838 6.47971C1.2039 6.41761 1.2323 6.35853 1.26823 6.30404C1.30873 6.24263 1.362 6.18936 1.46854 6.08282L6.25134 1.30002C6.65137 0.899992 7.29995 0.899992 7.69998 1.30002C8.10001 1.70006 8.10001 2.34864 7.69998 2.74867L2.91718 7.53146C2.81064 7.638 2.75737 7.69128 2.69596 7.73177C2.64147 7.7677 2.58238 7.7961 2.52029 7.8162C2.45031 7.83885 2.37543 7.84717 2.22568 7.86381L1 8L1.13619 6.77432Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </template>
+          </button-action>
+        </div>
 
-      <input-textarea
-          :input="inputs.productDescription"
-          :data="inputs.productDescription.data"
-          @data="emit => {
+        <input-textarea
+            :input="inputs.productDescription"
+            :data="inputs.productDescription.data"
+            @returnedData="emit => {
             this.product.description = emit
             delete this.notice.text.descriptionLength
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
 
           }"
-          @error="emit => {
+            @error="emit => {
             this.product.description = null
             this.notice.color = 'red'
             this.notice.text.descriptionLength = emit
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
 
           }"
-      />
-    </div>
+        />
+      </div>
 
 
-    <div class="popup_buttons" >
-      <div class="popup_buttons_button">
-        <button-primary
-            v-show="!loading"
-            @close="() => {
+      <div class="popup_buttons" >
+        <div class="popup_buttons_button">
+          <button-primary
+              v-show="!loading"
+              @close="() => {
 
               if (Object.keys(this.notice.text).length <= 0) {
                 this.product.projectId = $props.projectId
@@ -93,47 +94,48 @@
               }
 
             }"
-        >
-          <template #default>
-            <slot name="buttonConfirm"></slot>
-          </template>
-        </button-primary>
+          >
+            <template #default>
+              <slot name="buttonConfirm"></slot>
+            </template>
+          </button-primary>
 
-        <loader-small v-show="loading" />
-      </div>
+          <loader-small v-show="loading" />
+        </div>
 
-      <div class="popup_buttons_button">
-        <button-secondary-gray
-            @pressed="() => {
+        <div class="popup_buttons_button">
+          <button-secondary-gray
+              @pressed="() => {
               closeModal()
               this.oldImage ? $props.options.avatarFilePath = this.oldImage : null
             }"
-        >
-          <template #default>
-            <slot name="buttonSecondary"></slot>
-          </template>
-        </button-secondary-gray>
+          >
+            <template #default>
+              <slot name="buttonSecondary"></slot>
+            </template>
+          </button-secondary-gray>
+
+        </div>
+
 
       </div>
 
 
+      <div class="popup_close" @click="closeModal()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M13 1L1 13M1 1L13 13" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
     </div>
 
+    <div class="backdrop"
+         @click="closeModal()"
+         :class="{show: modal.show}"></div>
 
-    <div class="popup_close" @click="closeModal()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M13 1L1 13M1 1L13 13" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
+    <notice v-if="notice.show" :notice="notice"
+            @closeNotice="emit => notice.show = emit"
+    />
   </div>
-
-  <div class="backdrop"
-       @click="closeModal()"
-       :class="{show: modal.show}"></div>
-
-  <notice v-if="notice.show" :notice="notice"
-          @closeNotice="emit => notice.show = emit"
-  />
 </template>
 
 <script>

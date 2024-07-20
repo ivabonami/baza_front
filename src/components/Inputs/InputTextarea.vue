@@ -1,19 +1,21 @@
 <template>
-  <label :for="$props.input.name">
-    {{ $props.input.name }}
-    <svg v-show="input.tooltip" xmlns="http://www.w3.org/2000/svg" v-tippy="{content: $props.input.tooltip, theme: 'light'}" width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M7.95281 10.8V8M7.95281 5.2H7.95993M15.0758 8C15.0758 11.866 11.8868 15 7.95281 15C4.01886 15 0.829773 11.866 0.829773 8C0.829773 4.13401 4.01886 1 7.95281 1C11.8868 1 15.0758 4.13401 15.0758 8Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </label>
-  <textarea
-         :minlength="$props.input.min"
-         :maxlength="$props.input.max"
-         :class="{error: error}"
-         v-model="inputData"
-         @change="checkField()"
-         :id="$props.input.name"
-         :placeholder="$props.input.placeholder">
-  </textarea>
+  <div>
+    <label :for="$props.input.name">
+      {{ $props.input.name }}
+      <svg v-show="input.tooltip" xmlns="http://www.w3.org/2000/svg" v-tippy="{content: $props.input.tooltip, theme: 'light'}" width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M7.95281 10.8V8M7.95281 5.2H7.95993M15.0758 8C15.0758 11.866 11.8868 15 7.95281 15C4.01886 15 0.829773 11.866 0.829773 8C0.829773 4.13401 4.01886 1 7.95281 1C11.8868 1 15.0758 4.13401 15.0758 8Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </label>
+    <textarea
+        :minlength="$props.input.min"
+        :maxlength="$props.input.max"
+        :class="{error: error}"
+        v-model="inputData"
+        @change="checkField()"
+        :id="$props.input.name"
+        :placeholder="$props.input.placeholder">
+    </textarea>
+  </div>
 </template>
 
 <script>
@@ -23,6 +25,7 @@ import {checkInputData} from "../../assets/js/fieldDataController.js";
 
 export default {
   name: "InputTextarea.vue",
+  emits: ['returnedData', 'returnedError'],
   props: {
     input: {
       name: null,
@@ -62,10 +65,10 @@ export default {
 
       if (checkData === true) {
         this.error = false
-        this.$emit('data', this.inputData)
+        this.$emit('returnedData', this.inputData)
       } else {
         this.error = true
-        this.$emit('error', checkData)
+        this.$emit('returnedError', checkData)
       }
     },
     setData (value) {

@@ -19,9 +19,6 @@ export default {
       isLoaded: false,
       isAdmin: false,
       showScrollTopButton: false,
-
-      historyCount: 0,
-      modalSetting, ref
     }
   },
   setup() {
@@ -47,8 +44,6 @@ export default {
   },
   mounted() {
     this.historyCount = window.history.length
-    window.addEventListener('scroll', this.handleScroll);
-    document.querySelector('.preloader').style.display = 'none'
     this.isLoaded = true
     window.innerWidth >= 768 ? this.showMobileMenu = true : this.showMobileMenu = false
   },

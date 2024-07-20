@@ -313,6 +313,7 @@ export default {
 
 <style scoped lang="scss">
 .project-header {
+  box-sizing: border-box;
   border-radius: 10px;
   border: 1px solid var(--gray-2, #D8D8D8);
   display: flex;

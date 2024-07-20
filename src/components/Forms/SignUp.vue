@@ -8,8 +8,9 @@
           min: 1,
           max: 255
         }"
+        :tabindex="1"
         :error="{error: this.errors.username}"
-        @data="emit => user.username = emit"
+        @returnData="emit => user.username = emit"
     >
       <template #labelName>
         Юзернейм
@@ -24,8 +25,9 @@
           min: 1,
           max: 255,
         }"
+        :tabindex="2"
         :error="{error: this.errors.password}"
-        @data="emit => user.password = emit"
+        @returnData="emit => user.password = emit"
     >
       <template #labelName>
         Пароль
@@ -40,8 +42,9 @@
           min: 1,
           max: 255,
         }"
+        :tabindex="3"
         :error="{error: this.errors.repeatPassword}"
-        @data="emit => user.repeatPassword = emit"
+        @returnData="emit => user.repeatPassword = emit"
     >
       <template #labelName>
         Повторите пароль

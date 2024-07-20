@@ -63,6 +63,7 @@ export function getFavoriteProjects(options) {
     };
 
     axios.get(`${apiUrl}user/project`, {headers}).then(result => {
+        favoriteProjects.splice(0, favoriteProjects.length)
         for (let project of result.data.projects) {
             favoriteProjects.push(project)
         }

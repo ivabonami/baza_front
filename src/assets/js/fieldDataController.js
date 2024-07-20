@@ -2,13 +2,19 @@ import {uploadImage} from "./controllers/imageUploader.js";
 
 export function checkInputData (min, max, data, fieldName) {
 
-    if (data.length > max) {
-        return `${fieldName} должно быть не больше ${max} символов.`
-    } else if (data.length < min) {
-        return `${fieldName} должно содержать минимум ${min} символов.`
+    if (data) {
+        if (data.length > max) {
+            return `${fieldName} должно быть не больше ${max} символов.`
+        } else if (data.length < min) {
+            return `${fieldName} должно содержать минимум ${min} символов.`
+        } else {
+            return true
+        }
     } else {
-        return true
+        return `${fieldName} должно быть не больше ${max} символов.`
     }
+
+
 
 }
 

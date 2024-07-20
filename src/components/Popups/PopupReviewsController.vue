@@ -13,7 +13,7 @@
           :error="inputs.errors"
           :data="inputs.reviewRating.data"
           @data="emit => data.rating = emit"
-          @error="emit => emit"
+          @returnedError="emit => emit"
       >
 
       </InputRating>
@@ -21,8 +21,8 @@
       <input-textarea
           :input="inputs.reviewComment"
           :data="inputs.reviewComment.data"
-          @data="emit => data.comment = emit"
-          @error="emit => emit"
+          @returnedData="emit => data.comment = emit"
+          @returnedError="emit => emit"
       />
     </div>
 
@@ -92,7 +92,7 @@ import {addReview, editReview} from "../../API/reviews.js";
 
 export default {
   name: "PopupReviewController.vue",
-  emits: ['reviewEdit', 'closeModal'],
+  emits: ['reviewEdit', 'closeModal', 'reviewAdded'],
   props: {
     modal: {
       show: true,
@@ -159,13 +159,7 @@ export default {
     InputRating,
   },
   watch: {
-    options: (val, oldVal) => {
-
-    },
-    mode: (val, oldVal) => {
-
-    },
-    data: (newVal, oldVal) => {
+    dataReview: (newVal, oldVal) => {
       this.inputs.reviewRating.data = this.$props.dataReview.rating
       this.data.rating = this.inputs.reviewRating.data
       this.inputs.reviewComment.data = this.$props.dataReview.comment
