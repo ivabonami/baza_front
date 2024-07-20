@@ -5,9 +5,10 @@
   "type": "module",
   "sourcemap": true,
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "cross-env NODE_ENV=development vite",
+    "build-dev": "cross-env NODE_ENV=development vite build --mode development",
+    "build": "cross-env NODE_ENV=production vite build",
+    "preview": "cross-env NODE_ENV=development vite preview"
   },
   "dependencies": {
     "@vueuse/core": "^10.9.0",
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.2",
+    "cross-env": "^7.0.3",
     "vite": "^5.0.8"
   }
 }
