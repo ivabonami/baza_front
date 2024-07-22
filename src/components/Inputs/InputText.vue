@@ -7,6 +7,7 @@
       </svg>
     </label>
     <input type="text"
+           ref="inputForm"
            :tabindex="$props.tabindex"
            :name="$props.input.name"
            :minlength="$props.input.min"
@@ -78,7 +79,11 @@ export default {
 
   mounted() {
     this.setData()
+    this.$refs.inputForm.focus()
 
+  },
+  beforeUnmount() {
+    this.$props.input.data = null
   }
 
 }

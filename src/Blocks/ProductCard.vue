@@ -75,7 +75,6 @@ export default {
   background: #FFF;
   box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
   padding: 14px;
-  margin-bottom: 20px;
 
   &.highlighted {
     background: #fff7d6;

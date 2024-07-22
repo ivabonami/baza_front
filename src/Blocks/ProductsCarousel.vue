@@ -1,6 +1,6 @@
 <template>
 
-  <div :style="{ height: height > 300 ? `${height}px` : 'auto' }"
+  <div
        ref="carouselWrapper"
        class="products-carousel">
 
@@ -59,17 +59,20 @@
             @click="() => {
               highlightedProject.push(item)
             }"
+            :class="colClass"
             v-for="(item, index) in productsStore.products"
-            v-show="index < 5"
+            v-show="index < visibleItems"
             :key="index"
             class="products-carousel_items_item">
-          <services-card
+          <div ref="sliderItem">
+            <services-card
 
-              ref="sliderItem"
-              :item="item"
+                :item="item"
 
-          >
-          </services-card>
+            >
+            </services-card>
+          </div>
+
         </router-link>
       </div>
     </transition-group>
@@ -128,7 +131,9 @@ export default {
       sort: null,
       productsStore,
       height: null,
-      highlightedProject
+      highlightedProject,
+      visibleItems: 5,
+      colClass: 'col-5',
     }
   },
   setup() {
@@ -140,7 +145,7 @@ export default {
   methods: {
     next() {
       this.carousel.wrapperWidth = this.$refs.carouselItemsWrapper.scrollWidth
-      this.carousel.slideStep = this.$refs.carouselItemsWrapper.scrollWidth / Object.keys(productsStore.products).length
+      this.carousel.slideStep = this.$refs.sliderItem[1].scrollWidth + 20
 
       this.carousel.styles = {
         transform: `translateX(-${this.carousel.slideStep}px)`,
@@ -156,7 +161,8 @@ export default {
     },
     prev() {
       this.carousel.wrapperWidth = this.$refs.carouselItemsWrapper.scrollWidth
-      this.carousel.slideStep = this.$refs.carouselItemsWrapper.scrollWidth / Object.keys(productsStore.products).length
+      this.carousel.slideStep = this.$refs.sliderItem[1].scrollWidth + 20
+
 
       this.carousel.styles = {
         transform: `translateX(${this.carousel.slideStep}px)`,
@@ -204,12 +210,33 @@ export default {
 
     getHeight() {
       this.height = this.$refs.carouselWrapper.clientHeight
+    },
+
+    setVisibleItems(width) {
+      if (width >= 1000) {
+        this.visibleItems = 5
+        this.colClass = 'col-5'
+      } else if (width < 1000 && width >= 800) {
+        this.visibleItems = 4
+        this.colClass = 'col-4'
+      } else if (width < 800 && width >= 500) {
+        this.visibleItems = 3
+        this.colClass = 'col-3'
+      } else if (width < 500) {
+        this.visibleItems = 2
+        this.colClass = 'col-2'
+      }
     }
 
   },
   mounted() {
     this.collectProducts()
+    window.addEventListener("resize", e => this.setVisibleItems(e.target.innerWidth));
+    this.setVisibleItems(window.innerWidth)
   },
+  beforeUnmount() {
+    window.removeEventListener("resize", e => this.setVisibleItems(e.target.innerWidth));
+  }
 
 }
 </script>
@@ -218,12 +245,11 @@ export default {
 
 .products-carousel {
   width: 100%;
-  min-height: 275px;
+  min-height: 240px;
   position: relative;
   height: v-bind(height + 'px');
 
   .products-carousel_switch {
-
     display: flex;
     gap: 20px;
     align-items: center;
@@ -233,13 +259,29 @@ export default {
   .products-carousel_items {
     margin-top: 10px;
     display: flex;
-    gap: 20px;
     position: relative;
     align-items: stretch;
     width: 100%;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    box-sizing: border-box;
+
     .products-carousel_items_item {
       box-sizing: border-box;
-      width: 18.5%;
+      min-width: 0;
+
+      &.col-5 {
+        flex-basis: 18%;
+      }
+      &.col-4 {
+        flex-basis: 23%;
+      }
+      &.col-3 {
+        width: 32%;
+      }
+      &.col-2 {
+        flex-basis: 48%;
+      }
 
     }
   }
@@ -272,16 +314,19 @@ export default {
   }
 }
 
-@media screen and (max-width: 500px){
-  .products-carousel .products-carousel_items {
-    width: 105%;
-    overflow: hidden;
-    margin: 0 -10px 0 -10px;
-    padding-left: 10px;
-    padding-bottom: 30px;
-    .products-carousel_items_item {
-      width: 175px;
+@media screen and (max-width: 900px){
+  .products-carousel {
+    width: 100%;
+    .products-carousel_items {
+      width: 100%;
+      box-sizing: border-box;
+      justify-content: space-between;
+
     }
   }
+}
+
+@media screen and (max-width: 500px){
+
 }
 </style>

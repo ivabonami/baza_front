@@ -54,7 +54,7 @@ export default {
 <style scoped lang="scss">
 .project-navigation {
   box-sizing: border-box;
-  margin-top: 20px;
+  margin-top: 40px;
   margin-bottom: 20px;
   display: flex;
   align-items: center;
@@ -65,14 +65,14 @@ export default {
 
 
 }
-@media screen and (max-width: 500px){
+@media screen and (max-width: 600px){
 
   .project-navigation {
+    margin-top: 20px;
     flex-wrap: wrap;
     gap: 0;
     align-items: center;
     justify-content: space-between;
-    margin-top: -20px;
 
     .categories-menu {
       margin-bottom: 0;

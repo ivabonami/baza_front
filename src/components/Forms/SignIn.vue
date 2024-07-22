@@ -1,6 +1,6 @@
 <template>
 
-  <form onsubmit="return false" class="auth" @keydown.enter="onSignIn" @keydown.esc="$emit('closePopup', true)">
+  <form onsubmit="return false" class="auth" @keydown.enter="onSignIn" @keydown.esc="$emit('closePopup', true)" ref="form">
     <InputText
         :input="{
           name: 'Логин',
@@ -114,6 +114,9 @@ export default {
       }
 
     }
+  },
+  mounted() {
+    this.$refs.form.focus()
   },
   beforeUnmount() {
     this.user.username = null

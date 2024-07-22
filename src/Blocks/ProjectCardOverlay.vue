@@ -114,8 +114,9 @@ export default {
 <style scoped lang="scss">
 .project-avatar-overlay {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1 / 1;
   position: absolute;
+  z-index: 2;
 
 
   .project-avatar-overlay_item {
@@ -123,6 +124,7 @@ export default {
     position: absolute;
     width: 25px;
     height: 25px;
+    cursor: pointer;
 
     svg {
       transition: .15s ease;

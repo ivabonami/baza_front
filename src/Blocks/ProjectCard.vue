@@ -1,7 +1,26 @@
 <template>
 
-<div>
-  <div @click="this.$router.push({ name: 'ProjectView', params: {'id': $props.project.id }})"
+<div style="position: relative; z-index: 0">
+  <project-card-overlay
+      @click.stop
+      :projectId="$props.project.id"
+      :projectOwner="$props.project.userData.username"
+      :inFavorite="$props.project.favorite"
+      :isPayed="$props.project.payed"
+      :projectName="$props.project.name"
+      :project="$props.project"
+
+      @projectChangePayedStatus="emit => {
+              payedModal.show = true
+              payedModal.projectId = $props.project.id
+              payedModal.status = emit
+              payedModal.name = $props.project.name
+
+            }"
+      @favoriteChanged="emit => $emit('favoriteChanged', emit)"
+      @deleteProject="deleteModal.show = true"
+  />
+  <router-link :to="`/project/` + $props.project.id"
 
        class="project-card_wrapper"
   >
@@ -10,25 +29,7 @@
       <img :src="config.api.url + $props.project.avatarFilePath" v-show="imgLoaded" :alt="$props.project.name" @load="imgLoaded = true">
       <loader-small v-if="!imgLoaded"/>
 
-      <project-card-overlay
-          @click.stop
-          :projectId="$props.project.id"
-          :projectOwner="$props.project.userData.username"
-          :inFavorite="$props.project.favorite"
-          :isPayed="$props.project.payed"
-          :projectName="$props.project.name"
-          :project="$props.project"
 
-          @projectChangePayedStatus="emit => {
-              payedModal.show = true
-              payedModal.projectId = $props.project.id
-              payedModal.status = emit
-              payedModal.name = $props.project.name
-
-            }"
-          @favoriteChanged="emit => $emit('favoriteChanged', emit)"
-          @deleteProject="deleteModal.show = true"
-      />
 
 
     </div>
@@ -123,7 +124,7 @@
       </div>
 
     </div>
-  </div>
+  </router-link>
 
   <popup-project-links
       :modal="modal"

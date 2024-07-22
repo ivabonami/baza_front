@@ -85,7 +85,6 @@ export default {
 
   methods: {
     changeStatus(projectId) {
-      console.log(projectsStore.projects.find(item => item.id === projectId))
       projectsStore.projects.find(item => item.id === projectId).favorite = 0
     }
 
