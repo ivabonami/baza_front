@@ -84,5 +84,13 @@ export default {
   }
 
 }
+@media screen and (max-width: 500px){
+  .base-button {
+    gap: 5px;
+    svg {
+
+    }
+  }
+}
 
 </style>

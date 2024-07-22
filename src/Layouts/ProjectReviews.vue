@@ -62,7 +62,7 @@
         </span>
 
           <span class="onThe">
-          оценок проекта: {{ project.reviewsCount }}
+          оценок: {{ project.reviewsCount }}
         </span>
 
         </div>
@@ -205,9 +205,8 @@
         :dataReview="reviewToEdit"
         @closeModal="modalReviewsController.show = false"
         @reviewAdded="emit => {
-        modalInfo.show = true
-        project.reviewsCount++
-      }"
+          modalInfo.show = true
+        }"
     >
       <template #header>
         Оставить отзыв
@@ -556,6 +555,7 @@ export default {
     padding: 15px;
     display: flex;
     gap: 20px;
+    box-sizing: border-box;
 
     .icon {
       width: 50px;
@@ -587,6 +587,7 @@ export default {
       width: 100%;
       align-items: center;
       gap: 10px;
+      box-sizing: border-box;
 
       span {
         width: 100%;
@@ -662,16 +663,29 @@ export default {
   .project-reviews_items {
     .project-reviews_items_item {
       width: 100%;
+      gap: 10px;
+      .icon {
+        width: 40px;
+        svg {
+          width: 100%;
+        }
+      }
+      .menu {
+        gap: 5px;
+      }
 
       .project-reviews_items_item_heading {
         flex-wrap: wrap;
+        justify-content: space-between;
         gap: 5px;
         span {
-          width: 60px;
+          width: 50px;
         }
         .rating {
-
+          margin-left: -0px;
+          width: 25%;
         }
+
       }
       .project-reviews_items_item_body {
         margin-top: 5px;
@@ -685,10 +699,16 @@ export default {
 
   .project-reviews {
     .project-reviews_heading {
+
+      gap: 5px;
+      h2 {
+        font-size: 16px;
+      }
       .project-rating {
         gap: 2px;
+
         .rating {
-          font-size: 16px;
+          font-size: 14px;
         }
         svg {
           width: 12px;
@@ -700,7 +720,7 @@ export default {
     }
   }
   .project-reviews_items .project-reviews_items_item .project-reviews_items_item_heading .date {
-    font-size: 14px;
+    font-size: 12px;
   }
 }
 </style>

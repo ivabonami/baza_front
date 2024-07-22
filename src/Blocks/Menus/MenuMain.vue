@@ -7,7 +7,7 @@
       </svg>
 
     </div>
-    <div  ref="categoriesWrapper">
+    <div  ref="categoriesWrapper" class="categories-menu_items_wrapper">
       <div class="categories-menu_items" :style="styles" >
         <div ref="categoryBox" class="categories-menu_items_item"
              @click="$emit('projectsCategory', category.id)"
@@ -142,6 +142,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.categories-menu_items_wrapper {
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
 .categories-menu {
   overflow: hidden;
   width: 100%;
@@ -158,7 +163,6 @@ export default {
       top: -6px;
       padding: 6px;
       box-sizing: border-box;
-      background-color: #F8F7FC;
 
     }
     &.prev {
@@ -231,6 +235,16 @@ export default {
       }
 
     }
+  }
+}
+@media screen and (max-width: 500px){
+  .categories-menu .nav.next {
+    right: 20px;
+  }
+  .categories-menu_items_wrapper {
+    width: 72%;
+    box-sizing: border-box;
+    overflow: hidden;
   }
 }
 </style>

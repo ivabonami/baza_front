@@ -376,6 +376,12 @@ button {
   .back {
     padding-left: 10px;
   }
+  select {
+    font-size: 14px;
+  }
+  .link-btn {
+    font-size: 12px;
+  }
 }
 
 /*# sourceMappingURL=styles.css.map */

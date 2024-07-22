@@ -73,7 +73,7 @@
        :class="{show: modal.show}"></div>
 
   <notice v-if="notice.show" :notice="notice"
-          @closeNotice="emit => notice.show = emit"
+          @closeNotice="notice.show = false"
   />
 
 </template>
@@ -192,6 +192,7 @@ export default {
   methods: {
     onReviewAdd(mode) {
       this.data.projectId = this.$props.projectId
+      this.loading = true
 
 
       if (this.data.rating <= 0) {
@@ -216,12 +217,13 @@ export default {
             } else {
               this.notice.show = false
               this.closeModal()
-
+              this.loading = false
             }
 
           }).catch(error => {
             this.notice.show = false
             this.$emit('reviewAdded', this.data)
+            this.loading = false
             this.closeModal()
           })
         } else {
@@ -231,6 +233,7 @@ export default {
           editReview(this.data).then(result => {
             this.notice.show = false
             this.closeModal()
+            this.$emit('reviewAdded', this.data)
           })
         }
 

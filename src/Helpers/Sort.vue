@@ -157,7 +157,8 @@ export default {
 @media screen and (max-width: 500px){
   .filter {
     .filter_current {
-      width: 35px;
+      padding: 8px;
+      width: 14px;
 
     }
     .sort {

@@ -21,18 +21,23 @@
         <div class="popup_buttons">
           <div class="popup_buttons_button">
             <button-primary
+                v-if="!buttonLoader"
                 @close="() => {
-              $emit('actionConfirmed', true)
-            }"
+                  this.buttonLoader = true
+                  $emit('actionConfirmed', true)
+                }"
             >
               <template #default>
                 <slot name="buttonConfirm"></slot>
               </template>
             </button-primary>
+            <loader-small v-else />
           </div>
+
 
           <div class="popup_buttons_button">
             <button-secondary-gray
+                v-if="!buttonLoader"
                 @pressed="closeModal()"
             >
               <template #default>
@@ -64,6 +69,7 @@
 import ButtonPrimary from "../Buttons/ButtonPrimary.vue";
 import ButtonSecondaryGray from "../Buttons/ButtonSecondaryGray.vue";
 import {signOut} from "../../API/user.js";
+import loaderSmall from "../Loaders/LoaderSmall.vue";
 
 
 export default {
@@ -72,15 +78,17 @@ export default {
   props: {
     modal: {
       show: true
-    }
+    },
+
   },
 
   data() {
     return {
-      signOut
+      signOut,
+      buttonLoader: false
     }
   },
-  components: {ButtonPrimary, ButtonSecondaryGray},
+  components: {ButtonPrimary, ButtonSecondaryGray, loaderSmall},
   mounted() {
     if (this.$props.modal.show === true) {
       document.body.style.overflow = 'hidden hidden'
@@ -91,6 +99,9 @@ export default {
       document.body.style.overflow = 'hidden scroll'
     }
 
+  },
+  beforeUnmount() {
+    document.body.style.overflow = 'hidden scroll'
   },
   methods: {
     closeModal() {

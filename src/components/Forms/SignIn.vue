@@ -1,6 +1,6 @@
 <template>
 
-  <div class="auth" @keydown.enter="onSignIn" @keydown.esc="$emit('closePopup', true)">
+  <form onsubmit="return false" class="auth" @keydown.enter="onSignIn" @keydown.esc="$emit('closePopup', true)">
     <InputText
         :input="{
           name: 'Логин',
@@ -46,7 +46,7 @@
     </button-primary>
 
     <loaderSmall v-else></loaderSmall>
-  </div>
+  </form>
 </template>
 
 <script>
@@ -98,6 +98,7 @@ export default {
               this.$emit('success', true)
             })
             .catch(err => {
+
               if (err.response.data.success === false) {
                 let message = ""
                 if (err.response.data.message === "Invalid credentials") { message = "Неверные логин и пароль" }
@@ -106,16 +107,17 @@ export default {
                 this.$emit('errors', {responseError: message})
                 this.loading = false
 
-              } else {
-                this.$emit('errors', err.message)
+              } else if (err.statusCode !== 200) {
+                this.$emit('errors', {responseError: err.data.message})
               }
             })
       }
 
     }
   },
-  mounted() {
-
+  beforeUnmount() {
+    this.user.username = null
+    this.user.password = null
   },
 
 }

@@ -378,7 +378,7 @@ export default {
         font-weight: 600;
         margin-bottom: -5px;
         display: flex;
-        align-items: start;
+        align-items: center;
         gap: 10px;
         line-height: 1;
 
@@ -400,9 +400,9 @@ export default {
 
         svg {
           display: inline-block;
-          width: 22px;
+          width: 16px;
           position: relative;
-          height: 22px;
+          height: 16px;
           padding-left: 5px;
           padding-top: 0;
           padding-bottom: 0;
@@ -466,11 +466,12 @@ export default {
       .project-header_info_stats {
         flex-basis: 100%;
         width: 100%;
-        gap: 10px;
+        gap: 5px;
 
         .project-header_info_header {
           width: 100%;
           font-size: 16px;
+          margin-bottom: 5px;
         }
       }
 

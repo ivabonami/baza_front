@@ -99,6 +99,7 @@ label {
 }
 
 textarea {
+  width: 100%;
   color: var(--gray-2, #000);
   font-family: "PT Sans Caption";
   font-size: 16px;

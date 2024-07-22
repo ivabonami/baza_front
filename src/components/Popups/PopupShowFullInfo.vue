@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import loaderSmall from "../Loaders/LoaderSmall.vue";
+
 
 export default {
   name: "Popup.vue",
@@ -42,10 +44,11 @@ export default {
     return {
       modalSettings: {
         data: []
-      }
+      },
+      buttonLoader: false
     }
   },
-  components: {},
+  components: {loaderSmall},
 
   mounted() {
     document.body.style.overflow = 'hidden hidden'

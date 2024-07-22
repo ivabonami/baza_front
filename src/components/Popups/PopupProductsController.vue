@@ -102,9 +102,10 @@
 
           <loader-small v-show="loading" />
         </div>
-
         <div class="popup_buttons_button">
+
           <button-secondary-gray
+              v-if="!loading"
               @pressed="() => {
               closeModal()
               this.oldImage ? $props.options.avatarFilePath = this.oldImage : null
@@ -133,7 +134,7 @@
          :class="{show: modal.show}"></div>
 
     <notice v-if="notice.show" :notice="notice"
-            @closeNotice="emit => notice.show = emit"
+            @closeNotice="notice.show = false"
     />
   </div>
 </template>
@@ -182,6 +183,7 @@ export default {
         color: null,
         text: {}
       },
+      buttonLoading: false,
       oldImage: null,
       checkInputData,
       loading: false,
@@ -230,7 +232,8 @@ export default {
     notice,
     inputFile,
     loaderSmall,
-    buttonAction
+    buttonAction,
+
   },
   watch: {
     options: (val, oldVal) => {

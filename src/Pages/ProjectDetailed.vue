@@ -29,7 +29,11 @@
         </project-products>
 
 
-        <project-reviews :project="project">
+        <project-reviews
+            @reviewAdded="() => {
+              getProjectFullInfo()
+            }"
+            :project="project">
 
         </project-reviews>
 

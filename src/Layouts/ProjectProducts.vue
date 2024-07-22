@@ -383,7 +383,7 @@ export default {
   .project-products_items {
     width: 100%;
     display: flex;
-    gap: 2%;
+    gap: 1.2%;
     flex-wrap: wrap;
     box-sizing: border-box;
 
@@ -423,7 +423,7 @@ export default {
     .project-products_heading {
       h2 {
         margin-top: 0;
-        font-size: 20px;
+        font-size: 16px;
         line-height: 1.5;
         position: relative;
         top: -2px;

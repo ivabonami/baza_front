@@ -661,6 +661,7 @@ textarea {
 }
 @media screen and (max-width: 500px){
   .form-wrapper {
+    box-sizing: border-box;
     padding-left: 10px;
     padding-right: 10px;
     flex-wrap: wrap;
@@ -698,6 +699,26 @@ textarea {
 
     .categories-box {
       margin-top: 30px;
+    }
+
+    .links-box {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+
+      div {
+
+        &:nth-child(1) {
+          width: 40%;
+        }
+
+        &:nth-child(2) {
+          width: 58%;
+        }
+
+      }
+
+
     }
   }
 

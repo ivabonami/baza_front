@@ -215,12 +215,15 @@
     </div>
     <div class="buttons">
       <button-primary
+          v-if="!loading"
           @click="checkForm"
           :style="'filled'">
         <template #default>
           Добавить проект
         </template>
       </button-primary>
+
+      <loader-small v-else />
 
 
     </div>
@@ -281,6 +284,7 @@ import projectExternalLink from "../../Helpers/ProjectExternalLink.vue";
 import buttonAction from "../../components/Buttons/ButtonAction.vue";
 import {apiUrl} from "../../assets/js/config.js";
 import popupAuth from "../../components/Popups/PopupAuth.vue";
+import loaderSmall from "../../components/Loaders/LoaderSmall.vue";
 
 export default {
   name: "Project_Add.vue",
@@ -298,19 +302,21 @@ export default {
     popupInfo,
     popupAuth,
     projectExternalLink,
-    buttonAction
-
+    buttonAction,
+    loaderSmall
 
   },
   emits: ['changeModal'],
 
   data () {
     return {
+      loading: false,
       popup: {
         auth: {
           show: false
         }
       },
+
       project: {
         name: '',
         description: null,
@@ -460,7 +466,7 @@ export default {
 
     checkForm () {
 
-
+      this.loading = true
       this.project.name < 1 ? this.notice.text.nameEmpty = 'Название не может быть пустым' : delete this.notice.text.nameEmpty
       this.project.description < 1 ? this.notice.text.descriptionEmpty = 'Описание не может быть пустым' : delete this.notice.text.descriptionEmpty
       this.project.categoryIds.length < 1 ? this.notice.text.categoriesEmpty = 'Проект должен иметь хотя бы 1 категорию' : delete this.notice.text.categoriesEmpty
@@ -477,8 +483,11 @@ export default {
 
         addProject(this.project).then(result => {
           this.modal.show = true
+          this.loading = false
         }).catch(error => this.notice.text = error)
 
+      } else {
+        this.loading = false
       }
     }
   },
@@ -649,6 +658,26 @@ textarea {
     }
     .categories-box {
       margin-top: 30px;
+    }
+
+    .links-box {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+
+      div {
+
+        &:nth-child(1) {
+          width: 40%;
+        }
+
+        &:nth-child(2) {
+          width: 58%;
+        }
+
+      }
+
+
     }
   }
 

@@ -103,6 +103,7 @@
         @closeModal="modalAction.show = false"
         @actionConfirmed="() => {
         approveReview(modalAction.review)
+        modalAction.show = false
         reviews.splice(reviews.findIndex(item => item.id === modalAction.review.id), 1)
       }"
         :modal="modalAction"

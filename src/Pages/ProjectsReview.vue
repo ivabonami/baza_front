@@ -19,13 +19,13 @@
           <div class="button">
             <button-action
                 @click="() => {
-                modal.show = true
-                modal.project = project
+                  modal.show = true
+                  modal.project = project
 
-               }"
+                 }"
             >
               <template #text>
-                Опубликовать
+                <span class="text">Опубликовать</span>
               </template>
               <template #icon>
                 <svg xmlns="http://www.w3.org/2000/svg" class="approve" width="58" height="58" viewBox="0 0 58 58" fill="none">
@@ -62,9 +62,12 @@
         v-if="modal.show === true"
         @closeModal="modal.show = false"
         @actionConfirmed="() => {
+              this.loadingButton = true
               approveProject(modal.project).then(result => {
                 const project = this.projects.findIndex(item => item.id === modal.project.id)
                 this.projects.splice(project, 1)
+                this.loadingButton = false
+                modal.show = false
               })
 
       }"
@@ -96,6 +99,7 @@ import {approveProject, getProjects} from "../API/projects.js";
 import popupAction from "../components/Popups/PopupAction.vue";
 import {projectsStore} from "../Store/projectsStore.js";
 import {apiUrl} from "../assets/js/config.js";
+import loaderSmall from "../components/Loaders/LoaderSmall.vue";
 
 
 export default {
@@ -107,6 +111,7 @@ export default {
       loading: true,
       approveProject,
       projectsStore,
+      loadingButton: false,
       modal: {
         show: false,
         project: null
@@ -114,6 +119,7 @@ export default {
     }
   },
   components: {
+    loaderSmall,
     projectCard,
     emptyStore,
     baseLoader,
@@ -169,6 +175,7 @@ export default {
       border-radius: 20px;
       transition: .15s ease;
       background-color: #fff;
+      box-sizing: border-box;
 
       box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
 

@@ -136,5 +136,13 @@ export default {
   .empty-store .button-wrapper {
     width: 50%;
   }
+  .empty-store {
+    h3 {
+      font-size: 12px!important;
+    }
+    span {
+      font-size: 13px;
+    }
+  }
 }
 </style>

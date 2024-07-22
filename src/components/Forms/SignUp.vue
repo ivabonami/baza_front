@@ -1,5 +1,5 @@
 <template>
-  <div class="auth" @keydown.enter="" @keydown.esc="$emit('closePopup', true)">
+  <form onsubmit="return false" class="auth" @keydown.enter="signUp()" @keydown.esc="$emit('closePopup', true)">
     <InputText
         :input="{
           name: 'username',
@@ -53,6 +53,7 @@
 
 
     <button-primary
+        type="submit"
         v-if="loading === false"
         @click="signUp"
         :style="'filled'">
@@ -62,7 +63,7 @@
     </button-primary>
 
     <loaderSmall v-else></loaderSmall>
-  </div>
+  </form>
 </template>
 
 <script>
@@ -157,9 +158,11 @@ export default {
       }
     }
   },
-  mounted() {
-
-  },
+  beforeUnmount() {
+    this.user.password = null
+    this.user.username = null
+    this.user.repeatPassword = null
+  }
 }
 </script>
 

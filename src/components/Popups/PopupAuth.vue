@@ -53,7 +53,7 @@
          :class="{show: modalSettings.show}"></div>
 
     <notice v-if="notice.show" :notice="notice"
-            @closeNotice="emit => notice.show = emit"
+            @closeNotice="notice.show = false"
     />
   </div>
 </template>
