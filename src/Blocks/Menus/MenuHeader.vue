@@ -45,18 +45,21 @@ export default {
   methods: {
     closeByOutsideClick (event) {
 
-      if (event.target.dataset.dropdown !== 'dropdownMenu') {
+      if (event.target.dataset.dropdown !== 'dropdownMenu' && useWindowSize().width.value < 960) {
         this.closeDropdown()
       }
     },
     closeByEsc (event) {
-      if (event.key === 'Escape') {
+      if (event.key === 'Escape' && useWindowSize().width.value < 960) {
         this.closeDropdown()
       }
 
     },
     closeDropdown() {
-      this.hideMenu = true
+      if (useWindowSize().width.value < 960) {
+        this.hideMenu = true
+      }
+
     },
     showMenu() {
       this.hideMenu = !this.hideMenu

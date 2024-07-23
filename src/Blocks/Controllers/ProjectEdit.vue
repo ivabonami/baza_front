@@ -107,7 +107,7 @@
               @data="emit => {
               this.project.banner = emit
               delete this.notice.text.imageErros
-              Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
+              this.notice.show = false
             }"
               @error="emit => {
               this.project.banner = null
@@ -133,21 +133,20 @@
           <div>
             <input-link
                 :input="inputs.links.link"
-                :data="inputs.links.link.data"
+                :data="linkToAdd.link"
                 @returnData="emit => {
-                linkToAdd.link = emit
-                inputs.links.link.data = null
-                Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false,
-                delete this.notice.text.linkErr
-              }"
+                  linkToAdd.link = emit
+                  this.notice.show = false
+                  delete this.notice.text.linkErr
+                }"
 
                 @returnError="emit => {
-                linkToAdd.link = null
-                this.notice.color = 'red'
-                this.notice.text.linkErr = emit
-                Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
+                  linkToAdd.link = null
+                  this.notice.color = 'red'
+                  this.notice.text.linkErr = emit
+                  Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
 
-              }"
+                }"
             />
           </div>
 
@@ -381,7 +380,6 @@ export default {
             tooltip: 'На главной странице и на странице проекта отображаются только первые 90 символов, будьте внимательны.',
             min: 5,
             max: 255,
-            data: null
           }
 
         },
@@ -435,6 +433,7 @@ export default {
   methods: {
 
     addLinkToProject() {
+      console.log(this.linkToAdd.link)
 
       if (this.linkToAdd.name === null || !this.linkToAdd.link) {
 
@@ -508,6 +507,7 @@ export default {
       this.project.links = this.project.links
       this.project.avatarFilePath = this.project.avatarFilePath
       this.project.userData = result.data.project.userData
+      this.project.favorite = result.data.project.favorite
 
       userInfo.username === this.project.userData.username ? this.isOwner = true : this.isOwner = false
       userInfo.role === 'admin' ? this.isOwner = true : this.isOwner = false
@@ -538,6 +538,10 @@ export default {
     flex-wrap: wrap;
     box-sizing: border-box;
 
+    div {
+      width: 100%;
+    }
+
 
   }
   .right {
@@ -549,13 +553,18 @@ export default {
 
     .images-box, .links-box {
       width: 50%;
+      box-sizing: border-box;
+    }
+    .images-box {
+      padding-right: 10px;
+
     }
     .links-box {
       display: flex;
       gap: 5px;
       flex-wrap: wrap;
       height: 100px;
-
+      align-content: stretch;
       div {
 
         &:nth-child(1) {
@@ -605,6 +614,7 @@ textarea {
   height: 220px;
 }
 .links {
+  margin-top: 20px;
   gap: 10px;
   display: flex;
   flex-wrap: wrap;

@@ -10,15 +10,9 @@
       :projectName="$props.project.name"
       :project="$props.project"
 
-      @projectChangePayedStatus="emit => {
-              payedModal.show = true
-              payedModal.projectId = $props.project.id
-              payedModal.status = emit
-              payedModal.name = $props.project.name
-
-            }"
+      @projectChangePayedStatus="emit => $emit('projectChangePayedStatus', emit)"
       @favoriteChanged="emit => $emit('favoriteChanged', emit)"
-      @deleteProject="deleteModal.show = true"
+      @deleteProject="emit => $emit('deleteProject', emit)"
   />
   <router-link :to="`/project/` + $props.project.id"
 
@@ -43,7 +37,7 @@
 
       <div class="project-card_links">
 
-        <div v-for="(link, index) of $props.project.links"
+        <div v-for="(link, index) of spredLinks($props.project.links)"
              class="project-card_links_link"
              v-show="index < 2"
         >
@@ -55,15 +49,13 @@
 
         </div>
 
-        <div v-show="$props.project.links.length >= 2"
+        <a v-show="$props.project.links.length >= 2"
+           href="javascript:void(0);"
              @click.stop
-             @click="() => {
-                 this.modal.data = this.$props.project.links
-                 modal.show = true
-               }"
+             @click="$emit('showLinksModal', this.$props.project.links)"
              class="show-more">
           ...
-        </div>
+        </a>
 
       </div>
 
@@ -126,74 +118,9 @@
     </div>
   </router-link>
 
-  <popup-project-links
-      :modal="modal"
-      :data="$props.project.links"
-      @closeModal="modal.show = false"
-  />
 
-  <popup-delete
-      @click.stop
-      :modal="deleteModal"
-      @closeModal="deleteModal.show = false"
-      @deleteConfirmed="() => {
-        removeProject($props.project.id, $props.options, $props.offset)
-        this.$emit('projectDeleted', $props.project.id)
-      }"
 
-  >
-    <template #header>
-      Удалить проект?
-    </template>
-    <template #text>
-      Вы действительно хотите удалить проект <b>{{ $props.projectName }}</b>
-    </template>
-    <template #buttonConfirm>
-      Да, удалить
-    </template>
-    <template #buttonSecondary>
-      Отменить
-    </template>
-  </popup-delete>
 
-  <popup-action
-      v-show="payedModal.show === true"
-      @closeModal="payedModal.show = false"
-      @actionConfirmed="changePayedStatus(payedModal.projectId, payedModal.status)"
-      :modal="payedModal"
-  >
-    <template #header>
-      <span v-if="payedModal.status">
-        Выделить проект?
-      </span>
-
-      <span v-else>
-        Снять выделение с проекта?
-      </span>
-
-    </template>
-    <template #text>
-            <span v-if="payedModal.status">
-        Вы собираетесь выделить проект <b>{{ $props.project.name }}</b>, подтвердите действие.
-      </span>
-
-      <span v-else>
-        Вы собираетесь снять выделение с проекта <b>{{ $props.project.name }}</b>, подтвердите действие.
-      </span>
-    </template>
-    <template #buttonConfirm>
-      <span v-if="payedModal.status">
-        Выделить
-      </span>
-
-      <span v-else>
-        Снять
-      </span>
-    </template>
-    <template #buttonSecondary>
-      Отменить
-    </template>
-  </popup-action>
 </div>
 
 
@@ -271,17 +198,7 @@ export default {
         show: false,
         data: []
       },
-      deleteModal: {
-        show: false
-      },
 
-      payedModal: {
-        show: false,
-        projectId: null
-      },
-
-      removeProject,
-      changePayedStatus
 
     }
   },
@@ -291,6 +208,20 @@ export default {
     this.payed = this.$props.project.payed
   },
   methods: {
+    spredLinks(array){
+      array.sort((a, b) => {
+        let sortStringA = (a.name === 'Зеркало' ? 0 : 1)
+        let sortStringB = (b.name === 'Зеркало' ? 0 : 1)
+        if (sortStringA < sortStringB) {
+          return -1;
+        }
+        if (sortStringA > sortStringB) {
+          return 1;
+        }
+        return 0;
+      });
+      return array
+    },
     normalizeProjectName(name) {
       if (name.length > 35) {
         return name.substring(0, 33) + '...'
@@ -345,7 +276,7 @@ export default {
 
 
     img {
-      height: 100%;
+      width: 100%;
       transition: .15s ease;
     }
 

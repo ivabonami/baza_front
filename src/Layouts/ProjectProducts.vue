@@ -1,5 +1,5 @@
 <template>
-  <div class="project-products" :style="{minHeight: this.height}">
+  <div class="project-products">
     <div class="project-products_heading">
       <h2>Витрина</h2>
       <button-action
@@ -358,6 +358,7 @@ export default {
 .project-products {
   margin-top: 30px;
   margin-bottom: 10px;
+  min-height: 300px;
 
   .project-products_heading {
     color: #000;
@@ -387,6 +388,7 @@ export default {
     flex-wrap: wrap;
     box-sizing: border-box;
 
+
     &:after {
       content: '';
       flex: auto;
@@ -395,6 +397,7 @@ export default {
 
     .project-products_items_item {
       width: 19%;
+      margin-bottom: 10px;
       .project-products_admin-menu {
         margin-top: 10px;
         margin-bottom: 20px;
@@ -406,16 +409,18 @@ export default {
 @media screen and (max-width: 1000px) {
   .project-products .project-products_items {
     justify-content: space-between;
+
     .project-products_items_item {
-      width: 32%;
+      width: 24%;
     }
   }
 }
 @media screen and (max-width: 768px){
   .project-products .project-products_items {
     justify-content: space-between;
+
     .project-products_items_item {
-      width: 48%;
+      width: 32%;
     }
   }
 
@@ -428,6 +433,16 @@ export default {
         position: relative;
         top: -2px;
       }
+    }
+  }
+}
+
+@media screen and (max-width: 500px){
+  .project-products .project-products_items {
+    justify-content: space-between;
+
+    .project-products_items_item {
+      width: 49%;
     }
   }
 }

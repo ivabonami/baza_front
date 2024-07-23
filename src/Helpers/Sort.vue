@@ -71,23 +71,28 @@ export default {
   mounted() {
 
     this.selected = this.$props.sort[0]
-
+    document.addEventListener('keydown', this.closeDropdown)
+    document.addEventListener('mousedown', e => {
+      if (e.target.dataset.dropdown !== 'true') {
+        this.closeDropdown()
+      }
+    })
 
 
   },
   beforeUnmount() {
-
+    document.removeEventListener('keydown', this.closeDropdown)
+    document.removeEventListener('mousedown', e => {
+      if (e.target.dataset.dropdown !== 'true') {
+        console.log(e.target.dataset.dropdown)
+        this.closeDropdown()
+      }
+    })
   },
   methods: {
     closeDropdown () {
       this.showDropdown = false
-      document.removeEventListener('keydown', this.closeDropdown)
-      document.removeEventListener('mousedown', e => {
-        if (e.target.dataset.dropdown !== 'true') {
-          console.log(e.target.dataset.dropdown)
-          this.closeDropdown()
-        }
-      })
+
     },
     normalizeSortName(sortName) {
       if (sortName) {
@@ -166,9 +171,14 @@ export default {
 @media screen and (max-width: 600px){
   .filter {
     display: flex;
-    justify-content: end;
+    justify-content: center;
+    padding-left: 10px;
+    box-sizing: border-box;
+    position: relative;
+    top: -2px;
+
     .filter_current {
-      padding: 8px;
+      padding: 10px 8px;
       width: 14px;
 
     }

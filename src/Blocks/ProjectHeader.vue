@@ -48,7 +48,7 @@
               {{ stat.stat }}
             </template>
             <template #icon>
-              <img :src="stat.icon" alt="">
+              <img :src="stat.icon" alt="" style="width: 100%;">
             </template>
           </project-stats>
 
@@ -69,7 +69,7 @@
         </button-action>
 
       </div>
-      <div class="project-header_info_stats_exchanger" v-if="$props.project.type === 'exchanger'">
+      <div class="project-header_info_stats_exchanger pc_version" v-if="$props.project.type === 'exchanger'">
 
 
         <div
@@ -105,6 +105,43 @@
 
 
       </div>
+    </div>
+
+    <div class="project-header_info_stats_exchanger mobile_version" v-if="$props.project.type === 'exchanger'">
+
+
+      <div
+          class="project-header_info_stats_exchanger_item">
+        <project-additional-stats>
+          <template #header>
+            {{ normalizeReserveSumm($props.project.minValueToExchange) }} ₽
+          </template>
+          <template #icon>
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M3 3L4 2M4 2L3 1M4 2H3C1.89543 2 1 2.89543 1 4M9 9L8 10M8 10L9 11M8 10H9C10.1046 10 11 9.10457 11 8M5.09451 3.25C5.42755 1.95608 6.60212 1 8 1C9.65685 1 11 2.34315 11 4C11 5.39787 10.0439 6.57244 8.75003 6.90548M7 8C7 9.65685 5.65685 11 4 11C2.34315 11 1 9.65685 1 8C1 6.34315 2.34315 5 4 5C5.65685 5 7 6.34315 7 8Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </template>
+          <template #helper>
+            мин. обмен
+          </template>
+        </project-additional-stats>
+
+        <project-additional-stats>
+          <template #header>
+            {{ normalizeReserveSumm($props.project.reserve) }} ₽
+          </template>
+          <template #icon>
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M3 3L4 2M4 2L3 1M4 2H3C1.89543 2 1 2.89543 1 4M9 9L8 10M8 10L9 11M8 10H9C10.1046 10 11 9.10457 11 8M5.09451 3.25C5.42755 1.95608 6.60212 1 8 1C9.65685 1 11 2.34315 11 4C11 5.39787 10.0439 6.57244 8.75003 6.90548M7 8C7 9.65685 5.65685 11 4 11C2.34315 11 1 9.65685 1 8C1 6.34315 2.34315 5 4 5C5.65685 5 7 6.34315 7 8Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </template>
+          <template #helper>
+            резерв
+          </template>
+        </project-additional-stats>
+      </div>
+
+
     </div>
 
 
@@ -244,12 +281,28 @@ export default {
   },
 
   methods: {
-    setStats () {
-      this.stats.viewCount.stat = this.$props.project.viewCount
-      this.stats.reviewsCount.stat = this.$props.project.reviewsCount
-      this.stats.ratingAvg.stat = this.$props.project.ratingAvg
+    normalizeInt(summ) {
+      let number = summ.toString()
+      if (number.length > 6) {
+        number = number.substring(0, number.length - 6) + 'м'
+      } else if (number.length > 3) {
+        number = number.substring(0, number.length - 3) + 'к'
+      }
 
-      this.stats.categories.stat = this.$props.project.categories[0].name
+      return number
+    },
+    setStats () {
+      this.stats.viewCount.stat = this.normalizeInt(this.$props.project.viewCount)
+      this.stats.reviewsCount.stat = this.normalizeInt(this.$props.project.reviewsCount)
+      this.stats.ratingAvg.stat =  this.$props.project.ratingAvg
+
+      if (window.innerWidth > 768) {
+        this.stats.categories.stat = this.$props.project.categories[0].name
+      } else {
+        this.stats.categories.stat = this.$props.project.categories[0].name.substring(0, 4) + '...'
+      }
+
+
 
       if (this.$props.project.categories.length > 1) {
         this.stats.categories.stat += ` + ${this.$props.project.categories.length - 1}`
@@ -278,7 +331,7 @@ export default {
     project: function(newVal, oldVal) {
       this.setStats()
 
-      this.$props.project.name.length > 80 ?  this.normalizedName = this.$props.project.name.substring(0, 80) + '...' :  this.normalizedName = this.$props.project.name
+      this.$props.project.name.length > 39 ?  this.normalizedName = this.$props.project.name.substring(0, 42) + '...' :  this.normalizedName = this.$props.project.name
 
 
 
@@ -294,7 +347,11 @@ export default {
   mounted() {
     this.setStats()
 
-    this.$props.project.name.length > 80 ?  this.normalizedName = this.$props.project.name.substring(0, 80) + '...' :  this.normalizedName = this.$props.project.name
+    if (window.innerWidth > 768) {
+      this.$props.project.name.length > 80 ?  this.normalizedName = this.$props.project.name.substring(0, 77) + '...' :  this.normalizedName = this.$props.project.name
+    } else {
+      this.$props.project.name.length > 45 ?  this.normalizedName = this.$props.project.name.substring(0, 42) + '...' :  this.normalizedName = this.$props.project.name
+    }
 
 
 
@@ -327,13 +384,13 @@ export default {
     flex-basis: 80px;
     width: 80px;
     aspect-ratio: 1 / 1;
-    border-radius: 10px;
+
     overflow: hidden;
     position: relative;
 
     img {
-
-      height: 100%;
+      border-radius: 10px;
+      width: 100%;
     }
     .project-header_avatar_favorite {
       position: absolute;
@@ -362,7 +419,7 @@ export default {
       .project-header_info_stats_stat {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 5px;
       }
 
       .project-header_info_header {
@@ -394,7 +451,7 @@ export default {
           -moz-box-orient: vertical;
           display: -webkit-box;
           line-clamp: 2;
-          max-width: 90%;
+          max-width: 100%;
           line-height: 1.2;
         }
 
@@ -402,6 +459,7 @@ export default {
           display: inline-block;
           width: 16px;
           position: relative;
+          top: 2px;
           height: 16px;
           padding-left: 5px;
           padding-top: 0;
@@ -434,9 +492,17 @@ export default {
 .hideOnMobile {
   display: block;
 }
+.mobile_version {
+  display: none;
+}
 @media screen and (max-width: 768px){
+
+  .project-header .project-header_info .project-header_info_stats .project-header_info_header .project-name {
+    word-break: break-all;
+    font-size: 14px;
+  }
   .hideOnMobile {
-    width: 30px;
+    width: 0;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -444,7 +510,8 @@ export default {
   .project-header {
     flex-wrap: wrap;
     gap: 10px;
-    align-items: start;
+    align-items: stretch;
+    word-break: break-all;
 
     .project-header_links {
       width: 100%;
@@ -472,12 +539,22 @@ export default {
           width: 100%;
           font-size: 16px;
           margin-bottom: 5px;
+
+          svg {
+            width: 12px;
+          }
         }
       }
 
       .project-header_info_stats_exchanger {
         width: 100%;
         flex-basis: 100%;
+
+        &.pc_version {
+          display: none;
+        }
+
+
         .project-header_info_stats_exchanger_item {
           justify-content: start;
         }
@@ -485,5 +562,16 @@ export default {
 
     }
   }
+  .mobile_version {
+    display: flex;
+    width: 100%;
+
+    .project-header_info_stats_exchanger_item {
+      display: flex;
+      width: 100%;
+      gap: 20px;
+    }
+  }
 }
+
 </style>

@@ -57,7 +57,8 @@ export async function editProject(project, projectId) {
         reserve: project.reserve || null,
         minValueToExchange: project.minValueToExchange || null,
         categoryIds: project.categoryIds,
-        links: project.links
+        links: project.links,
+        favorite: project.favorite
     }
 
     if (project.reserve || project.minValueToExchange ) {
@@ -67,15 +68,20 @@ export async function editProject(project, projectId) {
 
 
 
+
     project.avatar ? projectToAdd.avatarFilePath = (await uploadImage(project.avatar)).data.filePath : projectToAdd.avatarFilePath = project.avatarFilePath
     project.banner ? projectToAdd.bannerFilePath = (await uploadImage(project.banner)).data.filePath : projectToAdd.bannerFilePath = project.bannerFilePath || null
 
     return await axios.put(`${apiUrl}projects/${projectId}`, projectToAdd,{headers}).then(result => {
 
         let projectToReplace = projectsStore.projects.findIndex(item => item.id === projectId)
+        result.data.updatedProject.favorite = project.favorite
+
+        console.log(result.data.favorite, project.favorite)
 
         result.data.updatedProject.userData = project.userData
         projectsStore.projects[projectToReplace] = result.data.updatedProject
+
 
 
     }).catch(error => error)

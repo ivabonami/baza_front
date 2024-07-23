@@ -84,7 +84,7 @@
                      startSearch(1000)
                    }"
                    :to="`/project/` + item.id"
-           v-for="item of liveResults"
+                   v-for="item of liveResults"
       >
         <div class="avatar" data-dropdown="dropdownSearch">
           <img :src="apiUrl + item.avatarFilePath" alt="" data-dropdown="dropdownSearch">
@@ -95,6 +95,13 @@
         </div>
       </router-link>
     </div>
+    <div class="dropdownSearchItems" data-dropdown="dropdownSearch" v-else-if="liveResults.length <= 0 && showLiveResults && !noResults">
+      <loader-small />
+    </div>
+    <div class="dropdownSearchItems" data-dropdown="dropdownSearch" v-else-if="noResults && showLiveResults">
+      <span>Нет результатов</span>
+    </div>
+    <div class="backdrop-mobile"  v-if="showSearch"></div>
 
     <notice v-if="notice.show" :notice="notice" :errors="errors" @closeNotice="notice.show = false" />
   </div>
@@ -108,6 +115,7 @@ import notice from "../Popups/Notice.vue";
 import buttonSecondaryGray from "../Buttons/ButtonSecondaryGray.vue";
 import {useFetch} from "../../assets/js/controllers/requestsControl.js";
 import {apiUrl} from "../../assets/js/config.js";
+import loaderSmall from "../Loaders/LoaderSmall.vue";
 
 
 export default {
@@ -122,6 +130,7 @@ export default {
       errors: {},
       showLiveResults: false,
       apiUrl,
+      noResults: true,
       notice: {
         show: ref(false)
       },
@@ -132,11 +141,13 @@ export default {
 
   components: {
     notice,
-    buttonSecondaryGray
+    buttonSecondaryGray,
+    loaderSmall
   },
 
   methods: {
     startSearch(timer) {
+      this.noResults = false
       if (this.searchTimeoutId) clearTimeout(this.searchTimeoutId)
 
       this.liveResults = []
@@ -147,6 +158,8 @@ export default {
               .then(result => {
                 if (result.success === true) {
                   this.liveResults = result.projects
+
+                  result.projects.length > 0 ? this.noResults = false : this.noResults = true
                 }
               })
         },timer)
@@ -199,13 +212,24 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.backdrop-mobile {
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 30;
+  background: rgba(217, 217, 217, 0.6);
+  backdrop-filter: blur(3px);
+}
 .search_mobile {
+  z-index: 31;
   position: absolute;
-  padding-left: 10px;
-  padding-right: 10px;
   box-sizing: border-box;
-  bottom: -40px;
-  z-index: 3;
+  bottom: -5px;
+
   width: 100%;
   left: 0;
   right: 0;
@@ -213,6 +237,7 @@ export default {
 .button {
   display: none;
   .button_search {
+    cursor: pointer;
     position: relative;
     top: -5px;
   }
@@ -267,7 +292,8 @@ input {
 .dropdownSearchItems {
   max-width: 500px;
   position: absolute;
-  z-index: 3;
+  z-index: 31;
+  box-sizing: border-box;
   background: #FFFFFF;
   padding: 10px;
   top: 60px;
@@ -364,12 +390,12 @@ input {
 
 @media screen and (max-width: 768px){
   .dropdownSearchItems {
-    top: 80px;
-    left: 5px;
+    top: 65px;
     max-height: 400px;
   }
   input {
     max-width: 100%;
+    box-sizing: border-box;
   }
   .button {
     display: flex;

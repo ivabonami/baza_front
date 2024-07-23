@@ -32,7 +32,7 @@ export default {
 
   .stat_icon {
     width: auto;
-    height: 14px;
+    height: 10px;
     align-self: center;
     display: flex;
 
@@ -71,18 +71,19 @@ export default {
 }
 @media screen and (max-width: 768px){
   .stat {
+    gap: 2px;
     .stat_icon {
       width: 12px;
 
     }
     .stat_text {
-      font-size: 12px;
+      font-size: 10px;
     }
 
     &.rating {
 
       .stat-text {
-        font-size: 12px;
+        font-size: 10px;
       }
     }
 

@@ -517,12 +517,13 @@ textarea {
 
 
   .project-banner {
+    box-sizing: border-box;
     width: 100%;
-    min-height: 100px;
+    min-height: 20px;
     height: auto;
     max-height: 500px;
     overflow: hidden;
-    border-radius: 20px;
+
     position: relative;
 
     .owner {
@@ -553,6 +554,7 @@ textarea {
 
     img {
       width: 100%;
+      border-radius: 20px;
       min-height: 100%;
     }
   }
@@ -715,8 +717,9 @@ h3 {
 
     }
     .project-banner {
-      padding: 0 10px;
+      padding: 0;
       max-height: 400px;
+      height: auto;
       img {
         border-radius: 10px;
       }

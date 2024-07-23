@@ -76,6 +76,11 @@ export default {
     }
 
   },
+  watch: {
+    link: function (newVal) {
+      this.setColor()
+    }
+  },
 
   mounted() {
     this.setColor()

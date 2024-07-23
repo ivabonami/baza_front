@@ -6,7 +6,7 @@
     </svg>
   </label>
 
-  <select
+  <select class="links-select"
          :class="{error: $props.error === true}"
          v-model="inputData"
          @change="checkField()"
@@ -120,6 +120,17 @@ input {
 
   &.error {
     border-color: #9A2929;
+  }
+}
+@media screen and (max-width: 1015px){
+  .links-select {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 940px) {
+  .links-select {
+    width: 100%;
   }
 }
 </style>

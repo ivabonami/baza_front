@@ -26,6 +26,7 @@ export default {
   padding: 8px 12px;
   border-radius: 10px;
   width: 100%;
+  max-height: 45px;
 
   span {
     color: #000;

@@ -291,25 +291,34 @@ export default {
     .prev, .next {
       position: absolute;
       top: 50%;
-      transform: translateY(-100%);
-      background-color: rgba(255,255,255, .3);
+      background-color: rgba(255,255,255, .7);
+      z-index: 1;
       padding: 5px 10px 5px 10px;
+      box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 20px;
       transition: .15s ease;
       cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+
+      svg {
+        width: 11px;
+      }
 
       &:hover {
-        background-color: rgba(255,255,255, .8);
+        background-color: rgba(255,255,255, 1);
       }
     }
     .prev {
-      left: 10px;
+      left: -8px;
     }
     .next {
-      right: 10px;
+      right: -8px;
     }
   }
 }

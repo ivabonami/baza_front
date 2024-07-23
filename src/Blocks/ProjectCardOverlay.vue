@@ -116,10 +116,11 @@ export default {
   width: 100%;
   aspect-ratio: 1 / 1;
   position: absolute;
-  z-index: 2;
+
 
 
   .project-avatar-overlay_item {
+    z-index: 3;
     color: #984a5a;
     position: absolute;
     width: 25px;

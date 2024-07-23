@@ -97,7 +97,12 @@ export default {
 
   methods: {
     normalizeText(text){
-      return text.substring(0, 30) + '...'
+      if (text.length >= 30) {
+        return text.slice(0, 20) + '...' + text.slice(-10)
+      } else {
+        return text
+      }
+
     },
     checkField(file) {
       this.file.loaded = false
@@ -179,7 +184,7 @@ label {
     color: #000;
     text-align: center;
     font-family: "PT Sans Caption";
-    font-size: 14px;
+    font-size: 12px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -189,7 +194,7 @@ label {
   display: flex;
   align-items: center;
   gap: 5px;
-  justify-content: space-between;
+  justify-content: start;
   flex-wrap: wrap;
 
   .input-file-loaded_file-name {
@@ -222,6 +227,7 @@ label {
   }
   .input-file-loaded_delete {
     cursor: pointer;
+    margin-left: 10px;
     svg {
       width: 15px;
       height: 15px;

@@ -111,21 +111,20 @@
         <div>
           <input-link
               :input="inputs.links.link"
-              :data="inputs.links.link.data"
+              :data="linkToAdd.link"
               @returnData="emit => {
-                linkToAdd.link = emit
-                inputs.links.link.data = emit
-                Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
-                delete this.notice.text.linkErr
-              }"
+                  linkToAdd.link = emit
+                  this.notice.show = false
+                  delete this.notice.text.linkErr
+                }"
 
               @returnError="emit => {
-                linkToAdd.link = null
-                this.notice.color = 'red'
-                this.notice.text.linkErr = emit
-                Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
+                  linkToAdd.link = null
+                  this.notice.color = 'red'
+                  this.notice.text.linkErr = emit
+                  Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
 
-              }"
+                }"
           />
         </div>
 
@@ -506,6 +505,10 @@ export default {
     flex-wrap: wrap;
     box-sizing: border-box;
 
+    div {
+      width: 100%;
+    }
+
 
   }
   .right {
@@ -516,13 +519,20 @@ export default {
 
     .images-box, .links-box {
       width: 50%;
+      box-sizing: border-box;
+    }
+    .images-box {
+      padding-right: 10px;
+
     }
     .links-box {
       display: flex;
       gap: 5px;
       flex-wrap: wrap;
+      align-content: stretch;
 
       div {
+
 
         &:nth-child(1) {
           width: 35%;
@@ -682,6 +692,15 @@ textarea {
   }
 
   .buttons {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 940px){
+  .add-project .right .links-box div:nth-child(1) {
+    width: 100%;
+  }
+  .add-project .right .links-box div:nth-child(2) {
     width: 100%;
   }
 }

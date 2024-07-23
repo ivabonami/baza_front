@@ -45,14 +45,14 @@ export function approveProject(project) {
 
 
 export function removeProject(projectId, options, offset) {
+    console.log(offset)
     const headers = {
         'Authorization': `Bearer ${userInfo.token}`
     };
     projectsStore.projects.splice(projectsStore.projects.findIndex(item => item.id === projectId), 1)
     options ? options = options.replace(/limit=[0-9]/i, 'limit=1') : null
-    options ? options = options.replace(/offset=[0-9]/i, `offset=${offset}`) : null
+    options ? options = options.replace(/offset=[0-9]/i, `offset=${parseInt(offset)}`) : null
     getProjects(options).then(result => projectsStore.projects.push(result.data.projects[0]))
-
 
     return axios.delete(`${apiUrl}projects/${projectId}`, {headers})
 }

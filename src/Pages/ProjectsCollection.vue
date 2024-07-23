@@ -30,7 +30,24 @@
               :project="project"
               :options="link"
               :offset="options.limit"
+              @projectChangePayedStatus="emit => {
+                payedModal.projectId = project.id
+                payedModal.projectName = project.name
+                payedModal.status = emit
+                payedModal.show = true
+                console.log(emit, project.id)
+              }"
+              @deleteProject="emit => {
+                deleteModal.projectId = project.id
+                deleteModal.projectName = project.name
+                deleteModal.show = true
+              }"
               @favoriteChanged="emit => changeFavoriteStatus(project.id, emit)"
+              @showLinksModal="emit => {
+                linksModal.show = true
+                linksModal.data = project.links
+                console.log(linksModal.data)
+              }"
 
           />
         </div>
@@ -63,7 +80,81 @@
     </Waypoint>
 
     <loader v-show="isLoading" />
+    <popup-project-links
+        v-if="linksModal.show"
+        :modal="linksModal"
+        :data="linksModal.data"
+        @closeModal="linksModal.show = false"
+    />
 
+    <popup-delete
+        @click.stop
+        :modal="deleteModal"
+        @closeModal="deleteModal.show = false"
+        @deleteConfirmed="() => {
+          removeProject(deleteModal.projectId, link, options.offset).then(() => {
+            this.options.offset++
+          })
+
+          deleteModal.show = false
+        }"
+
+    >
+      <template #header>
+        Удалить проект?
+      </template>
+      <template #text>
+        Вы действительно хотите удалить проект <b>{{ deleteModal.projectName }}</b>
+      </template>
+      <template #buttonConfirm>
+        Да, удалить
+      </template>
+      <template #buttonSecondary>
+        Отменить
+      </template>
+    </popup-delete>
+
+    <popup-action
+        v-if="payedModal.show === true"
+        @closeModal="payedModal.show = false"
+        @actionConfirmed="() => {
+          changePayedStatus(payedModal.projectId, payedModal.status)
+          payedModal.show = false
+        }"
+        :modal="payedModal"
+    >
+      <template #header>
+      <span v-if="payedModal.status">
+        Выделить проект?
+      </span>
+
+        <span v-else>
+        Снять выделение с проекта?
+      </span>
+
+      </template>
+      <template #text>
+            <span v-if="payedModal.status">
+        Вы собираетесь выделить проект <b>{{ payedModal.projectName }}</b>, подтвердите действие.
+      </span>
+
+        <span v-else>
+        Вы собираетесь снять выделение с проекта <b>{{ payedModal.projectName }}</b>, подтвердите действие.
+      </span>
+      </template>
+      <template #buttonConfirm>
+      <span v-if="payedModal.status">
+        Выделить
+      </span>
+
+        <span v-else>
+        Снять
+      </span>
+      </template>
+      <template #buttonSecondary>
+        Отменить
+      </template>
+    </popup-action>
   </div>
 
 
@@ -78,12 +169,15 @@ import projectsNavigation from "../Blocks/Menus/ProjectsNavigation.vue";
 import emptyStore from "../Blocks/EmptyStore.vue";
 import buttonPrimary from "../components/Buttons/ButtonPrimary.vue";
 
-import {getProjects} from "../API/projects.js";
+import {changePayedStatus, getProjects, removeProject} from "../API/projects.js";
 import {projectsStore} from "../Store/projectsStore.js";
 
 import { Waypoint } from "vue-waypoint";
 import { directive } from 'vue-tippy'
 import 'tippy.js/dist/tippy.css'
+import popupProjectLinks from "../components/Popups/PopupProjectLinks.vue";
+import popupDelete from "../components/Popups/PopupDelete.vue";
+import popupAction from "../components/Popups/PopupAction.vue";
 
 export default {
   name: "AllProjectsWithSort.vue",
@@ -93,12 +187,17 @@ export default {
     loader,
     projectsNavigation,
     emptyStore,
-    buttonPrimary
+    buttonPrimary,
+    popupProjectLinks,
+    popupDelete,
+    popupAction
   },
   emits: ['updated', 'projectDeleted'],
 
   data () {
     return {
+      changePayedStatus,
+      removeProject,
       sorts: [
         {
           name: 'Популярные',
@@ -137,6 +236,22 @@ export default {
           sort: 'popularity'
         },
         categoryIds: 0
+      },
+      linksModal: {
+        show: false,
+        data: null,
+      },
+      deleteModal: {
+        show: false,
+        projectId: null,
+        projectName: null
+      },
+
+      payedModal: {
+        show: false,
+        status: false,
+        projectId: null,
+        projectName: null,
       },
       link: null,
       isLoading: false,
@@ -228,6 +343,7 @@ export default {
       border-radius: 20px;
       transition: .15s ease;
       background-color: #fff;
+      cursor: pointer;
 
       box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
 

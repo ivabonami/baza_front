@@ -90,6 +90,7 @@ export default {
   },
   components: {ButtonPrimary, ButtonSecondaryGray, loaderSmall},
   mounted() {
+    this.buttonLoader = false
     if (this.$props.modal.show === true) {
       document.body.style.overflow = 'hidden hidden'
       window.addEventListener('keydown', (e) => {

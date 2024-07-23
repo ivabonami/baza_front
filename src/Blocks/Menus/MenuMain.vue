@@ -1,5 +1,5 @@
 <template>
-  <div class="categories-menu">
+  <div class="categories-menu" >
 
     <div  ref="categoriesWrapper" class="categories-menu_items_wrapper">
       <div class="nav prev" @click="prevItem" v-if="step > 0">
@@ -253,7 +253,6 @@ export default {
     width: 100%;
     box-sizing: border-box;
     overflow: hidden;
-    overflow-x: scroll;
   }
 }
 </style>

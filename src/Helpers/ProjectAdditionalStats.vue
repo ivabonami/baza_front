@@ -62,4 +62,24 @@ export default {
     line-height: 20px; /* 166.667% */
   }
 }
+
+@media screen and (max-width: 768px){
+  .additional-stat {
+    display: flex;
+    align-items: end;
+    gap: 5px;
+
+    .additional-stat_heading {
+      order: 2;
+      .additional-stat_header {
+        font-size: 14px;
+      }
+    }
+    .additional-stat_helper {
+      order: 1;
+      line-height: 1.6;
+      font-size: 10px;
+    }
+  }
+}
 </style>
