@@ -357,6 +357,7 @@ button {
   flex-wrap: wrap;
   align-items: start;
   gap: 2%;
+  box-sizing: border-box;
 
   .input-wrapper {
     position:  relative;

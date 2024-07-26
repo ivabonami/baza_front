@@ -81,6 +81,8 @@
       <router-link class="item" data-dropdown="dropdownSearch"
                    @click="() =>  {
                      search.query = ''
+                     this.showLiveResults = false
+                     this.showSearch = false
                      startSearch(1000)
                    }"
                    :to="`/project/` + item.id"

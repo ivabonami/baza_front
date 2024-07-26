@@ -25,11 +25,15 @@ export function changePayedStatus(projectId, status) {
         'Authorization': `Bearer ${userInfo.token}`
     };
 
-    const project = projectsStore.projects.find(item => item.id === projectId)
-    project.payed = status
+    if (projectsStore.projects.find(item => item.id === projectId)) {
+        const project = projectsStore.projects.find(item => item.id === projectId) || null
 
-    projectsStore.projects.splice(projectsStore.projects.findIndex(item => item.id === projectId), 1)
-    status === true ? projectsStore.projects.unshift(project) : projectsStore.projects.push(project)
+        project.payed = status
+
+        projectsStore.projects.splice(projectsStore.projects.findIndex(item => item.id === projectId), 1)
+        status === true ? projectsStore.projects.unshift(project) : projectsStore.projects.push(project)
+    }
+
 
     return axios.put(`${apiUrl}projects/${projectId}`, {payed: status},{headers})
 }
@@ -45,14 +49,16 @@ export function approveProject(project) {
 
 
 export function removeProject(projectId, options, offset) {
-    console.log(offset)
     const headers = {
         'Authorization': `Bearer ${userInfo.token}`
     };
-    projectsStore.projects.splice(projectsStore.projects.findIndex(item => item.id === projectId), 1)
-    options ? options = options.replace(/limit=[0-9]/i, 'limit=1') : null
-    options ? options = options.replace(/offset=[0-9]/i, `offset=${parseInt(offset)}`) : null
-    getProjects(options).then(result => projectsStore.projects.push(result.data.projects[0]))
+    if ( projectsStore.projects.findIndex(item => item.id === projectId) ) {
+        projectsStore.projects.splice(projectsStore.projects.findIndex(item => item.id === projectId), 1)
+        options ? options = options.replace(/limit=[0-9]/i, 'limit=1') : null
+        options ? options = options.replace(/offset=[0-9]/i, `offset=${parseInt(offset)}`) : null
+        getProjects(options).then(result => projectsStore.projects.push(result.data.projects[0]))
+    }
+
 
     return axios.delete(`${apiUrl}projects/${projectId}`, {headers})
 }

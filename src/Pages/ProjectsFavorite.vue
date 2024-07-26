@@ -23,7 +23,24 @@
         <div class="project" v-for="project of favoriteProjects">
           <project-card
               :project="project"
-              @favoriteChanged="emit => changeStatus(emit)"
+              @projectChangePayedStatus="emit => {
+                payedModal.projectId = project.id
+                payedModal.projectName = project.name
+                payedModal.status = emit
+                payedModal.show = true
+                console.log(emit, project.id)
+              }"
+              @deleteProject="emit => {
+                deleteModal.projectId = project.id
+                deleteModal.projectName = project.name
+                deleteModal.show = true
+              }"
+              @favoriteChanged="emit => changeFavoriteStatus(project.id, emit)"
+              @showLinksModal="emit => {
+                linksModal.show = true
+                linksModal.data = project.links
+                console.log(linksModal.data)
+              }"
           >
 
           </project-card>
@@ -32,6 +49,83 @@
       </div>
 
     </div>
+
+<!--    <popup-project-links-->
+<!--        v-if="linksModal.show"-->
+<!--        :modal="linksModal"-->
+<!--        :data="linksModal.data"-->
+<!--        @closeModal="linksModal.show = false"-->
+<!--    />-->
+
+    <popup-delete
+        @click.stop
+        :modal="deleteModal"
+        @closeModal="deleteModal.show = false"
+        @deleteConfirmed="() => {
+          favoriteProjects.splice(favoriteProjects.findIndex(item => item.id === deleteModal.projectId), 1)
+          removeProject(deleteModal.projectId)
+          deleteModal.show = false
+        }"
+
+    >
+      <template #header>
+        Удалить проект?
+      </template>
+      <template #text>
+        Вы действительно хотите удалить проект <b>{{ deleteModal.projectName }}</b>
+      </template>
+      <template #buttonConfirm>
+        Да, удалить
+      </template>
+      <template #buttonSecondary>
+        Отменить
+      </template>
+    </popup-delete>
+
+    <popup-action
+        v-if="payedModal.show === true"
+        @closeModal="payedModal.show = false"
+        @actionConfirmed="() => {
+          console.log(payedModal.projectId, payedModal.status)
+          let payed = favoriteProjects.find(item => item.id === payedModal.projectId).payed
+          favoriteProjects.find(item => item.id === payedModal.projectId).payed = !favoriteProjects.find(item => item.id === payedModal.projectId).payed
+          changePayedStatus(payedModal.projectId, payedModal.status)
+          payedModal.show = false
+        }"
+        :modal="payedModal"
+    >
+      <template #header>
+      <span v-if="payedModal.status">
+        Выделить проект?
+      </span>
+
+        <span v-else>
+        Снять выделение с проекта?
+      </span>
+
+      </template>
+      <template #text>
+            <span v-if="payedModal.status">
+        Вы собираетесь выделить проект <b>{{ payedModal.projectName }}</b>, подтвердите действие.
+      </span>
+
+        <span v-else>
+        Вы собираетесь снять выделение с проекта <b>{{ payedModal.projectName }}</b>, подтвердите действие.
+      </span>
+      </template>
+      <template #buttonConfirm>
+      <span v-if="payedModal.status">
+        Выделить
+      </span>
+
+        <span v-else>
+        Снять
+      </span>
+      </template>
+      <template #buttonSecondary>
+        Отменить
+      </template>
+    </popup-action>
 
   </div>
 
@@ -45,8 +139,10 @@ import loader from "../Layouts/BaseLoader.vue";
 import emptyStore from "../Blocks/EmptyStore.vue";
 
 import {favoriteProjects} from "../Store/favoriteProjects.js";
-import {getFavoriteProjects} from "../API/projects.js";
+import {changePayedStatus, getFavoriteProjects, removeProject} from "../API/projects.js";
 import {projectsStore} from "../Store/projectsStore.js";
+import popupDelete from "../components/Popups/PopupDelete.vue";
+import popupAction from "../components/Popups/PopupAction.vue";
 
 export default {
   name: "FavoriteProjects.vue",
@@ -55,12 +151,27 @@ export default {
     projectCard,
     Waypoint,
     loader,
+    popupAction,
+    popupDelete,
+
     emptyStore},
   emits: ['updated', 'projectDeleted'],
 
   data () {
     return {
-
+      deleteModal: {
+        show: false,
+        projectId: null,
+        projectName: null
+      },
+      changePayedStatus,
+      removeProject,
+      payedModal: {
+        show: false,
+        status: false,
+        projectId: null,
+        projectName: null,
+      },
       favoriteProjects
 
     }

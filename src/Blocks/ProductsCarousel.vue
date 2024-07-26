@@ -265,6 +265,8 @@ export default {
     flex-wrap: nowrap;
     justify-content: space-between;
     box-sizing: border-box;
+    gap: 10px;
+
 
     .products-carousel_items_item {
       box-sizing: border-box;

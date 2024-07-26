@@ -39,6 +39,7 @@
 
 
       <empty-store
+          @click="this.$router.push('/')"
           :show-button="true"
           :show-button-for-users="false"
           v-show="!loading && projects.length <= 0">

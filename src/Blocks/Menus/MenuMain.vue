@@ -62,6 +62,19 @@
 
 
 
+
+
+
+
+        </div>
+      </div>
+
+      <div class="categories-menu_items_clear" @click="$emit('projectsCategory', null)" v-if="$props.activeCategory">
+        <div class="icon">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 1L1 11M1 1L11 11" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+
         </div>
       </div>
 
@@ -160,6 +173,22 @@ export default {
   overflow-y: hidden;
   overflow-x: hidden;
   display: flex;
+  .categories-menu_items_clear {
+    cursor: pointer;
+    svg {
+      height: 20px;
+      path {
+        stroke-width: 1px;
+      }
+    }
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap:0;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
 }
 .categories-menu {
   overflow: hidden;

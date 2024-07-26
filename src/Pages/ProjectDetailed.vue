@@ -1,5 +1,5 @@
 <template >
-  <div class="wrapper" ref="wrapper">
+  <div class="wrapper2" ref="wrapper">
     <div class="project" v-if="project.name && !loading">
       <project-header
           v-if="project.name"
@@ -57,6 +57,8 @@
       </template>
     </empty-store>
 
+
+
     </div>
 
 
@@ -86,6 +88,8 @@ import projectProducts from "../Layouts/ProjectProducts.vue";
 import {useFetch} from "../assets/js/controllers/requestsControl.js";
 import emptyStore from "../Blocks/EmptyStore.vue";
 import loaderSmall from "../components/Loaders/LoaderSmall.vue";
+import popupDelete from "../components/Popups/PopupDelete.vue";
+import popupAction from "../components/Popups/PopupAction.vue";
 
 export default {
 
@@ -98,7 +102,9 @@ export default {
     loaderSmall,
     projectHeader,
     projectProducts,
-    emptyStore
+    emptyStore,
+    popupDelete,
+    popupAction
   },
   emits: ['updated', 'high'],
 

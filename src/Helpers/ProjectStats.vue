@@ -53,6 +53,8 @@ export default {
     font-style: normal;
     font-weight: 400;
     line-height: 1;
+    position: relative;
+    top: 2px;
   }
 
   &.rating {
@@ -72,18 +74,21 @@ export default {
 @media screen and (max-width: 768px){
   .stat {
     gap: 2px;
+    align-items: center;
     .stat_icon {
       width: 12px;
 
     }
     .stat_text {
-      font-size: 10px;
+      font-size: 12px;
+      position: relative;
+      top: 2px;
     }
 
     &.rating {
 
       .stat-text {
-        font-size: 10px;
+        font-size: 12px;
       }
     }
 

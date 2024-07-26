@@ -10,7 +10,7 @@
           collectProjects()
         }"
         @categoryChanged="(emit) => {
-          this.options.categoryIds = emit
+          emit === null ? delete this.options.categoryIds : this.options.categoryIds = emit
           projectsStore.projects.splice(0, projectsStore.projects.length)
           options.offset = 0
           collectProjects()
@@ -271,11 +271,24 @@ export default {
 
   },
   mounted() {
+
+    if (window.innerWidth > 1025) {
+      this.options.limit = 4
+
+    } else if (window.innerWidth > 768 && window.innerWidth < 1025) {
+      this.options.limit = 3
+    } else {
+      this.options.limit = 4
+    }
+
+
     if (projectsStore.projects.length <= 0) {
       this.collectProjects()
     } else {
       this.options.offset = projectsStore.projects.length
     }
+
+
 
   },
 

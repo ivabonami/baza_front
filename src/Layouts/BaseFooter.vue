@@ -13,7 +13,7 @@
     </div>
 
     <div class="nav">
-      <menu-header />
+      <menu-footer />
     </div>
 
     <div class="social">
@@ -55,18 +55,17 @@
 </template>
 
 <script>
-import menuHeader from "../Blocks/Menus/MenuHeader.vue";
+import menuFooter from "../Blocks/Menus/MenuFooter.vue";
 
 
 export default {
   name: "FooterView.vue",
-  components: {menuHeader}
+  components: {menuFooter}
 }
 </script>
 
 <style scoped lang="scss">
 .wrapper {
-  min-height: 100px;
   margin-top: auto;
   align-items: center;
   display: flex;

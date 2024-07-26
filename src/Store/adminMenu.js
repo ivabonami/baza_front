@@ -26,14 +26,16 @@ export const adminMenu = reactive(
 
 export const userMenu = reactive(
     [{
-        name: "Любимые",
+        name: "Избранное",
         path: '/favorite',
         icon: iconHearth,
-        auth: true
+        auth: true,
+        text: 'Избранное'
     },{
-        name: "Добавить проект",
+        name: "Проект",
         path: '/add-project',
         icon: iconPlus,
-        auth: false
+        auth: false,
+        text: 'Проект'
     }]
 )

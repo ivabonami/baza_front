@@ -2,7 +2,7 @@
   <div class="row" style="position: relative">
     <div class="d-flex justify-between align-center">
       <div class="left">
-        <router-link to="/" class="logo">
+        <router-link to="/" class="logo" @click="clearCategories()">
           <img src="../assets/images/logo.png" alt="">
         </router-link>
 
@@ -150,6 +150,13 @@ export default {
     userInfo.role === 'admin' ? this.isAdmin = true : this.isAdmin = false
 
   },
+  methods: {
+    clearCategories() {
+      if (this.$route.path === '/') {
+        cate
+      }
+    }
+  }
 }
 </script>
 

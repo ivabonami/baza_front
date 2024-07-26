@@ -145,7 +145,7 @@ export default {
 }
 @media screen and (max-width: 768px){
   .popup {
-    width: 90%;
+    width: 70%;
     flex-wrap: wrap;
     max-height: 90vh;
     overflow-x: hidden;

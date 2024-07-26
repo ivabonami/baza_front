@@ -358,7 +358,7 @@ export default {
 .project-products {
   margin-top: 30px;
   margin-bottom: 10px;
-  min-height: 300px;
+  min-height: 170px;
 
   .project-products_heading {
     color: #000;
