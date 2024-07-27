@@ -427,7 +427,7 @@ export default {
 
 <style scoped lang="scss">
 .project-reviews {
-  margin-top: 40px;
+  margin-top: 25px;
   margin-bottom: 10px;
 
   .filter {
