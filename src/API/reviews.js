@@ -3,6 +3,7 @@ import {apiUrl} from "../assets/js/config.js";
 import {userInfo} from "../Store/userInfo.js";
 import {projectReviewsStore} from "../Store/projectReviews.js";
 import re from "floating-vue";
+import {projectsStore} from "../Store/projectsStore.js";
 
 export function getReviews(options) {
     const headers = {
@@ -75,6 +76,9 @@ export async function approveReview(review) {
         'Authorization': `Bearer ${userInfo.token}`
     };
     review.isReviewed = true
+
+
+    projectsStore.projects.find(item => item.id === review.ProjectId).reviewsCount =  projectsStore.projects.find(item => item.id === review.ProjectId).reviewsCount + 1
 
     return await axios.put(`${apiUrl}reviews/${review.id}`, review, {headers})
         .then(result => result).catch(error => error)
