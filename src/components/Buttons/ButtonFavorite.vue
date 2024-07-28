@@ -1,6 +1,6 @@
 <template>
   <div
-      :class="{active: inFavorite === 1}"
+      :class="{active: favoriteStatus}"
       class="favorite"
       @click="favoriteController()"
   >
@@ -24,7 +24,8 @@ export default {
   props: {
     inFavorite: 0,
     projectId: ref(Number),
-    project: {}
+    project: {},
+    favoritePage: false,
   },
   data() {
     return {
@@ -66,12 +67,21 @@ export default {
   },
   watch: {
     inFavorite: function(newVal, oldVal) {
-      this.inFavorite === 0 ? this.favoriteStatus  = false : this.favoriteStatus = true
+      // this.$props.inFavorite === 0 ? this.inFavorite  = false : this.inFavorite = true
+      console.log(this.$props.favoritePage)
     }
   },
 
   mounted() {
-    this.inFavorite === 0 ? this.favoriteStatus  = false : this.favoriteStatus = true
+    if (this.$props.favoritePage) {
+      this.favoriteStatus = true
+    } else if (this.$props.project.favorite === 1) {
+      this.favoriteStatus = true
+    } else {
+      this.favoriteStatus  = false
+    }
+    // this.$props.inFavorite === 0 ? this.inFavorite  = false : this.inFavorite = true
+    console.log(this.$props.favoritePage)
   }
 
 }

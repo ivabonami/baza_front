@@ -12,9 +12,14 @@
       >
         <router-link active-class="active"
                      @click="closeDropdown"
+                     v-if="!link.needAuth || link.needAuth && userInfo.token"
                      :to="link.path"
                      data-dropdown="dropdownMenu"
-                     class="link">{{ link.name }}</router-link>
+                     class="link">
+          <img :src="link.icon" alt="">
+          {{ link.name }}
+
+        </router-link>
       </div>
     </div>
 
@@ -26,6 +31,7 @@
 <script>
 import {staticPages} from "../../Store/staticPages.js";
 import { useWindowSize } from '@vueuse/core'
+import {userInfo} from "../../Store/userInfo.js";
 
 export default {
   name: "MenuHeader.vue",
@@ -34,7 +40,7 @@ export default {
       staticPages,
       hideMenu: false,
       style: 'display: none',
-
+      userInfo
     }
 
 
@@ -161,11 +167,22 @@ export default {
   a {
     color: #000;
     font-family: "PT Sans Caption";
-    font-size: 16px;
+    font-size: 12px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     border-bottom: 1px solid transparent;
+    display: flex;
+    gap: 10px;
+    position: relative;
+    top: 3px;
+    padding-bottom: 5px;
+    align-items: center;
+
+    img {
+      max-width: 15px;
+
+    }
 
     object {
       width: 15px;

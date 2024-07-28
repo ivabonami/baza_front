@@ -4,9 +4,9 @@
           :class="$props.style || 'filled'"
           @click="$emit('confirmed', false)"
   >
-      <span data-dropdown="dropdown">{{ $props.username || "Войти" }}</span>
-      <slot name="icon" />
 
+      <slot name="icon" />
+      <span data-dropdown="dropdown">{{ $props.username || "Войти" }}</span>
   </button>
 </template>
 
@@ -56,7 +56,7 @@ export default {
 
   span {
     color: #126DF7;
-    font-size: 14px;
+    font-size: 12px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;

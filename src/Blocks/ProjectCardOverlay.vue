@@ -33,6 +33,7 @@
           :inFavorite="$props.inFavorite"
           :project-id="$props.projectId"
           :project="$props.project"
+          :favoritePage="$props.favoritePage"
           @favoriteChanged="$emit('favoriteChanged', $props.projectId)"
       />
     </div>
@@ -78,7 +79,8 @@ export default {
     projectOwner: null,
     isPayed: false,
     projectName: null,
-    project: {}
+    project: {},
+    favoritePage: false
   },
   emits: ['projectChangePayedStatus', 'pressed', 'favoriteChanged', 'deleteProject'],
   data() {

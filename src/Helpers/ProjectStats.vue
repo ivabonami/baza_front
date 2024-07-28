@@ -74,7 +74,7 @@ export default {
 @media screen and (max-width: 768px){
   .stat {
     gap: 2px;
-    align-items: center;
+    align-items: start;
     .stat_icon {
       width: 12px;
 
@@ -83,6 +83,10 @@ export default {
       font-size: 12px;
       position: relative;
       top: 2px;
+      max-width: 55px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     &.rating {

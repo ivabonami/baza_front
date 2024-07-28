@@ -211,7 +211,7 @@ export default {
 .project-reviews_items {
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: 20px;
 
   .project-reviews_items_item {
     width: 100%;

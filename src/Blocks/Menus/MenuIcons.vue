@@ -56,7 +56,7 @@ export default {
 
 <style scoped lang="scss">
 .icons-menu {
-  display: flex;
+  display: none;
   gap: 10px;
 
   .icon-menu_link {

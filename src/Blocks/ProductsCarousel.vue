@@ -146,6 +146,7 @@ export default {
     next() {
       this.carousel.wrapperWidth = this.$refs.carouselItemsWrapper.scrollWidth
       this.carousel.slideStep = this.$refs.sliderItem[1].scrollWidth + 20
+      this.$refs.sliderItem[0].style.display = "none"
 
       this.carousel.styles = {
         transform: `translateX(-${this.carousel.slideStep}px)`,
@@ -156,13 +157,14 @@ export default {
         const product = productsStore.products.shift()
         productsStore.products.push(product)
         this.resetTranslate()
+        this.$refs.sliderItem[0].style.display = "flex"
       })
 
     },
     prev() {
       this.carousel.wrapperWidth = this.$refs.carouselItemsWrapper.scrollWidth
       this.carousel.slideStep = this.$refs.sliderItem[1].scrollWidth + 20
-
+      this.$refs.sliderItem[4].style.display = "none"
 
       this.carousel.styles = {
         transform: `translateX(${this.carousel.slideStep}px)`,
@@ -173,6 +175,7 @@ export default {
         const product = productsStore.products.pop()
         productsStore.products.unshift(product)
         this.resetTranslate()
+        this.$refs.sliderItem[4].style.display = "flex"
       })
     },
 

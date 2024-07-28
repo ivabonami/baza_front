@@ -4,31 +4,31 @@
     <div class="project-reviews">
       <div class="project-reviews_heading">
         <h2>Отзывы</h2>
-        <button-action
-            v-if="!projectReviewsStore.reviews.find(review => review.userData.username === userInfo.username)"
-            @click="() => {
-            if (userInfo.username) {
-              modalReviewsController.show = true
-              modalReviewsController.mode = 'add'
-              modalReviewsController.buttonConfirmText = 'Оставить отзыв'
-              modalReviewsController.product = null
-              modalReviewsController.projectId = this.$props.project.id
-            } else {
-              modalAuth.show = true
-            }
+<!--        <button-action-->
+<!--            v-if="!projectReviewsStore.reviews.find(review => review.userData.username === userInfo.username)"-->
+<!--            @click="() => {-->
+<!--            if (userInfo.username) {-->
+<!--              modalReviewsController.show = true-->
+<!--              modalReviewsController.mode = 'add'-->
+<!--              modalReviewsController.buttonConfirmText = 'Оставить отзыв'-->
+<!--              modalReviewsController.product = null-->
+<!--              modalReviewsController.projectId = this.$props.project.id-->
+<!--            } else {-->
+<!--              modalAuth.show = true-->
+<!--            }-->
 
 
-          }"
-        >
-          <template #text>
-            Оставить
-          </template>
-          <template #icon>
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M9 5.8V12.2M5.8 9H12.2M17 9C17 13.4183 13.4183 17 9 17C4.58172 17 1 13.4183 1 9C1 4.58172 4.58172 1 9 1C13.4183 1 17 4.58172 17 9Z" stroke="#4E4E4E" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </template>
-        </button-action>
+<!--          }"-->
+<!--        >-->
+<!--          <template #text>-->
+<!--            Оставить-->
+<!--          </template>-->
+<!--          <template #icon>-->
+<!--            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">-->
+<!--              <path d="M9 5.8V12.2M5.8 9H12.2M17 9C17 13.4183 13.4183 17 9 17C4.58172 17 1 13.4183 1 9C1 4.58172 4.58172 1 9 1C13.4183 1 17 4.58172 17 9Z" stroke="#4E4E4E" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--            </svg>-->
+<!--          </template>-->
+<!--        </button-action>-->
         <div class="filter">
           <sort
               :sort="sorts"
@@ -158,7 +158,9 @@
     <div class="add-review" :class="{mt: projectReviewsStore.reviews.length > 0}">
       <empty-store
           :show-button="true"
-          :show-button-for-users="false"
+          :show-button-for-users="true"
+          :show-button-for-unauthorised="true"
+          :hideReviewButton="alreadyReviewed"
           @click="() => {
             if (userInfo.username) {
               modalReviewsController.show = true
@@ -166,10 +168,13 @@
               modalReviewsController.buttonConfirmText = 'Оставить отзыв'
               modalReviewsController.product = null
               modalReviewsController.projectId = this.$props.project.id
+            } else {
+              modalAuth.show = true
             }
           }">
         <template #header>
           <span v-if="projectReviewsStore.reviews.length <= 0">Никто еще не оставил отзывов о</span>
+          <span v-else-if="projectReviewsStore.reviews.find(item => item.userData.username === userInfo.username)">Вы уже оставляли отзыв о</span>
           <span v-else>Оставьте отзыв о </span>
         </template>
         <template #text>
@@ -324,6 +329,7 @@ export default {
       },
       months: ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'],
 
+      alreadyReviewed: false,
       sorts: [
 
         {
@@ -401,7 +407,10 @@ export default {
   },
   watch: {
     project: function (newVal, oldVal) {
-      getReviews({projectId: newVal.id, sort: this.selectedSort.sort})
+      getReviews({projectId: newVal.id, sort: this.selectedSort.sort}).then(() => {
+        projectReviewsStore.reviews.find(item => item.userData.username === userInfo.username) ? this.alreadyReviewed = true : null
+        console.log(this.alreadyReviewed)
+      })
 
       for (let i = 0; i < this.project.ratingAvg; i++) {
         this.$refs.stars.childNodes[i].classList.add('active')
@@ -414,7 +423,10 @@ export default {
   },
 
   mounted() {
-    getReviews({projectId: this.$props.project.id})
+    getReviews({projectId: this.$props.project.id}).then(() => {
+      projectReviewsStore.reviews.find(item => item.userData.username === userInfo.username) ? this.alreadyReviewed = true : null
+      console.log(this.alreadyReviewed)
+    })
 
     for (let i = 0; i < this.project.ratingAvg; i++) {
       this.$refs.stars.childNodes[i].classList.add('active')
@@ -447,7 +459,7 @@ export default {
     gap: 20px;
 
     align-items: end;
-    margin-bottom: 10px;
+    margin-bottom: -5px;
 
     h2 {
       margin-top: -10px;
@@ -529,7 +541,7 @@ export default {
 .project-reviews {
 
   .project-reviews_heading {
-    align-items: end;
+    align-items: center;
     gap: 10px;
     h2 {
       margin-top: 0;
@@ -548,7 +560,7 @@ export default {
 .project-reviews_items {
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: 10px;
   ;
 
   .project-reviews_items_item {
@@ -702,6 +714,7 @@ export default {
         margin-bottom: 5px;
       }
       .menu {
+        width: 100%;
         margin: 0;
       }
     }
@@ -710,7 +723,7 @@ export default {
   .project-reviews {
     .project-reviews_heading {
 
-      gap: 5px;
+      gap: 15px;
       h2 {
         font-size: 16px;
       }

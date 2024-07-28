@@ -62,7 +62,7 @@ export default {
   a {
     color: #000;
     font-family: "PT Sans Caption";
-    font-size: 16px;
+    font-size: 12px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;

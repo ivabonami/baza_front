@@ -9,6 +9,7 @@
       :isPayed="$props.project.payed"
       :projectName="$props.project.name"
       :project="$props.project"
+      :favoritePage="this.$props.favoritePage"
 
       @projectChangePayedStatus="emit => $emit('projectChangePayedStatus', emit)"
       @favoriteChanged="emit => $emit('favoriteChanged', emit)"
@@ -35,29 +36,7 @@
 
 
 
-      <div class="project-card_links">
 
-        <div v-for="(link, index) of spredLinks($props.project.links)"
-             class="project-card_links_link"
-             v-show="index < 2"
-        >
-          <project-external-link
-              @click.stop
-              :link="link"
-          />
-
-
-        </div>
-
-        <a v-show="$props.project.links.length >= 2"
-           href="javascript:void(0);"
-             @click.stop
-             @click="$emit('showLinksModal', this.$props.project.links)"
-             class="show-more">
-          ...
-        </a>
-
-      </div>
 
       <div class="project-card_stats">
 
@@ -115,6 +94,30 @@
 
       </div>
 
+      <div class="project-card_links">
+
+        <div v-for="(link, index) of spredLinks($props.project.links)"
+             class="project-card_links_link"
+             v-show="index < 2"
+        >
+          <project-external-link
+              @click.stop
+              :link="link"
+          />
+
+
+        </div>
+
+        <a v-show="$props.project.links.length >= 2"
+           href="javascript:void(0);"
+           @click.stop
+           @click="$emit('showLinksModal', this.$props.project.links)"
+           class="show-more">
+          ...
+        </a>
+
+      </div>
+
     </div>
   </router-link>
 
@@ -154,7 +157,9 @@ export default {
   props: {
     project: {},
     options: null,
-    offset: null
+    offset: null,
+    favoritePage: null,
+
   },
   emits: ['updated', 'favoriteChanged'],
   components: {
@@ -304,7 +309,7 @@ export default {
       height: 40px;
       font-size: 16px;
       font-style: normal;
-      font-weight: 400;
+      font-weight: 600;
       line-height: normal;
       text-overflow: ellipsis;
       display: -moz-box;
@@ -319,12 +324,13 @@ export default {
       display: flex;
       gap: 10px;
       align-items: center;
-      margin-top: 10px;
+      margin-top: 5px;
 
 
 
     }
     .project-card_links {
+      margin-top: 10px;
       display: flex;
       flex-wrap: wrap;
       gap: 5px;
@@ -359,7 +365,7 @@ export default {
     font-size: 14px;
   }
   .project-card_wrapper .project-card_body .project-card_links .show-more {
-    padding: 2px;
+    padding: 2px 5px;
     font-size: 11px;
   }
 }

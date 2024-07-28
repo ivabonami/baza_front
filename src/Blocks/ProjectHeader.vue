@@ -52,9 +52,9 @@
             </template>
           </project-stats>
 
-          <svg xmlns="http://www.w3.org/2000/svg" width="3"  v-if="isAdmin"  height="3" viewBox="0 0 3 3" fill="none">
-            <circle cx="1.5" cy="1.5" r="1.5" fill="#A8A8A8"/>
-          </svg>
+<!--          <svg xmlns="http://www.w3.org/2000/svg" width="3"  v-if="isAdmin"  height="3" viewBox="0 0 3 3" fill="none">-->
+<!--            <circle cx="1.5" cy="1.5" r="1.5" fill="#A8A8A8"/>-->
+<!--          </svg>-->
 
         </div>
         <button-action v-if="isAdmin" @click="this.$router.push({name: 'ProjectEdit'})">
@@ -84,7 +84,7 @@
               </svg>
             </template>
             <template #helper>
-              мин. обмен
+              Мин. обмен
             </template>
           </project-additional-stats>
 
@@ -98,50 +98,13 @@
               </svg>
             </template>
             <template #helper>
-              резерв
+              Резерв
             </template>
           </project-additional-stats>
         </div>
 
 
       </div>
-    </div>
-
-    <div class="project-header_info_stats_exchanger mobile_version" v-if="$props.project.type === 'exchanger'">
-
-
-      <div
-          class="project-header_info_stats_exchanger_item">
-        <project-additional-stats>
-          <template #header>
-            {{ normalizeReserveSumm($props.project.minValueToExchange) }} ₽
-          </template>
-          <template #icon>
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M3 3L4 2M4 2L3 1M4 2H3C1.89543 2 1 2.89543 1 4M9 9L8 10M8 10L9 11M8 10H9C10.1046 10 11 9.10457 11 8M5.09451 3.25C5.42755 1.95608 6.60212 1 8 1C9.65685 1 11 2.34315 11 4C11 5.39787 10.0439 6.57244 8.75003 6.90548M7 8C7 9.65685 5.65685 11 4 11C2.34315 11 1 9.65685 1 8C1 6.34315 2.34315 5 4 5C5.65685 5 7 6.34315 7 8Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </template>
-          <template #helper>
-            мин. обмен
-          </template>
-        </project-additional-stats>
-
-        <project-additional-stats>
-          <template #header>
-            {{ normalizeReserveSumm($props.project.reserve) }} ₽
-          </template>
-          <template #icon>
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M3 3L4 2M4 2L3 1M4 2H3C1.89543 2 1 2.89543 1 4M9 9L8 10M8 10L9 11M8 10H9C10.1046 10 11 9.10457 11 8M5.09451 3.25C5.42755 1.95608 6.60212 1 8 1C9.65685 1 11 2.34315 11 4C11 5.39787 10.0439 6.57244 8.75003 6.90548M7 8C7 9.65685 5.65685 11 4 11C2.34315 11 1 9.65685 1 8C1 6.34315 2.34315 5 4 5C5.65685 5 7 6.34315 7 8Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </template>
-          <template #helper>
-            резерв
-          </template>
-        </project-additional-stats>
-      </div>
-
-
     </div>
 
 
@@ -298,8 +261,10 @@ export default {
 
       if (window.innerWidth > 768) {
         this.stats.categories.stat = this.$props.project.categories[0].name
-      } else {
+      } else if (window.innerWidth > 768 && this.$props.project.viewCount > 1000 ) {
         this.stats.categories.stat = this.$props.project.categories[0].name.substring(0, 4) + '...'
+      } else {
+        this.stats.categories.stat = this.$props.project.categories[0].name
       }
 
 
@@ -335,10 +300,15 @@ export default {
     project: function(newVal, oldVal) {
       this.setStats()
 
-      this.$props.project.name.length > 39 ?  this.normalizedName = this.$props.project.name.substring(0, 42) + '...' :  this.normalizedName = this.$props.project.name
+      if (window.innerWidth > 768) {
+        this.$props.project.name.length > 39 ?  this.normalizedName = this.$props.project.name.substring(0, 42) + '...' :  this.normalizedName = this.$props.project.name
+        console.log(window.innerWidth)
+      } else {
+        this.$props.project.name.length > 29 ?  this.normalizedName = this.$props.project.name.substring(0, 22) + '...' :  this.normalizedName = this.$props.project.name
+        console.log(window.innerWidth)
+      }
 
-
-
+      console.log(123)
       if (userInfo.username) {
         userInfo.username === this.$props.project.userData.username ? this.isAdmin = true :  this.isAdmin = false
         userInfo.role === 'admin' ? this.isAdmin = true :  this.isAdmin = false
@@ -354,7 +324,7 @@ export default {
     if (window.innerWidth > 768) {
       this.$props.project.name.length > 80 ?  this.normalizedName = this.$props.project.name.substring(0, 77) + '...' :  this.normalizedName = this.$props.project.name
     } else {
-      this.$props.project.name.length > 45 ?  this.normalizedName = this.$props.project.name.substring(0, 42) + '...' :  this.normalizedName = this.$props.project.name
+      this.$props.project.name.length > 33 ?  this.normalizedName = this.$props.project.name.substring(0, 29) + '...' :  this.normalizedName = this.$props.project.name
     }
 
 
@@ -476,7 +446,7 @@ export default {
     .project-header_info_stats_exchanger {
       flex-basis: 28%;
       box-sizing: border-box;
-      margin-top: 5px;
+      margin-top: 2px;
 
       .project-header_info_stats_exchanger_item {
         display: flex;
@@ -506,7 +476,7 @@ export default {
     font-size: 14px;
   }
   .hideOnMobile {
-    width: 0;
+    width: 55px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -514,7 +484,7 @@ export default {
   .project-header {
     flex-wrap: wrap;
     gap: 10px;
-    align-items: stretch;
+    align-items: center;
     word-break: break-all;
 
     .project-header_links {
@@ -532,12 +502,16 @@ export default {
     .project-header_info {
       flex-basis: 75%;
       flex-wrap: wrap;
-      gap: 0;
+      box-sizing: border-box;
+      gap: 2px;
+      height: 100%;
+      margin-top: 15px;
 
       .project-header_info_stats {
         flex-basis: 100%;
         width: 100%;
-        gap: 5px;
+        gap: 8px;
+        margin-top: -15px;
 
         .project-header_info_header {
           width: 100%;
@@ -555,7 +529,7 @@ export default {
         flex-basis: 100%;
 
         &.pc_version {
-          display: none;
+
         }
 
 

@@ -23,6 +23,7 @@
         <div class="project" v-for="project of favoriteProjects">
           <project-card
               :project="project"
+              :favoritePage="true"
               @projectChangePayedStatus="emit => {
                 payedModal.projectId = project.id
                 payedModal.projectName = project.name
@@ -208,7 +209,7 @@ export default {
 .projects-wrapper {
 
   width: 100%;
-  padding: 10px;
+  padding-top: 30px;
 
 
   h3 {

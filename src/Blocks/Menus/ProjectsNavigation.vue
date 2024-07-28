@@ -76,10 +76,10 @@ export default {
 
     .categories-menu {
       margin-bottom: 0;
-      width: 90%;
+      width: 87%;
     }
     .filter {
-      width: 10%;
+      width: 13%;
     }
   }
 

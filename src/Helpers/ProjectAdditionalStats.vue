@@ -41,7 +41,7 @@ export default {
     gap: 8px;
 
     .additional-stat_header {
-      color: #000;
+      color: var(--gray, #A8A8A8);
       font-family: "PT Sans Caption";
       font-size: 16px;
       font-style: normal;
@@ -72,13 +72,14 @@ export default {
     .additional-stat_heading {
       order: 2;
       .additional-stat_header {
-        font-size: 14px;
+        font-size: 12px;
       }
     }
     .additional-stat_helper {
       order: 1;
       line-height: 1.6;
       font-size: 10px;
+      display: none;
     }
   }
 }

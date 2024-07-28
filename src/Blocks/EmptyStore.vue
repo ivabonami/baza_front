@@ -9,7 +9,7 @@
 
     <div class="button-wrapper">
       <button-primary
-          v-show="$props.showButtonForUsers && userInfo.token || $props.showButton && userInfo.role === 'admin'"
+          v-show="$props.showButtonForUsers && userInfo.token && this.$props.hideReviewButton === false || $props.showButton && userInfo.role === 'admin' && this.$props.hideReviewButton === false || $props.showButtonForUnauthorised && this.$props.hideReviewButton === false"
           @close="$emit('buttonPressed', true)"
           :style="'filled'">
         <template #default>
@@ -17,6 +17,7 @@
         </template>
       </button-primary>
     </div>
+    
 
 
 
@@ -44,6 +45,8 @@ export default {
   props: {
     showButton: false,
     showButtonForUsers: true,
+    showButtonForUnauthorised: false,
+    hideReviewButton: false
 
   },
   data() {

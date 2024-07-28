@@ -117,7 +117,7 @@
           }"
         v-show="!loading && products.length <= 0">
       <template #header>
-        В этом проекте, пока что, отстутствуют товары и услуги
+        Витрина пуста
       </template>
       <template #text>
         ожидайте обновлений

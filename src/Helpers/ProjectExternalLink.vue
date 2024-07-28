@@ -174,7 +174,7 @@ export default {
 
 @media screen and (max-width: 768px){
   .project-external {
-    padding: 2px;
+    padding: 2px 5px;
 
     .project-external_text {
       font-size: 11px;

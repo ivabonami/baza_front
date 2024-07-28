@@ -59,6 +59,7 @@ export default {
     transition: .15s ease;
     padding-right: 6px;
     padding-left: 0;
+
   }
 
   &:hover {
