@@ -32,10 +32,10 @@ export const userMenu = reactive(
         auth: true,
         text: 'Избранное'
     },{
-        name: "Проект",
+        name: "Разместить",
         path: '/add-project',
         icon: iconPlus,
         auth: false,
-        text: 'Проект'
+        text: 'Разместить'
     }]
 )
