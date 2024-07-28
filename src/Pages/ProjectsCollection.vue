@@ -42,7 +42,9 @@
                 deleteModal.projectName = project.name
                 deleteModal.show = true
               }"
-              @favoriteChanged="emit => changeFavoriteStatus(project.id, emit)"
+              @favoriteChanged="emit => {
+
+              }"
               @showLinksModal="emit => {
                 linksModal.show = true
                 linksModal.data = project.links
@@ -155,6 +157,7 @@
         Отменить
       </template>
     </popup-action>
+
   </div>
 
 
@@ -178,7 +181,7 @@ import 'tippy.js/dist/tippy.css'
 import popupProjectLinks from "../components/Popups/PopupProjectLinks.vue";
 import popupDelete from "../components/Popups/PopupDelete.vue";
 import popupAction from "../components/Popups/PopupAction.vue";
-
+import notice from "../components/Popups/Notice.vue";
 export default {
   name: "AllProjectsWithSort.vue",
   components: {
@@ -190,7 +193,8 @@ export default {
     buttonPrimary,
     popupProjectLinks,
     popupDelete,
-    popupAction
+    popupAction,
+    notice
   },
   emits: ['updated', 'projectDeleted'],
 
@@ -236,6 +240,11 @@ export default {
           sort: 'popularity'
         },
         categoryIds: 0
+      },
+      notice: {
+        show: false,
+        color: null,
+        text: {}
       },
       linksModal: {
         show: false,

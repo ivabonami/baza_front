@@ -232,10 +232,14 @@ export default {
     },
     normalizeInt(summ) {
       let number = summ.toString()
-      if (number.length > 6) {
-        number = number.substring(0, number.length - 6) + 'м+'
+      if (number.length > 12) {
+        number = number.substring(0, number.length - 6) + 'трлн'
+      } else if (number.length > 9) {
+        number = number.substring(0, number.length - 6) + 'млрд'
+      } else if (number.length > 6) {
+        number = number.substring(0, number.length - 6) + 'млн'
       } else if (number.length > 3) {
-        number = number.substring(0, number.length - 3) + 'к+'
+        number = number.substring(0, number.length - 3) + 'тыс'
       }
 
       return number

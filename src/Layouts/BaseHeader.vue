@@ -68,7 +68,7 @@
     </div>
 
     <popup-action
-        v-show="modal.show === true"
+        v-if="modal.show === true"
         @closeModal="modal.show = false"
         @actionConfirmed="() => {
           signOut()

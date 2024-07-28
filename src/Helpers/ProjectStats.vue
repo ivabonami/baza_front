@@ -32,9 +32,10 @@ export default {
 
   .stat_icon {
     width: auto;
-    height: 10px;
+    height: 14px;
     align-self: center;
     display: flex;
+    align-items: center;
 
     svg {
       width: 10px;
@@ -54,7 +55,6 @@ export default {
     font-weight: 400;
     line-height: 1;
     position: relative;
-    top: 2px;
   }
 
   &.rating {

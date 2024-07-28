@@ -318,10 +318,14 @@ export default {
 
     normalizeReserveSumm(summ) {
       let number = summ.toString()
-      if (number.length > 6) {
-        number = number.substring(0, number.length - 6) + 'м+'
+      if (number.length > 12) {
+        number = number.substring(0, number.length - 12) + 'трлн'
+      } else if (number.length > 9) {
+        number = number.substring(0, number.length - 9) + 'млрд'
+      } else if (number.length > 6) {
+        number = number.substring(0, number.length - 6) + 'млн'
       } else if (number.length > 3) {
-        number = number.substring(0, number.length - 3) + 'к+'
+        number = number.substring(0, number.length - 3) + 'к'
       }
 
       return number
@@ -470,7 +474,7 @@ export default {
       }
     }
     .project-header_info_stats_exchanger {
-      flex-basis: 25%;
+      flex-basis: 28%;
       box-sizing: border-box;
       margin-top: 5px;
 

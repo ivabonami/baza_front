@@ -209,6 +209,7 @@ export default {
 
   .nav {
     z-index: 2;
+    box-sizing: border-box;
     &.next {
 
     }
@@ -218,7 +219,7 @@ export default {
 
     svg {
       cursor: pointer;
-      height: 35px;
+      height: 32px;
 
       rect {
         opacity: .6;

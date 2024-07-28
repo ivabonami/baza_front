@@ -446,11 +446,12 @@ export default {
     display: flex;
     gap: 20px;
 
-    align-items: center;
-    margin-bottom: 20px;
+    align-items: end;
+    margin-bottom: 10px;
 
     h2 {
       margin-top: -10px;
+      line-height: 2;
     }
 
     .project-rating {
@@ -528,14 +529,14 @@ export default {
 .project-reviews {
 
   .project-reviews_heading {
-    align-items: center;
+    align-items: end;
     gap: 10px;
     h2 {
       margin-top: 0;
       font-size: 20px;
-      line-height: 1.5;
+      line-height: 1.2;
       position: relative;
-      top: -2px;
+
     }
   }
   .filter {
