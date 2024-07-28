@@ -49,6 +49,9 @@ export default {
     return {
       linkColors: [{
           name: 'Зеркало',
+          color: 'green'
+        },{
+          name: 'Зеркало VPN',
           color: 'yellow'
         },{
           name: 'Onion',
@@ -177,7 +180,12 @@ export default {
     padding: 2px 5px;
 
     .project-external_text {
-      font-size: 11px;
+      max-width: 50px;
+      font-size: 9px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      overflow:hidden;
     }
 
   }

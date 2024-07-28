@@ -333,7 +333,7 @@ export default {
       margin-top: 10px;
       display: flex;
       flex-wrap: wrap;
-      gap: 5px;
+      gap: 2px;
       width: 100%;
       margin-left: -0px;
 
