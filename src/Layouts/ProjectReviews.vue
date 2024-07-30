@@ -409,7 +409,7 @@ export default {
     project: function (newVal, oldVal) {
       getReviews({projectId: newVal.id, sort: this.selectedSort.sort}).then(() => {
         projectReviewsStore.reviews.find(item => item.userData.username === userInfo.username) ? this.alreadyReviewed = true : null
-        console.log(this.alreadyReviewed)
+
       })
 
       for (let i = 0; i < this.project.ratingAvg; i++) {
@@ -425,7 +425,7 @@ export default {
   mounted() {
     getReviews({projectId: this.$props.project.id}).then(() => {
       projectReviewsStore.reviews.find(item => item.userData.username === userInfo.username) ? this.alreadyReviewed = true : null
-      console.log(this.alreadyReviewed)
+
     })
 
     for (let i = 0; i < this.project.ratingAvg; i++) {

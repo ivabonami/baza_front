@@ -221,6 +221,7 @@
       </div>
 
       <div class="links">
+        <transition-group name="list">
         <div class="link" v-for="link of project.links">
           <project-external-link
               :link="link"
@@ -228,6 +229,7 @@
               @removeLink="emit => project.links.splice(project.links.findIndex(item => item.link === emit), 1)"
           />
         </div>
+        </transition-group>
 
 
       </div>
@@ -376,8 +378,8 @@ export default {
 
           link: {
             name: 'Ссылка',
-            placeholder: 'От 5 до 255 символов',
-            tooltip: 'На главной странице и на странице проекта отображаются только первые 90 символов, будьте внимательны.',
+            placeholder: 'начиная с https://',
+            tooltip: 'Вводить ссылку нужно начиная с http:// или https://, в противном случае добавить ее не получится.',
             min: 5,
             max: 255,
           }
@@ -398,6 +400,7 @@ export default {
 
         description: {
           name: 'Описание',
+          tooltip: 'От 30 символов.',
           placeholder: 'От 30 символов.',
           min: 30,
           max: 65535,
@@ -433,7 +436,7 @@ export default {
   methods: {
 
     addLinkToProject() {
-      console.log(this.linkToAdd.link)
+
 
       if (this.linkToAdd.name === null || !this.linkToAdd.link) {
 

@@ -7,7 +7,7 @@
               document.addEventListener('keydown', e => {this.closeDropdown()})
               document.addEventListener('mousedown', e => {
                 if (e.target.dataset.dropdown !== 'true') {
-                  console.log(e.target.dataset.dropdown)
+
                   this.closeDropdown()
                 }
               })
@@ -97,7 +97,7 @@ export default {
     document.removeEventListener('keydown', this.closeDropdown)
     document.removeEventListener('mousedown', e => {
       if (e.target.dataset.dropdown !== 'true') {
-        console.log(e.target.dataset.dropdown)
+
         this.closeDropdown()
       }
     })
@@ -128,7 +128,7 @@ export default {
   .filter_current {
     border-radius: 10px;
     border: 1px solid var(--gray-2, #D8D8D8);
-    width: 150px;
+    width: 125px;
     display: flex;
     gap: 10px;
     padding: 8px;

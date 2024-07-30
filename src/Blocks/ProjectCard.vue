@@ -242,9 +242,9 @@ export default {
       } else if (number.length > 9) {
         number = number.substring(0, number.length - 6) + 'млрд'
       } else if (number.length > 6) {
-        number = number.substring(0, number.length - 6) + 'млн'
+        number = number.substring(0, number.length - 6) + ' ' + number.substring(1, number.length - 3) + ' ' + number.substring(4, number.length)
       } else if (number.length > 3) {
-        number = number.substring(0, number.length - 3) + 'тыс'
+        number = number.substring(0, number.length - 3) + ' ' + number.substring(1, number.length)
       }
 
       return number

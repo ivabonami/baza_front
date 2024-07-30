@@ -527,7 +527,7 @@ textarea {
     width: 100%;
     min-height: 20px;
     height: auto;
-    max-height: 500px;
+    max-height: 800px;
     overflow: hidden;
 
     position: relative;
@@ -724,7 +724,7 @@ h3 {
     }
     .project-banner {
       padding: 0;
-      max-height: 400px;
+      max-height: 800px;
       height: auto;
       img {
         border-radius: 10px;

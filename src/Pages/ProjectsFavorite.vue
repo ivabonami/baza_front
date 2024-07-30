@@ -29,7 +29,7 @@
                 payedModal.projectName = project.name
                 payedModal.status = emit
                 payedModal.show = true
-                console.log(emit, project.id)
+
               }"
               @deleteProject="emit => {
                 deleteModal.projectId = project.id
@@ -40,7 +40,7 @@
               @showLinksModal="emit => {
                 linksModal.show = true
                 linksModal.data = project.links
-                console.log(linksModal.data)
+
               }"
           >
 
@@ -87,7 +87,7 @@
         v-if="payedModal.show === true"
         @closeModal="payedModal.show = false"
         @actionConfirmed="() => {
-          console.log(payedModal.projectId, payedModal.status)
+
           let payed = favoriteProjects.find(item => item.id === payedModal.projectId).payed
           favoriteProjects.find(item => item.id === payedModal.projectId).payed = !favoriteProjects.find(item => item.id === payedModal.projectId).payed
           changePayedStatus(payedModal.projectId, payedModal.status)

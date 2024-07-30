@@ -56,16 +56,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.timer {
-  width: 100%;
-  height: 5px;
-  background-color: #4b0f1b;
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  animation: toLeft 5s ease-in;
-}
+
 @keyframes toLeft {
   0% {
     width: 100%;
@@ -102,12 +93,29 @@ export default {
     }
   }
 
+  .timer {
+    width: 100%;
+    height: 5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    animation: toLeft 5s ease-in;
+  }
+
   &.red {
     background-color: rgba(154, 41, 41, 0.7);
+    .timer {
+      background-color: #4b0f1b;
+
+    }
   }
 
   &.green {
     background-color: rgba(46, 126, 54, .7);
+    .timer {
+      background-color: #0f4b10;
+    }
   }
 
   &.yellow {

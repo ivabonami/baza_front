@@ -152,9 +152,12 @@ export default {
   },
   methods: {
     clearCategories() {
-      if (this.$route.path === '/') {
-        cate
+      if (this.$route.path === '/' && this.$route.query.clear !== 'true' ) {
+        this.$router.replace('/?clear=true')
+      } else {
+        this.$router.replace('/')
       }
+
     }
   }
 }

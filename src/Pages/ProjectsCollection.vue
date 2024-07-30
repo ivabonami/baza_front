@@ -35,7 +35,7 @@
                 payedModal.projectName = project.name
                 payedModal.status = emit
                 payedModal.show = true
-                console.log(emit, project.id)
+
               }"
               @deleteProject="emit => {
                 deleteModal.projectId = project.id
@@ -44,11 +44,15 @@
               }"
               @favoriteChanged="emit => {
 
+                notice.show = true
+                notice.color = 'green'
+                notice.text = {success: 'Успешно!'}
+
               }"
               @showLinksModal="emit => {
                 linksModal.show = true
                 linksModal.data = project.links
-                console.log(linksModal.data)
+
               }"
 
           />
@@ -95,7 +99,7 @@
         @closeModal="deleteModal.show = false"
         @deleteConfirmed="() => {
           removeProject(deleteModal.projectId, link, options.offset).then(() => {
-            this.options.offset++
+
           })
 
           deleteModal.show = false
@@ -158,6 +162,8 @@
       </template>
     </popup-action>
 
+
+    <notice v-if="notice.show" :notice="notice" :errors="notice.text" @closeNotice="notice.show = false" />
   </div>
 
 
@@ -280,6 +286,7 @@ export default {
 
   },
   mounted() {
+    projectsStore.projects.splice(0, projectsStore.projects.length)
 
     if (window.innerWidth > 1025) {
       this.options.limit = 4
@@ -327,7 +334,7 @@ export default {
           projectsStore.projects.push(project)
         }
 
-        result.data.projects.length < 4 ? this.showLoadMore = false : this.showLoadMore = true
+        result.data.projects.length < this.options.limit ? this.showLoadMore = false : this.showLoadMore = true
 
         this.options.offset += this.options.limit
         this.isLoading = false

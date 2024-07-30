@@ -19,6 +19,7 @@ export default {
       isLoaded: false,
       isAdmin: false,
       showScrollTopButton: false,
+      clearCategory: false,
     }
   },
   setup() {
@@ -43,6 +44,7 @@ export default {
     }
   },
   mounted() {
+    window.addEventListener('scroll', this.handleScroll);
     this.historyCount = window.history.length
     this.isLoaded = true
     window.innerWidth >= 768 ? this.showMobileMenu = true : this.showMobileMenu = false
@@ -61,7 +63,7 @@ export default {
   <div class="global-wrapper" v-if="this.isLoaded === true" ref="wrapper">
 
     <header class="header wrapper">
-      <baza-header></baza-header>
+      <baza-header />
     </header>
 
 
@@ -95,12 +97,15 @@ export default {
 
       </div>
     </section>
-    <div class="scroll-to-top" v-if="showScrollTopButton === true" ref="scrollToTop" @click="scrollToTop()">
-      <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M13 7L7 1L1 7" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+    <div class="scroll-to-top-wrapper">
+      <div class="scroll-to-top" v-if="showScrollTopButton === true" ref="scrollToTop" @click="scrollToTop()">
+        <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 7L7 1L1 7" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
 
+      </div>
     </div>
+
     <base-footer />
   </div>
 
@@ -115,29 +120,45 @@ export default {
 header {
   padding: 10px 15px;
 }
-.scroll-to-top {
-  z-index: 10;
-  padding: 1em;
-  max-width: 1440px;
-  margin: 0 auto 20px;
-  display: flex;
-  justify-content: end;
-  box-sizing: border-box;
+.scroll-to-top-wrapper {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  height: 0;
   right: 0;
+  left: 0;
   z-index: 30;
   position: fixed;
-  bottom: 20px;
+  bottom: 80px;
+  display: flex;
+  justify-content: end;
+}
+.scroll-to-top {
+  box-sizing: border-box;
   transition: .3s ease;
+  border: 1px solid black;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+
 
 
   svg {
     box-sizing: border-box;
     cursor: pointer;
+    display: flex;
+    width: 15px;
+    height: 15px;
+    position: relative;
+    left: 3px;
+    top: 2px;
 
     path {
       stroke: black;
       background-color: #FFC700;
-      padding: 15px;
       border-radius: 20px;
     }
   }

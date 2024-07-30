@@ -77,8 +77,6 @@ export async function editProject(project, projectId) {
         let projectToReplace = projectsStore.projects.findIndex(item => item.id === projectId)
         result.data.updatedProject.favorite = project.favorite
 
-        console.log(result.data.favorite, project.favorite)
-
         result.data.updatedProject.userData = project.userData
         projectsStore.projects[projectToReplace] = result.data.updatedProject
 

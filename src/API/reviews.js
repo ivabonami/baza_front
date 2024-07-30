@@ -77,9 +77,9 @@ export async function approveReview(review) {
     };
     review.isReviewed = true
 
-
-    projectsStore.projects.find(item => item.id === review.ProjectId).reviewsCount =  projectsStore.projects.find(item => item.id === review.ProjectId).reviewsCount + 1
-
+    if (projectsStore.projects.find(item => item.id === review.ProjectId)) {
+        projectsStore.projects.find(item => item.id === review.ProjectId).reviewsCount =  projectsStore.projects.find(item => item.id === review.ProjectId).reviewsCount + 1
+    }
     return await axios.put(`${apiUrl}reviews/${review.id}`, review, {headers})
         .then(result => result).catch(error => error)
 }

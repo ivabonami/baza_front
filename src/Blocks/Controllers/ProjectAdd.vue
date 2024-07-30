@@ -199,6 +199,7 @@
     </div>
 
     <div class="links">
+      <transition-group name="list">
       <div class="link" v-for="link of project.links">
         <project-external-link
             :link="link"
@@ -209,6 +210,7 @@
             }"
         />
       </div>
+      </transition-group>
 
 
     </div>
@@ -374,11 +376,11 @@ export default {
 
           link: {
             name: 'Ссылка',
-            placeholder: 'От 5 до 255 символов',
-            tooltip: 'На главной странице и на странице проекта отображаются только первые 90 символов, будьте внимательны.',
+            placeholder: 'начиная с https://',
+            tooltip: 'Вводить ссылку нужно начиная с http:// или https://, в противном случае добавить ее не получится.',
             min: 5,
             max: 255,
-            data: null
+            data: 'https://'
           }
 
         },
@@ -397,6 +399,7 @@ export default {
 
         description: {
           name: 'Описание',
+          tooltip: 'От 30 символов.',
           placeholder: 'От 30 символов.',
           min: 30,
           max: 65535,
@@ -466,8 +469,7 @@ export default {
     checkForm () {
 
       this.loading = true
-      this.project.name < 1 ? this.notice.text.nameEmpty = 'Название не может быть пустым' : delete this.notice.text.nameEmpty
-      this.project.description < 1 ? this.notice.text.descriptionEmpty = 'Описание не может быть пустым' : delete this.notice.text.descriptionEmpty
+      this.project.description < 1 ? this.notice.text.descriptionEmpty = 'В описании должно быть минимум 30 символов' : delete this.notice.text.descriptionEmpty
       this.project.categoryIds.length < 1 ? this.notice.text.categoriesEmpty = 'Проект должен иметь хотя бы 1 категорию' : delete this.notice.text.categoriesEmpty
       this.project.links.length < 1 && this.linkToAdd.link.length <= 0 ? this.notice.text.linksEmpty = 'Проект должен иметь хотя бы 1 ссылку' : delete this.notice.text.linksEmpty
       !this.project.avatar ? this.notice.text.avatarFilePathEmpty = 'Загрузите аватар' : delete this.notice.text.avatarFilePathEmpty

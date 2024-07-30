@@ -58,13 +58,16 @@ export default {
           color: 'violet'
         },{
           name: 'Блокчейн',
-          color: 'green'
+          color: 'purple'
         },{
           name: 'Канал',
           color: 'blue'
         },{
           name: 'Бот',
           color: 'blue'
+        },{
+          name: 'Контакты',
+          color: 'red'
         }],
       color: null,
     }
@@ -136,6 +139,30 @@ export default {
 
     &:hover {
       background-color: rgba(139, 75, 221, .15);
+    }
+  }
+
+  &.red {
+    svg {
+      circle {
+        fill: #dd4b4b;
+      }
+    }
+
+    &:hover {
+      background-color: rgba(221, 75, 192, 0.15);
+    }
+  }
+
+  &.purple {
+    svg {
+      circle {
+        fill: #ce4bdd;
+      }
+    }
+
+    &:hover {
+      background-color: rgba(146, 75, 221, 0.15);
     }
   }
 

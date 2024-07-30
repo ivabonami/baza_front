@@ -73,6 +73,8 @@ export default {
   position: fixed;
   z-index: 51;
   width: 700px;
+  max-height: 90vh;
+  overflow: hidden auto;
 
   top: 50%;
   left: 50%;
@@ -116,6 +118,7 @@ export default {
       word-wrap: break-word;
     }
     .popup_text {
+      white-space: pre-line;
       color: var(--gray, #A8A8A8);
       font-family: "PT Sans Caption";
       font-size: 14px;

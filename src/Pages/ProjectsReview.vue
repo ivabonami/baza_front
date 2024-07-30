@@ -7,12 +7,30 @@
         <div class="project" v-for="project of projects">
           <project-card
               :project="project"
-              @projectUpdated="() => {
-                    this.getProjects()
-                  }"
-              @projectDeleted="(emit) => {
-                this.projects.splice(this.projects.findIndex(item => item.id === emit), 1)
-            }"
+              @projectChangePayedStatus="emit => {
+                payedModal.projectId = project.id
+                payedModal.projectName = project.name
+                payedModal.status = emit
+                payedModal.show = true
+
+              }"
+              @deleteProject="emit => {
+                deleteModal.projectId = project.id
+                deleteModal.projectName = project.name
+                deleteModal.show = true
+              }"
+              @favoriteChanged="emit => {
+
+                notice.show = true
+                notice.color = 'green'
+                notice.text = {success: 'Успешно!'}
+
+              }"
+              @showLinksModal="emit => {
+                linksModal.show = true
+                linksModal.data = project.links
+
+              }"
           >
 
           </project-card>
@@ -87,6 +105,86 @@
         Закрыть
       </template>
     </popup-action>
+
+    <popup-project-links
+        v-if="linksModal.show"
+        :modal="linksModal"
+        :data="linksModal.data"
+        @closeModal="linksModal.show = false"
+    />
+
+    <popup-delete
+        @click.stop
+        :modal="deleteModal"
+        @closeModal="deleteModal.show = false"
+        @deleteConfirmed="() => {
+          removeProject(deleteModal.projectId).then(() => {
+            this.projects.splice(this.projects.findIndex(item => item.id === payedModal.projectId), 1)
+          })
+
+          deleteModal.show = false
+        }"
+
+    >
+      <template #header>
+        Удалить проект?
+      </template>
+      <template #text>
+        Вы действительно хотите удалить проект <b>{{ deleteModal.projectName }}</b>
+      </template>
+      <template #buttonConfirm>
+        Да, удалить
+      </template>
+      <template #buttonSecondary>
+        Отменить
+      </template>
+    </popup-delete>
+
+    <popup-action
+        v-if="payedModal.show === true"
+        @closeModal="payedModal.show = false"
+        @actionConfirmed="() => {
+          changePayedStatus(payedModal.projectId, payedModal.status)
+          this.projects.find(item => item.id === payedModal.projectId).payed = !this.projects.find(item => item.id === payedModal.projectId).payed
+          payedModal.show = false
+        }"
+        :modal="payedModal"
+    >
+      <template #header>
+      <span v-if="payedModal.status">
+        Выделить проект?
+      </span>
+
+        <span v-else>
+        Снять выделение с проекта?
+      </span>
+
+      </template>
+      <template #text>
+            <span v-if="payedModal.status">
+        Вы собираетесь выделить проект <b>{{ payedModal.projectName }}</b>, подтвердите действие.
+      </span>
+
+        <span v-else>
+        Вы собираетесь снять выделение с проекта <b>{{ payedModal.projectName }}</b>, подтвердите действие.
+      </span>
+      </template>
+      <template #buttonConfirm>
+      <span v-if="payedModal.status">
+        Выделить
+      </span>
+
+        <span v-else>
+        Снять
+      </span>
+      </template>
+      <template #buttonSecondary>
+        Отменить
+      </template>
+    </popup-action>
+
+
+    <notice v-if="notice.show" :notice="notice" :errors="notice.text" @closeNotice="notice.show = false" />
   </div>
 
 </template>
@@ -96,11 +194,14 @@ import projectCard from "../Blocks/ProjectCard.vue";
 import emptyStore from "../Blocks/EmptyStore.vue";
 import baseLoader from "../Layouts/BaseLoader.vue";
 import buttonAction from "../components/Buttons/ButtonAction.vue";
-import {approveProject, getProjects} from "../API/projects.js";
+import {approveProject, changePayedStatus, getProjects, removeProject} from "../API/projects.js";
 import popupAction from "../components/Popups/PopupAction.vue";
 import {projectsStore} from "../Store/projectsStore.js";
 import {apiUrl} from "../assets/js/config.js";
 import loaderSmall from "../components/Loaders/LoaderSmall.vue";
+import notice from "../components/Popups/Notice.vue";
+import popupDelete from "../components/Popups/PopupDelete.vue";
+import popupProjectLinks from "../components/Popups/PopupProjectLinks.vue";
 
 
 export default {
@@ -108,6 +209,8 @@ export default {
   emits: ['productAdded', 'productUpdated', 'reviewAdded',],
   data() {
     return {
+      removeProject,
+      changePayedStatus,
       projects: {},
       loading: true,
       approveProject,
@@ -116,7 +219,28 @@ export default {
       modal: {
         show: false,
         project: null
-      }
+      },
+      notice: {
+        show: false,
+        color: null,
+        text: {}
+      },
+      linksModal: {
+        show: false,
+        data: null,
+      },
+      deleteModal: {
+        show: false,
+        projectId: null,
+        projectName: null
+      },
+
+      payedModal: {
+        show: false,
+        status: false,
+        projectId: null,
+        projectName: null,
+      },
     }
   },
   components: {
@@ -125,7 +249,10 @@ export default {
     emptyStore,
     baseLoader,
     buttonAction,
-    popupAction
+    popupAction,
+    notice,
+    popupDelete,
+    popupProjectLinks
 
   },
   mounted() {

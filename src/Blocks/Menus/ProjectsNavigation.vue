@@ -61,7 +61,14 @@ export default {
   justify-content: space-between;
   width: 100%;
   padding: 0 10px;
-  gap: 40px;
+
+  .categories-menu {
+    margin-bottom: 0;
+    flex-basis: 84%;
+  }
+  .filter {
+    flex-basis: 15%;
+  }
 
 
 }
@@ -76,10 +83,11 @@ export default {
 
     .categories-menu {
       margin-bottom: 0;
-      width: 87%;
+      flex-basis: 79%;
     }
     .filter {
-      width: 13%;
+      padding-left: 0;
+      flex-basis: 20%;
     }
   }
 

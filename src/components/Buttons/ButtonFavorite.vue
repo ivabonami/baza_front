@@ -68,7 +68,7 @@ export default {
   watch: {
     inFavorite: function(newVal, oldVal) {
       // this.$props.inFavorite === 0 ? this.inFavorite  = false : this.inFavorite = true
-      console.log(this.$props.favoritePage)
+
     }
   },
 
@@ -81,7 +81,7 @@ export default {
       this.favoriteStatus  = false
     }
     // this.$props.inFavorite === 0 ? this.inFavorite  = false : this.inFavorite = true
-    console.log(this.$props.favoritePage)
+
   }
 
 }

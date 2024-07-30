@@ -302,13 +302,13 @@ export default {
 
       if (window.innerWidth > 768) {
         this.$props.project.name.length > 39 ?  this.normalizedName = this.$props.project.name.substring(0, 42) + '...' :  this.normalizedName = this.$props.project.name
-        console.log(window.innerWidth)
+
       } else {
         this.$props.project.name.length > 29 ?  this.normalizedName = this.$props.project.name.substring(0, 22) + '...' :  this.normalizedName = this.$props.project.name
-        console.log(window.innerWidth)
+
       }
 
-      console.log(123)
+
       if (userInfo.username) {
         userInfo.username === this.$props.project.userData.username ? this.isAdmin = true :  this.isAdmin = false
         userInfo.role === 'admin' ? this.isAdmin = true :  this.isAdmin = false
