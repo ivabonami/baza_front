@@ -2,13 +2,13 @@
   <div>
     <h1>Контакты</h1>
 
-    <a href="https://t.me/enBaza" class="image-link" target="_blank">
+    <a href="https://t.me/mxBaza" class="image-link" target="_blank">
       <img src="../../assets/images/banners/contacts.png" alt="">
     </a>
 
 
     <div class="project-links">
-      <a href="https://t.me/enBaza" class="link-btn" target="_blank">
+      <a href="https://t.me/mxBaza" class="link-btn" target="_blank">
 
         Связаться с нами
       </a>

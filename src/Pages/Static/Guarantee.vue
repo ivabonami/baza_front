@@ -1,7 +1,7 @@
 <template>
 <div>
   <h1>Гарант</h1>
-  <a href="https://t.me/enBaza" class="image-link" target="_blank">
+  <a href="https://t.me/mxBaza" class="image-link" target="_blank">
     <img src="../../assets/images/banners/guarantee.png" alt="">
   </a>
 
@@ -21,7 +21,7 @@
   <br>
   Холд - удержание средств у гаранта во время проведения сделки на n-е время<br><br>
 
-  <a href="https://t.me/enBaza" class="link-btn" target="_blank">
+  <a href="https://t.me/mxBaza" class="link-btn" target="_blank">
     Воспользоваться гарантом BAZA
   </a>
 </div>
