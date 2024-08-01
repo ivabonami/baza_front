@@ -11,16 +11,7 @@
       </project-header>
 
 
-      <div class="project-banner" v-if="project.bannerFilePath">
-        <img :src="api + project.bannerFilePath"
-             alt=""
-             v-show="bannerLoaded"
-             @load="bannerLoaded = true"
-             v-if="project.bannerFilePath !== null">
 
-        <loader-small  v-if="!bannerLoaded"/>
-
-      </div>
 
       <div class="project-body">
 
@@ -522,48 +513,7 @@ textarea {
   box-sizing: border-box;
 
 
-  .project-banner {
-    box-sizing: border-box;
-    width: 100%;
-    min-height: 20px;
-    height: auto;
-    max-height: 800px;
-    overflow: hidden;
 
-    position: relative;
-
-    .owner {
-      position: absolute;
-      z-index: 15;
-      text-align: right;
-      right: 10px;
-      bottom: 10px;
-      font-size: 12px;
-      color: #ffffff;
-      background-color: #000;
-      padding: 5px 10px;
-      border-radius: 10px;
-      p {
-        color: #ffffff;
-      }
-      svg {
-        width: 12px;
-        height: 12px;
-        margin-left: 3px;
-        path {
-          fill: #fff;
-        }
-      }
-    }
-
-
-
-    img {
-      width: 100%;
-      border-radius: 20px;
-      min-height: 100%;
-    }
-  }
 
 
 

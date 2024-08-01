@@ -21,15 +21,15 @@
         <div class="project-header_info_header">
           <span class="project-name">
             {{ normalizedName }}
-<svg xmlns="http://www.w3.org/2000/svg"
-     @click="() => {
-                 modalInfo.show = true
-                 modalInfo.data = project
-               }"
-     v-tippy="{content: 'О проекте', theme: 'light'}"
-     width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M12 16V12M12 8H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="#D8D8D8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+<!--<svg xmlns="http://www.w3.org/2000/svg"-->
+<!--     @click="() => {-->
+<!--                 modalInfo.show = true-->
+<!--                 modalInfo.data = project-->
+<!--               }"-->
+<!--     v-tippy="{content: 'О проекте', theme: 'light'}"-->
+<!--     width="24" height="24" viewBox="0 0 24 24" fill="none">-->
+<!--            <path d="M12 16V12M12 8H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="#D8D8D8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--          </svg>-->
           </span>
 
 
@@ -108,6 +108,8 @@
     </div>
 
 
+
+
     <div class="project-header_links">
       <button-primary
           @click="() => {
@@ -152,6 +154,55 @@
 
   </popup-show-full-info>
 
+
+
+
+  <div class="short-description">
+    <div class="project-info">
+
+
+
+    </div>
+    <p class="short-description">
+      {{ shortDescription(project.description) }}
+
+
+    </p>
+
+    <span class="full"
+          v-if="longDescription"
+          @click="() => {
+                 modalInfo.show = true
+                 modalInfo.data = project
+               }">
+          подробное описание
+        </span>
+
+    <div class="project-banner" v-if="$props.project.bannerFilePath">
+      <img :src="api.url + $props.project.bannerFilePath"
+           alt=""
+           v-show="bannerLoaded"
+           @load="bannerLoaded = true">
+
+      <loader-small  v-if="!bannerLoaded"/>
+    </div>
+
+    <div class="links">
+      <transition-group name="list">
+        <div class="link" v-for="link of project.links">
+          <project-external-link
+              :link="link"
+              :edit="true"
+              @removeLink="emit => {
+              project.links.splice(project.links.findIndex(item => item.link === emit), 1)
+
+            }"
+          />
+        </div>
+      </transition-group>
+    </div>
+  </div>
+
 </template>
 
 <script>
@@ -176,6 +227,7 @@ import projectEdit from "./Controllers/ProjectEdit.vue";
 import {categoriesStore} from "../Store/categories.js";
 import popupShowFullInfo from "../components/Popups/PopupShowFullInfo.vue";
 import loaderSmall from "../components/Loaders/LoaderSmall.vue";
+import projectExternalLink from "../Helpers/ProjectExternalLink.vue";
 
 
 
@@ -189,6 +241,7 @@ export default {
   },
   data() {
     return {
+      bannerLoaded: false,
       modal: {
         show: false,
 
@@ -196,6 +249,7 @@ export default {
       modalInfo: {
         show: false
       },
+      longDescription: false,
       avatarLoaded: false,
       categoriesStore,
       userInfo,
@@ -239,11 +293,20 @@ export default {
     buttonAction,
     projectAdditionalStats,
     popupShowFullInfo,
-    loaderSmall
+    loaderSmall,
+    projectExternalLink
 
   },
 
   methods: {
+    shortDescription(text) {
+      if (text.length > 310) {
+        this.longDescription = true
+        return text.substring(0, 307) + '...'
+      } else {
+        return text
+      }
+    },
     normalizeInt(summ) {
       let number = summ.toString()
       if (number.length > 6) {
@@ -343,6 +406,100 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+.project-banner {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 20px;
+  height: auto;
+  max-height: 800px;
+  overflow: hidden;
+
+  position: relative;
+
+  .owner {
+    position: absolute;
+    z-index: 15;
+    text-align: right;
+    right: 10px;
+    bottom: 10px;
+    font-size: 12px;
+    color: #ffffff;
+    background-color: #000;
+    padding: 5px 10px;
+    border-radius: 10px;
+    p {
+      color: #ffffff;
+    }
+    svg {
+      width: 12px;
+      height: 12px;
+      margin-left: 3px;
+      path {
+        fill: #fff;
+      }
+    }
+  }
+
+
+
+  img {
+    width: 100%;
+    border-radius: 20px;
+    min-height: 100%;
+  }
+}
+.short-description {
+  margin-top: 0px;
+
+  span {
+    color: var(--gray, #A8A8A8);
+    font-family: "PT Sans Caption";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding-right: 6px;
+    padding-left: 0;
+    cursor: pointer;
+    margin-top: -10px;
+    transition: .3s ease;
+    margin-bottom: 20px;
+    display: block;
+    &:hover {
+      color: black;
+    }
+  }
+
+  .short-description {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #000;
+    font-family: "PT Sans Caption";
+    word-break: break-word;
+
+  }
+  .links {
+    margin-top: 10px;
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  .project-info {
+
+    color: #000;
+    font-family: "PT Sans Caption";
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 8px;
+
+  }
+
+}
 .project-header {
   box-sizing: border-box;
   border-radius: 10px;
@@ -470,6 +627,48 @@ export default {
   display: none;
 }
 @media screen and (max-width: 768px){
+
+  .short-description {
+    font-size: 14px;
+    .short-description {
+      font-family: "PT Sans Caption";
+      -webkit-line-clamp: 3;
+      position: relative;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      word-break: break-word;
+      color: #191B2A;
+      height: 55px;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      text-overflow: ellipsis;
+      display: -moz-box;
+      -moz-box-orient: vertical;
+      display: -webkit-box;
+      line-clamp: 3;
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 16px;
+      line-height: 1.5;
+      position: relative;
+      top: -2px;
+
+    }
+
+    .project-info {
+      h2 {
+        margin-top: 0;
+        font-size: 16px;
+        line-height: 1.5;
+        position: relative;
+        top: -2px;
+      }
+    }
+  }
 
   .project-header .project-header_info .project-header_info_stats .project-header_info_header .project-name {
     word-break: break-all;

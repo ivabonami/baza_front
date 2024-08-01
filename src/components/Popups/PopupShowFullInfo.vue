@@ -11,7 +11,8 @@
         </div>
 
         <div class="popup_text">
-          <slot name="text"></slot>
+<!--          <slot name="text" ></slot>-->
+          <p v-html="transformText($props.modal.data.description)"></p>
         </div>
 
 
@@ -54,6 +55,12 @@ export default {
     document.body.style.overflow = 'hidden hidden'
   },
   methods: {
+    transformText(text) {
+      const link = text.match(/(https?:\/\/[^\s]+)/g)
+      const styles = 'color: #000;'
+
+      return text.replace(/(https?:\/\/[^\s]+)/g, `<a href="${link}" target="_blank" class="ahref">${link}</a>`)
+    },
     closeModal() {
       this.$emit('closeModal', true)
 
@@ -117,7 +124,7 @@ export default {
       margin-bottom: 20px;
       word-wrap: break-word;
     }
-    .popup_text {
+    .popup_text p {
       white-space: pre-line;
       color: var(--gray, #A8A8A8);
       font-family: "PT Sans Caption";
@@ -127,6 +134,10 @@ export default {
       line-height: normal;
       margin-bottom: 20px;
       word-wrap: break-word;
+
+      a {
+        color: #7C7C7C;
+      }
     }
     .popup_button {
 

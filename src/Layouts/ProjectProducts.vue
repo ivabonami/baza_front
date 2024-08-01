@@ -140,7 +140,7 @@
     </template>
 
     <template #text>
-      {{ modalShowFullInfo.data.description }}
+      {{ modalShowFullInfo.data.description.replace(/(https?:\/\/[^\s]+)/g, `<a href="#">a</a>`) }}
     </template>
 
     <template #image>

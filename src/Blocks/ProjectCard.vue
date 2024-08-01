@@ -366,7 +366,7 @@ export default {
   }
   .project-card_wrapper .project-card_body .project-card_links .show-more {
     padding: 2px 5px;
-    font-size: 11px;
+    font-size: 10px;
   }
 }
 </style>

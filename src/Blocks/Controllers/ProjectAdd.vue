@@ -83,16 +83,16 @@
         <input-file
             :input="inputs.banner"
             @data="emit => {
-          this.project.banner = emit
-          delete this.notice.text.imageErros
-          Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
-        }"
-            @error="emit => {
-          this.project.banner = null
-          this.notice.color = 'red'
-          this.notice.text.imageErros = emit
-          Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
-        }"
+              this.project.banner = emit
+              delete this.notice.text.imageErros
+              Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
+            }"
+                @error="emit => {
+              this.project.banner = null
+              this.notice.color = 'red'
+              this.notice.text.imageErros = emit
+              Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
+            }"
         />
 
 
@@ -467,9 +467,11 @@ export default {
 
 
     checkForm () {
+      delete this.notice.text.imageErros
 
       this.loading = true
       this.project.description < 1 ? this.notice.text.descriptionEmpty = 'В описании должно быть минимум 30 символов' : delete this.notice.text.descriptionEmpty
+      this.project.name < 4 ? this.notice.text.nameEmpty = 'Название проекта должно содержать минимум 4 символа' : delete this.notice.text.nameEmpty
       this.project.categoryIds.length < 1 ? this.notice.text.categoriesEmpty = 'Проект должен иметь хотя бы 1 категорию' : delete this.notice.text.categoriesEmpty
       this.project.links.length < 1 && this.linkToAdd.link.length <= 0 ? this.notice.text.linksEmpty = 'Проект должен иметь хотя бы 1 ссылку' : delete this.notice.text.linksEmpty
       !this.project.avatar ? this.notice.text.avatarFilePathEmpty = 'Загрузите аватар' : delete this.notice.text.avatarFilePathEmpty

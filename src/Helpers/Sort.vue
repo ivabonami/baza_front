@@ -194,6 +194,9 @@ export default {
     box-sizing: border-box;
     position: relative;
     top: -2px;
+    .filter_dropdown_items {
+      top: 40px;
+    }
 
     .filter_current {
       border-color: transparent;

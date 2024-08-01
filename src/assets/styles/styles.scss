@@ -304,7 +304,16 @@ button {
   transition: .15s ease;
 
 }
+.ahref {
+  color: #b2a983;
+  border-bottom: 1px solid rgb(112, 102, 64);
+  transition: .3s ease;
 
+  &:hover {
+    color: #564e27;
+    border-bottom: 1px solid rgb(72, 65, 37);
+  }
+}
 
 //animations
 

@@ -30,8 +30,13 @@ export function changePayedStatus(projectId, status) {
 
         project.payed = status
 
+        const lastPayed = projectsStore.projects.filter(item => item.payed === true).length
+
+
+        console.log(lastPayed)
         projectsStore.projects.splice(projectsStore.projects.findIndex(item => item.id === projectId), 1)
-        status === true ? projectsStore.projects.unshift(project) : projectsStore.projects.push(project)
+
+        status === true ? projectsStore.projects.splice(lastPayed - 1, 0, project) : projectsStore.projects.push(project)
     }
 
 
@@ -52,11 +57,12 @@ export function removeProject(projectId, options, offset) {
     const headers = {
         'Authorization': `Bearer ${userInfo.token}`
     };
-    if ( projectsStore.projects.findIndex(item => item.id === projectId) ) {
 
-        options ? options = options.replace(/limit=[0-9]/i, 'limit=1') : null
-        options ? options = options.replace(/offset=[0-9]/i, `offset=${parseInt(offset)}`) : null
-        getProjects(options).then(result => projectsStore.projects.push(result.data.projects[0]))
+    if ( projectsStore.projects.findIndex(item => item.id === projectId) ) {
+        projectsStore.projects.splice(projectsStore.projects.findIndex(item => item.id === projectId), 1)
+        // options ? options = options.replace(/limit=[0-9]/i, 'limit=1') : null
+        // options ? options = options.replace(/offset=[0-9]/i, `offset=${parseInt(offset)}`) : null
+        // getProjects(options).then(result => projectsStore.projects.push(result.data.projects[0]))
     }
 
 

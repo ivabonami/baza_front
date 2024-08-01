@@ -48,6 +48,17 @@
         v-if="!loading && Object.keys(productsStore.products).length > 0"
         name="list">
       <div
+          @mousedown="(e) => {
+
+            this.position = e.screenX
+            this.dragSlide()
+
+          }"
+          @touchstart="e => this.position = e.targetTouches[0].screenX"
+          @touchend="stopDrag"
+          @touchmove="e => mobileDrag(e)"
+          @mouseup="stopDrag"
+          @mouseleave="stopDrag"
           :key="1"
           ref="carouselItemsWrapper"
           class="products-carousel_items"
@@ -109,24 +120,23 @@ import {getProducts} from "../API/products.js";
 import buttonSwitch from "../components/Buttons/ButtonSwitch.vue";
 import baseLoader from "../Layouts/BaseLoader.vue";
 import {highlightedProject} from "../Store/highlightedProject.js";
-
-
-
 export default {
   name: "Recommended.vue",
   components: {
     servicesCard,
     buttonSwitch,
-    baseLoader
+    baseLoader,
 
   },
   data() {
     return {
+      position: null,
       carousel: {
         wrapperWidth: 0,
         slideStep: 0,
         styles: {}
       },
+
       loading: false,
       sort: null,
       productsStore,
@@ -143,6 +153,39 @@ export default {
   },
 
   methods: {
+
+    mobileDrag(e) {
+      if (e.targetTouches[0].screenX - 200 > this.position) {
+        this.prev()
+        this.stopDrag()
+        this.position = e.targetTouches[0].screenX
+      } else if (e.targetTouches[0].screenX< this.position -200) {
+        this.next()
+        this.stopDrag()
+        this.position = e.targetTouches[0].screenX
+      }
+      this.stopDrag()
+    },
+    dragSlide() {
+      window.addEventListener('mousemove', this.dragToSlide)
+
+    },
+    stopDrag() {
+      window.removeEventListener('mousemove', this.dragToSlide)
+    },
+    dragToSlide(event) {
+      if (event.screenX - 200 > this.position) {
+        this.prev()
+        this.position = event.screenX
+
+      } else if (event.screenX < this.position -100) {
+        this.next()
+        this.position = event.screenX
+
+      }
+
+
+    },
     next() {
       this.carousel.wrapperWidth = this.$refs.carouselItemsWrapper.scrollWidth
       this.carousel.slideStep = this.$refs.sliderItem[1].scrollWidth + 20
@@ -269,6 +312,11 @@ export default {
     justify-content: space-between;
     box-sizing: border-box;
     gap: 10px;
+    cursor: grab;
+
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
 
 
     .products-carousel_items_item {

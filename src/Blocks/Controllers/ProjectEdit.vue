@@ -469,7 +469,7 @@ export default {
 
 
     checkForm () {
-
+      delete this.notice.text.imageErros
 
       this.project.name < 1 ? this.notice.text.nameEmpty = 'Название не может быть пустым' : delete this.notice.text.nameEmpty
       this.project.description < 1 ? this.notice.text.descriptionEmpty = 'Описание не может быть пустым' : delete this.notice.text.descriptionEmpty
