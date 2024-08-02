@@ -29,8 +29,8 @@ export default {
   name: "ProjectsNavigation.vue",
   props: {
     sort: {
-      name: 'Популярные',
-      sort: 'popularity'
+      name: 'С высоким рейтингом',
+      sort: 'highestRating'
     },
 
   },

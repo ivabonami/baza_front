@@ -209,19 +209,11 @@ export default {
       changePayedStatus,
       removeProject,
       sorts: [
-        {
-          name: 'Популярные',
-          sort: 'popularity'
-        },
+        // {
+        //   name: 'Популярные',
+        //   sort: 'popularity'
+        // },
 
-        {
-          name: 'Сначала новые',
-          sort: 'newest'
-        },
-        {
-          name: 'Сначала старые',
-          sort: 'oldest'
-        },
         {
           name: 'С высоким рейтингом',
           sort: 'highestRating'
@@ -231,9 +223,17 @@ export default {
           sort: 'lowestRating'
         },
         {
-          name: 'Мне повезет',
-          sort: 'random'
+          name: 'Сначала новые',
+          sort: 'newest'
         },
+        {
+          name: 'Сначала старые',
+          sort: 'oldest'
+        },
+        // {
+        //   name: 'Мне повезет',
+        //   sort: 'random'
+        // },
 
       ],
       options: {

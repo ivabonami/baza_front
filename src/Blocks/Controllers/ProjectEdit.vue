@@ -256,7 +256,7 @@
     <popup-info
         :modal="modal"
         v-if="modal.show"
-        @closeModal="this.$router.push('/')"
+        @closeModal="this.$router.go(-1)"
 
 
     >

@@ -179,7 +179,7 @@ export default {
   .popup {
     width: 70%;
     flex-wrap: wrap;
-    max-height: 90vh;
+    max-height:  80vh;
     overflow-x: hidden;
     overflow-y: auto;
     padding-bottom: 10px;

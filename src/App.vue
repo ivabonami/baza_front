@@ -121,7 +121,10 @@ header {
   padding: 10px 15px;
 }
 .scroll-to-top-wrapper {
-  max-width: 1200px;
+  max-width: 1250px;
+  padding-left: 25px;
+  padding-right: 25px;
+  box-sizing: border-box;
   width: 100%;
   margin: 0 auto;
   height: 0;

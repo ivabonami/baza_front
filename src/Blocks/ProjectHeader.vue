@@ -192,7 +192,7 @@
         <div class="link" v-for="link of project.links">
           <project-external-link
               :link="link"
-              :edit="true"
+              :edit="false"
               @removeLink="emit => {
               project.links.splice(project.links.findIndex(item => item.link === emit), 1)
 
@@ -484,6 +484,9 @@ export default {
     display: flex;
     gap: 15px;
     margin-bottom: 20px;
+    width: 100%;
+    overflow-x: auto;
+    padding: 10px 0;
   }
   .project-info {
 
