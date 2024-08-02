@@ -1,7 +1,18 @@
 <template>
   <div class="service-card" :class="{highlighted: $props.highlighted}" @mouseover="highlightedProject.splice(0, highlightedProject.length)">
     <div class="service-card_image">
-      <img :src="api.url + $props.item.avatarFilePath" alt="name" v-show="imgLoaded" @load="imgLoaded = true">
+      <img :src="api.url + $props.item.avatarFilePath"
+           alt="name"
+           v-show="imgLoaded && !errorImageLoad"
+           @error="() => {
+             this.imgLoaded = true
+             this.errorImageLoad = true
+           }"
+           @load="imgLoaded = true">
+      <img src="/src/assets/images/error.png"
+           v-show="imgLoaded && errorImageLoad"
+           alt="sorry"
+           @load="imgLoaded = true">
       <loader-small v-if="!imgLoaded" />
     </div>
     <div class="service-card_text">
@@ -41,6 +52,7 @@ export default {
 
   data() {
     return {
+      errorImageLoad: false,
       imgLoaded: false,
       text: null,
       api,

@@ -21,9 +21,24 @@
   >
 
     <div class="project-card_avatar">
-      <img :src="config.api.url + $props.project.avatarFilePath" v-show="imgLoaded" :alt="$props.project.name" @load="imgLoaded = true">
-      <loader-small v-if="!imgLoaded"/>
+      <img :src="config.api.url +  $props.project.avatarFilePath"
+           v-if="imgLoaded && !errorImageLoad"
+           :alt="$props.project.name"
+           @error="() => {
+             this.imgLoaded = true
+             this.errorImageLoad = true
+           }"
+           @load="imgLoaded = true">
 
+      <img src="/src/assets/images/error.png"
+           v-show="imgLoaded && errorImageLoad"
+           :alt="$props.project.name"
+           @error="() => {
+             this.imgLoaded = true
+             this.errorImageLoad = true
+           }"
+           @load="imgLoaded = true">
+      <loader-small v-if="!imgLoaded"/>
 
 
 
@@ -184,6 +199,7 @@ export default {
   },
   data () {
     return {
+      errorImageLoad: false,
       imgLoaded: false,
       favorite: false,
       isAdmin: false,
