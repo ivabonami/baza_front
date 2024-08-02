@@ -230,7 +230,7 @@ export default {
   z-index: 31;
   position: absolute;
   box-sizing: border-box;
-  bottom: -5px;
+  bottom: -35px;
 
   width: 100%;
   left: 0;

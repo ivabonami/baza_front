@@ -163,14 +163,26 @@ export default {
       window.removeEventListener('mousemove', this.dragToSlide)
     },
     dragToSlide(event) {
-      if (event.screenX - 90 > this.position) {
-        this.scrollActive = true
-        this.prevItem()
-        this.position = event.screenX
-      } else if (event.screenX < this.position - 90) {
-        this.scrollActive = true
-        this.nextItem()
-        this.position = event.screenX
+      if( window.innerWidth > 768 ) {
+        if (event.screenX - 90 > this.position) {
+          this.scrollActive = true
+          this.prevItem()
+          this.position = event.screenX
+        } else if (event.screenX < this.position - 90) {
+          this.scrollActive = true
+          this.nextItem()
+          this.position = event.screenX
+        }
+      } else {
+        if (event.screenX - 20 > this.position) {
+          this.scrollActive = true
+          this.prevItem()
+          this.position = event.screenX
+        } else if (event.screenX < this.position - 20) {
+          this.scrollActive = true
+          this.nextItem()
+          this.position = event.screenX
+        }
       }
     },
     nextItem() {

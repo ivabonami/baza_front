@@ -38,7 +38,7 @@ export default {
     color: #000;
     text-align: center;
     font-family: "PT Sans Caption";
-    font-size: 16px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;

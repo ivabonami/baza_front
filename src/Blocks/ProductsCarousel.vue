@@ -174,14 +174,27 @@ export default {
       window.removeEventListener('mousemove', this.dragToSlide)
     },
     dragToSlide(event) {
-      if (event.screenX - 200 > this.position) {
-        this.prev()
-        this.position = event.screenX
+      if (window.innerWidth > 768) {
+        if (event.screenX - 200 > this.position) {
+          this.prev()
+          this.position = event.screenX
 
-      } else if (event.screenX < this.position -100) {
-        this.next()
-        this.position = event.screenX
+        } else if (event.screenX < this.position -200) {
+          this.next()
+          this.position = event.screenX
 
+        }
+
+      } else {
+        if (event.screenX - 50 > this.position) {
+          this.prev()
+          this.position = event.screenX
+
+        } else if (event.screenX < this.position - 50) {
+          this.next()
+          this.position = event.screenX
+
+        }
       }
 
 

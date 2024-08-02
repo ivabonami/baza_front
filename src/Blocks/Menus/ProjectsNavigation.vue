@@ -68,6 +68,8 @@ export default {
   }
   .filter {
     flex-basis: 15%;
+    justify-content: end;
+    display: flex;
   }
 
 

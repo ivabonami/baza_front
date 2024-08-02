@@ -122,7 +122,7 @@ export default {
   border-radius: 10px;
   border: 1px solid var(--lightgray, #F2F5F7);
   background: #FFF;
-  width: 250px;
+  max-width: 180px;
   max-height: 200px;
   text-align: start;
   display: flex;
@@ -140,12 +140,14 @@ export default {
   }
 
   .dropdown_link {
+    width: 100%;
     color: #000;
     font-family: "PT Sans Caption";
-    font-size: 16px;
+    font-size: 12px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+
     display: flex;
     gap: 10px;
     align-items: center;
@@ -155,6 +157,7 @@ export default {
 
     span {
       transition: .3s;
+      width: 100%;
     }
     object {
       width: 15px;
@@ -171,7 +174,6 @@ export default {
     &.sign-out {
       color: #841717;
       font-family: "PT Sans Caption";
-      font-size: 16px;
       font-style: normal;
       font-weight: 400;
       line-height: normal;

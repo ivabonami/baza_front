@@ -112,8 +112,8 @@ export default {
     -webkit-box-orient: vertical;
     word-break: break-word;
     color: #191B2A;
-    height: 42px;
-    font-size: 16px;
+    height: 35px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: 1.2;
