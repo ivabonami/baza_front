@@ -3,7 +3,7 @@
     <div class="project-products_heading">
       <h2>Витрина</h2>
       <button-action
-          v-if="userInfo.role === 'admin' || isAdmin"
+          v-if="userInfo.role === 'admin' || isAdmin || userInfo.username === $props.project.userData.username"
           @click="() => {
 
 

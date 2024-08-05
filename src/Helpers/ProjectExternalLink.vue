@@ -207,7 +207,7 @@ export default {
     padding: 2px 5px;
 
     .project-external_text {
-      max-width: 50px;
+      max-width: 40px;
       font-size: 10px;
       text-overflow: ellipsis;
       white-space: nowrap;
