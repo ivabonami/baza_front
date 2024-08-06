@@ -35,6 +35,7 @@ import 'tippy.js/dist/tippy.css'
 export default {
   name: "ProjectExternalLink.vue",
   props: {
+    shortLinks: true,
     link: {
       link: null,
       name: null

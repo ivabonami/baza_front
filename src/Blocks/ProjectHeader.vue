@@ -2,10 +2,18 @@
   <div class="project-header">
     <div class="project-header_avatar">
       <img :src="api.url + $props.project.avatarFilePath"
-           v-show="avatarLoaded"
+           v-show="avatarLoaded && !errorAvatar"
+           @error="() => {
+             this.avatarLoaded = true
+             this.errorAvatar = true
+           }"
            @load="avatarLoaded = true"
            alt="">
       <loader-small v-if="!avatarLoaded"/>
+
+      <img src="./src/assets/images/error.png"
+           v-show="avatarLoaded && errorAvatar"
+           alt="">
       <div class="project-header_avatar_favorite" v-show="userInfo.token">
         <button-favorite
             :inFavorite="$props.project.favorite || 0"
@@ -57,7 +65,7 @@
 <!--          </svg>-->
 
         </div>
-        <button-action v-if="isAdmin" @click="this.$router.push({name: 'ProjectEdit'})">
+        <button-action v-if="isAdmin || userInfo.username === project.userData.username" @click="this.$router.push({name: 'ProjectEdit'})">
           <template #text>
             <span class="hideOnMobile">Редактировать</span>
           </template>
@@ -175,7 +183,7 @@
                  modalInfo.show = true
                  modalInfo.data = project
                }">
-          подробное описание
+          читать полностью
         </span>
 
     <div class="project-banner" v-if="$props.project.bannerFilePath">
@@ -189,15 +197,21 @@
 
     <div class="links">
       <transition-group name="list">
-        <div class="link" v-for="link of project.links">
-          <project-external-link
-              :link="link"
-              :edit="false"
-              @removeLink="emit => {
-              project.links.splice(project.links.findIndex(item => item.link === emit), 1)
+        <div class="link-cat" v-for="linkCat of linksSpread(project.links)">
 
-            }"
-          />
+            <project-external-link
+                :shortLinks="false"
+                v-for="link of linkCat.links"
+                :link="link"
+                :edit="false"
+                  @removeLink="emit => {
+                project.links.splice(project.links.findIndex(item => item.link === emit), 1)
+
+              }"
+            />
+
+
+
         </div>
       </transition-group>
     </div>
@@ -246,6 +260,7 @@ export default {
         show: false,
 
       },
+      errorAvatar: false,
       modalInfo: {
         show: false
       },
@@ -278,7 +293,35 @@ export default {
 
       },
       api,
-      isAdmin: false
+      isAdmin: false,
+      sortedLinks: [],
+
+      spreadLinks: {
+        clearnet: {
+          name: 'Клирнет',
+          links: []
+        },
+        contacts: {
+          name: 'Контакты',
+          links: []
+        },
+        telegram: {
+          name: 'Телеграм',
+          links: []
+        },
+        onion: {
+          name: 'Onion',
+          links: []
+        },
+        blockchain: {
+          name: 'Блокчейн',
+          links: []
+        },
+        other: {
+          name: 'Другое',
+          links: []
+        }
+      }
     }
   },
   directives: {
@@ -342,6 +385,27 @@ export default {
 
 
       }
+    },
+    linksSpread (links) {
+
+      for (let link of links) {
+        if (link.name === 'Зеркало' || link.name === 'Зеркало VPN') {
+          this.spreadLinks.clearnet.links.push(link)
+        } else if (link.name === 'Контакты') {
+          this.spreadLinks.contacts.links.push(link)
+        } else if (link.name === 'Канал' || link.name === 'Бот') {
+          this.spreadLinks.telegram.links.push(link)
+        } else if (link.name === 'Onion') {
+          this.spreadLinks.onion.links.push(link)
+        } else if (link.name === 'Блокчейн') {
+          this.spreadLinks.blockchain.links.push(link)
+        } else {
+          this.spreadLinks.other.links.push(link)
+        }
+      }
+
+      return this.spreadLinks
+
     },
 
     normalizeReserveSumm(summ) {
@@ -487,6 +551,11 @@ export default {
     width: 100%;
     overflow-x: auto;
     padding: 10px 0;
+
+    .link-cat {
+      display: flex;
+      gap: 15px;
+    }
   }
   .project-info {
 

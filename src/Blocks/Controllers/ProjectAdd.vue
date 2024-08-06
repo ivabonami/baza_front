@@ -35,7 +35,7 @@
             delete this.notice.text.nameLength
           }"
           @returnError="emit => {
-            this.project.name = null
+            this.project.name = emit
             this.notice.color = 'red'
             this.notice.text.nameLength = emit
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
@@ -51,10 +51,10 @@
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
 
           }"
-          @error="emit => {
+          @returnedError="emit => {
             this.project.description = null
             this.notice.color = 'red'
-            this.notice.text.descriptionLength = emit
+            this.notice.text.descriptionLength = 'Описание должно содержать не менее 30 символов'
             Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
 
           }"
@@ -467,17 +467,19 @@ export default {
 
 
     checkForm () {
-      delete this.notice.text.imageErros
+      this.notice.text = {}
 
       this.loading = true
-      this.project.description < 1 ? this.notice.text.descriptionEmpty = 'В описании должно быть минимум 30 символов' : delete this.notice.text.descriptionEmpty
-      this.project.name < 4 ? this.notice.text.nameEmpty = 'Название проекта должно содержать минимум 4 символа' : delete this.notice.text.nameEmpty
+      this.project.description < 30 ? this.notice.text.descriptionEmpty = 'В описании должно быть минимум 30 символов' : delete this.notice.text.descriptionEmpty
+      this.project.name.length < 4 ? this.notice.text.nameEmpty = 'Название проекта должно содержать минимум 4 символа' : delete this.notice.text.nameEmpty
       this.project.categoryIds.length < 1 ? this.notice.text.categoriesEmpty = 'Проект должен иметь хотя бы 1 категорию' : delete this.notice.text.categoriesEmpty
       this.project.links.length < 1 && this.linkToAdd.link.length <= 0 ? this.notice.text.linksEmpty = 'Проект должен иметь хотя бы 1 ссылку' : delete this.notice.text.linksEmpty
       !this.project.avatar ? this.notice.text.avatarFilePathEmpty = 'Загрузите аватар' : delete this.notice.text.avatarFilePathEmpty
       !this.project.minValueToExchange && this.project.categoryIds.includes(categoriesStore.exchanger.id) ? this.notice.text.minValueToExchangeErr2 = 'У обменника должно быть заполнено поле минимального обмена' : delete this.notice.text.minValueToExchangeErr2
       !this.project.reserve && this.project.categoryIds.includes(categoriesStore.exchanger.id) ? this.notice.text.reserveErr2 = 'У обменника должно быть заполнено поле резерв' : delete this.notice.text.reserveErr2
       this.linkToAdd.link.length > 0 ? this.addLinkToProject() : null
+
+      console.log(this.project.description)
 
 
       Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
@@ -490,6 +492,7 @@ export default {
         }).catch(error => this.notice.text = error)
 
       } else {
+        this.notice.show = true
         this.loading = false
       }
     }

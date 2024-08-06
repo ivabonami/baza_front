@@ -121,6 +121,33 @@ export default {
       editProduct: {},
       bannerLoaded: false,
 
+      spreadLinks: {
+        clearnet: {
+          name: 'Клирнет',
+          links: []
+        },
+        contacts: {
+          name: 'Контакты',
+          links: []
+        },
+        telegram: {
+          name: 'Телеграм',
+          links: []
+        },
+        onion: {
+          name: 'Onion',
+          links: []
+        },
+        blockchain: {
+          name: 'Блокчейн',
+          links: []
+        },
+        other: {
+          name: 'Другое',
+          links: []
+        }
+      },
+
 
       config, highlight, userInfo, modalSetting, store, editableProject, useFetch
     }
@@ -132,6 +159,8 @@ export default {
   },
 
   methods: {
+
+
 
     getProjectFullInfo() {
       const projectId = window.location.pathname.replace('/project/', '');

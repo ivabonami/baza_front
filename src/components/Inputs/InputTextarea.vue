@@ -62,10 +62,9 @@ export default {
   methods: {
     checkField() {
       const checkData = checkInputData(this.$props.input.min, this.$props.input.max, this.inputData, this.$props.input.name)
-
+      this.$emit('returnedData', this.inputData)
       if (checkData === true) {
         this.error = false
-        this.$emit('returnedData', this.inputData)
       } else {
         this.error = true
         this.$emit('returnedError', checkData)

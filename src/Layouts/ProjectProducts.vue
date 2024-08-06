@@ -117,10 +117,10 @@
           }"
         v-show="!loading && products.length <= 0">
       <template #header>
-        Витрина пуста
+        Витрина пустая
       </template>
       <template #text>
-        ожидайте обновлений
+        Ожидайте обновлений
       </template>
       <template #buttonText>
         Добавить
