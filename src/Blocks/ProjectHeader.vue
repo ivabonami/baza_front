@@ -11,7 +11,7 @@
            alt="">
       <loader-small v-if="!avatarLoaded"/>
 
-      <img src="./src/assets/images/error.png"
+      <img src="/src/assets/images/error.png"
            v-show="avatarLoaded && errorAvatar"
            alt="">
       <div class="project-header_avatar_favorite" v-show="userInfo.token">
@@ -183,7 +183,7 @@
                  modalInfo.show = true
                  modalInfo.data = project
                }">
-          читать полностью
+          Подробнее
         </span>
 
     <div class="project-banner" v-if="$props.project.bannerFilePath">
