@@ -197,11 +197,14 @@
 
     <div class="links">
       <transition-group name="list">
-        <div class="link-cat" v-for="linkCat of linksSpread(project.links)">
-
+        <div class="link-cat"
+             :key="linkCat"
+             v-show="linkCat.links.length > 0"
+             v-for="linkCat of linksSpread(project.links)">
             <project-external-link
                 :shortLinks="false"
                 v-for="link of linkCat.links"
+                :key="link"
                 :link="link"
                 :edit="false"
                   @removeLink="emit => {

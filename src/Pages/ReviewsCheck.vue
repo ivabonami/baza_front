@@ -103,10 +103,22 @@
         v-if="modalAction.show === true"
         @closeModal="modalAction.show = false"
         @actionConfirmed="() => {
-        approveReview(modalAction.review)
-        modalAction.show = false
-        reviews.splice(reviews.findIndex(item => item.id === modalAction.review.id), 1)
-      }"
+        approveReview(modalAction.review).then(result => {
+          console.log( result )
+          if( result.status === 200) {
+            modalAction.show = false
+            reviews.splice(reviews.findIndex(item => item.id === modalAction.review.id), 1)
+            this.notice.show = true
+            this.notice.text = { success: 'Успешно опубликовано'}
+            this.notice.color = 'green'
+          } else {
+            this.modalAction.show = false
+            this.notice.show = true
+            this.notice.text = {success: 'Ошибка при публикации'}
+            this.notice.color = 'red'
+          }
+
+      })}"
         :modal="modalAction"
     >
       <template #header>
@@ -148,6 +160,10 @@
         Отменить
       </template>
     </popup-delete>
+
+    <notice v-if="notice.show" :notice="notice"
+            @closeNotice="notice.show = false"
+    />
   </div>
 
 </template>
@@ -161,6 +177,7 @@ import {apiUrl} from "../assets/js/config.js";
 import popupDelete from "../components/Popups/PopupDelete.vue";
 import emptyStore from "../Blocks/EmptyStore.vue";
 import loaderSmall from "../components/Loaders/LoaderSmall.vue";
+import notice from "../components/Popups/Notice.vue";
 
 
 export default {
@@ -176,6 +193,11 @@ export default {
         show: false,
         review: {}
       },
+      notice: {
+        show: false,
+        color: null,
+        text: {}
+      },
 
       modalDelete: {
         show: false,
@@ -190,7 +212,8 @@ export default {
     popupAction,
     popupDelete,
     loaderSmall,
-    emptyStore
+    emptyStore,
+    notice
   },
 
   methods: {},

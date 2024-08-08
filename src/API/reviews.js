@@ -1,5 +1,5 @@
 import axios from "axios";
-import {apiUrl} from "../assets/js/config.js";
+import {api, apiUrl} from "../assets/js/config.js";
 import {userInfo} from "../Store/userInfo.js";
 import {projectReviewsStore} from "../Store/projectReviews.js";
 import re from "floating-vue";
@@ -80,8 +80,8 @@ export async function approveReview(review) {
     if (projectsStore.projects.find(item => item.id === review.ProjectId)) {
         projectsStore.projects.find(item => item.id === review.ProjectId).reviewsCount =  projectsStore.projects.find(item => item.id === review.ProjectId).reviewsCount + 1
     }
-    return await axios.put(`${apiUrl}reviews/${review.id}`, review, {headers})
-        .then(result => result).catch(error => error)
+    return await axios.put(`${api.url}reviews/${review.id}`, review, {headers})
+        .then(result => result).catch(error => error.response)
 }
 
 export async function disapproveReview(review) {

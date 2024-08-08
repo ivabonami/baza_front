@@ -224,6 +224,7 @@
         <transition-group name="list">
         <div class="link" v-for="link of project.links">
           <project-external-link
+              :key="link"
               :link="link"
               :edit="true"
               @removeLink="emit => project.links.splice(project.links.findIndex(item => item.link === emit), 1)"

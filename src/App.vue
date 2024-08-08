@@ -6,9 +6,10 @@ import bazaHeader from "./Layouts/BaseHeader.vue";
 import {modalSetting} from "./assets/js/modal.js";
 import {watch, ref} from "vue";
 import baseFooter from "./Layouts/BaseFooter.vue";
+import yandexMetrica from "./Layouts/YandexMetrica.vue";
 
 export default {
-  components: { FooterView, recommended, addCategory, bazaHeader, baseFooter},
+  components: { FooterView, recommended, addCategory, bazaHeader, baseFooter, yandexMetrica},
   emits: ['mobileClick'],
   data() {
     return {
@@ -61,7 +62,7 @@ export default {
 
 <template>
   <div class="global-wrapper" v-if="this.isLoaded === true" ref="wrapper">
-
+    <yandexMetrica />
     <header class="header wrapper">
       <baza-header />
     </header>

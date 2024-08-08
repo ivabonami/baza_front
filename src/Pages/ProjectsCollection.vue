@@ -19,6 +19,7 @@
 
     <transition-group name="list">
       <div class="projects-collection_items"
+           :key="'project'"
            v-if="!isLoading || projectsStore.projects.length > 0">
 
         <div v-for="project of projectsStore.projects"

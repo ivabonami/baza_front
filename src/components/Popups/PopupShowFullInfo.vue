@@ -56,10 +56,18 @@ export default {
   },
   methods: {
     transformText(text) {
-      const link = text.match(/(https?:\/\/[^\s]+)/g)
-      const styles = 'color: #000;'
+      const regexp = /( https?:\/\/[^\s]+)/g
 
-      return text.replace(/(https?:\/\/[^\s]+)/g, `<a href="${link}" target="_blank" class="ahref">${link}</a>`)
+      const links = text.match(regexp)
+
+      if (links.length > 0) {
+        for (let link of links) {
+
+          text = text.replace(link, `<a href="${link.substring(1, link.length)}" target="_blank" class="ahref"> ${link.substring(1, link.length)}</a>`)
+        }
+      }
+
+      return text
     },
     closeModal() {
       this.$emit('closeModal', true)

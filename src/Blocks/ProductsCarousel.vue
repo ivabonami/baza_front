@@ -256,7 +256,7 @@ export default {
       productsStore.products.splice(0, productsStore.products.length)
 
       if (Object.keys(productsStore.products).length <= 0) {
-        getProducts({sort: this.sort || 'random'}).then(result => {
+        getProducts({sort: this.sort|| 'random', limit: 50}).then(result => {
 
           for (const item of result.data.products) {
             productsStore.products.push(item)
