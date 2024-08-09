@@ -442,18 +442,13 @@ export default {
       if (this.linkToAdd.name === null || !this.linkToAdd.link) {
 
       } else {
-        if (this.project.links.length < 12) {
-          const link = {
-            name: this.linkToAdd.name,
-            link: this.linkToAdd.link
-          }
-          this.project.links.push(link)
-          this.linkToAdd.link = ''
-          this.inputs.links.link.data = ''
-
-        } else {
-
+        const link = {
+          name: this.linkToAdd.name,
+          link: this.linkToAdd.link
         }
+        this.project.links.push(link)
+        this.linkToAdd.link = ''
+        this.inputs.links.link.data = ''
 
 
       }
