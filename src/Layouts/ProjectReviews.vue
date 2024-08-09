@@ -87,7 +87,7 @@
             <div class="info">
 
           <span>
-            {{ review.userData.username }}
+            {{ review.userData.username || review.anonId }}
           </span>
             </div>
             <div class="rating" ref="ratingStars">
