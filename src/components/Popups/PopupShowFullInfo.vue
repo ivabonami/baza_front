@@ -60,11 +60,14 @@ export default {
 
       const links = text.match(regexp)
 
-      if (links.length > 0) {
-        for (let link of links) {
+      if (links) {
+        if (links.length > 0) {
+          for (let link of links) {
 
-          text = text.replace(link, `<a href="${link.substring(1, link.length)}" target="_blank" class="ahref"> ${link.substring(1, link.length)}</a>`)
+            text = text.replace(link, `<a href="${link.substring(1, link.length)}" target="_blank" class="ahref"> ${link.substring(1, link.length)}</a>`)
+          }
         }
+
       }
 
       return text

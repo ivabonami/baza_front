@@ -10,7 +10,7 @@
         <circle cx="3.66675" cy="3" r="3" fill="#A8A8A8" />
       </svg>
       <span class="project-external_text">
-      {{ $props.link.name }}
+      {{ setName($props.link) }}
     </span>
 
 
@@ -77,6 +77,26 @@ export default {
   components: {},
 
   methods: {
+    setName(data) {
+      data.name === 'Зеркало' ? this.color = 'yellow' : null
+      data.name === 'Зеркало VPN' ? this.color = 'green' : null
+      if ( data.name === 'Зеркало' || data.name === 'Зеркало VPN') {
+        let a = document.createElement('a');
+        a.href = data.link;
+        let newName = a.hostname.replace(/(https?:\/\/)?(www.)?/i, '').substring(0, a.hostname.lastIndexOf('.'))
+        newName.indexOf('.') > 0 ?
+            newName = newName.substring(a.hostname.indexOf('.') + 1, a.hostname.length) : newName
+
+        return newName.charAt(0).toUpperCase() + newName.slice(1)
+
+
+      } else {
+        this.setColor()
+        return data.name
+
+      }
+
+    },
     setColor () {
       this.linkColors.find(item => item.name === this.$props.link.name) ? this.color = this.linkColors.find(item => item.name === this.$props.link.name).color : null
 
@@ -85,12 +105,12 @@ export default {
   },
   watch: {
     link: function (newVal) {
-      this.setColor()
+      // this.setColor()
     }
   },
 
   mounted() {
-    this.setColor()
+    // this.setColor()
   }
 
 }

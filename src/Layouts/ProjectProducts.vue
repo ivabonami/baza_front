@@ -31,6 +31,7 @@
       <div v-for="product of products"
            class="project-products_items_item">
         <product-card
+            :key="product"
             :highlighted="highlightedProject.length > 0 ? highlightedProject[0].id === product.id : false"
             :item="product"
             @click="() => {
@@ -348,7 +349,7 @@ export default {
   },
 
   updated() {
-    this.productControllerOptions.projectId = this.$props.project.id
+    // this.productControllerOptions.projectId = this.$props.project.id
   }
 
 }

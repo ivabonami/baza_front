@@ -2,7 +2,7 @@
   <form onsubmit="return false" class="auth" @keydown.enter="signUp()" @keydown.esc="$emit('closePopup', true)">
     <InputText
         :input="{
-          name: 'username',
+          name: 'Логин',
           placeholder: 'Юзернейм',
           tooltip: 'Ваш юзернейм, от 1 до 255 символов',
           min: 1,

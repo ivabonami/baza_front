@@ -159,18 +159,14 @@
       <empty-store
           :show-button="true"
           :show-button-for-users="true"
-          :show-button-for-unauthorised="true"
+          :showButtonForUnauthorised="true"
           :hideReviewButton="alreadyReviewed"
           @click="() => {
-            if (userInfo.username) {
               modalReviewsController.show = true
               modalReviewsController.mode = 'add'
               modalReviewsController.buttonConfirmText = 'Оставить отзыв'
               modalReviewsController.product = null
               modalReviewsController.projectId = this.$props.project.id
-            } else {
-              modalAuth.show = true
-            }
           }">
         <template #header>
           <span v-if="projectReviewsStore.reviews.length <= 0">Никто еще не оставил отзывов о</span>
@@ -214,6 +210,12 @@
         @closeModal="modalReviewsController.show = false"
         @reviewAdded="emit => {
           modalInfo.show = true
+        }"
+        @userRegistration="(emit) => {
+          modalReviewsController.show = false
+          modalAuth.show = true
+          this.notice.show = true
+          this.notice.text = {error: emit}
         }"
     >
       <template #header>
@@ -287,6 +289,10 @@
         v-if="modalAuth.show === true"
         @closeModal="modalAuth.show = false"
         v-bind:modal="modalAuth" />
+
+    <notice v-if="notice.show" :notice="notice"
+            @closeNotice="notice.show = false"
+    />
   </div>
 </template>
 
@@ -302,6 +308,7 @@ import popupInfo from "../components/Popups/PopupInfo.vue";
 import popupAuth from "../components/Popups/PopupAuth.vue";
 
 import sort from "../Helpers/Sort.vue";
+import notice from "../components/Popups/Notice.vue";
 
 export default {
   name: "ProjectReviews.vue",
@@ -328,7 +335,11 @@ export default {
         buttonConfirmText: "Добавить отзыв"
       },
       months: ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'],
-
+      notice: {
+        show: false,
+        color: null,
+        text: {}
+      },
       alreadyReviewed: false,
       sorts: [
 
@@ -376,7 +387,8 @@ export default {
     popupDelete,
     popupInfo,
     popupAuth,
-    sort
+    sort,
+    notice
   },
 
   methods: {

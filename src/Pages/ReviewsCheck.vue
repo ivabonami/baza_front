@@ -33,7 +33,7 @@
                 <path d="M4.3163 18.4384C4.92462 17.0052 6.34492 16 8 16H14C15.6551 16 17.0754 17.0052 17.6837 18.4384M15 8.5C15 10.7091 13.2091 12.5 11 12.5C8.79086 12.5 7 10.7091 7 8.5C7 6.29086 8.79086 4.5 11 4.5C13.2091 4.5 15 6.29086 15 8.5ZM21 11C21 16.5228 16.5228 21 11 21C5.47715 21 1 16.5228 1 11C1 5.47715 5.47715 1 11 1C16.5228 1 21 5.47715 21 11Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
               <span>
-            от <b>{{ review.userData.username }}</b> к проекту <a class="linkToProject" :href="'/project/' + review.ProjectId"> {{ review.ProjectId }} </a>
+            от <b>{{ review.userData ? review.userData.username : review.anonId }}</b> к проекту <a class="linkToProject" :href="'/project/' + review.ProjectId"> {{ review.ProjectId }} </a>
 
           </span>
             </div>
@@ -104,7 +104,6 @@
         @closeModal="modalAction.show = false"
         @actionConfirmed="() => {
         approveReview(modalAction.review).then(result => {
-          console.log( result )
           if( result.status === 200) {
             modalAction.show = false
             reviews.splice(reviews.findIndex(item => item.id === modalAction.review.id), 1)
@@ -125,7 +124,7 @@
         Опубликовать отзыв?
       </template>
       <template #text>
-        Вы собиратесь опубликовать отзыв от пользователя {{ modalAction.review.userData.username }}
+        Вы собиратесь опубликовать отзыв от пользователя {{ modalDelete.review.userData ? modalDelete.review.userData.username : modalDelete.review.anonId }}
         к проекту с айди <a :href="'/project/' + modalAction.review.ProjectId" target="_blank">{{ modalAction.review.ProjectId }}</a>
       </template>
       <template #buttonConfirm>
@@ -150,7 +149,7 @@
         Удалить отзыв?
       </template>
       <template #text @click.stop>
-        Вы действительно хотите удалить отзыв от пользователя {{ modalDelete.review.userData.username }}
+        Вы действительно хотите удалить отзыв от пользователя {{ modalDelete.review.userData ? modalDelete.review.userData.username : modalDelete.review.anonId }}
         к проекту с айди <a :href="'/project/' + modalAction.review.ProjectId" target="_blank">{{ modalDelete.review.ProjectId }}</a>
       </template>
       <template #buttonConfirm @click.stop>

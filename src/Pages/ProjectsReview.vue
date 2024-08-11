@@ -298,7 +298,7 @@ export default {
     .project {
       width: 24%;
       margin-bottom: 20px;
-      padding: 10px 10px 30px 10px;
+      padding: 10px 10px 10px 10px;
       border: 2px solid transparent;
       border-radius: 20px;
       transition: .15s ease;
@@ -308,6 +308,7 @@ export default {
       box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
 
       .button {
+        margin-top: 10px;
 
       }
     }

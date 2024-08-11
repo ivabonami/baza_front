@@ -177,14 +177,27 @@
 
     </p>
 
-    <span class="full"
-          v-if="longDescription"
-          @click="() => {
+    <div class="long-menu" v-if="longDescription || isAdmin">
+      <span class="full"
+            v-if="longDescription"
+            @click="() => {
                  modalInfo.show = true
                  modalInfo.data = project
                }">
           Подробнее
         </span>
+
+      <span class="full"
+            v-if="isAdmin"
+            @click="() => {
+                 modalAction.show = true
+                 modalAction.data = project
+               }">
+          Скрыть проект
+        </span>
+    </div>
+
+
 
     <div class="project-banner" v-if="$props.project.bannerFilePath">
       <img :src="api.url + $props.project.bannerFilePath"
@@ -218,6 +231,31 @@
         </div>
       </transition-group>
     </div>
+
+    <popup-action
+        v-if="modalAction.show === true"
+        @closeModal="modalAction.show = false"
+        @actionConfirmed="() => {
+          disapproveProject(project).then(() => {
+            this.modalAction.show = false
+          })
+
+        }"
+        :modal="modalAction"
+    >
+      <template #header>
+        Скрыть проект?
+      </template>
+      <template #text>
+        Вы собиратесь скрыть проект {{ modalAction.data.name }}
+      </template>
+      <template #buttonConfirm>
+        Скрыть
+      </template>
+      <template #buttonSecondary>
+        Закрыть
+      </template>
+    </popup-action>
   </div>
 
 </template>
@@ -245,6 +283,8 @@ import {categoriesStore} from "../Store/categories.js";
 import popupShowFullInfo from "../components/Popups/PopupShowFullInfo.vue";
 import loaderSmall from "../components/Loaders/LoaderSmall.vue";
 import projectExternalLink from "../Helpers/ProjectExternalLink.vue";
+import popupAction from "../components/Popups/PopupAction.vue";
+import {disapproveProject} from "../API/projects.js";
 
 
 
@@ -258,10 +298,14 @@ export default {
   },
   data() {
     return {
+      disapproveProject,
       bannerLoaded: false,
       modal: {
         show: false,
 
+      },
+      modalAction: {
+        show: false
       },
       errorAvatar: false,
       modalInfo: {
@@ -340,7 +384,8 @@ export default {
     projectAdditionalStats,
     popupShowFullInfo,
     loaderSmall,
-    projectExternalLink
+    projectExternalLink,
+    popupAction
 
   },
 
@@ -473,7 +518,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.long-menu {
+  display: flex;
+  justify-content: space-between;
 
+}
 .project-banner {
   box-sizing: border-box;
   width: 100%;

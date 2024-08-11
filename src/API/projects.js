@@ -31,9 +31,6 @@ export function changePayedStatus(projectId, status) {
         project.payed = status
 
         const lastPayed = projectsStore.projects.filter(item => item.payed === true).length
-
-
-        console.log(lastPayed)
         projectsStore.projects.splice(projectsStore.projects.findIndex(item => item.id === projectId), 1)
 
         status === true ? projectsStore.projects.splice(lastPayed - 1, 0, project) : projectsStore.projects.push(project)
@@ -50,6 +47,15 @@ export function approveProject(project) {
 
     project.isReviewed = true
     return axios.put(`${apiUrl}projects/${project.id}`, {isReviewed: true},{headers})
+}
+
+export function disapproveProject(project) {
+    const headers = {
+        'Authorization': `Bearer ${userInfo.token}`
+    };
+
+    project.isReviewed = false
+    return axios.put(`${apiUrl}projects/${project.id}`, {isReviewed: false},{headers})
 }
 
 

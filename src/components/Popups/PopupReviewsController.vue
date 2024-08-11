@@ -209,10 +209,31 @@ export default {
               this.notice.show = true
               if (result.response.data.message === "This user already rated this project.") {
                 this.notice.text.fetchError = "Вы уже оставляли отзыв к проекту, дождитесь проверки модератора"
-              }
-              if (result.response.data.message === "Error creating review SequelizeValidationError: notNull Violation: Review.rating cannot be null") {
+              } else if (result.response.data.message === "Error creating review SequelizeValidationError: notNull Violation: Review.rating cannot be null") {
                 this.notice.text.fetchError = "Вы не указали рейтинг проекта"
+              } else if (result.response.data.message === "Cannot leave review now. Please, authorize or wait 24 hours after you have left the last review"){
+
+                let firstDate = new Date().getHours() + ":" + new Date().getMinutes();
+                let secondDate = new Date(result.response.data.allowedDate).getHours() + ":" + new Date(result.response.data.allowedDate).getMinutes();
+
+                let getDate = (string) => new Date(0, 0,0, string.split(':')[0], string.split(':')[1]);
+                let different = (getDate(secondDate) - getDate(firstDate));
+                let differentRes, hours, minuts;
+                if(different > 0) {
+                  differentRes = different;
+                  hours = Math.floor((differentRes % 86400000) / 3600000);
+                  minuts = Math.round(((differentRes % 86400000) % 3600000) / 60000);
+                } else {
+                  differentRes = Math.abs((getDate(firstDate) - getDate(secondDate)));
+                  hours = Math.floor(24 - (differentRes % 86400000) / 3600000);
+                  minuts = Math.round(60 - ((differentRes % 86400000) % 3600000) / 60000);
+                }
+                let results = hours > 0 ? hours + ' ч и ' + minuts + ' мин' : minuts + ' мин';
+                this.notice.text.fetchError = `К сожалению вы превысили лимит на анонимные отзывы в сутки, попробуйте через ${results} или выполните вход или зарегистрируйтесь`
+                this.$emit('userRegistration', `К сожалению вы превысили лимит на анонимные отзывы в сутки, попробуйте через ${results} или выполните вход или зарегистрируйтесь`)
               }
+
+              this.loading = false
 
             } else {
               this.notice.show = false

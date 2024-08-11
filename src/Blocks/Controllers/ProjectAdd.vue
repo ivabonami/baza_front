@@ -474,10 +474,6 @@ export default {
       !this.project.minValueToExchange && this.project.categoryIds.includes(categoriesStore.exchanger.id) ? this.notice.text.minValueToExchangeErr2 = 'У обменника должно быть заполнено поле минимального обмена' : delete this.notice.text.minValueToExchangeErr2
       !this.project.reserve && this.project.categoryIds.includes(categoriesStore.exchanger.id) ? this.notice.text.reserveErr2 = 'У обменника должно быть заполнено поле резерв' : delete this.notice.text.reserveErr2
       this.linkToAdd.link.length > 0 ? this.addLinkToProject() : null
-
-      console.log(this.project.description)
-
-
       Object.keys(this.notice.text).length > 0 ? this.notice.show = true : this.notice.show = false
 
       if(Object.keys(this.notice.text).length <= 0) {

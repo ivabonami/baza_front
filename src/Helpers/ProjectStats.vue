@@ -76,10 +76,16 @@ export default {
     gap: 2px;
     align-items: start;
     .stat_icon {
-      width: 12px;
+      height: 12px;
+      width: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 2px;
 
     }
     .stat_text {
+      line-height: 1;
       font-size: 12px;
       position: relative;
       top: 2px;
