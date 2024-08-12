@@ -47,7 +47,7 @@ export default {
     window.innerWidth >= 768 ? this.showMobileMenu = true : this.showMobileMenu = false
 
 
-    document.querySelector('.preloader').style.display = 'none'
+    document.querySelector('.preloader') ? document.querySelector('.preloader').style.display = 'none' : null
   },
 
   updated() {
