@@ -8,7 +8,7 @@
           Активные категории
         </h2>
 
-        <div class="category-list">
+        <div class="category-list" v-if="categoriesStore.categories">
 
 
           <div class="category"
@@ -83,6 +83,11 @@
 
 
           </div>
+        </div>
+
+        <div v-else-if="!categoriesStore.categories">
+          <h4 style="text-align: center; width: 100%; margin-top: 20px;">Произошла ошибка получения списка категорий, пожалуйста повторите попытку позже или перезагрузите страницу</h4>
+
         </div>
 
       </div>

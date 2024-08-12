@@ -209,7 +209,7 @@
     </div>
 
     <div class="links">
-      <transition-group name="list">
+      <transition-group name="list" >
         <div class="link-cat"
              :key="linkCat"
              v-show="linkCat.links.length > 0"

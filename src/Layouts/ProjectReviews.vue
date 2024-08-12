@@ -71,7 +71,7 @@
     </div>
 
 
-    <div class="project-reviews_items"
+    <div v-if="!loading && !loadingError" class="project-reviews_items"
     >
       <div class="project-reviews_items_item"
            v-for="review of projectReviewsStore.reviews"
@@ -87,7 +87,7 @@
             <div class="info">
 
           <span>
-            {{ review.userData.username || review.anonId }}
+            {{ userName(review) }}
           </span>
             </div>
             <div class="rating" ref="ratingStars">
@@ -154,6 +154,13 @@
 
       </div>
     </div>
+    <div v-if="loading && !loadingError">
+      <loader-small />
+    </div>
+    <div v-if="!loading && loadingError">
+      <h4 style="text-align: center; margin-top: 30px; margin-bottom: 30px">Произошла ошибка получения отзывов, пожалуйста повторите попытку позже или перезагрузите страницу</h4>
+
+    </div>
 
     <div class="add-review" :class="{mt: projectReviewsStore.reviews.length > 0}">
       <empty-store
@@ -170,7 +177,6 @@
           }">
         <template #header>
           <span v-if="projectReviewsStore.reviews.length <= 0">Никто еще не оставил отзывов о</span>
-          <span v-else-if="projectReviewsStore.reviews.find(item => item.userData.username === userInfo.username)">Вы уже оставляли отзыв о</span>
           <span v-else>Оставьте отзыв о </span>
         </template>
         <template #text>
@@ -309,6 +315,7 @@ import popupAuth from "../components/Popups/PopupAuth.vue";
 
 import sort from "../Helpers/Sort.vue";
 import notice from "../components/Popups/Notice.vue";
+import loaderSmall from "../components/Loaders/LoaderSmall.vue";
 
 export default {
   name: "ProjectReviews.vue",
@@ -321,6 +328,8 @@ export default {
   },
   data() {
     return {
+      loading: false,
+      loadingError: false,
       modalReviewsController: {
         show: false,
         review: null,
@@ -374,6 +383,7 @@ export default {
       reviewToEdit: null,
       projectReviewsStore,
       userInfo,
+
       deleteReview,
       reviewToDelete: null
 
@@ -388,10 +398,20 @@ export default {
     popupInfo,
     popupAuth,
     sort,
-    notice
+    notice,
+    loaderSmall
   },
 
   methods: {
+    userName(review) {
+      if( review.userData ) {
+        return review.userData.username
+      } else {
+
+        return 'user' + review.anonId
+      }
+
+    },
 
     normalizeData(date) {
       let reviewDate = Date.parse(date)
@@ -435,9 +455,17 @@ export default {
   },
 
   mounted() {
-    getReviews({projectId: this.$props.project.id}).then(() => {
-      projectReviewsStore.reviews.find(item => item.userData.username === userInfo.username) ? this.alreadyReviewed = true : null
-
+    this.loading = true
+    this.loadingError = false
+    getReviews({projectId: this.$props.project.id}).then((result) => {
+      this.loading = false
+      for (let review of result.data.reviews) {
+        projectReviewsStore.reviews.push(review)
+      }
+    }).catch(err => {
+      console.log(err)
+      this.loading = false
+      this.loadingError = true
     })
 
     for (let i = 0; i < this.project.ratingAvg; i++) {

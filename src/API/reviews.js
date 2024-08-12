@@ -16,13 +16,7 @@ export function getReviews(options) {
         }
     }
     link = link.slice(0, -1)
-    return axios.get(`${apiUrl}reviews${link}`, {headers}).then(result => {
-
-        for (let review of result.data.reviews) {
-            projectReviewsStore.reviews.push(review)
-        }
-
-    }).catch(error => error)
+    return axios.get(`${apiUrl}reviews${link}`, {headers})
 
 }
 

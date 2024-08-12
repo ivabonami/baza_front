@@ -200,9 +200,8 @@
 
     <div class="links">
       <transition-group name="list">
-      <div class="link" v-for="link of project.links">
+      <div class="link" v-for="link of project.links" :key="link">
         <project-external-link
-            :key="link"
             :link="link"
             :edit="true"
             @removeLink="emit => {

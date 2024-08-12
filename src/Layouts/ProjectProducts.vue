@@ -25,9 +25,13 @@
         </template>
       </button-action>
     </div>
+    <div class="" v-if="!loading && loadingError">
+
+      <h4 style="text-align: center; margin-top: 60px;">Произошла ошибка получения списка витрина, пожалуйста повторите попытку позже или перезагрузите страницу</h4>
+    </div>
     <div class="project-products_items"
          ref="projectProducts"
-         v-show="!loading || products.length > 0">
+         v-show="!loading && !loadingError || products.length > 0">
       <div v-for="product of products"
            class="project-products_items_item">
         <product-card
@@ -116,7 +120,7 @@
 
 
           }"
-        v-show="!loading && products.length <= 0">
+        v-show="!loading && !loadingError && products.length <= 0">
       <template #header>
         Витрина пустая
       </template>
@@ -128,7 +132,7 @@
       </template>
     </empty-store>
 
-    <base-loader v-show="loading" />
+    <base-loader v-if="loading && !loadingError" />
   </div>
 
   <popup-show-full-info
@@ -254,6 +258,7 @@ export default {
       height: 'auto',
       showLoadMore: false,
       loading: false,
+      loadingError: false,
       api,
       userInfo,
       isAdmin: false
@@ -289,6 +294,7 @@ export default {
 
     collectProducts() {
       this.loading = true
+      this.loadingError = false
       this.options.projectId = this.$props.project.id
 
 
@@ -299,7 +305,11 @@ export default {
         }
         result.data.products.length < this.options.limit ? this.showLoadMore = false : this.showLoadMore = true
         this.loading = false
+
         this.height = this.$refs.projectProducts.offsetHeight + 'px'
+      }).catch(err => {
+        this.loading = false
+        this.loadingError = true
       })
     },
     onProductAdded () {

@@ -88,10 +88,15 @@
       </div>
     </transition-group>
 
-    <base-loader v-else />
+    <base-loader v-else-if="loading" />
+    <div v-else>
+      <h4 style="text-align: center; margin-top: 85px;">Произошла ошибка получения витрин, пожалуйста повторите попытку позже или перезагрузите страницу</h4>
+
+    </div>
 
     <div class="products-carousel_navigation">
       <div class="next"
+           v-if="!loading && Object.keys(productsStore.products).length > 0"
            @click="next">
         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="22" viewBox="0 0 12 22" fill="none">
           <path d="M1 1L11 11L1 21" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -100,6 +105,7 @@
       </div>
 
       <div class="prev"
+           v-if="!loading && Object.keys(productsStore.products).length > 0"
            @click="prev">
         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="22" viewBox="0 0 12 22" fill="none">
           <path d="M11 21L1 11L11 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

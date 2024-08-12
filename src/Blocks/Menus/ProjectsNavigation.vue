@@ -9,6 +9,13 @@
         this.currentCategory = emit
       }"/>
 
+  <div v-else-if="!categoriesStore.categories">
+    <h4 style="text-align: left; ">Произошла ошибка получения категорий, перезагрузите страницу</h4>
+
+  </div>
+
+
+
   <sort
       :sort="$props.sort"
       @sortChanged="(emit) => {

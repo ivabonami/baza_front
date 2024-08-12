@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     transformText(text) {
-      const regexp = /( https?:\/\/[^\s]+)/g
+      const regexp = /(https?:\/\/[^\s]+)/g
 
       const links = text.match(regexp)
 
@@ -64,7 +64,7 @@ export default {
         if (links.length > 0) {
           for (let link of links) {
 
-            text = text.replace(link, `<a href="${link.substring(1, link.length)}" target="_blank" class="ahref"> ${link.substring(1, link.length)}</a>`)
+            text = text.replace(link, `<a href="${link.substring(0, link.length)}" target="_blank" class="ahref"> ${link.substring(0, link.length)}</a>`)
           }
         }
 

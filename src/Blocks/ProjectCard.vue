@@ -181,7 +181,7 @@ export default {
     favoritePage: null,
 
   },
-  emits: ['updated', 'favoriteChanged'],
+  emits: ['updated', 'favoriteChanged', 'showLinksModal'],
   components: {
     ProjectsView,
     projectCardOverlay,

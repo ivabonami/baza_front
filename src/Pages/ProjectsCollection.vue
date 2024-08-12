@@ -17,10 +17,12 @@
         }"
     />
 
+
+
     <transition-group name="list">
       <div class="projects-collection_items"
            :key="'project'"
-           v-if="!isLoading || projectsStore.projects.length > 0">
+           v-if="!isLoading && !isLoadingError || projectsStore.projects.length > 0">
 
         <div v-for="project of projectsStore.projects"
              :key="project"
@@ -60,7 +62,7 @@
         </div>
 
         <empty-store
-            v-show="!isLoading && projectsStore.projects.length <= 0">
+            v-show="!isLoading && !isLoadingError && projectsStore.projects.length <= 0">
           <template #header>
             Нет проектов
           </template>
@@ -73,7 +75,13 @@
     </transition-group>
 
 
-    <Waypoint v-if="!isLoading && showLoadMore"
+    <div class="" v-if="!isLoading && isLoadingError">
+
+      <h4 style="text-align: center; margin-top: 200px;">Произошла ошибка получения списка проектов, пожалуйста повторите попытку позже или перезагрузите страницу</h4>
+    </div>
+
+
+    <Waypoint v-if="!isLoading && !isLoadingError  && showLoadMore"
               @change="way => way.going === 'IN' ? collectProjects() : null">
 
       <button-primary
@@ -271,6 +279,7 @@ export default {
       },
       link: null,
       isLoading: false,
+      isLoadingError: false,
       activeCategory: 0,
       showLoadMore: true,
       getProjects,
@@ -329,6 +338,7 @@ export default {
 
     collectProjects () {
       this.isLoading = true
+      this.isLoadingError = false
 
       getProjects(this.linkBuilder()).then(result => {
         for (const project of result.data.projects) {
@@ -339,7 +349,10 @@ export default {
 
         this.options.offset += this.options.limit
         this.isLoading = false
-      }).catch(e => e)
+      }).catch(e => {
+        this.isLoading = false
+        this.isLoadingError = true
+      })
 
     },
 

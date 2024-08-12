@@ -110,6 +110,7 @@
 
     </div>
 
+
   </div>
 </template>
 
@@ -124,6 +125,7 @@ export default {
   },
   data() {
     return {
+      loadingError: false,
       position: null,
       styles: null,
       categoriesStore,

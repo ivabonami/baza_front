@@ -23,10 +23,6 @@ export default {
       clearCategory: false,
     }
   },
-  setup() {
-    watch(modalSetting, (value, oldValue) => {
-    }, { immediate: true })
-  },
   methods: {
     scrollToTop() {
       window.scrollTo({
@@ -49,6 +45,9 @@ export default {
     this.historyCount = window.history.length
     this.isLoaded = true
     window.innerWidth >= 768 ? this.showMobileMenu = true : this.showMobileMenu = false
+
+
+    document.querySelector('.preloader').style.display = 'none'
   },
 
   updated() {
@@ -81,7 +80,6 @@ export default {
           <div class="recommend">
             <recommended
                 v-if="this.$route.name === 'New projects view' || this.$route.name === 'Home' || this.$route.name === 'Favorite'" >
-
             </recommended>
           </div>
 

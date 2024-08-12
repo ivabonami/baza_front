@@ -78,8 +78,8 @@ export default {
 
   methods: {
     setName(data) {
-      data.name === 'Зеркало' ? this.color = 'yellow' : null
-      data.name === 'Зеркало VPN' ? this.color = 'green' : null
+      data.name === 'Зеркало' ? this.color = 'green' : null
+      data.name === 'Зеркало VPN' ? this.color = 'yellow' : null
       if ( data.name === 'Зеркало' || data.name === 'Зеркало VPN') {
         let a = document.createElement('a');
         a.href = data.link;
@@ -87,7 +87,7 @@ export default {
         newName.indexOf('.') > 0 ?
             newName = newName.substring(a.hostname.indexOf('.') + 1, a.hostname.length) : newName
 
-        return newName.charAt(0).toUpperCase() + newName.slice(1)
+        return newName
 
 
       } else {
