@@ -75,10 +75,7 @@
     </transition-group>
 
 
-    <div class="" v-if="!isLoading && isLoadingError">
 
-      <h4 style="text-align: center; margin-top: 200px;">Произошла ошибка получения списка проектов, пожалуйста повторите попытку позже или перезагрузите страницу</h4>
-    </div>
 
 
     <Waypoint v-if="!isLoading && !isLoadingError  && showLoadMore"
@@ -94,7 +91,12 @@
 
     </Waypoint>
 
-    <loader v-show="isLoading" />
+    <loader v-else-if="isLoading" />
+
+<!--    <div class="" v-else-if="!isLoading && isLoadingError && projectsStore.projects.length <= 0">-->
+
+<!--      <h4 style="text-align: center; margin-top: 200px;">Произошла ошибка получения списка проектов, пожалуйста повторите попытку позже или перезагрузите страницу</h4>-->
+<!--    </div>-->
     <popup-project-links
         v-if="linksModal.show"
         :modal="linksModal"
@@ -349,6 +351,7 @@ export default {
 
         this.options.offset += this.options.limit
         this.isLoading = false
+        this.isLoadingError = false
       }).catch(e => {
         this.isLoading = false
         this.isLoadingError = true

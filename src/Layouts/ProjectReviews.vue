@@ -265,8 +265,6 @@
         v-if="modalInfo.show"
         @closeModal="() => {
         modalInfo.show = false
-        projectReviewsStore.reviews.splice(0, projectReviewsStore.reviews.length)
-        getReviews({projectId: $props.project.id})
       }"
 
 

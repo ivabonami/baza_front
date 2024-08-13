@@ -153,6 +153,7 @@ export default {
         this.position = e.targetTouches[0].screenX
       }
       this.stopDrag()
+
     },
     dragSlide() {
       if (this.scrollActive) {
@@ -194,6 +195,7 @@ export default {
       this.scrollActive = true
       const clientWidth = this.$refs.categoriesWrapper.clientWidth
 
+      c
 
     },
     prevItem() {
