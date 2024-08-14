@@ -108,7 +108,7 @@ export default {
                 this.loading = false
 
               } else if (err.statusCode !== 200) {
-                this.$emit('errors', {responseError: err.data.message})
+                this.$emit('errors', {responseError: err.data})
               }
             })
       }

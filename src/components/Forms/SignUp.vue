@@ -145,8 +145,16 @@ export default {
             .catch(err => {
               if (err.response.data.success === false) {
                 let message = ""
-                if (err.response.data.message === "Username already exists") { message = "Такой пользователь уже существует" }
-                if (err.response.data.message === "User not found") { message = "Пользователь не найден" }
+                if (err.response.data.message === "Username already exists") {
+                  message = "Такой пользователь уже существует"
+                } else if (err.response.data.message === "User not found") {
+                  message = "Пользователь не найден"
+                } else if (err.response.data.message === "Username and password are required") {
+                  message = "Юзернейм и пароль обязательны для заполнения"
+                } else {
+                  message = err.response.data.message
+                }
+
 
                 this.$emit('errors', {responseError: message})
                 this.loading = false

@@ -1,6 +1,6 @@
 <template>
 
-  <div>
+  <div ref="projectReviewsAll" :style="saveHeight">
     <div class="project-reviews">
       <div class="project-reviews_heading">
         <h2>Отзывы</h2>
@@ -34,9 +34,23 @@
               :sort="sorts"
               v-show="projectReviewsStore.reviews.length > 0"
               @sortChanged="(emit) => {
-              projectReviewsStore.reviews.splice(0, projectReviewsStore.reviews.length)
-              this.selectedSort = emit
-              getReviews({projectId: this.$props.project.id, sort: this.selectedSort.sort})
+                projectReviewsStore.reviews.splice(0, projectReviewsStore.reviews.length)
+                this.selectedSort = emit
+                this.loading = true
+                this.loadingError = false
+
+                this.saveHeight['min-height'] = this.$refs.projectReviewsAll.clientHeight.toString() + 'px'
+
+                getReviews({projectId: this.$props.project.id}).then((result) => {
+                  this.loading = false
+                  for (let review of result.data.reviews) {
+                    projectReviewsStore.reviews.push(review)
+                  }
+                }).catch(err => {
+                  console.log(err)
+                  this.loading = false
+                  this.loadingError = true
+                })
             }"
           />
         </div>
@@ -72,6 +86,7 @@
 
 
     <div v-if="!loading && !loadingError" class="project-reviews_items"
+
     >
       <div class="project-reviews_items_item"
            v-for="review of projectReviewsStore.reviews"
@@ -326,6 +341,7 @@ export default {
   },
   data() {
     return {
+      saveHeight: {"min-height": 0},
       loading: false,
       loadingError: false,
       modalReviewsController: {

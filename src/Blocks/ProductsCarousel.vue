@@ -2,6 +2,7 @@
 
   <div
        ref="carouselWrapper"
+       :style="carousel.styles"
        class="products-carousel">
 
     <div class="products-carousel_switch">
@@ -45,7 +46,7 @@
     </div>
 
     <transition-group
-        v-if="!loading && Object.keys(productsStore.products).length > 0"
+
         name="list">
       <div
           @mousedown="(e) => {
@@ -54,6 +55,7 @@
             this.dragSlide()
 
           }"
+          v-if="!loading && Object.keys(productsStore.products).length > 0"
           @touchstart="e => this.position = e.targetTouches[0].screenX"
           @touchend="stopDrag"
           @touchmove="e => mobileDrag(e)"
@@ -62,7 +64,7 @@
           :key="1"
           ref="carouselItemsWrapper"
           class="products-carousel_items"
-          :style="carousel.styles"
+
 
       >
         <router-link
@@ -88,8 +90,8 @@
       </div>
     </transition-group>
 
-    <base-loader v-else-if="loading" />
-    <div v-else>
+    <base-loader v-if="loading" />
+    <div v-else-if="!loading && loadingError">
       <h4 style="text-align: center; margin-top: 85px;">Произошла ошибка получения витрин, пожалуйста повторите попытку позже или перезагрузите страницу</h4>
 
     </div>
@@ -144,6 +146,7 @@ export default {
       },
 
       loading: false,
+      loadingError: false,
       sort: null,
       productsStore,
       height: null,
@@ -259,6 +262,10 @@ export default {
 
     collectProducts () {
       this.getHeight()
+      this.loading = true
+      this.loadingError = false
+
+
       productsStore.products.splice(0, productsStore.products.length)
 
       if (Object.keys(productsStore.products).length <= 0) {
@@ -267,14 +274,20 @@ export default {
           for (const item of result.data.products) {
             productsStore.products.push(item)
           }
-
+          this.loading = false
+          this.loadingError = false
 
         }).catch(e => e)
       }
     },
 
     getHeight() {
-      this.height = this.$refs.carouselWrapper.clientHeight
+      if (this.$refs.carouselItemsWrapper) {
+        this.height = this.$refs.carouselWrapper.offsetHeight.toString() + 'px'
+        this.$refs.carouselItemsWrapper.style.display = 'none'
+      }
+
+
     },
 
     setVisibleItems(width) {
@@ -296,6 +309,7 @@ export default {
   },
   mounted() {
     this.collectProducts()
+
     window.addEventListener("resize", e => this.setVisibleItems(e.target.innerWidth));
     this.setVisibleItems(window.innerWidth)
   },
@@ -312,7 +326,7 @@ export default {
   width: 100%;
   min-height: 240px;
   position: relative;
-  height: v-bind(height + 'px');
+  height: v-bind(height);
 
   .products-carousel_switch {
     display: flex;
