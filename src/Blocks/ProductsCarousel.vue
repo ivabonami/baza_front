@@ -2,7 +2,7 @@
 
   <div
        ref="carouselWrapper"
-       :style="carousel.styles"
+
        class="products-carousel">
 
     <div class="products-carousel_switch">
@@ -63,6 +63,7 @@
           @mouseleave="stopDrag"
           :key="1"
           ref="carouselItemsWrapper"
+          :style="carousel.styles"
           class="products-carousel_items"
 
 
