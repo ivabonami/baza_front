@@ -41,7 +41,9 @@
 
                 this.saveHeight['min-height'] = this.$refs.projectReviewsAll.clientHeight.toString() + 'px'
 
-                getReviews({projectId: this.$props.project.id}).then((result) => {
+                console.log(emit)
+
+                getReviews({projectId: this.$props.project.id, sort: emit.sort}).then((result) => {
                   this.loading = false
                   for (let review of result.data.reviews) {
                     projectReviewsStore.reviews.push(review)

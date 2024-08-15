@@ -231,6 +231,8 @@ export default {
                 let results = hours > 0 ? hours + ' ч и ' + minuts + ' мин' : minuts + ' мин';
                 this.notice.text.fetchError = `К сожалению вы превысили лимит на анонимные отзывы в сутки, попробуйте через ${results} или выполните вход или зарегистрируйтесь`
                 this.$emit('userRegistration', `К сожалению вы превысили лимит на анонимные отзывы в сутки, попробуйте через ${results} или выполните вход или зарегистрируйтесь`)
+              } else {
+                this.notice.text.fetchError = result.response.data.message
               }
 
               this.loading = false

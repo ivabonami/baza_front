@@ -12,7 +12,7 @@
   >
 
     <div  ref="categoriesWrapper" class="categories-menu_items_wrapper">
-      <div class="nav prev" @click="prevItem" v-if="scrollActive || step > 0">
+      <div class="nav prev" @click="prevItem" v-if="scrollActive && step > 0">
         <svg width="33" height="44" viewBox="0 0 33 44" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="0.5" y="0.5" width="32" height="43" rx="16" stroke="#191B2A"/>
           <path d="M18.9971 26.2103C18.9977 26.107 18.98 26.0045 18.9452 25.9089C18.9104 25.8132 18.8591 25.7262 18.7943 25.6528L15.5833 22.0568C15.5178 21.9838 15.4657 21.897 15.4302 21.8013C15.3947 21.7056 15.3764 21.603 15.3764 21.4993C15.3764 21.3957 15.3947 21.2931 15.4302 21.1974C15.4657 21.1017 15.5178 21.0149 15.5833 20.9419L18.7943 17.3458C18.926 17.198 19 16.9975 19 16.7884C19 16.5793 18.926 16.3788 18.7943 16.2309C18.6625 16.0831 18.4839 16 18.2976 16C18.2053 16 18.114 16.0204 18.0288 16.06C17.9436 16.0996 17.8661 16.1577 17.8009 16.2309L14.597 19.8348C14.2139 20.2823 14 20.8788 14 21.4993C14 22.1199 14.2139 22.7164 14.597 23.1639L17.8009 26.7678C17.8659 26.8413 17.9433 26.8998 18.0286 26.9396C18.1138 26.9795 18.2052 27 18.2976 27C18.3899 27 18.4814 26.9795 18.5666 26.9396C18.6519 26.8998 18.7292 26.8413 18.7943 26.7678C18.8591 26.6944 18.9104 26.6074 18.9452 26.5117C18.98 26.4161 18.9977 26.3136 18.9971 26.2103Z" fill="black"/>
@@ -142,7 +142,7 @@ export default {
 
   methods: {
     mobileDrag(e) {
-      if (e.targetTouches[0].screenX - 50 > this.position) {
+      if (e.targetTouches[0].screenX - 50 > this.position && this.step > 0) {
         this.scrollActive = true
         this.prevItem()
         this.stopDrag()
@@ -166,22 +166,23 @@ export default {
       window.removeEventListener('mousemove', this.dragToSlide)
     },
     dragToSlide(event) {
+      console.log(this.step)
       if( window.innerWidth > 768 ) {
-        if (event.screenX - 90 > this.position) {
+        if (event.screenX - 90 > this.position && this.step > 0) {
           this.scrollActive = true
           this.prevItem()
           this.position = event.screenX
-        } else if (event.screenX < this.position - 90) {
+        } else if (event.screenX < this.position - 80) {
           this.scrollActive = true
           this.nextItem()
           this.position = event.screenX
         }
       } else {
-        if (event.screenX - 20 > this.position) {
+        if (event.screenX - 40 > this.position && this.step > 0) {
           this.scrollActive = true
           this.prevItem()
           this.position = event.screenX
-        } else if (event.screenX < this.position - 20) {
+        } else if (event.screenX < this.position - 40) {
           this.scrollActive = true
           this.nextItem()
           this.position = event.screenX
@@ -194,8 +195,6 @@ export default {
       this.step++
       this.scrollActive = true
       const clientWidth = this.$refs.categoriesWrapper.clientWidth
-
-      c
 
     },
     prevItem() {

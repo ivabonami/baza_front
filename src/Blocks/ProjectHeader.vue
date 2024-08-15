@@ -391,9 +391,12 @@ export default {
 
   methods: {
     shortDescription(text) {
-      if (text.length > 310) {
+      if (text.length > 310 && window.innerWidth > 768) {
         this.longDescription = true
         return text.substring(0, 307) + '...'
+      } else if (text.length > 160 && window.innerWidth <= 768){
+        this.longDescription = true
+        return text.substring(0, 157) + '...'
       } else {
         return text
       }
@@ -414,11 +417,11 @@ export default {
       this.stats.ratingAvg.stat =  this.$props.project.ratingAvg
 
       if (window.innerWidth > 768) {
-        this.stats.categories.stat = this.$props.project.categories[0].name
+        this.$props.project.categories.length > 0 ? this.stats.categories.stat = this.$props.project.categories[0].name : null
       } else if (window.innerWidth > 768 && this.$props.project.viewCount > 1000 ) {
-        this.stats.categories.stat = this.$props.project.categories[0].name.substring(0, 4) + '...'
+        this.$props.project.categories.length > 0 ? this.stats.categories.stat = this.$props.project.categories[0].name.substring(0, 4) + '...' : null
       } else {
-        this.stats.categories.stat = this.$props.project.categories[0].name
+        this.$props.project.categories.length > 0 ? this.stats.categories.stat = this.$props.project.categories[0].name : null
       }
 
 
@@ -476,10 +479,18 @@ export default {
       this.setStats()
 
       if (window.innerWidth > 768) {
-        this.$props.project.name.length > 39 ?  this.normalizedName = this.$props.project.name.substring(0, 42) + '...' :  this.normalizedName = this.$props.project.name
+        if ( this.normalizedName ) {
+          this.$props.project.name.length > 39 ?  this.normalizedName = this.$props.project.name.substring(0, 42) + '...' :  this.normalizedName = this.$props.project.name
+        }
+
+
 
       } else {
-        this.$props.project.name.length > 29 ?  this.normalizedName = this.$props.project.name.substring(0, 22) + '...' :  this.normalizedName = this.$props.project.name
+
+        if ( this.normalizedName ) {
+          this.$props.project.name.length > 29 ?  this.normalizedName = this.$props.project.name.substring(0, 22) + '...' :  this.normalizedName = this.$props.project.name
+        }
+
 
       }
 
@@ -756,23 +767,13 @@ export default {
     font-size: 14px;
     .short-description {
       font-family: "PT Sans Caption";
-      -webkit-line-clamp: 3;
       position: relative;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
       word-break: break-word;
       color: #191B2A;
-      height: 55px;
       font-size: 14px;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
-      text-overflow: ellipsis;
-      display: -moz-box;
-      -moz-box-orient: vertical;
-      display: -webkit-box;
-      line-clamp: 3;
     }
     h2 {
       margin-top: 0;
@@ -799,7 +800,7 @@ export default {
     font-size: 14px;
   }
   .hideOnMobile {
-    width: 55px;
+    max-width: 40px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
