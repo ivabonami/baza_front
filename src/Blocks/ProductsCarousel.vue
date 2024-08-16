@@ -325,9 +325,8 @@ export default {
 
 .products-carousel {
   width: 100%;
-  min-height: 240px;
   position: relative;
-  height: v-bind(height);
+  min-height: v-bind(height);
 
   .products-carousel_switch {
     display: flex;
