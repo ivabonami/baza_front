@@ -348,6 +348,10 @@ export default {
           name: 'Клирнет',
           links: []
         },
+        clearnet2: {
+          name: 'Клирнет',
+          links: []
+        },
         contacts: {
           name: 'Контакты',
           links: []
@@ -440,8 +444,10 @@ export default {
     linksSpread (links) {
 
       for (let link of links) {
-        if (link.name === 'Зеркало' || link.name === 'Зеркало VPN') {
+        if (link.name === 'Зеркало') {
           this.spreadLinks.clearnet.links.push(link)
+        } else if (link.name === 'Зеркало VPN') {
+          this.spreadLinks.clearnet2.links.push(link)
         } else if (link.name === 'Контакты') {
           this.spreadLinks.contacts.links.push(link)
         } else if (link.name === 'Канал' || link.name === 'Бот') {

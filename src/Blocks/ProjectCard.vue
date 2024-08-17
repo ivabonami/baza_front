@@ -233,6 +233,7 @@ export default {
     spredLinks(array){
       const links = {
         clearnet: [],
+        clearnet2: [],
         contacts: [],
         telegram: [],
         onion: [],
@@ -243,8 +244,10 @@ export default {
       const newArray = [];
 
       for (let link of array) {
-        if (link.name === 'Зеркало' || link.name === 'Зеркало VPN') {
+        if (link.name === 'Зеркало' ) {
           links.clearnet.push(link)
+        } else if (link.name === 'Зеркало VPN') {
+          links.clearnet2.push(link)
         }else if (link.name === 'Контакты') {
           links.contacts.push(link)
         } else if (link.name === 'Канал' || link.name === 'Бот') {
@@ -259,6 +262,9 @@ export default {
       }
 
       for (let pushLink of links.clearnet) {
+        newArray.push(pushLink)
+      }
+      for (let pushLink of links.clearnet2) {
         newArray.push(pushLink)
       }
       for (let pushLink of links.contacts) {

@@ -33,6 +33,7 @@ export default {
   width: auto;
   display: flex;
   gap: 5px;
+  border: 1px solid #d5d5d5;
 
   span {
     color: #000;
@@ -49,8 +50,9 @@ export default {
   }
 
   &.active {
-    background-color: #dcdcdc;
+    background-color: #eae8fb;
     cursor: default;
+    border-color: #d5d5d5;
   }
 
 

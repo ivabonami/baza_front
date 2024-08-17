@@ -155,9 +155,13 @@ export default {
 
     linksSpread (links) {
 
+      let yellowLinks = [], greenLinks = [];
+
       for (let link of links) {
-        if (link.name === 'Зеркало' || link.name === 'Зеркало VPN') {
-          this.spreadLinks.clearnet.links.push(link)
+        if (link.name === 'Зеркало') {
+          yellowLinks.push(link)
+        } else if (link.name === 'Зеркало VPN') {
+          greenLinks.push(link)
         } else if (link.name === 'Контакты') {
           this.spreadLinks.contacts.links.push(link)
         } else if (link.name === 'Канал' || link.name === 'Бот') {
@@ -170,6 +174,18 @@ export default {
           this.spreadLinks.other.links.push(link)
         }
       }
+
+      for (let link of yellowLinks) {
+        this.spreadLinks.clearnet.links.push(link)
+      }
+
+      for (let link of greenLinks) {
+        this.spreadLinks.clearnet.links.push(link)
+      }
+
+      console.log(this.spreadLinks)
+
+
 
 
     }
