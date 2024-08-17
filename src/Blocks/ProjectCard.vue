@@ -257,7 +257,7 @@ export default {
         } else if (link.name === 'Блокчейн') {
           links.blockchain.push(link)
         } else {
-          links.other.links.push(link)
+          links.other.push(link)
         }
       }
 
