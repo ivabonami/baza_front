@@ -27,7 +27,7 @@
           @errors="emit => {
           this.notice.show = true
           this.notice.text = emit
-          console.log(emit)
+
         }"
           @closePopup="closeModal()"
           @success="() => {

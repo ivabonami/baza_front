@@ -41,7 +41,6 @@
 
                 this.saveHeight['min-height'] = this.$refs.projectReviewsAll.clientHeight.toString() + 'px'
 
-                console.log(emit)
 
                 getReviews({projectId: this.$props.project.id, sort: emit.sort}).then((result) => {
                   this.loading = false
@@ -49,7 +48,7 @@
                     projectReviewsStore.reviews.push(review)
                   }
                 }).catch(err => {
-                  console.log(err)
+
                   this.loading = false
                   this.loadingError = true
                 })
@@ -479,7 +478,7 @@ export default {
         projectReviewsStore.reviews.push(review)
       }
     }).catch(err => {
-      console.log(err)
+
       this.loading = false
       this.loadingError = true
     })

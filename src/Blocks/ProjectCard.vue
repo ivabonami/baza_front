@@ -282,9 +282,6 @@ export default {
 
 
 
-      console.log(links)
-
-
       return newArray
     },
     normalizeProjectName(name) {

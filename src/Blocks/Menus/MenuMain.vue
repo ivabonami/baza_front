@@ -166,7 +166,7 @@ export default {
       window.removeEventListener('mousemove', this.dragToSlide)
     },
     dragToSlide(event) {
-      console.log(this.step)
+
       if( window.innerWidth > 768 ) {
         if (event.screenX - 90 > this.position && this.step > 0) {
           this.scrollActive = true
