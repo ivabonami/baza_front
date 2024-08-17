@@ -253,8 +253,8 @@ export default {
         offset: 0,
 
         sort: {
-          name: 'Популярные',
-          sort: 'popularity'
+          name: 'С высоким рейтингом',
+          sort: 'highestRating'
         },
         categoryIds: 0
       },
