@@ -208,7 +208,7 @@ export default {
       counter: 0,
       isLogin: false,
       reviewsCount: 0,
-      
+
       
       username: '',
       actionModal: {},
@@ -231,18 +231,61 @@ export default {
   },
   methods: {
     spredLinks(array){
-      array.sort((a, b) => {
-        let sortStringA = (a.name === 'Зеркало' ? 0 : 1)
-        let sortStringB = (b.name === 'Зеркало' ? 0 : 1)
-        if (sortStringA < sortStringB) {
-          return -1;
+      const links = {
+        clearnet: [],
+        contacts: [],
+        telegram: [],
+        onion: [],
+        blockchain: [],
+        other: []
+      }
+
+      const newArray = [];
+
+      for (let link of array) {
+        if (link.name === 'Зеркало' || link.name === 'Зеркало VPN') {
+          links.clearnet.push(link)
+        }else if (link.name === 'Контакты') {
+          links.contacts.push(link)
+        } else if (link.name === 'Канал' || link.name === 'Бот') {
+          links.telegram.push(link)
+        } else if (link.name === 'Onion') {
+          links.onion.push(link)
+        } else if (link.name === 'Блокчейн') {
+          links.blockchain.push(link)
+        } else {
+          links.other.links.push(link)
         }
-        if (sortStringA > sortStringB) {
-          return 1;
-        }
-        return 0;
-      });
-      return array
+      }
+
+      for (let pushLink of links.clearnet) {
+        newArray.push(pushLink)
+      }
+      for (let pushLink of links.contacts) {
+        newArray.push(pushLink)
+      }
+
+      for (let pushLink of links.telegram) {
+        newArray.push(pushLink)
+      }
+
+      for (let pushLink of links.onion) {
+        newArray.push(pushLink)
+      }
+
+      for (let pushLink of links.blockchain) {
+        newArray.push(pushLink)
+      }
+      for (let pushLink of links.other) {
+        newArray.push(pushLink)
+      }
+
+
+
+      console.log(links)
+
+
+      return newArray
     },
     normalizeProjectName(name) {
       if (name.length > 35) {
