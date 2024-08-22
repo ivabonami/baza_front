@@ -225,6 +225,16 @@ export default {
         //   sort: 'popularity'
         // },
 
+
+        {
+          name: 'С наибольшим кол-вом оценок',
+          sort: 'highestRatingCount'
+        },
+        {
+          name: 'С наименьшим кол-вом оценок',
+          sort: 'lowestRatingCount'
+        },
+
         {
           name: 'С высоким рейтингом',
           sort: 'highestRating'
@@ -252,9 +262,9 @@ export default {
         limit: 4,
         offset: 0,
 
-        sort: {
-          name: 'С высоким рейтингом',
-          sort: 'highestRating'
+        sort:  {
+          name: 'С наибольшим количеством оценок',
+          sort: 'highestRatingCount'
         },
         categoryIds: 0
       },

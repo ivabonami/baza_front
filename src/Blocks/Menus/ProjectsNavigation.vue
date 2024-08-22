@@ -35,9 +35,9 @@ import {categoriesStore} from "../../Store/categories.js";
 export default {
   name: "ProjectsNavigation.vue",
   props: {
-    sort: {
-      name: 'С высоким рейтингом',
-      sort: 'highestRating'
+    sort:  {
+      name: 'С наибольшим количеством оценок',
+      sort: 'highestRatingCount'
     },
 
   },

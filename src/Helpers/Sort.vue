@@ -144,10 +144,11 @@ export default {
     border-radius: 10px;
     border: 1px solid var(--lightgray, #F2F5F7);
     background: #FFF;
-    width: 180px;
+    width: 250px;
     position: absolute;
     z-index: 10;
-    right: -15px;
+    top: 35px;
+    right: 0px;
     margin-top: 5px;
 
 

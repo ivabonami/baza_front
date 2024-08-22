@@ -7,7 +7,7 @@ import {modalSetting} from "./assets/js/modal.js";
 import {watch, ref} from "vue";
 import baseFooter from "./Layouts/BaseFooter.vue";
 import yandexMetrica from "./Layouts/YandexMetrica.vue";
-
+import bitMabiaBanner from './assets/payedBanners/BitMafia x MixMafiaCROP.webm'
 export default {
   components: { FooterView, recommended, addCategory, bazaHeader, baseFooter, yandexMetrica},
   emits: ['mobileClick'],
@@ -16,7 +16,7 @@ export default {
       showMobileMenu: false,
       showLeftMenu: false,
       showRightMenu: false,
-
+      bitMabiaBanner,
       isLoaded: false,
       isAdmin: false,
       showScrollTopButton: false,
@@ -77,6 +77,12 @@ export default {
             <svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80.52 137.91"><path d="M26.75,68.29c14.02,13.92,26.77,26.57,39.5,39.23,3.54,3.52,7.15,6.98,10.53,10.65,4.87,5.29,4.82,11.95,.1,16.49-4.67,4.49-11.53,4.36-16.53-.62C41.46,115.25,22.61,96.41,3.83,77.51c-4.97-5-5.17-11.48-.22-16.49C22.7,41.7,41.91,22.5,61.2,3.38c4.71-4.67,11.74-4.38,16.15,.11,4.28,4.36,4.32,11.35-.42,16.15-14.74,14.95-29.61,29.77-44.5,44.57-1.41,1.4-3.26,2.36-5.69,4.08Z"/></svg>
             Назад
           </button>
+          <a class="payed-banner" href="https://Bitmafia.io" target="_blank">
+            <video autoplay loop muted>
+              <source :src="bitMabiaBanner" type="video/mp4">
+            </video>
+<!--            <img :src="bitMabiaBanner" alt="BIT MAFIA">-->
+          </a>
           <div class="recommend">
             <recommended
                 v-if="this.$route.name === 'New projects view' || this.$route.name === 'Home' || this.$route.name === 'Favorite'" >
@@ -134,6 +140,19 @@ header {
   bottom: 80px;
   display: flex;
   justify-content: end;
+}
+.payed-banner {
+  width: 100%;
+  margin-bottom: 14px;
+  position: relative;
+  display: block;
+  overflow: hidden;
+
+  video {
+    border-radius: 20px;
+    width: 100%;
+  }
+
 }
 .scroll-to-top {
   box-sizing: border-box;
