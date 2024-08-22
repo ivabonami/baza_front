@@ -78,7 +78,7 @@ export default {
             Назад
           </button>
           <a class="payed-banner" href="https://Bitmafia.io" target="_blank">
-            <video autoplay loop muted>
+            <video autoplay loop muted playsinline>
               <source :src="bitMabiaBanner" type="video/mp4">
             </video>
 <!--            <img :src="bitMabiaBanner" alt="BIT MAFIA">-->
