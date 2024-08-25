@@ -89,6 +89,7 @@ import {api} from "./../../assets/js/config.js";
 import ButtonAction from "../Buttons/ButtonAction.vue";
 import InputRating from "../Inputs/InputRating.vue";
 import {addReview, editReview} from "../../API/reviews.js";
+import {userInfo} from "../../Store/userInfo.js";
 
 export default {
   name: "PopupReviewController.vue",
@@ -230,7 +231,10 @@ export default {
                 }
                 let results = hours > 0 ? hours + ' ч и ' + minuts + ' мин' : minuts + ' мин';
                 this.notice.text.fetchError = `К сожалению вы превысили лимит на анонимные отзывы в сутки, попробуйте через ${results} или выполните вход или зарегистрируйтесь`
-                this.$emit('userRegistration', `К сожалению вы превысили лимит на анонимные отзывы в сутки, попробуйте через ${results} или выполните вход или зарегистрируйтесь`)
+
+                if (!userInfo.token) {
+                  this.$emit('userRegistration', `К сожалению вы превысили лимит на анонимные отзывы в сутки, попробуйте через ${results} или выполните вход или зарегистрируйтесь`)
+                }
               } else {
                 this.notice.text.fetchError = result.response.data.message
               }
