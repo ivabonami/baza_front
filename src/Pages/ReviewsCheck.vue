@@ -99,6 +99,28 @@
       </div>
     </div>
 
+    <div class="mt20">
+      <Waypoint v-if="!hideLoadMore"
+
+                @change="way => {
+                  if (way.going === 'IN') {
+                    options.offset += options.limit
+                    onReviewsLoad()
+                  }
+              }">
+
+        <button-primary
+            @click="onReviewsLoad()"
+            :style="'outline'">
+          <template #default>
+            Загрузить еще
+          </template>
+        </button-primary>
+
+      </Waypoint>
+    </div>
+
+
     <popup-action
         v-if="modalAction.show === true"
         @closeModal="modalAction.show = false"
@@ -177,14 +199,15 @@ import popupDelete from "../components/Popups/PopupDelete.vue";
 import emptyStore from "../Blocks/EmptyStore.vue";
 import loaderSmall from "../components/Loaders/LoaderSmall.vue";
 import notice from "../components/Popups/Notice.vue";
-
+import buttonPrimary from "../components/Buttons/ButtonPrimary.vue";
+import {Waypoint} from "vue-waypoint";
 
 export default {
   name: "ReviewsCheck.vue",
   data() {
     return {
       loading: false,
-      reviews: {},
+      reviews: [],
       userInfo,
       approveReview,
       deleteReview,
@@ -192,12 +215,16 @@ export default {
         show: false,
         review: {}
       },
+      hideLoadMore: false,
       notice: {
         show: false,
         color: null,
         text: {}
       },
-
+      options: {
+        limit: 5,
+        offset: 0,
+      },
       modalDelete: {
         show: false,
         review: {}
@@ -207,29 +234,48 @@ export default {
   },
 
   components: {
+    Waypoint,
     buttonAction,
     popupAction,
     popupDelete,
     loaderSmall,
     emptyStore,
-    notice
+    notice,
+    buttonPrimary
   },
 
-  methods: {},
+  methods: {
+    onReviewsLoad() {
+      showNotReviewed(this.options).then(result => {
+        for (const review of result.data.reviews) {
+          this.reviews.push(review)
+        }
+        this.options.offset += this.options.limit
+        this.loading = false
+
+        if (result.data.reviews.length < this.options.limit) {
+          this.hideLoadMore = true
+        } else {
+          this.hideLoadMore = false
+        }
+
+        console.log(result.data.reviews.length < this.options.limit)
+      })
+    }
+  },
 
   mounted() {
-    this.loading = true
-    showNotReviewed().then(result => {
 
-      this.reviews = result.data.reviews
-      this.loading = false
-    })
+    this.onReviewsLoad()
   }
 
 }
 </script>
 
 <style scoped lang="scss">
+.mt20 {
+  margin-top: 20px;
+}
 .project-reviews_items {
   display: flex;
   flex-wrap: wrap;

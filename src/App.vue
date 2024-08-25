@@ -148,6 +148,11 @@ header {
   display: block;
   overflow: hidden;
 
+  img {
+    border-radius: 20px;
+    width: 100%;
+  }
+
   video {
     border-radius: 20px;
     width: 100%;

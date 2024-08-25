@@ -35,12 +35,18 @@ export async function addReview(review) {
 }
 
 
-export function showNotReviewed() {
+export function showNotReviewed(options) {
     const headers = {
         'Authorization': `Bearer ${userInfo.token}`
     };
-
-    return axios.get(`${apiUrl}reviews?showNotReviewed=true`, {headers})
+    let link = ''
+    if (options) {
+        for (let option in options) {
+            link += `${option}=${options[option]}&`
+        }
+    }
+    link = link.slice(0, -1)
+    return axios.get(`${apiUrl}reviews?showNotReviewed=true&${link}`, {headers})
 }
 
 export async function editReview(review) {
