@@ -250,7 +250,7 @@ export default {
         for (const review of result.data.reviews) {
           this.reviews.push(review)
         }
-        this.options.offset += this.options.limit
+        this.options.offset = this.options.offset + this.options.limit
         this.loading = false
 
         if (result.data.reviews.length < this.options.limit) {
