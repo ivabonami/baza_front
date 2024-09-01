@@ -15,6 +15,7 @@ export function getReviews(options) {
             link += `${option}=${options[option]}&`
         }
     }
+    console.log(options)
     link = link.slice(0, -1)
     return axios.get(`${apiUrl}reviews${link}`, {headers})
 

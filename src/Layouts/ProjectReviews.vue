@@ -178,6 +178,26 @@
 
     </div>
 
+    <Waypoint v-show="showMoreButton"
+              @change="way => {
+            if (way.going === 'IN') {
+              this.onReviews()
+            }
+          }">
+
+      <button-primary
+          class="mt20"
+          @click="() => {
+this.onReviews()
+            }"
+          :style="'outline'">
+        <template #default>
+          Загрузить еще
+        </template>
+      </button-primary>
+
+    </Waypoint>
+
     <div class="add-review" :class="{mt: projectReviewsStore.reviews.length > 0}">
       <empty-store
           :show-button="true"
@@ -330,7 +350,8 @@ import popupAuth from "../components/Popups/PopupAuth.vue";
 import sort from "../Helpers/Sort.vue";
 import notice from "../components/Popups/Notice.vue";
 import loaderSmall from "../components/Loaders/LoaderSmall.vue";
-
+import buttonPrimary from "../components/Buttons/ButtonPrimary.vue";
+import {Waypoint} from "vue-waypoint";
 export default {
   name: "ProjectReviews.vue",
   emits: ['productAdded', 'productUpdated', 'reviewAdded'],
@@ -353,6 +374,10 @@ export default {
       modalAuth: {
         show: false
       },
+      options: {
+        limit: 5,
+        offset: 0
+      },
       modalDelete: {
         show: false,
         review: null,
@@ -364,6 +389,7 @@ export default {
         color: null,
         text: {}
       },
+      showMoreButton: true,
       alreadyReviewed: false,
       sorts: [
 
@@ -414,7 +440,9 @@ export default {
     popupAuth,
     sort,
     notice,
-    loaderSmall
+    loaderSmall,
+    buttonPrimary,
+    Waypoint
   },
 
   methods: {
@@ -448,20 +476,39 @@ export default {
     onDisapproveReview(review) {
       disapproveReview(review)
 
+    },
+
+    onReviews() {
+      getReviews({
+        projectId: this.project.id,
+        sort: this.selectedSort.sort,
+        limit: this.options.limit,
+        offset: this.options.offset
+      }).then((result) => {
+        this.loading = false
+        for (let review of result.data.reviews) {
+          projectReviewsStore.reviews.push(review)
+        }
+        if (result.data.reviews.length < this.options.limit) {
+          this.showMoreButton = false
+        }
+
+      }).catch(err => {
+
+        this.loading = false
+        this.loadingError = true
+        this.showMoreButton = false
+      })
+
+      this.options.offset = this.options.offset + this.options.limit
+
     }
 
 
   },
   watch: {
     project: function (newVal, oldVal) {
-      getReviews({projectId: newVal.id, sort: this.selectedSort.sort}).then(() => {
-        projectReviewsStore.reviews.find(item => item.userData.username === userInfo.username) ? this.alreadyReviewed = true : null
-
-      })
-
-      for (let i = 0; i < this.project.ratingAvg; i++) {
-        this.$refs.stars.childNodes[i].classList.add('active')
-      }
+      this.onReviews()
     },
   },
 
@@ -472,16 +519,7 @@ export default {
   mounted() {
     this.loading = true
     this.loadingError = false
-    getReviews({projectId: this.$props.project.id}).then((result) => {
-      this.loading = false
-      for (let review of result.data.reviews) {
-        projectReviewsStore.reviews.push(review)
-      }
-    }).catch(err => {
-
-      this.loading = false
-      this.loadingError = true
-    })
+    this.onReviews()
 
     for (let i = 0; i < this.project.ratingAvg; i++) {
       this.$refs.stars.childNodes[i].classList.add('active')
@@ -800,5 +838,8 @@ export default {
   .project-reviews_items .project-reviews_items_item .project-reviews_items_item_heading .date {
     font-size: 12px;
   }
+}
+.mt20 {
+  margin-top: 20px;
 }
 </style>
