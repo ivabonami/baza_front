@@ -392,7 +392,6 @@ export default {
       showMoreButton: true,
       alreadyReviewed: false,
       sorts: [
-
         {
           name: 'Сначала новые',
           sort: 'newest'
@@ -409,25 +408,20 @@ export default {
           name: 'С низким рейтингом',
           sort: 'lowestRating'
         },
-
       ],
       selectedSort: {
         name: 'Сначала новые',
         sort: 'newest'
       },
       getReviews,
-
       modalInfo: {
         show: false,
-
       },
       reviewToEdit: null,
       projectReviewsStore,
       userInfo,
-
       deleteReview,
       reviewToDelete: null
-
     }
   },
 
@@ -492,7 +486,7 @@ export default {
         if (result.data.reviews.length < this.options.limit) {
           this.showMoreButton = false
         }
-
+        this.options.offset = this.options.offset + this.options.limit
       }).catch(err => {
 
         this.loading = false
@@ -500,7 +494,7 @@ export default {
         this.showMoreButton = false
       })
 
-      this.options.offset = this.options.offset + this.options.limit
+
 
     }
 
