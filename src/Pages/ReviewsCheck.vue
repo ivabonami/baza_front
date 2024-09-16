@@ -104,7 +104,6 @@
 
                 @change="way => {
                   if (way.going === 'IN') {
-                    options.offset += options.limit
                     onReviewsLoad()
                   }
               }">
@@ -222,7 +221,7 @@ export default {
         text: {}
       },
       options: {
-        limit: 5,
+        limit: 1,
         offset: 0,
       },
       modalDelete: {
@@ -250,7 +249,7 @@ export default {
         for (const review of result.data.reviews) {
           this.reviews.push(review)
         }
-        this.options.offset = this.options.offset + this.options.limit
+
         this.loading = false
 
         if (result.data.reviews.length < this.options.limit) {
@@ -258,9 +257,9 @@ export default {
         } else {
           this.hideLoadMore = false
         }
-
-        console.log(result.data.reviews.length < this.options.limit)
       })
+
+      this.options.offset = this.options.offset + 1
     }
   },
 
