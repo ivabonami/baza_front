@@ -221,7 +221,7 @@ export default {
         text: {}
       },
       options: {
-        limit: 1,
+        limit: 5,
         offset: 0,
       },
       modalDelete: {
@@ -259,7 +259,7 @@ export default {
         }
       })
 
-      this.options.offset = this.options.offset + 1
+      this.options.offset = this.options.offset + this.options.limit
     }
   },
 
