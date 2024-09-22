@@ -58,7 +58,8 @@ export async function editProject(project, projectId) {
         minValueToExchange: project.minValueToExchange || null,
         categoryIds: project.categoryIds,
         links: project.links,
-        favorite: project.favorite
+        favorite: project.favorite,
+        payed: project.payed || false
     }
 
     if (project.reserve || project.minValueToExchange ) {

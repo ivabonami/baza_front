@@ -507,6 +507,7 @@ export default {
       this.project.avatarFilePath = this.project.avatarFilePath
       this.project.userData = result.data.project.userData
       this.project.favorite = result.data.project.favorite
+      this.project.payed = result.data.project.payed
 
       userInfo.username === this.project.userData.username ? this.isOwner = true : this.isOwner = false
       userInfo.role === 'admin' ? this.isOwner = true : this.isOwner = false
