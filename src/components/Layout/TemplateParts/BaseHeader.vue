@@ -31,9 +31,23 @@
 
     <div class="user-menu"
          v-else>
-      <span @click="dropdown.show = !dropdown.show" data-dropdown="dropdown">
+
+      <button-black
+          @buttonPressed="dropdown.show = !dropdown.show"
+          data-dropdown="dropdown"
+      >
         {{ userStore.username }}
-      </span>
+      </button-black>
+
+      <button-black
+          @buttonPressed="signOut()"
+      >
+        <span title="Выйти из аккаунта">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" >
+            <path d="M19.5608 13.5391L17.1758 15.9249L15.9975 14.7466L17.4108 13.3332H11.6675V11.6666H17.4642L15.9975 10.1991L17.1758 9.02074L19.5608 11.4057C20.1492 11.9941 20.1492 12.9507 19.5608 13.5391ZM11.6667 14.9999H13.3333V19.9991H0V3.49907C0 2.3124 0.845 1.28157 2.00917 1.04824L7.01 0.0474046C7.74833 -0.0975954 8.50417 0.0899046 9.08583 0.565738C9.4425 0.858238 9.6925 1.2424 9.8425 1.6649H10.8342C12.2125 1.6649 13.3342 2.78657 13.3342 4.1649V9.99907H11.6675V4.1649C11.6675 3.7049 11.2933 3.33157 10.8342 3.33157H10.0008V18.3316H11.6675V14.9991L11.6667 14.9999ZM7.50083 10.4157C7.50083 9.7249 6.94083 9.1649 6.25 9.1649C5.55917 9.1649 4.99917 9.7249 4.99917 10.4157C4.99917 11.1066 5.55917 11.6666 6.25 11.6666C6.94083 11.6666 7.50083 11.1066 7.50083 10.4157Z" fill="#B3B4C9"/>
+          </svg>
+        </span>
+      </button-black>
 
       <dropdownBox v-if="dropdown.show === true"
                    :selector="'dropdown'"
@@ -42,17 +56,6 @@
         <AdminMenu :admin-menu="adminMenu"/>
       </dropdownBox>
 
-      <div class="sign-out" @click.prevent
-           @click="addNotice({name: 'Никто не может выйти из аккаунта', type: 'warning'})"
-      >
-        <span title="Выйти из аккаунта">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" >
-            <path d="M19.5608 13.5391L17.1758 15.9249L15.9975 14.7466L17.4108 13.3332H11.6675V11.6666H17.4642L15.9975 10.1991L17.1758 9.02074L19.5608 11.4057C20.1492 11.9941 20.1492 12.9507 19.5608 13.5391ZM11.6667 14.9999H13.3333V19.9991H0V3.49907C0 2.3124 0.845 1.28157 2.00917 1.04824L7.01 0.0474046C7.74833 -0.0975954 8.50417 0.0899046 9.08583 0.565738C9.4425 0.858238 9.6925 1.2424 9.8425 1.6649H10.8342C12.2125 1.6649 13.3342 2.78657 13.3342 4.1649V9.99907H11.6675V4.1649C11.6675 3.7049 11.2933 3.33157 10.8342 3.33157H10.0008V18.3316H11.6675V14.9991L11.6667 14.9999ZM7.50083 10.4157C7.50083 9.7249 6.94083 9.1649 6.25 9.1649C5.55917 9.1649 4.99917 9.7249 4.99917 10.4157C4.99917 11.1066 5.55917 11.6666 6.25 11.6666C6.94083 11.6666 7.50083 11.1066 7.50083 10.4157Z" fill="#B3B4C9"/>
-          </svg>
-        </span>
-
-
-      </div>
     </div>
   </div>
 </template>
@@ -62,7 +65,7 @@ import logotype from '@/assets/logo-black.svg'
 import buttonBlack from "@/components/Buttons/ButtonBlack.vue";
 import {popup} from "@/js/controllers/popupController.js";
 import menuHeader from "@/components/Menus/MenuHeader.vue";
-import {userStore} from "@/Stores/userStore.js";
+import {signOut, userStore} from "@/Stores/userStore.js";
 import dropdownBox from "@/components/ReUsable/DropdownBox.vue";
 import {addNotice} from "@/js/notifications.js";
 import {adminMenu} from "@/Stores/adminMenu.js";
@@ -82,6 +85,7 @@ export default {
       popup,
       userStore,
       addNotice,
+      signOut,
       adminMenu,
       dropdown: {
         show: false

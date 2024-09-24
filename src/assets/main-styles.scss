@@ -100,8 +100,7 @@ svg {
 .projects-menu_categories {
   display: flex;
   gap: 10px;
-  max-width: 60vw;
-  overflow: scroll;
+  width: 100%;
 
 
   .projects-menu_categories_category {
@@ -150,3 +149,5 @@ svg {
     }
   }
 }
+
+@import "mobile-styles";

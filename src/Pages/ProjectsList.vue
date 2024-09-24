@@ -127,7 +127,7 @@ export default {
     } else if (window.innerWidth >= 768 && window.innerWidth <= 1053) {
       this.requestOptions.limit = 4
     } else {
-      this.requestOptions.limit = 2
+      this.requestOptions.limit = 4
     }
 
     this.getProjectsList(this.requestOptions)
