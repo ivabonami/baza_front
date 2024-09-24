@@ -4,6 +4,7 @@ import DEBUG from "@/components/DEBUG.vue";
 import CategoriesEditor from "@/Pages/CategoriesEditor.vue";
 import ProjectsChecker from "@/Pages/ProjectsChecker.vue";
 import ReviewsChecker from "@/Pages/ReviewsChecker.vue";
+import PayedProjectsController from "@/Pages/PayedProjectsController.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -30,6 +31,7 @@ const router = createRouter({
     },{
       path: '/payed-editor',
       name: 'PayedEditor',
+      component: PayedProjectsController
 
     }
   ]
