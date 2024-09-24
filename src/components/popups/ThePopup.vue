@@ -48,7 +48,6 @@ export default {
   methods: {
     swapComponent(component) {
       this.component = popup.component ? shallowRef(defineAsyncComponent(() => import(`@/components/ReUsable/${component}.vue`))) : null
-
       addNotice({name: `Загружен компонент ${popup.component} по запросу ${component}`, type: 'success'})
 
     },
@@ -63,7 +62,9 @@ export default {
     document.body.style.overflow = 'hidden hidden'
     document.body.style.paddingRight = '15px'
 
-    this.swapComponent('SignIn')
+    console.log(popup.component)
+
+    this.swapComponent(popup.component)
   },
   beforeUnmount() {
     window.removeEventListener("keydown", this.closeModalByEsc)

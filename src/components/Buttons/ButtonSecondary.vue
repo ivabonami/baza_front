@@ -21,6 +21,7 @@
 .button {
   background-color: transparent;
   border: 1px solid var(--yellow, #B3B4C9);
+  box-sizing: border-box;
 
   &:disabled {
     opacity: .5;

@@ -15,10 +15,12 @@ export default {
 .button {
   background: #191B2A;
   color: #F8F7FC;
+  box-sizing: border-box;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  height: auto;
 
   &:disabled {
     opacity: .5;

@@ -133,6 +133,23 @@ svg.stroke2 {
   stroke: #191B2A;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background-color: #e7e7e7;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-clip: content-box;
+  background-color: #5D599F;
+  cursor: s-resize;
+}
+
 @media screen and (max-width: 500px) {
   .projects-menu_categories {
     max-width: 60vw;

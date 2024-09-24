@@ -29,6 +29,7 @@
 
       <div class="buttons-group">
         <ButtonPrimary
+            :type="'button'"
             style="margin-top: 10px;"
             :disabled="loading"
             @click="() => {

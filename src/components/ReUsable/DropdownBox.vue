@@ -59,7 +59,11 @@ export default {
   box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
   padding: 10px;
   border-radius: 20px;
-  z-index: 1;
+  z-index: 2;
+  max-height: 600px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
 
 
 }

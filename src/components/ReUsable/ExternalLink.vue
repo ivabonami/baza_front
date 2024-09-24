@@ -1,31 +1,15 @@
 <template>
 <div>
-  <form
-
-      @submit.prevent="null"
-
-  >
-    <auth-header />
-    <input-text
-        class="mb15"
-        :data="{
-          placeholder: 'Введите ваш логин',
-          icon: userIcon,
-          name: 'username'
-        }"
-        @textData="emit => data.username = emit" />
-
-    <input-password
-        :data="{
-          placeholder: 'Введите ваш пароль',
-          icon: lockIcon,
-          name: 'password'
-        }"
-        @passwordData="emit => data.password = emit" />
-
+  <div>
+    <DefaultHeader>
+      Покинуть базу?
+    </DefaultHeader>
+    <p style="text-align: center; color: #5D599F">
+      Вы собираетесь перейти по <b>внешней ссылке</b> и покинуть BAZA, мы проверяем наши ссылки, но хотели бы знать, вы точно хотите это сделать?
+    </p>
     <div class="buttons-group">
       <ButtonPrimary
-          :type="'button'"
+          :type="'link'"
           style="margin-top: 10px;"
           :disabled="loading || data.password === '' || data.username === '' "
           @click="() => {
@@ -33,7 +17,7 @@
             onSubmit(this.data)
           }">
         <TheLoader v-if="loading"/>
-        <span>Войти</span>
+        <span>Да, перейти</span>
       </ButtonPrimary>
 
       <ButtonSecondary
@@ -41,7 +25,7 @@
           :disabled="loading"
           @click.stop
           @click="$emit('changeState', 'SignUp')">
-        <span>Нет аккаунта?</span>
+        <span>Остаться на BAZA</span>
       </ButtonSecondary>
 
 
@@ -49,9 +33,7 @@
     </div>
 
 
-  </form>
-
-
+  </div>
 
 </div>
 </template>
@@ -67,7 +49,7 @@ import {signIn} from "@/API/authController.js";
 import {closePopup, popup} from "@/js/controllers/popupController.js";
 import userIcon from '@/assets/icons/user-icon.svg'
 import lockIcon from '@/assets/icons/lock-icon.svg'
-import AuthHeader from "@/components/Blocks/AuthHeader.vue";
+import DefaultHeader from "@/components/Blocks/DefaultHeader.vue";
 import {addNotice, removeAllNotices} from "@/js/notifications.js";
 import {setUserData} from "@/Stores/userStore.js";
 
@@ -79,7 +61,7 @@ export default {
     TheLoader,
     ButtonPrimary,
     ButtonSecondary,
-    AuthHeader
+    DefaultHeader
   },
   data() {
     return {
@@ -132,6 +114,10 @@ export default {
 
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+.buttons-group {
+  display: flex;
+  flex-flow: row;
+  box-sizing: border-box;
+}
 </style>

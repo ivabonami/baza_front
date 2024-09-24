@@ -1,9 +1,12 @@
 <template>
 
   <div class="projects-list">
+    <div class="carousel">
+      <productsCarouselMenu />
+    </div>
     <div class="projects-nav">
       <ProjectsMenu />
-      <sort :sorts="sorts" @sortChanged="(emit) => {
+      <sort :sorts="projectsSortsStore" @sortChanged="(emit) => {
         this.requestOptions.sort = emit.slug
         this.projects.splice(0, this.projects.length)
         this.requestOptions.offset = 0
@@ -35,8 +38,10 @@
 import {defineAsyncComponent} from "vue";
 import {getProjects} from "@/API/projectsController.js";
 import {projects} from "@/Stores/projectsStore.js";
-import { defineComponent } from "vue";
+import {projectsSortsStore} from "@/Stores/projectsSortsStore.js";
 import { Waypoint } from "vue-waypoint";
+import productsCarouselMenu from "@/components/Blocks/ProductsCarouselMenu.vue";
+
 export default {
   name: 'ProjectsList.vue',
   components: {
@@ -52,6 +57,11 @@ export default {
     }),
     Sort: defineAsyncComponent({
       loader: () => import("@/components/ReUsable/BaseSort.vue"),
+      delay: 200,
+      timeout: 3000
+    }),
+    productsCarouselMenu: defineAsyncComponent({
+      loader: () => import("@/components/Blocks/ProductsCarouselMenu.vue"),
       delay: 200,
       timeout: 3000
     }),
@@ -86,13 +96,7 @@ export default {
         isPayedFirst: true,
         sort: null
       },
-      sorts: [{
-        name: 'Высокий рейтинг',
-        slug: 'highestRating'
-      },{
-        name: 'Низкий рейтинг',
-        slug: 'lowestRating'
-      }],
+      projectsSortsStore,
       result: null,
       projects,
       hasMore: true
@@ -105,23 +109,25 @@ export default {
       }
     },
     getProjectsList(options) {
-      try {
-        getProjects(options).then(result => {
-          this.hasMore = result.hasMore
-          for (const project of result.projects) {
-            projects.push(project)
-          }
-        })
+      if (options['sort']) {
+        try {
+          getProjects(options).then(result => {
+            this.hasMore = result.hasMore
+            for (const project of result.projects) {
+              projects.push(project)
+            }
+          })
 
-        this.requestOptions.offset += options.limit
+          this.requestOptions.offset += options.limit
 
-      } catch (err) {
-        this.result = err
+        } catch (err) {
+          this.result = err
+        }
       }
+
     }
   },
   mounted() {
-
     if (window.innerWidth > 1053) {
       this.requestOptions.limit = 8
     } else if (window.innerWidth >= 768 && window.innerWidth <= 1053) {
