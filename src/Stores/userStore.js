@@ -6,11 +6,9 @@ export const userStore = reactive({
 })
 
 export function setUserData(data) {
-    if (localStorage.getItem('token') && localStorage.getItem('username')) {
-        for (let prop in data) {
-            localStorage.setItem(prop, data[prop])
-            userStore[prop] = data[prop]
-        }
+    for (let prop in data) {
+        localStorage.setItem(prop, data[prop])
+        userStore[prop] = data[prop]
     }
 
 }

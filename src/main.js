@@ -13,7 +13,9 @@ app.use(router)
 app.component('inline-svg', InlineSvg);
 app.mount('#app')
 
-setUserData({token: localStorage.getItem('token'), username: localStorage.getItem('username')})
+if (localStorage.getItem('token') && localStorage.getItem('username')) {
+    setUserData({token: localStorage.getItem('token'), username: localStorage.getItem('username')})
+}
 userStore.token ? axios.defaults.headers.common['Authorization'] = `Bearer ${userStore.token}` : null
 
 setInterval(() => {
