@@ -1,73 +1,29 @@
 <template>
-  <button class="base-button" :class="$props.style || 'filled'" @click="$emit('close', true)">
-    <span>
-      <slot></slot>
-    </span>
-
+  <button class="button primary" :disabled="props.disabled">
+    <slot />
   </button>
 </template>
 
-<script>
-export default {
-  name: "ButtonPrimary.vue",
-  props: ['style'],
-  data() {
-    return {}
-  },
-  components: {},
-  mounted() {
+<script setup>
+  import {watch} from "vue";
 
-  },
-}
+  const props = defineProps({
+    disabled: false
+  })
+
+  watch(() => props.disabled, (e) => {
+    console.log(e)
+  })
+
 </script>
 
 <style scoped lang="scss">
-.base-button {
-  padding: 8px 12px;
-  border-radius: 10px;
-  width: 100%;
-  max-height: 45px;
+.button {
+  background: #7773FB;
 
-  span {
-    color: #000;
-    text-align: center;
-    font-family: "PT Sans Caption";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+  &:disabled {
+    opacity: .5;
   }
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0px 3px 6px 0px rgba(255, 199, 0, 0.3);
-  }
-
-  &.red {
-    background-color: #9A2929;
-    border: 2px solid var(--yellow, #9A2929);
-    span {
-      color: white;
-    }
-  }
-
-  &.filled {
-    background-color: #FFC700;
-    border: 2px solid var(--yellow, #FFC700);
-  }
-
-  &.outline {
-    background-color: transparent;
-    border: 2px solid var(--yellow, #FFC700);
-  }
-
-}
-@media screen and (max-width: 500px){
-  .base-button {
-    gap: 5px;
-    svg {
-
-    }
-  }
 }
 </style>

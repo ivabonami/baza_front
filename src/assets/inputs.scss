@@ -1,0 +1,63 @@
+
+
+.input-wrapper {
+  box-sizing: border-box;
+  border-radius: 28px;
+  border: 1px solid #B3B4C9;
+  background: #FFF;
+  box-shadow: 5px 5px 10px rgba(93, 89, 159, 0.16);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 5px;
+
+
+  svg {
+    width: 40px;
+
+    path {
+      stroke: #B3B4C9;
+      stroke-width: 1px;
+    }
+  }
+
+  &.active {
+    border-color: #191B2A;
+
+    svg {
+      path {
+        stroke: #191B2A;
+      }
+    }
+  }
+
+  input[type=text], input[type=search], input[type=password], input[type=number] {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    height: 100%;
+    border-radius: 200px;
+    padding: 10px;
+    border: none;
+    color: #191B2A;
+    width: 100%;
+
+    &::placeholder {
+      color: #B3B4C9;
+      font-size: 16px;
+      font-style: normal;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+  }
+
+
+}
