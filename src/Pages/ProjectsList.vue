@@ -5,7 +5,8 @@
       <ProjectsMenu />
       <sort :sorts="sorts" @sortChanged="(emit) => {
         this.requestOptions.sort = emit.slug
-        console.log(emit)
+        this.projects.splice(0, this.projects.length)
+        this.requestOptions.offset = 0
         getProjectsList(requestOptions)
       }"/>
     </div>
