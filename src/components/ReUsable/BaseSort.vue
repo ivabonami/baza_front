@@ -90,7 +90,7 @@ export default {
     border-radius: 20px;
     background-color: transparent;
     transition: .3s ease;
-    padding: 3px 15px;
+    padding: 5px 15px;
     box-sizing: border-box;
     cursor: pointer;
     border: 1px solid #d9d8ef;

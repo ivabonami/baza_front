@@ -127,6 +127,14 @@ export default {
   }
 }
 
+@media screen and (max-width: 500px){
+  .header {
+    .menu {
+      display: none;
+    }
+  }
+}
+
 .user-menu {
   display: flex;
   position: relative;
