@@ -501,9 +501,7 @@ export default {
 
   },
   watch: {
-    project: function (newVal, oldVal) {
-      this.onReviews()
-    },
+
   },
 
   beforeUnmount() {
@@ -513,7 +511,7 @@ export default {
   mounted() {
     this.loading = true
     this.loadingError = false
-    this.onReviews()
+
 
     for (let i = 0; i < this.project.ratingAvg; i++) {
       this.$refs.stars.childNodes[i].classList.add('active')

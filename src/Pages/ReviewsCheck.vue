@@ -221,7 +221,7 @@ export default {
         text: {}
       },
       options: {
-        limit: 5,
+        limit: 10,
         offset: 0,
       },
       modalDelete: {
@@ -265,7 +265,7 @@ export default {
 
   mounted() {
 
-    this.onReviewsLoad()
+
   }
 
 }
