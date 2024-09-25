@@ -4,7 +4,7 @@
       <slot />
     </button>
 
-    <a href="#" class="button primary" v-else-if="props.type === 'link'">
+    <a :href="props.link" class="button primary" v-else-if="props.type === 'link'" target="_blank">
       <slot />
     </a>
 
@@ -16,7 +16,8 @@
 
   const props = defineProps({
     disabled: false,
-    type: 'button'
+    type: 'button',
+    link: null
   })
 
   watch(() => props.disabled, (e) => {

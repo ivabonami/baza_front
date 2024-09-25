@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown" ref="dropdown" @click="closeDropDown()">
+  <div class="dropdown" ref="dropdown">
     <slot />
   </div>
 </template>
@@ -8,7 +8,7 @@
 export default {
   name: "DropdownBox.vue",
   props: {
-    selector: null
+    selector: null,
   },
   data() {
     return {}
@@ -18,11 +18,13 @@ export default {
 
   methods: {
     clickOutside(e) {
+      console.log(this.$refs.dropdown !== undefined , !this.$refs.dropdown.contains(e.target) , e.target.dataset.dropdown !== this.$props.selector)
+
       if (this.$refs.dropdown !== undefined && !this.$refs.dropdown.contains(e.target) && e.target.dataset.dropdown !== this.$props.selector) {
-        console.log( e.target.dataset, this.$props.selector )
         this.closeDropDown()
       }
     },
+
     closeByEsc(e) {
       if (e.key === 'Escape') {
         this.$emit('closeDropdown', true)
@@ -35,11 +37,11 @@ export default {
     }
   },
 
-  mounted() {
+  created() {
     addEventListener('mousedown', this.clickOutside)
     addEventListener('keydown', this.closeByEsc)
   },
-  beforeUnmount() {
+  unmounted() {
     removeEventListener('mousedown', this.clickOutside)
     removeEventListener('keydown', this.closeByEsc)
   }
@@ -52,7 +54,7 @@ export default {
   position: absolute;
   box-sizing: border-box;
   right: 10px;
-  top: 30px;
+  top: 45px;
   min-width: 180px;
   width: fit-content;
   background-color: #FFFFFF;
