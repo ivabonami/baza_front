@@ -38,6 +38,7 @@
   input[type=text], input[type=search], input[type=password], input[type=number] {
     font-size: 16px;
     font-style: normal;
+    box-sizing: border-box;
     font-weight: 400;
     line-height: normal;
     height: 100%;

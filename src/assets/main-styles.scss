@@ -10,6 +10,13 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
   font-family: "Inter", sans-serif;
   vertical-align:baseline
 }
+h2.heading2 {
+  text-align: center;
+  font-weight: 600;
+  margin-top: 50px;
+  margin-bottom: 20px;
+
+}
 body {
   background-color: #F8F7FC;
   min-height: 100vh;
@@ -107,7 +114,16 @@ svg {
 .mb15 {
   margin-bottom: 20px;
 }
+.categoryIcon {
+  height: 20px;
+  width: 20px;
 
+  path {
+    stroke: #B3B4C9;
+    transition: .3s ease;
+    stroke-width: 1px;
+  }
+}
 .projects-menu_categories {
   display: flex;
   gap: 10px;
@@ -124,15 +140,7 @@ svg {
     transition: .3s ease;
     text-align: center;
 
-    .categoryIcon {
-      height: 20px;
-      width: 20px;
 
-      path {
-        stroke: #B3B4C9;
-        transition: .3s ease;
-      }
-    }
     .projects-menu_categories_category_name {
       width: 100%;
       display: block;

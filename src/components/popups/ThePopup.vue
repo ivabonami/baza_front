@@ -47,8 +47,7 @@ export default {
 
   methods: {
     swapComponent(component) {
-      this.component = popup.component ? shallowRef(defineAsyncComponent(() => import(`@/components/ReUsable/${component}.vue`))) : null
-      addNotice({name: `Загружен компонент ${popup.component} по запросу ${component}`, type: 'success'})
+      this.component = popup.component ? shallowRef(defineAsyncComponent(() => import(`/src/components/popups/${component}.vue`))) : null
 
     },
     closeModalByEsc(e) {

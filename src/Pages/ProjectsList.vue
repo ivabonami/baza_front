@@ -19,7 +19,11 @@
            v-for="project of projects"
            :key="project"
       >
+        <ThePlaceholder :placeholder="project"
+                        v-if="!project.type"
+        />
         <project-card
+            v-else-if="project.type"
             :project="project"
         />
       </div>
@@ -41,6 +45,8 @@ import {projects} from "@/Stores/projectsStore.js";
 import {projectsSortsStore} from "@/Stores/projectsSortsStore.js";
 import { Waypoint } from "vue-waypoint";
 import productsCarouselMenu from "@/components/Blocks/ProductsCarouselMenu.vue";
+import thePlaceholder from "@/components/Layout/Project/ThePlaceholder.vue";
+import {placeholders} from "@/API/placeholders.js";
 
 export default {
   name: 'ProjectsList.vue',
@@ -62,6 +68,11 @@ export default {
     }),
     productsCarouselMenu: defineAsyncComponent({
       loader: () => import("@/components/Blocks/ProductsCarouselMenu.vue"),
+      delay: 200,
+      timeout: 3000
+    }),
+    ThePlaceholder: defineAsyncComponent({
+      loader: () => import("@/components/Layout/Project/ThePlaceholder.vue"),
       delay: 200,
       timeout: 3000
     }),
@@ -96,6 +107,7 @@ export default {
         isPayedFirst: true,
         sort: null
       },
+      placeholders,
       projectsSortsStore,
       result: null,
       projects,
@@ -154,6 +166,7 @@ export default {
     width: 23%;
     box-sizing: border-box;
     margin-bottom: 1.5%;
+    border-radius: 20px;
 
   }
 }

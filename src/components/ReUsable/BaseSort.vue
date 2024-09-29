@@ -113,10 +113,11 @@ export default {
   }
   .sort-name {
     position: relative;
-    border-radius: 20px;
+    border-radius: 40px;
     background-color: transparent;
     transition: .3s ease;
-    padding: 5px 15px;
+    padding: 10px 15px;
+
     box-sizing: border-box;
     cursor: pointer;
     border: 1px solid #d9d8ef;

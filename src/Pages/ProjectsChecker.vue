@@ -1,5 +1,5 @@
 <template>
-  <h1>IN PROGRESS</h1>
+  <h2 class="heading2">Проверка проектов еще не склеена</h2>
 </template>
 
 <script>

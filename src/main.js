@@ -6,6 +6,7 @@ import App from './App.vue'
 import router from './router'
 import {checkUserData, setUserData, signOut, userStore} from "@/Stores/userStore.js";
 import axios from "axios";
+import {getCategories} from "@/API/categoriesController.js";
 
 const app = createApp(App)
 
@@ -25,3 +26,5 @@ setInterval(() => {
 if (localStorage.getItem('token') === '' || localStorage.getItem('username') === '') {
     signOut()
 }
+
+getCategories()

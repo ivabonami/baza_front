@@ -1,11 +1,12 @@
 <template>
   <a class="project-wrapper"
      :href="loading.success || loading.error ? '/' + $props.project.id : null"
+     :class="{
+           'fake-placeholder': !loading.success && !loading.error,
+           'payed': $props.project.payed === true}"
   >
       <div class="project"
-           :class="{
-           'fake-placeholder': !loading.success && !loading.error,
-           'payed': $props.project.payed === true}">
+           >
         <div class="favorite-wrapper"  @click.prevent>
           <button class="favorite"
                   @click.prevent
@@ -187,49 +188,57 @@ export default {
 
 .project-wrapper {
   width: 100%;
+  box-sizing: border-box;
   display: block;
+  border-radius: 20px;
+  background-color: #FFFFFF;
+  box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
+  border: 2px solid transparent;
 
-  .project {
-    width: 100%;
-    padding: 15px 15px 50px 15px;
-    box-sizing: border-box;
-    border-radius: 20px;
-    border: 2px solid transparent;
-    margin: 5px;
-    transition: .3s ease;
-    position: relative;
-    background-color: #FFFFFF;
-    box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
+  &:hover {
+    border-color: black;
+  }
+
+  &.payed {
+    //box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
+    //background: linear-gradient(#fff,#fff 0) padding-box,linear-gradient(to bottom,#1254ff 70%,#caa0ff) border-box;
+    animation: gradient 2s ease infinite;
+    background: linear-gradient(#fff,#fff 0) padding-box, linear-gradient(-45deg, #743ad5, #d53a9d) border-box;
+    background-size: 200% 200%;
+
 
     &:hover {
-      border-color: black;
+      border-color: transparent;
+      box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -38px #7752B2;
     }
 
-    &.payed {
-      //box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
-      //background: linear-gradient(#fff,#fff 0) padding-box,linear-gradient(to bottom,#1254ff 70%,#caa0ff) border-box;
-      animation: gradient 2s ease infinite;
-      background: linear-gradient(#fff,#fff 0) padding-box, linear-gradient(-45deg, #743ad5, #d53a9d) border-box;
-      background-size: 200% 200%;
-
-
-      &:hover {
-        border-color: transparent;
-        box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -38px #7752B2;
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
       }
-
-      @keyframes gradient {
-        0% {
-          background-position: 0% 50%;
-        }
-        50% {
-          background-position: 100% 50%;
-        }
-        100% {
-          background-position: 0% 50%;
-        }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
       }
     }
+  }
+
+  .project {
+    padding: 15px 15px 50px 15px;
+
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 20px;
+    transition: .3s ease;
+    position: relative;
+    overflow: hidden;
+
+
+
+
+
 
     .show-more {
       border-radius: 12px;

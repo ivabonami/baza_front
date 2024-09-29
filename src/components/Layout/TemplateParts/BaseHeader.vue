@@ -15,7 +15,7 @@
       <button-black
           @buttonPressed="callModal({
             show: !popup.show,
-            component: 'SignUp',
+            component: 'SignIn',
           })"
       >
         <template #default>
@@ -40,7 +40,7 @@
       </button-black>
 
       <button-black
-          @buttonPressed="signOut()"
+          @buttonPressed="onSignOut()"
       >
         <span title="Выйти из аккаунта">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" >
@@ -53,7 +53,7 @@
                    :selector="'dropdown'"
                    @closeDropdown="dropdown.show = false"
       >
-        <AdminMenu :admin-menu="adminMenu"/>
+        <AdminMenu :admin-menu="adminMenu" @close="dropdown.show = false"/>
       </dropdownBox>
 
     </div>
@@ -93,6 +93,12 @@ export default {
     }
   },
   methods: {
+    onSignOut() {
+      popup.show = true
+      popup.heading = String
+      popup.component = 'SignOut'
+
+    },
     callModal(settings) {
       for (const option in settings) {
         popup[option] = settings[option]
@@ -142,6 +148,7 @@ export default {
 .user-menu {
   display: flex;
   position: relative;
+  gap: 10px;
 
 }
 </style>

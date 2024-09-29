@@ -14,7 +14,9 @@ export async function getProjects(options) {
     urlOptions = urlOptions.substring(0, urlOptions.length - 1)
 
     return axios.get(api.url + urlOptions, {timeout: 60000}).then(result => {
-        addNotice({name: `Получено проектов: ${result.data.projects.length}`, type: 'success'})
+        if (result.data.projects.length <= 0 && !options.offset) {
+            addNotice({name: `В этой категории еще нет проектов`, type: 'warning'})
+        }
         return result.data
     })
         .catch(err =>  {
@@ -26,4 +28,8 @@ export async function getProjects(options) {
                 addNotice({name: "Непредвиденная ошибка, обратитесь к администратору. " + err.message, type: 'danger'})
             }
         })
+}
+
+export function getProject(id) {
+    return axios.get(api.url + 'projects/' + id)
 }

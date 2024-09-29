@@ -147,8 +147,8 @@ export default {
       loading: false,
       currentSelectedCurrency: {},
       currentSelectedCurrencyFrom: {
-        name: 'BTC',
-        rate: 0.1
+        name: 'USDT',
+        rate: 1
       },
       currencyRates,
       coinName: ''
@@ -169,11 +169,9 @@ export default {
         }, 0)
       }
 
-
     },
     calculateInputRate(fromValue, toValue) {
-      const value = (toValue * fromValue)
-      return value
+      return (toValue * fromValue)
     },
     changeSelectedCurrencyTo(rate, name) {
       this.currentSelectedCurrency.name = name
@@ -323,7 +321,7 @@ export default {
       }
 
       .currency-from, .currency-to {
-        border-radius: 20px;
+        border-radius: 30px;
         border: 1px dashed #B3B4C9;
         background: #F8F7FC;
         padding: 5px 20px;

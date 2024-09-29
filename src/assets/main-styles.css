@@ -8,6 +8,13 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   vertical-align: baseline;
 }
 
+h2.heading2 {
+  text-align: center;
+  font-weight: 600;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
 body {
   background-color: #F8F7FC;
   min-height: 100vh;
@@ -103,6 +110,16 @@ svg.stroke2 {
   margin-bottom: 20px;
 }
 
+.categoryIcon {
+  height: 20px;
+  width: 20px;
+}
+.categoryIcon path {
+  stroke: #B3B4C9;
+  transition: 0.3s ease;
+  stroke-width: 1px;
+}
+
 .projects-menu_categories {
   display: flex;
   gap: 10px;
@@ -117,14 +134,6 @@ svg.stroke2 {
   cursor: pointer;
   transition: 0.3s ease;
   text-align: center;
-}
-.projects-menu_categories .projects-menu_categories_category .categoryIcon {
-  height: 20px;
-  width: 20px;
-}
-.projects-menu_categories .projects-menu_categories_category .categoryIcon path {
-  stroke: #B3B4C9;
-  transition: 0.3s ease;
 }
 .projects-menu_categories .projects-menu_categories_category .projects-menu_categories_category_name {
   width: 100%;
