@@ -2,9 +2,10 @@
 
 <div style="position: relative; z-index: 0">
   <project-card-overlay
+      v-if="!project.project"
       @click.stop
       :projectId="$props.project.id"
-      :projectOwner="$props.project.userData.username"
+
       :inFavorite="$props.project.favorite"
       :isPayed="$props.project.payed"
       :projectName="$props.project.name"

@@ -354,7 +354,9 @@ export default {
 
       getProjects(this.linkBuilder()).then(result => {
         for (const project of result.data.projects) {
-          projectsStore.projects.push(project)
+          if(project.type) {
+            projectsStore.projects.push(project)
+          }
         }
 
         result.data.projects.length < this.options.limit ? this.showLoadMore = false : this.showLoadMore = true
