@@ -359,7 +359,7 @@ export default {
           }
         }
 
-        result.data.projects.length < this.options.limit ? this.showLoadMore = false : this.showLoadMore = true
+        result.data.hasMore === false ? this.showLoadMore = false : this.showLoadMore = true
 
         this.options.offset += this.options.limit
         this.isLoading = false
