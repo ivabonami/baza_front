@@ -34,7 +34,7 @@
 
     <div class="admin-menu">
       <the-placeholder-card-admin-menu
-          v-if="userStore.token"
+          v-if="userStore.role === 'admin'"
           :isProjectLinked="placeholder.project"
           @removeProjectToPlaceholder="callUnlinkProjectModal($props.placeholder.id, placeholder.project.id)"
           @addProjectToPlaceholder="callLinkProjectModal($props.placeholder.id)"

@@ -24,16 +24,16 @@ export default {
   display: flex;
   align-items: center;
   justify-content: start;
-  gap: 5px;
+  gap: 3px;
 
   svg {
-    max-width: 15px;
+    max-width: 13px;
     position: relative;
-    top: -1px;
+    top: 0px;
   }
   span {
     color: #1E1E1E;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
   }
 }

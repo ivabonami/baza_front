@@ -5,6 +5,14 @@ import CategoriesEditor from "@/Pages/CategoriesEditor.vue";
 import ProjectsChecker from "@/Pages/ProjectsChecker.vue";
 import ReviewsChecker from "@/Pages/ReviewsChecker.vue";
 import PayedProjectsController from "@/Pages/PayedProjectsController.vue";
+import ProjectsFavorite from "@/Pages/ProjectsFavorite.vue";
+import ProjectDetailed from "@/Pages/ProjectDetailed.vue";
+import Guarantee from "@/Pages/static/Guarantee.vue";
+import Advertisement from "@/Pages/static/Advertisement.vue";
+import Contacts from "@/Pages/static/Contacts.vue";
+import ErrorPage from "@/Pages/static/ErrorPage.vue";
+import About from "@/Pages/static/About.vue";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -25,6 +33,11 @@ const router = createRouter({
       name: 'ProjectsChecker',
       component: ProjectsChecker
     },{
+      path: '/favorite',
+      name: 'Favorite',
+
+      component: ProjectsFavorite
+    },{
       path: '/reviews-checker',
       name: 'ReviewsChecker',
       component: ReviewsChecker
@@ -32,7 +45,30 @@ const router = createRouter({
       path: '/payed-editor',
       name: 'PayedEditor',
       component: PayedProjectsController
-
+    },{
+      path: '/project/:id',
+      name: 'ProjectDetailed',
+      component: ProjectDetailed
+    },{
+      path: '/guarantee',
+      name: 'guarantee',
+      component: Guarantee
+    },{
+      path: '/advertisement',
+      name: 'advertisement',
+      component: Advertisement
+    },{
+      path: '/contacts',
+      name: 'contacts',
+      component: Contacts
+    },{
+      path: '/about',
+      name: 'about',
+      component: About
+    },{
+      path: '/:pathMatch(.*)*',
+      name: '404',
+      component: ErrorPage
     }
   ]
 })

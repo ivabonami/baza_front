@@ -112,12 +112,6 @@
 
     </div>
 
-
-
-
-<!--    <div class="exchanger-box_icon">-->
-
-<!--    </div>-->
   </div>
 </template>
 <script>
@@ -147,8 +141,8 @@ export default {
       loading: false,
       currentSelectedCurrency: {},
       currentSelectedCurrencyFrom: {
-        name: 'USDT',
-        rate: 1
+        name: 'RUB',
+        rate: 100
       },
       currencyRates,
       coinName: ''
@@ -195,7 +189,7 @@ export default {
       getCoinRate(this.currentSelectedCurrencyFrom.name)
           .then(result => {
             currencyRates.rates.push(result.data.rates.data.rates)
-            const currency = this.currentSelectedCurrency.name || 'RUB'
+            const currency = this.currentSelectedCurrency.name || 'BTC'
 
             console.log(this.currentSelectedCurrency.name, currency)
             this.changeSelectedCurrencyTo(currencyRates.rates[0][currency], currency)

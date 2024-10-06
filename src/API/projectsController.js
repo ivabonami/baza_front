@@ -1,6 +1,8 @@
 import {api} from "@/API/apiurl.js";
 import axios from "axios";
 import {addNotice} from "@/js/notifications.js";
+import {favoriteProjects} from "@/Stores/favoriteProjects.js";
+import {userStore} from "@/Stores/userStore.js";
 
 export async function getProjects(options) {
     let urlOptions = 'projects?';
@@ -32,4 +34,20 @@ export async function getProjects(options) {
 
 export function getProject(id) {
     return axios.get(api.url + 'projects/' + id)
+}
+
+export function getFavoriteProjects(options) {
+    const headers = {
+        'Authorization': `Bearer ${userStore.token}`
+    };
+
+    axios.get(`${api.url}user/project`, {headers}).then(result => {
+        favoriteProjects.projects.splice(0, favoriteProjects.projects.length)
+        for (let project of result.data.projects) {
+            favoriteProjects.projects.push(project)
+        }
+
+    })
+
+
 }

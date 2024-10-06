@@ -24,12 +24,13 @@
         <TheExchanger />
       </div>
     </div>
+    <ProductsCarousel :sort="cardsSort"/>
   </div>
 </template>
 
 <script>
 import TheExchanger from "@/components/Blocks/TheExchanger.vue";
-
+import ProductsCarousel from "@/components/Blocks/ProductsCarousel.vue";
 export default {
   name: "ProductsCarouselMenu.vue",
   data() {
@@ -38,7 +39,11 @@ export default {
     }
   },
 
-  components: {TheExchanger},
+  components: {
+    TheExchanger,
+    ProductsCarousel
+  },
+  cardsSort: 'random',
 
   methods: {
     changeState(state) {

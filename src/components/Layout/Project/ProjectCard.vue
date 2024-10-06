@@ -1,6 +1,6 @@
 <template>
   <a class="project-wrapper"
-     :href="loading.success || loading.error ? '/' + $props.project.id : null"
+     :href="loading.success || loading.error ? '/project/' + $props.project.id : null"
      :class="{
            'fake-placeholder': !loading.success && !loading.error,
            'payed': $props.project.payed === true}"
@@ -38,6 +38,7 @@
                        @editProject="console.log(1)"
                        @deleteProject="console.log(2)"
                        @pinProject="console.log(3)"
+                       v-if=" userStore.role === 'admin'"
             />
           </div>
         </div>
@@ -88,6 +89,7 @@ import iconStar from '@/assets/icons/icon-star.svg'
 import {defineAsyncComponent} from "vue";
 import {projects} from "@/Stores/projectsStore.js";
 import {addFavorite, removeFavorite} from "@/API/favoriteController.js";
+import {userStore} from "@/Stores/userStore.js";
 
 
 export default {
@@ -121,6 +123,7 @@ export default {
   },
   props: {
     project: {
+
       name: null,
       id: null,
       avatarFilePath: null,
@@ -136,6 +139,7 @@ export default {
         error: false,
         success: false
       },
+      userStore,
       stats: {
         rating: {
           icon: iconStar,
@@ -159,7 +163,15 @@ export default {
 
   methods: {
     onFavorite(id, name) {
-      const project = projects.find(item => item.id === id)
+
+      let project;
+
+      if (projects.find(item => item.id === id)) {
+        project = projects.find(item => item.id === id)
+      } else {
+        project = projects.find(item => item.project.id === id)
+      }
+      console.log(project, id, name, projects)
       project.favorite === 0 ? project.favorite = 1 : project.favorite = 0
 
       if (project.favorite === 1) {

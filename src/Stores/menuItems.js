@@ -8,24 +8,19 @@ import iconFavorite from '@/assets/icons/icon-favorite.svg'
 import iconPlus from '@/assets/icons/icon-plus.svg'
 
 export const menuItems = reactive([
-    {
-        name: 'Каталог',
-        href: '/',
-        icon: iconCatalog,
-        color: 'default'
-    },{
+{
         name: 'Гарант',
-        href: '/',
+        href: '/guarantee',
         icon: iconGuarantee,
         color: 'default'
     },{
         name: 'Реклама',
-        href: '/',
+        href: '/advertisement',
         icon: iconAdv,
         color: 'default'
     },{
         name: 'Избранное',
-        href: '/',
+        href: '/favorite',
         icon: iconFavorite,
         color: 'pink'
     },{

@@ -42,7 +42,7 @@
 import {defineAsyncComponent} from "vue";
 import {getProjects} from "@/API/projectsController.js";
 import {projects} from "@/Stores/projectsStore.js";
-import {projectsSortsStore} from "@/Stores/projectsSortsStore.js";
+import {allSorts} from "@/Stores/allSorts.js";
 import { Waypoint } from "vue-waypoint";
 import productsCarouselMenu from "@/components/Blocks/ProductsCarouselMenu.vue";
 import thePlaceholder from "@/components/Layout/Project/ThePlaceholder.vue";
@@ -108,7 +108,7 @@ export default {
         sort: null
       },
       placeholders,
-      projectsSortsStore,
+      projectsSortsStore: allSorts,
       result: null,
       projects,
       hasMore: true
