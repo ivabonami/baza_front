@@ -24,6 +24,7 @@ export function getCategories() {
                 category.icon = forumsIcon
             } else if (category.name.toLowerCase().includes('обменник')) {
                 category.icon = exchangerIcon
+                categories.exchangerCategory.push(category)
             } else if (category.name.toLowerCase().includes('магазин')) {
                 category.icon = narcoIcon
             } else if (category.name.toLowerCase().includes('услуги')) {

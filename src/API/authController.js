@@ -9,3 +9,10 @@ export function signIn(data) {
         return err
     }
 }
+export function signUp(data) {
+    try {
+        return axios.post(api.url + 'signup', data, {timeout: 10000})
+    } catch (err) {
+        return err
+    }
+}

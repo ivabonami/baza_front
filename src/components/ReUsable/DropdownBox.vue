@@ -18,7 +18,6 @@ export default {
 
   methods: {
     clickOutside(e) {
-      console.log(this.$refs.dropdown !== undefined , !this.$refs.dropdown.contains(e.target) , e.target.dataset.dropdown !== this.$props.selector)
 
       if (this.$refs.dropdown !== undefined && !this.$refs.dropdown.contains(e.target) && e.target.dataset.dropdown !== this.$props.selector) {
         this.closeDropDown()

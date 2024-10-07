@@ -15,9 +15,19 @@ h2.heading2 {
   margin-bottom: 20px;
 }
 
+.link-btn {
+  border-radius: 378.5px;
+  background: #191B2A;
+  text-decoration: none;
+  color: #fff;
+  padding: 15px 25px;
+}
+
 body {
   background-color: #F8F7FC;
   min-height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
 }
 
 a {
@@ -52,9 +62,9 @@ h4 {
 }
 
 .button {
-  padding: 8px 12px;
+  padding: 10px 22px;
   border-radius: 30px;
-  width: 100%;
+  max-width: 100%;
   height: 45px;
   display: flex;
   justify-content: center;
@@ -122,11 +132,11 @@ svg.stroke2 {
 
 .projects-menu_categories {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   width: 100%;
 }
 .projects-menu_categories .projects-menu_categories_category {
-  color: #B3B4C9;
+  color: #70718c;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -135,16 +145,19 @@ svg.stroke2 {
   transition: 0.3s ease;
   text-align: center;
 }
+.projects-menu_categories .projects-menu_categories_category svg path {
+  stroke: #70718c;
+}
 .projects-menu_categories .projects-menu_categories_category .projects-menu_categories_category_name {
   width: 100%;
   display: block;
   white-space: nowrap;
 }
 .projects-menu_categories .projects-menu_categories_category:hover {
-  color: #191B2A;
+  color: #000;
 }
 .projects-menu_categories .projects-menu_categories_category:hover .categoryIcon path {
-  stroke: #191B2A;
+  stroke: #000;
 }
 .projects-menu_categories .projects-menu_categories_category.active {
   color: #191B2A;

@@ -7,7 +7,7 @@
   >
       <div class="project"
            >
-        <div class="favorite-wrapper"  @click.prevent>
+        <div class="favorite-wrapper" v-if="userStore.token"  @click.prevent>
           <button class="favorite"
                   @click.prevent
                   :class="{'in-favorite': $props.project.favorite === 1}"
@@ -35,9 +35,9 @@
 
           <div class="admin-menu">
             <AdminMenu @click.prevent
-                       @editProject="console.log(1)"
-                       @deleteProject="console.log(2)"
-                       @pinProject="console.log(3)"
+                       @editProject="console.log()"
+                       @deleteProject="console.log()"
+                       @pinProject="console.log()"
                        v-if=" userStore.role === 'admin'"
             />
           </div>
@@ -171,11 +171,11 @@ export default {
       } else {
         project = projects.find(item => item.project.id === id)
       }
-      console.log(project, id, name, projects)
+
       project.favorite === 0 ? project.favorite = 1 : project.favorite = 0
 
       if (project.favorite === 1) {
-        addFavorite(id, name).then((result) => console.log(result))
+        addFavorite(id, name).then((result) => result)
 
       } else {
         removeFavorite(id, name).then(() => project.favorite = 0)
@@ -238,7 +238,7 @@ export default {
   }
 
   .project {
-    padding: 15px 15px 50px 15px;
+    padding: 10px 10px 50px 10px;
 
     width: 100%;
     box-sizing: border-box;
@@ -275,7 +275,7 @@ export default {
     .favorite-wrapper, .pin-wrapper {
       background-color: #fff;
       position: absolute;
-      z-index: 1;
+      z-index: 10;
 
 
       .favorite, .pin {
@@ -317,18 +317,27 @@ export default {
     }
 
     .favorite-wrapper {
-      top: 20px;
-      border-radius: 0 20px 20px 0;
-      padding: 5px 3px 3px 0;
+      top: 25px;
+      border-radius: 0 25px 25px 0;
+      padding: 8px 5px 5px 0;
+      left: 5px;
+      box-sizing: border-box;
     }
     .pin-wrapper {
       top: -3px;
       right: -3px;
       border-radius: 0 20px;
-      padding: 8px 13px;
+      padding: 12px 15px;
       box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
       background: #FFF;
-      border: 1px solid #D9D6E5;
+      border: 2px solid #D9D6E5;
+      box-sizing: border-box;
+
+      svg {
+        width: 18px;
+        height: 18px;
+        stroke-width: 2px;
+      }
 
     }
 
@@ -358,7 +367,6 @@ export default {
       font-style: normal;
       font-weight: 400;
       line-height: normal;
-      border-radius: 20px;
       height: 25px;
       text-overflow: ellipsis;
       overflow: hidden;

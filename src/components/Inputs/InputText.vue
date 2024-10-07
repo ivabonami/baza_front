@@ -1,38 +1,27 @@
 <template>
-  <label class="input-wrapper"
-         :class="{active: active || inputData}"
-         @focus="active = true"
-  >
-
-    <InlineSvg :src="data.icon" />
+  <label class="input-wrapper">
+    <inline-svg :src="$props.data.icon" v-if="$props.data"/>
     <input type="text"
-           :name="data.name"
-           autocomplete
-           :placeholder="data.placeholder"
            v-model="inputData"
-           @input="$emit('textData', inputData)"
+           :placeholder="$props.placeholder || $props.data.placeholder"
+           @change="$emit('dataChanged', inputData)"
     >
   </label>
 </template>
 
 <script>
-import {ref} from "vue";
-import InlineSvg from 'vue-inline-svg';
 
 export default {
-  components: {
-    InlineSvg
-  },
+  components: {},
+
 
   props:{
-    data: {
-
-    }
+    placeholder: null,
+    data: {}
   },
   data () {
     return {
-      inputData: ref(''),
-      active: false
+      inputData: null
     }
   }
 }

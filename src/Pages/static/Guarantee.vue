@@ -2,7 +2,7 @@
 <div>
   <h1>Гарант</h1>
   <a href="https://t.me/mxBaza" class="image-link" target="_blank">
-    <img src="../../assets/images/banners/guarantee.png" alt="">
+    <img :src="image" alt="">
   </a>
 
   Гарант - это лицо, принимающее на себя ответственность за выполнение, соблюдение и т.д. каких-либо обязательств в сделке двух или более лиц, а также осуществляющее надзор за их выполнением, соблюдением и т.п.
@@ -21,6 +21,7 @@
   <br>
   Холд - удержание средств у гаранта во время проведения сделки на n-е время<br><br>
 
+
   <a href="https://t.me/mxBaza" class="link-btn" target="_blank">
     Воспользоваться гарантом BAZA
   </a>
@@ -31,10 +32,17 @@
 </template>
 
 <script>
-import buttonPrimary from "../../components/Buttons/ButtonPrimary.vue";
+import ButtonBlack from "@/components/Buttons/ButtonBlack.vue";
+import image from '@/assets/pages-images/guarantee.png'
+
 export default {
   name: "GuaranteeView.vue",
-  components: {buttonPrimary}
+  components: {ButtonBlack},
+  data() {
+    return {
+      image
+    }
+  }
 }
 </script>
 
@@ -64,7 +72,6 @@ img {
 ul {
   li {
     color: #000;
-    font-family: "PT Sans Caption";
     font-size: 14px;
     font-style: normal;
     font-weight: 400;

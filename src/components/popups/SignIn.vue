@@ -13,7 +13,7 @@
           icon: userIcon,
           name: 'username'
         }"
-        @textData="emit => data.username = emit" />
+        @dataChanged="emit => data.username = emit" />
 
     <input-password
         :data="{

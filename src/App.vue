@@ -29,6 +29,18 @@ const TheNotifications = defineAsyncComponent({
   timeout: 3000
 })
 
+const PayedBanners = defineAsyncComponent({
+  loader: () => import("@/components/Blocks/PayedBanners.vue"),
+  delay: 200,
+  timeout: 3000
+})
+
+const YandexMetrica = defineAsyncComponent({
+  loader: () => import("@/components/Blocks/YandexMetrica.vue"),
+  delay: 200,
+  timeout: 3000
+})
+
 import { useLocalStorage, useMouse, usePreferredDark } from '@vueuse/core'
 
 const { x, y } = useMouse()
@@ -36,10 +48,10 @@ const { x, y } = useMouse()
 </script>
 
 <template>
-  <div>pos: {{ x }}, {{ y }}</div>
   <base-layout>
     <template #header>
       <base-header />
+      <payed-banners />
     </template>
 
     <template #main>
@@ -53,6 +65,8 @@ const { x, y } = useMouse()
   </base-layout>
 
   <ThePopup v-if="popup.show" />
+
+  <yandex-metrica />
 
   <TheNotifications v-if="notifications.length > 0" />
 

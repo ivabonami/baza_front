@@ -12,6 +12,7 @@ import Advertisement from "@/Pages/static/Advertisement.vue";
 import Contacts from "@/Pages/static/Contacts.vue";
 import ErrorPage from "@/Pages/static/ErrorPage.vue";
 import About from "@/Pages/static/About.vue";
+import ProjectAdd from "@/components/Layout/Project/ProjectAdd.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -69,6 +70,10 @@ const router = createRouter({
       path: '/:pathMatch(.*)*',
       name: '404',
       component: ErrorPage
+    },{
+      path: '/add-project',
+      name: 'AddProject',
+      component: ProjectAdd
     }
   ]
 })

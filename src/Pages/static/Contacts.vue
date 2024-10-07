@@ -3,7 +3,7 @@
     <h1>Контакты</h1>
 
     <a href="https://t.me/mxBaza" class="image-link" target="_blank">
-      <img src="../../assets/images/banners/contacts.png" alt="">
+      <img :src="image" alt="">
     </a>
 
 
@@ -24,8 +24,14 @@
 </template>
 
 <script>
+import image from '@/assets/pages-images/contacts.webp'
 export default {
-  name: "ContactsView.vue"
+  name: "ContactsView.vue",
+  data() {
+    return {
+      image
+    }
+  }
 }
 </script>
 

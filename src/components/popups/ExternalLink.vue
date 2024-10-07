@@ -8,28 +8,34 @@
       Вы собираетесь перейти по <b>внешней ссылке</b> и покинуть BAZA, мы проверяем наши ссылки, но хотели бы знать, вы точно хотите это сделать?
     </p>
     <div class="buttons-group">
-      <ButtonPrimary
-          :type="'link'"
-          style="margin-top: 10px;"
-          :link="'https://t.me/bitmafia_bot'"
-          @click="() => {
+      <div class="button-wrapper">
+        <button-primary
+            :type="'link'"
+            style="margin-top: 10px;"
+            :link="'https://t.me/bitmafia_bot'"
+            @click="() => {
             this.loading = false
             closePopup()
           }">
-        <TheLoader v-if="loading"/>
-        <span>Да, перейти</span>
-      </ButtonPrimary>
+          <TheLoader v-if="loading"/>
+          <div class="button-content">
+            Да, перейти
+          </div>
 
-      <ButtonSecondary
-          style="margin-top: 10px;"
-          :disabled="loading"
-          @click.stop
-          @click="closePopup()">
-        <span>Остаться на BAZA</span>
-      </ButtonSecondary>
+        </button-primary>
+      </div>
 
-
-
+      <div class="button-wrapper">
+        <ButtonSecondary
+            style="margin-top: 10px;"
+            :disabled="loading"
+            @click.stop
+            @click="closePopup()">
+          <div class="button-content">
+            Остаться на базе
+          </div>
+        </ButtonSecondary>
+      </div>
     </div>
 
 
@@ -86,7 +92,9 @@ export default {
 <style scoped lang="scss">
 .buttons-group {
   display: flex;
-  flex-flow: row;
   box-sizing: border-box;
+  .button-wrapper {
+    width: 50%;
+  }
 }
 </style>

@@ -40,7 +40,7 @@ export default {
   },
   watch: {
     'popup.component': function (newVal, oldVal) {
-      console.log(123)
+
     },
 
   },
@@ -60,9 +60,6 @@ export default {
     window.addEventListener("keydown", this.closeModalByEsc)
     document.body.style.overflow = 'hidden hidden'
     document.body.style.paddingRight = '15px'
-
-    console.log(popup.component)
-
     this.swapComponent(popup.component)
   },
   beforeUnmount() {

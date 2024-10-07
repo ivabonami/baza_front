@@ -21,7 +21,7 @@
   })
 
   watch(() => props.disabled, (e) => {
-    console.log(e)
+
   })
 
 </script>

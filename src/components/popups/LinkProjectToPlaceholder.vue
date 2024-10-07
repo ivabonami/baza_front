@@ -96,7 +96,6 @@ export default {
             addNotice({name: `Проект ${this.projectId} успешно привязан к заглушке #${popup.placeholderId}`, type: 'success'})
             getProject(parseInt(this.projectId)).then(result => {
               placeholders.categoryPlaceholders.find(item => item.id === popup.placeholderId).project = result.data.project
-              console.log(placeholders.categoryPlaceholders)
             })
             this.loading = false
             closePopup()

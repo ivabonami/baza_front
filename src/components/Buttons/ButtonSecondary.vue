@@ -12,7 +12,7 @@
   })
 
   watch(() => props.disabled, (e) => {
-    console.log(e)
+
   })
 
 </script>
@@ -22,6 +22,7 @@
   background-color: transparent;
   border: 1px solid var(--yellow, #B3B4C9);
   box-sizing: border-box;
+  width: 100%;
 
   &:disabled {
     opacity: .5;

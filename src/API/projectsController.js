@@ -6,7 +6,7 @@ import {userStore} from "@/Stores/userStore.js";
 
 export async function getProjects(options) {
     let urlOptions = 'projects?';
-    console.log(options)
+
     for (const option in options) {
         if (options[option]) {
             urlOptions += `${option}=${options[option]}&`
@@ -48,6 +48,18 @@ export function getFavoriteProjects(options) {
         }
 
     })
+}
 
+export function addProject(project) {
+    const headers = {
+        'Authorization': `Bearer ${userStore.token}`
+    };
 
+    axios.post(`${api.url}projects`, project, {headers})
+        .then(result => {
+            addNotice({name: 'Проект успешно добавлен', type: 'success'})
+        })
+        .catch(error => {
+            addNotice({name: 'Не удалось добавить проект', type: 'danger'})
+        })
 }

@@ -64,6 +64,7 @@ export default {
     display: flex;
     justify-content: space-between;
     box-sizing: border-box;
+    align-items: center;
     .exchanger {
       border-radius: 44.5px;
       padding: 7px;

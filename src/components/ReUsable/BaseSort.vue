@@ -1,8 +1,25 @@
 <template>
   <div class="sort" data-dropdown="projectssort" @click="onDropdownStateChange()">
     <span class="sort-name" data-dropdown="projectssort">
-      <svg class="filter" width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg" data-dropdown="projectssort">
-       <path data-dropdown="projectssort" d="M2.38589 3.66687C1.62955 2.82155 1.25138 2.39889 1.23712 2.03968C1.22473 1.72764 1.35882 1.42772 1.59963 1.22889C1.87684 1 2.44399 1 3.57828 1H18.4212C19.5555 1 20.1227 1 20.3999 1.22889C20.6407 1.42772 20.7748 1.72764 20.7624 2.03968C20.7481 2.39889 20.3699 2.82155 19.6136 3.66687L13.9074 10.0444C13.7566 10.2129 13.6812 10.2972 13.6275 10.3931C13.5798 10.4781 13.5448 10.5697 13.5236 10.6648C13.4997 10.7721 13.4997 10.8852 13.4997 11.1113V16.4584C13.4997 16.6539 13.4997 16.7517 13.4682 16.8363C13.4403 16.911 13.395 16.9779 13.336 17.0315C13.2692 17.0922 13.1784 17.1285 12.9969 17.2012L9.59686 18.5612C9.22931 18.7082 9.04554 18.7817 8.89802 18.751C8.76901 18.7242 8.6558 18.6476 8.583 18.5377C8.49975 18.4122 8.49975 18.2142 8.49975 17.8184V11.1113C8.49975 10.8852 8.49975 10.7721 8.47587 10.6648C8.45469 10.5697 8.41971 10.4781 8.37204 10.3931C8.31828 10.2972 8.2429 10.2129 8.09213 10.0444L2.38589 3.66687Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <g clip-path="url(#clip0_1302_3778)">
+          <mask id="mask0_1302_3778" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+            <path d="M0 0H24V24H0V0Z" fill="white"/>
+          </mask>
+          <g mask="url(#mask0_1302_3778)">
+            <path d="M15.5 6H13.5C12.3954 6 11.5 6.89543 11.5 8C11.5 9.10457 12.3954 10 13.5 10H15.5C16.6046 10 17.5 9.10457 17.5 8C17.5 6.89543 16.6046 6 15.5 6Z" stroke="#7773FB" stroke-width="2"/>
+            <path d="M9.5 14H11.5C12.6046 14 13.5 14.8954 13.5 16C13.5 17.1046 12.6046 18 11.5 18H9.5C8.39543 18 7.5 17.1046 7.5 16C7.5 14.8954 8.39543 14 9.5 14Z" stroke="#7773FB" stroke-width="2"/>
+            <path d="M3 7C2.44772 7 2 7.44772 2 8C2 8.55228 2.44772 9 3 9V7ZM11.5 7H3V9H11.5V7Z" fill="#7773FB"/>
+            <path d="M16.5 16H21" stroke="#7773FB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 8H20.5" stroke="#7773FB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3 17C2.44772 17 2 16.5523 2 16C2 15.4477 2.44772 15 3 15V17ZM3 15H7.5V17H3V15Z" fill="#7773FB"/>
+          </g>
+        </g>
+        <defs>
+          <clipPath id="clip0_1302_3778">
+            <rect width="24" height="24" fill="white"/>
+          </clipPath>
+        </defs>
       </svg>
 
       <svg  width="14" height="8" viewBox="0 0 14 8" class=" filter arrow" data-dropdown="projectssort" :class="direction" fill="none" xmlns="http://www.w3.org/2000/svg">

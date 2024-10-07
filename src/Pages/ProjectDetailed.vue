@@ -1,10 +1,10 @@
 <template >
   <div class="project" v-if="project">
-    <div class="project-banner">
+    <div class="project-banner" v-if="project.bannerFilePath">
       <img :src="api.url + project.bannerFilePath" alt="">
     </div>
     <div class="project-info">
-      <div class="favorite-wrapper" >
+      <div class="favorite-wrapper" v-if="userStore.token" >
         <button class="favorite"
                 :class="{'in-favorite': project.favorite === 1}"
                 @click="onFavorite(project.id, project.name)">
@@ -71,6 +71,7 @@ import iconReview from "@/assets/icons/icon-review.svg";
 import iconMoney from "@/assets/icons/icon-money.svg";
 import {projects} from "@/Stores/projectsStore.js";
 import {addFavorite, removeFavorite} from "@/API/favoriteController.js";
+import {userStore} from "@/Stores/userStore.js";
 
 
 export default {
@@ -85,8 +86,8 @@ export default {
     return {
       project: null,
       api,
-      stats: {}
-
+      stats: {},
+      userStore
     }
   },
   methods: {
@@ -96,7 +97,7 @@ export default {
       this.project.favorite === 0 ? this.project.favorite = 1 : this.project.favorite = 0
 
       if (this.project.favorite === 1) {
-        addFavorite(id, name).then((result) => console.log(result))
+        addFavorite(id, name).then((result) => result)
 
       } else {
         removeFavorite(id, name).then(() => this.project.favorite = 0)

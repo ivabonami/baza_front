@@ -10,8 +10,10 @@ export const userStore = reactive({
 export function setUserData(data) {
     for (let prop in data) {
         localStorage.setItem(prop, data[prop])
-        userStore[prop] = data[prop]
+        userStore.token = data.token
+        userStore.username = data.username
         userStore.role = jwtDecode(userStore.token).role
+
     }
 
 }
@@ -20,6 +22,7 @@ export function signOut() {
     localStorage.clear()
     userStore.token = null
     userStore.username = null
+    userStore.role = null
 }
 export function checkUserData(token, username) {
     if (localStorage.getItem('token') !== token || localStorage.getItem('username') !== username) {

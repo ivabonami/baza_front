@@ -3,7 +3,7 @@
     <h1>Реклама</h1>
 
     <a href="https://t.me/mxBaza" class="image-link" target="_blank">
-      <img src="../../assets/images/banners/ads.png" alt="">
+      <img :src="image" alt="">
     </a>
 
 
@@ -16,8 +16,14 @@
 </template>
 
 <script>
+import image from '@/assets/pages-images/ads.png'
 export default {
-  name: "AdvertisementView.vue"
+  name: "AdvertisementView.vue",
+  data () {
+    return {
+      image
+    }
+  }
 }
 </script>
 

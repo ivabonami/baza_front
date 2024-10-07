@@ -10,10 +10,8 @@
   align-items: center;
   gap: 10px;
   width: 100%;
-  padding-left: 10px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-right: 5px;
+  padding: 10px;
+  height: 100%;
 
 
   svg {
@@ -35,23 +33,29 @@
     }
   }
 
-  input[type=text], input[type=search], input[type=password], input[type=number] {
+  input[type=text], input[type=search], input[type=password], input[type=number], textarea, select {
     font-size: 16px;
     font-style: normal;
     box-sizing: border-box;
     font-weight: 400;
     line-height: normal;
     height: 100%;
-    border-radius: 200px;
+    border-radius: 20px;
     padding: 10px;
     border: none;
     color: #191B2A;
     width: 100%;
+    resize: none;
+    font-family: "Inter", sans-serif;
+
 
     &::placeholder {
+      font-family: "Inter", sans-serif;
       color: #B3B4C9;
       font-size: 16px;
       font-style: normal;
+      font-weight: 400;
+      line-height: normal;
     }
 
     &:focus {

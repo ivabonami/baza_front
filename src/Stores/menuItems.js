@@ -25,7 +25,7 @@ export const menuItems = reactive([
         color: 'pink'
     },{
         name: 'Разместить',
-        href: '/',
+        href: '/add-project',
         icon: iconPlus,
         color: 'default'
     },
