@@ -148,7 +148,7 @@ svg.stroke2 {
   width: 20px;
 }
 .menuIcon path {
-  stroke: #B3B4C9;
+  stroke: #191B2A;
   transition: 0.3s ease;
   stroke-width: 1px;
 }
@@ -213,6 +213,24 @@ svg.stroke2 {
     padding-bottom: 5px;
   }
 }
+.cross-fade-leave-active {
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  position: absolute;
+}
+
+.cross-fade-enter-active {
+  transition: opacity 0.2s ease-in-out 0.2s;
+}
+
+.cross-fade-enter-from,
+.cross-fade-leave-to {
+  opacity: 0;
+}
+
+.cross-fade-move {
+  transition: transform 0.2s ease-in 0.2s, opacity 0.2s ease-in-out;
+}
+
 @media screen and (max-width: 500px) {
   .button {
     padding: 10px 8px;

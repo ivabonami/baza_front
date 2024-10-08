@@ -62,7 +62,7 @@ export function addPlaceholders(placeholdersParams) {
 }
 
 export function editPlaceholder(placeholdersParams) {
-    let url = 'placeholder'
+    let url = 'placeholder/edit'
 
     return axios.put(api.url + url, placeholdersParams, {timeout: 20000} )
 }

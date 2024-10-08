@@ -152,7 +152,7 @@ svg {
   width: 20px;
 
   path {
-    stroke: #B3B4C9;
+    stroke: #191B2A;
     transition: .3s ease;
     stroke-width: 1px;
   }
@@ -225,6 +225,20 @@ svg {
 
 @import "mobile-styles";
 
+.cross-fade-leave-active {
+  transition: transform .2s ease-in-out, opacity .2s ease-in-out;
+  position: absolute;
+}
+.cross-fade-enter-active {
+  transition: opacity .2s ease-in-out .2s;
+}
+.cross-fade-enter-from,
+.cross-fade-leave-to {
+  opacity: 0;
+}
+.cross-fade-move{
+  transition: transform .2s ease-in .2s, opacity .2s ease-in-out;
+}
 @media screen and (max-width: 500px) {
   .button {
     padding: 10px 8px;

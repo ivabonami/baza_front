@@ -18,7 +18,7 @@
         </button-black>
 
         <div class="count">
-          Отзывов: <span>{{reviews.length}}</span>
+          Отзывов: <span>{{project.reviewsCount}}</span>
         </div>
       </div>
       <div class="reviews-navigation_stars">
@@ -27,21 +27,33 @@
       <div class="reviews-navigation_filter">
         <base-sort :sorts="projectReviewsSort" @sortChanged="(emit) => {
           this.options.sort = emit.slug
-          this.reviews.splice(0, reviews.length)
+          this.reviewsStore.splice(0, reviewsStore.length)
           this.onGetReviews()
           }"/>
       </div>
     </div>
 
     <div class="reviews-list">
-      <project-review v-for="review of reviews"
-                      v-if="reviews.length > 0"
+      <project-review v-for="review of reviewsStore"
+                      v-if="reviewsStore.length > 0"
                       :key="review"
                       :review="review" />
     </div>
 
-    <Waypoint @change="onLoadMore()" v-if="!hasMore">
-      <button @click="onLoadMore()">Еще</button>
+    <Waypoint v-if="hasMore"
+              @change="way => {
+                  if (way.going === 'IN') {
+                    onGetReviews()
+                  }
+              }">
+      <button-black
+          @click="onGetReviews()"
+          :style="'outline'">
+        <div class="button-content">
+          Еще
+        </div>
+      </button-black>
+
     </Waypoint>
   </div>
 </template>
@@ -54,6 +66,9 @@ import {projectReviewsSort} from "@/Stores/allSorts.js";
 import ButtonBlack from "@/components/Buttons/ButtonBlack.vue";
 import {addNotice} from "@/js/notifications.js";
 import {popup} from "@/js/controllers/popupController.js";
+import {reviewsStore} from "@/Stores/reviewsStore.js";
+import {Waypoint} from "vue-waypoint";
+
 
 export default {
   name: 'ProjectReviews',
@@ -64,17 +79,18 @@ export default {
   components: {
     BaseSort,
     projectReview,
-    ButtonBlack
+    ButtonBlack,
+    Waypoint
   },
   data() {
     return {
-      reviews: [],
       popup,
       projectReviewsSort,
       options: {
         offset: 0,
         limit: 10
       },
+      reviewsStore,
       hasMore: true
     }
   },
@@ -88,7 +104,7 @@ export default {
       getReviews(this.options)
           .then(result => {
             for(let review of  result.data.reviews) {
-              this.reviews.push(review)
+              reviewsStore.push(review)
             }
             result.data.reviews.length < this.options.limit ? this.hasMore = true : this.hasMore = false
 

@@ -16,26 +16,24 @@
 
       <div class="project-info-stats">
         <img :src="api.url + project.avatarFilePath" alt="">
-        <div class="project-info-stats_name">
-          {{ project.name }}
-        </div>
         <div class="project-info-stats_stats" v-if="stats">
           <ProjectStatsItem v-for="stat of stats"
                             v-show="stat.data"
                             :key="stat"
                             :data="stat"/>
         </div>
-
       </div>
       <div class="project-info-description">
+
+        <div class="project-info-stats_name">
+          {{ project.name }}
+        </div>
         <div class="project-info-description_text">
-          <h4>Описание проекта</h4>
           <p>
             {{ project.description }}
           </p>
         </div>
         <div class="project-info-description_links">
-          <h4>Ссылки и контакты</h4>
           <div>
             <project-link-item :data="link"
                                v-for="(link, index) of project.links"
@@ -62,7 +60,6 @@
                     onGetProducts()
                   }
               }">
-        123
         <button-black
             @click="onGetProducts()"
             :style="'outline'">
@@ -96,6 +93,7 @@ import {userStore} from "@/Stores/userStore.js";
 import ProductCard from "@/components/Layout/Product/ProductCard.vue";
 import {getProducts} from "@/API/productsController.js";
 import ButtonBlack from "@/components/Buttons/ButtonBlack.vue";
+import {Waypoint} from "vue-waypoint";
 
 
 export default {
@@ -105,7 +103,8 @@ export default {
     ProjectStatsItem,
     ProjectLinkItem,
     ProductCard,
-    ButtonBlack
+    ButtonBlack,
+    Waypoint
   },
 
   data() {
@@ -135,7 +134,7 @@ export default {
       } else {
         removeFavorite(id, name).then(() => this.project.favorite = 0)
       }
-
+      console.log(this.project)
 
     },
     onGetProducts() {
@@ -221,6 +220,7 @@ export default {
     gap: 20px;
     margin-top: 20px;
     position: relative;
+    align-items: start;
 
     .favorite-wrapper {
       top: 8%;
@@ -281,32 +281,16 @@ export default {
       justify-content: center;
       flex-wrap: wrap;
       display: flex;
+      padding: 5px;
+
 
       img {
         border-radius: 18px;
-        max-width: 150px;
         width: 100%;
         aspect-ratio: 1 / 1;
-      }
-      .project-info-stats_name {
-        margin-top: 10px;
-        width: 100%;
-        color: #191B2A;
-        text-align: center;
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: normal;
-      }
-
-      .project-info-stats_stats {
-        margin-top: 10px;
-        display: flex;
-        gap: 5px;
-        flex-wrap: wrap;
-        justify-content: center;
 
       }
+
 
     }
     .project-info-description {
@@ -316,10 +300,35 @@ export default {
         word-break: break-word;
       }
 
+      .project-info-stats_name {
+        margin-top: 10px;
+        width: 100%;
+        color: #191B2A;
+        text-align: left;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+      }
+
+
+
     }
   }
 }
+.project-info-stats_stats {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: #fff;
+  width: 100%;
+  padding: 3px 10px;
+  border-radius: 20px;
+
+}
 .project-info-description_links {
+  margin-top: 10px;
   div {
     gap: 10px;
     display: flex;

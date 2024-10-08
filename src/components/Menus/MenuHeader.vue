@@ -43,10 +43,11 @@ export default {
     padding-left: 0;
     display: flex;
     gap: 20px;
+    margin-top: 5px;
 
     li {
       a {
-        color: #B3B4C9;
+        color: #191B2A;
         font-size: 16px;
         font-style: normal;
         font-weight: 400;
@@ -54,6 +55,9 @@ export default {
         display: flex;
         gap: 5px;
         align-items: center;
+        transition: .3s ease;
+        border-bottom: 2px solid transparent;
+        padding-bottom: 5px;
 
         svg {
           width: 16px;
@@ -63,6 +67,10 @@ export default {
           path {
             stroke: #6B6B6B;
           }
+        }
+
+        &.router-link-active {
+          border-bottom-color: #FFC700;
         }
       }
     }

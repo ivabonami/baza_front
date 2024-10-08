@@ -6,23 +6,31 @@
       </svg>
     </div>
     <div class="review-body">
-      <div class="review-body-info">
-        <div class="review-body_username" v-if="$props.review.userData || $props.review.anonId">
-          <span v-if="$props.review.userData">{{$props.review.userData.username}}</span>
-          <span v-else-if="$props.review.anonId">{{$props.review.anonId}}</span>
+      <div class="info">
+        <div class="review-body-info">
+          <div class="review-body_username" v-if="$props.review.userData || $props.review.anonId">
+            <span v-if="$props.review.userData">{{$props.review.userData.username}}</span>
+            <span v-else-if="$props.review.anonId">{{$props.review.anonId}}</span>
 
 
-        </div>
-        <div class="review-body_rate">
-          <svg v-for="count of this.$props.review.rating" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M13.9634 5.06925C13.8712 4.78577 13.6198 4.58507 13.3235 4.55826L9.28209 4.19135L7.68491 0.452034C7.56698 0.17731 7.29867 0 7.00002 0C6.70137 0 6.43295 0.17731 6.31577 0.452034L4.71859 4.19135L0.676564 4.55826C0.380264 4.5856 0.129359 4.7863 0.0366454 5.06925C-0.0555345 5.35274 0.0295957 5.66367 0.25369 5.86021L3.30866 8.53898L2.4079 12.5062C2.342 12.7979 2.45522 13.0996 2.69726 13.2745C2.82736 13.3691 2.98021 13.4163 3.13359 13.4163C3.2654 13.4163 3.39731 13.3813 3.51513 13.3108L7.00002 11.227L10.4843 13.3108C10.7399 13.4635 11.0613 13.4495 11.3028 13.2745C11.5448 13.0996 11.658 12.7979 11.5921 12.5062L10.6914 8.53898L13.7463 5.86021C13.9703 5.66367 14.0556 5.35338 13.9634 5.06925Z" fill="#191B2A"/>
-          </svg>
+          </div>
+          <div class="review-body_rate">
+            <svg v-for="count of this.$props.review.rating" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M13.9634 5.06925C13.8712 4.78577 13.6198 4.58507 13.3235 4.55826L9.28209 4.19135L7.68491 0.452034C7.56698 0.17731 7.29867 0 7.00002 0C6.70137 0 6.43295 0.17731 6.31577 0.452034L4.71859 4.19135L0.676564 4.55826C0.380264 4.5856 0.129359 4.7863 0.0366454 5.06925C-0.0555345 5.35274 0.0295957 5.66367 0.25369 5.86021L3.30866 8.53898L2.4079 12.5062C2.342 12.7979 2.45522 13.0996 2.69726 13.2745C2.82736 13.3691 2.98021 13.4163 3.13359 13.4163C3.2654 13.4163 3.39731 13.3813 3.51513 13.3108L7.00002 11.227L10.4843 13.3108C10.7399 13.4635 11.0613 13.4495 11.3028 13.2745C11.5448 13.0996 11.658 12.7979 11.5921 12.5062L10.6914 8.53898L13.7463 5.86021C13.9703 5.66367 14.0556 5.35338 13.9634 5.06925Z" fill="#191B2A"/>
+            </svg>
 
+          </div>
+          <div class="review-body_time">
+            {{ normalizeTime($props.review.createdAt) }}
+          </div>
+          <div class="admin-menu">
+            <review-menu :review="$props.review" />
+          </div>
         </div>
-        <div class="review-body_time">
-          {{ normalizeTime($props.review.createdAt) }}
-        </div>
+
+
       </div>
+
       <div class="review-body_text">
         {{ $props.review.comment }}
       </div>
@@ -31,6 +39,9 @@
 </template>
 
 <script>
+import ReviewMenu from "@/components/Menus/ReviewMenu.vue";
+
+
 export default {
   name: "ProjectReview.vue",
   props: {
@@ -42,6 +53,7 @@ export default {
 
     }
   },
+  components: {ReviewMenu},
   methods: {
     normalizeTime(time) {
       let reviewDate = Date.parse(time)
@@ -64,6 +76,7 @@ export default {
   gap: 20px;
   align-items: center;
 
+
   .review-avatar {
     width: 50px;
     height: 50px;
@@ -83,12 +96,18 @@ export default {
     }
   }
   .review-body {
-    width: 90%;
-
+    width: 95%;
+    .info {
+      width: 100%;
+    }
+    .admin-menu {
+      margin-left: auto;
+    }
     .review-body-info {
       display: flex;
       align-items: center;
       gap: 15px;
+      width: 100%;
 
       .review-body_username {
         color: #191B2A;

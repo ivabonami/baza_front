@@ -1,5 +1,5 @@
 <template>
-  <div class="placeholder">
+  <div class="placeholder" >
 
     <project-card
         :style="placeholder.style"
@@ -8,7 +8,7 @@
     />
 
 
-    <div class="project-dropdown-box-dropper"  v-else>
+    <div class="project-dropdown-box-dropper"  :style="placeholder.style" v-else>
 
       <div class="dropper-box">
         <p>
@@ -34,7 +34,7 @@
 
     <div class="admin-menu">
       <the-placeholder-card-admin-menu
-          v-if="userStore.role === 'admin'"
+          v-if="userStore.role === 'admin' && this.$route.path === '/payed-editor'"
           :isProjectLinked="placeholder.project"
           @removeProjectToPlaceholder="callUnlinkProjectModal($props.placeholder.id, placeholder.project.id)"
           @addProjectToPlaceholder="callLinkProjectModal($props.placeholder.id)"
@@ -124,17 +124,34 @@ export default {
 
   .project-dropdown-box-dropper {
     width: 100%;
-    height: 400px;
+    height: 410px;
     box-sizing: border-box;
     border-radius: 20px;
-    background: radial-gradient(175.11% 210.61% at 131.64% -20.57%, rgba(242, 242, 248, 0.50) 0%, rgba(233, 233, 242, 0.50) 31.1%);
-    box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
+    //background: radial-gradient(175.11% 210.61% at 131.64% -20.57%, rgba(242, 242, 248, 0.50) 0%, rgba(233, 233, 242, 0.50) 31.1%);
+    //box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
     display: flex;
     text-align: center;
-    border: 2px solid #B4B4B4;
+    border: 2px solid transparent;
     position: relative;
     padding: 20px;
     flex-wrap: wrap;
+    background-size: 100% 100%;
+
+    background-color: #FFFFFF;
+    box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
+    animation: BgGrad 5s ease-in-out infinite;
+
+    @keyframes BgGrad {
+      0% {
+        background-size: 100% 100%;
+      }
+      50% {
+        background-size: 1000% 1000%;
+      }
+      100% {
+        background-size: 100% 100%;
+      }
+    }
 
   }
 

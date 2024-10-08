@@ -10,8 +10,6 @@
 </template>
 
 <script>
-import { directive } from 'vue-tippy'
-import 'tippy.js/dist/tippy.css'
 
 export default {
   name: "ButtonPrimary.vue",

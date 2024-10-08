@@ -23,12 +23,7 @@
                 placeholder: 'Цвет',
                 icon: colorIcon,
                 name: 'Цвет',
-                data: [
-                    {
-                      name: 'Сине-фиолетовый градиент',
-                      value: 'background: linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255) 0px) padding-box padding-box, linear-gradient(-45deg, rgb(116, 58, 213), rgb(213, 58, 157)) border-box border-box;'
-                    }
-                ]
+                data: placeholderColors
               }"
           @dataChanged="emit => this.placeholder.placeholdersParams[0].style = emit.value" />
 
@@ -88,6 +83,7 @@ import inputSelectOption from "@/components/Inputs/InputSelectOption.vue";
 import {addPlaceholders, linkProjectWithPlaceholder, placeholders} from "@/API/placeholders.js";
 import {addNotice} from "@/js/notifications.js";
 import {categories} from "@/Stores/categories.js";
+import {placeholderColors} from "@/js/placeholderColors.js";
 
 export default {
   components: {
@@ -100,6 +96,7 @@ export default {
   },
   data() {
     return {
+      placeholderColors,
       nameIcon,
       colorIcon,
       projectId: null,
@@ -154,6 +151,7 @@ export default {
 .placeholder-add {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
 }
 .buttons-group {
   display: flex;

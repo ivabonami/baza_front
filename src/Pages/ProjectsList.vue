@@ -8,25 +8,29 @@
       <ProjectsMenu />
       <sort :sorts="projectsSortsStore" @sortChanged="(emit) => {
         this.requestOptions.sort = emit.slug
-        this.projects.splice(0, this.projects.length)
+        // this.projects.splice(0, this.projects.length)
+        removeItems()
         this.requestOptions.offset = 0
         getProjectsList(requestOptions)
       }"/>
     </div>
 
     <div class="projects" v-if="projects.length > 0 && !loading">
-      <div class="project-box"
-           v-for="project of projects"
-           :key="project"
-      >
-        <ThePlaceholder :placeholder="project"
-                        v-if="!project.type"
-        />
-        <project-card
-            v-else-if="project.type"
-            :project="project"
-        />
-      </div>
+      <transition-group name="cross-fade">
+        <div class="project-box"
+             v-for="project of projects"
+             :key="project"
+        >
+          <ThePlaceholder :placeholder="project"
+                          v-if="!project.type"
+          />
+          <project-card
+              v-else-if="project.type"
+              :project="project"
+          />
+        </div>
+      </transition-group>
+
 
       <Waypoint @change="onChange" v-if="hasMore">
         <button-black @buttonPressed="getProjectsList(requestOptions)">
@@ -156,7 +160,11 @@ export default {
         this.getProjectsList(this.requestOptions)
       }
     },
+    removeItems() {
+      this.projects.splice(0, this.projects.length)
+    },
     getProjectsList(options) {
+
       if (options['sort']) {
         try {
           getProjects(options).then(result => {
@@ -184,7 +192,7 @@ export default {
     } else {
       this.requestOptions.limit = 4
     }
-
+    this.removeItems()
     this.getProjectsList(this.requestOptions)
   }
 }

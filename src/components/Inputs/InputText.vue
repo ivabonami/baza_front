@@ -5,6 +5,7 @@
            v-model="inputData"
            :placeholder="$props.placeholder || $props.data.placeholder"
            @change="$emit('dataChanged', inputData)"
+           @input="$emit('dataChanged', inputData)"
     >
   </label>
 </template>

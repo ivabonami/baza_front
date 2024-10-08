@@ -13,35 +13,30 @@
               }"
           @keydown.enter="() => {
               this.loading = true
-              this.editPlaceholder()
+              this.onEditPlaceholder()
               }"
           :inputDataProp="popup.placeholder.text"
-          @dataChanged="emit => this.placeholder.placeholdersParams[0].text = emit" />
+          @dataChanged="emit => this.placeholder.placeholdersParams.text = emit" />
 
-      <input-select-option
-          class="mb15"
-          :data="{
-                placeholder: 'Цвет',
-                icon: colorIcon,
-                name: 'Цвет',
-                data: [
-                    {
-                      name: 'Сине-фиолетовый градиент',
-                      value: 'background: linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255) 0px) padding-box padding-box, linear-gradient(-45deg, rgb(116, 58, 213), rgb(213, 58, 157)) border-box border-box;'
-                    }
-                ]
-              }"
-          @dataChanged="emit => this.placeholder.placeholdersParams[0].style = emit.value" />
+<!--      <input-select-option-->
+<!--          class="mb15"-->
+<!--          :data="{-->
+<!--                placeholder: 'Цвет',-->
+<!--                icon: colorIcon,-->
+<!--                name: 'Цвет',-->
+<!--                data: placeholderColors-->
+<!--              }"-->
+<!--          @dataChanged="emit => this.placeholder.placeholdersParams.style = emit.value" />-->
 
-      <input-select-option
-          class="mb15"
-          :data="{
-                placeholder: 'Категория',
-                icon: colorIcon,
-                name: 'Категория',
-                data: allCats
-              }"
-          @dataChanged="emit => this.placeholder.categoryId = emit.id" />
+<!--      <input-select-option-->
+<!--          class="mb15"-->
+<!--          :data="{-->
+<!--                placeholder: 'Категория',-->
+<!--                icon: colorIcon,-->
+<!--                name: 'Категория',-->
+<!--                data: allCats-->
+<!--              }"-->
+<!--          @dataChanged="emit => this.placeholder.placeholdersParams.categoryId = emit.id" />-->
 
     </div>
     <div class="buttons-group">
@@ -51,10 +46,10 @@
           :link="'https://t.me/bitmafia_bot'"
           @click="() => {
             this.loading = true
-            this.addPlaceholder()
+            this.onEditPlaceholder()
           }">
         <TheLoader v-if="loading"/>
-        <span>Добавить заглушку</span>
+        <span>Изменить заглушку</span>
       </ButtonPrimary>
 
       <ButtonSecondary
@@ -87,9 +82,10 @@ import DefaultHeader from "@/components/Blocks/DefaultHeader.vue";
 import {closePopup, popup} from "@/js/controllers/popupController.js";
 import inputText from "@/components/Inputs/InputText.vue";
 import inputSelectOption from "@/components/Inputs/InputSelectOption.vue";
-import {addPlaceholders, linkProjectWithPlaceholder, placeholders} from "@/API/placeholders.js";
+import {addPlaceholders, editPlaceholder, linkProjectWithPlaceholder, placeholders} from "@/API/placeholders.js";
 import {addNotice} from "@/js/notifications.js";
 import {categories} from "@/Stores/categories.js";
+import {placeholderColors} from "@/js/placeholderColors.js";
 
 export default {
   components: {
@@ -111,38 +107,43 @@ export default {
         password: null
       },
       placeholder: {
-        placeholdersParams: [{
-          style: null,
+        placeholdersParams: {
           text: null
-        }],
+        },
         categoryId: null
       },
       allCats: [],
       closePopup,
+      placeholderColors,
       loading: ref(false)
     }
   },
   methods: {
-    addPlaceholder() {
+    onEditPlaceholder() {
 
-      addPlaceholders(this.placeholder)
+      editPlaceholder(this.placeholder.placeholdersParams)
           .then(result => {
-            addNotice({name: 'Заглушка успешно добавлена', type: 'success'})
+            addNotice({name: 'Заглушка успешно изменена', type: 'success'})
             this.loading = false
 
-            for (let placeholder of result.data.placeholders) {
-              placeholders.categoryPlaceholders.push(placeholder)
-            }
+            placeholders.categoryPlaceholders.find(item => item.id === popup.placeholder.id).text = this.placeholder.placeholdersParams.text
+
+            popup.show = false
+
           })
           .catch(error => {
-            addNotice({name: 'Ошибка, соси бибу', type: 'danger'})
+            popup.show = false
             this.loading = false
           })
     }
 
   },
   mounted() {
-    this.allCats = categories.allCategories
+    this.placeholder.placeholdersParams.placeholderId = popup.placeholder.id
+    for (let cats of categories.allCategories) {
+      this.allCats.push(cats)
+    }
+
     this.allCats.push({
       name: 'Главная'
     })

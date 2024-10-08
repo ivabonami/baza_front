@@ -73,9 +73,7 @@ export async function deleteReview(review) {
     const headers = {
         'Authorization': `Bearer ${userStore.token}`
     };
-    projectReviewsStore.reviews.splice(projectReviewsStore.reviews.findIndex(item => item.id === review.id), 1)
-    return await axios.delete(`${api.url}reviews/${review.id}`, {headers})
-        .then(result => result).catch(error => error)
+    return axios.delete(`${api.url}reviews/${review.id}`, {headers})
 }
 
 export async function approveReview(review) {
@@ -84,11 +82,7 @@ export async function approveReview(review) {
     };
     review.isReviewed = true
 
-    if (projectsStore.projects.find(item => item.id === review.ProjectId)) {
-        projectsStore.projects.find(item => item.id === review.ProjectId).reviewsCount =  projectsStore.projects.find(item => item.id === review.ProjectId).reviewsCount + 1
-    }
-    return await axios.put(`${api.url}reviews/${review.id}`, review, {headers})
-        .then(result => result).catch(error => error.response)
+    return axios.put(`${api.url}reviews/${review.id}`, review, {headers})
 }
 
 export async function disapproveReview(review) {

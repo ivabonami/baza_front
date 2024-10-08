@@ -217,15 +217,25 @@ export default {
   background-color: #FFFFFF;
   box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
   border: 2px solid transparent;
+  animation: BgGrad 5s ease-in-out infinite;
+
+  @keyframes BgGrad {
+    0% {
+      background-size: 100% 100%;
+    }
+    50% {
+      background-size: 1000% 1000%;
+    }
+    100% {
+      background-size: 100% 100%;
+    }
+  }
 
   &:hover {
     border-color: black;
   }
 
   &.payed {
-    //box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
-    //background: linear-gradient(#fff,#fff 0) padding-box,linear-gradient(to bottom,#1254ff 70%,#caa0ff) border-box;
-    animation: gradient 2s ease infinite;
     background: linear-gradient(#fff,#fff 0) padding-box, linear-gradient(-45deg, #743ad5, #d53a9d) border-box;
     background-size: 200% 200%;
 
@@ -235,32 +245,17 @@ export default {
       box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -38px #7752B2;
     }
 
-    @keyframes gradient {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    }
+
   }
 
   .project {
     padding: 10px 10px 50px 10px;
-
     width: 100%;
     box-sizing: border-box;
     border-radius: 20px;
     transition: .3s ease;
     position: relative;
     overflow: hidden;
-
-
-
-
 
 
     .show-more {
@@ -421,20 +416,12 @@ export default {
       .project_image {
         background: linear-gradient(200deg, #eeeeee, #bdbdbd, #eeeeee);
         background-size: 600% 600%;
-
-        -webkit-animation: BgGradient 2s alternate infinite;
-        -moz-animation: BgGradient 2s alternate infinite;
-        animation: BgGradient 2s alternate infinite;
       }
 
       .project_name, .project_links, .project_stats {
         margin-top: 10px;
         background: linear-gradient(200deg, #eeeeee, #dedede, #eeeeee);
         background-size: 400% 400%;
-
-        -webkit-animation: BgGradient 2s alternate infinite;
-        -moz-animation: BgGradient 2s alternate infinite;
-        animation: BgGradient 2s alternate infinite;
         padding: 8px;
 
         &:after {
@@ -448,7 +435,6 @@ export default {
     }
   }
 }
-
 
 @media screen and (max-width: 500px){
   .project-wrapper {

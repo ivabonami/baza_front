@@ -66,6 +66,7 @@ import {popup} from "@/js/controllers/popupController.js";
 import {linkProjectWithPlaceholder, placeholders} from "@/API/placeholders.js";
 import {addNotice} from "@/js/notifications.js";
 import {getProject} from "@/API/projectsController.js";
+import {projects} from "@/Stores/projectsStore.js";
 
 export default {
   components: {
@@ -91,14 +92,17 @@ export default {
   },
   methods: {
     addProjectToPlaceholder() {
+      console.log(this.projectId)
+
       linkProjectWithPlaceholder(popup.placeholderId, parseInt(this.projectId))
           .then(result => {
             addNotice({name: `Проект ${this.projectId} успешно привязан к заглушке #${popup.placeholderId}`, type: 'success'})
-            getProject(parseInt(this.projectId)).then(result => {
-              placeholders.categoryPlaceholders.find(item => item.id === popup.placeholderId).project = result.data.project
+            getProject(this.projectId).then(result => {
+              projects.find(item => item.id === popup.placeholderId).project = result.data.project
+              this.loading = false
+              closePopup()
             })
-            this.loading = false
-            closePopup()
+
           })
           .catch(error => {
             let message;

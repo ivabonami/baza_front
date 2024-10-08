@@ -2,22 +2,32 @@
 <div>
   <div>
     <DefaultHeader>
-      Привязка проекта
+      Редактор отзыва
     </DefaultHeader>
-    <p style="text-align: center; color: #5D599F">
-      Вы уверены что хотите отвязать проект от заглушки? {{ popup.projectId }} / {{ popup.placeholderId }}
-    </p>
+    <div class="form">
+      <input-rating :input="{
+        name: 'Оцените проект:',
+        data: popup.review.rating }"
+        @dataChanged="emit => popup.review.rating = emit"
+      />
+      <input-text
+          class="mb15"
+          :data="{
+          placeholder: 'Текст отзыва',
+          }"
+          :input-data-prop="popup.review.comment"
+          @dataChanged="emit => popup.review.comment = emit" />
+    </div>
     <div class="buttons-group">
       <ButtonPrimary
           :type="'button'"
           style="margin-top: 10px;"
-          :link="'https://t.me/bitmafia_bot'"
           @click="() => {
             this.loading = true
-            this.removeProjectFromPlaceholder()
+            onEditReview()
           }">
         <TheLoader v-if="loading"/>
-        <span>Отвязать</span>
+        <span>Изменить</span>
       </ButtonPrimary>
 
       <ButtonSecondary
@@ -48,11 +58,11 @@ import lockIcon from '@/assets/icons/lock-icon.svg'
 import DefaultHeader from "@/components/Blocks/DefaultHeader.vue";
 import {closePopup} from "@/js/controllers/popupController.js";
 import inputText from "@/components/Inputs/InputText.vue";
-
 import {popup} from "@/js/controllers/popupController.js";
-import {placeholders, unlinkProjectWithPlaceholder} from "@/API/placeholders.js";
 import {addNotice} from "@/js/notifications.js";
-import {projects} from "@/Stores/projectsStore.js";
+import {editReview} from "@/API/reviews.js";
+import {reviewsStore} from "@/Stores/reviewsStore.js";
+import inputRating from "@/components/Inputs/InputRating.vue";
 
 export default {
   components: {
@@ -61,7 +71,7 @@ export default {
     ButtonPrimary,
     ButtonSecondary,
     DefaultHeader,
-    closePopup
+    inputRating
   },
   data() {
     return {
@@ -72,25 +82,26 @@ export default {
         username: null,
         password: null
       },
+      addNotice,
       popup,
       closePopup,
       loading: ref(false)
     }
   },
   methods: {
-    removeProjectFromPlaceholder() {
-      unlinkProjectWithPlaceholder(popup.placeholderId, popup.projectId)
-          .then(result => {
-            addNotice({name: `Проект ${this.projectId} успешно отвязан от заглушки`, type: 'success'})
-            delete projects.find(item => item.id === popup.placeholderId).project
-            this.loading = false
-            closePopup()
-          })
-          .catch(error => {
-            addNotice({name: `${error.response.data.message}`, type: 'danger'})
-            this.loading = false
-          })
-    }
+    onEditReview() {
+      editReview(popup.review)
+        .then(result => {
+          reviewsStore.find(item => item.id === popup.review.id).rating = popup.review.rating
+          reviewsStore.find(item => item.id === popup.review.id).comment = popup.review.comment
+          addNotice({name: `Отзыв от ${popup.review.anonId || popup.review.userData.username} успешно изменен`, type: 'success'})
+          popup.show = false
+        })
+        .catch(error => {
+          addNotice({name: 'Произошла ошибка', type: 'danger'})
+        })
+
+    },
 
   }
 }

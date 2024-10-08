@@ -6,6 +6,7 @@
         <path d="M7.95281 10.8V8M7.95281 5.2H7.95993M15.0758 8C15.0758 11.866 11.8868 15 7.95281 15C4.01886 15 0.829773 11.866 0.829773 8C0.829773 4.13401 4.01886 1 7.95281 1C11.8868 1 15.0758 4.13401 15.0758 8Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </label>
+
     <div class="stars-rating" >
       <div class="star"
            v-for="(star, index) of stars"
@@ -29,7 +30,7 @@
          :maxlength="$props.input.max"
          :class="{error: this.$props.error === true}"
          v-model="this.rating"
-         @change="this.$emit('data', this.rating)"
+         @change="this.$emit('dataChanged', this.rating)"
          :id="$props.input.name"
          :placeholder="$props.input.placeholder">
 </template>
@@ -89,10 +90,10 @@ export default {
   },
 
   mounted() {
-
-    if (this.$props.data) {
+    if (this.$props.input.data) {
       this.setData()
-      this.changeRating(this.$props.data.rating - 1)
+
+      this.changeRating(this.$props.input.data - 1)
     }
 
   },

@@ -312,6 +312,10 @@ export default {
   .exchanger-box_input {
     display: flex;
     gap: 20px;
+    background-color: #FFFFFF;
+    border-radius: 30px;
+    padding: 5px;
+    box-sizing: border-box;
 
     .exchanger-box_currency {
       position: relative;

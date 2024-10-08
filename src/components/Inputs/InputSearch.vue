@@ -1,6 +1,6 @@
 <template>
 
-  <div >
+  <div class="wrapper">
     <div class="button" data-dropdown="dropdownSearch">
       <div class="button_search" data-dropdown="dropdownSearch" @click="showMobileSearch">
         <svg data-dropdown="dropdownSearch" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -23,25 +23,6 @@
              placeholder="Найти проект"
              v-model="search.query">
 
-      <div class="search_buttons" >
-        <button class="button-clear"
-                @click="() => {
-                  search.query = ''
-                  startSearch(1000)
-                }"
-                v-show="search.query.length > 0">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M17 1L1 17M1 1L17 17" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-
-        <button class="button-search"
-                v-on:click="searchProjects()">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path d="M19 19L14.65 14.65M17 9C17 13.4183 13.4183 17 9 17C4.58172 17 1 13.4183 1 9C1 4.58172 4.58172 1 9 1C13.4183 1 17 4.58172 17 9Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </div>
     </div>
 
     <div class="search_mobile"  v-if="showSearch" data-dropdown="dropdownSearch">
@@ -58,23 +39,6 @@
              placeholder="Найти проект"
              v-model="search.query">
 
-      <div class="search_buttons" data-dropdown="dropdownSearch">
-        <button class="button-clear"
-                data-dropdown="dropdownSearch"
-                @click="search.query = ''"
-                v-show="search.query.length > 0">
-          <svg data-dropdown="dropdownSearch" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path data-dropdown="dropdownSearch" d="M17 1L1 17M1 1L17 17" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-
-        <button data-dropdown="dropdownSearch" class="button-search"
-                v-on:click="searchProjects()">
-          <svg data-dropdown="dropdownSearch" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path data-dropdown="dropdownSearch" d="M19 19L14.65 14.65M17 9C17 13.4183 13.4183 17 9 17C4.58172 17 1 13.4183 1 9C1 4.58172 4.58172 1 9 1C13.4183 1 17 4.58172 17 9Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </div>
     </div>
 
     <div class="dropdownSearchItems" data-dropdown="dropdownSearch" v-if="liveResults.length > 0 && showLiveResults">
@@ -85,27 +49,41 @@
                      this.showSearch = false
                      startSearch(1000)
                    }"
+                   :style="item.style"
                    :to="`/project/` + item.id"
                    v-for="item of liveResults"
+                   :key="item"
       >
-        <div class="avatar" data-dropdown="dropdownSearch">
-          <img :src="apiUrl + item.avatarFilePath" alt="" data-dropdown="dropdownSearch">
+
+        <div class="project"  v-if="!item.type && item.project">
+          <div class="avatar" data-dropdown="dropdownSearch">
+            <img :src="api.url + item.project.avatarFilePath" alt="" data-dropdown="dropdownSearch">
+          </div>
+          <div class="info" data-dropdown="dropdownSearch">
+            <div class="name" data-dropdown="dropdownSearch">{{item.project.name}}</div>
+            <div class="description" data-dropdown="dropdownSearch">{{item.project.description}}</div>
+          </div>
         </div>
-        <div class="info" data-dropdown="dropdownSearch">
-          <div class="name" data-dropdown="dropdownSearch">{{item.name}}</div>
-          <div class="description" data-dropdown="dropdownSearch">{{item.description}}</div>
+        <div class="project" v-if="item.type">
+          <div class="avatar" data-dropdown="dropdownSearch">
+            <img :src="api.url + item.avatarFilePath" alt="" data-dropdown="dropdownSearch">
+          </div>
+          <div class="info" data-dropdown="dropdownSearch">
+            <div class="name" data-dropdown="dropdownSearch">{{item.name}}</div>
+            <div class="description" data-dropdown="dropdownSearch">{{item.description}}</div>
+          </div>
         </div>
+
       </router-link>
     </div>
     <div class="dropdownSearchItems" data-dropdown="dropdownSearch" v-else-if="liveResults.length <= 0 && showLiveResults && !noResults">
-      <loader-small />
+      <the-loader />
     </div>
     <div class="dropdownSearchItems" data-dropdown="dropdownSearch" v-else-if="noResults && showLiveResults">
       <span>Нет результатов</span>
     </div>
     <div class="backdrop-mobile"  v-if="showSearch"></div>
 
-    <notice v-if="notice.show" :notice="notice" :errors="errors" @closeNotice="notice.show = false" />
   </div>
 
 
@@ -113,12 +91,10 @@
 
 <script>
 import {ref} from "vue";
-import notice from "../Popups/Notice.vue";
-import buttonSecondaryGray from "../Buttons/ButtonSecondaryGray.vue";
-import {useFetch} from "../../assets/js/controllers/requestsControl.js";
-import {apiUrl} from "../../assets/js/config.js";
-import loaderSmall from "../Loaders/LoaderSmall.vue";
-
+import ButtonSecondaryGray from "@/components/Buttons/ButtonSecondaryGray.vue";
+import TheLoader from "@/components/ReUsable/TheLoader.vue";
+import axios from "axios";
+import {api} from "@/API/apiurl.js";
 
 export default {
   name: "InputSearch.vue",
@@ -127,24 +103,22 @@ export default {
       search: {
         query: ''
       },
+      api,
       searchTimeoutId: null,
       showSearch: false,
       errors: {},
       showLiveResults: false,
-      apiUrl,
       noResults: true,
       notice: {
         show: ref(false)
       },
-      useFetch,
       liveResults: []
     }
   },
 
   components: {
-    notice,
-    buttonSecondaryGray,
-    loaderSmall
+    TheLoader,
+    ButtonSecondaryGray,
   },
 
   methods: {
@@ -156,13 +130,12 @@ export default {
 
       if (this.search.query) {
         this.searchTimeoutId = setTimeout(() => {
-          useFetch(`projects?search=${this.search.query}`, 'GET')
+          axios.get(api.url + `projects?search=${this.search.query}`)
               .then(result => {
-                if (result.success === true) {
-                  this.liveResults = result.projects
+                this.liveResults = result.data.projects
+                console.log(result.data.projects)
 
-                  result.projects.length > 0 ? this.noResults = false : this.noResults = true
-                }
+                result.data.projects.length > 0 ? this.noResults = false : this.noResults = true
               })
         },timer)
       }
@@ -214,6 +187,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.wrapper {
+  width: 100%;
+}
 .backdrop-mobile {
   position: fixed;
   right: 0;
@@ -245,46 +221,14 @@ export default {
   }
 }
 input {
-  border-radius: 10px;
+  border-radius: 20px;
   border: 1px solid var(--gray-2, #D8D8D8);
   margin-bottom: 0;
-  max-width: 370px;
-}
-.search_buttons {
-  position: absolute;
-  right: 1px;
-  top: 1px;
-  bottom: 1px;
-  border-radius: 10px;
-  background-color: #fff;
+  width: 100%;
   display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0 10px;
-}
-.button-search, .button-clear {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-
-  svg {
-    background-color: transparent;
-
-    path {
-      width: 100%;
-      height: 100%;
-      stroke-width: 2px;
-      stroke: #A8A8A8;
-      transition: .3s ease;
-    }
-  }
-  &:hover, &.active {
-    svg {
-      path {
-        stroke: #2B2B2B;
-      }
-    }
-  }
+  min-height: 45px;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 .search {
@@ -292,17 +236,17 @@ input {
 }
 
 .dropdownSearchItems {
-  max-width: 500px;
+  max-width: 63%;
   position: absolute;
   z-index: 31;
   box-sizing: border-box;
   background: #FFFFFF;
   padding: 10px;
   top: 60px;
-  left: 0;
+  right: 50%;
+  transform: translateX(43%);
   border-radius: 20px;
   width: 100%;
-  box-sizing: border-box;
   cursor: pointer;
   max-height: 600px;
   overflow-x: hidden;
@@ -322,10 +266,31 @@ input {
     transition: .15s ease;
     padding: 10px;
     border-radius: 10px;
+    background-color: #FFFFFF;
+    box-sizing: border-box;
+    animation: BgGrad 5s ease-in-out infinite;
+
+    @keyframes BgGrad {
+      0% {
+        background-size: 100% 100%;
+      }
+      50% {
+        background-size: 1000% 1000%;
+      }
+      100% {
+        background-size: 100% 100%;
+      }
+    }
+
+    .project {
+      width: 100%;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
 
     .avatar {
       width: 80px;
-      flex-basis: 20%;
       aspect-ratio: 1 / 1;
       border-radius: 10px;
       overflow: hidden;
@@ -340,7 +305,7 @@ input {
 
     }
     .name {
-      font-family: "PT Sans Caption";
+      
       -webkit-line-clamp: 1;
       position: relative;
       overflow: hidden;
@@ -362,7 +327,7 @@ input {
     }
 
     .description {
-      font-family: "PT Sans Caption";
+      
       -webkit-line-clamp: 2;
       position: relative;
       overflow: hidden;

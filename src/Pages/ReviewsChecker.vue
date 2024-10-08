@@ -7,7 +7,7 @@
           :show-button="true"
           :show-button-for-users="false"
           @buttonPressed="this.$router.push('/')"
-          v-else-if="!loading && reviews.length <= 0">
+          v-else-if="!loading && reviewsStore.length <= 0">
         <template #header>
           Нет непроверенных отзывов!
         </template>
@@ -26,7 +26,7 @@
            v-else
       >
         <div class="project-reviews_items_item"
-             v-for="review of reviews"
+             v-for="review of reviewsStore"
         >
           <div class="project-reviews_items_item_heading">
             <div class="info">
@@ -54,10 +54,7 @@
           <div class="menu" v-if="userStore.role === 'admin'">
 
             <button-black
-                @click="() => {
-                modalDelete.show = true
-                modalDelete.review = review
-               }"
+                @click="onReviewApprove(review)"
             >
               <div class="button-content">
                 Опубликовать
@@ -94,25 +91,27 @@
 </template>
 
 <script>
-import {showNotReviewed} from "@/API/reviews.js";
+import {approveReview, showNotReviewed} from "@/API/reviews.js";
 import ButtonBlack from "@/components/Buttons/ButtonBlack.vue"
 import {userStore} from "@/Stores/userStore.js";
 import emptyStore from "@/components/Blocks/EmptyStore.vue";
 import TheLoader from "@/components/ReUsable/TheLoader.vue";
 import buttonPrimary from "../components/Buttons/ButtonPrimary.vue";
 import {Waypoint} from "vue-waypoint";
+import {popup} from "@/js/controllers/popupController.js";
+import {reviewsStore} from "@/Stores/reviewsStore.js";
 
 export default {
   name: "ReviewsCheck.vue",
   data() {
     return {
       loading: false,
-      reviews: [],
       userStore,
       modalAction: {
         show: false,
         review: {}
       },
+      reviewsStore,
       hideLoadMore: false,
       notice: {
         show: false,
@@ -143,7 +142,7 @@ export default {
     onReviewsLoad() {
       showNotReviewed(this.options).then(result => {
         for (const review of result.data.reviews) {
-          this.reviews.push(review)
+          reviewsStore.push(review)
         }
 
         this.loading = false
@@ -156,6 +155,11 @@ export default {
       })
 
       this.options.offset = this.options.offset + this.options.limit
+    },
+    onReviewApprove(review) {
+      popup.show = true
+      popup.component = 'ApproveReview'
+      popup.review = review
     }
   },
 

@@ -6,9 +6,9 @@
       </router-link>
     </div>
     <div class="search">
-
+      <the-search @searchOpen="hideMenu = !hideMenu"/>
     </div>
-    <div class="menu">
+    <div class="menu" v-if="!hideMenu">
       <menu-header />
     </div>
     <div class="auth" v-if="!userStore.username">
@@ -70,6 +70,7 @@ import dropdownBox from "@/components/ReUsable/DropdownBox.vue";
 import {addNotice} from "@/js/notifications.js";
 import {adminMenu} from "@/Stores/adminMenu.js";
 import AdminMenu from "@/components/Menus/AdminMenu.vue";
+import TheSearch from "@/components/Blocks/TheSearch.vue";
 
 export default {
   name: "BaseHeader.vue",
@@ -78,7 +79,7 @@ export default {
     buttonBlack,
     menuHeader,
     dropdownBox,
-
+    TheSearch
   },
   data() {
     return {
@@ -90,7 +91,8 @@ export default {
       adminMenu,
       dropdown: {
         show: false
-      }
+      },
+      hideMenu: false
     }
   },
   methods: {
@@ -120,6 +122,7 @@ export default {
   }
 }
 .header {
+  margin-top: 20px;
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -130,6 +133,7 @@ export default {
   padding: 10px 20px;
   box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
   box-sizing: border-box;
+  gap: 20px;
   .logo {
     flex-basis: 130px;
     svg {
@@ -137,7 +141,7 @@ export default {
     }
   }
   .search {
-    flex-basis: 250px;
+    width: 90%;
   }
   .menu {
 
