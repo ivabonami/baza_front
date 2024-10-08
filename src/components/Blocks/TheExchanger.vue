@@ -391,5 +391,32 @@ export default {
     }
   }
 }
+@media screen and (max-width: 500px){
+  .button-text {
+    width: 100%;
+  }
+  .exchanger-box {
+    margin-bottom: 10px;
 
+    .exchanger-box_input {
+      width: 100%;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 5px;
+
+
+      .exchanger-box_currency {
+        width: 100%;
+        .rates {
+          font-size: 11px;
+        }
+
+        .currency-from, .currency-to {
+          width: 50%;
+          padding: 2px 5px;
+        }
+      }
+    }
+  }
+}
 </style>

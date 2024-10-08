@@ -129,11 +129,12 @@ export default {
     .review-body-info {
 
       .review-body_rate {
-        width: 120px;
+        width: 90px;
+        gap: 5px;
       }
 
       .review-body_username {
-        width: 140px;
+        width: 80px;
         padding: 0;
         overflow: hidden;
         display: inline-block;

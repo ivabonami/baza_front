@@ -9,10 +9,8 @@
 
     <div class="button-wrapper">
       <button-black
-          v-show="$props.showButtonForUsers && userStore.token && this.$props.hideReviewButton === false ||
-                  $props.showButton && userStore.role === 'admin' && this.$props.hideReviewButton === false ||
-                  $props.showButtonForUnauthorised && this.$props.hideReviewButton === false"
-          @close="$emit('buttonPressed', true)"
+          v-show="$props.showButton"
+          @buttonPressed="$emit('buttonPressed', true)"
           :style="'filled'">
         <template #default>
           <slot name="buttonText" />

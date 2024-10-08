@@ -3,7 +3,7 @@
     <ul>
       <li v-for="item of menuItems">
         <router-link :to="item.href" :class="item.color">
-          <inline-svg v-if="item.icon" :src="item.icon" />
+          <inline-svg class="menuIcon" v-if="item.icon" :src="item.icon" />
           <span>{{ item.name }}</span>
         </router-link>
       </li>

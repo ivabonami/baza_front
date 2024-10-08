@@ -196,11 +196,14 @@ export default {
 
 }
 .admin-menu {
+  position: relative;
 
   .dropdown {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    position: absolute;
     gap: 2px;
+    right: 30px;
     margin-bottom: 2px;
     &.show {
       transition: .3s;
@@ -215,5 +218,15 @@ export default {
     }
   }
 
+}
+
+@media screen and (max-width: 500px){
+  .admin-button {
+    padding: 4px 6px;
+
+    svg {
+      width: 15px;
+    }
+  }
 }
 </style>

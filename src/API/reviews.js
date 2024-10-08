@@ -1,6 +1,8 @@
 import axios from "axios";
 import {api} from "@/API/apiurl.js";
 import {userStore} from "@/Stores/userStore.js";
+import {addNotice} from "@/js/notifications.js";
+import {popup} from "@/js/controllers/popupController.js";
 
 export function getReviews(options) {
     const headers = {
@@ -25,8 +27,18 @@ export async function addReview(review) {
 
     return await axios.post(`${api.url}reviews`, review, {headers})
         .then(result => {
-
-        }).catch(error => error)
+            addNotice({name: 'Отзыв отправлен на модерацию', type: 'success'})
+            popup.show = false
+        }).catch(error => {
+                let message;
+                if (error.response.data.message === "This user already rated this project.") {
+                    message = 'Вы уже оставляли отзыв'
+                } else {
+                    message = 'Ошибка :('
+                }
+                addNotice({name: message, type: 'danger'})
+            }
+        )
 }
 
 

@@ -2,7 +2,7 @@
   <div class="rating-setter">
     <label :for="$props.input.name">
       {{ $props.input.name }}
-      <svg v-show="input.tooltip" xmlns="http://www.w3.org/2000/svg" v-tippy="{content: $props.input.tooltip, theme: 'light'}" width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <svg v-show="input.tooltip" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
         <path d="M7.95281 10.8V8M7.95281 5.2H7.95993M15.0758 8C15.0758 11.866 11.8868 15 7.95281 15C4.01886 15 0.829773 11.866 0.829773 8C0.829773 4.13401 4.01886 1 7.95281 1C11.8868 1 15.0758 4.13401 15.0758 8Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </label>
@@ -35,20 +35,13 @@
 </template>
 
 <script>
-import { directive } from 'vue-tippy'
-import 'tippy.js/dist/tippy.css'
-import {checkInputData} from "../../assets/js/fieldDataController.js";
 
 export default {
   name: "InputText.vue",
-  emits: ['returnedError', 'data'],
+  emits: ['dataChanged'],
   props: {
     input: {
       name: null,
-      placeholder: null,
-      tooltip: null,
-      min: 0,
-      max: 255,
       data: null
 
     },
@@ -59,7 +52,6 @@ export default {
   data() {
     return {
       inputData: null,
-      checkInputData,
       hasError: false,
       stars: 5,
       rating: 0,
@@ -79,10 +71,7 @@ export default {
     error: function (newVal, oldVal) {
 
     }
-
   },
-
-
 
   components: {},
 
@@ -92,7 +81,7 @@ export default {
     },
     changeRating(count){
       this.rating = count + 1
-      this.$emit('data', this.rating)
+      this.$emit('dataChanged', this.rating)
     },
     changeHover(count) {
       this.hovered = count + 1
@@ -101,7 +90,7 @@ export default {
 
   mounted() {
 
-    if (this.$props.data !== null) {
+    if (this.$props.data) {
       this.setData()
       this.changeRating(this.$props.data.rating - 1)
     }
@@ -117,8 +106,7 @@ export default {
 <style scoped lang="scss">
 label {
   color: #000;
-  font-family: "PT Sans Caption";
-  font-size: 16px;
+  font-size: 22px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -126,12 +114,11 @@ label {
   gap: 5px;
   align-items: center;
   margin-bottom: 5px;
-  width: 50%;
+  justify-content: center;
 }
 
 input {
   color: var(--gray-2, #000);
-  font-family: "PT Sans Caption";
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -147,13 +134,14 @@ input {
 }
 .rating-setter {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  gap: 20px;
 
 }
 .stars-rating {
   display: flex;
-
-  width: 50%;
   justify-content: end;
   .star {
     cursor: pointer;

@@ -17,7 +17,7 @@
               this.loading = true
               this.addProjectToPlaceholder()
               }"
-            @textData="emit => this.projectId = emit" />
+            @dataChanged="emit => this.projectId = emit" />
       </span>
     </p>
     <div class="buttons-group">
@@ -106,6 +106,10 @@ export default {
               message = 'Этот проект уже привязан к заглушке'
             } else if (error.response.data.message === 'Project not found') {
               message = 'Проект с этим айди не найден'
+            } else if (error.response.data.message === 'projectId or placeholderId must be specified') {
+              message = 'ID проекта не найдено'
+            } else {
+              message = 'Произошла ошибка'
             }
             addNotice({name: `${message}`, type: 'danger'})
             this.loading = false

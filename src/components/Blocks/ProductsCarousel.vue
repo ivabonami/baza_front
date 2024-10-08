@@ -89,10 +89,13 @@ import {productsStore} from "@/Stores/productsStore.js";
 import {getProducts} from "@/API/productsController.js";
 
 export default {
-  name: "Recommended.vue",
+  name: "ProductsCarousel.vue",
   components: {
     ProductCard,
     TheLoader
+  },
+  props: {
+    sort: 'random'
   },
   data() {
     return {
@@ -105,7 +108,7 @@ export default {
 
       loading: false,
       loadingError: false,
-      sort: null,
+      currentSort: null,
       productsStore,
       height: null,
       visibleItems: 5,
@@ -117,7 +120,13 @@ export default {
     }, {immediate: true})
 
   },
-
+  watch: {
+    '$props.sort': function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.collectProducts()
+      }
+    }
+  },
   methods: {
 
     mobileDrag(e) {
@@ -226,7 +235,7 @@ export default {
       productsStore.products.splice(0, productsStore.products.length)
 
       if (Object.keys(productsStore.products).length <= 0) {
-        getProducts({sort: this.sort|| 'random', limit: 50}).then(result => {
+        getProducts({sort: this.$props.sort || 'random', limit: 50}).then(result => {
 
           for (const item of result.data.products) {
             productsStore.products.push(item)

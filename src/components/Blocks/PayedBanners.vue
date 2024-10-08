@@ -39,14 +39,16 @@ export default {
   width: 100%;
 }
 .payed-banner {
+  max-height: 165px;
   width: 100%;
   margin-bottom: 14px;
   position: relative;
   display: block;
   overflow: hidden;
-  border-radius: 30px;
 
   video, img {
+    border-radius: 30px;
+    height: 100%;
     width: 100%;
   }
 }

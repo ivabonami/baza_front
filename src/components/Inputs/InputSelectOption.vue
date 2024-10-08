@@ -7,11 +7,11 @@
   >
 
     <inline-svg :src="data.icon" />
-    <span class="name" v-if="selectedColor">
-      {{ selectedColor.name }}
+    <span class="name" v-if="selected">
+      {{ selected.name }}
     </span>
 
-    <span class="name" v-if="!selectedColor">
+    <span class="name" v-if="!selected">
       {{ $props.data.name }}
     </span>
 <!--    <input type="text"-->
@@ -26,13 +26,13 @@
                  @closeDropdown="dropdown.show = false"
     >
       <div class="colors">
-        <div class="color" v-for="color of colors" @click="selectColor(color)">
-          {{ color.name }}
-          <svg data-v-c7770d1f="" width="18" height="13" viewBox="0 0 18 13" fill="none"
-               xmlns="http://www.w3.org/2000/svg">
-            <path data-v-c7770d1f="" d="M17 1L6 12L1 7" stroke="black" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-          </svg>
+        <div class="color" v-for="data of $props.data.data" @click="selectData(data)">
+          {{ data.name }}
+<!--          <svg data-v-c7770d1f="" width="18" height="13" viewBox="0 0 18 13" fill="none"-->
+<!--               xmlns="http://www.w3.org/2000/svg">-->
+<!--            <path data-v-c7770d1f="" d="M17 1L6 12L1 7" stroke="black" stroke-width="2" stroke-linecap="round"-->
+<!--                  stroke-linejoin="round"></path>-->
+<!--          </svg>-->
         </div>
       </div>
     </dropdownBox>
@@ -49,7 +49,6 @@ export default {
   components: {
     InlineSvg,
     dropdownBox
-
   },
 
   props:{
@@ -64,19 +63,15 @@ export default {
       dropdown: {
         show: false
       },
-      colors: [
-        {
-          name: 'Сине-фиолетовый градиент',
-          value: 'background: linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255) 0px) padding-box padding-box, linear-gradient(-45deg, rgb(116, 58, 213), rgb(213, 58, 157)) border-box border-box;'
-        }
-      ],
-      selectedColor: null
+
+      selected: this.$props.data.data[0]
     }
   },
   methods: {
-    selectColor(color) {
-      this.selectedColor = color
-      this.$emit('textData', color.value)
+    selectData(data) {
+      console.log(data)
+      this.selected = data
+      this.$emit('dataChanged', this.selected)
     }
   }
 
@@ -95,9 +90,12 @@ export default {
     font-style: normal;
   }
   .colors {
-    width: 350px;
+    max-width: 350px;
 
     .color {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
 
       &.active {
 

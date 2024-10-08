@@ -173,4 +173,12 @@ export default {
     }
   }
 }
+
+@media screen and (max-width: 500px) {
+  .sort {
+    .sort-name {
+      padding: 5px 10px;
+    }
+  }
+}
 </style>

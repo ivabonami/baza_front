@@ -35,7 +35,7 @@ import TheLoader from "@/components/ReUsable/TheLoader.vue";
 export default {
   name: "InputText.vue",
   props: {
-
+    data: null
   },
   data() {
     return {
@@ -66,6 +66,14 @@ export default {
       this.imageFilePath = null
       this.$emit('dataChanged', null)
     }
+  },
+  watch: {
+    data: function () {
+      this.imageFilePath = this.$props.data
+    }
+  },
+  mounted() {
+    this.imageFilePath = this.$props.data
   }
 
 }

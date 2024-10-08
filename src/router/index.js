@@ -12,7 +12,8 @@ import Advertisement from "@/Pages/static/Advertisement.vue";
 import Contacts from "@/Pages/static/Contacts.vue";
 import ErrorPage from "@/Pages/static/ErrorPage.vue";
 import About from "@/Pages/static/About.vue";
-import ProjectAdd from "@/components/Layout/Project/ProjectAdd.vue";
+import ProjectAdd from "@/Pages/ProjectAdd.vue";
+import projectEdit from "@/Pages/ProjectEdit.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,10 +22,6 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: ProjectsList
-    },{
-      path: '/debug',
-      name: 'debug',
-      component: DEBUG
     },{
       path: '/categories-editor',
       name: 'CategoriesEditor',
@@ -50,6 +47,10 @@ const router = createRouter({
       path: '/project/:id',
       name: 'ProjectDetailed',
       component: ProjectDetailed
+    },{
+      path: '/project/:id/edit',
+      name: 'EditProject',
+      component: projectEdit
     },{
       path: '/guarantee',
       name: 'guarantee',

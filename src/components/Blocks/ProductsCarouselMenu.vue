@@ -3,8 +3,8 @@
     <div class="top-carousel-navigation">
       <div class="products-carousel-swapper">
         <span class="recommended"
-              :class="{active: currentState === 'recommended'}"
-              @click="changeState('recommended')"
+              :class="{active: currentState === 'random'}"
+              @click="changeState('random')"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
             <path d="M17.0716 7.04338C16.9251 6.90098 16.7195 6.83627 16.5183 6.86935C16.3168 6.90231 16.1427 7.02885 16.0492 7.21044C15.7276 7.83516 15.3191 8.40927 14.8386 8.91677C14.8865 8.55016 14.9106 8.18136 14.9106 7.81157C14.9106 7.10203 14.8155 6.37186 14.6279 5.64109C14.0109 3.24082 12.3931 1.21093 10.1895 0.0719562C9.99764 -0.0271727 9.76904 -0.0236923 9.58028 0.0812374C9.39152 0.18621 9.2679 0.378667 9.25097 0.593941C9.07918 2.77521 7.95563 4.75968 6.16671 6.0398C6.14304 6.05686 6.11954 6.07413 6.09603 6.09132C6.04735 6.12694 6.00146 6.16063 5.95857 6.1889C5.95187 6.19337 5.94521 6.19793 5.93868 6.20261C4.81359 7.00814 3.88525 8.08193 3.25391 9.30822C2.61238 10.5556 2.28711 11.8941 2.28711 13.2865C2.28711 13.9958 2.3822 14.726 2.56976 15.4569C3.55954 19.3093 7.02643 21.9999 11.0006 21.9999C15.805 21.9999 19.7136 18.0911 19.7136 13.2865C19.7136 10.9172 18.7753 8.7 17.0716 7.04338Z" fill="#FFC700"/>
@@ -24,7 +24,7 @@
         <TheExchanger />
       </div>
     </div>
-    <ProductsCarousel :sort="cardsSort"/>
+    <ProductsCarousel :sort="currentState"/>
   </div>
 </template>
 
@@ -35,7 +35,7 @@ export default {
   name: "ProductsCarouselMenu.vue",
   data() {
     return {
-      currentState: 'recommended'
+      currentState: 'random'
     }
   },
 
@@ -76,6 +76,9 @@ export default {
     display: flex;
     gap: 10px;
     align-items: center;
+    height: 35px;
+    box-sizing: border-box;
+
 
     span {
       border-radius: 28px;
@@ -89,6 +92,7 @@ export default {
       display: flex;
       align-items: center;
       gap: 10px;
+      box-sizing: border-box;
 
 
       svg {
@@ -143,6 +147,33 @@ export default {
         }
       }
     }
+  }
+}
+
+@media screen  and (max-width: 768px){
+  .products-carousel {
+    .top-carousel-navigation {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .products-carousel-swapper {
+      justify-content: space-between;
+      display: flex;
+      order: 2;
+      width: 100%;
+      height: 28px;
+
+      span {
+        font-size: 12px;
+        padding: 8px 16px;
+      }
+    }
+
+  }
+
+  .exchanger-box {
+    order: 1;
   }
 }
 </style>

@@ -50,8 +50,31 @@
       </div>
     </div>
 
+    <div class="project-products" v-if="products.length > 0">
+      <div class="product" v-for="item of products">
+        <ProductCard :item="item" />
+
+      </div>
+
+      <Waypoint v-if="hasMore"
+                @change="way => {
+                  if (way.going === 'IN') {
+                    onGetProducts()
+                  }
+              }">
+        123
+        <button-black
+            @click="onGetProducts()"
+            :style="'outline'">
+          <div class="button-content">
+            Еще
+          </div>
+        </button-black>
+
+      </Waypoint>
+    </div>
     <div class="project-reviews">
-      <ProjectReviews :id="project.id"/>
+      <ProjectReviews :id="project.id" :project="project"/>
     </div>
 
 
@@ -64,14 +87,15 @@ import {api} from "@/API/apiurl.js";
 import ProjectStatsItem from "@/components/Layout/Project/ProjectStatsItem.vue";
 import ProjectLinkItem from "@/components/Layout/Project/ProjectLinkItem.vue";
 import ProjectReviews from "@/components/Layout/Project/ProjectReviews.vue";
-
 import iconStar from "@/assets/icons/icon-star.svg";
 import iconView from "@/assets/icons/icon-views.svg";
 import iconReview from "@/assets/icons/icon-review.svg";
 import iconMoney from "@/assets/icons/icon-money.svg";
-import {projects} from "@/Stores/projectsStore.js";
 import {addFavorite, removeFavorite} from "@/API/favoriteController.js";
 import {userStore} from "@/Stores/userStore.js";
+import ProductCard from "@/components/Layout/Product/ProductCard.vue";
+import {getProducts} from "@/API/productsController.js";
+import ButtonBlack from "@/components/Buttons/ButtonBlack.vue";
 
 
 export default {
@@ -79,7 +103,9 @@ export default {
   components: {
     ProjectReviews,
     ProjectStatsItem,
-    ProjectLinkItem
+    ProjectLinkItem,
+    ProductCard,
+    ButtonBlack
   },
 
   data() {
@@ -87,7 +113,14 @@ export default {
       project: null,
       api,
       stats: {},
-      userStore
+      userStore,
+      products: [],
+      requestOptions: {
+        projectId: null,
+        limit: 10,
+        offset: 0
+      },
+      hasMore: true
     }
   },
   methods: {
@@ -105,11 +138,26 @@ export default {
 
 
     },
+    onGetProducts() {
+      this.requestOptions.projectId = this.project.id
+      getProducts(this.requestOptions).then(result => {
+        for (let product of result.data.products) {
+          this.products.push(product)
+        }
+        console.log(result.data.products.length)
+        if (result.data.products.length < this.requestOptions.limit) {
+          this.hasMore = false
+        } else {
+          this.hasMore = true
+        }
+        this.requestOptions.offset = this.requestOptions.offset + this.requestOptions.limit
+      })
+    },
     onGetProject(id) {
       getProject(id)
           .then(result => {
             this.project = result.data.project
-
+            this.onGetProducts()
             this.stats = {
               rating: {
                 icon: iconStar,
@@ -144,6 +192,19 @@ export default {
 <style scoped lang="scss">
 .project {
   width: 100%;
+
+  .project-products {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+
+    .product {
+      width: 19%;
+    }
+  }
 
   .project-banner {
     width: 100%;
@@ -258,15 +319,30 @@ export default {
     }
   }
 }
+.project-info-description_links {
+  div {
+    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
 @media screen and (max-width: 992px){
   .project {
     .project-info {
+
+      .favorite-wrapper {
+        top: 10px;
+        left: 10px;
+      }
 
       .project-info-description {
         width: 70%;
       }
       .project-info-stats {
         width: 30%;
+        .project-info-stats_stats {
+          gap: 15px;
+        }
         .project-info-stats_name {
 
         }

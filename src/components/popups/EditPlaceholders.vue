@@ -2,7 +2,7 @@
 <div>
   <div>
     <DefaultHeader>
-      Добавить заглушку
+      Изменить заглушку
     </DefaultHeader>
     <div class="placeholder-add">
       <input-text
@@ -13,8 +13,9 @@
               }"
           @keydown.enter="() => {
               this.loading = true
-              this.addPlaceholder()
+              this.editPlaceholder()
               }"
+          :inputDataProp="popup.placeholder.text"
           @dataChanged="emit => this.placeholder.placeholdersParams[0].text = emit" />
 
       <input-select-option
@@ -75,6 +76,7 @@
 </template>
 
 <script>
+
 import TheLoader from "@/components/ReUsable/TheLoader.vue";
 import ButtonPrimary from "@/components/Buttons/ButtonPrimary.vue";
 import ButtonSecondary from "@/components/Buttons/ButtonSecondary.vue";
@@ -82,7 +84,7 @@ import {ref} from "vue";
 import nameIcon from '@/assets/icons/icon-edit-4.svg'
 import colorIcon from '@/assets/icons/icon-color.svg'
 import DefaultHeader from "@/components/Blocks/DefaultHeader.vue";
-import {closePopup} from "@/js/controllers/popupController.js";
+import {closePopup, popup} from "@/js/controllers/popupController.js";
 import inputText from "@/components/Inputs/InputText.vue";
 import inputSelectOption from "@/components/Inputs/InputSelectOption.vue";
 import {addPlaceholders, linkProjectWithPlaceholder, placeholders} from "@/API/placeholders.js";
@@ -102,6 +104,7 @@ export default {
     return {
       nameIcon,
       colorIcon,
+      popup,
       projectId: null,
       data: {
         username: null,

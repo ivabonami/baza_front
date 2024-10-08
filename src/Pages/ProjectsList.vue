@@ -14,7 +14,7 @@
       }"/>
     </div>
 
-    <div class="projects">
+    <div class="projects" v-if="projects.length > 0 && !loading">
       <div class="project-box"
            v-for="project of projects"
            :key="project"
@@ -29,11 +29,35 @@
       </div>
 
       <Waypoint @change="onChange" v-if="hasMore">
-        <button @click="getProjectsList(requestOptions)">Еще</button>
+        <button-black @buttonPressed="getProjectsList(requestOptions)">
+          <div class="button-content">
+            Загрузить еще проекты
+          </div>
+        </button-black>
       </Waypoint>
 
 
     </div>
+
+    <empty-store
+        v-else-if="projects.length <= 0 && !loading"
+        :show-button="true"
+        :show-button-for-users="true"
+        :showButtonForUnauthorised="true"
+        @buttonPressed="this.$router.push('/add-project')">
+      <template #header>
+        В этой категории нет проектов
+      </template>
+      <template #text>
+        но вы всегда можете добавить свой
+      </template>
+      <template #buttonText>
+        <span>
+          Добавить проект
+        </span>
+
+      </template>
+    </empty-store>
   </div>
 
 </template>
@@ -47,12 +71,17 @@ import { Waypoint } from "vue-waypoint";
 import productsCarouselMenu from "@/components/Blocks/ProductsCarouselMenu.vue";
 import thePlaceholder from "@/components/Layout/Project/ThePlaceholder.vue";
 import {placeholders} from "@/API/placeholders.js";
-
+import ButtonBlack from "@/components/Buttons/ButtonBlack.vue";
 export default {
   name: 'ProjectsList.vue',
   components: {
     ProjectCard: defineAsyncComponent({
       loader: () => import("@/components/Layout/Project/ProjectCard.vue"),
+      delay: 200,
+      timeout: 3000
+    }),
+    ButtonBlack: defineAsyncComponent({
+      loader: () => import("@/components/Buttons/ButtonBlack.vue"),
       delay: 200,
       timeout: 3000
     }),
@@ -63,6 +92,12 @@ export default {
     }),
     Sort: defineAsyncComponent({
       loader: () => import("@/components/ReUsable/BaseSort.vue"),
+      delay: 200,
+      timeout: 3000
+    }),
+
+    EmptyStore: defineAsyncComponent({
+      loader: () => import("@/components/Blocks/EmptyStore.vue"),
       delay: 200,
       timeout: 3000
     }),
@@ -101,6 +136,7 @@ export default {
   },
   data() {
     return {
+      loading: true,
       requestOptions: {
         limit: 8,
         offset: 0,
@@ -135,6 +171,7 @@ export default {
         } catch (err) {
           this.result = err
         }
+        this.loading = false
       }
 
     }
@@ -161,6 +198,7 @@ export default {
   flex-wrap: wrap;
   gap: 2.5%;
   align-items: stretch;
+  min-height: 500px;
 
   .project-box {
     width: 23%;
@@ -201,7 +239,11 @@ export default {
 
 }
 @media screen and (max-width: 576px){
+  .projects-nav {
+
+  }
   .projects {
+    gap: 15px;
     .project-box {
       width: 100%;
     }

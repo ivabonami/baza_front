@@ -8,6 +8,10 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   vertical-align: baseline;
 }
 
+#app {
+  width: 100%;
+}
+
 h2.heading2 {
   text-align: center;
   font-weight: 600;
@@ -27,6 +31,12 @@ body {
   background-color: #F8F7FC;
   min-height: 100vh;
   width: 100vw;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+html {
   overflow-x: hidden;
 }
 
@@ -85,6 +95,7 @@ h4 {
 }
 .button.primary {
   color: #fff;
+  width: 100%;
 }
 .button.primary:hover {
   background-color: #191B2A;
@@ -106,6 +117,8 @@ h4 {
 .main {
   z-index: 1;
   position: relative;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 .popup {
@@ -125,6 +138,16 @@ svg.stroke2 {
   width: 20px;
 }
 .categoryIcon path {
+  stroke: #B3B4C9;
+  transition: 0.3s ease;
+  stroke-width: 1px;
+}
+
+.menuIcon {
+  height: 20px;
+  width: 20px;
+}
+.menuIcon path {
   stroke: #B3B4C9;
   transition: 0.3s ease;
   stroke-width: 1px;
@@ -180,7 +203,6 @@ svg.stroke2 {
   border-radius: 8px;
   background-clip: content-box;
   background-color: #5D599F;
-  cursor: s-resize;
 }
 
 @media screen and (max-width: 500px) {
@@ -189,6 +211,11 @@ svg.stroke2 {
     overflow-x: auto;
     overflow-y: hidden;
     padding-bottom: 5px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .button {
+    padding: 10px 8px;
   }
 }
 

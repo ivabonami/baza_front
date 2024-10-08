@@ -84,7 +84,6 @@ export default {
   background-color: transparent;
 
   .popup-body {
-    overflow: hidden;
     position: fixed;
     z-index: 51;
     border-radius: 10px;
@@ -157,5 +156,13 @@ export default {
 .fadeHeight-leave-to
 {
   max-height: 300px;
+}
+
+@media screen and (max-width: 500px){
+  .popup {
+    .popup-body {
+      width: 80%;
+    }
+  }
 }
 </style>

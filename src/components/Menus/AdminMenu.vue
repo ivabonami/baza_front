@@ -2,6 +2,8 @@
   <div class="menu-items">
     <router-link :to="item.link" class="menu-items-item"
          v-for="item of adminMenu"
+                 active-class="active"
+                 v-show="userStore.role === 'admin'"
                  @click="$emit('close', true)"
     >
       <inline-svg :src="item.icon" class="categoryIcon" />
@@ -10,6 +12,7 @@
   </div>
 </template>
 <script>
+import {userStore} from "@/Stores/userStore.js";
 
 export default {
   name: 'AdminMenu',
@@ -19,6 +22,12 @@ export default {
 
   props: {
     adminMenu: {}
+  },
+
+  data() {
+    return {
+      userStore
+    }
   }
 
 }
@@ -36,7 +45,7 @@ export default {
 
   .menu-items-item {
     transition: .3s ease;
-    color: #5D599F;
+    color: #B3B4C9;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -44,10 +53,9 @@ export default {
     display: flex;
     align-items: center;
     gap: 10px;
+
     &:hover {
       color: #191B2A;
-
-
     }
   }
 }

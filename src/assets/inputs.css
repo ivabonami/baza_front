@@ -50,5 +50,8 @@
 .input-wrapper input[type=text]:focus, .input-wrapper input[type=search]:focus, .input-wrapper input[type=password]:focus, .input-wrapper input[type=number]:focus, .input-wrapper textarea:focus, .input-wrapper select:focus {
   outline: none;
 }
+.input-wrapper textarea {
+  height: 100%;
+}
 
 /*# sourceMappingURL=inputs.css.map */

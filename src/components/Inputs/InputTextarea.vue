@@ -1,5 +1,5 @@
 <template>
-  <label class="input-wrapper">
+  <label class="input-wrapper" style="height: 100%">
     <textarea
         v-model="inputData"
         :placeholder="$props.placeholder"
@@ -14,20 +14,22 @@
 export default {
   name: "InputTextarea.vue",
   props: {
-    placeholder: null
+    placeholder: null,
+    inputDataProp: null
   },
   data() {
     return {
       inputData: null,
     }
   },
-
-  methods: {
-
+  watch: {
+    '$props.data': function () {
+      this.inputData = this.$props.inputDataProp
+    }
   },
-
   mounted() {
 
+    this.inputData = this.$props.inputDataProp
   }
 
 }

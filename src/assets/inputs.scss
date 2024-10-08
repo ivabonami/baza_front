@@ -49,6 +49,7 @@
     font-family: "Inter", sans-serif;
 
 
+
     &::placeholder {
       font-family: "Inter", sans-serif;
       color: #B3B4C9;
@@ -62,6 +63,9 @@
       outline: none;
     }
 
+  }
+  textarea {
+    height: 100%;
   }
 
 

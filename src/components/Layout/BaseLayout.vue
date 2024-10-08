@@ -22,6 +22,7 @@ export default {
 
 <style scoped lang="scss">
 main {
+  width: 100%;
   max-width: 1280px;
   padding-left: 10px;
   padding-right: 10px;

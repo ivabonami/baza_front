@@ -92,7 +92,7 @@ export default {
 
     aspect-ratio: 1/1;
     border-radius: 10px;
-    width: 100%;
+    height: 100%;
     overflow: hidden;
     margin-bottom: 10px;
     background: #fff 50% / cover no-repeat;
@@ -103,7 +103,7 @@ export default {
 
 
     img {
-      max-height: 100%;
+      height: 100%;
       position: relative;
       scale: 1;
       transition: .15s ease;

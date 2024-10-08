@@ -49,11 +49,11 @@
         </span>
       </button-black>
 
-      <dropdownBox v-if="dropdown.show === true"
+      <dropdownBox  v-if="dropdown.show === true && userStore.role === 'admin'"
                    :selector="'dropdown'"
                    @closeDropdown="dropdown.show = false"
       >
-        <AdminMenu :admin-menu="adminMenu" @close="dropdown.show = false"/>
+        <AdminMenu v-if="userStore.role === 'admin'" :admin-menu="adminMenu" @close="dropdown.show = false"/>
       </dropdownBox>
 
     </div>

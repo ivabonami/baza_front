@@ -73,10 +73,11 @@ export default {
   .link-input {
     display: flex;
     gap: 20px;
-    width: 100%;
+    width: 60%;
+    align-items: stretch;
 
     .text-input-wrapper {
-
+      height: 45px;
     }
   }
 }

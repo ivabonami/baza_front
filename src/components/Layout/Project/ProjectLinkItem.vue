@@ -78,4 +78,10 @@ export default {
   }
 }
 
+@media screen and (max-width: 500px){
+  .link {
+    font-size: 10px;
+  }
+}
+
 </style>

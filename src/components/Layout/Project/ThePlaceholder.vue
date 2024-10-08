@@ -38,7 +38,8 @@
           :isProjectLinked="placeholder.project"
           @removeProjectToPlaceholder="callUnlinkProjectModal($props.placeholder.id, placeholder.project.id)"
           @addProjectToPlaceholder="callLinkProjectModal($props.placeholder.id)"
-          @deletePlaceholder="onDeletePlaceholder($props.placeholder.id)"
+          @deletePlaceholder="onDeletePlaceholder($props.placeholder)"
+          @editPlaceholder="onEditPlaceholder($props.placeholder)"
       />
     </div>
   </div>
@@ -70,13 +71,16 @@ export default {
     }
   },
   methods: {
-    onDeletePlaceholder(placeholderId) {
-      deletePlaceholder(placeholderId)
-          .then(result => {
-            placeholders.categoryPlaceholders.splice(placeholders.categoryPlaceholders.findIndex(item => item.id === placeholderId), 1)
-            addNotice({name: `Заглушка ${placeholderId} была удалена успешно`, type: 'success'})
-          })
-          .catch(error => addNotice({name: 'При удалении заглушки произошла ошибка', type: 'warning'}))
+    onDeletePlaceholder(placeholder) {
+      popup.show = true
+      popup.placeholder = placeholder
+      popup.component = 'DeletePlaceholder'
+    },
+    onEditPlaceholder(placeholder) {
+      popup.show = true
+      popup.placeholder = placeholder
+      popup.component = 'EditPlaceholders'
+      console.log(popup)
     },
     callLinkProjectModal(placeholderId) {
       popup.show = true
@@ -170,5 +174,23 @@ export default {
     bottom: 5px;
   }
 
+}
+
+@media screen and (max-width: 500px){
+  .placeholder {
+    height: auto;
+
+    .project-dropdown-box-dropper {
+      height: auto;
+    }
+    .dropper-box {
+      height: 30px;
+      width: 100%;
+      padding: 10px;
+      p {
+        font-size: 18px;
+      }
+    }
+  }
 }
 </style>

@@ -1,7 +1,8 @@
 <template>
   <div>
+    <h2 class="heading2">Неопубликованные отзывы</h2>
     <div class="check-reviews">
-      <loader-small v-if="loading" />
+      <the-loader v-if="loading" />
       <empty-store
           :show-button="true"
           :show-button-for-users="false"
@@ -50,49 +51,19 @@
             {{ review.comment }}
           </div>
 
-          <div class="menu" v-if="userInfo.role === 'admin'">
-            <button-action
-                @click="() => {
-                this.modalAction.show = true
-                this.modalAction.review = review
-               }"
-            >
-              <template #text>
-                Опубликовать
-              </template>
-              <template #icon>
-                <svg xmlns="http://www.w3.org/2000/svg" class="approve" width="58" height="58" viewBox="0 0 58 58" fill="none">
-                  <path d="M56 26.5314V29.0154C55.9967 34.8378 54.1113 40.5031 50.6252 45.1664C47.139 49.8297 42.2389 53.2411 36.6555 54.892C31.0721 56.5428 25.1046 56.3446 19.6431 54.3268C14.1815 52.3091 9.51857 48.5799 6.34959 43.6955C3.18062 38.8111 1.67544 33.0332 2.05853 27.2235C2.44162 21.4138 4.69246 15.8835 8.47535 11.4575C12.2583 7.03156 17.3705 3.94699 23.0497 2.66385C28.7289 1.38071 34.6707 1.96776 39.989 4.33745M56 7.4L29 34.427L20.9 26.327" stroke="#2E7E36" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </template>
-            </button-action>
+          <div class="menu" v-if="userStore.role === 'admin'">
 
-            <button-action
+            <button-black
                 @click="() => {
                 modalDelete.show = true
                 modalDelete.review = review
                }"
             >
-              <template #text>
-                Удалить
-              </template>
-              <template #icon>
-                <svg data-v-76b04a54="" xmlns="http://www.w3.org/2000/svg" width="10" height="11" viewBox="0 0 10 11" fill="none" style="width: 15px; height: 15px;"><path data-v-76b04a54="" d="M6.77778 2.8V2.44C6.77778 1.93595 6.77778 1.68393 6.68089 1.49141C6.59567 1.32206 6.45969 1.18438 6.29244 1.09809C6.10229 1 5.85338 1 5.35556 1H4.64444C4.14662 1 3.89771 1 3.70756 1.09809C3.54031 1.18438 3.40433 1.32206 3.31911 1.49141C3.22222 1.68393 3.22222 1.93595 3.22222 2.44V2.8M1 2.8H9M8.11111 2.8V7.84C8.11111 8.59607 8.11111 8.97411 7.96579 9.26289C7.83796 9.51691 7.63398 9.72343 7.3831 9.85286C7.09788 10 6.72451 10 5.97778 10H4.02222C3.27549 10 2.90212 10 2.6169 9.85286C2.36602 9.72343 2.16204 9.51691 2.03421 9.26289C1.88889 8.97411 1.88889 8.59607 1.88889 7.84V2.8" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-              </template>
-            </button-action>
+              <div class="button-content">
+                Опубликовать
+              </div>
+            </button-black>
 
-            <!--        <button-action-->
-            <!--            @click="() => { onDisapproveReview(review) }"-->
-            <!--        >-->
-            <!--          <template #text>-->
-            <!--            Снять с публикации-->
-            <!--          </template>-->
-            <!--          <template #icon>-->
-            <!--            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 10 9" fill="none">-->
-            <!--              <path d="M4.48905 1.81368C4.65419 1.79031 4.82454 1.77778 5 1.77778C7.07432 1.77778 8.43548 3.52966 8.89277 4.22265C8.94812 4.30653 8.97579 4.34847 8.99128 4.41315C9.00291 4.46173 9.00291 4.53837 8.99126 4.58695C8.97576 4.65163 8.9479 4.69384 8.89216 4.77828C8.77032 4.96284 8.58456 5.22221 8.33846 5.50351M2.85615 2.44474C1.97763 3.01511 1.38122 3.80754 1.10762 4.22205C1.05202 4.30628 1.02423 4.3484 1.00873 4.41308C0.997094 4.46165 0.997089 4.53828 1.00872 4.58686C1.02421 4.65154 1.05188 4.69348 1.10722 4.77735C1.56451 5.47034 2.92567 7.22222 5 7.22222C5.8364 7.22222 6.55685 6.9374 7.14885 6.55201M1.34301 1L8.65699 8M4.13804 3.67504C3.91744 3.88617 3.781 4.17783 3.781 4.5C3.781 5.14433 4.32677 5.66667 5 5.66667C5.33662 5.66667 5.64136 5.53608 5.86196 5.32496" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>-->
-            <!--            </svg>-->
-            <!--          </template>-->
-            <!--        </button-action>-->
           </div>
 
         </div>
@@ -108,27 +79,27 @@
                   }
               }">
 
-        <button-black
+        <button-primary
             @click="onReviewsLoad()"
             :style="'outline'">
           <template #default>
             Загрузить еще
           </template>
-        </button-black>
+        </button-primary>
 
       </Waypoint>
     </div>
-
   </div>
 
 </template>
 
 <script>
-import {approveReview, deleteReview, showNotReviewed} from "../API/reviews.js";
-import ButtonBlack from "@/components/Buttons/ButtonBlack.vue";
+import {showNotReviewed} from "@/API/reviews.js";
+import ButtonBlack from "@/components/Buttons/ButtonBlack.vue"
 import {userStore} from "@/Stores/userStore.js";
-import {api} from "@/API/apiurl.js";
 import emptyStore from "@/components/Blocks/EmptyStore.vue";
+import TheLoader from "@/components/ReUsable/TheLoader.vue";
+import buttonPrimary from "../components/Buttons/ButtonPrimary.vue";
 import {Waypoint} from "vue-waypoint";
 
 export default {
@@ -138,8 +109,6 @@ export default {
       loading: false,
       reviews: [],
       userStore,
-      approveReview,
-      deleteReview,
       modalAction: {
         show: false,
         review: {}
@@ -158,14 +127,16 @@ export default {
         show: false,
         review: {}
       },
-      api
+
     }
   },
 
   components: {
     Waypoint,
     ButtonBlack,
+    TheLoader,
     emptyStore,
+    buttonPrimary
   },
 
   methods: {

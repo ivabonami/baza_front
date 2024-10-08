@@ -33,49 +33,58 @@
               }"
           />
 
-          <div class="admin-menu">
+          <div class="admin-menu" v-if="userStore.role === 'admin'">
             <AdminMenu @click.prevent
                        @editProject="console.log()"
                        @deleteProject="console.log()"
                        @pinProject="console.log()"
+                       :project="$props.project"
                        v-if=" userStore.role === 'admin'"
             />
           </div>
         </div>
 
+        <div class="project_data">
+          <div class="project_name">
+            <span v-if="$props.project.name">{{ $props.project.name }}</span>
+          </div>
+          <div class="project_links">
+            <project-link-item :data="link"
+                               v-for="(link, index) of $props.project.links"
+                               :key="link"
+                               v-show="index < 2"
+                               @click.stop
+            >
+            </project-link-item>
+            <div class="show-more" @click.prevent
+                 @click="() => {
+                   popup.show = true
+                   popup.project = $props.project
+                   popup.component = 'ProjectLinks'
+                 }"
+                 v-if="$props.project.links.length > 2">
+              ...
+            </div>
 
 
-        <div class="project_name">
-          <span v-if="$props.project.name">{{ $props.project.name }}</span>
-        </div>
-        <div class="project_links">
-          <project-link-item :data="link"
-                             v-for="(link, index) of $props.project.links"
-                             :key="link"
-                             v-show="index < 2"
-                             @click.stop
-          >
-          </project-link-item>
-          <div class="show-more" @click.prevent v-if="$props.project.links.length > 2">
-            ...
           </div>
 
+          <div class="project_stats" v-if="$props.project.viewCount || $props.project.reviewCount || $props.project.reserve || $props.project.ratingAvg">
+            <div class="project_stat"
+                 v-for="stat of stats"
+                 v-show="stat.data"
+                 :key="stat">
 
-        </div>
+              <ProjectStatsItem
+                  :data="stat"
+              />
+            </div>
 
-        <div class="project_stats" v-if="$props.project.viewCount || $props.project.reviewCount || $props.project.reserve || $props.project.ratingAvg">
-          <div class="project_stat"
-               v-for="stat of stats"
-               v-show="stat.data"
-               :key="stat">
 
-            <ProjectStatsItem
-                :data="stat"
-                 />
           </div>
-
-
         </div>
+
+
       </div>
 
   </a>
@@ -90,6 +99,7 @@ import {defineAsyncComponent} from "vue";
 import {projects} from "@/Stores/projectsStore.js";
 import {addFavorite, removeFavorite} from "@/API/favoriteController.js";
 import {userStore} from "@/Stores/userStore.js";
+import {popup} from "@/js/controllers/popupController.js";
 
 
 export default {
@@ -135,6 +145,7 @@ export default {
   },
   data() {
     return {
+      popup,
       loading: {
         error: false,
         success: false
@@ -275,7 +286,7 @@ export default {
     .favorite-wrapper, .pin-wrapper {
       background-color: #fff;
       position: absolute;
-      z-index: 10;
+      z-index: 5;
 
 
       .favorite, .pin {
@@ -351,11 +362,13 @@ export default {
       border-radius: 9px;
       width: 100%;
       height: 100%;
-      aspect-ratio: 1/1;
-      overflow: hidden;
+      aspect-ratio: 1 / 1;
       position: relative;
+      overflow: hidden;
 
       img {
+
+        overflow: hidden;
         width: 100%;
 
       }
@@ -436,6 +449,60 @@ export default {
   }
 }
 
+
+@media screen and (max-width: 500px){
+  .project-wrapper {
+    .project {
+      padding: 10px;
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 15px;
+      .show-more {
+        font-size: 10px;
+        padding: 0 10px;
+      }
+      .favorite-wrapper {
+        padding: 0 2px;
+        top: 15px;
+        .favorite {
+
+          svg {
+            width: 15px;
+          }
+        }
+      }
+      .pin-wrapper {
+        padding: 8px 11px;
+        svg {
+          width: 14px;
+        }
+      }
+      .project_image {
+        width: 30%;
+        min-width: 80px;
+        img {
+          width: 120px;
+        }
+      }
+      .project_data {
+        width: 90%;
+      }
+      .project_name {
+        width: 70%;
+        margin-top: 5px;
+      }
+      .project_links {
+        margin-top: 0;
+        overflow-y: hidden;
+        overflow-x: auto;
+      }
+      .project_stats {
+        margin-top: 10px;
+        width: 60%;
+      }
+    }
+  }
+}
 
 @-webkit-keyframes BgGradient {
   0%{background-position:0% 43%}

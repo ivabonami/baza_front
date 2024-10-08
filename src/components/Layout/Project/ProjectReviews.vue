@@ -3,7 +3,11 @@
     <div class="reviews-navigation">
       <div class="reviews-navigation_buttons">
         <button-black
-            @buttonPressed="$emit('buttonPressed', true)"
+            @buttonPressed="() => {
+              popup.show = true
+              popup.component = 'AddReview'
+              popup.project = $props.project
+            }"
             :style="'filled'">
           <div class="button-text">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -49,11 +53,13 @@ import BaseSort from "@/components/ReUsable/BaseSort.vue";
 import {projectReviewsSort} from "@/Stores/allSorts.js";
 import ButtonBlack from "@/components/Buttons/ButtonBlack.vue";
 import {addNotice} from "@/js/notifications.js";
+import {popup} from "@/js/controllers/popupController.js";
 
 export default {
   name: 'ProjectReviews',
   props: {
-    id: ref(Number)
+    id: ref(Number),
+    project: ref(Object)
   },
   components: {
     BaseSort,
@@ -63,6 +69,7 @@ export default {
   data() {
     return {
       reviews: [],
+      popup,
       projectReviewsSort,
       options: {
         offset: 0,
@@ -159,6 +166,11 @@ export default {
 }
 
 @media screen and (max-width: 500px) {
-
+  .button-text {
+    font-size: 13px;
+  }
+  .reviews .reviews-navigation .reviews-navigation_buttons .count {
+    font-size: 13px;
+  }
 }
 </style>

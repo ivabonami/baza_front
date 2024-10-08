@@ -58,5 +58,11 @@ export function unlinkProjectWithPlaceholder(placeholderId, projectId) {
 export function addPlaceholders(placeholdersParams) {
     let url = 'placeholder'
 
-    return axios.post(api.url + url, {placeholdersParams: placeholdersParams}, {timeout: 20000} )
+    return axios.post(api.url + url, placeholdersParams, {timeout: 20000} )
+}
+
+export function editPlaceholder(placeholdersParams) {
+    let url = 'placeholder'
+
+    return axios.put(api.url + url, placeholdersParams, {timeout: 20000} )
 }

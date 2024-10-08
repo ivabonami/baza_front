@@ -3,6 +3,8 @@ import axios from "axios";
 import {addNotice} from "@/js/notifications.js";
 import {favoriteProjects} from "@/Stores/favoriteProjects.js";
 import {userStore} from "@/Stores/userStore.js";
+import {popup} from "@/js/controllers/popupController.js";
+import {projects} from "@/Stores/projectsStore.js";
 
 export async function getProjects(options) {
     let urlOptions = 'projects?';
@@ -61,5 +63,61 @@ export function addProject(project) {
         })
         .catch(error => {
             addNotice({name: 'Не удалось добавить проект', type: 'danger'})
+        })
+}
+
+export function editProject(project) {
+    const headers = {
+        'Authorization': `Bearer ${userStore.token}`
+    };
+
+    axios.put(`${api.url}projects/${project.id}`, project, {headers})
+        .then(result => {
+            addNotice({name: 'Проект успешно изменен', type: 'success'})
+        })
+        .catch(error => {
+            addNotice({name: 'Не удалось изменить проект', type: 'danger'})
+        })
+}
+
+export function deleteProject(project) {
+    const headers = {
+        'Authorization': `Bearer ${userStore.token}`
+    };
+
+
+    axios.delete(`${api.url}projects/${project.id}`, {headers})
+        .then(result => {
+            projects.splice(projects.findIndex(item => item.id === project.id), 1)
+            addNotice({name: 'Проект успешно удален', type: 'success'})
+            popup.show = false
+        })
+        .catch(error => {
+            addNotice({name: 'Не удалось удалить проект', type: 'danger'})
+        })
+}
+
+export function pinUnpinProject(project) {
+    const headers = {
+        'Authorization': `Bearer ${userStore.token}`
+    };
+    let payed, message;
+
+    if (project.payed) {
+        payed = false
+        message = 'откреплен'
+    } else {
+        payed = true
+        message = 'закреплен'
+    }
+
+    project.payed = !project.payed
+
+    axios.put(`${api.url}projects/${project.id}`, project, {headers})
+        .then(result => {
+            addNotice({name: 'Проект ' + project.name + ' успешно ' + message + '!', type: 'success'})
+        })
+        .catch(error => {
+            addNotice({name: 'Не удалось изменить проект', type: 'danger'})
         })
 }

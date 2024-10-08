@@ -53,7 +53,7 @@ export default {
 h2 {
   font-size: 30px;
   color: #fff;
-  padding: 20px;
+  padding: 50px 10px 10px;
 }
 
 .default-header {
@@ -126,5 +126,12 @@ h2 {
 
 
 }
+@media screen and (max-width: 500px){
+  h2 {
+    padding: 50px 20px 20px;
+  }
+  .default-header .default-header_overlay {
 
+  }
+}
 </style>

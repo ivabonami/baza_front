@@ -13,16 +13,23 @@
 
 export default {
   components: {},
-
-
   props:{
     placeholder: null,
-    data: {}
+    data: {},
+    inputDataProp: null
   },
   data () {
     return {
       inputData: null
     }
+  },
+  watch: {
+    data: function () {
+      this.inputData = this.$props.inputDataProp
+    }
+  },
+  mounted() {
+    this.inputData = this.$props.inputDataProp
   }
 }
 
