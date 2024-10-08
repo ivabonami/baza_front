@@ -9,6 +9,7 @@ import baseFooter from "./Layouts/BaseFooter.vue";
 import yandexMetrica from "./Layouts/YandexMetrica.vue";
 import bitMabiaBanner from './assets/payedBanners/BitMafia x MixMafiaCROP.webm'
 import designBanner from './assets/payedBanners/design_ads.gif'
+import courierBanner from './assets/images/banners/IMG-3083.gif'
 
 
 export default {
@@ -21,6 +22,7 @@ export default {
       showRightMenu: false,
       bitMabiaBanner,
       designBanner,
+      courierBanner,
       isLoaded: false,
       isAdmin: false,
       showScrollTopButton: false,
@@ -89,6 +91,9 @@ export default {
             </a>
             <a class="payed-banner" href="https://t.me/kremlintop" target="_blank">
               <img :src="designBanner" alt="">
+            </a>
+            <a class="payed-banner" href="https://kra8.cc/shop/catalog/1da1b4bd-647f-4536-936e-b95c5cf4e681/" target="_blank">
+              <img :src="courierBanner" alt="">
             </a>
           </div>
 
