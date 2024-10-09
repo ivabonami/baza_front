@@ -75,6 +75,10 @@ const router = createRouter({
       path: '/add-project',
       name: 'AddProject',
       component: ProjectAdd
+    },{
+      path: '/categories-editor',
+      name: 'CategoriesEditor',
+      component: CategoriesEditor
     }
   ]
 })

@@ -199,7 +199,7 @@ export default {
         align-items: center;
         gap: 10px;
         color: #000;
-        font-family: "PT Sans Caption";
+
         font-size: 14px;
         font-style: normal;
         font-weight: 400;
@@ -214,7 +214,7 @@ export default {
 
         color: #000;
         text-align: right;
-        font-family: "PT Sans Caption";
+
         font-size: 16px;
         font-style: normal;
         font-weight: 400;

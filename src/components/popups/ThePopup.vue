@@ -22,14 +22,46 @@
 
 <script>
 import {closePopup, popup} from "@/js/controllers/popupController.js";
-import {defineAsyncComponent, shallowRef} from "vue";
 import TheLoader from "@/components/ReUsable/TheLoader.vue";
 import InlineSvg from 'vue-inline-svg';
-import {addNotice} from "@/js/notifications.js";
+import AddPlaceholders from "@/components/popups/AddPlaceholders.vue";
+import AddReview from "@/components/popups/AddReview.vue";
+import ApproveReview from "@/components/popups/ApproveReview.vue";
+import DeletePlaceholder from "@/components/popups/DeletePlaceholder.vue";
+import DeleteProject from "@/components/popups/DeleteProject.vue";
+import DeleteReview from "@/components/popups/DeleteReview.vue";
+import DisapproveReview from "@/components/popups/DisapproveReview.vue";
+import EditPlaceholders from "@/components/popups/EditPlaceholders.vue";
+import EditReview from "@/components/popups/EditReview.vue";
+import ExternalLink from "@/components/popups/ExternalLink.vue";
+import LinkProjectToPlaceholder from "@/components/popups/LinkProjectToPlaceholder.vue";
+import ProjectLinks from "@/components/popups/ProjectLinks.vue";
+import SignIn from "@/components/popups/SignIn.vue";
+import SignUp from "@/components/popups/SignUp.vue";
+import SignOut from "@/components/popups/SignOut.vue";
+import UnlinkProjectToPlaceholder from "@/components/popups/UnlinkProjectToPlaceholder.vue";
+
 export default {
   components: {
     InlineSvg,
-    TheLoader
+    TheLoader,
+
+    AddPlaceholders,
+    AddReview,
+    ApproveReview,
+    DeletePlaceholder,
+    DeleteProject,
+    DeleteReview,
+    EditPlaceholders,
+    DisapproveReview,
+    EditReview,
+    ExternalLink,
+    LinkProjectToPlaceholder,
+    ProjectLinks,
+    SignIn,
+    SignUp,
+    SignOut,
+    UnlinkProjectToPlaceholder
   },
   data() {
     return {
@@ -38,6 +70,7 @@ export default {
       component: null
     }
   },
+
   watch: {
     'popup.component': function (newVal, oldVal) {
 
@@ -47,7 +80,7 @@ export default {
 
   methods: {
     swapComponent(component) {
-      this.component = popup.component ? shallowRef(defineAsyncComponent(() => import(`/src/components/popups/${component}.vue`))) : null
+      this.component = component
 
     },
     closeModalByEsc(e) {
@@ -108,6 +141,11 @@ export default {
       align-items: start;
       justify-content: space-between;
       width: 100%;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
 
       .popup_heading-close {
         cursor: pointer;

@@ -89,7 +89,7 @@ export default {
 <style scoped lang="scss">
 label {
   color: #000;
-  font-family: "PT Sans Caption";
+
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -102,7 +102,7 @@ label {
 
 input {
   color: var(--gray-2, #000);
-  font-family: "PT Sans Caption";
+
   font-size: 16px;
   font-style: normal;
   font-weight: 400;

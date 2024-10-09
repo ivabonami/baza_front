@@ -130,7 +130,7 @@ export default {
         description: null,
         avatarFilePath: null,
         bannerFilePath: null,
-        links: [{name: 'Блокчейн', link: '123'}]
+        links: []
       }
     }
   },

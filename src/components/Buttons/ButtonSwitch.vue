@@ -39,7 +39,7 @@ export default {
   span {
     color: #000;
     text-align: center;
-    font-family: "PT Sans Caption";
+
     font-size: 14px;
     font-style: normal;
     font-weight: 400;

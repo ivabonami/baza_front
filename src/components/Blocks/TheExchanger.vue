@@ -13,8 +13,8 @@
             <br />
             <span data-dropdown="exchangerFrom" class="value"> {{ currentSelectedCurrencyFrom.rate || 'Введите количество' }} </span>
           </p>
-          <div class="icon" >
-
+          <div class="icon" v-if="icons.find(item => item.name === currentSelectedCurrencyFrom.name.toLowerCase())">
+            <img :src="setIcon(currentSelectedCurrencyFrom.name.toLowerCase())" alt="">
           </div>
 
           <dropdown-box v-if="dropdownTo.show === true"
@@ -62,6 +62,7 @@
              <TheLoader />
           </div>
 
+
           <p v-else-if="currentSelectedCurrencyFrom.name && !loading" class="rates" data-dropdown="exchangerTo">
             <span data-dropdown="exchangerTo" class="text">Получаете <b>{{ currentSelectedCurrency.name }}</b></span>
             <br />
@@ -69,6 +70,10 @@
 
 
           </p>
+
+          <div class="icon" v-if="icons.find(item => item.name === currentSelectedCurrency.name.toLowerCase())">
+            <img :src="setIcon(currentSelectedCurrency.name.toLowerCase())" alt="">
+          </div>
 
           <dropdown-box v-if="dropdownFrom.show === true && !loading"
                         :selector="'exchangerTo'"
@@ -131,11 +136,44 @@ import {popup} from "@/js/controllers/popupController.js";
 import {currencyRates} from "@/Stores/currencyRates.js";
 import {defineAsyncComponent} from "vue";
 
+import rub from '@/assets/currencies-icons/rub.svg'
+import btc from '@/assets/currencies-icons/btc.svg'
+import usd from '@/assets/currencies-icons/usd.svg'
+import usdt from '@/assets/currencies-icons/usdt.svg'
+import ltc from '@/assets/currencies-icons/ltc.svg'
+import eth from '@/assets/currencies-icons/eth.svg'
+import trx from '@/assets/currencies-icons/trx.svg'
+import bnb from '@/assets/currencies-icons/bnb.svg'
+import eur from '@/assets/currencies-icons/eur.svg'
+import jpy from '@/assets/currencies-icons/jpy.svg'
+import gbp from '@/assets/currencies-icons/gbp.svg'
+import aud from '@/assets/currencies-icons/usd.svg'
+import cad from '@/assets/currencies-icons/usd.svg'
+import cny from '@/assets/currencies-icons/cny.svg'
+import doge from '@/assets/currencies-icons/doge.svg'
 
 export default {
   name: 'TheExchanger',
   data() {
     return {
+      icons: [
+        {name: 'rub', icon: rub},
+        {name: 'btc', icon: btc},
+        {name: 'usd', icon: usd},
+        {name: 'usdt', icon: usdt},
+        {name: 'ltc', icon: ltc},
+        {name: 'eth', icon: eth},
+        {name: 'trx', icon: trx},
+        {name: 'bnb', icon: bnb},
+        {name: 'eur', icon: eur},
+        {name: 'jpy', icon: jpy},
+        {name: 'gbp', icon: gbp},
+        {name: 'aud', icon: aud},
+        {name: 'cad', icon: cad},
+        {name: 'cny', icon: cny},
+        {name: 'doge', icon: doge},
+
+      ],
       coinValue: 1,
       dropdownFrom: {
         show: false
@@ -188,6 +226,13 @@ export default {
     callModal(settings) {
       for (const option in settings) {
         popup[option] = settings[option]
+      }
+    },
+    setIcon(name){
+      for (let icon of this.icons) {
+        if (icon.name === name) {
+          return icon.icon
+        }
       }
     },
     getRate() {
@@ -333,7 +378,7 @@ export default {
       .currency-from, .currency-to {
         border-radius: 30px;
         border: 2px dashed #B3B4C9;
-        padding: 5px 20px;
+        padding: 5px 5px 5px 20px;
         box-sizing: border-box;
         white-space: nowrap;
         cursor: pointer;
@@ -342,7 +387,32 @@ export default {
         width: 200px;
         height: 42px;
         align-items: center;
-        gap: 10px;
+        gap: 5px;
+        justify-content: start;
+
+
+        .icon {
+          width: 30px;
+          height: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: end;
+          position: relative;
+          box-sizing: content-box;
+          border-radius: 20px;
+          background-color: #7AAD7F;
+
+          img {
+            filter: invert(100%);
+            height: 55%;
+            top: 50%;
+            left: 50%;
+            position: absolute;
+            translate: -50% -50%;
+
+
+          }
+        }
 
         svg {
           transform: rotate(0deg);
@@ -369,8 +439,12 @@ export default {
           background: #ecebf3;
         }
       }
+      .arrow {
+        width: 15px;
+      }
 
       .rates {
+        width: 66%;
         color: #B3B4C9;
         font-size: 13px;
         font-style: normal;

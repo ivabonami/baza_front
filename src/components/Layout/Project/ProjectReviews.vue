@@ -43,11 +43,11 @@
     <Waypoint v-if="hasMore"
               @change="way => {
                   if (way.going === 'IN') {
-                    onGetReviews()
+                    onLoadMore()
                   }
               }">
       <button-black
-          @click="onGetReviews()"
+          @click="onLoadMore()"
           :style="'outline'">
         <div class="button-content">
           Еще
@@ -106,7 +106,7 @@ export default {
             for(let review of  result.data.reviews) {
               reviewsStore.push(review)
             }
-            result.data.reviews.length < this.options.limit ? this.hasMore = true : this.hasMore = false
+            result.data.reviews.length < this.options.limit ? this.hasMore = false : this.hasMore = true
 
           })
           .catch(error => {

@@ -90,12 +90,12 @@ export default {
 
         this.hasMore = result.hasMore
         for (const project of result.projects) {
-          if( !project.style ) {
+          if( project.type ) {
             this.projects.push(project)
-            console.log(project)
+
           }
         }
-
+        console.log(result.projects)
         this.loading = false
       })
     }

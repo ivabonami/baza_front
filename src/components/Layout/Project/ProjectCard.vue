@@ -1,6 +1,6 @@
 <template>
-  <a class="project-wrapper"
-     :href="loading.success || loading.error ? '/project/' + $props.project.id : null"
+  <router-link class="project-wrapper"
+     :to="'/project/' + $props.project.id"
      :class="{
            'fake-placeholder': !loading.success && !loading.error,
            'payed': $props.project.payed === true}"
@@ -87,7 +87,7 @@
 
       </div>
 
-  </a>
+  </router-link>
 </template>
 
 <script>
