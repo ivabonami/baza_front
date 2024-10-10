@@ -1,5 +1,5 @@
 <template>
-  <div class="items">
+  <div class="items" >
     <div class="item" @click="onEdit()">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
         <path d="M1.27237 12.5486C1.30565 12.2491 1.32229 12.0994 1.3676 11.9594C1.4078 11.8352 1.4646 11.7171 1.53646 11.6081C1.61745 11.4853 1.72399 11.3787 1.93707 11.1656L11.5027 1.60005C12.3027 0.799984 13.5999 0.799985 14.4 1.60005C15.2 2.40011 15.2 3.69727 14.4 4.49734L4.83436 14.0629C4.62127 14.276 4.51473 14.3826 4.39191 14.4635C4.28295 14.5354 4.16477 14.5922 4.04059 14.6324C3.90062 14.6777 3.75087 14.6943 3.45137 14.7276L1 15L1.27237 12.5486Z" stroke="#B3B4C9" stroke-linecap="round" stroke-linejoin="round"/>
@@ -29,7 +29,9 @@ import {popup} from "@/js/controllers/popupController.js";
 export default {
   name: "ReviewMenu.vue",
   data() {
-    return {}
+    return {
+
+    }
   },
   props: {
     review: {}
@@ -100,4 +102,13 @@ export default {
     }
   }
 }
+
+@media screen and (max-width: 500px){
+    .admin-menu {
+      span {
+        display: none;
+      }
+    }
+  }
+
 </style>

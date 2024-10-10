@@ -1,6 +1,6 @@
 <template>
   <div class="project-form" v-if="!loading">
-    <h2 class="heading2">Добавить проект</h2>
+    <h2 class="heading2">Изменить проект</h2>
     <div class="project-banner">
       <input-file :data="project.bannerFilePath" @dataChanged="emit => project.bannerFilePath = emit">
         Загрузите баннер профиля вашего проекта в размере 1600x220px или оставьте поле пустым

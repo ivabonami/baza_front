@@ -130,7 +130,7 @@ export default {
   border-radius: 44.5px;
   background: #FFF;
   margin-bottom: 25px;
-  padding: 10px 20px;
+  padding: 10px;
   box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
   box-sizing: border-box;
   gap: 20px;
@@ -173,7 +173,12 @@ export default {
       display: none;
     }
   }
-
+  .header .logo {
+    flex-basis: 250px;
+    img {
+      width: 100%;
+    }
+  }
 }
 
 </style>

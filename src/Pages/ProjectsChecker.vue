@@ -57,7 +57,6 @@ import emptyStore from "@/components/Blocks/EmptyStore.vue";
 import TheLoader from "@/components/ReUsable/TheLoader.vue";
 import ButtonBlack from "@/components/Buttons/ButtonBlack.vue";
 import {getProjects} from "@/API/projectsController.js";
-import {projects} from "@/Stores/projectsStore.js";
 
 export default {
   name: "checkProjects.vue",
@@ -88,14 +87,13 @@ export default {
     onGetProjects (options) {
       getProjects(options).then(result => {
 
-        this.hasMore = result.hasMore
+
         for (const project of result.projects) {
           if( project.type ) {
             this.projects.push(project)
 
           }
         }
-        console.log(result.projects)
         this.loading = false
       })
     }
@@ -134,6 +132,7 @@ export default {
 
 @media screen and (max-width: 500px){
   .wrapper {
+    box-sizing: border-box;
     .projects {
       .project {
         width: 48%;

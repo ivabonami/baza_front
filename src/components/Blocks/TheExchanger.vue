@@ -14,7 +14,7 @@
             <span data-dropdown="exchangerFrom" class="value"> {{ currentSelectedCurrencyFrom.rate || 'Введите количество' }} </span>
           </p>
           <div class="icon" v-if="icons.find(item => item.name === currentSelectedCurrencyFrom.name.toLowerCase())">
-            <img :src="setIcon(currentSelectedCurrencyFrom.name.toLowerCase())" alt="">
+            <img :src="setIcon(currentSelectedCurrencyFrom.name)" alt="">
           </div>
 
           <dropdown-box v-if="dropdownTo.show === true"
@@ -71,8 +71,8 @@
 
           </p>
 
-          <div class="icon" v-if="icons.find(item => item.name === currentSelectedCurrency.name.toLowerCase())">
-            <img :src="setIcon(currentSelectedCurrency.name.toLowerCase())" alt="">
+          <div class="icon" v-if="currentSelectedCurrency.name">
+            <img :src="setIcon(currentSelectedCurrency.name)" alt="">
           </div>
 
           <dropdown-box v-if="dropdownFrom.show === true && !loading"
@@ -127,14 +127,13 @@
   </div>
 </template>
 <script>
-import {getCoinIcon, getCoinRate} from "@/API/exchangerController.js";
+import {getCoinRate} from "@/API/exchangerController.js";
 import {addNotice} from "@/js/notifications.js";
 import dropdownBox from "@/components/ReUsable/DropdownBox.vue";
 import TheLoader from "@/components/ReUsable/TheLoader.vue";
 import buttonBlack from "@/components/Buttons/ButtonBlack.vue";
 import {popup} from "@/js/controllers/popupController.js";
 import {currencyRates} from "@/Stores/currencyRates.js";
-import {defineAsyncComponent} from "vue";
 
 import rub from '@/assets/currencies-icons/rub.svg'
 import btc from '@/assets/currencies-icons/btc.svg'
@@ -229,11 +228,13 @@ export default {
       }
     },
     setIcon(name){
-      for (let icon of this.icons) {
-        if (icon.name === name) {
-          return icon.icon
-        }
+
+      if (this.icons.find(item => item.name === name.toLowerCase())) {
+        return this.icons.find(item => item.name === name.toLowerCase()).icon
+      } else {
+        return usdt
       }
+
     },
     getRate() {
       this.loading = true
@@ -247,7 +248,7 @@ export default {
             this.changeSelectedCurrencyTo(currencyRates.rates[0][currency], currency)
             this.loading = false
           })
-          .catch(err => {
+          .catch(() => {
             addNotice({name: 'Нет!', type: 'warning'})
             this.loading = false
           })

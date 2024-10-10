@@ -357,11 +357,27 @@ input {
 
 @media screen and (max-width: 768px){
   .dropdownSearchItems {
-    top: 65px;
+    top: 75px;
     max-height: 400px;
+    width: 88%;
+    max-width: 90%;
+    position: fixed;
+    left: 5%;
+    right: 5%;
+    transform: none;
+  }
+  .wrapper {
+    align-items: center;
+    display: flex;
+    width: 100%;
   }
   input {
-    max-width: 100%;
+    width: 88%;
+    top: 30px;
+    left: 5%;
+    right: 5%;
+    z-index: 20;
+    position: fixed;
     box-sizing: border-box;
   }
   .button {
@@ -376,7 +392,7 @@ input {
     height: 15px;
     box-sizing: border-box;
   }
-  .search {
+  .button_search {
     display: none;
   }
   .nav {

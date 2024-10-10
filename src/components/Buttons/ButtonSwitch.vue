@@ -2,9 +2,9 @@
   <button class="base-button"
           :class="{active: $props.active}"
           @click="$emit('pressed', true)">
-    <div class="image">
+    <span class="image">
       <slot name="icon"/>
-    </div>
+    </span>
     <span>
       <slot name="text"/>
     </span>
@@ -65,7 +65,7 @@ export default {
 
     }
     span {
-      font-size: 12px;
+      font-size: 15px;
     }
   }
 }

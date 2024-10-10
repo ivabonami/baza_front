@@ -165,8 +165,8 @@ export default {
       height: 28px;
 
       span {
-        font-size: 12px;
-        padding: 8px 16px;
+        font-size: 16px;
+        padding: 12px 16px;
       }
     }
 

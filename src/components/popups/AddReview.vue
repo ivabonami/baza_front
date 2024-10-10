@@ -59,7 +59,6 @@ import {ref} from "vue";
 import DefaultHeader from "@/components/Blocks/DefaultHeader.vue";
 import {closePopup, popup} from "@/js/controllers/popupController.js";
 import inputSelectOption from "@/components/Inputs/InputSelectOption.vue";
-import {addPlaceholders, linkProjectWithPlaceholder, placeholders} from "@/API/placeholders.js";
 import {addNotice} from "@/js/notifications.js";
 import {categories} from "@/Stores/categories.js";
 import InputTextarea from "@/components/Inputs/InputTextarea.vue";
@@ -101,12 +100,11 @@ export default {
   methods: {
     onReviewAdd() {
       this.data.projectId = popup.project.id
-      console.log(this.data)
       if (!this.data.rating) {
         addNotice({name: 'Оцените проект!', type: 'warning'})
       } else {
-        addReview(this.data).then(result => {
-
+        addReview(this.data).then(() => {
+          addNotice({name: 'Отзыв добавлен! Ожидайте модерации!', type: 'success'})
         })
       }
 

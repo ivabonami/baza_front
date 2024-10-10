@@ -195,4 +195,21 @@ export default {
   }
 }
 
+@media screen and (max-width: 500px){
+  .placeholders {
+    .selectCategory {
+      gap: 20px;
+      overflow-y: hidden;
+      overflow-x: scroll;
+    }
+    .stats {
+      width: 100%;
+    }
+  }
+  .projects {
+    .project-placeholder {
+      width: 100%;
+    }
+  }
+}
 </style>

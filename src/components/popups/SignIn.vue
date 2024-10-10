@@ -1,134 +1,107 @@
 <template>
-<div>
-  <form
-
-      @submit.prevent="null"
-
-  >
-    <auth-header />
-    <input-text
-        class="mb15"
-        :data="{
+  <div>
+    <form
+        name="login"
+        @submit.prevent
+    >
+      <auth-header />
+      <input-text
+          class="mb15"
+          :data="{
           placeholder: 'Введите ваш логин',
-          icon: userIcon,
-          name: 'username'
+          icon: userIcon
         }"
-        @dataChanged="emit => data.username = emit" />
+          @dataChanged="emit => data.username = emit" />
 
-    <input-password
-        :data="{
+      <input-password
+          class="mb15"
+          :data="{
           placeholder: 'Введите ваш пароль',
-          icon: lockIcon,
-          name: 'password'
+          icon: lockIcon
         }"
-        @passwordData="emit => data.password = emit" />
+          @passwordData="emit => data.password = emit" />
 
-    <div class="buttons-group">
-      <ButtonPrimary
-          :type="'button'"
-          style="margin-top: 10px;"
-          :disabled="loading || data.password === '' || data.username === '' "
-          @click="() => {
+
+      <div class="buttons-group">
+        <ButtonPrimary
+            :type="'button'"
+            style="margin-top: 10px;"
+            :disabled="loading"
+            @click="() => {
             loading = true
-            onSubmit(this.data)
+            onSubmit(data)
           }">
-        <TheLoader v-if="loading"/>
-        <span>Войти</span>
-      </ButtonPrimary>
+          <TheLoader v-if="loading"/>
+          <span>Войти</span>
+        </ButtonPrimary>
 
-      <ButtonSecondary
-          style="margin-top: 10px;"
-          :disabled="loading"
-          @click.stop
-          @click="$emit('changeState', 'SignUp')">
-        <span>Нет аккаунта?</span>
-      </ButtonSecondary>
-
-
-
-    </div>
-
-
-  </form>
+        <ButtonSecondary
+            style="margin-top: 10px;"
+            :disabled="loading"
+            @click.stop
+            @click="$emit('changeState', 'SignUp')">
+          <span>Уже зарегистрированы?</span>
+        </ButtonSecondary>
 
 
 
-</div>
+      </div>
+
+
+    </form>
+
+
+
+  </div>
 </template>
 
-<script>
+<script setup>
 import InputText from "@/components/Inputs/InputText.vue";
 import InputPassword from "@/components/Inputs/InputPassword.vue";
 import TheLoader from "@/components/ReUsable/TheLoader.vue";
 import ButtonPrimary from "@/components/Buttons/ButtonPrimary.vue";
 import ButtonSecondary from "@/components/Buttons/ButtonSecondary.vue";
 import {ref} from "vue";
-import {signIn} from "@/API/authController.js";
+import {signIn, signUp} from "@/API/authController.js";
 import {closePopup, popup} from "@/js/controllers/popupController.js";
 import userIcon from '@/assets/icons/user-icon.svg'
 import lockIcon from '@/assets/icons/lock-icon.svg'
 import AuthHeader from "@/components/Blocks/AuthHeader.vue";
-import {addNotice, removeAllNotices} from "@/js/notifications.js";
+import {addNotice} from "@/js/notifications.js";
 import {setUserData} from "@/Stores/userStore.js";
 
 
-export default {
-  components: {
-    InputText,
-    InputPassword,
-    TheLoader,
-    ButtonPrimary,
-    ButtonSecondary,
-    AuthHeader
-  },
-  data() {
-    return {
-      userIcon,
-      lockIcon,
-      data: {
-        username: null,
-        password: null
-      },
-      loading: ref(false)
-    }
-  },
-  methods: {
-    async onSubmit(userData) {
-      removeAllNotices()
-      signIn(userData).then(result => {
-        addNotice({name: 'Вы успешно авторизовались', type: 'success'})
-        setUserData({username: this.data.username, token: result.data.token})
-        this.loading = false
-        closePopup()
-      }).catch(err => {
-        if (err.response) {
-          if (err.response.data.message === 'User not found') {
-            addNotice({name: 'Пользователь не найден', type: 'danger'})
+const data = {
+  username: null,
+  password: null,
+  repeat: null
 
-          } else if (err.response.data.message === 'Invalid credentials') {
-            addNotice({name: 'Неверный пароль', type: 'danger'})
-          } else {
-            addNotice({name: err.response.status + ', ' + err.response.statusText, type: 'danger'})
-          }
-        } else {
-          if (err.code === "ECONNABORTED") {
-            addNotice({name: 'Таймаут соединения, попробуйте позже', type: 'danger'})
-          } else if ( err.code === "ERR_NETWORK"){
-            addNotice({name: 'Нет соединения', type: 'danger'})
-          } else {
-            addNotice({name: err, type: 'danger'})
-          }
-        }
-        this.loading = false
-
-
-      })
-
-    }
-  }
 }
 
 
+let loading = ref(false);
+
+async function onSubmit(userData) {
+  signIn(userData).then(result => {
+    addNotice({name: 'Вы успешно авторизовались', type: 'success'})
+    popup.show = false
+    localStorage.setItem('username', userData.username)
+    localStorage.setItem('token', result.data.token)
+
+    setUserData({username: localStorage.getItem('username'), token: localStorage.getItem('token') })
+  }).catch(err => {
+    let message;
+    if (err.response.data.message === 'Username already exists') {
+      message = 'Ошибка, провверьте правильность данных'
+    } else {
+      message = 'Ошибка, провверьте правильность данных'
+    }
+    loading = false
+    popup.show = false
+    addNotice({name: message, type: 'danger'})
+  })
+
+}
 
 </script>
 

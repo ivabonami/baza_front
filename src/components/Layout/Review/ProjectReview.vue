@@ -23,7 +23,7 @@
           <div class="review-body_time">
             {{ normalizeTime($props.review.createdAt) }}
           </div>
-          <div class="admin-menu">
+          <div class="admin-menu" v-if="userStore.token">
             <review-menu :review="$props.review" />
           </div>
         </div>
@@ -40,6 +40,7 @@
 
 <script>
 import ReviewMenu from "@/components/Menus/ReviewMenu.vue";
+import {userStore} from "@/Stores/userStore.js";
 
 
 export default {
@@ -50,7 +51,7 @@ export default {
   data() {
     return {
       months: ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'],
-
+      userStore
     }
   },
   components: {ReviewMenu},
@@ -97,6 +98,7 @@ export default {
   }
   .review-body {
     width: 95%;
+
     .info {
       width: 100%;
     }
@@ -104,6 +106,7 @@ export default {
       margin-left: auto;
     }
     .review-body-info {
+      justify-content: space-between;
       display: flex;
       align-items: center;
       gap: 15px;
@@ -143,24 +146,42 @@ export default {
 }
 
 @media screen and (max-width: 768px){
-  .review .review-body {
-
-    .review-body-info {
-
-      .review-body_rate {
-        width: 90px;
-        gap: 5px;
+  .review {
+    .review-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      svg {
+        border-radius: 10px;
+        width: 30px;
       }
+    }
+    .review-body {
 
-      .review-body_username {
-        width: 80px;
-        padding: 0;
-        overflow: hidden;
-        display: inline-block;
-        text-decoration: none;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+      .review-body-info {
+        gap: 5px;
 
+        .review-body_rate {
+          width: 70px;
+          gap: 2px;
+
+        }
+
+        .review-body_time {
+          font-size: 12px;
+        }
+
+        .review-body_username {
+          width: 60px;
+          padding: 0;
+          font-size: 12px;
+          overflow: hidden;
+          display: inline-block;
+          text-decoration: none;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+        }
       }
     }
   }

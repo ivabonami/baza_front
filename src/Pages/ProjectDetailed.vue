@@ -134,7 +134,6 @@ export default {
       } else {
         removeFavorite(id, name).then(() => this.project.favorite = 0)
       }
-      console.log(this.project)
 
     },
     onGetProducts() {
@@ -143,12 +142,7 @@ export default {
         for (let product of result.data.products) {
           this.products.push(product)
         }
-        console.log(result.data.products.length)
-        if (result.data.products.length < this.requestOptions.limit) {
-          this.hasMore = false
-        } else {
-          this.hasMore = true
-        }
+        this.hasMore = result.data.products.length >= this.requestOptions.limit;
         this.requestOptions.offset = this.requestOptions.offset + this.requestOptions.limit
       })
     },
@@ -362,12 +356,27 @@ export default {
 
 @media screen and (max-width: 500px){
   .project {
+    .project-products {
+      .product {
+        width: 47%;
+        box-sizing: border-box;
+      }
+    }
     .project-info {
       flex-wrap: wrap;
+      .favorite-wrapper {
+        left: 50%;
+        transform: translateX(-220%);
+      }
       .project-info-stats, .project-info-description {
         width: 100%;
       }
       .project-info-stats {
+        width: 100%;
+        margin: 0 auto  ;
+        img {
+          width: 50%;
+        }
         .project-info-stats_name {
 
         }
