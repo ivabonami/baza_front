@@ -6,6 +6,7 @@
       </select>
       <div class="text-input-wrapper">
         <input-text :placeholder="'https://exapmle.com'"
+                    @keydown.enter="checkField()"
                     @dataChanged="emit => link.link = emit" />
       </div>
     </div>

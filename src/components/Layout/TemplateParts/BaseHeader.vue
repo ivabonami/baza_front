@@ -180,5 +180,16 @@ export default {
     }
   }
 }
-
+  @media screen and (max-width: 500px){
+    .user-menu {
+      height: 30px;
+    }
+    .button {
+      span {
+        svg {
+          width: 15px;
+        }
+      }
+    }
+  }
 </style>

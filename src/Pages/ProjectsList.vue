@@ -164,6 +164,7 @@ export default {
       this.projects.splice(0, this.projects.length)
     },
     getProjectsList(options) {
+      this.loading = true
 
       if (options['sort']) {
         try {
@@ -173,13 +174,14 @@ export default {
               projects.push(project)
             }
           })
-
+          this.loading = false
           this.requestOptions.offset += options.limit
 
         } catch (err) {
           this.result = err
+          this.loading = false
         }
-        this.loading = false
+
       }
 
     }
@@ -248,6 +250,8 @@ export default {
 }
 @media screen and (max-width: 576px){
   .projects-nav {
+    padding: 15px;
+    gap: 10px;
 
   }
   .projects {
