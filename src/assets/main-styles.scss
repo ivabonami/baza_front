@@ -157,10 +157,13 @@ svg {
     stroke-width: 1px;
   }
 }
+p {
+  word-break: break-word;
+}
 .projects-menu_categories {
   display: flex;
   gap: 20px;
-  width: 100%;
+  width: 95%;
 
 
   .projects-menu_categories_category {
@@ -209,6 +212,7 @@ svg {
 }
 ::-webkit-scrollbar {
   width: 8px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -238,9 +242,4 @@ svg {
 }
 .cross-fade-move{
   transition: transform .2s ease-in .2s, opacity .2s ease-in-out;
-}
-@media screen and (max-width: 500px) {
-  .button {
-    padding: 10px 8px;
-  }
 }

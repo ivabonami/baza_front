@@ -28,6 +28,7 @@
       <div class="reviews-navigation_filter">
         <base-sort :sorts="projectReviewsSort" @sortChanged="(emit) => {
           this.options.sort = emit.slug
+          this.options.offset = 0
           this.reviewsStore.splice(0, reviewsStore.length)
           this.onGetReviews()
           }"/>
@@ -185,10 +186,14 @@ export default {
 
 @media screen and (max-width: 500px) {
   .button-text {
-    font-size: 13px;
+    font-size: 11px;
+    gap: 5px;
   }
   .reviews .reviews-navigation .reviews-navigation_buttons .count {
-    font-size: 13px;
+    font-size: 11px;
+    span {
+      font-size: 11px;
+    }
   }
 }
 </style>

@@ -45,6 +45,20 @@
           </div>
         </div>
 
+        <div class="exchanger_stats">
+          <div class="min-value-to-exchange">
+            {{ project.minValueToExchange }}
+          </div>
+          <div class="reserve">
+            {{ project.reserve }}
+          </div>
+        </div>
+        <div class="admin-menu">
+          <router-link :to="this.$route.path + '/edit'">
+            редактировать
+          </router-link>
+        </div>
+
       </div>
     </div>
 
@@ -342,7 +356,7 @@ export default {
 
       .favorite-wrapper {
         top: 10px;
-        left: 10px;
+        left: 0px;
       }
 
       .project-info-description {
@@ -372,8 +386,7 @@ export default {
     .project-info {
       flex-wrap: wrap;
       .favorite-wrapper {
-        left: 50%;
-        transform: translateX(-220%);
+        left: 0%;
       }
       .project-info-stats, .project-info-description {
         width: 100%;
@@ -382,7 +395,7 @@ export default {
         width: 100%;
         margin: 0 auto  ;
         img {
-          width: 50%;
+          width: 100%;
         }
         .project-info-stats_name {
 

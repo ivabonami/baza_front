@@ -76,10 +76,13 @@
 
       </router-link>
     </div>
-    <div class="dropdownSearchItems" data-dropdown="dropdownSearch" v-else-if="liveResults.length <= 0 && showLiveResults && !noResults">
+    <div class="dropdownSearchItems" data-dropdown="dropdownSearch" v-else-if="liveResults.length <= 0 && showLiveResults && !noResults && search.query.length > 0">
       <the-loader />
     </div>
-    <div class="dropdownSearchItems" data-dropdown="dropdownSearch" v-else-if="noResults && showLiveResults">
+    <div class="dropdownSearchItems" data-dropdown="dropdownSearch" v-else-if="search.query.length <= 0">
+      <span>Введите запрос</span>
+    </div>
+    <div class="dropdownSearchItems" data-dropdown="dropdownSearch" v-else-if="noResults && showLiveResults && search.query.length > 0">
       <span>Нет результатов</span>
     </div>
     <div class="backdrop-mobile"  v-if="showSearch"></div>

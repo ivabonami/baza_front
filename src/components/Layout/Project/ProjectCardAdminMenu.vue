@@ -205,10 +205,10 @@ export default {
 
 @media screen and (max-width: 500px){
   .admin-button {
-    padding: 5px;
+    padding: 2px;
 
     svg {
-      width: 15px;
+      height: 10px;
     }
   }
 }
