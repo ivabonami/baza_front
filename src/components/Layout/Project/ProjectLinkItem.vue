@@ -1,5 +1,5 @@
 <template>
-  <a v-if="$props.data" class="link"
+  <a v-if="$props.data.name" class="link"
      :class="{
         yellow: $props.data.name === 'Зеркало',
         green: $props.data.name === 'Зеркало VPN',
@@ -10,7 +10,7 @@
      }"
      :href="projectLink()"
      target="_blank">
-    {{ normalizeLinkName($props.data.name) }}
+    {{ normalizeLinkName($props.data) }}
   </a>
 </template>
 
@@ -24,9 +24,22 @@ export default {
     }
   },
   methods: {
-    normalizeLinkName(text) {
+    normalizeLinkName(data) {
       const pattern = /^(http|https)/;
-      return text
+      let link;
+
+      if (data.name) {
+        if (data.name === 'Зеркало' || data.name === 'Зеркало VPN') {
+
+          link = data.link
+          
+
+        } else {
+          link = this.$props.data.name
+        }
+      }
+
+      return link
     },
     projectLink() {
       return this.$props.data.link

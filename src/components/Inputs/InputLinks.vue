@@ -42,6 +42,7 @@ export default {
 
   methods: {
     checkField() {
+      console.log(this.link)
       if (this.link.link < 10 ) {
         addNotice({name: 'Что-то ссылка коротковата', type: 'warning'})
       } else {

@@ -18,15 +18,15 @@
           :inputDataProp="popup.placeholder.text"
           @dataChanged="emit => this.placeholder.placeholdersParams.text = emit" />
 
-<!--      <input-select-option-->
-<!--          class="mb15"-->
-<!--          :data="{-->
-<!--                placeholder: 'Цвет',-->
-<!--                icon: colorIcon,-->
-<!--                name: 'Цвет',-->
-<!--                data: placeholderColors-->
-<!--              }"-->
-<!--          @dataChanged="emit => this.placeholder.placeholdersParams.style = emit.value" />-->
+      <input-select-option
+          class="mb15"
+          :data="{
+                placeholder: 'Цвет',
+                icon: colorIcon,
+                name: 'Цвет',
+                data: placeholderColors
+              }"
+          @dataChanged="emit => this.placeholder.placeholdersParams.style = emit.value" />
 
 <!--      <input-select-option-->
 <!--          class="mb15"-->

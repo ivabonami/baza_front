@@ -36,10 +36,10 @@ export function addFavorite(id, name) {
 
 export function removeFavorite(id, name) {
 
-
     return axios.delete(api.url + 'user/project/' + id, {timeout: 60000, headers: {
             'Authorization': `Bearer ${userStore.token}`
         }}).then(result => {
+
             addNotice({name: `Проект ${name} успешно удален из избранного!`, type: 'warning'})
 
             if (projects.find(item => item.project.id === id)) {

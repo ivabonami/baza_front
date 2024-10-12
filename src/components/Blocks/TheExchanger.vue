@@ -114,12 +114,16 @@
       </div>
 
       <button-black
-          @buttonPressed="callModal({
-            show: !popup.show,
-            component: 'ExternalLink',
-          })"
-      >
-        <div class="button-text">Обменять</div>
+          :type="'link'"
+          :link="'https://t.me/bitmafia_bot'"
+          @click="() => {
+            this.loading = false
+          }">
+        <TheLoader v-if="loading"/>
+        <div class="button-content">
+          Обменять
+        </div>
+
       </button-black>
 
     </div>
@@ -362,6 +366,7 @@ export default {
     border-radius: 30px;
     padding: 5px;
     box-sizing: border-box;
+    align-items: center;
 
     .exchanger-box_currency {
       position: relative;
@@ -379,7 +384,7 @@ export default {
       .currency-from, .currency-to {
         border-radius: 30px;
         border: 2px dashed #B3B4C9;
-        padding: 5px 5px 5px 20px;
+        padding: 5px 5px 5px 10px;
         box-sizing: border-box;
         white-space: nowrap;
         cursor: pointer;
@@ -388,7 +393,7 @@ export default {
         width: 200px;
         height: 42px;
         align-items: center;
-        gap: 5px;
+        gap: 10px;
         justify-content: start;
 
 
@@ -401,7 +406,7 @@ export default {
           position: relative;
           box-sizing: content-box;
           border-radius: 20px;
-          background-color: #7AAD7F;
+          background-color: #70718c;
 
           img {
             filter: invert(100%);

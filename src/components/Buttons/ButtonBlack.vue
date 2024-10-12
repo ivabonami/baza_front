@@ -1,14 +1,24 @@
 <template>
-  <button class="button primary" @click="$emit('buttonPressed')">
-    <slot />
-  </button>
+
+  <div style="width: 100%">
+    <button @click="$emit('buttonPressed')" class="button primary" :disabled="props.disabled" v-if="props.type === 'button'">
+      <slot />
+    </button>
+
+    <a :href="props.link" class="button primary" v-else-if="props.type === 'link'" target="_blank">
+      <slot />
+    </a>
+
+  </div>
 </template>
 
-<script>
-export default {
-  name: 'ButtonBlack.vue'
-}
+<script setup>
 
+const props = defineProps({
+  disabled: false,
+  type: 'button',
+  link: null
+})
 </script>
 
 <style scoped lang="scss">
@@ -20,7 +30,7 @@ export default {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  height: auto;
+  height: 100%;
 
   &:disabled {
     opacity: .5;

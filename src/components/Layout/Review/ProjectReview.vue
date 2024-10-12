@@ -106,7 +106,7 @@ export default {
       margin-left: auto;
     }
     .review-body-info {
-      justify-content: space-between;
+      justify-content: start;
       display: flex;
       align-items: center;
       gap: 15px;
@@ -118,6 +118,8 @@ export default {
         font-style: normal;
         font-weight: 600;
         line-height: normal;
+        width: 180px;
+        overflow: hidden;
       }
       .review-body_time {
         color: #B3B4C9;
@@ -125,10 +127,12 @@ export default {
         font-style: normal;
         font-weight: 400;
         line-height: 154.183%; /* 21.586px */
+        margin-left: auto;
       }
       .review-body_rate {
         display: flex;
         gap: 5px;
+        width: 100px;
       }
     }
     .review-body_text {

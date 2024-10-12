@@ -124,7 +124,7 @@ export default {
 
   .project-dropdown-box-dropper {
     width: 100%;
-    height: 410px;
+    height: 400px;
     box-sizing: border-box;
     border-radius: 20px;
     //background: radial-gradient(175.11% 210.61% at 131.64% -20.57%, rgba(242, 242, 248, 0.50) 0%, rgba(233, 233, 242, 0.50) 31.1%);

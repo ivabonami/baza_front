@@ -3,6 +3,7 @@
     <div class="reviews-navigation">
       <div class="reviews-navigation_buttons">
         <button-black
+            :type="'button'"
             @buttonPressed="() => {
               popup.show = true
               popup.component = 'AddReview'
@@ -47,6 +48,7 @@
                   }
               }">
       <button-black
+          :type="'button'"
           @click="onLoadMore()"
           :style="'outline'">
         <div class="button-content">

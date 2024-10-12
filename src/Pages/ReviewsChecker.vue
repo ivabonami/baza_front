@@ -54,6 +54,7 @@
           <div class="menu" v-if="userStore.role === 'admin'">
 
             <button-black
+                :type="'button'"
                 @click="onReviewApprove(review)"
             >
               <div class="button-content">

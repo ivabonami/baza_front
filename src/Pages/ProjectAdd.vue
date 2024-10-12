@@ -50,8 +50,7 @@
         </div>
       </div>
     </div>
-
-    <div class="exchanger-data" v-if="this.project.categoryIds.includes(categories.exchangerCategory[0].id)">
+    <div class="exchanger-data" v-show="this.project.categoryIds.includes(categories.exchangerCategory[0].id)">
       <div class="fields-name">
         Доп информация для обмеников:
       </div>
@@ -314,6 +313,11 @@ export default {
       font-style: normal;
       font-weight: 400;
       line-height: normal;
+    }
+    .links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
     }
     .adder {
       display: flex;

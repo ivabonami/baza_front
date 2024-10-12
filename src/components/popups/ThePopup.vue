@@ -40,12 +40,14 @@ import SignIn from "@/components/popups/SignIn.vue";
 import SignUp from "@/components/popups/SignUp.vue";
 import SignOut from "@/components/popups/SignOut.vue";
 import UnlinkProjectToPlaceholder from "@/components/popups/UnlinkProjectToPlaceholder.vue";
+import ProductInfo from "@/components/popups/ProductInfo.vue";
+
 
 export default {
   components: {
     InlineSvg,
     TheLoader,
-
+    ProductInfo,
     AddPlaceholders,
     AddReview,
     ApproveReview,

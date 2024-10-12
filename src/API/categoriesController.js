@@ -12,6 +12,7 @@ import jobIcon from '@/assets/icons/menu-icons/job.svg'
 import servicesIcon from '@/assets/icons/menu-icons/services.svg'
 import designIcon from '@/assets/icons/menu-icons/design.svg'
 import otherIcon from '@/assets/icons/menu-icons/other.svg'
+import {userStore} from "@/Stores/userStore.js";
 
 export function getCategories() {
     axios.get(api.url + 'categories').then(result => {
@@ -44,4 +45,29 @@ export function getCategories() {
 
 export function changeCategory(id) {
     router.replace({ query: {categoryIds: id} })
+}
+
+export function editCategory(id, name) {
+    const headers = {
+        'Authorization': `Bearer ${userStore.token}`
+    };
+    categories.allCategories.find(item => item.id === id).name = name
+    return axios.put(`${api.url}categories/${id}`, {name: name}, {headers})
+}
+
+export function addCategory(name, front) {
+    const headers = {
+        'Authorization': `Bearer ${userStore.token}`
+    };
+
+    return axios.post(`${api.url}categories/`, {name: name, allowShopfront: front}, {headers}).then(result => getCategories())
+}
+
+export function deleteCategory(id) {
+    const headers = {
+        'Authorization': `Bearer ${userStore.token}`
+    };
+    categories.allCategories.splice(categories.allCategories.findIndex(item => item.id === id), 1)
+
+    return axios.delete(`${api.url}categories/${id}`, {headers})
 }

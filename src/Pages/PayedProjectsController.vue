@@ -30,6 +30,7 @@
       </div>
 
       <button-black
+          :type="'button'"
           @buttonPressed="callAddPlaceholdersPopup()"
       >
         Добавить

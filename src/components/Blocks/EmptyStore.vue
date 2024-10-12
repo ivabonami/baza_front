@@ -9,6 +9,7 @@
 
     <div class="button-wrapper">
       <button-black
+          :type="'button'"
           v-show="$props.showButton"
           @buttonPressed="$emit('buttonPressed', true)"
           :style="'filled'">

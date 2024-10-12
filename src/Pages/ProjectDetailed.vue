@@ -50,7 +50,11 @@
 
     <div class="project-products" v-if="products.length > 0">
       <div class="product" v-for="item of products">
-        <ProductCard :item="item" />
+        <ProductCard :item="item"  @click="() => {
+          popup.show = true
+          popup.component = 'ProductInfo'
+          popup.product = item
+        }"/>
 
       </div>
 
@@ -61,6 +65,7 @@
                   }
               }">
         <button-black
+            :type="'button'"
             @click="onGetProducts()"
             :style="'outline'">
           <div class="button-content">
@@ -94,6 +99,7 @@ import ProductCard from "@/components/Layout/Product/ProductCard.vue";
 import {getProducts} from "@/API/productsController.js";
 import ButtonBlack from "@/components/Buttons/ButtonBlack.vue";
 import {Waypoint} from "vue-waypoint";
+import {popup} from "@/js/controllers/popupController.js";
 
 
 export default {
@@ -119,6 +125,7 @@ export default {
         limit: 10,
         offset: 0
       },
+      popup,
       hasMore: true
     }
   },
@@ -295,7 +302,7 @@ export default {
       }
 
       .project-info-stats_name {
-        margin-top: 10px;
+        margin-top: -5px;
         width: 100%;
         color: #191B2A;
         text-align: left;

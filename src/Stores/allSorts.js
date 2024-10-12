@@ -1,18 +1,18 @@
 import {reactive} from "vue";
 
-export const allSorts =  reactive([{
-        name: 'Высокий рейтинг',
-        slug: 'highestRating'
-    },{
-        name: 'Низкий рейтинг',
-        slug: 'lowestRating'
-    },
+export const allSorts =  reactive([
     {
         name: 'Больше оценок',
         slug: 'highestRatingCount'
     },{
         name: 'Меньше оценок',
         slug: 'lowestRatingCount'
+    },{
+        name: 'Высокий рейтинг',
+        slug: 'highestRating'
+    },{
+        name: 'Низкий рейтинг',
+        slug: 'lowestRating'
     },
     {
         name: 'Сначала новые',

@@ -33,7 +33,7 @@
 
 
       <Waypoint @change="onChange" v-if="hasMore">
-        <button-black @buttonPressed="getProjectsList(requestOptions)">
+        <button-black @buttonPressed="getProjectsList(requestOptions)" :type="'button'">
           <div class="button-content">
             Загрузить еще проекты
           </div>

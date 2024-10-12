@@ -1,9 +1,9 @@
 <template>
   <div class="projects-wrapper" >
     <h2 class="heading2">Ваши любимые проекты</h2>
-    <div class="projects-list" v-if="favoriteProjects.projects">
+    <div class="projects-list" v-if="projects">
 
-      <div class="project-wrapper-card" v-for="project of favoriteProjects.projects">
+      <div class="project-wrapper-card" v-for="project of projects">
         <project-card
             :project="project"
         />
@@ -14,7 +14,7 @@
           :show-button="true"
           :show-button-for-users="false"
           @buttonPressed="this.$router.push('/')"
-          v-if="favoriteProjects.projects.length <= 0">
+          v-if="projects.length <= 0">
         <template #header>
           Вы еще не добавили проектов в избранное
         </template>
@@ -43,8 +43,9 @@ import { Waypoint } from "vue-waypoint";
 import emptyStore from "@/components/Blocks/EmptyStore.vue";
 import projectCard from "@/components/Layout/Project/ProjectCard.vue";
 import TheLoader from "@/components/ReUsable/TheLoader.vue";
-import {favoriteProjects} from "@/Stores/favoriteProjects.js";
+
 import {getFavoriteProjects} from "@/API/projectsController.js";
+import {projects} from "@/Stores/projectsStore.js";
 
 export default {
   name: "FavoriteProjects.vue",
@@ -58,13 +59,13 @@ export default {
 
   data () {
     return {
-      favoriteProjects
+      projects
 
     }
   },
 
   watch: {
-    favoriteProjects: function (newVal, oldVal) {
+    projects: function (newVal, oldVal) {
 
     }
   },

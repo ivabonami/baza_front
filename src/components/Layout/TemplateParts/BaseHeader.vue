@@ -13,6 +13,7 @@
     </div>
     <div class="auth" v-if="!userStore.username">
       <button-black
+          :type="'button'"
           @buttonPressed="callModal({
             show: !popup.show,
             component: 'SignIn',
@@ -35,11 +36,13 @@
       <button-black
           @buttonPressed="dropdown.show = !dropdown.show"
           data-dropdown="dropdown"
+          :type="'button'"
       >
         {{ userStore.username }}
       </button-black>
 
       <button-black
+          :type="'button'"
           @buttonPressed="onSignOut()"
       >
         <span title="Выйти из аккаунта">
@@ -141,7 +144,7 @@ export default {
     }
   }
   .search {
-    width: 90%;
+    width: 80%;
   }
   .menu {
 

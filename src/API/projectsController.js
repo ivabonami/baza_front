@@ -1,8 +1,6 @@
 import {api} from "@/API/apiurl.js";
 import axios from "axios";
-import {addNotice} from "@/js/notifications.js";
-import {favoriteProjects} from "@/Stores/favoriteProjects.js";
-import {userStore} from "@/Stores/userStore.js";
+import {addNotice} from "@/js/notifications.js";import {userStore} from "@/Stores/userStore.js";
 import {popup} from "@/js/controllers/popupController.js";
 import {projects} from "@/Stores/projectsStore.js";
 
@@ -44,10 +42,14 @@ export function getFavoriteProjects(options) {
     };
 
     axios.get(`${api.url}user/project`, {headers}).then(result => {
-        favoriteProjects.projects.splice(0, favoriteProjects.projects.length)
+        console.log(result)
+        projects.splice(0, projects.length)
         for (let project of result.data.projects) {
-            favoriteProjects.projects.push(project)
+            project.favorite = 1
+            projects.push(project)
         }
+
+        console.log(projects)
 
     })
 }
@@ -116,6 +118,37 @@ export function pinUnpinProject(project) {
     axios.put(`${api.url}projects/${project.id}`, project, {headers})
         .then(result => {
             addNotice({name: 'Проект ' + project.name + ' успешно ' + message + '!', type: 'success'})
+        })
+        .catch(error => {
+            addNotice({name: 'Не удалось изменить проект', type: 'danger'})
+        })
+}
+
+export function approveProject(project) {
+    const headers = {
+        'Authorization': `Bearer ${userStore.token}`
+    };
+    project.isReviewed = true
+    axios.put(`${api.url}projects/${project.id}`, project, {headers})
+        .then(result => {
+            addNotice({name: 'Проект успешно опубликован', type: 'success'})
+            projects.splice(projects.findIndex(project),1 )
+        })
+        .catch(error => {
+            addNotice({name: 'Не удалось изменить проект', type: 'danger'})
+        })
+}
+
+export function disapproveProject(project) {
+    const headers = {
+        'Authorization': `Bearer ${userStore.token}`
+    };
+    project.isReviewed = false
+
+    axios.put(`${api.url}projects/${project.id}`, project, {headers})
+        .then(result => {
+            addNotice({name: 'Проект успешно снят с публикации', type: 'success'})
+            projects.splice(projects.findIndex(project),1 )
         })
         .catch(error => {
             addNotice({name: 'Не удалось изменить проект', type: 'danger'})

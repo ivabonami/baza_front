@@ -9,6 +9,8 @@
     </p>
     <div class="buttons-group">
       <div class="button-wrapper">
+
+
         <button-primary
             :type="'link'"
             style="margin-top: 10px;"

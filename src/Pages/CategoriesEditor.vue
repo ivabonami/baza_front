@@ -114,7 +114,7 @@
         </div>
 
         <button-black
-
+            :type="'button'"
             :style="'filled'">
           <div class="button-content">
             Добавить категорию
@@ -133,6 +133,8 @@ import {categories} from "@/Stores/categories.js";
 import {userStore} from "@/Stores/userStore.js";
 import InputText from "@/components/Inputs/InputText.vue";
 import ButtonBlack from "@/components/Buttons/ButtonBlack.vue";
+import {addCategory, editCategory, deleteCategory} from "@/API/categoriesController.js";
+
 
 export default {
   name: "CategoryEditor.vue",
@@ -160,7 +162,10 @@ export default {
       errors: {},
       categoryName: null,
       categories,
-      userStore
+      userStore,
+      addCategory,
+      editCategory,
+      deleteCategory
     }
   },
   mounted() {
