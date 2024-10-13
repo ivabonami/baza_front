@@ -25,6 +25,7 @@
                 name: 'Цвет',
                 data: placeholderColors
               }"
+          :selector="'color'"
           @dataChanged="emit => this.placeholder.placeholdersParams[0].style = emit.value" />
 
       <input-select-option
@@ -35,6 +36,7 @@
                 name: 'Категория',
                 data: allCats
               }"
+          :selector="'category'"
           @dataChanged="emit => this.placeholder.categoryId = emit.id" />
 
     </div>
@@ -106,10 +108,10 @@ export default {
       },
       placeholder: {
         placeholdersParams: [{
-          style: null,
+          style: 'background: linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255) 0px) padding-box padding-box, linear-gradient(-45deg, rgb(116, 58, 213), rgb(213, 58, 157)) border-box border-box;',
           text: null
         }],
-        categoryId: null
+        categoryId: 3
       },
       allCats: [],
       closePopup,
@@ -125,7 +127,10 @@ export default {
             this.loading = false
 
             for (let placeholder of result.data.placeholders) {
-              placeholders.categoryPlaceholders.push(placeholder)
+              if (this.placeholder.categoryId === placeholders.categoryId) {
+                placeholders.categoryPlaceholders.push(placeholder)
+              }
+
             }
           })
           .catch(error => {
@@ -140,6 +145,9 @@ export default {
     this.allCats.push({
       name: 'Главная'
     })
+  },
+  beforeUnmount() {
+    this.allCats.splice(this.allCats.findIndex(item => item.name === 'Главная'))
   }
 }
 
@@ -152,6 +160,8 @@ export default {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+
+
 }
 .buttons-group {
   display: flex;

@@ -41,6 +41,11 @@ import SignUp from "@/components/popups/SignUp.vue";
 import SignOut from "@/components/popups/SignOut.vue";
 import UnlinkProjectToPlaceholder from "@/components/popups/UnlinkProjectToPlaceholder.vue";
 import ProductInfo from "@/components/popups/ProductInfo.vue";
+import DeleteProduct from "@/components/popups/DeleteProduct.vue";
+import EditProduct from "@/components/popups/EditProduct.vue";
+import AddProduct from "@/components/popups/AddProduct.vue";
+import EditLink from "@/components/popups/EditLink.vue";
+import DeleteLink from "@/components/popups/DeleteLink.vue";
 
 
 export default {
@@ -56,10 +61,15 @@ export default {
     DeleteReview,
     EditPlaceholders,
     DisapproveReview,
+    DeleteLink,
+    EditLink,
     EditReview,
     ExternalLink,
     LinkProjectToPlaceholder,
     ProjectLinks,
+    DeleteProduct,
+    EditProduct,
+    AddProduct,
     SignIn,
     SignUp,
     SignOut,
@@ -69,7 +79,8 @@ export default {
     return {
       popup,
       closePopup,
-      component: null
+      component: null,
+
     }
   },
 
@@ -94,12 +105,14 @@ export default {
   mounted() {
     window.addEventListener("keydown", this.closeModalByEsc)
     document.body.style.overflow = 'hidden hidden'
+    document.body.style.height = '100vh'
     document.body.style.paddingRight = '15px'
     this.swapComponent(popup.component)
   },
   beforeUnmount() {
     window.removeEventListener("keydown", this.closeModalByEsc)
     document.body.style.overflow = 'scroll scroll'
+    document.body.style.maxHeight = 'auto'
     document.body.style.paddingRight = '0px'
   }
 }
@@ -132,7 +145,6 @@ export default {
     transform: translate(-50%, -50%);
     transition: height .15s ease;
     display: flex;
-
     justify-content: center;
     align-items: center;
 
@@ -156,7 +168,6 @@ export default {
 
 
     .popup-body_content {
-      min-height: 120px;
       width: 100%;
     }
 

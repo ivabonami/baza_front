@@ -1,5 +1,8 @@
 import axios from "axios";
 import {api} from "@/API/apiurl.js";
+import {userStore} from "@/Stores/userStore.js";
+import {productsStore} from "@/Stores/productsStore.js";
+import {addNotice} from "@/js/notifications.js";
 
 
 export function getProducts(options) {
@@ -19,54 +22,38 @@ export function getProducts(options) {
 
 export async function addProduct(product) {
     const headers = {
-        'Authorization': `Bearer ${userInfo.token}`
+        'Authorization': `Bearer ${userStore.token}`
     };
 
-    let image = await uploadImage(product.file)
-
-    if (image === 'Invalid token') {
-        refreshToken
-        return {error: 'Невалидный токен, пожалуйста залогиньтесь заново.'}
-    } else {
-        return await axios.post(`${api.url}products`, {
-            name: product.name,
-            description: product.description,
-            avatarFilePath: image.data.filePath,
-            projectId: product.projectId
-        },{headers}).then(result => result).catch(error => error)
-    }
-
+    return axios.post(`${api.url}products`, product,{headers}).then(result => result).catch(error => error)
 
 }
 
 export async function updateProduct(product) {
     const headers = {
-        'Authorization': `Bearer ${userInfo.token}`
+        'Authorization': `Bearer ${userStore.token}`
     };
 
-    let image = product.file ? await (await uploadImage(product.file)).data.filePath : product.avatarFilePath
-
-
-    if (image === 'Invalid token') {
-        refreshToken
-        return {error: 'Невалидный токен, пожалуйста залогиньтесь заново.'}
-    } else {
-        return await axios.put(`${api.url}products/${product.id}`, {
-            name: product.name,
-            description: product.description,
-            avatarFilePath: image,
-            projectId: product.projectId
-        },{headers}).then(result => result).catch(error => error)
-    }
+    return axios.put(`${api.url}products/${product.id}`, product,{headers})
+        .then(result => result)
+        .catch(error => error)
 
 
 }
 
 export async function deleteProduct(product) {
     const headers = {
-        'Authorization': `Bearer ${userInfo.token}`
+        'Authorization': `Bearer ${userStore.token}`
     };
-    return await axios.delete(`${api.url}products/${product.id}`,{headers}).then(result => result).catch(error => error)
+
+    productsStore.products.splice(productsStore.products.findIndex(item => item.id === product.id), 1)
+    return axios.delete(`${api.url}products/${product.id}`,{headers})
+        .then(result => {
+            addNotice({name: `Услуга ${product.name} удалена успешно`, type: 'success'})
+        })
+        .catch(error => {
+            addNotice({name: `Произошла ошибка`, type: 'danger'})
+        })
 
 
 }

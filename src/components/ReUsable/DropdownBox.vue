@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown" ref="dropdown">
+  <div class="dropdown" ref="dropdown" :data-dropdown="$props.selector">
     <slot />
   </div>
 </template>
@@ -19,8 +19,10 @@ export default {
   methods: {
     clickOutside(e) {
       if (this.$refs.dropdown !== undefined && !this.$refs.dropdown.contains(e.target) && e.target.dataset.dropdown !== this.$props.selector) {
+        this.$emit('closeDropdown', true)
         this.closeDropDown()
       }
+
     },
 
     closeByEsc(e) {
@@ -38,6 +40,7 @@ export default {
   created() {
     addEventListener('mousedown', this.clickOutside)
     addEventListener('keydown', this.closeByEsc)
+
   },
   unmounted() {
     removeEventListener('mousedown', this.clickOutside)
@@ -60,11 +63,10 @@ export default {
   padding: 10px;
   border-radius: 20px;
   z-index: 15;
-  max-height: 600px;
   overflow-x: hidden;
   overflow-y: auto;
   box-sizing: border-box;
-
+  max-height: 300px;
 
 
 }

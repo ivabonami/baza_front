@@ -4,6 +4,7 @@ import {userStore} from "@/Stores/userStore.js";
 import {reactive} from "vue";
 
 export const placeholders = reactive({
+    categoryId: null,
     categoryPlaceholders: []
 })
 

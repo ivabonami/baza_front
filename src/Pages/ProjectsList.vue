@@ -156,12 +156,14 @@ export default {
   },
   methods: {
     onChange(e) {
-      if (e.direction === 'UP' && e.going) {
+      console.log(e)
+      if (e.direction === 'UP' && e.going === 'IN') {
         this.getProjectsList(this.requestOptions)
       }
     },
     removeItems() {
       this.projects.splice(0, this.projects.length)
+      console.log(this.projects)
     },
     getProjectsList(options) {
       this.loading = true
@@ -188,14 +190,22 @@ export default {
   },
   mounted() {
     if (window.innerWidth > 1053) {
-      this.requestOptions.limit = 8
+      this.requestOptions.limit = 12
     } else if (window.innerWidth >= 768 && window.innerWidth <= 1053) {
-      this.requestOptions.limit = 4
+      this.requestOptions.limit = 8
     } else {
       this.requestOptions.limit = 4
     }
     this.removeItems()
-    this.getProjectsList(this.requestOptions)
+
+    if( this.$route.query.categoryIds ) {
+      this.requestOptions.categoryIds = `[${this.$route.query.categoryIds}]`
+      this.requestOptions.offset = 0
+    }
+  },
+
+  beforeUnmount() {
+    this.removeItems()
   }
 }
 

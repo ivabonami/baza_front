@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Реклама</h1>
+    <h2 class="heading2">Реклама</h2>
 
     <a href="https://t.me/mxBaza" class="image-link" target="_blank">
       <img :src="image" alt="">

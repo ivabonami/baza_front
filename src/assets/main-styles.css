@@ -153,10 +153,14 @@ svg.stroke2 {
   stroke-width: 1px;
 }
 
+p {
+  word-break: break-word;
+}
+
 .projects-menu_categories {
   display: flex;
   gap: 20px;
-  width: 100%;
+  width: 95%;
 }
 .projects-menu_categories .projects-menu_categories_category {
   color: #70718c;
@@ -191,6 +195,7 @@ svg.stroke2 {
 
 ::-webkit-scrollbar {
   width: 8px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -207,10 +212,13 @@ svg.stroke2 {
 
 @media screen and (max-width: 500px) {
   .projects-menu_categories {
-    max-width: 60vw;
+    max-width: 65vw;
     overflow-x: auto;
     overflow-y: hidden;
     padding-bottom: 5px;
+  }
+  .button {
+    padding: 10px 8px;
   }
 }
 .cross-fade-leave-active {
@@ -229,12 +237,6 @@ svg.stroke2 {
 
 .cross-fade-move {
   transition: transform 0.2s ease-in 0.2s, opacity 0.2s ease-in-out;
-}
-
-@media screen and (max-width: 500px) {
-  .button {
-    padding: 10px 8px;
-  }
 }
 
 /*# sourceMappingURL=main-styles.css.map */

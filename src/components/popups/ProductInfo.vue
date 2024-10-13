@@ -9,19 +9,40 @@
       <div class="image">
         <img :src="api.url + popup.product.avatarFilePath" alt="">
       </div>
-      <div class="text">
-        {{ popup.product.description }}
-      </div>
+      <p class="text" v-html="transformHyperlinks(popup.product.description)">
+
+      </p>
     </div>
     <div class="buttons-group">
-
+      <button-primary
+          v-if="popup.editProductCard"
+          style="margin-top: 10px;"
+          :disabled="loading"
+          :type="'button'"
+          @click.stop
+          @click="$emit('changeState', 'EditProduct')">
+        <div class="button-content">
+          Изменить
+        </div>
+      </button-primary>
+      <button-primary
+          v-if="popup.editProductCard"
+          style="margin-top: 10px;"
+          :disabled="loading"
+          :type="'button'"
+          @click.stop
+          @click="$emit('changeState', 'DeleteProduct')">
+        <div class="button-content">
+          Удалить
+        </div>
+      </button-primary>
       <ButtonSecondary
           style="margin-top: 10px;"
           :disabled="loading"
           @click.stop
           @click="closePopup()">
         <div class="button-content">
-          Закрыть окно
+          Закрыть
         </div>
       </ButtonSecondary>
 
@@ -32,7 +53,6 @@
 
 </div>
 </template>
-
 <script>
 import InputText from "@/components/Inputs/InputText.vue";
 import InputPassword from "@/components/Inputs/InputPassword.vue";
@@ -56,6 +76,7 @@ export default {
     closePopup,
     ProjectLinkItem
   },
+
   data() {
     return {
       popup,
@@ -65,7 +86,18 @@ export default {
     }
   },
   methods: {
+    transformHyperlinks(text) {
+      const urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+      let links = text.match(urlRegex);
 
+      if (links) {
+        for (let link of links) {
+          text = text.replace(link, `<a href= "${link}">${link}</a>`)
+        }
+      }
+
+      return text
+    }
   }
 }
 
@@ -77,6 +109,7 @@ export default {
 .buttons-group {
   display: flex;
   box-sizing: border-box;
+
   .button-wrapper {
     width: 50%;
   }
@@ -89,11 +122,11 @@ h2 {
   display: flex;
   gap: 20px;
   width: 100%;
-  align-items: center;
+  align-items: start;
   flex-wrap: wrap;
 
   .image {
-    width: 40%;
+    width: 25%;
     border-radius: 20px;
     background: #FFF;
     box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
@@ -105,13 +138,23 @@ h2 {
     line-height: 154.183%;
     aspect-ratio: 1 / 1;
     overflow: hidden;
+    display: none;
+    z-index: 20;
+
+
 
     img {
       height: 100%;
     }
   }
   .text {
-    width: 55%;
+    width: 100%;
+    white-space: pre-wrap;
+    word-break: break-word;
+    padding-bottom: 70px;
+    max-height: 50vh;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 }
 

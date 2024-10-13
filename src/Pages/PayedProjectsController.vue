@@ -1,7 +1,7 @@
 <template>
 
   <div class="placeholders">
-    <h2 class="heading2">Редактор заглушек (в разработке)</h2>
+    <h2 class="heading2">Редактор заглушек</h2>
 
     <div class="selectCategory">
 
@@ -90,10 +90,13 @@ export default {
     callAddPlaceholdersPopup() {
       popup.show = true
       popup.component = 'AddPlaceholders'
+
     },
     onGetPlaceholders(categoryId) {
+
       getPlaceholders(categoryId)
           .then(result => {
+            placeholders.categoryId = categoryId
             placeholders.categoryPlaceholders = result.data.placeholders
           })
           .catch(error => {

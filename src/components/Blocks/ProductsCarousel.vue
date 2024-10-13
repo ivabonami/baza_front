@@ -30,9 +30,6 @@
       >
         <router-link
             :to="`/project/${item.ProjectId}`"
-            @click="() => {
-              highlightedProject.push(item)
-            }"
             :class="colClass"
             v-for="(item, index) in productsStore.products"
             v-show="index < visibleItems"
@@ -281,6 +278,7 @@ export default {
   },
   beforeUnmount() {
     window.removeEventListener("resize", e => this.setVisibleItems(e.target.innerWidth));
+    productsStore.products.splice(0, productsStore.products.length)
   }
 
 }

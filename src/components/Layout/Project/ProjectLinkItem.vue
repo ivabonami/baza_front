@@ -30,9 +30,10 @@ export default {
 
       if (data.name) {
         if (data.name === 'Зеркало' || data.name === 'Зеркало VPN') {
+          const domain = data.link.match(/^(?:.*\:\/?\/)?(?<domain>[\w\-\.]*)/i)[1]
 
-          link = data.link
-          
+          link = domain.substring(0, domain.lastIndexOf('.'))
+
 
         } else {
           link = this.$props.data.name
