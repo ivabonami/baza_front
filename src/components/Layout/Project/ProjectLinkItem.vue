@@ -25,14 +25,11 @@ export default {
   },
   methods: {
     normalizeLinkName(data) {
-      const pattern = /^(http|https)/;
       let link;
 
       if (data.name) {
         if (data.name === 'Зеркало' || data.name === 'Зеркало VPN') {
-          const domain = data.link.match(/^(?:.*\:\/?\/)?(?<domain>[\w\-\.]*)/i)[1]
-
-          link = domain.substring(0, domain.lastIndexOf('.'))
+          link = data.link.match(/^(?:.*\:\/?\/)?(?<domain>[\w\-\.]*)/i)[1].substring(0, data.link.lastIndexOf('.'))
 
 
         } else {

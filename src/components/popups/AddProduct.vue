@@ -2,7 +2,7 @@
 <div>
   <div>
     <DefaultHeader>
-      Добавить продукт
+      Добавить
     </DefaultHeader>
     <div class="placeholder-add">
       <div class="image">
@@ -25,7 +25,7 @@
             @dataChanged="emit => product.name = emit" />
 
         <input-textarea
-            style="height: 300px"
+            style="height: 200px"
             class="mb15 h30"
             :data="{
                 placeholder: 'Надпись',
@@ -54,7 +54,7 @@
           }">
         <div class="button-content">
           <TheLoader v-if="loading"/>
-          <span>Изменить</span>
+          <span>Добавить</span>
         </div>
 
       </ButtonPrimary>
@@ -183,5 +183,24 @@ export default {
 }
 .h30 {
   height: 50px;
+}
+
+@media screen and (max-width: 500px){
+  .placeholder-add {
+    flex-wrap: wrap;
+
+    .image {
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+    }
+    .edit {
+      width: 100%;
+    }
+    .h30 {
+      height: 40px;
+    }
+  }
 }
 </style>

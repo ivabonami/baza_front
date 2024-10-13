@@ -82,24 +82,36 @@ const data = {
 let loading = ref(false);
 
 async function onSubmit(userData) {
-  signIn(userData).then(result => {
-    addNotice({name: 'Вы успешно авторизовались', type: 'success'})
-    popup.show = false
-    localStorage.setItem('username', userData.username)
-    localStorage.setItem('token', result.data.token)
 
-    setUserData({username: localStorage.getItem('username'), token: localStorage.getItem('token') })
-  }).catch(err => {
-    let message;
-    if (err.response.data.message === 'Username already exists') {
-      message = 'Ошибка, провверьте правильность данных'
-    } else {
-      message = 'Ошибка, провверьте правильность данных'
-    }
-    loading = false
-    popup.show = false
-    addNotice({name: message, type: 'danger'})
-  })
+  if (!userData.username) {
+    addNotice({name: 'Вы не ввели юзернейм', type: 'danger'})
+
+  } else if (!userData.password) {
+    addNotice({name: 'Вы не ввели пароль', type: 'danger'})
+  } else {
+    signIn(userData).then(result => {
+      addNotice({name: 'Вы успешно авторизовались', type: 'success'})
+      popup.show = false
+      localStorage.setItem('username', userData.username)
+      localStorage.setItem('token', result.data.token)
+
+      setUserData({username: localStorage.getItem('username'), token: localStorage.getItem('token') })
+    }).catch(err => {
+      let message;
+      if (err.response.data.message === 'Username already exists') {
+        message = 'Такой пользователь уже сужествует'
+        this.loading = false
+      } else {
+        message = 'Ошибка, проверьте правильность данных'
+        this.loading = false
+      }
+
+      addNotice({name: message, type: 'danger'})
+    })
+  }
+
+  this.loading = false
+
 
 }
 

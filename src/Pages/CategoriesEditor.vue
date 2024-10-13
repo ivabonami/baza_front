@@ -69,10 +69,10 @@
               </div>
 
               <div class="delete" @click="() => {
-              modal.show = true
-              modal.deleteCatName = category.name
-              modal.deleteCatId = category.id
-            }">
+                  popup.show = true
+                  popup.component = 'DeleteCategory'
+                  popup.category = category
+                }">
                 <svg xmlns="http://www.w3.org/2000/svg" width="8" height="9" viewBox="0 0 8 9" fill="none">
                   <path d="M5.33333 2.4V2.12C5.33333 1.72796 5.33333 1.53194 5.26067 1.38221C5.19676 1.25049 5.09477 1.14341 4.96933 1.0763C4.82672 1 4.64004 1 4.26667 1H3.73333C3.35996 1 3.17328 1 3.03067 1.0763C2.90523 1.14341 2.80324 1.25049 2.73933 1.38221C2.66667 1.53194 2.66667 1.72796 2.66667 2.12V2.4M1 2.4H7M6.33333 2.4V6.32C6.33333 6.90806 6.33333 7.20208 6.22434 7.42669C6.12847 7.62426 5.97549 7.78489 5.78732 7.88556C5.57341 8 5.29339 8 4.73333 8H3.26667C2.70661 8 2.42659 8 2.21268 7.88556C2.02451 7.78489 1.87153 7.62426 1.77566 7.42669C1.66667 7.20208 1.66667 6.90806 1.66667 6.32V2.4" stroke="#D8D8D8" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -100,20 +100,18 @@
       <div class="form">
         <div>
           <input-text
-              :inputDataProp="null"
+              :inputDataProp="this.categoryName"
               :placeholder="'Введите название категории....'"
-              @returnData="emit => this.categoryName  = emit"
+              @dataChanged="emit => this.categoryName  = emit"
           />
         </div>
         <div>
-<!--          <input-checkbox-->
-<!--              :input="inputs.front"-->
-<!--              :data="inputs.front.data"-->
-<!--              @checkboxChanged="emit => this.allowShopfront = emit"-->
-<!--          />-->
+          <input type="checkbox" name="allowShopFront" id="allowShopFront" v-model="allowShopfront">
+          <label for="allowShopFront">Наличие витрины</label>
         </div>
 
         <button-black
+            @click="onAddCategory()"
             :type="'button'"
             :style="'filled'">
           <div class="button-content">
@@ -134,6 +132,8 @@ import {userStore} from "@/Stores/userStore.js";
 import InputText from "@/components/Inputs/InputText.vue";
 import ButtonBlack from "@/components/Buttons/ButtonBlack.vue";
 import {addCategory, editCategory, deleteCategory} from "@/API/categoriesController.js";
+import {popup} from "@/js/controllers/popupController.js";
+import {addNotice} from "@/js/notifications.js";
 
 
 export default {
@@ -149,16 +149,7 @@ export default {
     return {
       editMode: 0,
       allowShopfront: true,
-      modal: {
-        show: false,
-        deleteCatName: null,
-        deleteCatId: null
-      },
-      notice: {
-        show: false,
-        color: null,
-        text: {}
-      },
+      popup,
       errors: {},
       categoryName: null,
       categories,
@@ -169,26 +160,20 @@ export default {
     }
   },
   mounted() {
-
+    if (userStore.role !== 'admin') {
+      addNotice({name: 'У вас нет прав для просмотра этой страницы', type: 'danger'})
+      this.$router.replace('/')
+    }
   },
   created() {
 
   },
 
   methods: {
-    addCategory() {
-      if (!this.categoryName || this.categoryName.length < 0) {
-        this.notice.show = true
-        this.notice.text.lengthErr = 'Введите название категории'
-      } else {
-        // addCategory(this.categoryName, this.allowShopfront).then(result => {
-        //   getCategories()
-        // }).catch(err => {
-        //   this.notice.show = true
-        //   err.response.data.message === "Invalid token" ? this.notice.text.axiosErr = "Токен не валдиный, перелогиньтесь" : this.notice.text.axiosErr = err.response.data.message
-        //
-        // })
-      }
+    onAddCategory() {
+      addCategory(this.categoryName, this.allowShopfront)
+      this.categoryName = null
+
     }
   }
 }

@@ -30,7 +30,7 @@
             this.onReviewAdd()
           }">
         <TheLoader v-if="loading"/>
-        <span>Добавить отзыв</span>
+        <span>Оставить отзыв</span>
       </ButtonPrimary>
 
       <ButtonSecondary
@@ -103,9 +103,7 @@ export default {
       if (!this.data.rating) {
         addNotice({name: 'Оцените проект!', type: 'warning'})
       } else {
-        addReview(this.data).then(() => {
-          addNotice({name: 'Отзыв добавлен! Ожидайте модерации!', type: 'success'})
-        })
+        addReview(this.data)
       }
 
       this.loading = false

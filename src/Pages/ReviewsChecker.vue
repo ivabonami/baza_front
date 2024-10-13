@@ -45,6 +45,20 @@
               {{ review.rating }}
             </div>
 
+            <div class="menu">
+              <span @click="onReviewApprove(review)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M10.2593 5.0713H6.85112V1.6631C6.85112 1.19277 6.47025 0.811035 5.99905 0.811035C5.52786 0.811035 5.14698 1.19277 5.14698 1.6631V5.0713H1.73879C1.26759 5.0713 0.886719 5.45303 0.886719 5.92337C0.886719 6.39371 1.26759 6.77544 1.73879 6.77544H5.14698V10.1836C5.14698 10.654 5.52786 11.0357 5.99905 11.0357C6.47025 11.0357 6.85112 10.654 6.85112 10.1836V6.77544H10.2593C10.7305 6.77544 11.1114 6.39371 11.1114 5.92337C11.1114 5.45303 10.7305 5.0713 10.2593 5.0713Z" fill="#191B2A"/>
+                </svg>
+                одобрить
+              </span>
+              <span @click="onDeleteReview(review)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16" fill="none">
+                  <path d="M9.66667 3.8V3.24C9.66667 2.45593 9.66667 2.06389 9.52134 1.76441C9.39351 1.50099 9.18954 1.28681 8.93865 1.15259C8.65344 1 8.28007 1 7.53333 1H6.46667C5.71993 1 5.34656 1 5.06135 1.15259C4.81046 1.28681 4.60649 1.50099 4.47866 1.76441C4.33333 2.06389 4.33333 2.45593 4.33333 3.24V3.8M1 3.8H13M11.6667 3.8V11.64C11.6667 12.8161 11.6667 13.4042 11.4487 13.8534C11.2569 14.2485 10.951 14.5698 10.5746 14.7711C10.1468 15 9.58677 15 8.46667 15H5.53333C4.41323 15 3.85318 15 3.42535 14.7711C3.04903 14.5698 2.74307 14.2485 2.55132 13.8534C2.33333 13.4042 2.33333 12.8161 2.33333 11.64V3.8" stroke="#B3B4C9" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                удалить</span>
+            </div>
+
           </div>
 
           <div class="project-reviews_items_item_body" v-if="review.comment">
@@ -53,14 +67,6 @@
 
           <div class="menu" v-if="userStore.role === 'admin'">
 
-            <button-black
-                :type="'button'"
-                @click="onReviewApprove(review)"
-            >
-              <div class="button-content">
-                Опубликовать
-              </div>
-            </button-black>
 
           </div>
 
@@ -92,7 +98,7 @@
 </template>
 
 <script>
-import {approveReview, showNotReviewed} from "@/API/reviews.js";
+import {approveReview, deleteReview, showNotReviewed} from "@/API/reviews.js";
 import ButtonBlack from "@/components/Buttons/ButtonBlack.vue"
 import {userStore} from "@/Stores/userStore.js";
 import emptyStore from "@/components/Blocks/EmptyStore.vue";
@@ -101,6 +107,7 @@ import buttonPrimary from "../components/Buttons/ButtonPrimary.vue";
 import {Waypoint} from "vue-waypoint";
 import {popup} from "@/js/controllers/popupController.js";
 import {reviewsStore} from "@/Stores/reviewsStore.js";
+import {addNotice} from "@/js/notifications.js";
 
 export default {
   name: "ReviewsCheck.vue",
@@ -123,10 +130,7 @@ export default {
         limit: 10,
         offset: 0,
       },
-      modalDelete: {
-        show: false,
-        review: {}
-      },
+      deleteReview
 
     }
   },
@@ -140,6 +144,13 @@ export default {
   },
 
   methods: {
+    onDeleteReview(review) {
+
+      deleteReview(review).then(result => {
+        reviewsStore.splice(reviewsStore.findIndex(item => item.id === review.id), 1)
+        addNotice({name: 'Отзыв удален', type: 'success'})
+      })
+    },
     onReviewsLoad() {
       showNotReviewed(this.options).then(result => {
         for (const review of result.data.reviews) {
@@ -166,7 +177,10 @@ export default {
 
   mounted() {
 
-
+    if (userStore.role !== 'admin') {
+      addNotice({name: 'У вас нет прав для просмотра этой страницы', type: 'danger'})
+      this.$router.replace('/')
+    }
   }
 
 }
@@ -195,6 +209,8 @@ export default {
       display: flex;
       justify-content: space-between;
       margin-bottom: 10px;
+      gap: 30px;
+
       .info {
         display: flex;
         align-items: center;
@@ -226,9 +242,36 @@ export default {
 
     .menu {
       display: flex;
-      width: 100%;
       gap: 10px;
-      margin-top: 10px;
+      margin-left: auto;
+
+
+      span {
+        cursor: pointer;
+        color: #B3B4C9;
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: .3s ease;
+
+        svg {
+          path {
+            background-color: #70718c;
+            stroke: #70718c;
+          }
+        }
+
+        &:hover {
+          color: #191B2A;
+        }
+      }
+
+
+
 
       button:nth-child(3) {
         margin-left: auto;

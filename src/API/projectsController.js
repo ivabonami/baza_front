@@ -59,13 +59,7 @@ export function addProject(project) {
         'Authorization': `Bearer ${userStore.token}`
     };
 
-    axios.post(`${api.url}projects`, project, {headers})
-        .then(result => {
-            addNotice({name: 'Проект успешно добавлен', type: 'success'})
-        })
-        .catch(error => {
-            addNotice({name: 'Не удалось добавить проект', type: 'danger'})
-        })
+    return axios.post(`${api.url}projects`, project, {headers})
 }
 
 export function editProject(project) {
@@ -73,7 +67,7 @@ export function editProject(project) {
         'Authorization': `Bearer ${userStore.token}`
     };
 
-    axios.put(`${api.url}projects/${project.id}`, project, {headers})
+    return axios.put(`${api.url}projects/${project.id}`, project, {headers})
         .then(result => {
             addNotice({name: 'Проект успешно изменен', type: 'success'})
         })
@@ -145,12 +139,10 @@ export function disapproveProject(project) {
     };
     project.isReviewed = false
 
-    axios.put(`${api.url}projects/${project.id}`, project, {headers})
+    return axios.put(`${api.url}projects/${project.id}`, project, {headers})
         .then(result => {
             addNotice({name: 'Проект успешно снят с публикации', type: 'success'})
             projects.splice(projects.findIndex(project),1 )
         })
-        .catch(error => {
-            addNotice({name: 'Не удалось изменить проект', type: 'danger'})
-        })
+
 }

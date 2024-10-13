@@ -163,7 +163,9 @@ p {
 .projects-menu_categories {
   display: flex;
   gap: 20px;
-  width: 95%;
+  width: 100%;
+  overflow: scroll auto;
+  padding-bottom: 5px;
 
 
   .projects-menu_categories_category {

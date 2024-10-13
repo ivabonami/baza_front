@@ -53,7 +53,10 @@ export default {
 @import "@/assets/categories.scss";
 
 .projects-menu {
-
+  width: 90%;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box;
 
 
 }

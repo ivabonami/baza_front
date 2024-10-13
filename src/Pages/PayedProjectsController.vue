@@ -41,7 +41,7 @@
     <div class="projects">
 
         <div class="project-placeholder" v-for="placeholder of placeholders.categoryPlaceholders">
-          <ThePlaceholder :placeholder="placeholder"
+          <ThePlaceholder :placeholder="placeholder" style="min-height: 400px"
 
 
           />
@@ -61,7 +61,7 @@ import {categories} from "@/Stores/categories.js";
 import ThePlaceholder from "@/components/Layout/Project/ThePlaceholder.vue";
 import buttonBlack from "@/components/Buttons/ButtonBlack.vue";
 import {popup} from "@/js/controllers/popupController.js";
-
+import {userStore} from "@/Stores/userStore.js";
 export default {
   name: "PayedProjectsController",
   data() {
@@ -105,6 +105,8 @@ export default {
               message = 'Нет заглушек для главной страницы'
             } else if (error.response.data.message === 'No Placeholders found for specified category') {
               message = 'Нет заглушек для этой категории'
+            }else if (error.response.data.message === 'Provide token in Authorization header') {
+              message = 'У вас нет прав на просмотр этой страницы'
             } else {
               message = error.response.data.message
             }
@@ -116,7 +118,13 @@ export default {
   },
 
   mounted() {
-    this.onGetPlaceholders()
+
+    if (userStore.role !== 'admin') {
+      addNotice({name: 'У вас нет прав для просмотра этой страницы', type: 'danger'})
+      this.$router.replace('/')
+    } else {
+      this.onGetPlaceholders()
+    }
 
   }
 
@@ -140,6 +148,7 @@ export default {
     justify-content: center;
 
     .stats-count {
+      font-size: 14px;
       display: block;
       width: 100%;
     }
@@ -148,10 +157,13 @@ export default {
   .selectCategory {
     display: flex;
     justify-content: space-around;
-    padding: 0 20px;
+    padding: 10px;
     border-radius: 44.5px;
+    box-sizing: border-box;
     background: #FFF;
     box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
+    gap: 20px;
+    overflow: scroll hidden;
 
     .category {
       cursor: pointer;
@@ -159,16 +171,16 @@ export default {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      margin-top: 20px;
-      margin-bottom: 20px;
       transition: .3s ease;
+      gap: 5px;
 
       span {
         color: #B3B4C9;
         font-size: 14px;
         font-style: normal;
         font-weight: 400;
-        line-height: normal;
+        line-height: 1;
+        white-space: nowrap;
         cursor: pointer;
         transition: 0.3s ease;
         text-align: center;
@@ -205,6 +217,7 @@ export default {
       gap: 20px;
       overflow-y: hidden;
       overflow-x: scroll;
+
     }
     .stats {
       width: 100%;

@@ -1,5 +1,5 @@
 <template>
-  <button class="button secondary" :disabled="props.disabled">
+  <button class="button secondary" :disabled="props.disabled" @click="$emit('buttonPressed', true)">
     <slot />
   </button>
 </template>

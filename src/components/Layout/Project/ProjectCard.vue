@@ -180,15 +180,15 @@ export default {
       if (projects.find(item => item.id === id)) {
         project = projects.find(item => item.id === id)
       } else {
-        project = projects.find(item => item.project.id === id)
+        project = projects.find(item => item.project.id === id).project
       }
-
       project.favorite === 0 ? project.favorite = 1 : project.favorite = 0
 
       if (project.favorite === 1) {
         addFavorite(id, name).then((result) => result)
 
       } else {
+        console.log(project.favorite)
         removeFavorite(id, name).then(() => project.favorite = 0)
       }
 
@@ -249,6 +249,7 @@ export default {
   }
 
   .project {
+
     padding: 10px 10px 50px 10px;
     width: 100%;
     box-sizing: border-box;

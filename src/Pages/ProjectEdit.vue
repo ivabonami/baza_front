@@ -210,6 +210,14 @@ export default {
         this.project.categoryIds.push(categoryId.id)
       }
 
+      if (userStore.username !== this.project.userData.username) {
+        if (userStore.role !== 'admin') {
+          addNotice({name: 'У вас нет прав для просмотра этой страницы', type: 'danger'})
+          this.$router.replace('/')
+        }
+
+      }
+
       this.loading = false
     })
   }

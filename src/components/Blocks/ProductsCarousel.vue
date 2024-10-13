@@ -33,11 +33,10 @@
             :class="colClass"
             v-for="(item, index) in productsStore.products"
             v-show="index < visibleItems"
-            :key="index"
+            :key="item"
             class="products-carousel_items_item">
           <div ref="sliderItem">
             <ProductCard
-
                 :item="item"
 
             >
@@ -185,7 +184,7 @@ export default {
         const product = productsStore.products.shift()
         productsStore.products.push(product)
         this.resetTranslate()
-        this.$refs.sliderItem[0].style.display = "flex"
+        this.$refs.sliderItem[0].style.display = null
       })
 
     },
@@ -203,7 +202,7 @@ export default {
         const product = productsStore.products.pop()
         productsStore.products.unshift(product)
         this.resetTranslate()
-        this.$refs.sliderItem[4].style.display = "flex"
+        this.$refs.sliderItem[4].style.display = null
       })
     },
 

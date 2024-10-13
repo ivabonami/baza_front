@@ -14,19 +14,6 @@
       >
       </project-link-item>
     </div>
-    <div class="buttons-group">
-
-      <ButtonSecondary
-          style="margin-top: 10px;"
-          :disabled="loading"
-          @click.stop
-          @click="closePopup()">
-        <div class="button-content">
-          Закрыть окно
-        </div>
-      </ButtonSecondary>
-
-    </div>
 
 
   </div>

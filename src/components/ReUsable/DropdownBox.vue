@@ -9,6 +9,7 @@ export default {
   name: "DropdownBox.vue",
   props: {
     selector: null,
+    name: null
   },
   data() {
     return {}
@@ -18,9 +19,13 @@ export default {
 
   methods: {
     clickOutside(e) {
-      if (this.$refs.dropdown !== undefined && !this.$refs.dropdown.contains(e.target) && e.target.dataset.dropdown !== this.$props.selector) {
-        this.$emit('closeDropdown', true)
-        this.closeDropDown()
+      if (this.$refs.dropdown !== undefined || e.target.dataset.dropdown !== this.$props.selector) {
+        if (this.$refs.dropdown.contains(e.target)) {
+          console.log(true)
+          this.$emit('closeDropdown', true)
+          this.closeDropDown()
+        }
+
       }
 
     },

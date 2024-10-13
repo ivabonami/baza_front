@@ -36,15 +36,6 @@
           Удалить
         </div>
       </button-primary>
-      <ButtonSecondary
-          style="margin-top: 10px;"
-          :disabled="loading"
-          @click.stop
-          @click="closePopup()">
-        <div class="button-content">
-          Закрыть
-        </div>
-      </ButtonSecondary>
 
     </div>
 

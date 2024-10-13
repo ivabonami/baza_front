@@ -60,7 +60,14 @@ export function addCategory(name, front) {
         'Authorization': `Bearer ${userStore.token}`
     };
 
-    return axios.post(`${api.url}categories/`, {name: name, allowShopfront: front}, {headers}).then(result => getCategories())
+    return axios.post(`${api.url}categories/`, {name: name, allowShopfront: front}, {headers})
+        .then(() => {
+            getCategories()
+            addNotice({name: 'Категория успешно добавлена', type: 'success'})
+        })
+        .catch(() => {
+            addNotice({name: 'Не удалось добавить категорию', type: 'danger'})
+        })
 }
 
 export function deleteCategory(id) {

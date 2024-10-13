@@ -46,6 +46,7 @@ import EditProduct from "@/components/popups/EditProduct.vue";
 import AddProduct from "@/components/popups/AddProduct.vue";
 import EditLink from "@/components/popups/EditLink.vue";
 import DeleteLink from "@/components/popups/DeleteLink.vue";
+import DeleteCategory from "@/components/popups/DeleteCategory.vue";
 
 
 export default {
@@ -56,6 +57,7 @@ export default {
     AddPlaceholders,
     AddReview,
     ApproveReview,
+    DeleteCategory,
     DeletePlaceholder,
     DeleteProject,
     DeleteReview,

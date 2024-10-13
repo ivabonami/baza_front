@@ -52,11 +52,11 @@
         </span>
       </button-black>
 
-      <dropdownBox  v-if="dropdown.show === true && userStore.role === 'admin'"
+      <dropdownBox v-if="dropdown.show === true && userStore.role === 'admin'"
                    :selector="'dropdown'"
-                   @closeDropdown="dropdown.show = false"
+                   @closeDropdown=""
       >
-        <AdminMenu v-if="userStore.role === 'admin'" :admin-menu="adminMenu" @close="dropdown.show = false"/>
+        <AdminMenu v-if="userStore.role === 'admin'" :admin-menu="adminMenu"  @close="dropdown.show = false"/>
       </dropdownBox>
 
     </div>
@@ -141,6 +141,15 @@ export default {
     flex-basis: 130px;
     svg {
       width: 100%;
+    }
+    a {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+    img {
+      height: 100%;
     }
   }
   .search {

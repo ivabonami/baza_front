@@ -13,7 +13,10 @@
             <br />
             <span data-dropdown="exchangerFrom" class="value"> {{ currentSelectedCurrencyFrom.rate || 'Введите количество' }} </span>
           </p>
-          <div class="icon" v-if="icons.find(item => item.name === currentSelectedCurrencyFrom.name.toLowerCase())">
+          <div class="icon"
+               :style="`background-color: ${currentSelectedCurrencyFrom.color || 'gray'}`"
+               >
+
             <img :src="setIcon(currentSelectedCurrencyFrom.name)" alt="">
           </div>
 
@@ -31,15 +34,14 @@
 
             </div>
             <div class="coins-rates"
-                 :class="{selected: currentSelectedCurrencyFrom.name === name}"
+                 :class="{selected: currentSelectedCurrencyFrom.name === coin.name}"
                  @click="() => {
-                   changeSelectedCurrencyFrom(name)
-                   changeDropdownState(dropdownTo)
+                   changeSelectedCurrencyFrom(coin)
                  }"
-                 v-for="(name) of currencyRates.coinsFrom"
-                 :key="name"
+                 v-for="(coin) of currencyRates.coinsFrom"
+                 :key="coin.name"
             >
-              <span>{{ name }}</span>
+              <span>{{ coin.name }}</span>
 
               <svg width="18" height="13" viewBox="0 0 18 13" fill="none" xmlns="http://www.w3.org/2000/svg" v-show="currentSelectedCurrencyFrom.name === name">
                 <path d="M17 1L6 12L1 7" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -49,10 +51,12 @@
           </dropdown-box>
         </div>
 
+        <div class="swap" @click="changeCoins()">
+          <svg class="swapIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M20 17H4M4 17L8 13M4 17L8 21M4 7H20M20 7L16 3M20 7L16 11" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
 
-        <svg class="swapIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M20 17H4M4 17L8 13M4 17L8 21M4 7H20M20 7L16 3M20 7L16 11" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
 
         <div class="currency-to" @click="changeDropdownState(dropdownFrom, dropdownTo.show)" data-dropdown="exchangerTo">
           <svg class="arrow" data-dropdown="exchangerTo" :class="{up: this.dropdownFrom.show}" xmlns="http://www.w3.org/2000/svg" width="13" height="7" viewBox="0 0 13 7" fill="none">
@@ -71,8 +75,9 @@
 
           </p>
 
-          <div class="icon" v-if="currentSelectedCurrency.name">
-            <img :src="setIcon(currentSelectedCurrency.name)" alt="">
+          <div class="icon" v-if="currentSelectedCurrency.name" :style="`background-color: ${currentSelectedCurrency.color}`" >
+
+            <img :src="setIcon(currentSelectedCurrency.name, true)" alt="">
           </div>
 
           <dropdown-box v-if="dropdownFrom.show === true && !loading"
@@ -92,7 +97,6 @@
                  :class="{selected: currentSelectedCurrency.name === name}"
                  @click="() => {
                   changeSelectedCurrencyTo(rate, name)
-                  changeDropdownState(dropdownFrom, dropdownFrom.show)
                 }"
                  v-for="(rate, name) of currencyRates.rates[0]"
                  :key="name"
@@ -160,21 +164,21 @@ export default {
   data() {
     return {
       icons: [
-        {name: 'rub', icon: rub},
-        {name: 'btc', icon: btc},
-        {name: 'usd', icon: usd},
-        {name: 'usdt', icon: usdt},
-        {name: 'ltc', icon: ltc},
-        {name: 'eth', icon: eth},
-        {name: 'trx', icon: trx},
-        {name: 'bnb', icon: bnb},
-        {name: 'eur', icon: eur},
-        {name: 'jpy', icon: jpy},
-        {name: 'gbp', icon: gbp},
-        {name: 'aud', icon: aud},
-        {name: 'cad', icon: cad},
-        {name: 'cny', icon: cny},
-        {name: 'doge', icon: doge},
+        {name: 'rub', icon: rub, color: 'orange'},
+        {name: 'btc', icon: btc, color: 'orange'},
+        {name: 'usd', icon: usd, color: 'green'},
+        {name: 'usdt', icon: usdt, color: 'green'},
+        {name: 'ltc', icon: ltc, color: 'gray'},
+        {name: 'eth', icon: eth, color: 'skyblue'},
+        {name: 'trx', icon: trx, color: 'red'},
+        {name: 'bnb', icon: bnb, color: 'yellow'},
+        {name: 'eur', icon: eur, color: 'yellow'},
+        {name: 'jpy', icon: jpy, color: 'blue'},
+        {name: 'gbp', icon: gbp, color: 'violet'},
+        {name: 'aud', icon: aud, color: 'lightblue'},
+        {name: 'cad', icon: cad, color: 'red'},
+        {name: 'cny', icon: cny, color: '#7773FB'},
+        {name: 'doge', icon: doge, color: 'orange'},
 
       ],
       coinValue: 1,
@@ -191,7 +195,8 @@ export default {
       currentSelectedCurrency: {},
       currentSelectedCurrencyFrom: {
         name: 'RUB',
-        rate: 5000
+        rate: 5000,
+        color: 'orange'
       },
       currencyRates,
       coinName: ''
@@ -214,9 +219,18 @@ export default {
       this.currentSelectedCurrency.rate = rate
     },
 
-    changeSelectedCurrencyFrom(name) {
-      this.currentSelectedCurrencyFrom.name = name
+    changeSelectedCurrencyFrom(coin) {
+      this.currentSelectedCurrencyFrom.name = coin.name
+      this.currentSelectedCurrencyFrom.color = coin.color
       this.getRate()
+    },
+    changeCoins() {
+      let coinFrom = this.currentSelectedCurrencyFrom.name
+      this.currentSelectedCurrencyFrom.name = this.currentSelectedCurrency.name
+
+      this.changeSelectedCurrencyFrom(this.currentSelectedCurrencyFrom.name)
+      this.changeSelectedCurrencyTo(6000, coinFrom)
+
     },
 
     callModal(settings) {
@@ -224,13 +238,23 @@ export default {
         popup[option] = settings[option]
       }
     },
-    setIcon(name){
+    setIcon(coin, colors){
+      if (coin) {
+        if (this.icons.find(item => item.name === coin.toLowerCase())) {
 
-      if (this.icons.find(item => item.name === name.toLowerCase())) {
-        return this.icons.find(item => item.name === name.toLowerCase()).icon
-      } else {
-        return usdt
+
+          if (colors) {
+            this.icons.find(item => item.name === this.currentSelectedCurrency.name.toLowerCase()).color ?
+                this.currentSelectedCurrency.color = this.icons.find(item => item.name === this.currentSelectedCurrency.name.toLowerCase()).color :
+                this.currentSelectedCurrency.color = 'gray'
+          }
+          console.log(this.currentSelectedCurrency)
+          return this.icons.find(item => item.name === coin.toLowerCase()).icon
+        } else {
+          return usd
+        }
       }
+
 
     },
     getRate() {
@@ -241,7 +265,6 @@ export default {
           .then(result => {
             currencyRates.rates.push(result.data.rates.data.rates)
             const currency = this.currentSelectedCurrency.name || 'BTC'
-
             this.changeSelectedCurrencyTo(currencyRates.rates[0][currency], currency)
             this.loading = false
           })
@@ -373,6 +396,9 @@ export default {
           stroke: #B3B4C9;
         }
       }
+      .swap {
+        cursor: pointer;
+      }
 
       .currency-from, .currency-to {
         border-radius: 30px;
@@ -480,6 +506,7 @@ export default {
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 5px;
+      border-radius: 10px;
 
 
       .exchanger-box_currency {

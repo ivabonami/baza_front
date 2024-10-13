@@ -71,10 +71,10 @@
         <input-links @dataChanged="emit => project.links.push(emit)"/>
       </div>
       <div class="links">
+
         <project-link-item :data="link"
                            v-for="(link, index) of project.links"
                            :key="link"
-                           v-show="index < 2"
         >
         </project-link-item>
       </div>
@@ -123,7 +123,7 @@ export default {
         avatarFilePath: null,
         bannerFilePath: null,
         links: []
-      }
+      },
     }
   },
 
@@ -143,7 +143,7 @@ export default {
         addNotice({name: 'Имя проекта должно быть больше 3х символов', type: 'warning'})
         this.error = true
       }
-      if (!this.project.name || this.project.description.length < 15) {
+      if (!this.project.description || this.project.description.length < 15) {
         addNotice({name: 'Описание проекта должно быть больше 15и символов', type: 'warning'})
         this.error = true
       }
@@ -161,8 +161,11 @@ export default {
       }
 
       if (!this.error) {
-        addProject(this.project)
-        this.$router.replace('/')
+        addProject(this.project).then(() => {
+          addNotice({name: 'Проект успешно добавлен, ожидайте модерацию', type: 'success'})
+          this.$router.go(-1)
+        })
+
       }
 
     }

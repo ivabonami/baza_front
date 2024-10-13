@@ -25,7 +25,7 @@ export default {
     }
   },
   watch: {
-    data: function () {
+    inputDataProp: function () {
       this.inputData = this.$props.inputDataProp
     }
   },
