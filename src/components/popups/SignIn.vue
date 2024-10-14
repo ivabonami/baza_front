@@ -32,7 +32,7 @@
             onSubmit(data)
           }">
           <TheLoader v-if="loading"/>
-          <span>Войти</span>
+          <span class="button-content">Войти</span>
         </ButtonPrimary>
 
         <ButtonSecondary
@@ -40,7 +40,7 @@
             :disabled="loading"
             @click.stop
             @click="$emit('changeState', 'SignUp')">
-          <span>Уже зарегистрированы?</span>
+          <span class="button-content">Нет аккаунта?</span>
         </ButtonSecondary>
 
 

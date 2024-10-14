@@ -13,7 +13,9 @@
       </svg>
     </div>
     <div class="search" v-if="showSearch">
-      <input-search />
+      <input-search @closeSearch="() => {
+        closeSearch()
+      }" />
     </div>
   </div>
 </template>

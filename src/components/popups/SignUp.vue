@@ -45,7 +45,7 @@
             :disabled="loading"
             @click.stop
             @click="$emit('changeState', 'SignIn')">
-          <span>Уже зарегистрированы?</span>
+          <span>Есть аккаунт?</span>
         </ButtonSecondary>
 
 

@@ -49,6 +49,7 @@ export default {
 <style scoped lang="scss">
 
 .auth-header {
+  padding-top: 40px;
   border-radius: 8px;
   background: #7773FB;
   display: flex;

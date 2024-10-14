@@ -240,8 +240,15 @@ export default {
           })
     }
   },
+  watch: {
+    '$route': function () {
+      this.onGetProject(this.$route.path.replace('/project/', ''))
+    }
+  },
   mounted() {
+
     this.onGetProject(this.$route.path.replace('/project/', ''))
+
 
   },
   beforeUnmount() {

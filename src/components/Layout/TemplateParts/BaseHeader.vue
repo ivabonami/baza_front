@@ -6,7 +6,7 @@
       </router-link>
     </div>
     <div class="search">
-      <the-search @searchOpen="hideMenu = !hideMenu"/>
+      <the-search @searchOpen="hideMenu = false"/>
     </div>
     <div class="menu" v-if="!hideMenu">
       <menu-header />

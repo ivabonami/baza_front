@@ -41,40 +41,47 @@
 
     </div>
 
-    <div class="dropdownSearchItems" data-dropdown="dropdownSearch" v-if="liveResults.length > 0 && showLiveResults">
-      <a class="item" data-dropdown="dropdownSearch"
+    <div class="dropdownSearchItems" @click="closeDropdown()" data-dropdown="dropdownSearch" v-if="liveResults.length > 0 && showLiveResults">
+      <div class="item" data-dropdown="dropdownSearch"
                    @click="() =>  {
                      search.query = ''
                      this.showLiveResults = false
                      this.showSearch = false
                      startSearch(1000)
+
                    }"
                    :style="item.style"
-                   :href="`/project/` + item.id"
+
                    v-for="item of liveResults"
                    :key="item"
       >
+        <router-link :to="`/project/` + item.project.id" v-if="!item.type && item.project">
+          <div class="project" data-dropdown="dropdownSearch">
+            <div class="avatar" data-dropdown="dropdownSearch">
+              <img :src="api.url + item.project.avatarFilePath" alt="" data-dropdown="dropdownSearch">
+            </div>
+            <div class="info" data-dropdown="dropdownSearch">
+              <div class="name" data-dropdown="dropdownSearch">{{item.project.name}}</div>
+              <div class="description" data-dropdown="dropdownSearch">{{item.project.description}}</div>
+            </div>
+          </div>
+        </router-link>
 
-        <div class="project"  v-if="!item.type && item.project">
-          <div class="avatar" data-dropdown="dropdownSearch">
-            <img :src="api.url + item.project.avatarFilePath" alt="" data-dropdown="dropdownSearch">
+        <router-link :to="`/project/` + item.id" v-if="item.type" >
+          <div class="project" data-dropdown="dropdownSearch" >
+            <div class="avatar" data-dropdown="dropdownSearch">
+              <img :src="api.url + item.avatarFilePath" alt="" data-dropdown="dropdownSearch">
+            </div>
+            <div class="info" data-dropdown="dropdownSearch">
+              <div class="name" data-dropdown="dropdownSearch">{{item.name}}</div>
+              <div class="description" data-dropdown="dropdownSearch">{{item.description}}</div>
+            </div>
           </div>
-          <div class="info" data-dropdown="dropdownSearch">
-            <div class="name" data-dropdown="dropdownSearch">{{item.project.name}}</div>
-            <div class="description" data-dropdown="dropdownSearch">{{item.project.description}}</div>
-          </div>
-        </div>
-        <div class="project" v-if="item.type">
-          <div class="avatar" data-dropdown="dropdownSearch">
-            <img :src="api.url + item.avatarFilePath" alt="" data-dropdown="dropdownSearch">
-          </div>
-          <div class="info" data-dropdown="dropdownSearch">
-            <div class="name" data-dropdown="dropdownSearch">{{item.name}}</div>
-            <div class="description" data-dropdown="dropdownSearch">{{item.description}}</div>
-          </div>
-        </div>
+        </router-link>
 
-      </a>
+
+
+      </div>
     </div>
     <div class="dropdownSearchItems" data-dropdown="dropdownSearch" v-else-if="liveResults.length <= 0 && showLiveResults && !noResults && search.query.length > 0">
       <the-loader />
@@ -125,6 +132,7 @@ export default {
   },
 
   methods: {
+
     startSearch(timer) {
       this.noResults = false
       if (this.searchTimeoutId) clearTimeout(this.searchTimeoutId)
@@ -172,7 +180,9 @@ export default {
 
     },
     closeDropdown() {
+      this.$emit('closeSearch', true)
       this.showSearch = false
+      this.showLiveResults  = false
     },
   },
 

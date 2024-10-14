@@ -33,7 +33,7 @@
                 dropdownTo.show = false
               }" placeholder="Количество" class="search-coin" type="number" ref="coinSearch" v-model="exchangeCoins.from.rate">
               <svg data-dropdown="exchangerFrom"
-                   @click=""
+                   @click="exchangeCoins.from.rate = ''"
                    width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11 1L1 11M1 1L11 11" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -153,6 +153,7 @@ import buttonBlack from "@/components/Buttons/ButtonBlack.vue";
 import {popup} from "@/js/controllers/popupController.js";
 import {currencyRates} from "@/Stores/currencyRates.js";
 import usd from '@/assets/currencies-icons/usd.svg'
+import rub from '@/assets/currencies-icons/rub.svg'
 
 
 export default {
@@ -174,7 +175,7 @@ export default {
         from: {
           name: 'rub',
           rate: 5000,
-          icon: usd,
+          icon: rub,
           color: 'orange'
         },
         to: {

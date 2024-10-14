@@ -6,20 +6,25 @@
       </video>
     </a>
     <a class="payed-banner" href="https://t.me/kremlintop" target="_blank"><img data-v-ca4db2f6=""
-                                                                                                   :src="banner1"
-                                                                                                   alt=""></a>
+                                                                                :src="banner1"
+                                                                                alt=""></a>
+
+    <a class="payed-banner" href="https://kra8.cc/shop/catalog/1da1b4bd-647f-4536-936e-b95c5cf4e681/" target="_blank"><img data-v-ca4db2f6=""
+                                                                                :src="banner3"
+                                                                                alt=""></a>
   </div>
 </template>
 
 <script>
 import banner1 from '@/assets/payed_banners/design_ads-C3hEbYrH.gif'
 import banner2 from '@/assets/payed_banners/BitMafia x MixMafiaCROP-CXmqE8dO.webm'
+import banner3 from '@/assets/payed_banners/IMG-3083-DU_WZax1.gif'
 export default {
   name: "PayedBanners.vue",
   data() {
     return {
       banner1,
-      banner2
+      banner2,banner3
     }
   },
 
