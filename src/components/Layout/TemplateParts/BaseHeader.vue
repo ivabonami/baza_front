@@ -77,7 +77,7 @@
       </div>
 
       <button-black
-          style="height: 100%; width: 50px;"
+          style="height: 100%;"
           @buttonPressed="dropdown.show = !dropdown.show"
           data-dropdown="dropdown"
           :type="'button'"
@@ -240,6 +240,7 @@ export default {
   display: flex;
   position: relative;
   gap: 10px;
+  height: 50px;
 
 }
 @media screen and (max-width: 768px){

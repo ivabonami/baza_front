@@ -161,7 +161,7 @@ p {
   display: flex;
   gap: 20px;
   width: 100%;
-  overflow: scroll auto;
+  overflow: auto hidden;
   padding-bottom: 5px;
 }
 .projects-menu_categories .projects-menu_categories_category {

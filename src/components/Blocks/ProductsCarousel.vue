@@ -172,7 +172,9 @@ export default {
     },
     next() {
       this.carousel.wrapperWidth = this.$refs.carouselItemsWrapper.scrollWidth
-      this.carousel.slideStep = this.$refs.sliderItem[3].scrollWidth + 20
+      this.carousel.slideStep <= 0 ? this.carousel.slideStep = this.$refs.sliderItem[3].clientWidth + 20 : this.carousel.slideSte
+
+      console.log(this.carousel.slideStep)
       this.$refs.sliderItem[0].style.display = "none"
 
       this.carousel.styles = {
@@ -190,7 +192,7 @@ export default {
     },
     prev() {
       this.carousel.wrapperWidth = this.$refs.carouselItemsWrapper.scrollWidth
-      this.carousel.slideStep = this.$refs.sliderItem[1].scrollWidth + 20
+      this.carousel.slideStep <= 0 ? this.carousel.slideStep = this.$refs.sliderItem[3].clientWidth + 20 : this.carousel.slideSte
       this.$refs.sliderItem[4].style.display = "none"
 
       this.carousel.styles = {
@@ -215,9 +217,8 @@ export default {
     },
 
     resetTranslate () {
-      this.carousel.slideStep = 0
       this.carousel.styles = {
-        transform: `translateX(${this.carousel.slideStep}px)`,
+        transform: `translateX(${0}px)`,
         transition: `none`
       }
     },
@@ -267,8 +268,10 @@ export default {
         this.visibleItems = 2
         this.colClass = 'col-2'
       }
+    },
+    setStep() {
+      this.carousel.slideStep = this.$refs.sliderItem[3].clientWidth + 20
     }
-
   },
   mounted() {
     this.collectProducts()
@@ -276,7 +279,11 @@ export default {
     window.addEventListener("resize", e => this.setVisibleItems(e.target.innerWidth));
     this.setVisibleItems(window.innerWidth)
   },
+  updated() {
+    window.addEventListener('resize', this.setStep)
+  },
   beforeUnmount() {
+    window.addEventListener('resize', this.setStep)
     window.removeEventListener("resize", e => this.setVisibleItems(e.target.innerWidth));
     productsStore.products.splice(0, productsStore.products.length)
   }
