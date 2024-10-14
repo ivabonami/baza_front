@@ -475,7 +475,7 @@ export default {
         width: 90%;
       }
       .project_name {
-        width: 70%;
+        width: 85%;
         margin-top: 5px;
       }
       .project_links {

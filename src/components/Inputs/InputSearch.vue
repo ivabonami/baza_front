@@ -42,7 +42,7 @@
     </div>
 
     <div class="dropdownSearchItems" data-dropdown="dropdownSearch" v-if="liveResults.length > 0 && showLiveResults">
-      <router-link class="item" data-dropdown="dropdownSearch"
+      <a class="item" data-dropdown="dropdownSearch"
                    @click="() =>  {
                      search.query = ''
                      this.showLiveResults = false
@@ -50,7 +50,7 @@
                      startSearch(1000)
                    }"
                    :style="item.style"
-                   :to="`/project/` + item.id"
+                   :href="`/project/` + item.id"
                    v-for="item of liveResults"
                    :key="item"
       >
@@ -74,7 +74,7 @@
           </div>
         </div>
 
-      </router-link>
+      </a>
     </div>
     <div class="dropdownSearchItems" data-dropdown="dropdownSearch" v-else-if="liveResults.length <= 0 && showLiveResults && !noResults && search.query.length > 0">
       <the-loader />

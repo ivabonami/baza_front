@@ -66,7 +66,7 @@
           style="margin-top: 10px;"
           :disabled="loading"
           @click.stop
-          @click="$emit('changeState', 'ProductInfo')">
+          @click="closePopup()">
         <div class="button-content">
           <span>Отмена</span>
         </div>
@@ -169,5 +169,22 @@ export default {
 }
 .h30 {
   height: 50px;
+}
+
+@media screen and (max-width: 500px){
+  .placeholder-add {
+    flex-wrap: wrap;
+    max-height: 60vh;
+    overflow: hidden auto;
+    .image {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .edit {
+      width: 100%;
+    }
+  }
 }
 </style>

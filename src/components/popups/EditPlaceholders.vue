@@ -127,6 +127,7 @@ export default {
             this.loading = false
 
             placeholders.categoryPlaceholders.find(item => item.id === popup.placeholder.id).text = this.placeholder.placeholdersParams.text
+            placeholders.categoryPlaceholders.find(item => item.id === popup.placeholder.id).style = this.placeholder.placeholdersParams.style
 
             popup.show = false
 

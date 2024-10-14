@@ -338,6 +338,12 @@ export default {
     width: 100%;
   }
   .project-form {
+    .exchanger-data {
+      flex-wrap: wrap;
+      .exchanger-input {
+        width: 100%;
+      }
+    }
     .add-links {
       flex-wrap: wrap;
 

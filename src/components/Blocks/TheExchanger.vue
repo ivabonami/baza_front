@@ -487,6 +487,7 @@ export default {
   .button-text {
     width: 100%;
   }
+
   .exchanger-box {
     margin-bottom: 10px;
 
@@ -505,7 +506,7 @@ export default {
         }
 
         .currency-from, .currency-to {
-          width: 50%;
+          width: 100%;
           padding: 2px 5px;
 
           .value {

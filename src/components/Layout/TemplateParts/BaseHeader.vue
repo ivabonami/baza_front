@@ -35,7 +35,7 @@
       </div>
 
       <button-black
-          style="height: 100%; width: 50px;"
+          style="height: 100%;"
           :type="'button'"
           @buttonPressed="callModal({
             show: !popup.show,
@@ -174,6 +174,8 @@ export default {
 }
 .mobileMenu {
   width: 60px;
+  height: 100%;
+
 
 }
 .mobileMenuIcon {
@@ -216,7 +218,8 @@ export default {
 
   }
   .auth {
-    align-items: end;
+    align-items: center;
+    height: 40px;
     display: flex;
   }
 }
@@ -228,9 +231,21 @@ export default {
   .mobileMenu {
     display: block;
   }
+  .auth {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
   .header {
     .menu {
       display: none;
+    }
+  }
+  .items {
+    padding: 10px;
+
+    ul {
+      gap: 10px;
     }
   }
 
@@ -250,7 +265,7 @@ export default {
     }
   }
   .header .logo {
-    flex-basis: 250px;
+    flex-basis: 500px;
     img {
       width: 100%;
     }
