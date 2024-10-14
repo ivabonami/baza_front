@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import {ref, watch} from 'vue'
+import {reactive, ref, watch} from 'vue'
 import ProductCard from "@/components/Layout/Product/ProductCard.vue";
 import TheLoader from "@/components/ReUsable/TheLoader.vue";
 import {productsStore} from "@/Stores/productsStore.js";
@@ -172,7 +172,7 @@ export default {
     },
     next() {
       this.carousel.wrapperWidth = this.$refs.carouselItemsWrapper.scrollWidth
-      this.carousel.slideStep = this.$refs.sliderItem[1].scrollWidth + 20
+      this.carousel.slideStep = this.$refs.sliderItem[3].scrollWidth + 20
       this.$refs.sliderItem[0].style.display = "none"
 
       this.carousel.styles = {
@@ -227,7 +227,6 @@ export default {
       this.loading = true
       this.loadingError = false
 
-
       productsStore.products.splice(0, productsStore.products.length)
 
       if (Object.keys(productsStore.products).length <= 0) {
@@ -236,6 +235,8 @@ export default {
           for (const item of result.data.products) {
             productsStore.products.push(item)
           }
+
+          console.log(reactive(this.$refs.sliderItem))
           this.loading = false
           this.loadingError = false
 

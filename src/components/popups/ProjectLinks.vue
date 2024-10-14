@@ -9,7 +9,6 @@
       <project-link-item :data="link"
                          v-for="(link, index) of popup.project.links"
                          :key="link"
-                         v-show="index < 2"
                          @click.stop
       >
       </project-link-item>

@@ -1,12 +1,12 @@
 <template>
-  <div class="menu-items">
-    <router-link :to="item.link" class="menu-items-item"
+  <div class="menu-items" data-dropdown="dropdownAdmin">
+    <router-link data-dropdown="dropdownAdmin" :to="item.link" class="menu-items-item"
          v-for="item of adminMenu"
                  active-class="active"
                  v-show="userStore.role === 'admin'"
                  @click="$emit('close', true)"
     >
-      <inline-svg :src="item.icon" class="categoryIcon" />
+      <inline-svg data-dropdown="dropdownAdmin" :src="item.icon" class="categoryIcon" />
       {{ item.name }}
     </router-link>
   </div>

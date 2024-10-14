@@ -1,10 +1,10 @@
 <template>
-  <nav class="items">
-    <ul>
-      <li v-for="item of menuItems">
-        <router-link :to="item.href" :class="item.color">
-          <inline-svg class="menuIcon" v-if="item.icon" :src="item.icon" />
-          <span>{{ item.name }}</span>
+  <nav data-dropdown="dropdownMenu" class="items" >
+    <ul data-dropdown="dropdownMenu">
+      <li data-dropdown="dropdownMenu" v-for="item of menuItems" @click="$emit('closeDropdown', true)">
+        <router-link data-dropdown="dropdownMenu" :to="item.href" :class="item.color">
+          <inline-svg data-dropdown="dropdownMenu" class="menuIcon" v-if="item.icon" :src="item.icon" />
+          <span data-dropdown="dropdownMenu">{{ item.name }}</span>
         </router-link>
       </li>
     </ul>
@@ -76,5 +76,15 @@ export default {
     }
   }
 }
-
+@media screen and (max-width: 992px) {
+  .items {
+    max-width: 150px;
+    ul {
+      flex-wrap: wrap;
+      li {
+        width: 100%;
+      }
+    }
+  }
+}
 </style>

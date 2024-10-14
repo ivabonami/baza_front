@@ -417,4 +417,48 @@ export default {
     gap: 5px;
   }
 }
+
+@media screen and (max-width: 500px) {
+  .links-input-wrapper .link-input {
+    width: 100%;
+  }
+  .project-form {
+    .add-links {
+      flex-wrap: wrap;
+
+      .adder {
+        width: 100%;
+
+        .links-input-wrapper {
+          flex-wrap: wrap;
+          gap: 10px;
+          width: 100%;
+          height: auto;
+        }
+      }
+    }
+    .project-info {
+      flex-wrap: wrap;
+      width: 100%;
+      .project-avatar {
+        width: 100%;
+      }
+      .project-name-description {
+        width: 100%;
+      }
+    }
+    .project-categories {
+      .categories {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        .category {
+          .category-name {
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+}
 </style>

@@ -27,10 +27,9 @@ export default {
     normalizeLinkName(data) {
       let link;
 
-      if (data.name) {
+      if (data.link) {
         if (data.name === 'Зеркало' || data.name === 'Зеркало VPN') {
-          link = data.link.match(/^(?:.*\:\/?\/)?(?<domain>[\w\-\.]*)/i)[1].substring(0, data.link.lastIndexOf('.'))
-
+          data.link.match(/^(?:.*\:\/?\/)?(?<domain>[\w\-\.]*)/i) ? link = data.link.match(/^(?:.*\:\/?\/)?(?<domain>[\w\-\.]*)/i)[1].substring(0, data.link.lastIndexOf('.')) : link = this.$props.data.name
 
         } else {
           link = this.$props.data.name

@@ -2,7 +2,7 @@
 <div>
   <div>
     <DefaultHeader>
-      Добавить
+
     </DefaultHeader>
     <div class="placeholder-add">
       <div class="image">
@@ -14,7 +14,7 @@
         <input-text
             class="mb15 h30"
             :data="{
-                placeholder: 'Надпись',
+                placeholder: 'Название услуги/товара',
                 icon: nameIcon
               }"
             @keydown.enter="() => {
@@ -27,10 +27,7 @@
         <input-textarea
             style="height: 200px"
             class="mb15 h30"
-            :data="{
-                placeholder: 'Надпись',
-                icon: nameIcon
-              }"
+            :placeholder="'описание'"
             @keydown.enter="() => {
               this.loading = true
 

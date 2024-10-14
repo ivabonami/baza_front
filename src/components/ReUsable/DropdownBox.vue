@@ -19,13 +19,10 @@ export default {
 
   methods: {
     clickOutside(e) {
-      if (this.$refs.dropdown !== undefined || e.target.dataset.dropdown !== this.$props.selector) {
-        if (this.$refs.dropdown.contains(e.target)) {
-          console.log(true)
-          this.$emit('closeDropdown', true)
-          this.closeDropDown()
-        }
-
+      console.log(e.target.dataset.dropdown, this.$props.selector)
+      if (!e.target.dataset.dropdown || e.target.dataset.dropdown !== this.$props.selector) {
+        // console.log(e.target.dataset.dropdown, this.$props.selector)
+        this.closeDropDown()
       }
 
     },
@@ -33,12 +30,14 @@ export default {
     closeByEsc(e) {
       if (e.key === 'Escape') {
         this.$emit('closeDropdown', true)
+        removeEventListener('mousedown', this.clickOutside)
         removeEventListener('keydown', this.closeByEsc)
       }
     },
     closeDropDown() {
       this.$emit('closeDropdown', true)
       removeEventListener('mousedown', this.clickOutside)
+      removeEventListener('keydown', this.closeByEsc)
     }
   },
 

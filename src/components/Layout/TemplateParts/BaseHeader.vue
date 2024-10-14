@@ -11,8 +11,31 @@
     <div class="menu" v-if="!hideMenu">
       <menu-header />
     </div>
+
     <div class="auth" v-if="!userStore.username">
+
+      <div class="mobileMenu">
+        <button-black
+            :type="'button'"
+            style="height: 100%; width: 50px;"
+            @buttonPressed="mobileMenu.show = true"
+        >
+          <svg class="mobileMenuIcon" width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 7H13M1 1H19M1 13H19" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+
+        </button-black>
+
+        <dropdownBox v-if="mobileMenu.show === true"
+                     :selector="'dropdownMenu'"
+                     @closeDropdown="mobileMenu.show = false"
+        >
+          <menu-header @closeDropdown="mobileMenu.show = false"  />
+        </dropdownBox>
+      </div>
+
       <button-black
+          style="height: 100%; width: 50px;"
           :type="'button'"
           @buttonPressed="callModal({
             show: !popup.show,
@@ -33,7 +56,28 @@
     <div class="user-menu"
          v-else>
 
+      <div class="mobileMenu">
+        <button-black
+            :type="'button'"
+            style="height: 100%; width: 50px;"
+            @buttonPressed="mobileMenu.show = true"
+        >
+          <svg class="mobileMenuIcon" width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 7H13M1 1H19M1 13H19" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+
+        </button-black>
+
+        <dropdownBox v-if="mobileMenu.show === true"
+                     :selector="'dropdownMenu'"
+                     @closeDropdown="mobileMenu.show = false"
+        >
+          <menu-header @closeDropdown="mobileMenu.show = false"  />
+        </dropdownBox>
+      </div>
+
       <button-black
+          style="height: 100%; width: 50px;"
           @buttonPressed="dropdown.show = !dropdown.show"
           data-dropdown="dropdown"
           :type="'button'"
@@ -43,6 +87,7 @@
 
       <button-black
           :type="'button'"
+          style="height: 100%; width: 50px;"
           @buttonPressed="onSignOut()"
       >
         <span title="Выйти из аккаунта">
@@ -53,8 +98,8 @@
       </button-black>
 
       <dropdownBox v-if="dropdown.show === true && userStore.role === 'admin'"
-                   :selector="'dropdown'"
-                   @closeDropdown=""
+                   :selector="'dropdownAdmin'"
+                   @closeDropdown="dropdown.show = false"
       >
         <AdminMenu v-if="userStore.role === 'admin'" :admin-menu="adminMenu"  @close="dropdown.show = false"/>
       </dropdownBox>
@@ -86,6 +131,9 @@ export default {
   },
   data() {
     return {
+      mobileMenu: {
+        show: false
+      },
       logotype,
       popup,
       userStore,
@@ -122,6 +170,15 @@ export default {
   gap: 10px;
   span {
     font-weight: normal;
+  }
+}
+.mobileMenu {
+  width: 60px;
+
+}
+.mobileMenuIcon {
+  path {
+    stroke: #F8F7FC;
   }
 }
 .header {
@@ -163,8 +220,14 @@ export default {
     display: flex;
   }
 }
-
+.mobileMenu {
+  display: none;
+  position: relative;
+}
 @media screen and (max-width: 992px){
+  .mobileMenu {
+    display: block;
+  }
   .header {
     .menu {
       display: none;

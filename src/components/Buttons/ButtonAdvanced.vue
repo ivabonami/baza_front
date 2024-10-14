@@ -29,4 +29,10 @@
   }
 
 }
+
+@media screen and (max-width: 500px) {
+  .button {
+    width: 100%;
+  }
+}
 </style>

@@ -140,7 +140,8 @@ export default {
     border: 1px solid #D8D8D8;
     background: #fff;
     padding: 15px;
-    width: 100%;
+    width: fit-content;
+    min-width: 280px;
     max-width: 630px;
     top: 50%;
     left: 50%;

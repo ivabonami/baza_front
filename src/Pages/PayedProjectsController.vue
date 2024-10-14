@@ -41,7 +41,7 @@
     <div class="projects">
 
         <div class="project-placeholder" v-for="placeholder of placeholders.categoryPlaceholders">
-          <ThePlaceholder :placeholder="placeholder" style="min-height: 400px"
+          <ThePlaceholder :placeholder="placeholder" style="min-height: 100%"
 
 
           />
@@ -163,7 +163,7 @@ export default {
     background: #FFF;
     box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
     gap: 20px;
-    overflow: scroll hidden;
+    overflow: auto hidden;
 
     .category {
       cursor: pointer;
@@ -207,7 +207,7 @@ export default {
 
 
   .project-placeholder {
-    width: 24%;
+    width: 23%;
   }
 }
 

@@ -6,7 +6,7 @@
     </div>
     <div class="projects-nav">
       <ProjectsMenu />
-      <sort :sorts="projectsSortsStore" @sortChanged="(emit) => {
+      <sort :selector="'projectsSort'" :sorts="projectsSortsStore" @sortChanged="(emit) => {
         this.requestOptions.sort = emit.slug
         // this.projects.splice(0, this.projects.length)
         removeItems()

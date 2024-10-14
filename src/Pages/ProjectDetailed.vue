@@ -38,7 +38,6 @@
             <project-link-item :data="link"
                                v-for="(link, index) of project.links"
                                :key="link"
-                               v-show="index < 2"
                                @click.stop
             >
             </project-link-item>
@@ -480,7 +479,7 @@ export default {
     .project-info {
 
       .favorite-wrapper {
-        top: 10px;
+        top: 4%;
         left: 0px;
       }
 

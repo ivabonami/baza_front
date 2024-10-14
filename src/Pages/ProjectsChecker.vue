@@ -86,6 +86,7 @@ import {popup} from "@/js/controllers/popupController.js";
 
 import {userStore} from "@/Stores/userStore.js";
 import {addNotice} from "@/js/notifications.js";
+import {Waypoint} from "vue-waypoint";
 export default {
   name: "checkProjects.vue",
   emits: ['productAdded', 'productUpdated', 'reviewAdded',],
@@ -109,8 +110,12 @@ export default {
     ProjectCard,
     ButtonBlack,
     TheLoader,
-    ButtonSecondary
+    ButtonSecondary,
+    Waypoint
 
+  },
+  beforeUnmount() {
+    projects.splice(0, projects.length)
   },
   mounted() {
 
@@ -119,7 +124,7 @@ export default {
       addNotice({name: 'У вас нет прав для просмотра этой страницы', type: 'danger'})
       this.$router.replace('/')
     } else {
-      this.onGetProjects(this.requestOptions)
+
     }
   },
   methods: {

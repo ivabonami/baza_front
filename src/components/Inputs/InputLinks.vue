@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <button-advanced @buttonPressed="checkField()" style="height: 40px">
+    <button-advanced @buttonPressed="checkField()" style="height: 40px;">
       <div class="button-content">
         вставить ссылку в проект
       </div>
@@ -97,6 +97,16 @@ export default {
 
     .text-input-wrapper {
       height: 40px;
+    }
+  }
+}
+@media screen and (max-width: 500px) {
+  .links-input-wrapper {
+    .link-input {
+      width: 100%;
+    }
+    .button-content {
+      width: 100%;
     }
   }
 }

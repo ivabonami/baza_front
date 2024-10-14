@@ -126,10 +126,10 @@ export function approveProject(project) {
     axios.put(`${api.url}projects/${project.id}`, project, {headers})
         .then(result => {
             addNotice({name: 'Проект успешно опубликован', type: 'success'})
-            projects.splice(projects.findIndex(project),1 )
+            projects.splice(projects.findIndex(item => item === project),1 )
         })
         .catch(error => {
-            addNotice({name: 'Не удалось изменить проект', type: 'danger'})
+
         })
 }
 

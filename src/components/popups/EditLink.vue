@@ -48,7 +48,7 @@
           style="margin-top: 10px;"
           :disabled="loading"
           @click.stop
-          @click="$emit('changeState', 'ProductInfo')">
+          @click="this.closePopup()">
         <div class="button-content">
           <span>Отмена</span>
         </div>
