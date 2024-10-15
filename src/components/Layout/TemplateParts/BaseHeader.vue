@@ -255,7 +255,7 @@ export default {
   display: flex;
   position: relative;
   gap: 10px;
-  height: 50px;
+  height: auto;
 
 }
 @media screen and (max-width: 768px){

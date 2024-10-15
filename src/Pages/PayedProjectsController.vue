@@ -105,7 +105,7 @@ export default {
               message = 'Нет заглушек для главной страницы'
             } else if (error.response.data.message === 'No Placeholders found for specified category') {
               message = 'Нет заглушек для этой категории'
-            }else if (error.response.data.message === 'Provide token in Authorization header') {
+            } else if (error.response.data.message === 'Provide token in Authorization header') {
               message = 'У вас нет прав на просмотр этой страницы'
             } else {
               message = error.response.data.message

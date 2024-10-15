@@ -72,7 +72,7 @@ h4 {
 }
 
 .button {
-  padding: 10px 22px;
+  padding: 10px 12px;
   border-radius: 30px;
   max-width: 100%;
   height: 45px;
@@ -83,15 +83,16 @@ h4 {
   align-items: center;
   cursor: pointer;
   border: none;
+  box-sizing: border-box;
+}
+.button .button-content {
+  font-size: 14px;
+}
+.button svg {
+  height: 15px;
 }
 .button:disabled {
   cursor: no-drop;
-}
-.button span {
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
 }
 .button.primary {
   color: #fff;
@@ -155,6 +156,10 @@ svg.stroke2 {
 
 p {
   word-break: break-word;
+}
+
+.stat-icon {
+  height: 10px;
 }
 
 .projects-menu_categories {

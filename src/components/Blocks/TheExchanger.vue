@@ -4,24 +4,24 @@
     <div class="exchanger-box_input">
       <div class="exchanger-box_currency">
         <div class="currency-from_wrapper" data-dropdown="exchangerFrom">
-          <div class="currency-from"  data-dropdown="exchangerFrom" @click="dropdownTo.show = !dropdownTo.show">
+          <div class="currency-from"  data-dropdown="exchangerFrom">
+            <div class="currency" data-dropdown="exchangerFrom" >
+              <div class="value" data-dropdown="exchangerFrom">
+                <input type="number" data-dropdown="exchangerFrom" v-model="exchangeCoins.from.rate" @input="setCoinFrom(exchangeCoins.from.name)">
+              </div>
+              <div class="drop"  data-dropdown="exchangerFrom" @click="dropdownTo.show = !dropdownTo.show">
+                <svg class="arrow" data-dropdown="exchangerFrom" :class="{up: this.dropdownTo.show}" xmlns="http://www.w3.org/2000/svg" width="13" height="7" viewBox="0 0 13 7" fill="none">
+                  <path data-dropdown="exchangerFrom" d="M0.922355 0.00366649C1.04299 0.00296887 1.16259 0.0260921 1.27427 0.0717097C1.38595 0.117327 1.48753 0.184542 1.57319 0.2695L5.77152 4.477C5.85674 4.56292 5.95812 4.63111 6.06983 4.67765C6.18153 4.72419 6.30134 4.74815 6.42236 4.74815C6.54337 4.74815 6.66318 4.72419 6.77488 4.67765C6.88659 4.63111 6.98797 4.56292 7.07319 4.477L11.2715 0.269499C11.4441 0.0968868 11.6782 -8.47752e-05 11.9224 -8.47965e-05C12.1665 -8.48179e-05 12.4006 0.0968867 12.5732 0.269499C12.7458 0.442111 12.8428 0.676222 12.8428 0.920332C12.8428 1.0412 12.819 1.16089 12.7727 1.27256C12.7265 1.38423 12.6587 1.4857 12.5732 1.57117L8.36569 5.7695C7.84324 6.27144 7.14685 6.55176 6.42236 6.55176C5.69786 6.55176 5.00147 6.27144 4.47902 5.7695L0.271522 1.57117C0.185605 1.48595 0.117408 1.38457 0.0708709 1.27286C0.0243325 1.16116 0.000373359 1.04134 0.000373348 0.920333C0.000373337 0.799322 0.0243325 0.679509 0.0708708 0.567804C0.117408 0.4561 0.185605 0.354716 0.271522 0.2695C0.357175 0.184542 0.458756 0.117327 0.57044 0.0717098C0.682125 0.0260922 0.801715 0.00296889 0.922355 0.00366649Z" fill="#B3B4C9"/>
+                </svg>
+                {{ exchangeCoins.from.name.toUpperCase() }}
+                <div class="icon" data-dropdown="exchangerFrom" :style="`background-color: ${exchangeCoins.from.color}`">
+                  <img  data-dropdown="exchangerFrom" :src="exchangeCoins.from.icon" alt="">
+                </div>
+              </div>
 
 
-            <svg class="arrow" data-dropdown="exchangerFrom" :class="{up: this.dropdownTo.show}" xmlns="http://www.w3.org/2000/svg" width="13" height="7" viewBox="0 0 13 7" fill="none">
-              <path data-dropdown="exchangerFrom" d="M0.922355 0.00366649C1.04299 0.00296887 1.16259 0.0260921 1.27427 0.0717097C1.38595 0.117327 1.48753 0.184542 1.57319 0.2695L5.77152 4.477C5.85674 4.56292 5.95812 4.63111 6.06983 4.67765C6.18153 4.72419 6.30134 4.74815 6.42236 4.74815C6.54337 4.74815 6.66318 4.72419 6.77488 4.67765C6.88659 4.63111 6.98797 4.56292 7.07319 4.477L11.2715 0.269499C11.4441 0.0968868 11.6782 -8.47752e-05 11.9224 -8.47965e-05C12.1665 -8.48179e-05 12.4006 0.0968867 12.5732 0.269499C12.7458 0.442111 12.8428 0.676222 12.8428 0.920332C12.8428 1.0412 12.819 1.16089 12.7727 1.27256C12.7265 1.38423 12.6587 1.4857 12.5732 1.57117L8.36569 5.7695C7.84324 6.27144 7.14685 6.55176 6.42236 6.55176C5.69786 6.55176 5.00147 6.27144 4.47902 5.7695L0.271522 1.57117C0.185605 1.48595 0.117408 1.38457 0.0708709 1.27286C0.0243325 1.16116 0.000373359 1.04134 0.000373348 0.920333C0.000373337 0.799322 0.0243325 0.679509 0.0708708 0.567804C0.117408 0.4561 0.185605 0.354716 0.271522 0.2695C0.357175 0.184542 0.458756 0.117327 0.57044 0.0717098C0.682125 0.0260922 0.801715 0.00296889 0.922355 0.00366649Z" fill="#B3B4C9"/>
-            </svg>
-
-            <p class="rates" data-dropdown="exchangerFrom">
-              <span data-dropdown="exchangerFrom" class="text">Отдаете <b>{{ exchangeCoins.from.name }}</b> </span>
-              <br />
-              <span data-dropdown="exchangerFrom" class="value"> {{ exchangeCoins.from.rate }} </span>
-            </p>
-            <div class="icon"
-                 :style="`background-color: ${exchangeCoins.from.color}`"
-                 >
-
-              <img :src="exchangeCoins.from.icon" alt="">
             </div>
+
           </div>
           <dropdown-box v-if="dropdownTo.show === true"
                         :selector="'exchangerFrom'"
@@ -29,11 +29,13 @@
 
             <div data-dropdown="exchangerFrom" class="search">
               <input data-dropdown="exchangerFrom" @change="() => {
-                getRate(exchangeCoins.from, exchangeCoins.to)
-                dropdownTo.show = false
-              }" placeholder="Количество" class="search-coin" type="number" ref="coinSearch" v-model="exchangeCoins.from.rate">
+                        getRate(exchangeCoins.from, exchangeCoins.to)
+                        dropdownTo.show = false
+                      }"
+                     placeholder="поиск монеты" class="search-coin" type="text" ref="coinSearch" v-model="searchCoin.from">
+
               <svg data-dropdown="exchangerFrom"
-                   @click="exchangeCoins.from.rate = ''"
+                   @click="searchCoin.from = ''"
                    width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11 1L1 11M1 1L11 11" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -48,6 +50,7 @@
                  }"
                  v-for="(coin) of currencyRates.coinsFrom"
                  :key="coin.name"
+                 v-show="coin.name.toLowerCase().includes(searchCoin.from.toLowerCase())"
             >
               <span data-dropdown="exchangerFrom">{{ coin.name }}</span>
 
@@ -66,27 +69,28 @@
         </div>
 
         <div class="currency-from_wrapper" data-dropdown="exchangerTo" >
-          <div class="currency-to" data-dropdown="exchangerTo" @click="dropdownFrom.show = !dropdownFrom.show">
-            <svg class="arrow" data-dropdown="exchangerTo" :class="{up: this.dropdownFrom.show}" xmlns="http://www.w3.org/2000/svg" width="13" height="7" viewBox="0 0 13 7" fill="none">
-              <path data-dropdown="exchangerTo" d="M0.922355 0.00366649C1.04299 0.00296887 1.16259 0.0260921 1.27427 0.0717097C1.38595 0.117327 1.48753 0.184542 1.57319 0.2695L5.77152 4.477C5.85674 4.56292 5.95812 4.63111 6.06983 4.67765C6.18153 4.72419 6.30134 4.74815 6.42236 4.74815C6.54337 4.74815 6.66318 4.72419 6.77488 4.67765C6.88659 4.63111 6.98797 4.56292 7.07319 4.477L11.2715 0.269499C11.4441 0.0968868 11.6782 -8.47752e-05 11.9224 -8.47965e-05C12.1665 -8.48179e-05 12.4006 0.0968867 12.5732 0.269499C12.7458 0.442111 12.8428 0.676222 12.8428 0.920332C12.8428 1.0412 12.819 1.16089 12.7727 1.27256C12.7265 1.38423 12.6587 1.4857 12.5732 1.57117L8.36569 5.7695C7.84324 6.27144 7.14685 6.55176 6.42236 6.55176C5.69786 6.55176 5.00147 6.27144 4.47902 5.7695L0.271522 1.57117C0.185605 1.48595 0.117408 1.38457 0.0708709 1.27286C0.0243325 1.16116 0.000373359 1.04134 0.000373348 0.920333C0.000373337 0.799322 0.0243325 0.679509 0.0708708 0.567804C0.117408 0.4561 0.185605 0.354716 0.271522 0.2695C0.357175 0.184542 0.458756 0.117327 0.57044 0.0717098C0.682125 0.0260922 0.801715 0.00296889 0.922355 0.00366649Z" fill="#B3B4C9"/>
-            </svg>
+          <div class="currency-to" data-dropdown="exchangerTo" >
             <div class="loading" data-dropdown="exchangerTo" v-if="loading">
               <TheLoader />
             </div>
+            <div class="currency" data-dropdown="exchangerTo" v-else>
 
+              <div class="drop" data-dropdown="exchangerTo" @click="dropdownFrom.show = !dropdownFrom.show">
+                <div class="icon"  data-dropdown="exchangerTo" :style="`background-color: ${exchangeCoins.to.color}`" >
+                  <img :src="exchangeCoins.to.icon" data-dropdown="exchangerTo" alt="">
+                </div>
 
-            <p class="rates" data-dropdown="exchangerTo">
-              <span data-dropdown="exchangerTo" class="text">Получаете <b>{{ exchangeCoins.to.name }}</b></span>
-              <br />
-              <span data-dropdown="exchangerTo" class="value">{{ exchangeCoins.to.rate }}</span>
+                <svg class="arrow" data-dropdown="exchangerTo" :class="{up: this.dropdownFrom.show}" xmlns="http://www.w3.org/2000/svg" width="13" height="7" viewBox="0 0 13 7" fill="none">
+                  <path data-dropdown="exchangerTo" d="M0.922355 0.00366649C1.04299 0.00296887 1.16259 0.0260921 1.27427 0.0717097C1.38595 0.117327 1.48753 0.184542 1.57319 0.2695L5.77152 4.477C5.85674 4.56292 5.95812 4.63111 6.06983 4.67765C6.18153 4.72419 6.30134 4.74815 6.42236 4.74815C6.54337 4.74815 6.66318 4.72419 6.77488 4.67765C6.88659 4.63111 6.98797 4.56292 7.07319 4.477L11.2715 0.269499C11.4441 0.0968868 11.6782 -8.47752e-05 11.9224 -8.47965e-05C12.1665 -8.48179e-05 12.4006 0.0968867 12.5732 0.269499C12.7458 0.442111 12.8428 0.676222 12.8428 0.920332C12.8428 1.0412 12.819 1.16089 12.7727 1.27256C12.7265 1.38423 12.6587 1.4857 12.5732 1.57117L8.36569 5.7695C7.84324 6.27144 7.14685 6.55176 6.42236 6.55176C5.69786 6.55176 5.00147 6.27144 4.47902 5.7695L0.271522 1.57117C0.185605 1.48595 0.117408 1.38457 0.0708709 1.27286C0.0243325 1.16116 0.000373359 1.04134 0.000373348 0.920333C0.000373337 0.799322 0.0243325 0.679509 0.0708708 0.567804C0.117408 0.4561 0.185605 0.354716 0.271522 0.2695C0.357175 0.184542 0.458756 0.117327 0.57044 0.0717098C0.682125 0.0260922 0.801715 0.00296889 0.922355 0.00366649Z" fill="#B3B4C9"/>
+                </svg>
+                {{ exchangeCoins.to.name.toUpperCase() }}
+                <div class="value">
+                  {{ exchangeCoins.to.rate }}
+                </div>
+              </div>
 
-
-            </p>
-
-            <div class="icon"  data-dropdown="exchangerTo" :style="`background-color: ${exchangeCoins.to.color}`" >
-
-              <img :src="exchangeCoins.to.icon" data-dropdown="exchangerTo" alt="">
             </div>
+
           </div>
 
           <dropdown-box v-if="dropdownFrom.show"
@@ -97,9 +101,9 @@
 
 
             <div class="search" data-dropdown="exchangerTo">
-              <input data-dropdown="exchangerTo" class="search-coin" placeholder="поиск валюты" type="text" ref="coinSearch" v-model="coinName">
-              <svg data-dropdown="exchangerTo" v-if="coinName.length > 0"
-                   @click="coinName = ''"
+              <input data-dropdown="exchangerTo" class="search-coin" placeholder="поиск валюты" type="text" ref="coinSearch" v-model="searchCoin.to">
+              <svg data-dropdown="exchangerTo" v-if="searchCoin.to.length > 0"
+                   @click="searchCoin.to = ''"
                    width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path data-dropdown="exchangerTo" d="M11 1L1 11M1 1L11 11" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -114,7 +118,7 @@
                  }"
                  v-for="(rate, name) of currencyRates.rates[0]"
                  :key="name"
-                 v-show="name.toLowerCase().includes(coinName.toLowerCase())"
+                 v-show="name.toLowerCase().includes(searchCoin.to.toLowerCase())"
             >
               <span data-dropdown="exchangerTo">{{ name }}</span>
 
@@ -181,7 +185,7 @@ export default {
           name: 'rub',
           rate: 5000,
           icon: rub,
-          color: 'orange'
+          color: 'rgba(5, 198, 83, 1)'
         },
         to: {
           name: 'btc',
@@ -189,7 +193,10 @@ export default {
         }
       },
       currencyRates,
-      coinName: ''
+      searchCoin: {
+        from: '',
+        to: ''
+      }
     }
   },
   components: {
@@ -389,11 +396,12 @@ export default {
         width: 100%;
         height: 100%;
         position: relative;
+        min-width: 195px;
       }
       .currency-from, .currency-to {
         border-radius: 30px;
         border: 2px dashed #B3B4C9;
-        padding: 5px 5px 5px 10px;
+        padding: 0 3px;
         box-sizing: border-box;
         white-space: nowrap;
         cursor: pointer;
@@ -405,6 +413,38 @@ export default {
         gap: 5px;
         justify-content: start;
         background-color: #F8F7FC;
+
+        .currency {
+          display: flex;
+          width: 100%;
+          height: 100%;
+          align-items: center;
+          gap: 2px;
+          box-sizing: border-box;
+          justify-content: space-between;
+
+          input {
+            height: 35px;
+            box-sizing: border-box;
+            width: 100%;
+            font-size: 14px;
+            color: #70718c;
+            position: relative;
+            background-color: transparent;
+            border: 1px solid #c9c9c9;
+            border-radius: 20px;
+
+            padding-left: 8px;
+
+          }
+          .drop {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            color: #70718c;
+          }
+        }
 
 
         .icon {

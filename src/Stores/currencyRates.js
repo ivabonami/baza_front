@@ -58,7 +58,7 @@ export const currencyRates = reactive({
     },{
         name: 'RUB',
         icon: rub,
-        color: 'orange'
+        color: 'rgba(5, 198, 83, 1)'
     },{
         name: 'BTC',
         icon: btc,

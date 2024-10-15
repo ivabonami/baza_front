@@ -13,7 +13,9 @@ export function getPlaceholders(categoryId) {
 
     categoryId ? url += '?categoryId=' + categoryId : url
 
-    return axios.get(api.url + url)
+    return axios.get(api.url + url, {timeout: 20000, headers: {
+            'Authorization': `Bearer ${userStore.token}`
+        }})
 }
 
 export function setPlaceholdersCount(placeholdersParams, categoryId) {

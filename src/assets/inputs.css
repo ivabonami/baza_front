@@ -9,7 +9,6 @@ select {
   line-height: normal;
   max-width: 100%;
   background: #FFF;
-  box-shadow: 5px 5px 10px rgba(93, 89, 159, 0.16);
 }
 
 .input-wrapper {
