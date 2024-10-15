@@ -55,6 +55,7 @@ export default {
 <style scoped lang="scss">
 select {
   width: 100%;
-  height: 50px;
+  height: 100%;
+  border: none;
 }
 </style>

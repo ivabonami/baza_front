@@ -95,6 +95,7 @@ import iconMoney from '@/assets/icons/icon-money.svg'
 import iconView from '@/assets/icons/icon-views.svg'
 import iconReview from '@/assets/icons/icon-review.svg'
 import iconStar from '@/assets/icons/icon-star.svg'
+import iconFlag from '@/assets/icons/icon-flag.svg'
 import {defineAsyncComponent} from "vue";
 import {projects} from "@/Stores/projectsStore.js";
 import {addFavorite, removeFavorite} from "@/API/favoriteController.js";
@@ -164,9 +165,11 @@ export default {
           icon: iconReview,
           data: this.$props.project.reviewsCount
         },
-        money: {
-          icon: iconMoney,
-          data: this.$props.project.reserve
+        owner: {
+          icon: iconFlag,
+          data: this.$props.project.userData ? this.$props.project.userData.username === userStore.username ? 'Ваш проект' : null : null
+          // if() {} this.$props.project.userData
+          //     ? this.$props.project.userData.username === userStore.username ? 'Ваш проект' : null
         }
       }
     }

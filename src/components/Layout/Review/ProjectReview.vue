@@ -23,7 +23,7 @@
           <div class="review-body_time">
             {{ normalizeTime($props.review.createdAt) }}
           </div>
-          <div class="admin-menu" v-if="userStore.token">
+          <div class="admin-menu" v-if="userStore.role === 'admin'">
             <review-menu :review="$props.review" />
           </div>
         </div>
@@ -75,7 +75,7 @@ export default {
   padding: 10px;
   display: flex;
   gap: 20px;
-  align-items: center;
+  align-items: start;
 
 
   .review-avatar {

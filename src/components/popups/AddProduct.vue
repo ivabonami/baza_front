@@ -164,13 +164,18 @@ export default {
   display: flex;
   gap: 15px;
   width: 100%;
+  flex-wrap: wrap;
 
   .image {
-    width: 35%;
+    box-sizing: border-box;
+    width: 100%;
     height: 35%;
+    display: flex;
+    justify-content: center;
   }
   .edit {
-    width: 65%;
+    box-sizing: border-box;
+    width: 100%;
   }
 }
 .buttons-group {

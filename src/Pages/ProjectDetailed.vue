@@ -229,10 +229,6 @@ export default {
                 icon: iconReview,
                 data: this.project.reviewsCount
               },
-              money: {
-                icon: iconMoney,
-                data: this.project.reserve
-              }
             }
           })
           .catch(error => {

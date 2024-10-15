@@ -12,10 +12,8 @@ export function setUserData(data) {
         localStorage.setItem(prop, data[prop])
         userStore.token = data.token
         userStore.username = data.username
-        userStore.role = jwtDecode(userStore.token).role
-
     }
-
+    userStore.role = jwtDecode(userStore.token).role
 }
 
 export function signOut() {

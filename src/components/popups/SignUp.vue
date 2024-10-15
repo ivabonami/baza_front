@@ -86,21 +86,32 @@ const data = {
 let loading = ref(false)
 
 async function onSubmit(userData) {
-  signUp(data).then(result => {
-    popup.show = false
-    signIn(data).then(result => {
-      addNotice({name: 'Вы успешно заругистрировались и авторизовались', type: 'success'})
-    })
-    loading = false
-  }).catch(err => {
-    let message;
-    if (err.response.data.message === 'Username already exists') {
-      message = 'Пользователь с таким имененм уже зарегистрирован'
-    }
-    loading = false
+  if (!data.username) {
+    addNotice({name: 'Не введен юзернейм', type: 'danger'})
+  } else if (!data.password) {
+    addNotice({name: 'Не введен пароль', type: 'danger'})
+  } else if (!data.repeat) {
+    addNotice({name: 'Повторите ввод пароля', type: 'danger'})
+  } else if (data.repeat !== data.password){
+    addNotice({name: 'Пароли не совпадают', type: 'danger'})
+  } else {
+    signUp(data).then(result => {
+      popup.show = false
+      signIn(data).then(result => {
+        addNotice({name: 'Вы успешно зарегистрировались и авторизовались', type: 'success'})
+      })
+      loading = false
+    }).catch(err => {
+      let message;
+      if (err.response.data.message === 'Username already exists') {
+        message = 'Пользователь с таким имененм уже зарегистрирован'
+      }
 
-    addNotice({name: message, type: 'danger'})
-  })
+
+      addNotice({name: message, type: 'danger'})
+    })
+  }
+  loading = false
 
 }
 

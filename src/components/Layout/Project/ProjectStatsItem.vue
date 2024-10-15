@@ -1,6 +1,6 @@
 <template>
   <div class="stat">
-    <inline-svg v-if="$props.data.icon" :src="$props.data.icon" />
+    <inline-svg class="stat-icon" v-if="$props.data.icon" :src="$props.data.icon" />
     <span>{{ $props.data.data }}</span>
   </div>
 </template>

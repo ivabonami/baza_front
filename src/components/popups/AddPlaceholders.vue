@@ -17,27 +17,33 @@
               }"
           @dataChanged="emit => this.placeholder.placeholdersParams[0].text = emit" />
 
-      <input-select-option
-          class="mb15"
-          :data="{
+      <div class="select-wrapper">
+        <input-select-option
+            class="mb15"
+            :data="{
                 placeholder: 'Цвет',
                 icon: colorIcon,
                 name: 'Цвет',
                 data: placeholderColors
               }"
-          :selector="'color'"
-          @dataChanged="emit => this.placeholder.placeholdersParams[0].style = emit.value" />
-
-      <input-select-option
-          class="mb15"
-          :data="{
+            :selector="'color'"
+            @dataChanged="emit => this.placeholder.placeholdersParams[0].style = emit.value" />
+      </div>
+      <div class="select-wrapper">
+        <input-select-option
+            class="mb15"
+            :data="{
                 placeholder: 'Категория',
                 icon: colorIcon,
                 name: 'Категория',
                 data: allCats
               }"
-          :selector="'category'"
-          @dataChanged="emit => this.placeholder.categoryId = emit.id" />
+            :selector="'category'"
+            @dataChanged="emit => this.placeholder.categoryId = emit.id" />
+      </div>
+
+
+
 
     </div>
     <div class="buttons-group">
@@ -160,6 +166,16 @@ export default {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  justify-content: space-between;
+  .select-wrapper {
+    border: 1px solid #B3B4C9;
+    height: 45px;
+    width: 48%;
+    box-sizing: border-box;
+    padding-right: 10px;
+    border-radius: 300px;
+    box-shadow: 5px 5px 10px rgba(93, 89, 159, 0.16);
+  }
 
 
 }

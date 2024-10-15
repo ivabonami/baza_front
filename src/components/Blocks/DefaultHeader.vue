@@ -42,10 +42,11 @@ export default {
 <style scoped lang="scss">
 
 h2 {
-  font-size: 30px;
+  font-size: 25px;
   color: #fff;
   padding: 50px 10px 10px;
   text-align: center;
+  word-break: break-all;
 }
 
 .default-header {

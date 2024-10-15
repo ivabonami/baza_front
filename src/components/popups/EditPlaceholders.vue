@@ -18,15 +18,17 @@
           :inputDataProp="popup.placeholder.text"
           @dataChanged="emit => this.placeholder.placeholdersParams.text = emit" />
 
-      <input-select-option
-          class="mb15"
-          :data="{
+      <div class="select-wrapper">
+        <input-select-option
+            class="mb15"
+            :data="{
                 placeholder: 'Цвет',
                 icon: colorIcon,
                 name: 'Цвет',
                 data: placeholderColors
               }"
-          @dataChanged="emit => this.placeholder.placeholdersParams.style = emit.value" />
+            @dataChanged="emit => this.placeholder.placeholdersParams.style = emit.value" />
+      </div>
 
 <!--      <input-select-option-->
 <!--          class="mb15"-->
@@ -159,6 +161,16 @@ export default {
 .placeholder-add {
   display: flex;
   gap: 10px;
+
+  .select-wrapper {
+    border: 1px solid #B3B4C9;
+    height: 50px;
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 10px;
+    border-radius: 300px;
+    box-shadow: 5px 5px 10px rgba(93, 89, 159, 0.16);
+  }
 }
 .buttons-group {
   display: flex;

@@ -186,6 +186,12 @@ export default {
         this.error = true
       }
 
+      if (this.project.reserve) {
+        this.project.type = 'exchanger'
+      } else {
+        this.project.type = 'project'
+      }
+
       if (!this.error) {
         editProject(this.project)
         this.$router.go(-1)
