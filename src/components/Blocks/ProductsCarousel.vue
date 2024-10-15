@@ -5,11 +5,8 @@
 
        class="products-carousel">
 
-    <transition-group
 
-        name="list">
-      <div
-          @mousedown="(e) => {
+      <div @mousedown="(e) => {
 
             this.position = e.screenX
             this.dragSlide()
@@ -28,24 +25,27 @@
 
 
       >
-        <router-link
-            :to="`/project/${item.ProjectId}`"
-            :class="colClass"
-            v-for="(item, index) in productsStore.products"
-            v-show="index < visibleItems"
-            :key="item"
-            class="products-carousel_items_item">
-          <div ref="sliderItem">
-            <ProductCard
-                :item="item"
 
-            >
-            </ProductCard>
-          </div>
+        <transition-group name="list">
+          <router-link
+              :to="`/project/${item.ProjectId}`"
+              :class="colClass"
+              v-for="(item, index) in productsStore.products"
+              v-show="index < visibleItems"
+              :key="item"
+              class="products-carousel_items_item">
+            <div ref="sliderItem">
+              <ProductCard
+                  :item="item"
 
-        </router-link>
+              >
+              </ProductCard>
+            </div>
+
+          </router-link>
+        </transition-group>
       </div>
-    </transition-group>
+
 
     <the-loader v-if="loading" />
     <div v-else-if="!loading && loadingError">
@@ -171,57 +171,15 @@ export default {
 
     },
     next() {
-      this.carousel.wrapperWidth = this.$refs.carouselItemsWrapper.scrollWidth
-      this.carousel.slideStep <= 0 ? this.carousel.slideStep = this.$refs.sliderItem[3].clientWidth + 20 : this.carousel.slideSte
-
-      console.log(this.carousel.slideStep)
-      this.$refs.sliderItem[0].style.display = "none"
-
-      this.carousel.styles = {
-        transform: `translateX(-${this.carousel.slideStep}px)`,
-        transition: `.15s ease`
-      }
-
-      this.afterTransition(() => {
-        const product = productsStore.products.shift()
-        productsStore.products.push(product)
-        this.resetTranslate()
-        this.$refs.sliderItem[0].style.display = null
-      })
+      const product = productsStore.products.shift()
+      productsStore.products.push(product)
 
     },
     prev() {
-      this.carousel.wrapperWidth = this.$refs.carouselItemsWrapper.scrollWidth
-      this.carousel.slideStep <= 0 ? this.carousel.slideStep = this.$refs.sliderItem[3].clientWidth + 20 : this.carousel.slideSte
-      this.$refs.sliderItem[4].style.display = "none"
-
-      this.carousel.styles = {
-        transform: `translateX(${this.carousel.slideStep}px)`,
-        transition: `.15s ease`
-      }
-
-      this.afterTransition(() => {
-        const product = productsStore.products.pop()
-        productsStore.products.unshift(product)
-        this.resetTranslate()
-        this.$refs.sliderItem[4].style.display = null
-      })
+      const product = productsStore.products.pop()
+      productsStore.products.unshift(product)
     },
 
-    afterTransition (callback) {
-      const listener = () => {
-        callback()
-        this.$refs.carouselItemsWrapper.removeEventListener('transitionend', listener)
-      }
-      this.$refs.carouselItemsWrapper.addEventListener('transitionend', listener)
-    },
-
-    resetTranslate () {
-      this.carousel.styles = {
-        transform: `translateX(${0}px)`,
-        transition: `none`
-      }
-    },
 
     collectProducts () {
       this.getHeight()
@@ -279,13 +237,8 @@ export default {
     window.addEventListener("resize", e => this.setVisibleItems(e.target.innerWidth));
     this.setVisibleItems(window.innerWidth)
   },
-  updated() {
-    window.addEventListener('resize', this.setStep)
-  },
   beforeUnmount() {
-    window.addEventListener('resize', this.setStep)
     window.removeEventListener("resize", e => this.setVisibleItems(e.target.innerWidth));
-    productsStore.products.splice(0, productsStore.products.length)
   }
 
 }
@@ -379,6 +332,34 @@ export default {
       right: -8px;
     }
   }
+}
+
+.list-enter-active,
+.list-move {
+  transition: 0.4s ease all;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.list-leave-active {
+  transition: 0.2s ease all;
+  display: none;
+  position: absolute;
+}
+
+.list-list-enter-active,
+.list-list-leave-active {
+  transition: 0.2s ease all;
+}
+
+.list-list-enter-from,
+.list-list-leave-to {
+  transform: translateY(10px);
+  opacity: 0;
 }
 
 @media screen and (max-width: 900px){

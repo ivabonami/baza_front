@@ -5,6 +5,7 @@
         :style="placeholder.style"
         v-if="placeholder.project"
         :project="placeholder.project"
+        style="min-height: 100%"
     />
 
 
@@ -168,6 +169,7 @@ export default {
     box-sizing: border-box;
     padding: 10px;
     width: 100%;
+    min-height: 220px;
     height: 80%;
     margin-bottom: 20px;
     display: flex;

@@ -41,7 +41,7 @@
     <div class="projects">
 
         <div class="project-placeholder" v-for="placeholder of placeholders.categoryPlaceholders">
-          <ThePlaceholder :placeholder="placeholder" style="min-height: 300px"
+          <ThePlaceholder :placeholder="placeholder"
 
 
           />

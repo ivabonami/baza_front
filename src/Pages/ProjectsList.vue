@@ -217,8 +217,6 @@ export default {
   display: flex;
   flex-wrap: wrap;
   gap: 2.5%;
-  align-items: stretch;
-  min-height: 500px;
 
   .project-box {
     width: 23%;
