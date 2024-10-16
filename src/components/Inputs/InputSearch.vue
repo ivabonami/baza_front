@@ -141,7 +141,6 @@ export default {
           axios.get(api.url + `projects?search=${this.search.query}`)
               .then(result => {
                 this.liveResults = result.data.projects
-                console.log(result.data.projects)
 
                 result.data.projects.length > 0 ? this.noResults = false : this.noResults = true
               })

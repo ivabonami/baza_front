@@ -240,14 +240,12 @@ export default {
     },
     calculateSwap(coin) {
       this.exchangeCoins.to.rate = currencyRates.rates[0][coin] * this.exchangeCoins.from.rate
-      console.log(currencyRates.rates[0][coin], coin)
     },
     swapCoins() {
       this.exchangeCoins.to = [this.exchangeCoins.from, this.exchangeCoins.from = this.exchangeCoins.to][0]
       this.getRate(this.exchangeCoins.from, this.exchangeCoins.to)
     },
     getRate(coinFrom, coinTo) {
-      console.log(coinFrom, coinTo)
       this.loading = true
       currencyRates.rates.splice(0, currencyRates.rates.length)
 
@@ -258,10 +256,8 @@ export default {
             currencyRates.rates.push(result.data.rates.data.rates)
             this.setCoinTo(coinTo.name)
             this.loading = false
-            console.log(this.exchangeCoins )
           })
           .catch((error) => {
-            console.log(error)
             addNotice({name: 'Не могу получить актуальный курс, попробуйте еще раз.', type: 'warning'})
             this.loading = false
           })

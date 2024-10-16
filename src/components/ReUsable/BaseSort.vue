@@ -79,7 +79,6 @@ export default {
     },
     setNewActiveSort(sort) {
       this.activeSort = sort
-      console.log(123)
       this.$emit('sortChanged', sort)
     }
   },

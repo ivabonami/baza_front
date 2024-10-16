@@ -83,7 +83,6 @@ export default {
           .then(result => {
             addNotice({name: 'Отзыв опубликован', type: 'success'})
             reviewsStore.splice(reviewsStore.findIndex(item => item.id === popup.review.id), 1)
-            console.log(reviewsStore.findIndex(item => item.id === popup.review.id))
             popup.show = false
           })
           .catch(error => {

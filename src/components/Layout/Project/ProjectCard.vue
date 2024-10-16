@@ -35,9 +35,6 @@
 
           <div class="admin-menu" v-if="userStore.role === 'admin'">
             <AdminMenu @click.prevent
-                       @editProject="console.log()"
-                       @deleteProject="console.log()"
-                       @pinProject="console.log()"
                        :project="$props.project"
                        v-if=" userStore.role === 'admin'"
             />
@@ -191,7 +188,6 @@ export default {
         addFavorite(id, name).then((result) => result)
 
       } else {
-        console.log(project.favorite)
         removeFavorite(id, name).then(() => project.favorite = 0)
       }
 

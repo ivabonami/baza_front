@@ -195,7 +195,6 @@ export default {
             productsStore.products.push(item)
           }
 
-          console.log(reactive(this.$refs.sliderItem))
           this.loading = false
           this.loadingError = false
 

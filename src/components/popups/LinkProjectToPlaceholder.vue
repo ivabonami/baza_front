@@ -92,7 +92,6 @@ export default {
   },
   methods: {
     addProjectToPlaceholder() {
-      console.log(this.projectId)
 
       linkProjectWithPlaceholder(popup.placeholderId, parseInt(this.projectId))
           .then(result => {

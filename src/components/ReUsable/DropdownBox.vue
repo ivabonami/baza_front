@@ -19,9 +19,7 @@ export default {
 
   methods: {
     clickOutside(e) {
-      console.log(e.target.dataset.dropdown, this.$props.selector)
       if (!e.target.dataset.dropdown || e.target.dataset.dropdown !== this.$props.selector) {
-        // console.log(e.target.dataset.dropdown, this.$props.selector)
         this.closeDropDown()
       }
 

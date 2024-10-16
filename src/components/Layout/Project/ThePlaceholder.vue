@@ -81,7 +81,6 @@ export default {
       popup.show = true
       popup.placeholder = placeholder
       popup.component = 'EditPlaceholders'
-      console.log(popup)
     },
     callLinkProjectModal(placeholderId) {
       popup.show = true

@@ -156,14 +156,12 @@ export default {
   },
   methods: {
     onChange(e) {
-      console.log(e)
       if (e.direction === 'UP' && e.going === 'IN') {
         this.getProjectsList(this.requestOptions)
       }
     },
     removeItems() {
       this.projects.splice(0, this.projects.length)
-      console.log(this.projects)
     },
     getProjectsList(options) {
       this.loading = true

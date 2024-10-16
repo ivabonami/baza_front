@@ -1,6 +1,6 @@
 <template>
   <select @change="selectData(selected)" v-model='selected' v-show="$props.data.data">
-    <option v-for="data of $props.data.data" @click="console.log(123)" :value="data">
+    <option v-for="data of $props.data.data" :value="data">
       {{ data.name }}
     </option>
   </select>
