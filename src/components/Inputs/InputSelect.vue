@@ -18,10 +18,6 @@
 </template>
 
 <script>
-import { directive } from 'vue-tippy'
-import 'tippy.js/dist/tippy.css'
-import {checkInputData} from "../../assets/js/fieldDataController.js";
-import {linksCategories} from "../../Store/linksCategories.js";
 
 
 export default {
@@ -60,9 +56,7 @@ export default {
 
   },
 
-  directives: {
-    tippy: directive,
-  },
+
 
   components: {},
 
@@ -95,7 +89,7 @@ export default {
 <style scoped lang="scss">
 label {
   color: #000;
-  font-family: "PT Sans Caption";
+
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -108,7 +102,7 @@ label {
 
 input {
   color: var(--gray-2, #000);
-  font-family: "PT Sans Caption";
+
   font-size: 16px;
   font-style: normal;
   font-weight: 400;

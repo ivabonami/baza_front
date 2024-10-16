@@ -1,0 +1,12 @@
+@media screen and (max-width: 500px){
+  .projects-menu_categories {
+    max-width: 65vw;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 5px;
+  }
+  .button {
+    padding: 10px 8px;
+  }
+}
+

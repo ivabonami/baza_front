@@ -2,9 +2,9 @@
   <button class="base-button"
           :class="{active: $props.active}"
           @click="$emit('pressed', true)">
-    <div class="image">
+    <span class="image">
       <slot name="icon"/>
-    </div>
+    </span>
     <span>
       <slot name="text"/>
     </span>
@@ -34,11 +34,12 @@ export default {
   display: flex;
   gap: 5px;
   border: 1px solid #d5d5d5;
+  box-sizing: border-box;
 
   span {
     color: #000;
     text-align: center;
-    font-family: "PT Sans Caption";
+
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -62,6 +63,9 @@ export default {
     gap: 5px;
     svg {
 
+    }
+    span {
+      font-size: 15px;
     }
   }
 }

@@ -1,253 +1,155 @@
 <template>
   <div class="image-input">
-    <label :for="$props.input.name">
-      {{ $props.input.name }}
-      <svg v-show="input.tooltip" xmlns="http://www.w3.org/2000/svg" v-tippy="{content: $props.input.tooltip, theme: 'light'}" width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <path d="M7.95281 10.8V8M7.95281 5.2H7.95993M15.0758 8C15.0758 11.866 11.8868 15 7.95281 15C4.01886 15 0.829773 11.866 0.829773 8C0.829773 4.13401 4.01886 1 7.95281 1C11.8868 1 15.0758 4.13401 15.0758 8Z" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
+    <div class="image-upload" v-if="!imageFilePath && !loading">
+      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.66797 4.24984C4.88557 4.24984 4.2513 4.88411 4.2513 5.6665V28.3332C4.2513 29.1156 4.88557 29.7498 5.66797 29.7498H28.3346C29.1171 29.7498 29.7513 29.1156 29.7513 28.3332V21.9582H32.5846V28.3332C32.5846 30.6804 30.6819 32.5832 28.3346 32.5832H5.66797C3.32076 32.5832 1.41797 30.6804 1.41797 28.3332V5.6665C1.41797 3.3193 3.32076 1.4165 5.66797 1.4165H12.043V4.24984H5.66797Z" fill="#B3B4C9"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M13.0959 21.4978C11.4555 19.4788 8.40249 19.394 6.65264 21.3189L1.78639 26.6717C1.31806 27.187 1.29348 27.966 1.7284 28.5097L4.56174 32.0514C4.83059 32.3874 5.23761 32.5831 5.66797 32.5831H19.1263C19.6729 32.5831 20.1705 32.2687 20.4054 31.7753C20.6403 31.2817 20.5705 30.6972 20.2258 30.2731L13.0959 21.4978Z" fill="#B3B4C9"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M26.2524 24.9556C24.6701 23.3737 22.1323 23.2891 20.4485 24.7626L16.7768 27.9753C16.2917 28.3998 16.1543 29.0984 16.4426 29.675L17.1509 31.0917C17.3909 31.5716 17.8815 31.8748 18.418 31.8748H29.7513C30.3244 31.8748 30.8409 31.5297 31.0602 31.0003C31.2795 30.4709 31.1582 29.8616 30.753 29.4564L26.2524 24.9556Z" fill="#B3B4C9"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M21.9609 1.4165C16.093 1.4165 11.3359 6.17347 11.3359 12.0415C11.3359 17.9095 16.093 22.6665 21.9609 22.6665C27.8289 22.6665 32.5859 17.9095 32.5859 12.0415C32.5859 6.17347 27.8289 1.4165 21.9609 1.4165ZM20.5443 9.79497V16.2915H23.3776V9.79497L25.2092 11.6266L27.2127 9.6231L22.9627 5.3731C22.4095 4.81986 21.5124 4.81986 20.9592 5.3731L16.7092 9.6231L18.7127 11.6266L20.5443 9.79497Z" fill="#B3B4C9"/>
       </svg>
-    </label>
+      <p>
+        <slot />
+      </p>
 
-    <input type="file"
-           hidden
-           accept="image/*"
-           ref="imageInput"
-           :class="{error: error}"
-           @change="checkField($event.target.files[0])"
-           :id="$props.input.name"
-           :placeholder="$props.input.placeholder">
-
-    <label :for="$props.input.name"
-           v-show="!file.data"
-           class="input-file-label">
-      <span class="input-file-btn">Выберите файл</span>
-      <span class="input-file-text">Максимум 5мб</span>
-    </label>
-
-    <loader-small v-show="!file.loaded" />
-
-    <div class="input-file-loaded" v-if="file.data">
-      <div class="input-file-loaded_success">
-        <svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58" fill="none">
-          <path d="M56 26.5314V29.0154C55.9967 34.8378 54.1113 40.5031 50.6252 45.1664C47.139 49.8297 42.2389 53.2411 36.6555 54.892C31.0721 56.5428 25.1046 56.3446 19.6431 54.3268C14.1815 52.3091 9.51857 48.5799 6.34959 43.6955C3.18062 38.8111 1.67544 33.0332 2.05853 27.2235C2.44162 21.4138 4.69246 15.8835 8.47535 11.4575C12.2583 7.03156 17.3705 3.94699 23.0497 2.66385C28.7289 1.38071 34.6707 1.96776 39.989 4.33745M56 7.4L29 34.427L20.9 26.327" stroke="#2E7E36" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <input type="file" @change="uploadImage">
+    </div>
+    <the-loader v-else-if="loading"/>
+    <div class="uploaded-image" v-else-if="imageFilePath && !loading">
+      <img :src="api.url + imageFilePath" alt="">
+      <div class="delete-icon" @click="emptyImage()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M16 6V5.2C16 4.0799 16 3.51984 15.782 3.09202C15.5903 2.71569 15.2843 2.40973 14.908 2.21799C14.4802 2 13.9201 2 12.8 2H11.2C10.0799 2 9.51984 2 9.09202 2.21799C8.71569 2.40973 8.40973 2.71569 8.21799 3.09202C8 3.51984 8 4.0799 8 5.2V6M10 11.5V16.5M14 11.5V16.5M3 6H21M19 6V17.2C19 18.8802 19 19.7202 18.673 20.362C18.3854 20.9265 17.9265 21.3854 17.362 21.673C16.7202 22 15.8802 22 14.2 22H9.8C8.11984 22 7.27976 22 6.63803 21.673C6.07354 21.3854 5.6146 20.9265 5.32698 20.362C5 19.7202 5 18.8802 5 17.2V6" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        Изображение выбрано
-      </div>
-
-      <div
-          @click="clearInput()"
-          class="input-file-loaded_delete">
-        <svg v-tippy="{content: 'Удалить выбранный файл', theme: 'light'}"
-             xmlns="http://www.w3.org/2000/svg"
-             width="14" height="16" viewBox="0 0 14 16"
-             fill="none">
-          <path d="M9.66667 3.8V3.24C9.66667 2.45593 9.66667 2.06389 9.52134 1.76441C9.39351 1.50099 9.18954 1.28681 8.93865 1.15259C8.65344 1 8.28007 1 7.53333 1H6.46667C5.71993 1 5.34656 1 5.06135 1.15259C4.81046 1.28681 4.60649 1.50099 4.47866 1.76441C4.33333 2.06389 4.33333 2.45593 4.33333 3.24V3.8M1 3.8H13M11.6667 3.8V11.64C11.6667 12.8161 11.6667 13.4042 11.4487 13.8534C11.2569 14.2485 10.951 14.5698 10.5746 14.7711C10.1468 15 9.58677 15 8.46667 15H5.53333C4.41323 15 3.85318 15 3.42535 14.7711C3.04903 14.5698 2.74307 14.2485 2.55132 13.8534C2.33333 13.4042 2.33333 12.8161 2.33333 11.64V3.8" stroke="#A8A8A8" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <div class="input-file-loaded_file-name">
-        Имя файла: {{ normalizeText(file.data) }}
       </div>
     </div>
   </div>
-
-
 </template>
 
 <script>
-import { directive } from 'vue-tippy'
-import 'tippy.js/dist/tippy.css'
-import {checkFileData} from "../../assets/js/fieldDataController.js";
-import loaderSmall from "../Loaders/LoaderSmall.vue";
-import {uploadImage} from "../../API/image.js";
+
+import {uploadImage} from "@/API/imageUploader.js";
+import {api} from "@/API/apiurl.js";
+import {addNotice} from "@/js/notifications.js";
+import TheLoader from "@/components/ReUsable/TheLoader.vue";
 
 export default {
   name: "InputText.vue",
   props: {
-    input: {
-      name: null,
-      tooltip: null,
-    },
-    data: {}
-
-
+    data: null
   },
   data() {
     return {
-      inputData: null,
-      file: {
-        loaded: true,
-        data: null
-      },
-      error: false
+      imageFilePath: null,
+      api,
+      loading: false
     }
   },
-
-  watch: {
-    data: function (newVal, oldVal) {
-      !newVal ? this.file.data = null : null
-    }
-  },
-
-  directives: {
-    tippy: directive,
-  },
-
   components: {
-    loaderSmall
+    TheLoader
   },
 
   methods: {
-    normalizeText(text){
-      if (text.length >= 30) {
-        return text.slice(0, 20) + '...' + text.slice(-10)
+    uploadImage(e) {
+      this.loading = true
+      if(e.target.files[0].type.includes('image/')) {
+        uploadImage(e.target.files[0]).then(result => {
+          this.imageFilePath = result.data.filePath
+          this.loading = false
+          this.$emit('dataChanged', this.imageFilePath)
+        }).catch(error => this.loading = false)
       } else {
-        return text
+        addNotice({name: 'Не поддерживаемый формат изображения', type: 'warning'})
+        this.loading = false
       }
-
     },
-    checkField(file) {
-      this.file.loaded = false
-      const checkData = checkFileData(file)
-
-      if (Object.keys(checkData) <= 0) {
-        this.error = false
-        this.file.loaded = true
-        this.file.data = file.name
-        this.$emit('data', file)
-
-      } else {
-        this.error = true
-        this.file.loaded = false
-        this.file.data = null
-
-        let errorsText = ''
-        for (let error in checkData) {
-          errorsText += checkData[error] + ', '
-        }
-        errorsText =
-            errorsText.charAt(0).toUpperCase() + errorsText.slice(1).slice(0, -2)
-
-        this.$emit('error', errorsText)
-      }
-
-      this.file.loaded = true
-    },
-    clearInput() {
-      this.file.data = null
-      this.$emit('data', null)
-      this.$refs.imageInput.value = null
+    emptyImage() {
+      this.imageFilePath = null
+      this.$emit('dataChanged', null)
     }
-
   },
-
+  watch: {
+    data: function () {
+      this.imageFilePath = this.$props.data
+    }
+  },
   mounted() {
-
+    this.imageFilePath = this.$props.data
   }
 
 }
 </script>
 
 <style scoped lang="scss">
-label {
-  color: #000;
-  font-family: "PT Sans Caption";
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  margin-bottom: 5px;
-}
 .image-input {
-  margin-bottom: 10px;
-}
-.input-file-label {
-  display: flex;
-  flex-wrap: wrap;
-
-  .input-file-btn {
-    padding: 9px 13px;
-    border-radius: 10px;
-    width: 55%;
-    background-color: transparent;
-    border: 2px solid var(--yellow, #FFC700);
-    color: #000;
-    text-align: center;
-    font-family: "PT Sans Caption";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
-  .input-file-text {
-    color: #000;
-    text-align: center;
-    font-family: "PT Sans Caption";
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
-}
-.input-file-loaded {
+  border-radius: 20px;
+  border: 1px dashed #B3B4C9;
+  background: #F8F7FC;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
-  gap: 5px;
-  justify-content: start;
+  justify-content: center;
   flex-wrap: wrap;
+  min-height: 80px;
+  height: 100%;
+  position: relative;
 
-  .input-file-loaded_file-name {
-    text-align: left;
-    font-family: "PT Sans Caption";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    color: #6B6B6B;
+  input {
+    position: absolute;
     width: 100%;
+    height: 100%;
+    opacity: 0;
   }
+}
+.image-upload {
+  padding: 20px;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+  justify-content: center;
 
-  .input-file-loaded_success {
-    display: flex;
-    align-items: center;
-    gap: 10px;
 
-    svg {
-      width: 20px;
-      height: 20px;
-    }
-    color: #2E7E36;
+
+  svg {
+
+  }
+  p {
+    color: #B3B4C9;
     text-align: center;
-    font-family: "PT Sans Caption";
-    font-size: 14px;
+    font-size: 13px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
   }
-  .input-file-loaded_delete {
-    cursor: pointer;
-    margin-left: 10px;
-    svg {
-      width: 15px;
-      height: 15px;
+}
+.uploaded-image {
+  width: 100%;
+  position: relative;
 
-      path {
-        transition: .15s ease;
-        stroke: #7C7C7C;
-      }
-    }
-
-    &:hover {
-      svg {
-        path {
-          stroke: #dc4a4a;
-        }
-      }
-    }
+  img {
+    width: 100%;
+    border-radius: 25px;
   }
 
+  .delete-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    padding: 2px 6px;
+    box-sizing: border-box;
+    width: 35px;
+    height: 35px;
 
+    svg {
+      width: 100%;
+      height: 100%;
+
+
+    }
+  }
 }
 
 </style>

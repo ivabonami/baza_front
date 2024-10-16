@@ -10,8 +10,6 @@
 </template>
 
 <script>
-import { directive } from 'vue-tippy'
-import 'tippy.js/dist/tippy.css'
 
 export default {
   name: "ButtonPrimary.vue",
@@ -23,9 +21,7 @@ export default {
   data() {
     return {}
   },
-  directives: {
-    tippy: directive,
-  },
+
   components: {},
   mounted() {
 
@@ -55,7 +51,7 @@ export default {
   span {
     color: #A8A8A8;
     text-align: center;
-    font-family: "PT Sans Caption";
+
     font-size: 14px;
     font-style: normal;
     font-weight: 400;

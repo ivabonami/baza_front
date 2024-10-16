@@ -1,73 +1,43 @@
 <template>
-  <button class="base-button" :class="$props.style || 'filled'" @click="$emit('close', true)">
-    <span>
-      <slot></slot>
-    </span>
+  <div style="width: 100%">
+    <button class="button primary" :disabled="props.disabled" v-if="props.type === 'button'">
+      <slot />
+    </button>
 
-  </button>
+    <a :href="props.link" class="button primary" v-else-if="props.type === 'link'" target="_blank">
+      <slot />
+    </a>
+
+  </div>
 </template>
 
-<script>
-export default {
-  name: "ButtonPrimary.vue",
-  props: ['style'],
-  data() {
-    return {}
-  },
-  components: {},
-  mounted() {
+<script setup>
+  import {watch} from "vue";
 
-  },
-}
+  const props = defineProps({
+    disabled: false,
+    type: 'button',
+    link: null
+  })
+
+  watch(() => props.disabled, (e) => {
+
+  })
+
 </script>
 
 <style scoped lang="scss">
-.base-button {
-  padding: 8px 12px;
-  border-radius: 10px;
-  width: 100%;
-  max-height: 45px;
+.button {
+  background: #7773FB;
+  box-sizing: border-box;
 
-  span {
-    color: #000;
-    text-align: center;
-    font-family: "PT Sans Caption";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0px 3px 6px 0px rgba(255, 199, 0, 0.3);
-  }
-
-  &.red {
-    background-color: #9A2929;
-    border: 2px solid var(--yellow, #9A2929);
-    span {
-      color: white;
-    }
-  }
-
-  &.filled {
-    background-color: #FFC700;
-    border: 2px solid var(--yellow, #FFC700);
-  }
-
-  &.outline {
-    background-color: transparent;
-    border: 2px solid var(--yellow, #FFC700);
+  &:disabled {
+    opacity: .5;
   }
 
 }
-@media screen and (max-width: 500px){
-  .base-button {
-    gap: 5px;
-    svg {
-
-    }
-  }
+a {
+  padding: 0 10px;
+  width: 100%;
 }
 </style>
