@@ -433,7 +433,6 @@ export default {
             background-color: transparent;
             border: 1px solid #c9c9c9;
             border-radius: 20px;
-
             padding-left: 8px;
 
           }
@@ -537,6 +536,7 @@ export default {
 
   .exchanger-box {
     margin-bottom: 10px;
+    width: 100%;
 
     .exchanger-box_input {
       width: 100%;
@@ -552,9 +552,13 @@ export default {
           font-size: 10px;
         }
 
+        .currency-from_wrapper, .currency-to_wrapper {
+          min-width: 90px;
+        }
+
         .currency-from, .currency-to {
           width: 100%;
-          padding: 2px 5px;
+          padding: 2px 2px;
 
           .value {
             font-size: 12px;

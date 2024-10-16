@@ -30,6 +30,19 @@
             @dataChanged="emit => this.placeholder.placeholdersParams.style = emit.value" />
       </div>
 
+      <div class="select-wrapper">
+        <input-select-option
+            class="mb15"
+            :data="{
+                placeholder: 'Позиция',
+                icon: colorIcon,
+                name: 'Цвет',
+                data: placeholderPositions
+              }"
+            :inputDataProp="this.placeholder.placeholdersParams.position"
+            @dataChanged="emit => this.placeholder.placeholdersParams.position = emit.value" />
+      </div>
+
 <!--      <input-select-option-->
 <!--          class="mb15"-->
 <!--          :data="{-->
@@ -117,6 +130,7 @@ export default {
       allCats: [],
       closePopup,
       placeholderColors,
+      placeholderPositions: [],
       loading: ref(false)
     }
   },
@@ -130,6 +144,7 @@ export default {
 
             placeholders.categoryPlaceholders.find(item => item.id === popup.placeholder.id).text = this.placeholder.placeholdersParams.text
             placeholders.categoryPlaceholders.find(item => item.id === popup.placeholder.id).style = this.placeholder.placeholdersParams.style
+            placeholders.categoryPlaceholders.find(item => item.id === popup.placeholder.id).position = this.placeholder.placeholdersParams.position
 
             popup.show = false
 
@@ -143,6 +158,16 @@ export default {
   },
   mounted() {
     this.placeholder.placeholdersParams.placeholderId = popup.placeholder.id
+    this.placeholder.placeholdersParams.text = popup.placeholder.text
+    this.placeholder.placeholdersParams.position = popup.placeholder.position
+
+
+    for (let i = 0; i <= placeholders.categoryPlaceholders.length; i++) {
+      this.placeholderPositions.push({position: i, name: i})
+    }
+
+    this.placeholder.placeholdersParams.position = popup.placeholder.position
+
     for (let cats of categories.allCategories) {
       this.allCats.push(cats)
     }

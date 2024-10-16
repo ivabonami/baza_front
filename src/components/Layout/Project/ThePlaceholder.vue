@@ -204,6 +204,7 @@ export default {
       height: auto;
     }
     .dropper-box {
+      min-height: auto;
       height: 30px;
       width: 100%;
       padding: 10px;

@@ -232,7 +232,8 @@ export default {
 }
 input {
   border-radius: 20px;
-  border: 1px solid var(--gray-2, #D8D8D8);
+  border: none;
+  background-color: #F8F7FC;
   margin-bottom: 0;
   width: 100%;
   display: flex;
