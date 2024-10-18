@@ -1,4 +1,5 @@
 <script setup>
+// import {openPopup} from "@/components/popups/PopupController.js";
 import {popup} from "@/js/controllers/popupController.js";
 import {defineAsyncComponent, reactive} from "vue";
 import {notifications} from "@/js/notifications.js";
@@ -14,6 +15,8 @@ const ThePopup = defineAsyncComponent({
 const BaseHeader = defineAsyncComponent({
   loader: () => import("@/components/Layout/TemplateParts/BaseHeader.vue"),
 })
+
+const SecondPopup = import("@/components/popups/TheBazaPopup.vue");
 
 const BaseFooter = defineAsyncComponent({
   loader: () => import("@/components/Layout/TemplateParts/BaseFooter.vue"),
@@ -32,6 +35,7 @@ const YandexMetrica = defineAsyncComponent({
 })
 
 import { useMouse } from '@vueuse/core'
+import TheBazaPopup from "@/components/popups/TheBazaPopup.vue";
 
 const { x, y } = useMouse()
 
@@ -51,6 +55,9 @@ window.addEventListener('scroll', handleScroll);
 <template>
   <base-layout>
     <template #header>
+<!--          <span @click="openPopup()">-->
+<!--            open new modal-->
+<!--          </span>-->
       <base-header />
       <payed-banners />
     </template>
@@ -68,6 +75,15 @@ window.addEventListener('scroll', handleScroll);
   <ThePopup v-if="popup.show" />
 
   <yandex-metrica />
+
+  <the-baza-popup>
+    <template #header>
+      Kill meKill meKill meKill meKill meKill meKill meKill meKill meKill meKill meKill meKill meKill meKill meKill meKill meKill meKill me
+    </template>
+    <template #component>
+      <payed-banners />
+    </template>
+  </the-baza-popup>
 
   <TheNotifications v-if="notifications.length > 0" />
 

@@ -6,7 +6,7 @@ import router from "@/router/index.js";
 
 import marketplaceIcon from '@/assets/icons/menu-icons/marketplace.svg'
 import forumsIcon from '@/assets/icons/menu-icons/forums.svg'
-import exchangerIcon from '@/assets/icons/menu-icons/marketplace.svg'
+import exchangerIcon from '@/assets/icons/menu-icons/exchangers.svg'
 import narcoIcon from '@/assets/icons/menu-icons/narco.svg'
 import jobIcon from '@/assets/icons/menu-icons/job.svg'
 import servicesIcon from '@/assets/icons/menu-icons/services.svg'

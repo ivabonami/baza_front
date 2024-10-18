@@ -1,9 +1,9 @@
 <template>
   <div class="banners" v-if="this.$route.path === '/'">
     <a class="payed-banner" href="https://Bitmafia.io" target="_blank">
-      <video data-v-ca4db2f6="" autoplay="" loop="" playsinline="">
-        <source data-v-ca4db2f6="" :src="banner2">
-      </video>
+      <img data-v-ca4db2f6=""
+           :src="banner2"
+           alt="">
     </a>
     <a class="payed-banner" href="https://t.me/kremlintop" target="_blank"><img data-v-ca4db2f6=""
                                                                                 :src="banner1"
@@ -20,7 +20,7 @@
 
 <script>
 import banner1 from '@/assets/payed_banners/design_ads-C3hEbYrH.gif'
-import banner2 from '@/assets/payed_banners/BitMafia x MixMafiaCROP-CXmqE8dO.webm'
+import banner2 from '@/assets/payed_banners/BitMafia x MixMafiaCROP-min.gif'
 import banner3 from '@/assets/payed_banners/IMG-3083-DU_WZax1.gif'
 import banner4 from '@/assets/payed_banners/3.gif'
 export default {

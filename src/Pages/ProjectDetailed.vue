@@ -83,7 +83,7 @@
       </div>
     </div>
 
-    <div class="project-products" v-if="productsStore.products.length > 0">
+    <div class="project-products" v-if="projectProductsStore.length > 0">
       <div class="products-navigation">
         <button-black
             v-if="userStore.username === project.userData.username || userStore.role === 'admin'"
@@ -104,7 +104,7 @@
         </button-black>
         <p>Витрина проекта</p>
       </div>
-      <div class="product" v-for="item of productsStore.products">
+      <div class="product" v-for="item of projectProductsStore">
         <ProductCard :item="item" :isEditable="userStore.role === 'admin'"  @click="() => {
           popup.show = true
           popup.component = 'ProductInfo'
@@ -156,7 +156,8 @@ import {getProducts} from "@/API/productsController.js";
 import ButtonBlack from "@/components/Buttons/ButtonBlack.vue";
 import {Waypoint} from "vue-waypoint";
 import {popup} from "@/js/controllers/popupController.js";
-import {productsStore} from "@/Stores/productsStore.js";
+import {projectProductsStore} from "@/Stores/projectProductsStore.js";
+
 
 
 export default {
@@ -175,7 +176,7 @@ export default {
       project: null,
       api,
       stats: {},
-      productsStore,
+      projectProductsStore,
       userStore,
       products: [],
       requestOptions: {
@@ -205,7 +206,7 @@ export default {
       this.requestOptions.projectId = this.project.id
       getProducts(this.requestOptions).then(result => {
         for (let product of result.data.products) {
-          productsStore.products.push(product)
+          projectProductsStore.push(product)
         }
         this.hasMore = result.data.products.length >= this.requestOptions.limit;
         this.requestOptions.offset = this.requestOptions.offset + this.requestOptions.limit
@@ -248,7 +249,7 @@ export default {
 
   },
   beforeUnmount() {
-    productsStore.products.splice(0, productsStore.products.length)
+    projectProductsStore.splice(0, projectProductsStore.length)
   }
 }
 </script>
