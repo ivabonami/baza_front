@@ -1,5 +1,5 @@
 <script setup>
-// import {openPopup} from "@/components/popups/PopupController.js";
+import {openPopup} from "@/components/popups/PopupController.js";
 import {popup} from "@/js/controllers/popupController.js";
 import {defineAsyncComponent, reactive} from "vue";
 import {notifications} from "@/js/notifications.js";
@@ -55,9 +55,6 @@ window.addEventListener('scroll', handleScroll);
 <template>
   <base-layout>
     <template #header>
-<!--          <span @click="openPopup()">-->
-<!--            open new modal-->
-<!--          </span>-->
       <base-header />
       <payed-banners />
     </template>

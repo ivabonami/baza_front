@@ -2,8 +2,8 @@
   <div class="links-input-wrapper">
     <div class="link-input">
       <div class="select-box">
-        <select :value="names[0]" >
-          <option v-for="name of names" @change="link.name = name" :value="name">{{name}}</option>
+        <select :value="names[0]" @change="link.name = $event.target.value" >
+          <option v-for="name of names" :value="name">{{name}}</option>
         </select>
       </div>
 
@@ -48,6 +48,7 @@ export default {
 
   methods: {
     checkField() {
+      console.log(this.link)
       if (this.link.link < 10 ) {
         addNotice({name: 'Что-то ссылка коротковата', type: 'warning'})
       } else {

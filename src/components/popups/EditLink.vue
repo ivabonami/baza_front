@@ -35,6 +35,7 @@
           :link="'https://t.me/bitmafia_bot'"
           @click="() => {
             this.loading = true
+            console.log(popup.link)
             this.closePopup()
           }">
         <div class="button-content">

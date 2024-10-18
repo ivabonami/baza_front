@@ -47,6 +47,7 @@ import AddProduct from "@/components/popups/AddProduct.vue";
 import EditLink from "@/components/popups/EditLink.vue";
 import DeleteLink from "@/components/popups/DeleteLink.vue";
 import DeleteCategory from "@/components/popups/DeleteCategory.vue";
+import ProjectDescription from "@/components/popups/ProjectDescription.vue";
 
 
 export default {
@@ -75,7 +76,8 @@ export default {
     SignIn,
     SignUp,
     SignOut,
-    UnlinkProjectToPlaceholder
+    UnlinkProjectToPlaceholder,
+    ProjectDescription
   },
   data() {
     return {

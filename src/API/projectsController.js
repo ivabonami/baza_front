@@ -50,6 +50,37 @@ export function getFavoriteProjects(options) {
 
     })
 }
+export function linksSorter(links) {
+    console.log(links)
+    let sortedLinks = {
+        clearnet: [],
+        clearnetVPN :[],
+        contacts: [],
+        telegram: [],
+        onion: [],
+        blockchain: [],
+        other: []
+    };
+
+    for (let link of links) {
+        if (link.name === 'Зеркало') { sortedLinks.clearnet.push({name: link.name, link: link.link})}
+        else if (link.name === 'Зеркало VPN') { sortedLinks.clearnetVPN.push({name: link.name, link: link.link})}
+        else if (link.name === 'Контакты') { sortedLinks.contacts.push({name: link.name, link: link.link})}
+        else if (link.name === 'Канал' || link.name === 'Бот') { sortedLinks.telegram.push({name: link.name, link: link.link})}
+        else if (link.name === 'Onion') { sortedLinks.onion.push({name: link.name, link: link.link})}
+        else if (link.name === 'Блокчейн') { sortedLinks.blockchain.push({name: link.name, link: link.link})}
+        else {sortedLinks.other.push({name: link.name, link: link.link})}
+    }
+
+
+    return sortedLinks.clearnet
+        .concat(sortedLinks.clearnetVPN)
+        .concat(sortedLinks.contacts)
+        .concat(sortedLinks.telegram)
+        .concat(sortedLinks.onion)
+        .concat(sortedLinks.blockchain)
+        .concat(sortedLinks.other)
+}
 
 export function addProject(project) {
     const headers = {

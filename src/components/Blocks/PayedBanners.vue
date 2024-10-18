@@ -19,10 +19,10 @@
 </template>
 
 <script>
-import banner1 from '@/assets/payed_banners/design_ads-C3hEbYrH.gif'
+import banner1 from '@/assets/payed_banners/design_ads-C3hEbYrH-min.gif'
 import banner2 from '@/assets/payed_banners/BitMafia x MixMafiaCROP-min.gif'
-import banner3 from '@/assets/payed_banners/IMG-3083-DU_WZax1.gif'
-import banner4 from '@/assets/payed_banners/3.gif'
+import banner3 from '@/assets/payed_banners/IMG-3083-DU_WZax1-min.gif'
+import banner4 from '@/assets/payed_banners/3-min.gif'
 export default {
   name: "PayedBanners.vue",
   data() {

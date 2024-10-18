@@ -72,11 +72,7 @@
       </div>
       <div class="links">
 
-        <project-link-item :data="link"
-                           v-for="(link, index) of project.links"
-                           :key="link"
-        >
-        </project-link-item>
+        <project-link-item :data="project.links" :return-links-count="999" :isEditable="true" />
       </div>
     </div>
 

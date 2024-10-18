@@ -46,10 +46,8 @@
             <span v-if="$props.project.name">{{ $props.project.name }}</span>
           </div>
           <div class="project_links">
-            <project-link-item :data="link"
-                               v-for="(link, index) of $props.project.links"
-                               :key="link"
-                               v-show="index < 2"
+            <project-link-item :data="$props.project.links"
+                               :returnLinksCount="2"
                                @click.stop
             >
             </project-link-item>

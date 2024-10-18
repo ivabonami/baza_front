@@ -32,12 +32,15 @@
           <p>
             {{ project.description }}
           </p>
+
+          <span class="more-toggle" v-if="hideDescription" @click="toggleDescription(project.description)">
+              полное описание
+          </span>
         </div>
         <div class="project-info-description_links">
           <div>
-            <project-link-item :data="link"
-                               v-for="(link, index) of project.links"
-                               :key="link"
+            <project-link-item :data="project.links"
+                               :returnLinksCount="999"
                                @click.stop
             >
             </project-link-item>
@@ -139,7 +142,7 @@
   </div>
 </template>
 <script>
-import {getProject} from "@/API/projectsController.js";
+import {getProject, linksSorter} from "@/API/projectsController.js";
 import {addNotice} from "@/js/notifications.js";
 import {api} from "@/API/apiurl.js";
 import ProjectStatsItem from "@/components/Layout/Project/ProjectStatsItem.vue";
@@ -179,16 +182,23 @@ export default {
       projectProductsStore,
       userStore,
       products: [],
+      hideDescription: false,
       requestOptions: {
         projectId: null,
         limit: 10,
         offset: 0
       },
+      linksSorter,
       popup,
       hasMore: true
     }
   },
   methods: {
+    toggleDescription(text) {
+      popup.component = 'ProjectDescription'
+      popup.show = true
+      popup.project = this.project
+    },
     onFavorite(id, name) {
 
 
@@ -208,6 +218,7 @@ export default {
         for (let product of result.data.products) {
           projectProductsStore.push(product)
         }
+
         this.hasMore = result.data.products.length >= this.requestOptions.limit;
         this.requestOptions.offset = this.requestOptions.offset + this.requestOptions.limit
       })
@@ -231,6 +242,8 @@ export default {
                 data: this.project.reviewsCount
               },
             }
+
+            this.project.description.length >= 222 ? this.hideDescription = true : this.hideDescription = false
           })
           .catch(error => {
             addNotice({name: error.response.data.message, type: 'danger'})
@@ -243,7 +256,7 @@ export default {
     }
   },
   mounted() {
-    productsStore.products.splice(0, productsStore.products.length)
+    projectProductsStore.splice(0, projectProductsStore.length)
     this.onGetProject(this.$route.path.replace('/project/', ''))
 
 
@@ -291,6 +304,16 @@ export default {
       font-style: normal;
       font-weight: 400;
     }
+  }
+}
+.more-toggle {
+  cursor: pointer;
+  display: block;
+  margin-top: 5px;
+  transition: .3s ease;
+
+  &:hover {
+    color: #5D599F;
   }
 }
 .project {
@@ -431,7 +454,7 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: 5;
+        -webkit-line-clamp: 4;
         -webkit-box-orient: vertical;
       }
 
