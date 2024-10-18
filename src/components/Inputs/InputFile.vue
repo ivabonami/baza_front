@@ -90,7 +90,6 @@ export default {
   justify-content: center;
   flex-wrap: wrap;
   min-height: 80px;
-  height: 100%;
   position: relative;
 
   input {

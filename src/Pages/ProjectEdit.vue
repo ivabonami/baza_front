@@ -244,7 +244,7 @@ export default {
 
     .project-avatar {
       width: 180px;
-      height: 180px;
+      height: auto;
 
     }
 
