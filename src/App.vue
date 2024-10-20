@@ -1,5 +1,4 @@
 <script setup>
-import {openPopup} from "@/components/popups/PopupController.js";
 import {popup} from "@/js/controllers/popupController.js";
 import {defineAsyncComponent, reactive} from "vue";
 import {notifications} from "@/js/notifications.js";
@@ -72,15 +71,6 @@ window.addEventListener('scroll', handleScroll);
   <ThePopup v-if="popup.show" />
 
   <yandex-metrica />
-
-  <the-baza-popup>
-    <template #header>
-      Kill meKill meKill meKill meKill meKill meKill meKill meKill meKill meKill meKill meKill meKill meKill meKill meKill meKill meKill me
-    </template>
-    <template #component>
-      <payed-banners />
-    </template>
-  </the-baza-popup>
 
   <TheNotifications v-if="notifications.length > 0" />
 

@@ -5,6 +5,8 @@
         :style="placeholder.style"
         v-if="placeholder.project"
         :project="placeholder.project"
+        :placeholderId="placeholder.id"
+        :placeholder-menu="true"
         style="min-height: 100%"
     />
 
@@ -28,74 +30,18 @@
           Забронировать
         </div>
       </button-black-outline>
-
-
-
     </div>
 
-    <div class="admin-menu">
-      <the-placeholder-card-admin-menu
-          v-if="userStore.role === 'admin' && this.$route.path === '/payed-editor'"
-          :isProjectLinked="placeholder.project"
-          @removeProjectToPlaceholder="callUnlinkProjectModal($props.placeholder.id, placeholder.project.id)"
-          @addProjectToPlaceholder="callLinkProjectModal($props.placeholder.id)"
-          @deletePlaceholder="onDeletePlaceholder($props.placeholder)"
-          @editPlaceholder="onEditPlaceholder($props.placeholder)"
-      />
-    </div>
   </div>
 </template>
-<script>
-import projectCard from "@/components/Layout/Project/ProjectCard.vue";
+<script setup>
+import ProjectCard from "@/components/Layout/Project/ProjectCard.vue";
+import ButtonBlackOutline from "@/components/Buttons/ButtonBlackOutline.vue";
+import {ref} from "vue";
 
-
-import {deletePlaceholder, placeholders} from "@/API/placeholders.js";
-import {addNotice} from "@/js/notifications.js";
-import thePlaceholderCardAdminMenu from "@/components/Layout/Project/ThePlaceholderCardAdminMenu.vue";
-import {popup} from "@/js/controllers/popupController.js";
-import buttonBlackOutline from "@/components/Buttons/ButtonBlackOutline.vue";
-import {userStore} from "@/Stores/userStore.js";
-
-export default {
-  name: 'ThePlaceholder',
-  props: {
-    placeholder: {}
-  },
-  components: {
-    thePlaceholderCardAdminMenu,
-    projectCard,
-    buttonBlackOutline
-  },
-  data  () {
-    return {
-      userStore
-    }
-  },
-  methods: {
-    onDeletePlaceholder(placeholder) {
-      popup.show = true
-      popup.placeholder = placeholder
-      popup.component = 'DeletePlaceholder'
-    },
-    onEditPlaceholder(placeholder) {
-      popup.show = true
-      popup.placeholder = placeholder
-      popup.component = 'EditPlaceholders'
-    },
-    callLinkProjectModal(placeholderId) {
-      popup.show = true
-      popup.placeholderId = placeholderId
-      popup.component = 'LinkProjectToPlaceholder'
-    },
-
-    callUnlinkProjectModal(placeholderId, projectId) {
-      popup.show = true
-      popup.placeholderId = placeholderId
-      popup.projectId = projectId
-      popup.component = 'UnlinkProjectToPlaceholder'
-    }
-  }
-}
+const props = defineProps({
+  placeholder: ref(Object)
+})
 </script>
 <style scoped lang="scss">
 

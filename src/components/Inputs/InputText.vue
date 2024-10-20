@@ -1,6 +1,5 @@
 <template>
   <label class="input-wrapper">
-    <inline-svg :src="$props.data.icon" v-if="$props.data"/>
     <input type="text"
            v-model="inputData"
            :placeholder="$props.placeholder || $props.data.placeholder"
@@ -37,5 +36,7 @@ export default {
 </script>
 
 <style scoped>
-
+.input-wrapper {
+  height: 40px;
+}
 </style>

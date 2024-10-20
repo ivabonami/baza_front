@@ -37,7 +37,7 @@
 
 }
 a {
-  padding: 0 10px;
+  padding: 0 5px;
   width: 100%;
 }
 </style>

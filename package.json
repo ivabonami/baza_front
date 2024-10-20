@@ -10,9 +10,10 @@
     "preview": "cross-env NODE_ENV=development vite preview"
   },
   "dependencies": {
-    "@vueuse/core": "^11.0.1",
+    "@vueuse/core": "^11.1.0",
     "cross-env": "^7.0.3",
     "env": "^0.0.2",
+    "image-compressor": "^2.0.3",
     "jwt-decode": "^4.0.0",
     "vue": "^3.4.29",
     "vue-inline-svg": "^3.1.3",

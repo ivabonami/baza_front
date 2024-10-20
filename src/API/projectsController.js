@@ -125,6 +125,7 @@ export function pinUnpinProject(project) {
     const headers = {
         'Authorization': `Bearer ${userStore.token}`
     };
+
     let payed, message;
 
     if (project.payed) {
@@ -137,7 +138,7 @@ export function pinUnpinProject(project) {
 
     project.payed = !project.payed
 
-    axios.put(`${api.url}projects/${project.id}`, project, {headers})
+    return axios.put(`${api.url}projects/${project.id}`, project, {headers})
         .then(result => {
             addNotice({name: 'Проект ' + project.name + ' успешно ' + message + '!', type: 'success'})
         })

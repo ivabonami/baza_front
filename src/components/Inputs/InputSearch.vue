@@ -55,29 +55,25 @@
                    v-for="item of liveResults"
                    :key="item"
       >
-        <router-link :to="`/project/` + item.project.id" v-if="!item.type && item.project">
-          <div class="project" data-dropdown="dropdownSearch">
-            <div class="avatar" data-dropdown="dropdownSearch">
-              <img :src="api.url + item.project.avatarFilePath" alt="" data-dropdown="dropdownSearch">
-            </div>
-            <div class="info" data-dropdown="dropdownSearch">
-              <div class="name" data-dropdown="dropdownSearch">{{item.project.name}}</div>
-              <div class="description" data-dropdown="dropdownSearch">{{item.project.description}}</div>
-            </div>
+        <div class="project" v-if="item.project" data-dropdown="dropdownSearch" @click="$emit('projectSelected', item.project ? item.project : item)">
+          <div class="avatar" data-dropdown="dropdownSearch">
+            <img :src="api.url + item.project.avatarFilePath" alt="" data-dropdown="dropdownSearch">
           </div>
-        </router-link>
+          <div class="info" data-dropdown="dropdownSearch">
+            <div class="name" data-dropdown="dropdownSearch">{{item.project.name}}</div>
+            <div class="description" data-dropdown="dropdownSearch">{{item.project.description}}</div>
+          </div>
+        </div>
 
-        <router-link :to="`/project/` + item.id" v-if="item.type" >
-          <div class="project" data-dropdown="dropdownSearch" >
-            <div class="avatar" data-dropdown="dropdownSearch">
-              <img :src="api.url + item.avatarFilePath" alt="" data-dropdown="dropdownSearch">
-            </div>
-            <div class="info" data-dropdown="dropdownSearch">
-              <div class="name" data-dropdown="dropdownSearch">{{item.name}}</div>
-              <div class="description" data-dropdown="dropdownSearch">{{item.description}}</div>
-            </div>
+        <div class="project" v-else data-dropdown="dropdownSearch" @click="$emit('projectSelected', item)">
+          <div class="avatar" data-dropdown="dropdownSearch">
+            <img :src="api.url + item.avatarFilePath" alt="" data-dropdown="dropdownSearch">
           </div>
-        </router-link>
+          <div class="info" data-dropdown="dropdownSearch">
+            <div class="name" data-dropdown="dropdownSearch">{{item.name}}</div>
+            <div class="description" data-dropdown="dropdownSearch">{{item.description}}</div>
+          </div>
+        </div>
 
 
 
@@ -246,7 +242,7 @@ input {
 }
 
 .dropdownSearchItems {
-  max-width: 63%;
+  max-width: 100%;
   position: absolute;
   z-index: 31;
   box-sizing: border-box;
@@ -254,7 +250,7 @@ input {
   padding: 10px;
   top: 60px;
   right: 50%;
-  transform: translateX(43%);
+  transform: translateX(50%);
   border-radius: 20px;
   width: 100%;
   cursor: pointer;

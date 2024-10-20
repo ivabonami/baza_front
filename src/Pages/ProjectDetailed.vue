@@ -39,11 +39,12 @@
         </div>
         <div class="project-info-description_links">
           <div>
-            <project-link-item :data="project.links"
-                               :returnLinksCount="999"
-                               @click.stop
+            <project-links
+                :project-links="project.links"
+                :show-count="999"
+                :is-editable="false"
             >
-            </project-link-item>
+            </project-links>
           </div>
         </div>
 
@@ -146,7 +147,7 @@ import {getProject, linksSorter} from "@/API/projectsController.js";
 import {addNotice} from "@/js/notifications.js";
 import {api} from "@/API/apiurl.js";
 import ProjectStatsItem from "@/components/Layout/Project/ProjectStatsItem.vue";
-import ProjectLinkItem from "@/components/Layout/Project/ProjectLinkItem.vue";
+import ProjectLinks from "@/components/Layout/Project/ProjectParts/ProjectLinks.vue";
 import ProjectReviews from "@/components/Layout/Project/ProjectReviews.vue";
 import iconStar from "@/assets/icons/icon-star.svg";
 import iconView from "@/assets/icons/icon-views.svg";
@@ -168,7 +169,7 @@ export default {
   components: {
     ProjectReviews,
     ProjectStatsItem,
-    ProjectLinkItem,
+    ProjectLinks,
     ProductCard,
     ButtonBlack,
     Waypoint

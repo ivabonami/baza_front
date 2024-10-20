@@ -5,8 +5,7 @@
            'fake-placeholder': !loading.success && !loading.error,
            'payed': $props.project.payed === true}"
   >
-      <div class="project"
-           >
+      <div class="project" v-if="$props.project">
         <div class="favorite-wrapper" v-if="userStore.token"  @click.prevent>
           <button class="favorite"
                   @click.prevent
@@ -33,12 +32,7 @@
               }"
           />
 
-          <div class="admin-menu" v-if="userStore.role === 'admin'">
-            <AdminMenu @click.prevent
-                       :project="$props.project"
-                       v-if=" userStore.role === 'admin'"
-            />
-          </div>
+
         </div>
 
         <div class="project_data">
@@ -46,20 +40,13 @@
             <span v-if="$props.project.name">{{ $props.project.name }}</span>
           </div>
           <div class="project_links">
-            <project-link-item :data="$props.project.links"
-                               :returnLinksCount="2"
+            <project-link-item :project-links="$props.project.links"
+                               :project-name="$props.project.name"
+                               :show-count="2"
+                               v-if="$props.project.links"
                                @click.stop
             >
             </project-link-item>
-            <div class="show-more" @click.prevent
-                 @click="() => {
-                   popup.show = true
-                   popup.project = $props.project
-                   popup.component = 'ProjectLinks'
-                 }"
-                 v-if="$props.project.links.length > 2">
-              ...
-            </div>
 
 
           </div>
@@ -112,13 +99,13 @@ export default {
       timeout: 3000
     }),
     ProjectLinkItem: defineAsyncComponent({
-      loader: () => import("@/components/Layout/Project/ProjectLinkItem.vue"),
+      loader: () => import("@/components/Layout/Project/ProjectParts/ProjectLinks.vue"),
       delay: 200,
       timeout: 3000
     }),
 
     AdminMenu: defineAsyncComponent({
-      loader: () => import("@/components/Layout/Project/ProjectCardAdminMenu.vue"),
+      loader: () => import("@/components/Layout/Project/ProjectControllers/ProjectMenuController.vue"),
       delay: 200,
       timeout: 3000
     }),
@@ -129,7 +116,6 @@ export default {
   },
   props: {
     project: {
-
       name: null,
       id: null,
       avatarFilePath: null,
@@ -137,7 +123,9 @@ export default {
       viewCount: null,
       reviewCount: null,
       reserve: null
-    }
+    },
+    placeholderMenu: false,
+    placeholderId: null
   },
   data() {
     return {
@@ -172,7 +160,6 @@ export default {
 
   methods: {
     onFavorite(id, name) {
-
       let project;
 
       if (projects.find(item => item.id === id)) {
@@ -246,7 +233,7 @@ export default {
   }
 
   .project {
-
+    min-height: 350px;
     padding: 10px 10px 50px 10px;
     width: 100%;
     box-sizing: border-box;

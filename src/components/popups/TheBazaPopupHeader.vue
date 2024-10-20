@@ -65,7 +65,7 @@ export default {
   .popup-header-text {
     color: #191B2A;
     text-align: center;
-    font-size: 30px;
+    font-size: 25px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;

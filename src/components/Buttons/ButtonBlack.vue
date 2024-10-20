@@ -1,6 +1,6 @@
 <template>
 
-  <div style="width: 100%">
+  <div style="width: 100%;">
     <button @click="$emit('buttonPressed')" class="button primary" :disabled="props.disabled" v-if="props.type === 'button'">
       <slot />
     </button>
@@ -23,14 +23,13 @@ const props = defineProps({
 
 <style scoped lang="scss">
 .button {
+  width: 100%;
   background: #191B2A;
   color: #F8F7FC;
   box-sizing: border-box;
-  font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  height: 100%;
 
   &:disabled {
     opacity: .5;

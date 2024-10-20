@@ -212,10 +212,11 @@ export default {
     }
   }
   .search {
-    width: 80%;
+    width: 30%;
   }
   .menu {
-
+    width: 110%;
+    justify-content: end;
   }
   .auth {
     align-items: center;

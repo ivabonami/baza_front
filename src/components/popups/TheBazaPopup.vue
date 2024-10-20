@@ -1,18 +1,23 @@
 <template>
-  <div class="popup" @click="closeModalByClickOutside" v-if="popup.isVisible">
+  <div class="popup">
     <div class="popup-body">
       <div class="popup-body_content" ref="popupBody">
         <div class="popup-body_content_header">
-          <the-baza-popup-header
-              @closePopup="closeModal">
-            <slot name="header" />
+          <the-baza-popup-header @closePopup="emits('closePopup')">
+            <div class="modal-header">
+              {{ props.headline }}
+            </div>
           </the-baza-popup-header>
 
         </div>
-        <div class="popup-body_content_body">
-          <slot name="component" />
+        <div class="popup-body_content_body" id="modalBody" @click.stop>
+          <slot />
         </div>
       </div>
+
+    </div>
+
+    <div class="popup-backdrop" @click="emits('closePopup')">
 
     </div>
 
@@ -20,27 +25,17 @@
 </template>
 
 <script setup>
-import {onMounted, onUnmounted, ref} from "vue";
-import {popup} from "@/components/popups/PopupController.js";
+import {ref} from "vue";
 import TheBazaPopupHeader from "@/components/popups/TheBazaPopupHeader.vue";
+
+const props = defineProps({
+  headline: ref(String)
+})
+const emits = defineEmits(['closePopup'])
+
 const popupBody = ref(null)
 
-const closeModal = () => popup.isVisible = false
 
-const closeModalByClickOutside = (e) => {
-  if (!popupBody.value.contains(e.target)) {
-    closeModal()
-  }
-}
-
-onMounted(() => {
-  if (popup.isVisible) {
-    document.documentElement.style.overflow = 'hidden'
-  }
-})
-onUnmounted(() => {
-  document.documentElement.style.overflow = 'auto'
-})
 </script>
 
 <style scoped lang="scss">
@@ -53,11 +48,21 @@ onUnmounted(() => {
   bottom: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(112, 113, 140, 0.35);
-  backdrop-filter: blur(5px);
-  z-index: 50;
+
+  .popup-backdrop {
+    background-color: rgba(112, 113, 140, 0.35);
+    backdrop-filter: blur(5px);
+    z-index: 50;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+  }
 
   .popup-body {
+    z-index: 51;
     position: relative;
     box-sizing: border-box;
     outline: none;
@@ -68,7 +73,7 @@ onUnmounted(() => {
     max-width: 80vw;
     height: fit-content;
     max-height: 80vh;
-    min-height: 30vh;
+    min-height: 15vh;
     left: 50%;
     top: 50%;
     translate: -50% -50%;
@@ -93,7 +98,7 @@ onUnmounted(() => {
   }
 
   .popup-body_content {
-    padding: 40px;
+    padding: 20px;
     box-sizing: border-box;
     width: 100%;
     height: 100%;

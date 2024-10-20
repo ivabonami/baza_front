@@ -78,10 +78,10 @@
         <input-links @dataChanged="emit => project.links.push(emit)"/>
       </div>
       <div class="links">
-        <div class="link-wrapper"
+        <div class="link-wrapper" style="width: 100%; overflow: hidden"
         >
 
-          <project-link-item :data="project.links" :return-links-count="999" :isEditable="true" />
+          <project-links :project-links="project.links" :show-count="999" :isEditable="true" />
 
 
         </div>
@@ -105,11 +105,11 @@ import InputTextarea from "@/components/Inputs/InputTextarea.vue";
 import ButtonAdvanced from "@/components/Buttons/ButtonAdvanced.vue"
 import {categories} from "@/Stores/categories.js";
 import {addNotice} from "@/js/notifications.js";
-import projectLinkItem from "@/components/Layout/Project/ProjectLinkItem.vue";
 import InputLinks from "@/components/Inputs/InputLinks.vue";
 import {editProject, getProject, linksSorter} from "@/API/projectsController.js";
 import {userStore} from "@/Stores/userStore.js";
 import {popup} from "@/js/controllers/popupController.js";
+import ProjectLinks from "@/components/Layout/Project/ProjectParts/ProjectLinks.vue";
 
 export default {
   name: "Project_Add.vue",
@@ -118,7 +118,7 @@ export default {
     InputFile,
     InputText,
     InputTextarea,
-    projectLinkItem,
+    ProjectLinks,
     InputLinks
   },
 

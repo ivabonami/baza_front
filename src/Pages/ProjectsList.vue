@@ -28,6 +28,13 @@
               v-else-if="project.type"
               :project="project"
           />
+          <AdminMenu @click.prevent
+                     :advanced-menu="!project.type"
+                     :placeholder-menu="project.project"
+                     :project="project.project ? project.project : project"
+                     :placeholderId="project.id"
+                     v-if=" userStore.role === 'admin' || userStore.username === project.userData.username"
+          />
         </div>
       </transition-group>
 
@@ -76,6 +83,8 @@ import productsCarouselMenu from "@/components/Blocks/ProductsCarouselMenu.vue";
 import thePlaceholder from "@/components/Layout/Project/ThePlaceholder.vue";
 import {placeholders} from "@/API/placeholders.js";
 import ButtonBlack from "@/components/Buttons/ButtonBlack.vue";
+import {userStore} from "@/Stores/userStore.js";
+
 export default {
   name: 'ProjectsList.vue',
   components: {
@@ -115,6 +124,11 @@ export default {
       delay: 200,
       timeout: 3000
     }),
+    AdminMenu: defineAsyncComponent({
+      loader: () => import("@/components/Layout/Project/ProjectControllers/ProjectMenuController.vue"),
+      delay: 200,
+      timeout: 3000
+    }),
     Waypoint
   },
   watch: {
@@ -147,6 +161,7 @@ export default {
         isPayedFirst: true,
         sort: null
       },
+      userStore,
       placeholders,
       projectsSortsStore: allSorts,
       result: null,
@@ -217,6 +232,7 @@ export default {
   gap: 2.5%;
 
   .project-box {
+    position: relative;
     width: 23%;
     box-sizing: border-box;
     margin-bottom: 1.5%;

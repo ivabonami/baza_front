@@ -16,7 +16,6 @@ export default {
   background: #F8F7FC;
   color: #191B2A;
   box-sizing: border-box;
-  font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
