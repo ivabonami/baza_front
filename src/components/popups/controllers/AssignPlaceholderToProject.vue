@@ -6,7 +6,7 @@
          :style="placeholder.style"
          v-for="placeholder of placeholders.categoryPlaceholders"
     >
-      <div class="placeholder" @click="assignProject(placeholder.id, placeholder.project)">
+      <div class="placeholder" @click="assignProject(placeholder, data.project)">
         <div class="project" v-if="placeholder.project">
           <div class="image">
             <img :src="api.url + placeholder.project.avatarFilePath" alt="">
@@ -47,19 +47,14 @@ getPlaceholders(route.query.categoryIds).then(() => {
 })
 
 
-const assignProject = (placeholderId, placeholderProject) => {
-  console.log(placeholderProject, props.data)
-  if(placeholderProject) {
-    relinkProjectToPlaceholder(placeholderId, props.data)
+const assignProject = (placeholder, project) => {
+
+
+  if(placeholder.project) {
+    relinkProjectToPlaceholder(placeholder.id, project)
+    console.log(project)
   } else {
-    linkProjectWithPlaceholder(placeholderId, props.data.id).then(result => {
-      try {
-        placeholders.categoryPlaceholders.find(item => item.id = placeholderId).project = getProject(props.data)
-      } catch (err) {
-
-      }
-
-    })
+    linkProjectWithPlaceholder(placeholder.id, project)
   }
   emits('closePopup')
 }
@@ -72,7 +67,7 @@ const assignProject = (placeholderId, placeholderProject) => {
   flex-wrap: wrap;
   gap: 10px;
   width: 100%;
-  min-width: 1000px;
+  box-sizing: border-box;
 
   .small-placeholder {
     width: 24%;
@@ -136,6 +131,12 @@ const assignProject = (placeholderId, placeholderProject) => {
       border-color: #191B2A;
       box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
     }
+  }
+}
+
+@media screen and (max-width: 500px){
+  .assign-wrapper .small-placeholder {
+    width: 100%;
   }
 }
 </style>

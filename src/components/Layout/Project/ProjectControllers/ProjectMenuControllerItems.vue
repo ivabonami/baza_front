@@ -3,25 +3,51 @@
     <div class="menu-item" v-if="advancedMenu && userStore.role === 'admin'">
       <button-black
           title="Изменить заглушку"
-          @button-pressed="popup.isVisible = true; component = PlaceholderEdit; componentData.data = placeholderId; popupHeadline = 'Изменить заглушку'"
+          @button-pressed="popup.isVisible = true; component = PlaceholderEdit; componentData.data = placeholder; popupHeadline = 'Изменить заглушку'"
           :type="'button'"
           :style="'filled'">
         <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M10 3.99998H5.8C4.11984 3.99998 3.27976 3.99998 2.63803 4.32696C2.07354 4.61458 1.6146 5.07353 1.32698 5.63801C1 6.27975 1 7.11983 1 8.79998V17.2C1 18.8801 1 19.7202 1.32698 20.362C1.6146 20.9264 2.07354 21.3854 2.63803 21.673C3.27976 22 4.11984 22 5.8 22H14.2C15.8802 22 16.7202 22 17.362 21.673C17.9265 21.3854 18.3854 20.9264 18.673 20.362C19 19.7202 19 18.8801 19 17.2V13M6.99997 16H8.67452C9.1637 16 9.40829 16 9.63846 15.9447C9.84254 15.8957 10.0376 15.8149 10.2166 15.7053C10.4184 15.5816 10.5914 15.4086 10.9373 15.0627L20.5 5.49998C21.3284 4.67156 21.3284 3.32841 20.5 2.49998C19.6716 1.67156 18.3284 1.67155 17.5 2.49998L7.93723 12.0627C7.59133 12.4086 7.41838 12.5816 7.29469 12.7834C7.18504 12.9624 7.10423 13.1574 7.05523 13.3615C6.99997 13.5917 6.99997 13.8363 6.99997 14.3255V16Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
+      </button-black>
+    </div>
+
+    <div class="menu-item" v-if="advancedMenu && userStore.role === 'admin'">
+      <button-black
+          title="Удалить заглушку"
+          @button-pressed="popup.isVisible = true; component = PlaceholderDelete; componentData.data = placeholder; popupHeadline = 'Удалить'"
+          :type="'button'"
+          :style="'filled'">
+        <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 5V4.2C14 3.0799 14 2.51984 13.782 2.09202C13.5903 1.71569 13.2843 1.40973 12.908 1.21799C12.4802 1 11.9201 1 10.8 1H9.2C8.07989 1 7.51984 1 7.09202 1.21799C6.71569 1.40973 6.40973 1.71569 6.21799 2.09202C6 2.51984 6 3.0799 6 4.2V5M1 5H19M17 5V16.2C17 17.8802 17 18.7202 16.673 19.362C16.3854 19.9265 15.9265 20.3854 15.362 20.673C14.7202 21 13.8802 21 12.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+
 
 
       </button-black>
     </div>
 
-    <div class="menu-item" v-if="placeholderMenu && userStore.role === 'admin'">
+    <div class="menu-item" v-if="!project.placeholderId && !project.position && userStore.role === 'admin'">
       <button-black
-          title="Поменять проект в заглушке"
-          @button-pressed="popup.isVisible = true; component = SearchProject; componentData.data = placeholderId; popupHeadline = 'Переназначить проект'"
+          title="Залинковать проект к заглушке"
+          @button-pressed="popup.isVisible = true; component = AssignPlaceholderToProject; componentData.data = {project: project}"
           :type="'button'"
           :style="'filled'">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M5 5L7 3M7 3L5 1M7 3H5C2.79086 3 1 4.79086 1 7M17 17L15 19M15 19L17 21M15 19H17C19.2091 19 21 17.2091 21 15M12.4172 12.4172C13.1994 12.7908 14.0753 13 15 13C18.3137 13 21 10.3137 21 7C21 3.68629 18.3137 1 15 1C11.6863 1 9 3.68629 9 7C9 7.92472 9.20919 8.80057 9.58283 9.58283M13 15C13 18.3137 10.3137 21 7 21C3.68629 21 1 18.3137 1 15C1 11.6863 3.68629 9 7 9C10.3137 9 13 11.6863 13 15Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8.99999 12C9.42944 12.5741 9.97734 13.0491 10.6065 13.3929C11.2357 13.7367 11.9315 13.9411 12.6466 13.9923C13.3618 14.0435 14.0796 13.9403 14.7513 13.6897C15.4231 13.4392 16.0331 13.047 16.54 12.54L19.54 9.53997C20.4508 8.59695 20.9547 7.33394 20.9434 6.02296C20.932 4.71198 20.4061 3.45791 19.4791 2.53087C18.552 1.60383 17.298 1.07799 15.987 1.0666C14.676 1.0552 13.413 1.55918 12.47 2.46997L10.75 4.17997M13 9.99996C12.5705 9.42584 12.0226 8.95078 11.3934 8.60703C10.7642 8.26327 10.0685 8.05885 9.35334 8.00763C8.63819 7.95641 7.9204 8.0596 7.24864 8.31018C6.57688 8.56077 5.96687 8.9529 5.45999 9.45996L2.45999 12.46C1.5492 13.403 1.04522 14.666 1.05662 15.977C1.06801 17.288 1.59385 18.542 2.52089 19.4691C3.44793 20.3961 4.702 20.9219 6.01298 20.9333C7.32396 20.9447 8.58697 20.4408 9.52999 19.53L11.24 17.82" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+
+      </button-black>
+    </div>
+
+    <div class="menu-item" v-if="!project.type && userStore.role === 'admin'">
+      <button-black
+          title="Залинковать проект"
+          @button-pressed="popup.isVisible = true; component = SearchProject; componentData.data = placeholder; popupHeadline = 'Залинковать'"
+          :type="'button'"
+          :style="'filled'">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11.7076 17.3639L10.2933 18.7781C8.34072 20.7308 5.1749 20.7308 3.22228 18.7781C1.26966 16.8255 1.26966 13.6597 3.22228 11.7071L4.63649 10.2929M17.3644 11.7071L18.7786 10.2929C20.7312 8.34024 20.7312 5.17441 18.7786 3.22179C16.826 1.26917 13.6602 1.26917 11.7076 3.22179L10.2933 4.636M7.50045 14.4999L14.5005 7.49994" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
 
       </button-black>
@@ -29,23 +55,11 @@
     <div class="menu-item" v-if="placeholderMenu && userStore.role === 'admin'">
       <button-black
           title="Убрать проект из заглушки"
-          @button-pressed="popup.isVisible = true; component = RemoveProjectFromPlaceholder; componentData.data = { project: project, placeholderId: placeholderId}; popupHeadline = 'Убрать проект из заглушки'"
+          @button-pressed="popup.isVisible = true; component = RemoveProjectFromPlaceholder; componentData.data = project; popupHeadline = 'Разлинковать'"
           :type="'button'"
           :style="'filled'">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M8 3V1M14 19V21M3 8H1M19 14H21M3.91421 3.91421L2.5 2.5M18.0858 18.0858L19.5 19.5M11 16.6569L8.87868 18.7782C7.31658 20.3403 4.78392 20.3403 3.22183 18.7782C1.65973 17.2161 1.65973 14.6834 3.22183 13.1213L5.34315 11M16.6569 11L18.7782 8.87868C20.3403 7.31658 20.3403 4.78392 18.7782 3.22183C17.2161 1.65973 14.6834 1.65973 13.1213 3.22183L11 5.34315" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-
-      </button-black>
-    </div>
-    <div class="menu-item" v-if="!project.placeholderId && !project.position && userStore.role === 'admin'">
-      <button-black
-          title="Залинковать проект к заглушке"
-          @button-pressed="popup.isVisible = true; component = AssignPlaceholderToProject; componentData.data = project"
-          :type="'button'"
-          :style="'filled'">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M8.99999 12C9.42944 12.5741 9.97734 13.0491 10.6065 13.3929C11.2357 13.7367 11.9315 13.9411 12.6466 13.9923C13.3618 14.0435 14.0796 13.9403 14.7513 13.6897C15.4231 13.4392 16.0331 13.047 16.54 12.54L19.54 9.53997C20.4508 8.59695 20.9547 7.33394 20.9434 6.02296C20.932 4.71198 20.4061 3.45791 19.4791 2.53087C18.552 1.60383 17.298 1.07799 15.987 1.0666C14.676 1.0552 13.413 1.55918 12.47 2.46997L10.75 4.17997M13 9.99996C12.5705 9.42584 12.0226 8.95078 11.3934 8.60703C10.7642 8.26327 10.0685 8.05885 9.35334 8.00763C8.63819 7.95641 7.9204 8.0596 7.24864 8.31018C6.57688 8.56077 5.96687 8.9529 5.45999 9.45996L2.45999 12.46C1.5492 13.403 1.04522 14.666 1.05662 15.977C1.06801 17.288 1.59385 18.542 2.52089 19.4691C3.44793 20.3961 4.702 20.9219 6.01298 20.9333C7.32396 20.9447 8.58697 20.4408 9.52999 19.53L11.24 17.82" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
 
       </button-black>
@@ -114,14 +128,15 @@ import {pinUnpinProject} from "@/API/projectsController.js";
 import {userStore} from "@/Stores/userStore.js";
 import SearchProject from '@/components/Blocks/SearchProject.vue'
 import ProjectDelete from '@/components/popups/controllers/ProjectDelete.vue'
-import PlaceholderEdit from '@/components/popups/controllers/PlaceholderEdit.vue'
+import PlaceholderEdit from '@/components/popups/controllers/placeholders/PlaceholderEdit.vue'
+import PlaceholderDelete from '@/components/popups/controllers/placeholders/PlaceholderDelete.vue'
 
 const popupHeadline = 'Выполните действие'
 const router = useRouter()
 const props = defineProps({
   project: null,
   advancedMenu: ref(Boolean),
-  placeholderId: ref(null),
+  placeholder: ref(null),
   placeholderMenu: ref(Boolean)
 })
 

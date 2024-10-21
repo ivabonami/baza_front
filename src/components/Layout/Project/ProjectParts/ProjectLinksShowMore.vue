@@ -7,7 +7,7 @@
 
     <Teleport to="body" v-if="popup.isVisible">
       <the-baza-popup
-          :headline="'Ссылки проекта ' + projectName"
+          :headline="projectName"
           @closePopup="popup.isVisible = false"
       >
         <project-links :project-links="links" :show-count="999" :isEditable="false" />

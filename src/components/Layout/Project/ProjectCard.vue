@@ -40,13 +40,13 @@
             <span v-if="$props.project.name">{{ $props.project.name }}</span>
           </div>
           <div class="project_links">
-            <project-link-item :project-links="$props.project.links"
+            <project-links :project-links="$props.project.links"
                                :project-name="$props.project.name"
                                :show-count="2"
                                v-if="$props.project.links"
                                @click.stop
             >
-            </project-link-item>
+            </project-links>
 
 
           </div>
@@ -98,7 +98,7 @@ export default {
       delay: 200,
       timeout: 3000
     }),
-    ProjectLinkItem: defineAsyncComponent({
+    ProjectLinks: defineAsyncComponent({
       loader: () => import("@/components/Layout/Project/ProjectParts/ProjectLinks.vue"),
       delay: 200,
       timeout: 3000

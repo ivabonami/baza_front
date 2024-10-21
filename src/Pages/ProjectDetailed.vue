@@ -312,6 +312,12 @@ export default {
   display: block;
   margin-top: 5px;
   transition: .3s ease;
+  color: #7c7c7c;
+  border-bottom: 1px solid rgba(124, 124, 124, 0.38);
+  width: fit-content;
+  &:hover {
+    color: #191B2A;
+  }
 
   &:hover {
     color: #5D599F;

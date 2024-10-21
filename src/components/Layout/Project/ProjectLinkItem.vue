@@ -1,19 +1,18 @@
 <template>
   <div class="links-wrapper">
-    <a v-if="$props.data" class="link"
-       v-for="link of linksSorter($props.data)"
+    <a v-if="$props.link" class="link"
        :class="{
-        yellow: link.name === 'Зеркало',
-        green: link.name === 'Зеркало VPN',
-        red: link.name === 'Контакты',
-        blue: link.name === 'Канал' || $props.data.name === 'Бот',
-        violet: link.name === 'Onion',
-        purple: link.name === 'Блокчейн' || $props.data.name === 'Blockchain',
+        green: $props.link.name === 'Зеркало',
+        yellow: $props.link.name === 'Зеркало VPN',
+        red: $props.link.name === 'Контакты',
+        blue: $props.link.name === 'Канал' || $props.link.name === 'Бот',
+        violet: $props.link.name === 'Onion',
+        purple: $props.link.name === 'Блокчейн' || $props.link.name === 'Blockchain',
      }"
        :href="link.link"
        target="_blank">
 
-      {{ normalizeLinkName(link) }}
+      {{ normalizeLinkName($props) }}
 
       <div class="menu" @click.prevent v-if="$props.isEditable">
         <svg @click="() => onCallPopup(link)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -44,7 +43,6 @@
 </template>
 
 <script setup>
-import {linksSorter} from "@/API/projectsController.js";
 import LinkEditor from "@/components/popups/controllers/LinkEditor.vue";
 import TheBazaPopup from "@/components/popups/TheBazaPopup.vue"
 import {reactive, ref} from "vue";
@@ -54,6 +52,7 @@ const props = defineProps({
   isEditable: ref(false),
 
 })
+
 
 let editableLink = ref(Object)
 

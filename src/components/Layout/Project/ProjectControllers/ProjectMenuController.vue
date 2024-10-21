@@ -13,7 +13,7 @@
 
     <div class="project-menu-dropdown" v-if="adminMenu.show">
       <ProjectMenuControllerItems
-          :placeholder-id="placeholderId"
+          :placeholder="placeholder"
           :placeholder-menu="placeholderMenu"
           :advanced-menu="advancedMenu"
           @closeDropdown="adminMenu.show = false"
@@ -35,7 +35,7 @@ const props = defineProps({
     name: ref(String),
     id: ref(Number)
   },
-  placeholderId: ref(null),
+  placeholder: ref(null),
   placeholderMenu: ref(false),
   advancedMenu: ref(false)
 })

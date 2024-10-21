@@ -29,15 +29,15 @@
         <base-sort :sorts="projectReviewsSort" @sortChanged="(emit) => {
           this.options.sort = emit.slug
           this.options.offset = 0
-          this.reviewsStore.splice(0, reviewsStore.length)
+          this.projectReviewsStore.splice(0, projectReviewsStore.length)
           this.onGetReviews()
           }"/>
       </div>
     </div>
 
     <div class="reviews-list">
-      <project-review v-for="review of reviewsStore"
-                      v-if="reviewsStore.length > 0"
+      <project-review v-for="review of projectReviewsStore"
+                      v-if="projectReviewsStore.length > 0"
                       :key="review"
                       :review="review" />
     </div>
@@ -69,7 +69,7 @@ import {projectReviewsSort} from "@/Stores/allSorts.js";
 import ButtonBlack from "@/components/Buttons/ButtonBlack.vue";
 import {addNotice} from "@/js/notifications.js";
 import {popup} from "@/js/controllers/popupController.js";
-import {reviewsStore} from "@/Stores/reviewsStore.js";
+import {projectReviewsStore} from "@/Stores/projectReviewsStore.js";
 import {Waypoint} from "vue-waypoint";
 
 
@@ -93,7 +93,7 @@ export default {
         offset: 0,
         limit: 10
       },
-      reviewsStore,
+      projectReviewsStore,
       hasMore: true
     }
   },
@@ -107,7 +107,7 @@ export default {
       getReviews(this.options)
           .then(result => {
             for(let review of  result.data.reviews) {
-              reviewsStore.push(review)
+              projectReviewsStore.push(review)
             }
             result.data.reviews.length < this.options.limit ? this.hasMore = false : this.hasMore = true
 
@@ -119,6 +119,9 @@ export default {
   },
   mounted() {
 
+  },
+  beforeUnmount() {
+    projectReviewsStore.splice(0, projectReviewsStore.length)
   }
 }
 </script>

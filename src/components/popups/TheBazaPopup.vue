@@ -78,6 +78,7 @@ const popupBody = ref(null)
     top: 50%;
     translate: -50% -50%;
     border-radius: 20px;
+
   }
 
   .popup-close {
@@ -104,6 +105,14 @@ const popupBody = ref(null)
     height: 100%;
     position: relative;
     border-radius: 30px;
+
+    .popup-body_content_body {
+      width: 100%;
+      box-sizing: border-box;
+      height: auto;
+      max-height: 68vh;
+      overflow: hidden auto;
+    }
   }
 
 }

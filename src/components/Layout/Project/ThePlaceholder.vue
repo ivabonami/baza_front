@@ -5,7 +5,7 @@
         :style="placeholder.style"
         v-if="placeholder.project"
         :project="placeholder.project"
-        :placeholderId="placeholder.id"
+        :placeholder="placeholder"
         :placeholder-menu="true"
         style="min-height: 100%"
     />

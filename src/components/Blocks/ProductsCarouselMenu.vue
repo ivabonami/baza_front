@@ -13,7 +13,7 @@
           Рекомендованные</span>
         <span class="fresh"
               :class="{active: currentState === 'fresh'}"
-              @click="changeState('fresh')"
+              @click="changeState('newest')"
               style="height: 45px;"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">

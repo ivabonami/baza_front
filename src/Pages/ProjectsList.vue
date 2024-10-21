@@ -32,7 +32,7 @@
                      :advanced-menu="!project.type"
                      :placeholder-menu="project.project"
                      :project="project.project ? project.project : project"
-                     :placeholderId="project.id"
+                     :placeholder="!project.type ? project : null"
                      v-if="checkPermissions(project.project ? project.project : project)"
           />
         </div>

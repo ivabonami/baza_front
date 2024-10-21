@@ -5,6 +5,7 @@ import {reactive} from "vue";
 import {addNotice} from "@/js/notifications.js";
 import {projects} from "@/Stores/projectsStore.js";
 import router from "@/router/index.js";
+import {getProject} from "@/API/projectsController.js";
 
 export const placeholders = reactive({
     categoryId: null,
@@ -42,25 +43,36 @@ export function deletePlaceholder(placeholderId) {
     const data = {
         placeholderId: placeholderId
     }
+    try {
+        projects.splice(projects.findIndex(item => item.id === placeholderId), 1)
+    } catch (e) {
+        placeholders.categoryPlaceholders.splice(placeholders.categoryPlaceholders.findIndex(item => item.id === placeholderId), 1)
+    }
 
     return axios.delete(api.url + url, {data} )
 }
 
-export function linkProjectWithPlaceholder(placeholderId, projectId) {
+export function linkProjectWithPlaceholder(placeholderId, project) {
     let url = 'placeholder/assign'
 
     return axios.post(api.url + url, {
         placeholderId: placeholderId,
-        projectId: projectId
+        projectId: project.id
     }, {timeout: 20000} ).then(result => {
-        const project = projects.find(item => item.id === projectId)
-        const placeholder = projects.find(item => item.id === placeholderId)
-        console.log(project, placeholder, projects)
-        projects.splice(projects.indexOf(project), 1)
-        placeholder.project = project
-        addNotice({name: `Проект успешно отвязан`, type: 'success'})
+
+        projects.findIndex(item => item.id === project.id) ? projects.splice(projects.findIndex(item => item.id === project.id), 1) : null
+
+        getProject(project.id).then(result => {
+            try {
+                projects.find(item => item.id === placeholderId && item.project).project = result.data.project
+            } catch (e) {
+                placeholders.categoryPlaceholders.find(item => item.id === placeholderId && item.project).project = result.data.project
+            }
+
+        })
+
+        addNotice({name: `Проект успешно привязан`, type: 'success'})
     }).catch(error => {
-        console.log(error)
         addNotice({name: `Не удалось отвязать проект`, type: 'danger'})
     })
 }
@@ -72,9 +84,12 @@ export function unlinkProjectWithPlaceholder(placeholderId, projectId) {
         placeholderId: '',
         projectId: projectId
     }, {timeout: 20000} ).then(result => {
-        const placeholder = projects.find(item => item.id === placeholderId, 1)
-        projects.push(placeholder.project)
-        placeholder.project = null
+        try {
+            projects.find(item => item.id === placeholderId).project = null
+        } catch (e) {
+            placeholders.categoryPlaceholders.find(item => item.id === placeholderId).project = null
+        }
+
         addNotice({name: `Проект успешно отвязан`, type: 'success'})
     }).catch(error => {
         addNotice({name: `Не удалось отвязать проект`, type: 'danger'})
@@ -84,7 +99,7 @@ export function unlinkProjectWithPlaceholder(placeholderId, projectId) {
 export function relinkProjectToPlaceholder(placeholderId, newProject) {
     let url = 'placeholder/project'
 
-
+    console.log('relink')
     return axios.put(api.url + url, {
         placeholderId: placeholderId,
         projectId: newProject.id
@@ -95,8 +110,13 @@ export function relinkProjectToPlaceholder(placeholderId, newProject) {
                 newProject.placeholderId = placeholderId
                 projects.find(item => item.id === placeholderId && item.project).project = newProject
             } catch (error) {
-                projects.splice(projects.findIndex(item => item.name === newProject.name), 1)
-                projects.find(item => item.id === placeholderId && item.project).project = newProject
+                getProject(newProject.id).then(result => {
+                    try {
+                        projects.find(item => item.id === placeholderId && item.project).project = result.data.project
+                    } catch (e) {
+                        placeholders.categoryPlaceholders.find(item => item.id === placeholderId && item.project).project = result.data.project
+                    }
+                })
             }
 
             addNotice({name: `Проект успешно привязан`, type: 'success'})

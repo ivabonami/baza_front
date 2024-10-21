@@ -43,7 +43,12 @@
         <div class="project-placeholder" v-for="placeholder of placeholders.categoryPlaceholders">
           <ThePlaceholder :placeholder="placeholder"
 
-
+          />
+          <AdminMenu @click.prevent
+                     :advanced-menu="true"
+                     :placeholder-menu="true"
+                     :project="{placeholderId: -1 }"
+                     :placeholder="placeholder"
           />
         </div>
 
@@ -62,6 +67,9 @@ import ThePlaceholder from "@/components/Layout/Project/ThePlaceholder.vue";
 import buttonBlack from "@/components/Buttons/ButtonBlack.vue";
 import {popup} from "@/js/controllers/popupController.js";
 import {userStore} from "@/Stores/userStore.js";
+import {defineAsyncComponent} from "vue";
+
+
 export default {
   name: "PayedProjectsController",
   data() {
@@ -80,7 +88,12 @@ export default {
 
   components: {
     ThePlaceholder,
-    buttonBlack
+    buttonBlack,
+    AdminMenu: defineAsyncComponent({
+      loader: () => import("@/components/Layout/Project/ProjectControllers/ProjectMenuController.vue"),
+      delay: 200,
+      timeout: 3000
+    }),
   },
 
   methods: {
@@ -100,7 +113,7 @@ export default {
             placeholders.categoryPlaceholders = result.data.placeholders
           })
           .catch(error => {
-            let message
+            let message;
             if (error.response.data.message === 'No Placeholders found for main page') {
               message = 'Нет заглушек для главной страницы'
             } else if (error.response.data.message === 'No Placeholders found for specified category') {
@@ -207,6 +220,7 @@ export default {
 
 
   .project-placeholder {
+    position: relative;
     width: 23%;
   }
 }

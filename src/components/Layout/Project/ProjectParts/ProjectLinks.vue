@@ -9,7 +9,7 @@
           @editLink="emit => editLink(emit)"
           @removeLink="emit => removeLink(emit)"
 
-          v-for="(link, index) of props.projectLinks"
+          v-for="(link, index) of linksSorter(props.projectLinks)"
           v-show="index < props.showCount"
       >
 
@@ -49,9 +49,11 @@ import {addNotice} from "@/js/notifications.js";
 import LinkEditor from "@/components/popups/controllers/LinkEditor.vue";
 import ProjectLinksShowMore from "@/components/Layout/Project/ProjectParts/ProjectLinksShowMore.vue";
 import TheBazaPopup from "@/components/popups/TheBazaPopup.vue";
+import {linksSorter} from "@/API/projectsController.js";
+
 
 const props = defineProps({
-  projectLinks: ref(Array),
+  projectLinks: reactive(Array),
   isEditable: true,
   showCount: ref(9999),
   projectName: ref(String)
@@ -104,6 +106,7 @@ const removeLink = (link) => {
 
   .project-links-items {
     display: flex;
+    flex-wrap: wrap;
     overflow: hidden;
     gap: 5px;
   }
