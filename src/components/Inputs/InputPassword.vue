@@ -4,7 +4,6 @@
          @focus="active = true"
   >
 
-    <InlineSvg :src="data.icon" />
     <input type="password"
            :name="data.name"
            autocomplete
@@ -40,5 +39,7 @@ export default {
 </script>
 
 <style scoped>
-
+.input-wrapper {
+  height: 40px;
+}
 </style>

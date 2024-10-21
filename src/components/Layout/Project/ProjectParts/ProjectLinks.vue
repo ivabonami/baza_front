@@ -82,9 +82,12 @@ const editLink = (link) => {
 }
 
 const onLinkEdit = (newLink, oldLink) => {
-  editableLink = newLink
-  props.projectLinks.find(item => item === oldLink).name = newLink.name
-  props.projectLinks.find(item => item === oldLink).link = newLink.link
+  for(const link of props.projectLinks) {
+    if (link.name === oldLink.name && link.link === oldLink.link) {
+      link.name = newLink.name
+      link.link = newLink.link
+    }
+  }
   addNotice({name: 'Ссылка отредактирована, не забудьте сохранить изменения', type: 'warning'})
   popup.isVisible = false
 }

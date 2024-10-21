@@ -171,7 +171,11 @@ export default {
   },
   methods: {
     checkPermissions(project) {
-      return userStore.role === 'admin' || project.userData.username === userStore.username;
+      try {
+        return userStore.role === 'admin' || project.userData.username === userStore.username;
+      } catch (e) {
+        return false
+      }
     },
     onChange(e) {
       if (e.direction === 'UP' && e.going === 'IN') {
