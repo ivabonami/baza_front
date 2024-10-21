@@ -46,6 +46,7 @@ import TheLoader from "@/components/ReUsable/TheLoader.vue";
 
 import {getFavoriteProjects} from "@/API/projectsController.js";
 import {projects} from "@/Stores/projectsStore.js";
+import {userStore} from "@/Stores/userStore.js";
 
 export default {
   name: "FavoriteProjects.vue",
@@ -71,8 +72,13 @@ export default {
   },
 
   mounted() {
+    if (!userStore.token) {
+      this.$router.replace('/')
+    } else {
+      getFavoriteProjects()
+    }
 
-    getFavoriteProjects()
+
   },
   created() {
 

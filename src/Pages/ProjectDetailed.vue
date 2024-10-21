@@ -257,10 +257,7 @@ export default {
     }
   },
   mounted() {
-    projectProductsStore.splice(0, projectProductsStore.length)
     this.onGetProject(this.$route.path.replace('/project/', ''))
-
-
   },
   beforeUnmount() {
     projectProductsStore.splice(0, projectProductsStore.length)

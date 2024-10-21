@@ -97,6 +97,13 @@ export default {
       hasMore: true
     }
   },
+  watch: {
+    '$route': function () {
+      this.hasMore = true
+      this.options.offset = 0
+      this.onGetReviews()
+    }
+  },
   methods: {
     onLoadMore() {
       this.options.offset = this.options.limit + this.options.offset

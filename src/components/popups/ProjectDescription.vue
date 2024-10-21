@@ -61,6 +61,7 @@ export default {
   max-height: 70vh;
   overflow-y: auto;
   overflow-x: hidden;
+  word-break: break-word;
   color: #191B2A;
   font-size: 14px;
   font-style: normal;

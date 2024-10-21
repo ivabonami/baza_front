@@ -5,9 +5,9 @@
         <img :src="logotype" alt="">
       </router-link>
     </div>
-    <div class="search">
-      <the-search @searchOpen="hideMenu = false"/>
-    </div>
+<!--    <div class="search-box">-->
+<!--      <the-search @searchOpen="hideMenu = false"/>-->
+<!--    </div>-->
     <div class="menu" v-if="!hideMenu">
       <menu-header />
     </div>
@@ -211,7 +211,7 @@ export default {
       height: 100%;
     }
   }
-  .search {
+  .search-box {
     width: 30%;
   }
   .menu {

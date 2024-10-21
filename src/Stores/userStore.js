@@ -8,11 +8,8 @@ export const userStore = reactive({
 })
 
 export function setUserData(data) {
-    for (let prop in data) {
-        localStorage.setItem(prop, data[prop])
-        userStore.token = data.token
-        userStore.username = data.username
-    }
+    userStore.token = data.token
+    userStore.username = data.username.toLowerCase()
     userStore.role = jwtDecode(userStore.token).role
 }
 

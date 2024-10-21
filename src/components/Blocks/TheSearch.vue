@@ -13,7 +13,7 @@
       </svg>
     </div>
     <div class="search" v-if="showSearch">
-      <input-search @projectSelected="emit => $router.replace('/project/' + emit.id)" @closeSearch="() => {
+      <input-search @projectSelected="emit => this.$router.go('/project/' + emit.id)" @closeSearch="() => {
         closeSearch()
       }" />
     </div>
