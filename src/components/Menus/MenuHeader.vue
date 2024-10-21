@@ -2,22 +2,23 @@
   <nav data-dropdown="dropdownMenu" class="items" >
     <ul data-dropdown="dropdownMenu">
       <li data-dropdown="dropdownMenu" v-for="item of menuItems" @click="$emit('closeDropdown', true)">
+        <a data-dropdown="dropdownMenu"
+           target="_blank"
+           v-if="item.type === 'external'"
+           :href="item.href"
+           :class="item.color">
+          <inline-svg data-dropdown="dropdownMenu" class="menuIcon" v-if="item.icon" :src="item.icon" />
+          <span data-dropdown="dropdownMenu">{{ item.name }}</span>
+        </a>
         <router-link data-dropdown="dropdownMenu"
-                     v-if="item.type === 'internal'"
+                     v-else-if="item.type === 'internal'"
                      :to="item.href"
                      :class="item.color">
           <inline-svg data-dropdown="dropdownMenu" class="menuIcon" v-if="item.icon" :src="item.icon" />
           <span data-dropdown="dropdownMenu">{{ item.name }}</span>
         </router-link>
 
-        <a data-dropdown="dropdownMenu"
-           target="_blank"
-                     v-else-if="item.type === 'external'"
-                     :href="item.href"
-                     :class="item.color">
-          <inline-svg data-dropdown="dropdownMenu" class="menuIcon" v-if="item.icon" :src="item.icon" />
-          <span data-dropdown="dropdownMenu">{{ item.name }}</span>
-        </a>
+
       </li>
     </ul>
   </nav>

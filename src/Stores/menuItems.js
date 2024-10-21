@@ -8,6 +8,12 @@ import iconSber from '@/assets/icons/Sberbank_Logo_2020.svg'
 
 export const menuItems = reactive([
     {
+        name: 'Обмен криптовалюты',
+        href: 'https://cardbtc.io/',
+        icon: iconSber,
+        color: 'green',
+        type: 'external'
+    }, {
         name: 'Гарант',
         href: '/guarantee',
         icon: iconGuarantee,
@@ -32,11 +38,5 @@ export const menuItems = reactive([
         icon: iconPlus,
         color: 'default',
         type: 'internal'
-    }, {
-        name: 'Обмен криптовалюты',
-        href: 'https://google.com',
-        icon: iconSber,
-        color: 'green',
-        type: 'external'
     },
 ])

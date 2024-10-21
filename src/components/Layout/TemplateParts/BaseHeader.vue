@@ -215,7 +215,7 @@ export default {
     width: 30%;
   }
   .menu {
-    width: 110%;
+    width: 130%;
     justify-content: end;
   }
   .auth {

@@ -424,6 +424,7 @@ export default {
 @media screen and (max-width: 500px){
   .project-wrapper {
     .project {
+      min-height: 100px;
       padding: 10px;
       display: flex;
       flex-wrap: nowrap;

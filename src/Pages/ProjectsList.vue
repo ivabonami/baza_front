@@ -33,7 +33,7 @@
                      :placeholder-menu="project.project"
                      :project="project.project ? project.project : project"
                      :placeholderId="project.id"
-                     v-if=" userStore.role === 'admin' || userStore.username === project.userData.username"
+                     v-if="checkPermissions(project.project ? project.project : project)"
           />
         </div>
       </transition-group>
@@ -170,6 +170,9 @@ export default {
     }
   },
   methods: {
+    checkPermissions(project) {
+      return userStore.role === 'admin' || project.userData.username === userStore.username;
+    },
     onChange(e) {
       if (e.direction === 'UP' && e.going === 'IN') {
         this.getProjectsList(this.requestOptions)
