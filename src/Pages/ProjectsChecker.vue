@@ -9,6 +9,12 @@
               v-if="project"
               :project="project"
           />
+          <AdminMenu @click.prevent
+                     :advanced-menu="true"
+                     :placeholder-menu="false"
+                     :project="project"
+                     :placeholderId="null"
+          />
 
           <div class="button">
             <button-black style=" height: 40px;" @buttonPressed="approveProject(project)" :type="'button'">
@@ -87,6 +93,7 @@ import {popup} from "@/js/controllers/popupController.js";
 import {userStore} from "@/Stores/userStore.js";
 import {addNotice} from "@/js/notifications.js";
 import {Waypoint} from "vue-waypoint";
+import AdminMenu from "@/components/Menus/AdminMenu.vue";
 export default {
   name: "checkProjects.vue",
   emits: ['productAdded', 'productUpdated', 'reviewAdded',],
@@ -111,7 +118,8 @@ export default {
     ButtonBlack,
     TheLoader,
     ButtonSecondary,
-    Waypoint
+    Waypoint,
+    AdminMenu
 
   },
   beforeUnmount() {
@@ -165,9 +173,11 @@ export default {
     width: 100%;
     flex-wrap: wrap;
     gap: 10px;
+    position: relative;
 
     .project {
       width: 24%;
+      position: relative;
 
     }
   }
@@ -199,7 +209,11 @@ export default {
     box-sizing: border-box;
     .projects {
       .project {
-        width: 48%;
+        width: 100%;
+        margin-bottom: 30px;
+        .project-wrapper {
+          margin-bottom: 0;
+        }
       }
     }
 

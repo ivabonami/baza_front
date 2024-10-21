@@ -108,4 +108,12 @@ const removeLink = (link) => {
     gap: 5px;
   }
 }
+
+@media screen  and (max-width: 500px){
+  .project-links-wrapper {
+    .project-links-items {
+      flex-wrap: wrap;
+    }
+  }
+}
 </style>

@@ -78,4 +78,11 @@ export default {
     white-space: nowrap;
   }
 }
+@media screen  and (max-width: 500px){
+  .popup-header {
+    .popup-header-text {
+      font-size: 18px;
+    }
+  }
+}
 </style>

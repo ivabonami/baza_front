@@ -87,7 +87,7 @@ window.addEventListener('scroll', handleScroll);
 
 <style scoped lang="scss">
 .scroll-to-top-wrapper {
-  max-width: 1250px;
+  max-width: 1400px;
   padding-left: 25px;
   padding-right: 25px;
   box-sizing: border-box;
@@ -111,20 +111,21 @@ window.addEventListener('scroll', handleScroll);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 25px;
-  height: 25px;
-
+  width: 35px;
+  height: 35px;
+  position: relative;
 
 
   svg {
     box-sizing: border-box;
     cursor: pointer;
     display: flex;
-    width: 15px;
-    height: 15px;
-    position: relative;
-    left: 3px;
-    top: 2px;
+    width: 25px;
+    position: absolute;
+    left: 65%;
+    top: 60%;
+    translate: -50% -50%;
+
 
     path {
       stroke: black;
