@@ -44,10 +44,8 @@ let adminMenu = reactive({
   show: false
 })
 
-const canEdit = () => {
-  if (userStore.role === 'admin') {
-    return true
-  }
+function canEdit() {
+  return userStore.role === 'admin';
 }
 
 const adminMenuDiv = ref(null)

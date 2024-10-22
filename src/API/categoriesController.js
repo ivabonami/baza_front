@@ -13,12 +13,14 @@ import servicesIcon from '@/assets/icons/menu-icons/services.svg'
 import designIcon from '@/assets/icons/menu-icons/design.svg'
 import otherIcon from '@/assets/icons/menu-icons/other.svg'
 import {userStore} from "@/Stores/userStore.js";
+import {placeholders} from "@/API/placeholders.js";
 
 export function getCategories() {
     axios.get(api.url + 'categories').then(result => {
-        categories.allCategories = result.data.categories
 
-        for (const category of categories.allCategories){
+        let allCategories = result.data.categories
+
+        for (const category of allCategories){
             if (category.name.toLowerCase().includes('маркетплейс')) {
                 category.icon = marketplaceIcon
             } else if (category.name.toLowerCase().includes('форум')) {
@@ -35,9 +37,11 @@ export function getCategories() {
             } else {
                 category.icon = otherIcon
             }
-
-
         }
+
+        categories.allCategories = allCategories
+        placeholders.categories = allCategories
+
     }).catch(error => {
         addNotice({name: 'Категории не были получены', type: 'danger'})
     })

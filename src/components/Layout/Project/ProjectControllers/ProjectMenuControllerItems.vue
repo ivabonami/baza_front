@@ -121,15 +121,17 @@
 import ButtonBlack from "@/components/Buttons/ButtonBlack.vue";
 import TheBazaPopup from "@/components/popups/TheBazaPopup.vue";
 import {reactive, ref} from "vue";
-import AssignPlaceholderToProject from '@/components/popups/controllers/AssignPlaceholderToProject.vue'
-import RemoveProjectFromPlaceholder from '@/components/popups/controllers/RemoveProjectFromPlaceholder.vue'
 import { useRouter } from "vue-router";
 import {pinUnpinProject} from "@/API/projectsController.js";
 import {userStore} from "@/Stores/userStore.js";
+
+import AssignPlaceholderToProject from '@/components/popups/controllers/AssignPlaceholderToProject.vue'
+import RemoveProjectFromPlaceholder from '@/components/popups/controllers/RemoveProjectFromPlaceholder.vue'
 import SearchProject from '@/components/Blocks/SearchProject.vue'
 import ProjectDelete from '@/components/popups/controllers/ProjectDelete.vue'
 import PlaceholderEdit from '@/components/popups/controllers/placeholders/PlaceholderEdit.vue'
 import PlaceholderDelete from '@/components/popups/controllers/placeholders/PlaceholderDelete.vue'
+
 
 const popupHeadline = 'Выполните действие'
 const router = useRouter()

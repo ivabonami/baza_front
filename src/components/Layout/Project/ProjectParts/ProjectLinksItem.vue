@@ -34,7 +34,7 @@ import {ref} from "vue";
 
 const props = defineProps({
   isEditable: ref(false),
-  link: ref(Object)
+  link: ref(Object),
 })
 
 const emits = defineEmits(['editLink', 'removeLink'])

@@ -5,9 +5,10 @@
       <project-links-item
           :is-editable="props.isEditable"
           :link="link"
+          :index="index"
 
           @editLink="emit => editLink(emit)"
-          @removeLink="emit => removeLink(emit)"
+          @removeLink="emit => removeLink(index)"
 
           v-for="(link, index) of linksSorter(props.projectLinks)"
           v-show="index < props.showCount"
@@ -94,7 +95,8 @@ const onLinkEdit = (newLink, oldLink) => {
 
 const removeLink = (link) => {
   try {
-    props.projectLinks.splice(props.projectLinks.findIndex(item => item === link), 1)
+    props.projectLinks.splice(props.projectLinks.findIndex(item => item.name === link.name && item.link === link.link), 1)
+    console.log(link, props.projectLinks)
   } catch (error) {
     addNotice({name: 'Не могу удалить ссылку', type: 'danger'})
   }

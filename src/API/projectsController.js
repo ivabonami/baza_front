@@ -51,7 +51,6 @@ export function getFavoriteProjects(options) {
     })
 }
 export function linksSorter(links) {
-    console.log(links)
     let sortedLinks = {
         clearnet: [],
         clearnetVPN :[],

@@ -6,10 +6,11 @@ import {addNotice} from "@/js/notifications.js";
 import {projects} from "@/Stores/projectsStore.js";
 import router from "@/router/index.js";
 import {getProject} from "@/API/projectsController.js";
+import {categories} from "@/Stores/categories.js";
 
 export const placeholders = reactive({
-    categoryId: null,
-    categoryPlaceholders: []
+    categoryPlaceholders: [],
+    categories: []
 })
 
 export function getPlaceholders(categoryId) {
@@ -64,7 +65,7 @@ export function linkProjectWithPlaceholder(placeholderId, project) {
 
         getProject(project.id).then(result => {
             try {
-                projects.find(item => item.id === placeholderId && item.project).project = result.data.project
+                projects.find(item => item.id === placeholderId && !item.type).project = result.data.project
             } catch (e) {
                 placeholders.categoryPlaceholders.find(item => item.id === placeholderId && item.project).project = result.data.project
             }
