@@ -2,8 +2,8 @@
   <div class="link-item">
 
     <a :class="{
-        yellow: props.link.name === 'Зеркало',
-        green: props.link.name === 'Зеркало VPN',
+        green: props.link.name === 'Зеркало',
+        yellow: props.link.name === 'Зеркало VPN',
         red: props.link.name === 'Контакты',
         blue: props.link.name === 'Канал' || props.link.name === 'Бот',
         violet: props.link.name === 'Onion',
