@@ -142,7 +142,7 @@ const props = defineProps({
   placeholderMenu: ref(Boolean)
 })
 
-let componentData = reactive({
+const componentData = reactive({
   data: null
 })
 
@@ -151,7 +151,7 @@ const emits = defineEmits(['closeDropdown'])
 const popup = reactive({
   isVisible: false
 })
-const component = null
+let component = null
 
 </script>
 <style lang="scss" scoped>
