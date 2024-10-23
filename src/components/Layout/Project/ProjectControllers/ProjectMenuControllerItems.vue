@@ -142,7 +142,7 @@ const props = defineProps({
   placeholderMenu: ref(Boolean)
 })
 
-const componentData = reactive({
+let componentData = reactive({
   data: null
 })
 
