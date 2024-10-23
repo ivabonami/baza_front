@@ -1,7 +1,7 @@
 <template>
   <div class="add-banner">
     <div class="inputs">
-      <input-text />
+      <input-text :placeholder="'Ссылка'"/>
       <input-file />
     </div>
 

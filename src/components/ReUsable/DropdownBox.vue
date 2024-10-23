@@ -39,15 +39,6 @@ export default {
     }
   },
 
-  created() {
-    addEventListener('mousedown', this.clickOutside)
-    addEventListener('keydown', this.closeByEsc)
-
-  },
-  unmounted() {
-    removeEventListener('mousedown', this.clickOutside)
-    removeEventListener('keydown', this.closeByEsc)
-  }
 
 }
 </script>

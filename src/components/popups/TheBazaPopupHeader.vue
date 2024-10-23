@@ -9,22 +9,8 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "TheBazaPopupHeader.vue",
-  data() {
-    return {}
-  },
+<script setup>
 
-  components: {},
-
-  methods: {},
-
-  mounted() {
-
-  }
-
-}
 </script>
 
 <style scoped lang="scss">
