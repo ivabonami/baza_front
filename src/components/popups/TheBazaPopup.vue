@@ -17,7 +17,7 @@
 
     </div>
 
-    <div class="popup-backdrop" @click="emits('closePopup')">
+    <div class="popup-backdrop" @keydown="emits('closePopup')">
 
     </div>
 

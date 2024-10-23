@@ -44,11 +44,6 @@ export function deletePlaceholder(placeholderId) {
     const data = {
         placeholderId: placeholderId
     }
-    try {
-        projects.splice(projects.findIndex(item => item.id === placeholderId), 1)
-    } catch (e) {
-        placeholders.categoryPlaceholders.splice(placeholders.categoryPlaceholders.findIndex(item => item.id === placeholderId), 1)
-    }
 
     return axios.delete(api.url + url, {data} )
 }
