@@ -55,6 +55,15 @@
 
     </div>
 
+    <Teleport to="body" v-if="addPopup.isVisible">
+      <the-baza-popup
+          :headline="'Добавить'"
+          @close-popup="addPopup.isVisible = false">
+
+        <placeholder-add :category="category" />
+
+      </the-baza-popup>
+    </Teleport>
   </div>
 
 </template>
@@ -69,6 +78,9 @@ import {popup} from "@/js/controllers/popupController.js";
 import {userStore} from "@/Stores/userStore.js";
 import {defineAsyncComponent} from "vue";
 
+import PlaceholderAdd from '@/components/popups/controllers/placeholders/PlaceholderAdd.vue'
+import TheBazaPopup from "@/components/popups/TheBazaPopup.vue";
+
 
 export default {
   name: "PayedProjectsController",
@@ -82,13 +94,19 @@ export default {
         show: false,
         newCount: 0
       },
-      popup
+      popup,
+      addPopup: {
+        isVisible: false
+      },
+      category: null
     }
   },
 
   components: {
     ThePlaceholder,
     buttonBlack,
+    TheBazaPopup,
+    PlaceholderAdd,
     AdminMenu: defineAsyncComponent({
       loader: () => import("@/components/Layout/Project/ProjectControllers/ProjectMenuController.vue"),
       delay: 200,
@@ -98,11 +116,11 @@ export default {
 
   methods: {
     changeCategory(categoryId) {
+      this.category = categories.allCategories.find(item => item.id === categoryId)
       this.onGetPlaceholders(categoryId)
     },
     callAddPlaceholdersPopup() {
-      popup.show = true
-      popup.component = 'AddPlaceholders'
+      this.addPopup.isVisible = true
 
     },
     onGetPlaceholders(categoryId) {
@@ -113,18 +131,8 @@ export default {
             placeholders.categoryPlaceholders = result.data.placeholders
           })
           .catch(error => {
-            let message;
-            if (error.response.data.message === 'No Placeholders found for main page') {
-              message = 'Нет заглушек для главной страницы'
-            } else if (error.response.data.message === 'No Placeholders found for specified category') {
-              message = 'Нет заглушек для этой категории'
-            } else if (error.response.data.message === 'Provide token in Authorization header') {
-              message = 'У вас нет прав на просмотр этой страницы'
-            } else {
-              message = error.response.data.message
-            }
-
-            addNotice({name: message, type: 'danger'})
+            addNotice({name: 'Ошибка получения заглушек ', type: 'danger'})
+            console.log(error)
             this.placeholdersCount = 0
           })
     }

@@ -4,7 +4,6 @@
       <input-text
           style="margin-bottom: 10px;"
           :data="{ placeholder: 'Надпись в заглушке' }"
-          :inputDataProp="placeholder.text"
           @keydown.enter="onEditPlaceholder(placeholder)"
           @dataChanged="emit => placeholder.text = emit" />
 
@@ -12,15 +11,25 @@
       <input-select-options
           style="width: 50%;"
           :input-data="{
-            selected: setSelected(placeholder.style),
+            selected: setSelected('Фиолетовый'),
             items: setNames(placeholderColors)
           }"
           @dataChanged="emit => placeholder.style = placeholderColors.find(item => item.name === emit).value" />
+
       <input-select-options
           style="width: 50%;"
           :input-data="{
-            selected: data.position + 1,
-            items: placeholders.categoryPlaceholders.length
+            selected: (placeholders.categoryPlaceholders.length + 1),
+            items: (placeholders.categoryPlaceholders.length + 1)
+          }"
+          @dataChanged="emit => placeholder.position = emit - 1" />
+
+      Props: {{ props }}
+      <input-select-options
+          style="width: 50%;"
+          :input-data="{
+            selected: 0,
+            items: setNames(placeholders.categories)
           }"
           @dataChanged="emit => placeholder.position = emit - 1" />
     </div>
@@ -88,7 +97,7 @@ function setSelected(color) {
 }
 
 const props = defineProps({
-  data: null
+  categoryId: null
 })
 
 const emits = defineEmits(['closePopup'])

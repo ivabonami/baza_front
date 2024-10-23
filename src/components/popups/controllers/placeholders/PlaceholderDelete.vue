@@ -5,7 +5,7 @@
     <div class="buttons">
       <button-black
           :type="'button'"
-          @buttonPressed="deletePlaceholder(data.id); emits('closePopup')"
+          @buttonPressed="onDeletePlaceholder(data.id); "
           :style="'filled'">
         <div class="button-text">
           Удалить
@@ -26,7 +26,9 @@
 <script setup>
 import ButtonBlack from "@/components/Buttons/ButtonBlack.vue";
 import ButtonSecondary from "@/components/Buttons/ButtonSecondary.vue";
-import {deletePlaceholder} from "@/API/placeholders.js";
+import {deletePlaceholder, placeholders} from "@/API/placeholders.js";
+import {projects} from "@/Stores/projectsStore.js";
+import {useRoute} from "vue-router";
 
 
 const props = defineProps({
@@ -34,6 +36,29 @@ const props = defineProps({
 })
 
 const emits = defineEmits(['closePopup'])
+
+const route = useRoute()
+
+function onDeletePlaceholder(placeholderId) {
+
+  deletePlaceholder(placeholderId)
+      .then(() => {
+        if (route.path === '/payed-editor') {
+          try {
+            placeholders.categoryPlaceholders.splice(placeholders.categoryPlaceholders.findIndex(item => item.id === placeholderId), 1)
+          } catch (e) { addNotice({name: 'Не удалось обновить позицию', type: 'warning'}) }
+        } else {
+          try {
+            projects.splice(projects.findIndex(item => item.id === placeholderId && !item.type), 1)
+          } catch (e) { addNotice({name: 'Не удалось обновить позицию', type: 'warning'}) }
+        }
+      })
+      .catch(error => {
+        addNotice({name: 'Не удалось удалить заглушку', type: 'danger'})
+      })
+
+  emits('closePopup')
+}
 
 </script>
 
