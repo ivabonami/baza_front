@@ -24,26 +24,9 @@
   </nav>
 </template>
 
-<script>
+<script setup>
 import {menuItems} from "@/Stores/menuItems.js";
 
-export default {
-  name: "MenuHeader.vue",
-  data() {
-    return {
-      menuItems
-    }
-  },
-
-  components: {},
-
-  methods: {},
-
-  mounted() {
-
-  }
-
-}
 </script>
 
 <style scoped lang="scss">

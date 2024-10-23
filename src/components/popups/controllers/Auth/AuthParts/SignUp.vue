@@ -1,34 +1,22 @@
 <template>
   <div>
-    <form
-        @submit.prevent
-    >
-      <auth-header />
+    <form @submit.prevent >
       <input-text
           class="mb15"
-          :data="{
-          placeholder: 'Введите ваш логин',
-          icon: userIcon
-        }"
+          :placeholder="'Логин'"
           @dataChanged="emit => data.username = emit" />
 
       <input-password
           class="mb15"
-          :data="{
-          placeholder: 'Введите ваш пароль',
-          icon: lockIcon
-        }"
+          :placeholder="'Пароль'"
           @passwordData="emit => data.password = emit" />
 
       <input-password
-          :data="{
-          placeholder: 'Введите ваш пароль',
-          icon: lockIcon
-        }"
+          :placeholder="'Повторите пароль'"
           @passwordData="emit => data.repeat = emit" />
 
       <div class="buttons-group">
-        <ButtonPrimary
+        <button-black
             :type="'button'"
             style="margin-top: 10px;"
             :disabled="loading"
@@ -38,7 +26,7 @@
           }">
           <TheLoader v-if="loading"/>
           <span>Регистрация</span>
-        </ButtonPrimary>
+        </button-black>
 
         <ButtonSecondary
             style="margin-top: 10px;"
@@ -64,14 +52,10 @@
 import InputText from "@/components/Inputs/InputText.vue";
 import InputPassword from "@/components/Inputs/InputPassword.vue";
 import TheLoader from "@/components/ReUsable/TheLoader.vue";
-import ButtonPrimary from "@/components/Buttons/ButtonPrimary.vue";
+import ButtonBlack from "@/components/Buttons/ButtonBlack.vue";
 import ButtonSecondary from "@/components/Buttons/ButtonSecondary.vue";
 import {ref} from "vue";
-import {signIn, signUp} from "@/API/authController.js";
-import {closePopup, popup} from "@/js/controllers/popupController.js";
-import userIcon from '@/assets/icons/user-icon.svg'
-import lockIcon from '@/assets/icons/lock-icon.svg'
-import AuthHeader from "@/components/Blocks/AuthHeader.vue";
+import {signUp} from "@/API/authController.js";
 import {addNotice} from "@/js/notifications.js";
 
 
@@ -95,21 +79,7 @@ async function onSubmit(userData) {
   } else if (data.repeat !== data.password){
     addNotice({name: 'Пароли не совпадают', type: 'danger'})
   } else {
-    signUp(data).then(result => {
-      popup.show = false
-      signIn(data).then(result => {
-        addNotice({name: 'Вы успешно зарегистрировались и авторизовались', type: 'success'})
-      })
-      loading = false
-    }).catch(err => {
-      let message;
-      if (err.response.data.message === 'Username already exists') {
-        message = 'Пользователь с таким имененм уже зарегистрирован'
-      }
-
-
-      addNotice({name: message, type: 'danger'})
-    })
+    signUp(data)
   }
   loading = false
 

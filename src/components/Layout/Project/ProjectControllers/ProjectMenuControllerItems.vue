@@ -3,7 +3,7 @@
     <div class="menu-item" v-if="advancedMenu && userStore.role === 'admin'">
       <button-black
           title="Изменить заглушку"
-          @button-pressed="popup.isVisible = true; component = PlaceholderEdit; componentData.data = placeholder; popupHeadline = 'Изменить заглушку'"
+          @button-pressed="popup.isVisible = true; PopupData.component = PlaceholderEdit; PopupData.data = placeholder; PopupData.headline = 'Изменить заглушку'"
           :type="'button'"
           :style="'filled'">
         <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -15,7 +15,7 @@
     <div class="menu-item" v-if="advancedMenu && userStore.role === 'admin'">
       <button-black
           title="Удалить заглушку"
-          @button-pressed="popup.isVisible = true; component = PlaceholderDelete; componentData.data = placeholder; popupHeadline = 'Удалить'"
+          @button-pressed="popup.isVisible = true; PopupData.component = PlaceholderDelete; PopupData.data = placeholder; PopupData.headline = 'Удалить'"
           :type="'button'"
           :style="'filled'">
         <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -30,7 +30,7 @@
     <div class="menu-item" v-if="!project.placeholderId && !project.position && userStore.role === 'admin'">
       <button-black
           title="Залинковать проект к заглушке"
-          @button-pressed="popup.isVisible = true; component = AssignPlaceholderToProject; componentData.data = {project: project}"
+          @button-pressed="popup.isVisible = true; PopupData.component = AssignPlaceholderToProject; PopupData.data = {project: project}"
           :type="'button'"
           :style="'filled'">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -43,7 +43,7 @@
     <div class="menu-item" v-if="!project.type && userStore.role === 'admin'">
       <button-black
           title="Залинковать проект"
-          @button-pressed="popup.isVisible = true; component = SearchProject; componentData.data = placeholder; popupHeadline = 'Залинковать'"
+          @button-pressed="popup.isVisible = true; PopupData.component = SearchProject; PopupData.data = placeholder; PopupData.headline = 'Залинковать'"
           :type="'button'"
           :style="'filled'">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -55,7 +55,7 @@
     <div class="menu-item" v-if="placeholderMenu && userStore.role === 'admin'">
       <button-black
           title="Убрать проект из заглушки"
-          @button-pressed="popup.isVisible = true; component = RemoveProjectFromPlaceholder; componentData.data = project; popupHeadline = 'Разлинковать'"
+          @button-pressed="popup.isVisible = true; PopupData.component = RemoveProjectFromPlaceholder; PopupData.data = project; PopupData.headline = 'Разлинковать'"
           :type="'button'"
           :style="'filled'">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -94,7 +94,7 @@
     <div class="menu-item" v-if="project.type">
       <button-black
           title="Удалить проект"
-          @button-pressed="popup.isVisible = true; component = ProjectDelete; componentData.data = project; popup.heading = 'Удалить проект'"
+          @button-pressed="popup.isVisible = true; PopupData.component = ProjectDelete; PopupData.data = project; PopupData.headline = 'Удалить проект'"
           :type="'button'"
           :style="'filled'">
         <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -109,10 +109,10 @@
 
     <Teleport to="body" v-if="popup.isVisible">
       <the-baza-popup
-          :headline="popupHeadline"
+          :headline="PopupData.headline"
           @close-popup="popup.isVisible = false">
 
-        <component :is="component" :data="componentData.data" @close-popup="popup.isVisible = false" />
+        <component :is="PopupData.component" :data="PopupData.data" @close-popup="popup.isVisible = false" />
       </the-baza-popup>
     </Teleport>
   </div>
@@ -132,8 +132,6 @@ import ProjectDelete from '@/components/popups/controllers/ProjectDelete.vue'
 import PlaceholderEdit from '@/components/popups/controllers/placeholders/PlaceholderEdit.vue'
 import PlaceholderDelete from '@/components/popups/controllers/placeholders/PlaceholderDelete.vue'
 
-
-const popupHeadline = 'Выполните действие'
 const router = useRouter()
 const props = defineProps({
   project: null,
@@ -142,16 +140,17 @@ const props = defineProps({
   placeholderMenu: ref(Boolean)
 })
 
-const componentData = reactive({
-  data: null
-})
+const PopupData = {
+  data: null,
+  component: null,
+  headline: 'Выполните действие'
+}
 
 const emits = defineEmits(['closeDropdown'])
 
 const popup = reactive({
   isVisible: false
 })
-let component = null
 
 </script>
 <style lang="scss" scoped>

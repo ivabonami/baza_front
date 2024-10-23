@@ -5,9 +5,8 @@
   >
 
     <input type="password"
-           :name="data.name"
            autocomplete
-           :placeholder="data.placeholder"
+           :placeholder="placeholder"
            v-model="inputData"
            @input="$emit('passwordData', inputData)"
     >
@@ -25,9 +24,7 @@ export default {
   },
 
   props:{
-    data: {
-
-    }
+    placeholder: null
   },
   data () {
     return {

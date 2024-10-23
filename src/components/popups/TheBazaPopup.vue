@@ -10,14 +10,14 @@
           </the-baza-popup-header>
 
         </div>
-        <div class="popup-body_content_body" id="modalBody" @click.stop>
+        <div class="popup-body_content_body" id="modalBody">
           <slot />
         </div>
       </div>
 
     </div>
 
-    <div class="popup-backdrop" @keydown="emits('closePopup')">
+    <div class="popup-backdrop" @keydown.esc="emits('closePopup')" @mousedown="emits('closePopup')">
 
     </div>
 

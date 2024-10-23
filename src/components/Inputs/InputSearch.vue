@@ -233,6 +233,7 @@ input {
   width: 100%;
   display: flex;
   min-height: 45px;
+  max-height: 50px;
   padding: 10px;
   box-sizing: border-box;
 }
