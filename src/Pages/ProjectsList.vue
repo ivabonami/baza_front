@@ -28,8 +28,7 @@
               v-else-if="project.type"
               :project="project"
           />
-          <AdminMenu @click.prevent
-                     :advanced-menu="!project.type"
+          <AdminMenu :advanced-menu="!project.type"
                      :placeholder-menu="project.project"
                      :project="project.project ? project.project : project"
                      :placeholder="!project.type ? project : null"

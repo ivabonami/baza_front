@@ -25,7 +25,7 @@ const emits = defineEmits(['closePopup'])
 <style scoped lang="scss">
 .search-project {
   height: 100%;
-  width: 100%;
+  width: 60vw;
   box-sizing: border-box;
 
   .search-project-input {
@@ -33,6 +33,12 @@ const emits = defineEmits(['closePopup'])
     width: 90%;
     left: 5%;
     right: 0;
+  }
+}
+
+@media screen and (max-width: 500px){
+  .search-project {
+    width: 90vw;
   }
 }
 

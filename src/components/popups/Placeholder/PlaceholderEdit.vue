@@ -57,6 +57,7 @@ import {placeholderColors} from "@/js/placeholderColors.js";
 import {editPlaceholder, getPlaceholders, placeholders} from "@/API/placeholders.js";
 import {useRoute} from "vue-router";
 import {projects} from "@/Stores/projectsStore.js";
+import {addNotice} from "@/js/notifications.js";
 
 const route = useRoute()
 

@@ -1,46 +1,44 @@
 <template>
-  <div class="dropdown" ref="dropdown" :data-dropdown="$props.selector">
+  <div class="dropdown" ref="dropdown" :data-dropdown="selector">
     <slot />
   </div>
 </template>
 
-<script>
-export default {
-  name: "DropdownBox.vue",
-  props: {
-    selector: null,
-    name: null
-  },
-  data() {
-    return {}
-  },
+<script setup>
 
-  components: {},
+import {onMounted} from "vue";
 
-  methods: {
-    clickOutside(e) {
-      if (!e.target.dataset.dropdown || e.target.dataset.dropdown !== this.$props.selector) {
-        this.closeDropDown()
-      }
+const emits = defineEmits(['closeDropdown'])
 
-    },
+const props = defineProps({
+  selector: null
+})
 
-    closeByEsc(e) {
-      if (e.key === 'Escape') {
-        this.$emit('closeDropdown', true)
-        removeEventListener('mousedown', this.clickOutside)
-        removeEventListener('keydown', this.closeByEsc)
-      }
-    },
-    closeDropDown() {
-      this.$emit('closeDropdown', true)
-      removeEventListener('mousedown', this.clickOutside)
-      removeEventListener('keydown', this.closeByEsc)
-    }
-  },
-
-
+function clickOutside(e) {
+  if (!e.target.dataset.dropdown || e.target.dataset.dropdown !== props.selector) {
+    closeDropDown()
+  }
 }
+
+function closeByEsc(e) {
+  if (e.key === 'Escape') {
+    emits('closeDropdown')
+    removeEventListener('mousedown', clickOutside)
+    removeEventListener('keydown', closeByEsc)
+  }
+}
+
+function closeDropDown() {
+  emits('closeDropdown')
+  removeEventListener('mousedown', clickOutside)
+  removeEventListener('keydown', closeByEsc)
+}
+
+onMounted(() => {
+
+  addEventListener('mousedown', clickOutside)
+  addEventListener('keydown', closeByEsc)
+})
 </script>
 
 <style scoped lang="scss">

@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import LinkEditor from "@/components/popups/controllers/LinkEditor.vue";
+import LinkEditor from "@/components/popups/Project/LinkEditor.vue";
 import TheBazaPopup from "@/components/popups/TheBazaPopup.vue"
 import {reactive, ref} from "vue";
 import {addNotice} from "@/js/notifications.js";

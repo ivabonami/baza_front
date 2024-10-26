@@ -11,7 +11,7 @@
     </button-header-menu>
 
     <button-header-menu
-        @click="authPopup.show = true; component = 'SignIn'"
+        @click="authPopup.show = true; component = 'SignIn'; authPopup.headline = 'Авторизация'"
         v-else-if="!userStore.username" >
       <div class="button-content">
         <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,15 +25,27 @@
     <dropdown-box :selector="'adminMenu'"
                   v-if="userMenu.show"
                   @closeDropdown="userMenu.show = false" >
-      <user-menu />
+      <user-menu @close-menu="userMenu.show = false"
+                 @add-banner="onAddBanner()"
+                 @sign-out="onSignOut()"
+      />
     </dropdown-box>
 
     <Teleport to="body" v-if="authPopup.show">
       <the-baza-popup
-          :headline="'Авторизация'"
+          :headline="authPopup.headline"
           @closePopup="authPopup.show = false"
       >
         <auth-controller :setComponent="component" @closePopup="authPopup.show = false"/>
+      </the-baza-popup>
+    </Teleport>
+
+    <Teleport to="body" v-if="addBanner.show">
+      <the-baza-popup
+          :headline="addBanner.headline"
+          @closePopup="addBanner.show = false"
+      >
+        <add-banner @close-popup="addBanner.show = false" />
       </the-baza-popup>
     </Teleport>
 
@@ -49,6 +61,7 @@ import DropdownBox from "@/components/ReUsable/DropdownBox.vue";
 import UserMenu from "@/components/Layout/TemplateParts/HeaderParts/UserMenu.vue"
 import TheBazaPopup from "@/components/popups/TheBazaPopup.vue";
 import AuthController from '@/components/popups/controllers/Auth/AuthController.vue'
+import AddBanner from '@/components/popups/AdsBanners/AddBanner.vue'
 
 
 import {reactive, ref} from "vue";
@@ -60,8 +73,25 @@ const userMenu = ref({
 let component = ref(String)
 
 const authPopup = reactive({
-  show: false
+  show: false,
+  headline: 'Выполните действие'
 })
+
+const addBanner = reactive({
+  show: false,
+  headline: 'Добавить рекламный баннер'
+})
+
+const onSignOut = () => {
+  component = 'SignOut'
+  authPopup.show = true
+  authPopup.headline = 'Выйти?'
+}
+
+const onAddBanner = () => {
+  component = 'AddBanner'
+  addBanner.show = true
+}
 </script>
 
 <style scoped lang="scss">

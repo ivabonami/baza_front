@@ -1,21 +1,22 @@
 <template>
   <div class="stat">
-    <inline-svg class="stat-icon" v-if="$props.data.icon" :src="$props.data.icon" />
-    <span>{{ $props.data.data }}</span>
+    <inline-svg class="stat-icon" v-if="data.icon" :src="data.icon" />
+    <span>{{ data.data }}</span>
+
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    data: {
-      icon: null,
-      data: null,
-    }
-  },
-  name: "ProjectStatsItem.vue",
+<script setup>
 
-}
+import {ref} from "vue";
+
+const props = defineProps({
+  data: ref({
+    icon: null,
+    data: null,
+  })
+})
+
 </script>
 
 <style scoped lang="scss">

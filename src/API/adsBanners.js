@@ -7,9 +7,8 @@ export function getAdsBanners() {
 
     return axios.get(api.url + 'advBanners')
         .then(result => {
-            for (const banner of result.data.banners) {
-                adsBanners.push(banner)
-            }
+            adsBanners.large = result.data.banners.large
+            adsBanners.small = result.data.banners.small
         })
         .catch(error => {
             addNotice({name: 'Не могу получить список платных баннеров', type: 'warning'})
@@ -18,37 +17,57 @@ export function getAdsBanners() {
 
 export function addAdsBanner(path, link, type) {
 
-    return axios.post(api.url + 'advBanners', {path: path, link: link, type: type})
+    return axios.post(api.url + 'advBanner', {path: path, link: link, type: type})
         .then(result => {
-            adsBanners.push(result.data.banner)
+            if (type === 'large') {
+                adsBanners.large.push(result.data.banner)
+            } else {
+                adsBanners.small.push(result.data.banner)
+            }
+            addNotice({name: 'Баннер успешно добавлен', type: 'success'})
         })
         .catch(error => {
             addNotice({name: 'Не могу добавить рекламный баннер', type: 'warning'})
         })
 }
 
-export function editAdsBanner(id, path, link, type) {
+export function editAdsBanner(id, path, link, type, oldType) {
 
-    return axios.put(api.url + 'advBanners', {id: id, path: path, link: link, type: type})
+
+
+    return axios.put(api.url + 'advBanner/' + id, {path: path, link: link, type: type})
         .then(result => {
-            adsBanners.find(item => item.id === id).type = result.data.banner.type
-            adsBanners.find(item => item.id === id).link = result.data.banner.link
-            adsBanners.find(item => item.id === id).path = result.data.banner.path
+
+            if (type !== oldType) {
+                try {
+                    const banner = adsBanners[oldType].find(item => item.id === id)
+                    adsBanners[oldType].splice(adsBanners[oldType].findIndex(item => item.id === id), 1)
+                    adsBanners[type].push(banner)
+                } catch (e) {
+                    addNotice({name: "Не получилось реактивно поменять баннеры, перезагрузите страницу"})
+                }
+            }
+
+
+            addNotice({name: 'Баннер успешно изменен', type: 'success'})
         })
         .catch(error => {
             addNotice({name: 'Не могу отредактировать рекламный баннер', type: 'warning'})
         })
 }
 
-export function removeAdsBanner(id) {
+export function removeAdsBanner(id, type) {
 
-    return axios.delete(api.url + 'advBanners/' + id)
+    return axios.delete(api.url + 'advBanner/' + id)
         .then(result => {
             try {
-                adsBanners.splice(adsBanners.findIndex(item => item.id === id), 1)
-            } catch (e) {  }
+                adsBanners[type].splice(adsBanners[type].findIndex(item => item.id === id), 1)
+            } catch (e) {
+                addNotice({name: 'Не могу реактивно удалить баннер, перезагрузите страницу', type: 'warning'})
+            }
+            addNotice({name: 'Баннер удален', type: 'success'})
         })
         .catch(error => {
-            addNotice({name: 'Не могу удалить рекламный баннер', type: 'warning'})
+            addNotice({name: 'Не могу удалить рекламный баннер', type: 'danger'})
         })
 }

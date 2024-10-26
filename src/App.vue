@@ -3,7 +3,7 @@ import {popup} from "@/js/controllers/popupController.js";
 import {defineAsyncComponent, reactive} from "vue";
 import {notifications} from "@/js/notifications.js";
 import BaseLayout from "@/components/Layout/BaseLayout.vue";
-import { RouterView } from 'vue-router'
+import {RouterView, useRoute} from 'vue-router'
 
 const ThePopup = defineAsyncComponent({
   loader: () => import("@/components/popups/ThePopup.vue"),
@@ -36,7 +36,8 @@ const YandexMetrica = defineAsyncComponent({
 import { useMouse } from '@vueuse/core'
 import TheBazaPopup from "@/components/popups/TheBazaPopup.vue";
 
-const { x, y } = useMouse()
+
+const route = useRoute()
 
 let scrollTopButton = reactive({show: false})
 
@@ -55,7 +56,7 @@ window.addEventListener('scroll', handleScroll);
   <base-layout>
     <template #header>
       <base-header />
-      <payed-banners />
+      <payed-banners  v-if="route.path === '/'" />
     </template>
 
     <template #main>

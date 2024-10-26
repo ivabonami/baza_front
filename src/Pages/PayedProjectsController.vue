@@ -78,7 +78,7 @@ import {popup} from "@/js/controllers/popupController.js";
 import {userStore} from "@/Stores/userStore.js";
 import {defineAsyncComponent} from "vue";
 
-import PlaceholderAdd from '@/components/popups/controllers/placeholders/PlaceholderAdd.vue'
+import PlaceholderAdd from '@/components/popups/Placeholder/PlaceholderAdd.vue'
 import TheBazaPopup from "@/components/popups/TheBazaPopup.vue";
 
 
@@ -131,7 +131,14 @@ export default {
             placeholders.categoryPlaceholders = result.data.placeholders
           })
           .catch(error => {
-            addNotice({name: 'Ошибка получения заглушек ', type: 'danger'})
+            let message;
+
+            if (error.response.data.message === "No Placeholders found for specified category") {
+              message = 'Нет заглушек для этой категории'
+            } else {
+              message = 'Ошибка получения заглушек'
+            }
+            addNotice({name: message, type: 'danger'})
             console.log(error)
             this.placeholdersCount = 0
           })

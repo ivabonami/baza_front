@@ -101,6 +101,7 @@ import {api} from "@/API/apiurl.js";
 
 export default {
   name: "InputSearch.vue",
+
   data() {
     return {
       search: {
@@ -207,16 +208,6 @@ export default {
   background: rgba(217, 217, 217, 0.6);
   backdrop-filter: blur(3px);
 }
-.search_mobile {
-  z-index: 31;
-  position: absolute;
-  box-sizing: border-box;
-  bottom: -35px;
-
-  width: 100%;
-  left: 0;
-  right: 0;
-}
 .button {
   display: none;
   .button_search {
@@ -292,12 +283,13 @@ input {
     .project {
       width: 100%;
       display: flex;
+      flex-wrap: wrap;
       gap: 15px;
       align-items: center;
     }
 
     .avatar {
-      width: 80px;
+      width: 100%;
       aspect-ratio: 1 / 1;
       border-radius: 10px;
       overflow: hidden;
@@ -366,7 +358,7 @@ input {
   .dropdownSearchItems {
     top: 75px;
     max-height: 400px;
-    width: 88%;
+    width: 90%;
     max-width: 90%;
     position: fixed;
     left: 5%;
@@ -379,11 +371,14 @@ input {
     width: 100%;
   }
   input {
-    width: 88%;
+    width: 95%;
     top: 30px;
-    left: 5%;
-    right: 5%;
+    left: 4%;
+    right: 3%;
     z-index: 20;
+    max-height: 60px;
+    border-radius: 30px;
+    height: 100%;
     position: fixed;
     box-sizing: border-box;
   }

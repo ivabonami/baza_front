@@ -9,28 +9,9 @@ export function addFavorite(id, name) {
             'Authorization': `Bearer ${userStore.token}`
         }}).then(result => {
             addNotice({name: `Проект ${name} успешно добавлен в избранное!`, type: 'success'})
-                if (projects.find(item => item.project.id === id)) {
-                    projects.find(item => item.project.id === id).project.favorite = 1
-                } else {
-                    projects.find(item => item.id === id).favorite = 1
-                }
-            return result
         })
         .catch(error => {
-            if (error.code === "ECONNABORTED") {
-                addNotice({name: `Таймаут соединения`, type: 'danger'})
-            } else if (error.response.data.message === "Invalid token") {
-                addNotice({name: `Токен не валидный, авторизуйтесь или перезайдите`, type: 'danger'})
-            } else if (error.response.data.message){
-                addNotice({name: `${error.response.data.message}`, type: 'danger'})
-            } else if (error.message === "Request failed with status code 404"){
-                addNotice({name: `Запрос не может быть отправлен, ошибка 404`, type: 'danger'})
-            } else {
-                addNotice({name: `${error.message}`, type: 'danger'})
-            }
-
-
-
+            addNotice({name: `Ошибка`, type: 'danger'})
         })
 }
 
@@ -41,26 +22,9 @@ export function removeFavorite(id, name) {
         }}).then(result => {
 
             addNotice({name: `Проект ${name} успешно удален из избранного!`, type: 'warning'})
-
-            if (projects.find(item => item.project.id === id)) {
-                projects.find(item => item.project.id === id).project.favorite = 0
-            } else {
-                projects.find(item => item.id === id).favorite = 0
-            }
             return result
         })
         .catch(error => {
-            if (error.code === "ECONNABORTED") {
-                addNotice({name: `Таймаут соединения, попробуйте позже`, type: 'danger'})
-            } else if (error.response.data.message === "Invalid token") {
-                addNotice({name: `Токен не валидный, авторизуйтесь или перезайдите`, type: 'danger'})
-            } else if (error.response.data.message){
-                addNotice({name: `${error.response.data.message}`, type: 'danger'})
-            } else if (error.message === "Request failed with status code 404"){
-                addNotice({name: `Запрос не может быть отправлен, ошибка 404`, type: 'danger'})
-            } else {
-                addNotice({name: `${error.message}`, type: 'danger'})
-            }
-
+            addNotice({name: `Ошибка`, type: 'danger'})
         })
 }

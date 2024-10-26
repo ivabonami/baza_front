@@ -65,7 +65,7 @@ const data = {
   password: null,
   repeat: null
 }
-
+const emits= defineEmits(['closePopup'])
 
 let loading = ref(false)
 
@@ -79,7 +79,7 @@ async function onSubmit(userData) {
   } else if (data.repeat !== data.password){
     addNotice({name: 'Пароли не совпадают', type: 'danger'})
   } else {
-    signUp(data)
+    signUp(data).then(() => emits('closePopup'))
   }
   loading = false
 

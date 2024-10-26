@@ -7,7 +7,7 @@
           :type="'button'"
           :style="'filled'"
           style="margin-top: 10px;"
-          @click="console.log(123)">
+          @click="onSignOut()">
         <span>Выйти</span>
       </button-black>
 
@@ -37,12 +37,15 @@ const emits = defineEmits(['closePopup'])
 const onSignOut = () => {
   try {
     signOut()
+
     addNotice({name: 'Вы успешно вышли из аккаунта', type: 'success'})
     emits('closePopup')
+
   } catch (e) {
     addNotice({name: 'Ошибка при выходе из аккаунта', type: 'danger'})
-    emits('closePopup')
+
   }
+
 
 }
 

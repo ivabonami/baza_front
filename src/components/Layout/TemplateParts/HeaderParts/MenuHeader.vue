@@ -1,21 +1,30 @@
 <template>
-  <nav data-dropdown="dropdownMenu" class="items" >
-    <ul data-dropdown="dropdownMenu">
-      <li data-dropdown="dropdownMenu" v-for="item of menuItems" @click="$emit('closeDropdown', true)">
-        <a data-dropdown="dropdownMenu"
+  <nav class="items" :class="{collapsed: userMenu.collapsed, show: userMenu.show}" ref="userMenuBox">
+    <button-black
+        :type="'button'"
+        v-if="userMenu.collapsed"
+        @click="toggleDropdown()"
+        :style="'filled'">
+      <div class="button-text">
+        M
+      </div>
+    </button-black>
+    <ul>
+      <li v-for="item of menuItems">
+        <a
            target="_blank"
            v-if="item.type === 'external'"
            :href="item.href"
            :class="item.color">
-          <inline-svg data-dropdown="dropdownMenu" class="menuIcon" v-if="item.icon" :src="item.icon" />
-          <span data-dropdown="dropdownMenu">{{ item.name }}</span>
+          <inline-svg class="menuIcon" v-if="item.icon" :src="item.icon" />
+          <span>{{ item.name }}</span>
         </a>
-        <router-link data-dropdown="dropdownMenu"
+        <router-link
                      v-else-if="item.type === 'internal'"
                      :to="item.href"
                      :class="item.color">
-          <inline-svg data-dropdown="dropdownMenu" class="menuIcon" v-if="item.icon" :src="item.icon" />
-          <span data-dropdown="dropdownMenu">{{ item.name }}</span>
+          <inline-svg class="menuIcon" v-if="item.icon" :src="item.icon" />
+          <span>{{ item.name }}</span>
         </router-link>
 
 
@@ -26,6 +35,52 @@
 
 <script setup>
 import {menuItems} from "@/Stores/menuItems.js";
+import {reactive, ref} from "vue";
+import ButtonBlack from "@/components/Buttons/ButtonBlack.vue";
+
+const userMenu = reactive({
+  collapsed: false,
+  show: false
+})
+
+const userMenuBox = ref(null)
+
+const hideMenuIOnResize = (e) => {
+  userMenu.collapsed = e.target.innerWidth < 1165;
+}
+userMenu.collapsed = window.innerWidth < 1165;
+
+
+const toggleDropdown = () => {
+  if (!userMenu.show) {
+    userMenu.show = true
+    addEventListener('mousedown', closeByClickOutside)
+    addEventListener('keydown', closeByEsc)
+  } else {
+    closeDropdown()
+  }
+}
+
+const closeDropdown = () => {
+  removeEventListener('mousedown', closeByClickOutside)
+  removeEventListener('keydown', closeByEsc)
+  userMenu.show = false
+  console.log(userMenu.show)
+}
+
+const closeByClickOutside = (e) => {
+  if (userMenuBox.value && !userMenuBox.value.contains(e.target)) {
+    closeDropdown()
+  }
+}
+
+const closeByEsc = (e) => {
+  if (e.key === 'Escape') {
+    closeDropdown()
+  }
+}
+
+window.addEventListener('resize', hideMenuIOnResize)
 
 </script>
 
@@ -35,6 +90,7 @@ import {menuItems} from "@/Stores/menuItems.js";
   padding: 0 30px;
   box-sizing: border-box;
   width: 100%;
+  position: relative;
 
   ul {
     list-style: none;
@@ -76,6 +132,45 @@ import {menuItems} from "@/Stores/menuItems.js";
 
         &.router-link-active {
           border-bottom-color: #FFC700;
+        }
+      }
+    }
+
+
+  }
+  button {
+    display: none;
+  }
+
+  &.collapsed {
+    padding: 0;
+    button {
+      display: block;
+    }
+
+    ul {
+      display: none;
+    }
+
+    &.show {
+
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        position: absolute;
+        right: 0;
+        top: 40px;
+        padding: 10px 20px;
+        border-radius: 20px;
+        background-color: #FFFFFF;
+        z-index: 20;
+        width: 240px;
+        box-sizing: border-box;
+        box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
+        gap: 5px;
+
+        li {
+          width: 100%;
         }
       }
     }

@@ -47,7 +47,7 @@
 import {reactive, ref} from "vue";
 import ProjectLinksItem from "@/components/Layout/Project/ProjectParts/ProjectLinksItem.vue";
 import {addNotice} from "@/js/notifications.js";
-import LinkEditor from "@/components/popups/controllers/LinkEditor.vue";
+import LinkEditor from "@/components/popups/Project/LinkEditor.vue";
 import ProjectLinksShowMore from "@/components/Layout/Project/ProjectParts/ProjectLinksShowMore.vue";
 import TheBazaPopup from "@/components/popups/TheBazaPopup.vue";
 import {linksSorter} from "@/API/projectsController.js";

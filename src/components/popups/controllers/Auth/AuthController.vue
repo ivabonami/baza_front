@@ -1,6 +1,6 @@
 <template>
   <div class="auth-popup">
-    <component :is="component.state" @change-state="emit => {toggleComponent(emit); console.log(emit)}" @close-popup="console.log(123)"/>
+    <component :is="component.state" @change-state="emit => {toggleComponent(emit)}" @closePopup="emits('closePopup')"/>
   </div>
 </template>
 

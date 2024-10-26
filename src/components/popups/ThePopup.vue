@@ -24,7 +24,6 @@
 import {closePopup, popup} from "@/js/controllers/popupController.js";
 import TheLoader from "@/components/ReUsable/TheLoader.vue";
 import InlineSvg from 'vue-inline-svg';
-import AddPlaceholders from "@/components/popups/AddPlaceholders.vue";
 import AddReview from "@/components/popups/AddReview.vue";
 import ApproveReview from "@/components/popups/ApproveReview.vue";
 import DeletePlaceholder from "@/components/popups/DeletePlaceholder.vue";
@@ -47,7 +46,7 @@ import AddProduct from "@/components/popups/AddProduct.vue";
 import EditLink from "@/components/popups/EditLink.vue";
 import DeleteLink from "@/components/popups/DeleteLink.vue";
 import DeleteCategory from "@/components/popups/DeleteCategory.vue";
-import ProjectDescription from "@/components/popups/ProjectDescription.vue";
+import ProjectDescription from "@/components/popups/Project/ProjectDescription.vue";
 
 
 export default {
@@ -217,7 +216,8 @@ export default {
 @media screen and (max-width: 500px){
   .popup {
     .popup-body {
-      width: 80%;
+      width: 80vw;
+      max-width: 90vw;
     }
   }
 }

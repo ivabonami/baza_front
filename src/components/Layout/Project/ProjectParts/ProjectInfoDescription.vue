@@ -1,0 +1,141 @@
+<template>
+  <div class="project-info-description">
+    <h4>
+      {{ data.name }}
+    </h4>
+    <div class="project-info-description_text">
+      <p>
+        {{ normalizeDescription(data.description) }}
+      </p>
+      <span class="more-toggle" v-if="shortDescription" @click="toggleDescription(data.description)">
+          полное описание
+      </span>
+    </div>
+    <div class="project-info-description_links">
+      <div>
+        <project-links
+            :project-links="data.links"
+            :show-count="999"
+            :is-editable="false"
+        >
+        </project-links>
+      </div>
+    </div>
+    <div class="exchanger_stats">
+      <div class="exchanger_stat min-value-to-exchange" v-if="data.minValueToExchange">
+
+        <div class="stat-ex">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path
+                d="M3 3L4 2M4 2L3 1M4 2H3C1.89543 2 1 2.89543 1 4M9 9L8 10M8 10L9 11M8 10H9C10.1046 10 11 9.10457 11 8M5.09451 3.25C5.42755 1.95608 6.60212 1 8 1C9.65685 1 11 2.34315 11 4C11 5.39787 10.0439 6.57244 8.75003 6.90548M7 8C7 9.65685 5.65685 11 4 11C2.34315 11 1 9.65685 1 8C1 6.34315 2.34315 5 4 5C5.65685 5 7 6.34315 7 8Z"
+                stroke="#191B2A" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          {{ data.minValueToExchange }}
+        </div>
+        <div class="desc-ex">
+          мин. обмен
+        </div>
+      </div>
+      <div class="exchanger_stat reserve" v-if="data.reserve">
+        <div class="stat-ex">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" viewBox="0 0 13 12" fill="none">
+            <path
+                d="M7.05 2.11111C7.05 2.72476 5.69566 3.22222 4.025 3.22222C2.35434 3.22222 1 2.72476 1 2.11111M7.05 2.11111C7.05 1.49746 5.69566 1 4.025 1C2.35434 1 1 1.49746 1 2.11111M7.05 2.11111V4.58731C6.37817 4.7911 5.95 5.09941 5.95 5.44444M1 2.11111V8.77778C1 9.39143 2.35434 9.88889 4.025 9.88889C4.7563 9.88889 5.42698 9.79357 5.95 9.63492V5.44444M1 4.33333C1 4.94698 2.35434 5.44444 4.025 5.44444C4.7563 5.44444 5.42698 5.34913 5.95 5.19047M1 6.55556C1 7.16921 2.35434 7.66667 4.025 7.66667C4.7563 7.66667 5.42698 7.57135 5.95 7.41269M12 5.44444C12 6.05809 10.6457 6.55556 8.975 6.55556C7.30434 6.55556 5.95 6.05809 5.95 5.44444M12 5.44444C12 4.83079 10.6457 4.33333 8.975 4.33333C7.30434 4.33333 5.95 4.83079 5.95 5.44444M12 5.44444V9.88889C12 10.5025 10.6457 11 8.975 11C7.30434 11 5.95 10.5025 5.95 9.88889V5.44444M12 7.66667C12 8.28032 10.6457 8.77778 8.975 8.77778C7.30434 8.77778 5.95 8.28032 5.95 7.66667"
+                stroke="#191B2A" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          {{ data.reserve }}
+        </div>
+        <div class="desc-ex">
+          резерв
+        </div>
+      </div>
+
+      <div class="menu-item" style="margin-left: auto "
+           v-if="userStore.username === data.userData.username || userStore.role === 'admin'">
+        <router-link :to="route.path + '/edit'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path
+                d="M1.27237 12.5486C1.30565 12.2491 1.32229 12.0994 1.3676 11.9594C1.4078 11.8352 1.4646 11.7171 1.53646 11.6081C1.61745 11.4853 1.72399 11.3787 1.93707 11.1656L11.5027 1.60005C12.3027 0.799984 13.5999 0.799985 14.4 1.60005C15.2 2.40011 15.2 3.69727 14.4 4.49734L4.83436 14.0629C4.62127 14.276 4.51473 14.3826 4.39191 14.4635C4.28295 14.5354 4.16477 14.5922 4.04059 14.6324C3.90062 14.6777 3.75087 14.6943 3.45137 14.7276L1 15L1.27237 12.5486Z"
+                stroke="#B3B4C9" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          редактировать
+        </router-link>
+      </div>
+    </div>
+
+    <Teleport to="body" v-if="popup.isVisible">
+      <the-baza-popup
+          :headline="popup.headline"
+          @closePopup="popup.isVisible = false"
+      >
+        <component :is="popup.component" :data="data.description"/>
+      </the-baza-popup>
+    </Teleport>
+  </div>
+</template>
+<script setup>
+import {userStore} from "@/Stores/userStore.js";
+import {reactive, ref, shallowRef} from "vue";
+import {useRoute} from "vue-router";
+import TheBazaPopup from "@/components/popups/TheBazaPopup.vue";
+import ProjectDescription from "@/components/popups/Project/ProjectDescription.vue";
+import ProjectLinks from "@/components/Layout/Project/ProjectParts/ProjectLinks.vue";
+
+const route = useRoute()
+
+const props = defineProps({
+  data: ref(Object)
+})
+
+const popup = reactive({
+  isVisible: false,
+  component: null,
+  headline: null
+})
+
+let shortDescription = ref(false)
+
+const normalizeDescription = (text) => {
+  if ( text.length > 450) {
+    shortDescription = true
+    return text.substring(0, 450) + '...'
+  } else {
+    shortDescription = false
+    return text
+  }
+}
+
+const toggleDescription = (text) => {
+  popup.isVisible = true
+  popup.headline = props.data.name
+  popup.component = shallowRef(ProjectDescription)
+}
+
+</script>
+<style scoped lang="scss">
+.project-info-description {
+  border-radius: 20px;
+  background: #FFF;
+  box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
+  padding: 20px;
+  box-sizing: border-box;
+  color: #191B2A;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  height: 240px;
+  display: block;
+  line-height: 154.183%; /* 21.586px */
+
+  h4 {
+    color: #191B2A;
+    text-align: left;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 5px;
+  }
+
+}
+</style>
