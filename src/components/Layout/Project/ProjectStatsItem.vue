@@ -30,7 +30,7 @@ const props = defineProps({
   svg {
     max-width: 13px;
     position: relative;
-    top: 0px;
+    top: 0;
   }
   span {
     color: #1E1E1E;

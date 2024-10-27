@@ -25,7 +25,13 @@ export async function addProduct(product) {
         'Authorization': `Bearer ${userStore.token}`
     };
 
-    return axios.post(`${api.url}products`, product,{headers}).then(result => result).catch(error => error)
+    return axios.post(`${api.url}products`, product,{headers})
+        .then(result => {
+            addNotice({name: 'Товар/услуга успешно добавлены', type: 'success'})
+        })
+        .catch(error => {
+            addNotice({name: 'Ошибка добавления', type: 'danger'})
+        })
 
 }
 

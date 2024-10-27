@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ProjectsList from "@/Pages/ProjectsList.vue";
-import DEBUG from "@/components/DEBUG.vue";
 import CategoriesEditor from "@/Pages/CategoriesEditor.vue";
 import ProjectsChecker from "@/Pages/ProjectsChecker.vue";
 import ReviewsChecker from "@/Pages/ReviewsChecker.vue";

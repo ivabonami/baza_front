@@ -22,7 +22,6 @@ const loading = reactive({
 <style scoped lang="scss">
 .project-banner {
   width: 100%;
-  min-height: 160px;
   border-radius: 20px;
   overflow: hidden;
   height: 100%;

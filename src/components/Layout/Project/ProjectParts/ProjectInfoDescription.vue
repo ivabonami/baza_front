@@ -14,6 +14,7 @@
     <div class="project-info-description_links">
       <div>
         <project-links
+            style="margin-top: 10px;"
             :project-links="data.links"
             :show-count="999"
             :is-editable="false"
@@ -96,9 +97,9 @@ const popup = reactive({
 let shortDescription = ref(false)
 
 const normalizeDescription = (text) => {
-  if ( text.length > 450) {
+  if ( text.length > 350) {
     shortDescription = true
-    return text.substring(0, 450) + '...'
+    return text.substring(0, 347) + '...'
   } else {
     shortDescription = false
     return text
@@ -127,6 +128,15 @@ const toggleDescription = (text) => {
   display: block;
   line-height: 154.183%; /* 21.586px */
 
+  .exchanger_stats {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+    .exchanger_stat {
+      width: 15%;
+    }
+  }
+
   h4 {
     color: #191B2A;
     text-align: left;
@@ -135,7 +145,33 @@ const toggleDescription = (text) => {
     font-weight: 600;
     line-height: normal;
     margin-bottom: 5px;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
+  .menu-item {
+    margin-top: auto;
+    width: 100%;
+    align-items: end;
+    display: flex;
 
+    a {
+      margin-left: auto;
+      color: #7c7c7c;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+    }
+  }
+  .more-toggle {
+    cursor: pointer;
+    color: #7c7c7c;
+    transition: .3s ease;
+
+    &:hover {
+      color: #5D599F;
+    }
+  }
 }
 </style>

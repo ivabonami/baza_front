@@ -3,7 +3,7 @@
     <the-loader v-if="!loading.loaded" />
     <img :src="api.url + data.avatar"
          v-show="loading.loaded"
-         alt="Баннер проекта"
+         alt="Аватар проекта"
          @load="loading.loaded = true">
 
     <div class="favorite-wrapper" v-if="userStore.token">
@@ -61,10 +61,17 @@ function onFavorite (status, projectId, projectName) {
 <style scoped lang="scss">
 .avatar {
   position: relative;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
 
   img {
     width: 100%;
-    border-radius: 20px;
+
   }
 }
 .favorite-wrapper {

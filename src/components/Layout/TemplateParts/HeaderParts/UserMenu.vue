@@ -19,7 +19,7 @@
         </svg>
       </div>
       <div class="text" data-dropdown="adminMenu">
-        Редактор платных мест
+        Редактор заглушек
       </div>
     </div>
 
@@ -97,7 +97,7 @@ const makeRoute = (path) => {
   padding: 10px;
   display: flex;
   flex-wrap: wrap;
-  max-width: 240px;
+  max-width: 260px;
 
   .sep {
     box-sizing: border-box;
@@ -119,6 +119,7 @@ const makeRoute = (path) => {
 
     .icon {
       width: 30px;
+      height: 20px;
       svg {
         path {
           transition: .3s ease;

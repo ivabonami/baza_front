@@ -3,9 +3,9 @@
     <the-loader style="min-height: 200px;" v-if="loading.loaded" />
 
     <div class="banners" v-else>
-      <div class="large">
+      <div class="large" v-if="adsBanners.large">
         <div class="banner-large" v-for="banner of adsBanners.large">
-          <a :href="banner.link">
+          <a :href="banner.link" target="_blank">
             <img :src="api.url + banner.path" alt="">
             <div class="banner-menu" v-if="userStore.role === 'admin'" @click.prevent>
               <svg @click="onEditBanner(banner, 'large')" width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -22,7 +22,7 @@
         </div>
 
       </div>
-      <div class="small">
+      <div class="small" v-if="adsBanners.small">
         <div class="banner-small" v-for="banner of adsBanners.small">
           <a :href="banner.link">
             <img :src="api.url + banner.path" alt="">
@@ -112,6 +112,7 @@ onMounted(() => {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    height: fit-content;
     position: relative;
 
     .banner-menu {
@@ -147,12 +148,14 @@ onMounted(() => {
     .large {
       width: 100%;
       display: flex;
+      height: fit-content;
       gap: 10px;
       flex-wrap: wrap;
     }
     .small {
       width: 100%;
       display: flex;
+      height: fit-content;
       gap: 15px;
       justify-content: space-between;
       flex-wrap: wrap;
@@ -162,8 +165,7 @@ onMounted(() => {
 
   .banner-large, .banner-small {
     width: 100%;
-    border-radius: 30px;
-    height: 160px;
+    height: 100%;
     position: relative;
 
     a {
@@ -175,17 +177,16 @@ onMounted(() => {
 
       img {
         border-radius: 30px;
-        aspect-ratio: 8 / 1;
-        height: 100%;
+        width: 100%;
       }
     }
   }
   .banner-large {
-    height: 160px;
     overflow: hidden;
   }
   .banner-small {
     width: 32%;
+    height: 100%;
     overflow: hidden;
 
     a {
@@ -203,6 +204,29 @@ onMounted(() => {
     display: block;
     overflow: hidden;
 
+  }
+}
+
+@media screen and (max-width: 500px){
+  .banners-wrapper {
+    .banner-small, .banner-large {
+      max-height: 60px;
+      a {
+        img {
+          height: 100%;
+        }
+      }
+    }
+    .banners {
+
+      .banner-menu {
+        top: 10px;
+        svg {
+          width: 15px;
+          height: 15px;
+        }
+      }
+    }
   }
 }
 

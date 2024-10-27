@@ -5,13 +5,16 @@
         v-if="userMenu.collapsed"
         @click="toggleDropdown()"
         :style="'filled'">
-      <div class="button-text">
-        M
+      <div class="button-content">
+        <svg width="20" height="10" viewBox="0 0 20 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1.5H19M1 8.5H19" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
     </button-black>
     <ul>
       <li v-for="item of menuItems">
         <a
+            @click="closeDropdown()"
            target="_blank"
            v-if="item.type === 'external'"
            :href="item.href"
@@ -20,6 +23,7 @@
           <span>{{ item.name }}</span>
         </a>
         <router-link
+            @click="closeDropdown()"
                      v-else-if="item.type === 'internal'"
                      :to="item.href"
                      :class="item.color">
@@ -85,7 +89,13 @@ window.addEventListener('resize', hideMenuIOnResize)
 </script>
 
 <style scoped lang="scss">
-
+.button-content {
+  svg {
+    path {
+      stroke: #FFFFFF;
+    }
+  }
+}
 .items {
   padding: 0 30px;
   box-sizing: border-box;

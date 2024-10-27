@@ -104,7 +104,6 @@ export default {
     justify-content: space-between;
     align-items: center;
     border-radius: 20px;
-    transition: .3s ease;
     cursor: pointer;
 
 

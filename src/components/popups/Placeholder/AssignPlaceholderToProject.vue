@@ -27,7 +27,6 @@ import { useRoute } from 'vue-router'
 import {getPlaceholders, linkProjectWithPlaceholder, relinkProjectToPlaceholder} from "@/API/placeholders.js";
 import {api} from "@/API/apiurl.js";
 import {placeholders} from "@/API/placeholders.js";
-import {getProject} from "@/API/projectsController.js";
 import TheLoader from "@/components/ReUsable/TheLoader.vue";
 import {reactive} from "vue";
 

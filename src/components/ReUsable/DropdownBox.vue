@@ -56,7 +56,6 @@ onMounted(() => {
   z-index: 15;
   overflow-x: hidden;
   overflow-y: auto;
-  box-sizing: border-box;
   max-height: 300px;
 
 

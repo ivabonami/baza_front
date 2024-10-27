@@ -477,19 +477,19 @@ export default {
 }
 
 @-webkit-keyframes BgGradient {
-  0%{background-position:0% 43%}
+  0%{background-position:0 43%}
   50%{background-position:100% 58%}
-  100%{background-position:0% 43%}
+  100%{background-position:0 43%}
 }
 @-moz-keyframes BgGradient {
-  0%{background-position:0% 43%}
+  0%{background-position:0 43%}
   50%{background-position:100% 58%}
-  100%{background-position:0% 43%}
+  100%{background-position:0 43%}
 }
 @keyframes BgGradient {
-  0%{background-position:0% 43%}
+  0%{background-position:0 43%}
   50%{background-position:100% 58%}
-  100%{background-position:0% 43%}
+  100%{background-position:0 43%}
 }
 
 </style>

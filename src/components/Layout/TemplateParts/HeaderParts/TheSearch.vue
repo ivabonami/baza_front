@@ -46,7 +46,6 @@ const closeDropdown = () => {
   removeEventListener('mousedown', closeByClickOutside)
   removeEventListener('keydown', closeByEsc)
   searchProjects.show = false
-  console.log(searchProjects.show)
 }
 
 const closeByClickOutside = (e) => {
@@ -64,6 +63,7 @@ const closeByEsc = (e) => {
 
 const hideMenuIOnResize = (e) => {
   searchProjects.collapsed = e.target.innerWidth < 992;
+  searchProjects.show = window.innerWidth > 992;
 }
 
 searchProjects.collapsed = window.innerWidth < 992;
@@ -74,7 +74,9 @@ window.addEventListener('resize', hideMenuIOnResize)
 
 const onProjectClick = (id) => {
   router.push({path: '/project/' + id, params: id})
-  closeDropdown()
+  if (searchProjects.collapsed) {
+    searchProjects.show = false
+  }
 }
 
 </script>

@@ -145,11 +145,7 @@ export default {
     onGetProjects (options) {
       getProjects(options).then(result => {
 
-        if (result.projects.length < this.requestOptions.limit) {
-          this.hasMore =  false
-        } else {
-          this.hasMore = true
-        }
+        this.hasMore = result.projects.length >= this.requestOptions.limit;
 
         for (const project of result.projects) {
           if( project.type ) {

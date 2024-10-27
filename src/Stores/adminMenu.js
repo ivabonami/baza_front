@@ -3,7 +3,6 @@ import iconCategory from '@/assets/icons/icon-category-manager.svg'
 import iconCheck from '@/assets/icons/icon-check.svg'
 import iconCheckMessage from '@/assets/icons/icon-check-message.svg'
 import iconDollar from '@/assets/icons/icon-dollar.svg'
-import iconHearth from '@/assets/icons/menu-icons/icon-hearth.svg'
 
 
 

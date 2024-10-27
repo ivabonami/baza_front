@@ -73,7 +73,7 @@ const popupBody = ref(null)
     max-width: 80vw;
     height: fit-content;
     max-height: 80vh;
-    min-height: 15vh;
+    min-height: 12vh;
     left: 50%;
     top: 50%;
     translate: -50% -50%;

@@ -5,17 +5,9 @@ import {notifications} from "@/js/notifications.js";
 import BaseLayout from "@/components/Layout/BaseLayout.vue";
 import {RouterView, useRoute} from 'vue-router'
 
-const ThePopup = defineAsyncComponent({
-  loader: () => import("@/components/popups/ThePopup.vue"),
-  delay: 200,
-  timeout: 10000
-})
-
 const BaseHeader = defineAsyncComponent({
   loader: () => import("@/components/Layout/TemplateParts/BaseHeader.vue"),
 })
-
-const SecondPopup = import("@/components/popups/TheBazaPopup.vue");
 
 const BaseFooter = defineAsyncComponent({
   loader: () => import("@/components/Layout/TemplateParts/BaseFooter.vue"),
@@ -32,9 +24,6 @@ const PayedBanners = defineAsyncComponent({
 const YandexMetrica = defineAsyncComponent({
   loader: () => import("@/components/Blocks/YandexMetrica.vue"),
 })
-
-import { useMouse } from '@vueuse/core'
-import TheBazaPopup from "@/components/popups/TheBazaPopup.vue";
 
 
 const route = useRoute()

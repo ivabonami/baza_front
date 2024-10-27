@@ -10,7 +10,7 @@ import SignUp from "@/components/popups/controllers/Auth/AuthParts/SignUp.vue"
 import SignOut from "@/components/popups/controllers/Auth/AuthParts/SignOut.vue"
 
 import {addNotice} from "@/js/notifications.js";
-import {reactive, ref, shallowRef} from "vue";
+import {reactive,  shallowRef} from "vue";
 
 const props = defineProps({
   setComponent: null,

@@ -64,50 +64,51 @@
           <div class="project-reviews_items_item_body" v-if="review.comment">
             {{ review.comment }}
           </div>
-
-          <div class="menu" v-if="userStore.role === 'admin'">
-
-
-          </div>
-
         </div>
       </div>
     </div>
 
     <div class="mt20">
-      <Waypoint v-if="!hideLoadMore"
-
-                @change="way => {
-                  if (way.going === 'IN') {
-                    onReviewsLoad()
-                  }
-              }">
-
-        <button-primary
+      <Waypoint v-if="hasMore" @change="way => { if (way.going === 'IN') onReviewsLoad() }">
+        <button-black
             @click="onReviewsLoad()"
+            :type="'button'"
             :style="'outline'">
-          <template #default>
+          <div class="button-content">
             Загрузить еще
-          </template>
-        </button-primary>
+          </div>
+        </button-black>
 
       </Waypoint>
     </div>
+
+    <Teleport to="body" v-if="popup.show">
+      <the-baza-popup
+          :headline="'Опубликовать отзыв'"
+          @closePopup="popup.show = false"
+      >
+        <approve-review :data="popup.data"
+                        @approve-review="emit => reviewsStore.splice(reviewsStore.findIndex(item => item.id === emit) , 1)"
+                        @close-popup="popup.show = false"
+        />
+      </the-baza-popup>
+    </Teleport>
   </div>
 
 </template>
 
 <script>
-import {approveReview, deleteReview, showNotReviewed} from "@/API/reviews.js";
+import {deleteReview, showNotReviewed} from "@/API/reviews.js";
 import ButtonBlack from "@/components/Buttons/ButtonBlack.vue"
 import {userStore} from "@/Stores/userStore.js";
 import emptyStore from "@/components/Blocks/EmptyStore.vue";
 import TheLoader from "@/components/ReUsable/TheLoader.vue";
 import buttonPrimary from "../components/Buttons/ButtonPrimary.vue";
 import {Waypoint} from "vue-waypoint";
-import {popup} from "@/js/controllers/popupController.js";
 import {reviewsStore} from "@/Stores/reviewsStore.js";
 import {addNotice} from "@/js/notifications.js";
+import TheBazaPopup from "@/components/popups/TheBazaPopup.vue"
+import ApproveReview from "@/components/popups/Reviews/ApproveReview.vue"
 
 export default {
   name: "ReviewsCheck.vue",
@@ -115,19 +116,19 @@ export default {
     return {
       loading: false,
       userStore,
-      modalAction: {
+      popup: {
         show: false,
         review: {}
       },
       reviewsStore,
-      hideLoadMore: false,
+      hasMore: true,
       notice: {
         show: false,
         color: null,
         text: {}
       },
       options: {
-        limit: 10,
+        limit: 15,
         offset: 0,
       },
       deleteReview
@@ -140,7 +141,9 @@ export default {
     ButtonBlack,
     TheLoader,
     emptyStore,
-    buttonPrimary
+    buttonPrimary,
+    TheBazaPopup,
+    ApproveReview
   },
 
   methods: {
@@ -156,22 +159,17 @@ export default {
         for (const review of result.data.reviews) {
           reviewsStore.push(review)
         }
-
         this.loading = false
 
-        if (result.data.reviews.length < this.options.limit) {
-          this.hideLoadMore = true
-        } else {
-          this.hideLoadMore = false
-        }
+        result.data.reviews.length < this.options.limit ? this.hasMore = false : this.hasMore = true
+
       })
 
       this.options.offset = this.options.offset + this.options.limit
     },
     onReviewApprove(review) {
-      popup.show = true
-      popup.component = 'ApproveReview'
-      popup.review = review
+      this.popup.show = true
+      this.popup.data = review
     }
   },
 
@@ -181,6 +179,9 @@ export default {
       addNotice({name: 'У вас нет прав для просмотра этой страницы', type: 'danger'})
       this.$router.replace('/')
     }
+  },
+  unmounted() {
+    reviewsStore.splice(0, reviewsStore.length)
   }
 
 }
