@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {onMounted, onUnmounted, ref} from "vue";
 import TheBazaPopupHeader from "@/components/popups/TheBazaPopupHeader.vue";
 
 const props = defineProps({
@@ -34,6 +34,18 @@ const props = defineProps({
 const emits = defineEmits(['closePopup'])
 
 const popupBody = ref(null)
+
+
+onMounted(() => {
+  document.body.style.maxHeight = '100vh'
+  document.body.style.paddingRight = '10px'
+  document.body.style.overflowY = 'hidden'
+})
+onUnmounted(() => {
+  document.body.style.maxHeight = 'auto'
+  document.body.style.paddingRight = '0'
+  document.body.style.overflowY = 'scroll'
+})
 
 
 </script>

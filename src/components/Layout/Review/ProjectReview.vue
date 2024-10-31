@@ -24,7 +24,30 @@
             {{ normalizeTime($props.review.createdAt) }}
           </div>
           <div class="admin-menu" v-if="userStore.role === 'admin'">
-            <review-menu :review="$props.review" />
+            <review-menu :review="$props.review"
+                         @review-edited="emit => {
+                            try {
+                              this.$emit('reviewEdited', emit)
+                            } catch (e) {
+                              addNotice({name: 'Не удалось реактивно обновить отзыв', type: 'warning'})
+                            }
+                          }"
+                         @review-deleted="emit => {
+                          try {
+                            this.$emit('reviewDeleted', emit)
+                          } catch (e) {
+                            addNotice({name: 'Не удалось реактивно удалить отзыв', type: 'warning'})
+                          }
+            }"
+                         @disapprove-review="emit => {
+                          try {
+                            this.$emit('disapproveReview', emit)
+                          } catch (e) {
+                            addNotice({name: 'Не удалось реактивно удалить отзыв', type: 'warning'})
+                          }
+            }"
+
+            />
           </div>
         </div>
 
@@ -41,6 +64,7 @@
 <script>
 import ReviewMenu from "@/components/Menus/ReviewMenu.vue";
 import {userStore} from "@/Stores/userStore.js";
+import {addNotice} from "@/js/notifications.js";
 
 
 export default {
@@ -51,7 +75,7 @@ export default {
   data() {
     return {
       months: ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'],
-      userStore
+      userStore, addNotice
     }
   },
   components: {ReviewMenu},
@@ -60,7 +84,7 @@ export default {
       let reviewDate = Date.parse(time)
       return new Date(reviewDate).getDate() + ' ' + this.months[new Date(reviewDate).getMonth()] + ' ' + new Date(reviewDate).getFullYear()
 
-    }
+    },
   }
 }
 </script>

@@ -63,10 +63,8 @@ export async function editReview(review) {
 
     return await axios.put(`${api.url}reviews/${review.id}`, review, {headers})
         .then(result => {
-            const review = projectReviewsStore.reviews.find(item => item.id === result.data.updatedReview.id)
-            review.comment = result.data.updatedReview.comment
-            review.rating = result.data.updatedReview.rating
-        }).catch(error => error)
+            addNotice({name: "Отзыв успешно изменен", type: 'success'})
+        }).catch(error => addNotice({name: "Не получилось изменить отзыв", type: 'danger'}))
 }
 
 export async function deleteReview(review) {

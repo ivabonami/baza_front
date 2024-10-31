@@ -29,6 +29,8 @@
         <component :is="popup.component"
                    :data="popup.data"
                    @close-popup="popup.show = false"
+                   @review-edited="emit => emits('reviewEdited', emit) "
+                   @review-deleted="emit => emits('reviewDeleted', emit) "
                    @disapprove-review="emits('disapproveReview')"/>
       </the-baza-popup>
     </Teleport>
@@ -52,7 +54,7 @@ const popup = reactive({
   headline: 'Выполните действие',
   data: null
 })
-const emits = defineEmits(['disapproveReview'])
+const emits = defineEmits(['disapproveReview', 'reviewEdited', 'reviewDeleted'])
 
 const onCallPopup = (component, headline, data) => {
   popup.show = true

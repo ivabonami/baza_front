@@ -58,8 +58,6 @@ window.addEventListener('scroll', handleScroll);
 
   </base-layout>
 
-  <ThePopup v-if="popup.show" />
-
   <yandex-metrica />
 
   <TheNotifications v-if="notifications.length > 0" />

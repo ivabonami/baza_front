@@ -50,11 +50,10 @@
         @buttonPressed="onAddReview()"
         :style="'filled'">
       <div class="button-content">
-        Скрыть отзыв
+        Оставить отзыв
       </div>
     </button-black>
 
-    {{ review }}
   </div>
 </template>
 
@@ -104,11 +103,13 @@ const onAddReview = () => {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+    font-size: 14px;
+
     .stars-items {
       svg {
         cursor: pointer;
-        width: 30px;
-        height: 30px;
+        width: 20px;
+        height: 20px;
         transition: .3s ease;
 
         path {

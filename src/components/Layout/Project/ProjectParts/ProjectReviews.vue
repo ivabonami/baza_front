@@ -4,7 +4,7 @@
       <div class="reviews-navigation_buttons">
         <button-black
             :type="'button'"
-            @buttonPressed="popup.show = true"
+            @buttonPressed="setComponent(AddReview, projectId)"
             :style="'filled'">
           <div class="button-content">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -30,6 +30,23 @@
       <project-review v-for="review of reviews"
                       v-if="reviews.length > 0"
                       :key="review"
+                      @reviewEdited="emit => {
+                        review.comment = emit.comment
+                        review.rating = emit.rating}"
+                      @reviewDeleted="emit => {
+                        try {
+                          reviews.splice(reviews.findIndex(item => item.id === emit), 1)
+                        } catch (e) {
+                          addNotice({name: 'Не удалось реактивно удалить отзыв', type: 'warning'})
+                        }
+                      }"
+                      @disapproveReview="emit => {
+                        try {
+                          reviews.splice(reviews.findIndex(item => item.id === emit), 1)
+                        } catch (e) {
+                          addNotice({name: 'Не удалось реактивно скрыть отзыв', type: 'warning'})
+                        }
+                      }"
                       :review="review" />
     </div>
 
@@ -50,14 +67,14 @@
           :headline="'Оставить отзыв'"
           @closePopup="popup.show = false"
       >
-        <add-review :data="props.projectId" @closePopup="popup.show = false" />
+        <component :is="popup.component" :data="popup.data" @closePopup="popup.show = false" />
       </the-baza-popup>
     </Teleport>
   </div>
 </template>
 <script setup>
 import ProjectReview from "@/components/Layout/Review/ProjectReview.vue";
-import {onMounted, reactive, ref, watch} from "vue";
+import {onMounted, reactive, ref, shallowRef, watch} from "vue";
 import {getReviews} from "@/API/reviewsController.js";
 import BaseSort from "@/components/ReUsable/BaseSort.vue";
 import {projectReviewsSort} from "@/Stores/allSorts.js";
@@ -66,6 +83,8 @@ import {addNotice} from "@/js/notifications.js";
 import {Waypoint} from "vue-waypoint";
 import TheBazaPopup from "@/components/popups/TheBazaPopup.vue"
 import AddReview from "@/components/popups/Reviews/AddReview.vue"
+import EditReview from "@/components/popups/Reviews/EditReview.vue"
+import DeleteReview from "@/components/popups/Reviews/DeleteReview.vue"
 
 const props = defineProps({
   reviewsCount: ref(null),
@@ -84,8 +103,16 @@ const requestOptions = {
 }
 
 const popup = reactive({
-  show: false
+  show: false,
+  component: null,
+  data: null
 })
+
+const setComponent = (component, data) => {
+  popup.component = shallowRef(component)
+  popup.data = data
+  popup.show = true
+}
 let reviews = reactive([])
 
 const onSortReviews = (sort) => {
