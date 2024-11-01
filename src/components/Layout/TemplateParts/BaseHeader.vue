@@ -77,4 +77,21 @@ import HeaderAuth from "@/components/Layout/TemplateParts/HeaderParts/HeaderAuth
   }
 }
 
+@media screen and (max-width: 500px){
+  .header {
+    flex-wrap: nowrap;
+    .logo {
+      width: 40%;
+      a {
+        img {
+          width: 100%;
+        }
+      }
+    }
+    .search {
+      width: 15%;
+    }
+  }
+}
+
 </style>

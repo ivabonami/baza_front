@@ -27,7 +27,7 @@
 <script setup>
 import ButtonBlack from "@/components/Buttons/ButtonBlack.vue";
 import ButtonSecondary from "@/components/Buttons/ButtonSecondary.vue";
-import {placeholders, unlinkProjectWithPlaceholder} from "@/API/placeholders.js";
+import {unlinkProjectWithPlaceholder} from "@/API/placeholders.js";
 
 
 const props = defineProps({
@@ -38,7 +38,8 @@ const emits = defineEmits(['closePopup'])
 
 <style scoped lang="scss">
 .project-remove {
-  max-width: 400px;
+  width: 100%;
+  max-width: 550px;
 
   p {
     margin-bottom: 20px;

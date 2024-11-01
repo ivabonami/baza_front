@@ -56,7 +56,7 @@
 <script setup>
 import TheBazaPopup from "@/components/popups/TheBazaPopup.vue";
 import {getAdsBanners} from "@/API/adsBanners.js";
-import {onMounted, reactive, ref, shallowRef} from "vue";
+import {onMounted, reactive, shallowRef} from "vue";
 import {adsBanners} from "@/Stores/adsBannersStore.js";
 import TheLoader from "@/components/ReUsable/TheLoader.vue";
 import {api} from "@/API/apiurl.js";
@@ -114,6 +114,7 @@ onMounted(() => {
     gap: 10px;
     height: fit-content;
     position: relative;
+    align-items: stretch;
 
     .banner-menu {
       position: absolute;
@@ -146,19 +147,31 @@ onMounted(() => {
     }
 
     .large {
-      width: 100%;
-      display: flex;
-      height: fit-content;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .small {
-      width: 100%;
+      width: 74%;
       display: flex;
       height: fit-content;
       gap: 15px;
-      justify-content: space-between;
       flex-wrap: wrap;
+
+      img {
+
+        width: auto;
+        height: 100%;
+      }
+    }
+    .small {
+      width: 24%;
+      display: flex;
+      gap: 15px;
+      height: 140px;
+      flex-wrap: wrap;
+
+
+      img {
+
+        width: auto;
+        height: 100%;
+      }
 
     }
   }
@@ -183,16 +196,25 @@ onMounted(() => {
   }
   .banner-large {
     overflow: hidden;
+    width: auto;
+    min-width: 100%;
+    height: 140px;
+    border-radius: 30px;
+    a {
+      img {
+        aspect-ratio: 7 / 1;
+      }
+    }
   }
   .banner-small {
-    width: 32%;
-    height: 100%;
+    width: auto;
     overflow: hidden;
+    border-radius: 30px;
+    height: 100%;
 
     a {
       img {
         aspect-ratio: auto / 1;
-        height: 100%;
       }
     }
   }
@@ -217,7 +239,24 @@ onMounted(() => {
         }
       }
     }
+    .banner-small {
+      width: 47%;
+      a {
+        img {
+          height: 100%;
+        }
+      }
+    }
     .banners {
+      .large {
+        width: 100%;
+        height: fit-content;
+      }
+      .small {
+        width: 100%;
+        height: fit-content;
+
+      }
 
       .banner-menu {
         top: 10px;

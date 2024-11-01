@@ -364,6 +364,18 @@ input {
     left: 5%;
     right: 5%;
     transform: none;
+
+    .item {
+      .project {
+        flex-wrap: nowrap;
+        .avatar {
+          width: 25%;
+        }
+        .info {
+          width: 73%;
+        }
+      }
+    }
   }
   .wrapper {
     align-items: center;
@@ -371,7 +383,7 @@ input {
     width: 100%;
   }
   input {
-    width: 95%;
+    width: 90%;
     top: 30px;
     left: 4%;
     right: 3%;

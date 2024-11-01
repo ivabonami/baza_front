@@ -37,7 +37,9 @@
     </div>
 
     <div class="project-reviews" v-if="compiledInfo.project">
-      <project-reviews :project-id="compiledInfo.project.id" :reviews-count="compiledInfo.project.reviewsCount"/>
+      <project-reviews :project-id="compiledInfo.project.id"
+                       :reviews-count="compiledInfo.project.reviewsCount"
+                       @review-count-changed="compiledInfo.project.reviewsCount += -1 "/>
     </div>
 
 
@@ -118,7 +120,7 @@ const onGetProject = () => {
         setStats(result.data.project)
         loading.loaded = true
       } )
-      .catch(error =>  addNotice({name: 'Не удалось получить данные по проекту', type: 'danger'}))
+      .catch(() =>  addNotice({name: 'Не удалось получить данные по проекту', type: 'danger'}))
 }
 
 onMounted(() => onGetProject())

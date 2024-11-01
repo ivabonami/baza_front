@@ -36,6 +36,7 @@
                       @reviewDeleted="emit => {
                         try {
                           reviews.splice(reviews.findIndex(item => item.id === emit), 1)
+                          this.$emit('reviewCountChanged')
                         } catch (e) {
                           addNotice({name: 'Не удалось реактивно удалить отзыв', type: 'warning'})
                         }
@@ -43,6 +44,7 @@
                       @disapproveReview="emit => {
                         try {
                           reviews.splice(reviews.findIndex(item => item.id === emit), 1)
+                          this.$emit('reviewCountChanged')
                         } catch (e) {
                           addNotice({name: 'Не удалось реактивно скрыть отзыв', type: 'warning'})
                         }
@@ -74,7 +76,7 @@
 </template>
 <script setup>
 import ProjectReview from "@/components/Layout/Review/ProjectReview.vue";
-import {onMounted, reactive, ref, shallowRef, watch} from "vue";
+import {reactive, ref, shallowRef, watch} from "vue";
 import {getReviews} from "@/API/reviewsController.js";
 import BaseSort from "@/components/ReUsable/BaseSort.vue";
 import {projectReviewsSort} from "@/Stores/allSorts.js";
@@ -83,8 +85,6 @@ import {addNotice} from "@/js/notifications.js";
 import {Waypoint} from "vue-waypoint";
 import TheBazaPopup from "@/components/popups/TheBazaPopup.vue"
 import AddReview from "@/components/popups/Reviews/AddReview.vue"
-import EditReview from "@/components/popups/Reviews/EditReview.vue"
-import DeleteReview from "@/components/popups/Reviews/DeleteReview.vue"
 
 const props = defineProps({
   reviewsCount: ref(null),
@@ -147,13 +147,12 @@ const onLoadReviews = () => {
       })
 }
 
-watch(props, (value, oldValue, onCleanup) => {
-  if (value !== oldValue) {
-    reviews.splice(0, reviews.length)
-    requestOptions.projectId = value.projectId
-    requestOptions.offset = 0
-    onLoadReviews()
-  }
+watch(props, (value, oldValue) => {
+  console.log(value, oldValue)
+  reviews.splice(0, reviews.length)
+  requestOptions.projectId = value.projectId
+  requestOptions.offset = 0
+  onLoadReviews()
 
 })
 
