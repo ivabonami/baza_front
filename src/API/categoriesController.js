@@ -40,8 +40,9 @@ export function getCategories() {
 
         categories.allCategories = allCategories
         placeholders.categories = allCategories
+        placeholders.categories.unshift({ "id": null, "name": "Главная", "icon": "/src/assets/icons/menu-icons/forums.svg" })
 
-    }).catch(error => {
+    }).catch(() => {
         addNotice({name: 'Категории не были получены', type: 'danger'})
     })
 }

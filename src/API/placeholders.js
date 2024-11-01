@@ -4,9 +4,7 @@ import {userStore} from "@/Stores/userStore.js";
 import {reactive} from "vue";
 import {addNotice} from "@/js/notifications.js";
 import {projects} from "@/Stores/projectsStore.js";
-import router from "@/router/index.js";
 import {getProject} from "@/API/projectsController.js";
-import {categories} from "@/Stores/categories.js";
 
 export const placeholders = reactive({
     categoryPlaceholders: [],
@@ -21,9 +19,7 @@ export function getPlaceholders(categoryId) {
     return axios.get(api.url + url, {timeout: 20000, headers: {
             'Authorization': `Bearer ${userStore.token}`
         }})
-        .then(result => {
-            placeholders.categoryPlaceholders = result.data.placeholders
-        })
+        .then(result => result.data.placeholders)
 }
 
 export function setPlaceholdersCount(placeholdersParams, categoryId) {
@@ -54,7 +50,7 @@ export function linkProjectWithPlaceholder(placeholderId, project) {
     return axios.post(api.url + url, {
         placeholderId: placeholderId,
         projectId: project.id
-    }, {timeout: 20000} ).then(result => {
+    }, {timeout: 20000} ).then(() => {
 
         projects.findIndex(item => item.id === project.id) ? projects.splice(projects.findIndex(item => item.id === project.id), 1) : null
 
@@ -68,7 +64,7 @@ export function linkProjectWithPlaceholder(placeholderId, project) {
         })
 
         addNotice({name: `Проект успешно привязан`, type: 'success'})
-    }).catch(error => {
+    }).catch(() => {
         addNotice({name: `Не удалось отвязать проект`, type: 'danger'})
     })
 }
@@ -79,7 +75,7 @@ export function unlinkProjectWithPlaceholder(placeholderId, projectId) {
     return axios.put(api.url + url, {
         placeholderId: '',
         projectId: projectId
-    }, {timeout: 20000} ).then(result => {
+    }, {timeout: 20000} ).then(() => {
         try {
             projects.find(item => item.id === placeholderId).project = null
         } catch (e) {
@@ -87,7 +83,7 @@ export function unlinkProjectWithPlaceholder(placeholderId, projectId) {
         }
 
         addNotice({name: `Проект успешно отвязан`, type: 'success'})
-    }).catch(error => {
+    }).catch(() => {
         addNotice({name: `Не удалось отвязать проект`, type: 'danger'})
     })
 }
@@ -100,7 +96,7 @@ export function relinkProjectToPlaceholder(placeholderId, newProject) {
         placeholderId: placeholderId,
         projectId: newProject.id
     }, {timeout: 20000} )
-        .then(result => {
+        .then(() => {
             try {
                 projects.find(item => item.id === newProject.placeholderId && item.project).project
                 newProject.placeholderId = placeholderId
@@ -134,10 +130,12 @@ export function relinkProjectToPlaceholder(placeholderId, newProject) {
 
 }
 
-export function addPlaceholders(placeholdersParams) {
+export function addPlaceholders(placeholdersParams, categoryId) {
     let url = 'placeholder'
 
-    return axios.post(api.url + url, placeholdersParams, {timeout: 20000} )
+    return axios.post(api.url + url, {placeholdersParams: [placeholdersParams], categoryId: categoryId}, {timeout: 20000} )
+        .then(() => addNotice({name: 'Успешно', type: 'success'}))
+        .catch(() => addNotice({name: 'Не могу добавить заглушку', type: 'danger'}))
 }
 
 

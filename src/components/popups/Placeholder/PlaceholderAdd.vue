@@ -3,8 +3,7 @@
     <div class="form">
       <input-text
           style="margin-bottom: 10px;"
-          :data="{ placeholder: 'Надпись в заглушке' }"
-          @keydown.enter="onEditPlaceholder(placeholder)"
+          :placeholder="'Надпись в заглушке'"
           @dataChanged="emit => placeholder.text = emit" />
 
 
@@ -17,21 +16,12 @@
           @dataChanged="emit => placeholder.style = placeholderColors.find(item => item.name === emit).value" />
 
       <input-select-options
-          style="width: 50%;"
+          style="width: 50%; margin-top: 10px;"
           :input-data="{
-            selected: (placeholders.categoryPlaceholders.length + 1),
-            items: (placeholders.categoryPlaceholders.length + 1)
-          }"
-          @dataChanged="emit => placeholder.position = emit - 1" />
-
-      Props: {{ props }}
-      <input-select-options
-          style="width: 50%;"
-          :input-data="{
-            selected: 0,
+            selected: props.category ? props.category.name : null,
             items: setNames(placeholders.categories)
           }"
-          @dataChanged="emit => placeholder.position = emit - 1" />
+          @dataChanged="emit => placeholder.categoryId = categories.allCategories.find(item => item.name === emit).id" />
     </div>
 
 
@@ -39,10 +29,10 @@
     <div class="buttons">
       <button-black
           :type="'button'"
-          @buttonPressed="onEditPlaceholder(placeholder)"
+          @buttonPressed="onAddPlaceholder(placeholder)"
           :style="'filled'">
         <div class="button-text">
-          Изменить
+          Добавить
         </div>
       </button-black>
       <button-secondary
@@ -63,11 +53,16 @@ import ButtonSecondary from "@/components/Buttons/ButtonSecondary.vue";
 import InputText from "@/components/Inputs/InputText.vue";
 import InputSelectOptions from "@/components/Inputs/InputSelectOptions.vue";
 import {placeholderColors} from "@/js/placeholderColors.js";
-import {editPlaceholder, getPlaceholders, placeholders} from "@/API/placeholders.js";
+import {addPlaceholders, getPlaceholders, placeholders} from "@/API/placeholders.js";
 import {useRoute} from "vue-router";
 import {projects} from "@/Stores/projectsStore.js";
+import {categories} from "@/Stores/categories.js";
+import {addNotice} from "@/js/notifications.js";
 
 const route = useRoute()
+const props = defineProps({
+  category: null
+})
 
 getPlaceholders(route.query.categoryIds || null)
 
@@ -80,14 +75,6 @@ function setNames(data) {
 }
 
 
-function setNewColor(color) {
-  placeholder.color = placeholderColors.find(item => item.name === color).value
-}
-function setNewCategory(category) {
-  placeholder.categoryId = placeholderColors.find(item => item.category === category).id
-}
-
-
 function setSelected(color) {
     try {
       return placeholderColors.find(item => item.value === color).name
@@ -96,39 +83,41 @@ function setSelected(color) {
     }
 }
 
-const props = defineProps({
-  categoryId: null
-})
+
 
 const emits = defineEmits(['closePopup'])
 
-const placeholder = props.data
+const placeholder = {
+  text: null,
+  style: placeholderColors[0].value,
+  categoryId: props.category ? props.category.id : null,
+}
 
 
-
-function onEditPlaceholder(placeholder) {
+function onAddPlaceholder(placeholder) {
   emits('closePopup')
-  editPlaceholder({
-    placeholderId: placeholder.id,
+  addPlaceholders({
     text: placeholder.text,
     style: placeholder.style,
-    position: placeholder.position
-  }).then(() => {
+  }, placeholder.categoryId).then(() => {
+    try {
+      if (props.category && placeholder.categoryId === props.category.id) {
+        placeholders.categoryPlaceholders.push(placeholder)
+      } else if (!props.category && !placeholder.categoryId) {
+        placeholders.categoryPlaceholders.push(placeholder)
+      }
 
-    if (route.path === '/payed-editor') {
-      try {
-        placeholders.categoryPlaceholders.splice(placeholders.categoryPlaceholders.findIndex(item => item.id === placeholder.id), 1)
-        placeholders.categoryPlaceholders.splice(placeholder.position, 0, placeholder)
-      } catch (e) { addNotice({name: 'Не удалось обновить позицию', type: 'warning'}) }
+    } catch (e) {
 
-    } else {
-      try {
-        projects.splice(projects.findIndex(item => item.id === placeholder.id && !item.type), 1)
-        projects.splice(placeholder.position, 0, placeholder)
-      } catch (e) { addNotice({name: 'Не удалось обновить позицию', type: 'warning'}) }
+      if (props.category && placeholder.categoryId === props.category.id) {
+        projects.push(placeholder)
+      } else if (!props.category && !placeholder.categoryId) {
+        projects.push(placeholder)
+      }
     }
-    addNotice({name: 'Заглушка изменена успешно', type: 'success'})
+    emits('closePopup')
   }).catch(err => {
+    console.log(err)
     addNotice({name: 'Не удалось изменить заглушку', type: 'danger'})
   })
 }
