@@ -1,6 +1,5 @@
 <template>
   <div class="project-links-wrapper">
-
     <div class="project-links-items">
       <project-links-item
           :is-editable="props.isEditable"
@@ -8,7 +7,7 @@
           :index="index"
 
           @editLink="emit => editLink(emit)"
-          @removeLink="emit => removeLink(index)"
+          @removeLink="emit => removeLink(link)"
 
           v-for="(link, index) of linksSorter(props.projectLinks)"
           v-show="index < props.showCount"
@@ -34,7 +33,7 @@
         <link-editor
             :link-to-edit="editableLink"
 
-            @edit-aborted="emit => editableLink.name = emit.name "
+            @close-popup="popup.isVisible = false"
             @link-edited="emit => onLinkEdit(emit, editableLink)" />
       </the-baza-popup>
     </Teleport>
@@ -94,6 +93,7 @@ const onLinkEdit = (newLink, oldLink) => {
 }
 
 const removeLink = (link) => {
+
   try {
     props.projectLinks.splice(props.projectLinks.findIndex(item => item.name === link.name && item.link === link.link), 1)
     console.log(link, props.projectLinks)

@@ -33,7 +33,7 @@
         <link-editor
             :link-to-edit="editableLink"
 
-            @edit-aborted="popup.isVisible = false"
+            @close-popup="popup.isVisible = false"
             @link-edited="emit => onLinkEdit()" />
       </the-baza-popup>
     </Teleport>

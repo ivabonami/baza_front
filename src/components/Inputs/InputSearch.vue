@@ -283,13 +283,13 @@ input {
     .project {
       width: 100%;
       display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
+      flex-wrap: nowrap;
+      gap: 5px;
       align-items: center;
     }
 
     .avatar {
-      width: 100%;
+      width: 30%;
       aspect-ratio: 1 / 1;
       border-radius: 10px;
       overflow: hidden;
@@ -300,7 +300,7 @@ input {
 
     }
     .info {
-      flex-basis: 80%;
+      width: 75%;
 
     }
     .name {
@@ -327,7 +327,7 @@ input {
 
     .description {
       
-      -webkit-line-clamp: 2;
+      -webkit-line-clamp: 1;
       position: relative;
       overflow: hidden;
       display: -webkit-box;
@@ -342,7 +342,7 @@ input {
       display: -moz-box;
       -moz-box-orient: vertical;
       display: -webkit-box;
-      line-clamp: 3;
+      line-clamp: 1;
       margin-bottom: 5px;
       width: 100%;
     }

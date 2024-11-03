@@ -1,8 +1,6 @@
 <template>
   <div class="assign-wrapper">
-    <the-loader style="margin-top: 50px;" v-if="!loading.isLoaded"/>
-
-    <div v-else class="small-placeholder"
+    <div class="small-placeholder"
          :style="placeholder.style"
          v-for="placeholder of placeholders.categoryPlaceholders"
     >
@@ -28,7 +26,7 @@ import {getPlaceholders, linkProjectWithPlaceholder, relinkProjectToPlaceholder}
 import {api} from "@/API/apiurl.js";
 import {placeholders} from "@/API/placeholders.js";
 import TheLoader from "@/components/ReUsable/TheLoader.vue";
-import {reactive} from "vue";
+import {onMounted, reactive} from "vue";
 
 
 const route = useRoute()
@@ -41,8 +39,10 @@ const props = defineProps({
 })
 const emits = defineEmits(['closePopup'])
 
-getPlaceholders(route.query.categoryIds).then(() => {
+getPlaceholders(route.query.categoryIds).then((result) => {
   loading.isLoaded = true
+  placeholders.categoryPlaceholders = result
+  console.log(result)
 })
 
 
@@ -58,7 +58,6 @@ const assignProject = (placeholder, project) => {
   emits('closePopup')
 }
 
-
 </script>
 <style lang="scss" scoped>
 .assign-wrapper {
@@ -66,6 +65,7 @@ const assignProject = (placeholder, project) => {
   flex-wrap: wrap;
   gap: 10px;
   width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
 
   .small-placeholder {

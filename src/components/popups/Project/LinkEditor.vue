@@ -29,7 +29,7 @@
 
       <button-secondary-gray
           :type="'button'"
-          @buttonPressed="emits('editAborted')"
+          @buttonPressed="emits('closePopup', props.linkToEdit)"
           :style="'filled'">
         <div class="button-text">
           Отменить
@@ -59,7 +59,7 @@ const newLink = {
   link: props.linkToEdit.link
 }
 
-const emits = defineEmits(['linkEdited', 'editAborted'])
+const emits = defineEmits(['linkEdited', 'closePopup'])
 
 
 </script>

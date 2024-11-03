@@ -122,6 +122,7 @@ onMounted(() => {
       right: 20px;
       top: 20px;
       display: flex;
+      flex-wrap: wrap;
       gap: 10px;
 
       svg {
@@ -147,30 +148,23 @@ onMounted(() => {
     }
 
     .large {
-      width: 74%;
+      width: 100%;
       display: flex;
-      height: fit-content;
       gap: 15px;
       flex-wrap: wrap;
 
-      img {
-
-        width: auto;
-        height: 100%;
-      }
     }
     .small {
-      width: 24%;
+      width: 100%;
       display: flex;
-      gap: 15px;
-      height: 140px;
+      gap: 20px;
+      justify-content: space-between;
       flex-wrap: wrap;
+      margin-top: 10px;
 
-
-      img {
-
-        width: auto;
-        height: 100%;
+      &::after {
+        content: '';
+        justify-content: start;
       }
 
     }
@@ -184,7 +178,6 @@ onMounted(() => {
     a {
       width: 100%;
       display: flex;
-      height: 100%;
       align-items: center;
       justify-content: center;
 
@@ -198,23 +191,24 @@ onMounted(() => {
     overflow: hidden;
     width: auto;
     min-width: 100%;
-    height: 140px;
+    height: 160px;
     border-radius: 30px;
     a {
       img {
-        aspect-ratio: 7 / 1;
+        width: 100%;
       }
     }
   }
   .banner-small {
-    width: auto;
+    width: 32%;
     overflow: hidden;
     border-radius: 30px;
-    height: 100%;
+    height: 160px;
 
     a {
+      width: 100%;
       img {
-        aspect-ratio: auto / 1;
+        width: 100%;
       }
     }
   }
@@ -254,7 +248,8 @@ onMounted(() => {
       }
       .small {
         width: 100%;
-        height: fit-content;
+        display: flex;
+        gap: 10px;
 
       }
 

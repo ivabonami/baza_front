@@ -5,6 +5,7 @@
            @click="swapCategory(category.id)"
            v-for="category of categories.allCategories"
            :class="{active: category.id === parseInt(this.$route.query.categoryIds)}"
+           v-show="category.name !== 'Главная'"
            :key="category.id">
         <InlineSvg :src="category.icon" class="categoryIcon"/>
         <span class="projects-menu_categories_category_name">{{ category.name }}</span>

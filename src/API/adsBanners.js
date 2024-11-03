@@ -2,6 +2,7 @@ import axios from "axios";
 import {api} from "@/API/apiurl.js";
 import {adsBanners} from "@/Stores/adsBannersStore.js";
 import {addNotice} from "@/js/notifications.js";
+import {userStore} from "@/Stores/userStore.js";
 
 export function getAdsBanners() {
 
@@ -16,8 +17,10 @@ export function getAdsBanners() {
 }
 
 export function addAdsBanner(path, link, type) {
-
-    return axios.post(api.url + 'advBanner', {path: path, link: link, type: type})
+    const headers = {
+        'Authorization': `Bearer ${userStore.token}`
+    };
+    return axios.post(api.url + 'advBanner', {path: path, link: link, type: type}, {headers})
         .then(result => {
             if (type === 'large') {
                 adsBanners.large.push(result.data.banner)
@@ -32,10 +35,12 @@ export function addAdsBanner(path, link, type) {
 }
 
 export function editAdsBanner(id, path, link, type, oldType) {
+    const headers = {
+        'Authorization': `Bearer ${userStore.token}`
+    };
 
 
-
-    return axios.put(api.url + 'advBanner/' + id, {path: path, link: link, type: type})
+    return axios.put(api.url + 'advBanner/' + id, {path: path, link: link, type: type}, {headers})
         .then(result => {
 
             if (type !== oldType) {
@@ -57,8 +62,10 @@ export function editAdsBanner(id, path, link, type, oldType) {
 }
 
 export function removeAdsBanner(id, type) {
-
-    return axios.delete(api.url + 'advBanner/' + id)
+    const headers = {
+        'Authorization': `Bearer ${userStore.token}`
+    };
+    return axios.delete(api.url + 'advBanner/' + id, {headers})
         .then(result => {
             try {
                 adsBanners[type].splice(adsBanners[type].findIndex(item => item.id === id), 1)

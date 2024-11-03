@@ -26,6 +26,7 @@ const emits = defineEmits(['closePopup'])
 .search-project {
   height: 100%;
   width: 60vw;
+  max-width: 400px;
   box-sizing: border-box;
 
   .search-project-input {

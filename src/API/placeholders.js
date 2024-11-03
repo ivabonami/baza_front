@@ -41,7 +41,9 @@ export function deletePlaceholder(placeholderId) {
         placeholderId: placeholderId
     }
 
-    return axios.delete(api.url + url, {data} )
+    return axios.delete(api.url + url, {data: data, timeout: 20000, headers: {
+        'Authorization': `Bearer ${userStore.token}`
+    }} )
 }
 
 export function linkProjectWithPlaceholder(placeholderId, project) {
@@ -50,7 +52,9 @@ export function linkProjectWithPlaceholder(placeholderId, project) {
     return axios.post(api.url + url, {
         placeholderId: placeholderId,
         projectId: project.id
-    }, {timeout: 20000} ).then(() => {
+    }, {timeout: 20000, headers: {
+            'Authorization': `Bearer ${userStore.token}`
+        }} ).then(() => {
 
         projects.findIndex(item => item.id === project.id) ? projects.splice(projects.findIndex(item => item.id === project.id), 1) : null
 
@@ -75,7 +79,9 @@ export function unlinkProjectWithPlaceholder(placeholderId, projectId) {
     return axios.put(api.url + url, {
         placeholderId: '',
         projectId: projectId
-    }, {timeout: 20000} ).then(() => {
+    }, {timeout: 20000, headers: {
+            'Authorization': `Bearer ${userStore.token}`
+        }} ).then(() => {
         try {
             projects.find(item => item.id === placeholderId).project = null
         } catch (e) {
@@ -95,7 +101,9 @@ export function relinkProjectToPlaceholder(placeholderId, newProject) {
     return axios.put(api.url + url, {
         placeholderId: placeholderId,
         projectId: newProject.id
-    }, {timeout: 20000} )
+    }, {timeout: 20000, headers: {
+            'Authorization': `Bearer ${userStore.token}`
+        }} )
         .then(() => {
             try {
                 projects.find(item => item.id === newProject.placeholderId && item.project).project
@@ -133,7 +141,9 @@ export function relinkProjectToPlaceholder(placeholderId, newProject) {
 export function addPlaceholders(placeholdersParams, categoryId) {
     let url = 'placeholder'
 
-    return axios.post(api.url + url, {placeholdersParams: [placeholdersParams], categoryId: categoryId}, {timeout: 20000} )
+    return axios.post(api.url + url, {placeholdersParams: [placeholdersParams], categoryId: categoryId}, {timeout: 20000,headers: {
+            'Authorization': `Bearer ${userStore.token}`
+        }} )
         .then(() => addNotice({name: 'Успешно', type: 'success'}))
         .catch(() => addNotice({name: 'Не могу добавить заглушку', type: 'danger'}))
 }
@@ -142,5 +152,7 @@ export function addPlaceholders(placeholdersParams, categoryId) {
 export function editPlaceholder(placeholdersParams) {
     let url = 'placeholder/edit'
 
-    return axios.put(api.url + url, placeholdersParams, {timeout: 20000} )
+    return axios.put(api.url + url, placeholdersParams, {timeout: 20000, headers: {
+            'Authorization': `Bearer ${userStore.token}`
+        }} )
 }

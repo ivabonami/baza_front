@@ -81,7 +81,7 @@ onUnmounted(() => {
     background-color: #fff;
     box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
     width: fit-content;
-    min-width: 30vw;
+    min-width: 10vw;
     max-width: 80vw;
     height: fit-content;
     max-height: 80vh;
