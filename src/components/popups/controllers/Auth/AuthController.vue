@@ -33,13 +33,10 @@ function toggleComponent(state) {
     }
 
   } catch (e) {
-    console.log(component)
     addNotice({name: 'Не удалось загрузить компонент', type: 'danger'})
   }
 
 }
-
-console.log(props.setComponent)
 
 if (props.setComponent) {
   toggleComponent(props.setComponent)

@@ -85,7 +85,6 @@ const onEditBanner = (data, size) => {
   component.bannerData = data
   component.bannerData.type = size
 
-  console.log(component)
 }
 
 const onDeleteBanner = (data, size) => {

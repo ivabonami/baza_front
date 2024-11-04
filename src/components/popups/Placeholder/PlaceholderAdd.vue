@@ -116,8 +116,7 @@ function onAddPlaceholder(placeholder) {
       }
     }
     emits('closePopup')
-  }).catch(err => {
-    console.log(err)
+  }).catch(() => {
     addNotice({name: 'Не удалось изменить заглушку', type: 'danger'})
   })
 }

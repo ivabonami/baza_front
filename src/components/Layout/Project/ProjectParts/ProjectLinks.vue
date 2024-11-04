@@ -7,7 +7,7 @@
           :index="index"
 
           @editLink="emit => editLink(emit)"
-          @removeLink="emit => removeLink(link)"
+          @removeLink="removeLink(link)"
 
           v-for="(link, index) of linksSorter(props.projectLinks)"
           v-show="index < props.showCount"
@@ -96,7 +96,6 @@ const removeLink = (link) => {
 
   try {
     props.projectLinks.splice(props.projectLinks.findIndex(item => item.name === link.name && item.link === link.link), 1)
-    console.log(link, props.projectLinks)
   } catch (error) {
     addNotice({name: 'Не могу удалить ссылку', type: 'danger'})
   }

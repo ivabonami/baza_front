@@ -5,7 +5,7 @@ import {addNotice} from "@/js/notifications.js";
 
 
 export function signIn(data) {
-    console.log(data)
+
     return axios.post(api.url + 'login', data, {timeout: 10000})
         .then(result => {
             localStorage.setItem('username', data.username)
@@ -36,9 +36,9 @@ export function signIn(data) {
 }
 export function signUp(data) {
     try {
-        return axios.post(api.url + 'signup', data, {timeout: 10000}).then(result => {
+        return axios.post(api.url + 'signup', data, {timeout: 10000}).then(() => {
             try {
-                signIn(data).then(result => {
+                signIn(data).then(() => {
                     addNotice({name: 'Вы успешно зарегистрировались и авторизовались', type: 'success'})
                 })
             } catch (e) {

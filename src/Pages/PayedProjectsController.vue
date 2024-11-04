@@ -121,10 +121,9 @@ export default {
             placeholders.categoryId = categoryId
             placeholders.categoryPlaceholders = result
           })
-          .catch(error => {
+          .catch(() => {
 
             addNotice({name: 'Ошибка получения заглушек', type: 'danger'})
-            console.log(error)
             this.placeholdersCount = 0
           })
     }

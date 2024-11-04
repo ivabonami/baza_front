@@ -140,15 +140,13 @@ const onLoadReviews = () => {
         requestOptions.offset = requestOptions.offset + requestOptions.limit
         loading.loaded = true
       })
-      .catch(error => {
-        console.log(error)
+      .catch(() => {
         addNotice({name: 'Произошла ошибка, повторите позже', type: 'danger'})
         loading.loaded = true
       })
 }
 
-watch(props, (value, oldValue) => {
-  console.log(value, oldValue)
+watch(props, (value) => {
   reviews.splice(0, reviews.length)
   requestOptions.projectId = value.projectId
   requestOptions.offset = 0

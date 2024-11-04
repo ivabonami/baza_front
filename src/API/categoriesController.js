@@ -5,6 +5,7 @@ import {categories} from "@/Stores/categories.js";
 import router from "@/router/index.js";
 
 import marketplaceIcon from '@/assets/icons/menu-icons/marketplace.svg'
+import homeIcon from '@/assets/icons/menu-icons/home.svg'
 import forumsIcon from '@/assets/icons/menu-icons/forums.svg'
 import exchangerIcon from '@/assets/icons/menu-icons/exchangers.svg'
 import narcoIcon from '@/assets/icons/menu-icons/narco.svg'
@@ -40,7 +41,7 @@ export function getCategories() {
 
         categories.allCategories = allCategories
         placeholders.categories = allCategories
-        placeholders.categories.unshift({ "id": null, "name": "Главная", "icon": "/src/assets/icons/menu-icons/forums.svg" })
+        placeholders.categories.unshift({ "id": null, "name": "Главная", "icon": homeIcon })
 
     }).catch(() => {
         addNotice({name: 'Категории не были получены', type: 'danger'})

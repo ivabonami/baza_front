@@ -25,8 +25,7 @@ import { useRoute } from 'vue-router'
 import {getPlaceholders, linkProjectWithPlaceholder, relinkProjectToPlaceholder} from "@/API/placeholders.js";
 import {api} from "@/API/apiurl.js";
 import {placeholders} from "@/API/placeholders.js";
-import TheLoader from "@/components/ReUsable/TheLoader.vue";
-import {onMounted, reactive} from "vue";
+import {reactive} from "vue";
 
 
 const route = useRoute()
@@ -42,7 +41,6 @@ const emits = defineEmits(['closePopup'])
 getPlaceholders(route.query.categoryIds).then((result) => {
   loading.isLoaded = true
   placeholders.categoryPlaceholders = result
-  console.log(result)
 })
 
 
@@ -51,7 +49,6 @@ const assignProject = (placeholder, project) => {
 
   if(placeholder.project) {
     relinkProjectToPlaceholder(placeholder.id, project)
-    console.log(project)
   } else {
     linkProjectWithPlaceholder(placeholder.id, project)
   }

@@ -97,7 +97,6 @@ export function unlinkProjectWithPlaceholder(placeholderId, projectId) {
 export function relinkProjectToPlaceholder(placeholderId, newProject) {
     let url = 'placeholder/project'
 
-    console.log('relink')
     return axios.put(api.url + url, {
         placeholderId: placeholderId,
         projectId: newProject.id
@@ -125,7 +124,6 @@ export function relinkProjectToPlaceholder(placeholderId, newProject) {
         })
         .catch(error => {
             let message;
-            console.log(error)
 
             if (error.response.data.message === "Specified placeholder already has an assigned project") {
                 message = 'Проект уже привязан к другой заглушке'

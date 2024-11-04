@@ -69,7 +69,6 @@ const closeDropdown = () => {
   removeEventListener('mousedown', closeByClickOutside)
   removeEventListener('keydown', closeByEsc)
   userMenu.show = false
-  console.log(userMenu.show)
 }
 
 const closeByClickOutside = (e) => {
