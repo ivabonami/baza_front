@@ -1,7 +1,10 @@
 <template>
   <div class="delete-banner">
 
-    <img :src="api.url + bannerData.path" alt="">
+    <div class="banner">
+      <img :src="api.url + bannerData.path" alt="">
+    </div>
+
 
     <div class="buttons">
       <button-black
@@ -53,6 +56,16 @@ const onDeleteBanner = (banner) => {
 
 <style scoped lang="scss">
 .delete-banner {
+
+  .banner {
+    margin-bottom: 20px;
+    overflow: hidden;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 160px;
+  }
   img {
     width: 100%;
     border-radius: 30px;

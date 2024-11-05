@@ -172,6 +172,7 @@ onMounted(() => {
   .banner-large, .banner-small {
     width: 100%;
     height: 100%;
+    border-radius: 15px;
     position: relative;
 
     a {
@@ -181,7 +182,6 @@ onMounted(() => {
       justify-content: center;
 
       img {
-        border-radius: 30px;
         width: 100%;
       }
     }
@@ -191,7 +191,6 @@ onMounted(() => {
     width: auto;
     min-width: 100%;
     height: 160px;
-    border-radius: 30px;
     a {
       img {
         width: 100%;
@@ -201,13 +200,17 @@ onMounted(() => {
   .banner-small {
     width: 32%;
     overflow: hidden;
-    border-radius: 30px;
     height: 160px;
 
     a {
       width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       img {
-        width: 100%;
+        width: auto;
+        height: 100%;
       }
     }
   }
