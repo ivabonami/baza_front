@@ -52,20 +52,20 @@ export function changeCategory(id) {
     router.push({ query: {categoryIds: id} })
 }
 
-export function editCategory(id, name) {
+export function editCategory(newData) {
     const headers = {
         'Authorization': `Bearer ${userStore.token}`
     };
-    categories.allCategories.find(item => item.id === id).name = name
-    return axios.put(`${api.url}categories/${id}`, {name: name}, {headers})
+    categories.allCategories.find(item => item.id === newData.id).name = newData.name
+    return axios.put(`${api.url}categories/${newData.id}`, {name: newData.name, allowShopFront: newData.allowShopfront}, {headers})
 }
 
-export function addCategory(name, front) {
+export function addCategory(categoryData) {
     const headers = {
         'Authorization': `Bearer ${userStore.token}`
     };
 
-    return axios.post(`${api.url}categories/`, {name: name, allowShopfront: front}, {headers})
+    return axios.post(`${api.url}categories/`, {name: categoryData.name, allowShopfront: categoryData.allowShopfront}, {headers})
         .then(() => {
             getCategories()
             addNotice({name: 'Категория успешно добавлена', type: 'success'})

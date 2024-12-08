@@ -127,6 +127,12 @@ onUnmounted(() => {
     }
   }
 
+  .modal-header {
+    max-width: 450px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
 }
 
 </style>

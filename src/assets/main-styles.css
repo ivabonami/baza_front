@@ -12,6 +12,19 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   width: 100%;
 }
 
+.link-in-description {
+  color: #191B2A;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  background-color: #eeeeee;
+  border-radius: 10px;
+  padding: 0 5px;
+  box-sizing: border-box;
+  transition: 0.3s ease;
+}
+.link-in-description:hover {
+  background-color: #B3B4C9;
+}
+
 h2.heading2 {
   text-align: center;
   font-weight: 600;
@@ -20,7 +33,7 @@ h2.heading2 {
 }
 
 .link-btn {
-  border-radius: 378px;
+  border-radius: 378.5px;
   background: #191B2A;
   text-decoration: none;
   color: #fff;

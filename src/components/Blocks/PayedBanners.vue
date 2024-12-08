@@ -229,9 +229,14 @@ onMounted(() => {
   .banners-wrapper {
     .banner-small, .banner-large {
       max-height: 60px;
+      border-radius: 20px;
+      overflow: hidden;
       a {
+        height: 100%;
+        display: inline;
+
         img {
-          height: 100%;
+          min-height: 100%;
         }
       }
     }

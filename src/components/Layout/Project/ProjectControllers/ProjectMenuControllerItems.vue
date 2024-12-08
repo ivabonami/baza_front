@@ -12,20 +12,20 @@
       </button-black>
     </div>
 
-    <div class="menu-item" v-if="advancedMenu && userStore.role === 'admin'">
-      <button-black
-          title="Удалить заглушку"
-          @button-pressed="emits('userAction', {component: PlaceholderDelete, data: placeholder, headline: 'Удалить'})"
-          :type="'button'"
-          :style="'filled'">
-        <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M14 5V4.2C14 3.0799 14 2.51984 13.782 2.09202C13.5903 1.71569 13.2843 1.40973 12.908 1.21799C12.4802 1 11.9201 1 10.8 1H9.2C8.07989 1 7.51984 1 7.09202 1.21799C6.71569 1.40973 6.40973 1.71569 6.21799 2.09202C6 2.51984 6 3.0799 6 4.2V5M1 5H19M17 5V16.2C17 17.8802 17 18.7202 16.673 19.362C16.3854 19.9265 15.9265 20.3854 15.362 20.673C14.7202 21 13.8802 21 12.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+      <div class="menu-item" v-if="advancedMenu && userStore.role === 'admin'">
+          <button-black
+                  title="Удалить заглушку"
+                  @button-pressed="emits('userAction', {component: PlaceholderDelete, data: placeholder, headline: 'Удалить'})"
+                  :type="'button'"
+                  :style="'filled'">
+              <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14 5V4.2C14 3.0799 14 2.51984 13.782 2.09202C13.5903 1.71569 13.2843 1.40973 12.908 1.21799C12.4802 1 11.9201 1 10.8 1H9.2C8.07989 1 7.51984 1 7.09202 1.21799C6.71569 1.40973 6.40973 1.71569 6.21799 2.09202C6 2.51984 6 3.0799 6 4.2V5M1 5H19M17 5V16.2C17 17.8802 17 18.7202 16.673 19.362C16.3854 19.9265 15.9265 20.3854 15.362 20.673C14.7202 21 13.8802 21 12.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
 
 
 
-      </button-black>
-    </div>
+          </button-black>
+      </div>
 
     <div class="menu-item" v-if="!project.placeholderId && !project.position && userStore.role === 'admin'">
       <button-black
@@ -107,6 +107,19 @@
 
     </div>
 
+      <div class="menu-item" v-if="userStore.role === 'admin'">
+          <button-black
+                  title="Скрыть проект"
+                  @button-pressed="emits('userAction', {component: ProjectHide, data: project, headline: 'Скрыть'})"
+                  :type="'button'"
+                  :style="'filled'">
+              <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.74294 3.09232C10.1494 3.03223 10.5686 3 11.0004 3C16.1054 3 19.4553 7.50484 20.5807 9.28682C20.7169 9.5025 20.785 9.61034 20.8231 9.77667C20.8518 9.90159 20.8517 10.0987 20.8231 10.2236C20.7849 10.3899 20.7164 10.4985 20.5792 10.7156C20.2793 11.1901 19.8222 11.8571 19.2165 12.5805M5.72432 4.71504C3.56225 6.1817 2.09445 8.21938 1.42111 9.28528C1.28428 9.50187 1.21587 9.61016 1.17774 9.77648C1.1491 9.9014 1.14909 10.0984 1.17771 10.2234C1.21583 10.3897 1.28393 10.4975 1.42013 10.7132C2.54554 12.4952 5.89541 17 11.0004 17C13.0588 17 14.8319 16.2676 16.2888 15.2766M2.00042 1L20.0004 19M8.8791 7.87868C8.3362 8.42157 8.00042 9.17157 8.00042 10C8.00042 11.6569 9.34356 13 11.0004 13C11.8288 13 12.5788 12.6642 13.1217 12.1213" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+
+          </button-black>
+      </div>
+
 
   </div>
 </template>
@@ -121,6 +134,7 @@ import AssignPlaceholderToProject from '@/components/popups/Placeholder/AssignPl
 import RemoveProjectFromPlaceholder from '@/components/popups/Placeholder/RemoveProjectFromPlaceholder.vue'
 import SearchProject from '@/components/Blocks/SearchProject.vue'
 import ProjectDelete from '@/components/popups/Project/ProjectDelete.vue'
+import ProjectHide from '@/components/popups/Project/ProjectHide.vue'
 
 import PlaceholderDelete from '@/components/popups/Placeholder/PlaceholderDelete.vue'
 

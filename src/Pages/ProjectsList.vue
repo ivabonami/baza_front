@@ -207,7 +207,14 @@ export default {
 
     }
   },
-  mounted() {
+    created() {
+        if( this.$route.query.categoryIds ) {
+            this.requestOptions.categoryIds = `[${this.$route.query.categoryIds}]`
+            this.requestOptions.offset = 0
+        }
+    },
+    mounted() {
+
     if (window.innerWidth > 1053) {
       this.requestOptions.limit = 12
     } else if (window.innerWidth >= 768 && window.innerWidth <= 1053) {
@@ -215,12 +222,11 @@ export default {
     } else {
       this.requestOptions.limit = 4
     }
-    this.removeItems()
 
-    if( this.$route.query.categoryIds ) {
-      this.requestOptions.categoryIds = `[${this.$route.query.categoryIds}]`
-      this.requestOptions.offset = 0
-    }
+
+
+
+      this.removeItems()
   },
 
   beforeUnmount() {

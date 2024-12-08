@@ -1,7 +1,7 @@
 <template>
   <div class="add-product">
     <div class="inputs">
-      <input-file style="margin-bottom: 20px;"
+      <input-file style="margin-bottom: 20px; max-width: 300px"
                   :data="data.avatarFilePath"
                   @data-changed="emit => product.avatarFilePath = emit">
         Загрузите изображение товара или услуги, рекомендованный размер 512х512px, до 5мб.

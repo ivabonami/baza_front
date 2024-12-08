@@ -109,7 +109,7 @@ export function deleteProject(project) {
     };
 
 
-    axios.delete(`${api.url}projects/${project.id}`, {headers})
+    return axios.delete(`${api.url}projects/${project.id}`, {headers})
         .then(result => {
             projects.splice(projects.findIndex(item => item.id === project.id), 1)
             addNotice({name: 'Проект успешно удален', type: 'success'})
@@ -151,13 +151,13 @@ export function approveProject(project) {
         'Authorization': `Bearer ${userStore.token}`
     };
     project.isReviewed = true
-    axios.put(`${api.url}projects/${project.id}`, project, {headers})
+    return axios.put(`${api.url}projects/${project.id}`, project, {headers})
         .then(result => {
             addNotice({name: 'Проект успешно опубликован', type: 'success'})
             projects.splice(projects.findIndex(item => item === project),1 )
         })
         .catch(error => {
-
+            addNotice({name: 'Ошибка при одобрении, попробуйте позже', type: 'danger'})
         })
 }
 
@@ -170,7 +170,7 @@ export function disapproveProject(project) {
     return axios.put(`${api.url}projects/${project.id}`, project, {headers})
         .then(result => {
             addNotice({name: 'Проект успешно снят с публикации', type: 'success'})
-            projects.splice(projects.findIndex(project),1 )
+            projects.splice(projects.findIndex(project), 1 )
         })
 
 }
