@@ -5,8 +5,11 @@ import {popup} from "@/js/controllers/popupController.js";
 import {projects} from "@/Stores/projectsStore.js";
 
 export async function getProjects(options) {
+    console.log(localStorage.getItem('token'), userStore.token )
     let urlOptions = 'projects?';
-
+    const headers = {
+        'Authorization': `Bearer ${userStore.token}`
+    };
     for (const option in options) {
         if (options[option]) {
             urlOptions += `${option}=${options[option]}&`
@@ -15,7 +18,9 @@ export async function getProjects(options) {
     }
     urlOptions = urlOptions.substring(0, urlOptions.length - 1)
 
-    return axios.get(api.url + urlOptions, {timeout: 60000}).then(result => {
+    return axios.get(api.url + urlOptions, {timeout: 60000, headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }}).then(result => {
         if (result.data.projects.length <= 0 && !options.offset) {
             addNotice({name: `В этой категории еще нет проектов`, type: 'warning'})
         }

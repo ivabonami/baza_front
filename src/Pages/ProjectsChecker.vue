@@ -117,7 +117,12 @@ const onGetProjects = (options) => {
         if(result.projects.length < requestOptions.limit) {
             pageOptions.hasMore = false
         }
-       pageOptions.project = result.projects
+
+        for (const project of result.projects) {
+            if (project.avatarFilePath) {
+                pageOptions.project.push(project)
+            }
+        }
 
     })
 }
