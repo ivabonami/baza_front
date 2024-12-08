@@ -122,13 +122,18 @@ onUnmounted(() => {
       width: 100%;
       box-sizing: border-box;
       height: auto;
+      padding: 10px;
       max-height: 68vh;
-      overflow: hidden auto;
+      overflow-x: clip;
+      overflow-y: auto;
     }
   }
 
   .modal-header {
     max-width: 450px;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
     text-overflow: ellipsis;
     overflow: hidden;
   }

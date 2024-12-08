@@ -8,7 +8,7 @@
         </svg>
       </div>
       <div class="text" data-dropdown="adminMenu">
-        Редактор витрины
+        Редактор категорий
       </div>
     </div>
 
