@@ -1,7 +1,7 @@
 <template>
   <div class="add-product">
     <div class="inputs">
-      <input-file style="margin-bottom: 20px; max-width: 300px"
+      <input-file style="margin-bottom: 20px; max-width: 200px"
                   :data="data.avatarFilePath"
                   @data-changed="emit => product.avatarFilePath = emit">
         Загрузите изображение товара или услуги, рекомендованный размер 512х512px, до 5мб.
@@ -12,7 +12,7 @@
                   :placeholder="'Название товара или услуги'"
                   @data-changed="emit => product.name = emit"/>
 
-      <input-textarea style="margin-bottom: 20px;"
+      <input-textarea style="margin-bottom: 20px; height: 250px; width: 100%; min-width: 300px;"
                       :input-data-prop="data.description"
                       :placeholder="'Описание товара или услуги'"
                       @data-changed="emit => product.description = emit"/>
@@ -77,5 +77,9 @@ const onEditProduct = (product) => {
 </script>
 
 <style scoped lang="scss">
-
+.add-product {
+  width: 100%;
+  max-width: 450px;
+  min-width: 300px;
+}
 </style>

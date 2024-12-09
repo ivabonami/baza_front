@@ -38,14 +38,14 @@ select {
   stroke: #191B2A;
 }
 .input-wrapper input[type=text], .input-wrapper input[type=search], .input-wrapper input[type=password], .input-wrapper input[type=number], .input-wrapper textarea, .input-wrapper select {
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   box-sizing: border-box;
   font-weight: 400;
   line-height: normal;
   height: 100%;
   border-radius: 20px;
-  padding: 10px;
+  padding: 5px;
   border: none;
   color: #191B2A;
   width: 100%;

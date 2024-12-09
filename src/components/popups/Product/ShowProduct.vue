@@ -29,10 +29,12 @@ const wrapLinks = (text) => {
 
 <style scoped lang="scss">
 .product-info {
-  max-width: 550px;
+  max-width: 350px;
   white-space: pre-line;
   img {
     width: 100%;
+    max-width: 350px;
+    margin-bottom: 20px;
   }
   p {
     font-size: 14px;
