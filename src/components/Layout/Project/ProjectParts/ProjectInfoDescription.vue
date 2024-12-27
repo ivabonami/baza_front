@@ -7,10 +7,12 @@
       <p>
         {{ normalizeDescription(data.description) }}
       </p>
-      <span class="more-toggle" v-if="shortDescription" @click="toggleDescription(data.description)">
+      <span class="more-toggle" v-if="shortDescription" @click="toggleComponent(shallowRef(ProjectDescription), data.name)">
           полное описание
       </span>
     </div>
+
+
     <div class="project-info-description_links">
       <div>
         <project-links
@@ -53,15 +55,30 @@
 
       <div class="menu-item" style="margin-left: auto "
            v-if="userStore.username === data.userData.username || userStore.role === 'admin'">
-        <router-link :to="route.path + '/edit'">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path
-                d="M1.27237 12.5486C1.30565 12.2491 1.32229 12.0994 1.3676 11.9594C1.4078 11.8352 1.4646 11.7171 1.53646 11.6081C1.61745 11.4853 1.72399 11.3787 1.93707 11.1656L11.5027 1.60005C12.3027 0.799984 13.5999 0.799985 14.4 1.60005C15.2 2.40011 15.2 3.69727 14.4 4.49734L4.83436 14.0629C4.62127 14.276 4.51473 14.3826 4.39191 14.4635C4.28295 14.5354 4.16477 14.5922 4.04059 14.6324C3.90062 14.6777 3.75087 14.6943 3.45137 14.7276L1 15L1.27237 12.5486Z"
-                stroke="#B3B4C9" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          редактировать
-        </router-link>
+          <div class="item">
+              <router-link :to="route.path + '/edit'">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path
+                              d="M1.27237 12.5486C1.30565 12.2491 1.32229 12.0994 1.3676 11.9594C1.4078 11.8352 1.4646 11.7171 1.53646 11.6081C1.61745 11.4853 1.72399 11.3787 1.93707 11.1656L11.5027 1.60005C12.3027 0.799984 13.5999 0.799985 14.4 1.60005C15.2 2.40011 15.2 3.69727 14.4 4.49734L4.83436 14.0629C4.62127 14.276 4.51473 14.3826 4.39191 14.4635C4.28295 14.5354 4.16477 14.5922 4.04059 14.6324C3.90062 14.6777 3.75087 14.6943 3.45137 14.7276L1 15L1.27237 12.5486Z"
+                              stroke="#B3B4C9" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  редактировать
+              </router-link>
+          </div>
+
+          <div class="sep"></div>
+          <div class="item" v-if="userStore.role === 'admin'"  title="Дневная накрутка">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M19 19H2.6C2.03995 19 1.75992 19 1.54601 18.891C1.35785 18.7951 1.20487 18.6422 1.10899 18.454C1 18.2401 1 17.9601 1 17.4V1M18 13L14.0811 8.81734C13.9326 8.65883 13.8584 8.57957 13.7688 8.5386C13.6897 8.50245 13.6026 8.48753 13.516 8.49534C13.4179 8.50418 13.3215 8.55423 13.1287 8.65433L9.87132 10.3457C9.67854 10.4458 9.58215 10.4958 9.48404 10.5047C9.39744 10.5125 9.31031 10.4976 9.23124 10.4614C9.14165 10.4204 9.06739 10.3412 8.91887 10.1827L5 6" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+
+              <span>{{ data.dailyViewsIncrement }}</span>
+              <div class="change" @click="toggleComponent(shallowRef(DailyIncrement), 'Дневная накрутка')">
+                  изменить
+              </div>
+          </div>
       </div>
+
     </div>
 
     <Teleport to="body" v-if="popup.isVisible">
@@ -69,7 +86,7 @@
           :headline="popup.headline"
           @closePopup="popup.isVisible = false"
       >
-        <component :is="popup.component" :data="data.description"/>
+        <component :is="popup.component" :data="popup.data" @dailyViewsIncrementChanged="emit => saveDailyIncrement(emit)"/>
       </the-baza-popup>
     </Teleport>
   </div>
@@ -81,6 +98,8 @@ import {useRoute} from "vue-router";
 import TheBazaPopup from "@/components/popups/TheBazaPopup.vue";
 import ProjectDescription from "@/components/popups/Project/ProjectDescription.vue";
 import ProjectLinks from "@/components/Layout/Project/ProjectParts/ProjectLinks.vue";
+import DailyIncrement from '@/components/popups/Project/DailyIncrement.vue'
+import {changeDailyIncrement} from "@/API/projectsController.js";
 
 const route = useRoute()
 
@@ -91,7 +110,8 @@ const props = defineProps({
 const popup = reactive({
   isVisible: false,
   component: null,
-  headline: null
+  headline: null,
+    data: null
 })
 
 let shortDescription = ref(false)
@@ -106,10 +126,16 @@ const normalizeDescription = (text) => {
   }
 }
 
-const toggleDescription = (text) => {
+const toggleComponent = (component, headline) => {
   popup.isVisible = true
-  popup.headline = props.data.name
-  popup.component = shallowRef(ProjectDescription)
+  popup.headline = headline
+  popup.data = props.data
+  popup.component = component
+}
+
+const saveDailyIncrement = (count) => {
+    changeDailyIncrement(props.data.id, count)
+    popup.isVisible = false
 }
 
 </script>
@@ -154,13 +180,37 @@ const toggleDescription = (text) => {
     width: 100%;
     align-items: end;
     display: flex;
+    justify-content: end;
 
-    a {
-      margin-left: auto;
+    .item, .item a {
       color: #7c7c7c;
       display: flex;
       align-items: center;
       gap: 5px;
+      transition: .3s ease;
+
+      svg {
+        path {
+          stroke: #838383;
+        }
+      }
+    }
+    a:hover , .change:hover {
+      cursor: pointer;
+      color: #575757;
+
+      svg {
+        path {
+          stroke: #575757;
+        }
+      }
+    }
+    .sep {
+      width: 1px;
+      height: 20px;
+      background-color: #bdbdbd;
+      margin-left: 15px;
+      margin-right: 15px;
 
     }
   }

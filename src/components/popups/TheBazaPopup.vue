@@ -117,6 +117,7 @@ onUnmounted(() => {
     height: 100%;
     position: relative;
     border-radius: 30px;
+    max-width: 900px;
 
     .popup-body_content_body {
       width: 100%;

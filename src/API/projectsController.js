@@ -166,6 +166,20 @@ export function approveProject(project) {
         })
 }
 
+export function changeDailyIncrement(projectId, count) {
+    const headers = {
+        'Authorization': `Bearer ${userStore.token}`
+    };
+    return axios.put(`${api.url}projects/${projectId}`, {dailyViewsIncrement: parseInt(count)}, {headers})
+        .then(result => {
+            addNotice({name: 'Накрутка изменена', type: 'success'})
+            projects.splice(projects.findIndex(item => item.id === projectId),1 )
+        })
+        .catch(error => {
+            addNotice({name: 'Ошибка, попробуйте позже', type: 'danger'})
+        })
+}
+
 export function disapproveProject(project) {
     const headers = {
         'Authorization': `Bearer ${userStore.token}`
