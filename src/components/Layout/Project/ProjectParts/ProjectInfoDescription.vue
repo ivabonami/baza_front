@@ -6,11 +6,14 @@
     <div class="project-info-description_text">
       <p>
         {{ normalizeDescription(data.description) }}
+          {{ data.description.length }}
       </p>
+
+
+    </div>
       <span class="more-toggle" v-if="shortDescription" @click="toggleComponent(shallowRef(ProjectDescription), data.name)">
           полное описание
       </span>
-    </div>
 
 
     <div class="project-info-description_links">
@@ -117,13 +120,9 @@ const popup = reactive({
 let shortDescription = ref(false)
 
 const normalizeDescription = (text) => {
-  if ( text.length > 350) {
     shortDescription = true
-    return text.substring(0, 347) + '...'
-  } else {
-    shortDescription = false
+    console.log(shortDescription = text.length >= 350)
     return text
-  }
 }
 
 const toggleComponent = (component, headline) => {
@@ -153,6 +152,28 @@ const saveDailyIncrement = (count) => {
   height: 240px;
   display: block;
   line-height: 154.183%; /* 21.586px */
+
+  .project-info-description_text {
+    position: relative;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+    color: #191B2A;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-overflow: ellipsis;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    margin-bottom: 5px;
+    width: 100%;
+
+  }
 
   .exchanger_stats {
     display: flex;
