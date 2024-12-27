@@ -4,7 +4,7 @@
     <input-text
         :data="{}"
         :input-data-prop="data.dailyViewsIncrement"
-        @keydown.enter="emit => data.dailyViewsIncrement = emit"
+        @keydown.enter="emits('dailyViewsIncrementChanged', data.dailyViewsIncrement)"
         @dataChanged="emit => data.dailyViewsIncrement = emit" />
     </div>
 
