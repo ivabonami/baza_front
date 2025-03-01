@@ -41,6 +41,8 @@
       <input-textarea
           :placeholder="'Ваши впечатления'"
           @dataChanged="emit => review.comment = emit"
+          style="height: 150px; width: 300px"
+
       />
     </div>
 

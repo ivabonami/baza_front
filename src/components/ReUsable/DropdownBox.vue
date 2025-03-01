@@ -6,7 +6,7 @@
 
 <script setup>
 
-import {onMounted} from "vue";
+import {onBeforeUnmount, onMounted, ref} from "vue";
 
 const emits = defineEmits(['closeDropdown'])
 
@@ -14,8 +14,10 @@ const props = defineProps({
   selector: null
 })
 
+const dropdown = ref(null)
+
 function clickOutside(e) {
-  if (!e.target.dataset.dropdown || e.target.dataset.dropdown !== props.selector) {
+  if (!dropdown.value.contains(e.target)) {
     closeDropDown()
   }
 }
@@ -30,14 +32,15 @@ function closeByEsc(e) {
 
 function closeDropDown() {
   emits('closeDropdown')
-  removeEventListener('mousedown', clickOutside)
-  removeEventListener('keydown', closeByEsc)
 }
 
 onMounted(() => {
-
   addEventListener('mousedown', clickOutside)
   addEventListener('keydown', closeByEsc)
+})
+onBeforeUnmount(() => {
+    removeEventListener('mousedown', clickOutside)
+    removeEventListener('keydown', closeByEsc)
 })
 </script>
 
@@ -52,7 +55,7 @@ onMounted(() => {
   background-color: #FFFFFF;
   box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
   padding: 10px;
-  border-radius: 20px;
+  border-radius: 10px;
   z-index: 15;
   overflow-x: hidden;
   overflow-y: auto;

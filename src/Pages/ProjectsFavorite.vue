@@ -5,6 +5,7 @@
 
       <div class="project-wrapper-card" v-for="project of projects">
         <project-card
+                @favoriteRemoved="emit => changeStatus(emit)"
             :project="project"
         />
       </div>
@@ -89,7 +90,8 @@ export default {
 
   methods: {
     changeStatus(projectId) {
-      // projectsStore.projects.find(item => item.id === projectId).favorite = 0
+      this.projects.find(item => item.id === projectId).favorite = 0
+      this.projects.splice(this.projects.findIndex(item => item.id === projectId), 1)
     }
 
 

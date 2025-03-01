@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import {onMounted, onUnmounted, ref} from "vue";
+import {onBeforeUnmount, onMounted, onUnmounted, ref} from "vue";
 import TheBazaPopupHeader from "@/components/popups/TheBazaPopupHeader.vue";
 
 const props = defineProps({
@@ -35,16 +35,26 @@ const emits = defineEmits(['closePopup'])
 
 const popupBody = ref(null)
 
+const closeByEsc = (e) => {
+    if (e.key === 'Escape') {
+        emits('closePopup')
+    }
+}
 
 onMounted(() => {
   document.body.style.maxHeight = '100vh'
   document.body.style.paddingRight = '10px'
   document.body.style.overflowY = 'hidden'
+
+    window.addEventListener('keydown', closeByEsc)
 })
-onUnmounted(() => {
+onBeforeUnmount(() => {
   document.body.style.maxHeight = 'auto'
   document.body.style.paddingRight = '0'
   document.body.style.overflowY = 'scroll'
+
+    window.removeEventListener('keydown', closeByEsc)
+
 })
 
 
@@ -89,7 +99,7 @@ onUnmounted(() => {
     left: 50%;
     top: 50%;
     translate: -50% -50%;
-    border-radius: 20px;
+    border-radius: 10px;
 
   }
 
@@ -111,7 +121,7 @@ onUnmounted(() => {
   }
 
   .popup-body_content {
-    padding: 20px;
+    padding: 10px;
     box-sizing: border-box;
     width: 100%;
     height: 100%;
@@ -131,10 +141,11 @@ onUnmounted(() => {
   }
 
   .modal-header {
-    max-width: 450px;
+    max-width: 100%;
     padding-left: 10px;
     padding-right: 10px;
     box-sizing: border-box;
+    font-size: 18px;
     text-overflow: ellipsis;
     overflow: hidden;
   }

@@ -72,29 +72,28 @@
     </div>
 
 
-    <div class="add-links">
-      <h4>Ссылки на проект</h4>
-      <div class="adder">
-        <input-links @dataChanged="emit => project.links.push(emit)"/>
+      <div class="add-links">
+
+          <div class="adder">
+              <h4>Ссылки на проект</h4>
+              <input-links @dataChanged="emit => project.links.push(emit)"/>
+          </div>
+
+          <div class="links">
+              <h4>Добавленные ссылки</h4>
+              <span v-if="project.links.length <= 0"> Вы пока не добавили ни одной ссылки, нужно добавить, как минимум, одну</span>
+              <div class="links-wrapper">
+                  <project-links :project-links="project.links" :show-count="999" :isEditable="true" />
+              </div>
+
+          </div>
       </div>
-      <div class="links">
-        <div class="link-wrapper" style="width: 100%; overflow: hidden"
-        >
 
-          <project-links :project-links="project.links" :show-count="999" :isEditable="true" />
-
-
-        </div>
-
-
-      </div>
-    </div>
-
-    <button-advanced @buttonPressed="checkForm()" style="margin-top: 20px;">
+    <button-black @buttonPressed="checkForm()" style="margin-top: 20px; width: fit-content" :type="'button'">
       <div class="button-content">
-        Сохранить изменения в проекте
+        Сохранить
       </div>
-    </button-advanced>
+    </button-black>
   </div>
 </template>
 
@@ -110,10 +109,12 @@ import {editProject, getProject, linksSorter} from "@/API/projectsController.js"
 import {userStore} from "@/Stores/userStore.js";
 import {popup} from "@/js/controllers/popupController.js";
 import ProjectLinks from "@/components/Layout/Project/ProjectParts/ProjectLinks.vue";
+import ButtonBlack from "@/components/Buttons/ButtonBlack.vue";
 
 export default {
   name: "Project_Add.vue",
   components: {
+      ButtonBlack,
     ButtonAdvanced,
     InputFile,
     InputText,
@@ -254,21 +255,12 @@ export default {
 
   .project-categories {
     margin-top: 20px;
-    border-radius: 20px;
+    border-radius: 10px;
     border: 2px dashed #B3B4C9;
     background: #F8F7FC;
     padding: 10px;
     box-sizing: border-box;
-    h4 {
-      margin-bottom: 10px;
-      width: 100%;
-      text-align: center;
-      color: #B3B4C9;
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
-    }
+
 
     .categories {
       display: flex;
@@ -280,12 +272,13 @@ export default {
         cursor: pointer;
         padding: 10px;
         box-sizing: border-box;
-        border-radius: 20px;
+        border-radius: 10px;
         transition: .3s ease;
         opacity: .5;
         background-color: transparent;
         align-items: center;
         text-align: center;
+        border: 1px solid transparent;
 
         .category-name {
           color: #5D599F;
@@ -296,9 +289,18 @@ export default {
         }
 
         &.selected {
+          border: 1px solid #191B2A;
           background-color: #FFFFFF;
           opacity: 1;
-          box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
+
+          svg {
+            path {
+              stroke: #191B2A;
+            }
+          }
+          .category-name {
+            font-weight: 500;
+          }
         }
       }
 
@@ -311,7 +313,7 @@ export default {
     gap: 20px;
     justify-content: space-around;
     margin-top: 20px;
-    border-radius: 20px;
+    border-radius: 10px;
     border: 2px dashed #B3B4C9;
     background: #F8F7FC;
     padding: 10px;
@@ -334,51 +336,40 @@ export default {
   }
   .add-links {
     margin-top: 20px;
-    border-radius: 20px;
+    border-radius: 10px;
     border: 2px dashed #B3B4C9;
     background: #F8F7FC;
     padding: 10px;
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
+    gap: 20px;
+
     .links {
-      width: 40%;
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+      align-items: center;
+      .links-wrapper {
+        display: flex;
+        gap: 10px;
+      }
+    }
 
-      svg {
-        cursor: pointer;
-        path {
-          transition: .3s ease;
-        }
+    .adder, .links {
+      width: 48%;
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      align-items: start;
 
-        &:hover {
-          path {
-            stroke: #191B2A;
-          }
-        }
+      span {
+        opacity: .5;
+        font-size: 12px;
+        text-align: left;
       }
 
       h4 {
         width: 100%;
       }
-    }
-
-    h4 {
-      margin-bottom: 10px;
-      width: 100%;
-      text-align: center;
-      color: #B3B4C9;
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
-    }
-    .adder {
-      display: flex;
 
       .links-input-wrapper {
         height: 40px;
@@ -388,29 +379,17 @@ export default {
     }
   }
 }
-.link-wrapper {
-  display: flex;
 
-  align-items: center;
-  box-sizing: border-box;
-  a {
-    position: relative;
-    z-index: 1;
-  }
-  .menu {
-    width: 45px;
-    border-radius: 0 20px 20px 0;
-    border: 1px solid #c7c7c7;
-    padding: 3px;
-    margin-left: -10px;
-    z-index: 0;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    gap: 5px;
-  }
+h4 {
+  margin-bottom: 10px;
+  width: 100%;
+  text-align: left;
+  color: #191B2A;
+  font-weight: bold;
+  font-size: 16px;
+  font-style: normal;
+  line-height: normal;
 }
-
 @media screen and (max-width: 500px) {
   .links-input-wrapper .link-input {
     width: 100%;
@@ -425,8 +404,11 @@ export default {
     .add-links {
       flex-wrap: wrap;
 
+
+
       .adder {
         width: 100%;
+
 
         .links-input-wrapper {
           flex-wrap: wrap;
@@ -457,6 +439,11 @@ export default {
           }
         }
       }
+    }
+  }
+  .project-form .add-links {
+    .links, .adder {
+      width: 100%;
     }
   }
 }

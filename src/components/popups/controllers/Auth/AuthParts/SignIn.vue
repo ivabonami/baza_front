@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form name="login" @submit.prevent>
+    <form name="login" @submit.prevent @keydown.enter="signIn(data)">
       <input-text
           style="margin-bottom: 15px;"
           :placeholder="'Логин'"
@@ -44,9 +44,10 @@ import InputPassword from "@/components/Inputs/InputPassword.vue";
 import TheLoader from "@/components/ReUsable/TheLoader.vue";
 import ButtonBlack from "@/components/Buttons/ButtonBlack.vue";
 import ButtonSecondary from "@/components/Buttons/ButtonSecondary.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {signIn} from "@/API/authController.js";
 import {addNotice} from "@/js/notifications.js";
+import {setUserData, signOut} from "@/Stores/userStore.js";
 
 
 const data = {
@@ -59,7 +60,7 @@ const emits = defineEmits(['changeState', 'closePopup'])
 
 let loading = ref(false);
 
-async function onSubmit(userData) {
+function onSubmit(userData) {
   loading = true
 
   if (!userData.username) {
@@ -68,13 +69,40 @@ async function onSubmit(userData) {
   } else if (!userData.password) {
     addNotice({name: 'Вы не ввели пароль', type: 'danger'})
   } else {
-    signIn(userData).then(() => emits('closePopup'))
+
+      signIn(userData).then(result => {
+          localStorage.setItem('username', data.username)
+          localStorage.setItem('token', result.data.token)
+          setUserData({username: localStorage.getItem('username'), token: localStorage.getItem('token') })
+
+          try {
+              setUserData({username: localStorage.getItem('username'), token: localStorage.getItem('token') })
+              addNotice({name: 'Вы успешно авторизовались', type: 'success'})
+
+          } catch (e) {
+              addNotice({name: 'Не получилось установить данные юзера', type: 'danger'})
+              signOut()
+          }
+          emits('closePopup')
+      }).catch(error => {
+          let message;
+          if (error.response.data.message === 'Username already exists') {
+              message = 'Такой пользователь уже сужествует'
+          } else {
+              message = 'Ошибка, проверьте правильность данных'
+          }
+
+          addNotice({name: message, type: 'danger'})
+      })
+
+
   }
 
   this.loading = false
 
 
 }
+
 
 </script>
 

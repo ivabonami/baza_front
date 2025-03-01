@@ -75,7 +75,7 @@ export default {
 
     background-color: #dcdcdc;
     padding: 10px;
-    border-radius: 20px;
+    border-radius: 10px;
 
     img {
       max-width: 80px;

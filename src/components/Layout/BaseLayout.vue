@@ -1,8 +1,5 @@
 <template>
-  <main class="main">
-    <header>
-      <slot name="header" />
-    </header>
+  <main class="main wrapper">
     <section>
       <slot name="main" />
     </section>
@@ -12,11 +9,7 @@
   </main>
 </template>
 
-<script>
-
-export default {
-  name: 'BaseLayout.vue'
-}
+<script setup>
 
 </script>
 
@@ -28,9 +21,14 @@ main {
   padding-right: 10px;
   box-sizing: border-box;
   margin: 0 auto;
+  min-height: calc(70vh);
 }
 header, footer, section {
 
 }
 
+
+footer {
+
+}
 </style>

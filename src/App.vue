@@ -3,11 +3,12 @@ import {popup} from "@/js/controllers/popupController.js";
 import {defineAsyncComponent, reactive} from "vue";
 import {notifications} from "@/js/notifications.js";
 import BaseLayout from "@/components/Layout/BaseLayout.vue";
-import {RouterView, useRoute} from 'vue-router'
-
-const BaseHeader = defineAsyncComponent({
-  loader: () => import("@/components/Layout/TemplateParts/BaseHeader.vue"),
-})
+import {RouterView, useRoute, useRouter} from 'vue-router'
+import DefaultHeader from "@/core/template/header/DefaultHeader.vue";
+import PopupModule from "@/core/layout/popup/PopupModule.vue";
+import {popupSettings} from "@/core/layout/popup/popupSettings.js";
+import BaseHeader from "@/components/Layout/TemplateParts/BaseHeader.vue";
+import ButtonBack from "@/components/Buttons/ButtonBack.vue";
 
 const BaseFooter = defineAsyncComponent({
   loader: () => import("@/components/Layout/TemplateParts/BaseFooter.vue"),
@@ -27,6 +28,7 @@ const YandexMetrica = defineAsyncComponent({
 
 
 const route = useRoute()
+const router = useRouter()
 
 let scrollTopButton = reactive({show: false})
 
@@ -42,21 +44,19 @@ window.addEventListener('scroll', handleScroll);
 </script>
 
 <template>
-  <base-layout>
-    <template #header>
-      <base-header />
-      <payed-banners  v-if="route.path === '/'" />
-    </template>
+    <base-header />
+    <payed-banners  v-if="route.path === '/'" />
 
+  <base-layout>
     <template #main>
+        <button-back v-if="route.name !== 'home'" />
       <RouterView />
     </template>
-
-    <template #footer>
-      <base-footer />
-    </template>
-
   </base-layout>
+
+    <footer>
+        <base-footer />
+    </footer>
 
   <yandex-metrica />
 
@@ -70,6 +70,8 @@ window.addEventListener('scroll', handleScroll);
 
     </div>
   </div>
+
+    <popup-module v-if="popupSettings.isVisible" />
 
 </template>
 
@@ -118,7 +120,7 @@ window.addEventListener('scroll', handleScroll);
     path {
       stroke: black;
       background-color: #FFC700;
-      border-radius: 20px;
+      border-radius: 10px;
     }
   }
 

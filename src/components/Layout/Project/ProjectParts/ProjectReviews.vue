@@ -21,7 +21,7 @@
       <div class="reviews-navigation_stars">
 
       </div>
-      <div class="reviews-navigation_filter">
+      <div class="reviews-navigation_filter" v-if="reviews.length > 1">
         <base-sort :sorts="projectReviewsSort" @sortChanged="emit => onSortReviews(emit)"/>
       </div>
     </div>
@@ -34,12 +34,8 @@
                         review.comment = emit.comment
                         review.rating = emit.rating}"
                       @reviewDeleted="emit => {
-                        try {
-                          reviews.splice(reviews.findIndex(item => item.id === emit), 1)
-                          this.$emit('reviewCountChanged')
-                        } catch (e) {
-                          addNotice({name: 'Не удалось реактивно удалить отзыв', type: 'warning'})
-                        }
+                        reviews.splice(reviews.findIndex(item => item.id === emit), 1)
+                        this.$emit('reviewCountChanged')
                       }"
                       @disapproveReview="emit => {
                         try {
@@ -69,7 +65,7 @@
           :headline="'Оставить отзыв'"
           @closePopup="popup.show = false"
       >
-        <component :is="popup.component" :data="popup.data" @closePopup="popup.show = false" />
+        <component :is="popup.component" :data="popup.data" @closePopup="popup.show = false" @deleteReview="emits('deleteReview', )"/>
       </the-baza-popup>
     </Teleport>
   </div>
@@ -94,6 +90,8 @@ const props = defineProps({
 const hasMore = reactive({
   show: true
 })
+
+const emits = defineEmits(['deleteReview'])
 
 const requestOptions = {
   limit: 10,
@@ -180,7 +178,7 @@ watch(props, (value) => {
   width: 100%;
 
   .reviews-navigation {
-    border-radius: 20px;
+    border-radius: 10px;
     background: #FFF;
     box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
     display: flex;

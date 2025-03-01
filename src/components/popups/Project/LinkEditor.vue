@@ -29,10 +29,10 @@
 
       <button-secondary-gray
           :type="'button'"
-          @buttonPressed="emits('closePopup', props.linkToEdit)"
+          @buttonPressed="emits('linkDeleted', props.linkToEdit)"
           :style="'filled'">
         <div class="button-text">
-          Отменить
+          Удалить ссылку
         </div>
       </button-secondary-gray>
     </div>

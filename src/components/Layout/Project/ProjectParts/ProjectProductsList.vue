@@ -1,6 +1,6 @@
 <template>
   <div class="project-products">
-    <div class="heading">
+    <div class="heading" v-if="products.list.length > 0 || isEditable">
       <button-black style="width: auto"
                     v-if="props.isEditable"
                     @buttonPressed="onCallPopup(AddProduct, 'Добавить', projectId)"
@@ -19,15 +19,7 @@
         Витрина
       </div>
     </div>
-    <empty-store v-if="products.length <= 0">
-      <template #header>
-        Витрина пуста
-      </template>
-      <template #text>
-        витрина этого проекта пуста, ожидайте обновлений
-      </template>
-    </empty-store>
-    <div class="project-product" v-else v-for="product of products" :key="product">
+    <div class="project-product" v-for="product of products.list" :key="product">
 
       <product-card :item="product"
                     :key="product"
@@ -107,16 +99,18 @@ const requestOptions = {
 const hasMore = reactive({
   show: true
 })
-let products = reactive([])
+const products = reactive({
+    list: []
+})
 
 const onGetProducts = () => {
   getProducts(requestOptions).then(result => {
     for(const product of result.data.products) {
-      products.push(product)
+      products.list.push(product)
     }
     result.data.products.length < requestOptions.limit ? hasMore.show = false : hasMore.show = true
     requestOptions.offset = requestOptions.offset + requestOptions.limit
-    products = result.data.products
+
   })
 }
 
@@ -134,7 +128,6 @@ const onCallPopup = (component, headline, data) => {
   popup.show = true
 }
 
-onMounted(() => onGetProducts())
 watch(props, (value, oldValue, onCleanup) => {
   products.splice(0, products.length)
   requestOptions.projectId = value.projectId
@@ -156,7 +149,7 @@ watch(props, (value, oldValue, onCleanup) => {
 
   .heading {
     width: 100%;
-    border-radius: 20px;
+    border-radius: 10px;
     background: #fff;
     box-shadow: -10px -12px 51.7px -40px #fff, 24px 21px 64.8px -23px #c1bfda;
     display: flex;

@@ -198,7 +198,7 @@ export default {
 
   .project-reviews_items_item {
     width: 100%;
-    border-radius: 20px;
+    border-radius: 10px;
     background: #FFF;
     box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
     padding: 15px;

@@ -130,7 +130,8 @@ export default {
     startSearch(timer) {
       this.noResults = false
       if (this.searchTimeoutId) clearTimeout(this.searchTimeoutId)
-
+        document.body.style.height = '100vh'
+        document.body.style.overflowY = 'hidden'
       this.liveResults = []
 
       if (this.search.query) {
@@ -176,6 +177,9 @@ export default {
       this.$emit('closeSearch', true)
       this.showSearch = false
       this.showLiveResults  = false
+
+        document.body.style.height = 'auto'
+        document.body.style.overflowY = 'auto'
     },
   },
 
@@ -217,7 +221,7 @@ export default {
   }
 }
 input {
-  border-radius: 20px;
+  border-radius: 10px;
   border: none;
   background-color: #F8F7FC;
   margin-bottom: 0;
@@ -234,17 +238,16 @@ input {
 }
 
 .dropdownSearchItems {
-  max-width: 100%;
-  position: absolute;
+  width: 90%;
+  position: fixed;
   z-index: 31;
   box-sizing: border-box;
   background: #FFFFFF;
   padding: 10px;
-  top: 60px;
+  top: 80px;
   right: 50%;
   transform: translateX(50%);
-  border-radius: 20px;
-  width: 100%;
+  border-radius: 10px;
   cursor: pointer;
   max-height: 600px;
   overflow-x: hidden;

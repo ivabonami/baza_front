@@ -77,7 +77,7 @@ export default {
   gap: 20px;
   .select-box {
     border: 1px solid #B3B4C9;
-    border-radius: 20px;
+    border-radius: 10px;
     height: 40px;
     box-sizing: border-box;
     width: 200px;

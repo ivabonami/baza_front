@@ -1,43 +1,43 @@
 <template>
-  <div style="width: 100%">
-    <button class="button primary" :disabled="props.disabled" v-if="props.type === 'button'">
-      <slot />
-    </button>
 
-    <a :href="props.link" class="button primary" v-else-if="props.type === 'link'" target="_blank">
-      <slot />
-    </a>
+    <div style="width: 100%;">
+        <button @click="$emit('buttonPressed')" class="button primary" :disabled="props.disabled" v-if="props.type === 'button'">
+            <slot />
+        </button>
 
-  </div>
+        <a :href="props.link" class="button primary" v-else-if="props.type === 'link'" target="_blank">
+            <slot />
+        </a>
+
+    </div>
 </template>
 
 <script setup>
-  import {watch} from "vue";
 
-  const props = defineProps({
+const props = defineProps({
     disabled: false,
     type: 'button',
     link: null
-  })
-
-  watch(() => props.disabled, (e) => {
-
-  })
-
+})
 </script>
 
 <style scoped lang="scss">
 .button {
-  background: #7773FB;
+  width: 100%;
+  background: #191B2A;
+  color: #F8F7FC;
   box-sizing: border-box;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  &:hover {
+    background-color: #474a6c;
+  }
 
   &:disabled {
     opacity: .5;
   }
 
-}
-a {
-  padding: 0 5px;
-  width: 100%;
 }
 </style>

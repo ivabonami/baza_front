@@ -22,14 +22,14 @@ const loading = reactive({
 <style scoped lang="scss">
 .project-banner {
   width: 100%;
-  border-radius: 20px;
+  border-radius: 10px;
   overflow: hidden;
   height: 100%;
   position: relative;
 
   img {
     width: 100%;
-    border-radius: 20px;
+    border-radius: 10px;
     box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
   }
 }

@@ -1,0 +1,81 @@
+
+.header-top-links {
+  display: flex;
+  justify-content: space-between;
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+
+}
+  .link a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: .2s ease;
+
+    .icon {
+      display: flex;
+      align-items: center;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      svg.default {
+        path {
+          stroke: #9299A2;
+          transition: .2s ease;
+        }
+      }
+    }
+
+    .text {
+      font-family: "SF Pro Display";
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      transition: .2s ease;
+
+      &.default {
+        color: #9299A2;
+      }
+      &.green {
+        color: #21A038;
+      }
+    }
+
+    &:hover {
+      .icon {
+        svg.default {
+          path {
+            stroke: #333 ;
+          }
+        }
+      }
+      .text {
+
+        &.default {
+          color: #333;
+        }
+        &.green {
+          color: #0d5e1a;
+        }
+      }
+    }
+  }
+}
+
+header {
+  position: sticky;
+  z-index: 10;
+  top: 0;
+}
+
+#app {
+  height: fit-content;
+}

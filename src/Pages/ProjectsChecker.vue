@@ -124,6 +124,8 @@ const onGetProjects = (options) => {
             }
         }
 
+        options.offset += options.limit
+
     })
 }
 

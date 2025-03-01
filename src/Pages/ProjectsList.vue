@@ -248,13 +248,13 @@ export default {
     width: 23%;
     box-sizing: border-box;
     margin-bottom: 1.5%;
-    border-radius: 20px;
+    border-radius: 10px;
 
   }
 }
 
 .projects-nav {
-  border-radius: 44.5px;
+  border-radius: 10px;
   background: #FFF;
   box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
   width: 100%;

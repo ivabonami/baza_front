@@ -1,0 +1,63 @@
+.header-top-links {
+  display: flex;
+  justify-content: space-between;
+}
+.header-top-links .links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+}
+.header-top-links .link a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: 0.2s ease;
+}
+.header-top-links .link a .icon {
+  display: flex;
+  align-items: center;
+}
+.header-top-links .link a .icon svg {
+  width: 16px;
+  height: 16px;
+}
+.header-top-links .link a .icon svg.default path {
+  stroke: #9299A2;
+  transition: 0.2s ease;
+}
+.header-top-links .link a .text {
+  font-family: "SF Pro Display";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  transition: 0.2s ease;
+}
+.header-top-links .link a .text.default {
+  color: #9299A2;
+}
+.header-top-links .link a .text.green {
+  color: #21A038;
+}
+.header-top-links .link a:hover .icon svg.default path {
+  stroke: #333;
+}
+.header-top-links .link a:hover .text.default {
+  color: #333;
+}
+.header-top-links .link a:hover .text.green {
+  color: #0d5e1a;
+}
+
+header {
+  position: sticky;
+  z-index: 10;
+  top: 0;
+}
+
+#app {
+  height: fit-content;
+}
+
+/*# sourceMappingURL=header-styles.css.map */

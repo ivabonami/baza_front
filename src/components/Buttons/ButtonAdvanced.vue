@@ -19,10 +19,10 @@
 
 <style scoped lang="scss">
 .button {
-  background: #7773FB;
+  background: #f8f7fc;
   border: 1px solid transparent;
   box-sizing: border-box;
-  color: #ffffff;
+  color: #575757;
 
   &:disabled {
     opacity: .5;

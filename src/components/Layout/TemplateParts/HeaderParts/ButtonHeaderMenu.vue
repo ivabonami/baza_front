@@ -31,5 +31,8 @@ const props = defineProps({
       opacity: .5;
     }
   }
+  &:hover {
+    background-color: #474a6c;
+  }
 }
 </style>

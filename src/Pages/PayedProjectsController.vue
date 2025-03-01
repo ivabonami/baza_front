@@ -170,7 +170,7 @@ export default {
     display: flex;
     justify-content: space-around;
     padding: 10px;
-    border-radius: 44.5px;
+    border-radius: 10px;
     box-sizing: border-box;
     background: #FFF;
     box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;

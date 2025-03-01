@@ -130,9 +130,9 @@ export default {
   box-sizing: border-box;
   width: 100%;
   cursor: pointer;
-  border-radius: 20px;
+  border-radius: 10px;
   background: #FFF;
-  box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
+  //box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
   padding: 14px;
 
   &.highlighted {

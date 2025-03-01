@@ -78,6 +78,7 @@ import iconView from '@/assets/icons/icon-views.svg'
 import iconReview from '@/assets/icons/icon-review.svg'
 import iconStar from '@/assets/icons/icon-star.svg'
 import iconFlag from '@/assets/icons/icon-flag.svg'
+import iconStats from '@/assets/icons/icon-stats.svg'
 import {defineAsyncComponent} from "vue";
 import {projects} from "@/Stores/projectsStore.js";
 import {addFavorite, removeFavorite} from "@/API/favoriteController.js";
@@ -153,6 +154,10 @@ export default {
           data: this.$props.project.userData ? this.$props.project.userData.username === userStore.username ? 'Ваш проект' : null : null
           // if() {} this.$props.project.userData
           //     ? this.$props.project.userData.username === userStore.username ? 'Ваш проект' : null
+        },
+        dailyViewsIncrement: {
+          icon: iconStats,
+          data: userStore.role === 'admin' ? this.$props.project.dailyViewsIncrement : null
         }
       }
     }
@@ -173,6 +178,7 @@ export default {
         addFavorite(id, name).then((result) => result)
 
       } else {
+          this.$emit('favoriteRemoved', id)
         removeFavorite(id, name).then(() => project.favorite = 0)
       }
 
@@ -197,11 +203,12 @@ export default {
   width: 100%;
   box-sizing: border-box;
   display: block;
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: #FFFFFF;
   box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
   border: 2px solid transparent;
   animation: BgGrad 5s ease-in-out infinite;
+  z-index: 1;
 
   @keyframes BgGrad {
     0% {
@@ -237,7 +244,7 @@ export default {
     padding: 10px 10px 50px 10px;
     width: 100%;
     box-sizing: border-box;
-    border-radius: 20px;
+    border-radius: 10px;
     transition: .3s ease;
     position: relative;
     overflow: hidden;
@@ -369,7 +376,7 @@ export default {
     }
     .project_links {
       overflow: visible;
-      border-radius: 20px;
+      border-radius: 10px;
       display: flex;
       gap: 6px;
       margin-top: 10px;
@@ -382,7 +389,7 @@ export default {
 
     }
     .project_stats {
-      border-radius: 20px;
+      border-radius: 10px;
       display: flex;
       gap: 15px;
       margin-top: 15px;

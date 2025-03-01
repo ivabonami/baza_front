@@ -31,6 +31,10 @@ const props = defineProps({
   font-weight: 400;
   line-height: normal;
 
+  &:hover {
+    background-color: #474a6c;
+  }
+
   &:disabled {
     opacity: .5;
   }

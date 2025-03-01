@@ -21,8 +21,9 @@ export default {
   line-height: normal;
   height: auto;
   max-height: 50px;
-  border-radius: 378.5px;
+  border-radius: 10px;
   border: 1px solid #B3B4C9;
+  width: 100%;
 
   &:hover {
     color: #F8F7FC;

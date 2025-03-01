@@ -33,7 +33,9 @@
 
 
     <div class="project-products" v-if="compiledInfo.project">
-      <project-products-list :project-id="compiledInfo.project.id" :is-editable="userStore.role === 'admin' || compiledInfo.project.userData.username === userStore.username"/>
+      <project-products-list
+              :project-id="compiledInfo.project.id"
+              :is-editable="userStore.role === 'admin' || compiledInfo.project.userData.username === userStore.username"/>
     </div>
 
     <div class="project-reviews" v-if="compiledInfo.project">
@@ -158,7 +160,7 @@ watch(props, () => onGetProject())
     margin-bottom: 20px;
     .products-navigation {
       width: 100%;
-      border-radius: 20px;
+      border-radius: 10px;
       background: #FFF;
       box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
       display: flex;
@@ -194,8 +196,8 @@ watch(props, () => onGetProject())
     align-items: start;
 
 
-    .project-info-stats, .project-info-description {
-      border-radius: 20px;
+    .project-info-stats {
+      border-radius: 10px;
       background: #FFF;
       box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
       padding: 20px;
@@ -208,6 +210,8 @@ watch(props, () => onGetProject())
       display: block;
       line-height: 154.183%; /* 21.586px */
 
+
+
       h4 {
         color: #B3B4C9;
         font-size: 16px;
@@ -219,6 +223,8 @@ watch(props, () => onGetProject())
       }
 
     }
+
+
     .project-info-stats {
       width: 17%;
       justify-content: center;
@@ -254,7 +260,7 @@ watch(props, () => onGetProject())
   background-color: #fff;
   width: 100%;
   padding: 3px 8px;
-  border-radius: 20px;
+  border-radius: 10px;
 
 }
 

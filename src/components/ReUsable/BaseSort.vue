@@ -29,7 +29,8 @@
 
 
     <dropdownBox v-if="dropdown.show === true"
-                 :selector="'$props.selector'"
+                 ref="dropdownBox"
+                 @closeDropdown="dropdown.show = false"
     >
       <div class="sort-item"
            :class="{active: activeSort.name === sort.name}"
@@ -80,7 +81,11 @@ export default {
     setNewActiveSort(sort) {
       this.activeSort = sort
       this.$emit('sortChanged', sort)
-    }
+    },
+      closeByClickOutside(e) {
+
+      }
+
   },
 
   mounted() {
@@ -103,7 +108,7 @@ export default {
     padding: 5px 10px;
     justify-content: space-between;
     align-items: center;
-    border-radius: 20px;
+    border-radius: 10px;
     cursor: pointer;
 
 
@@ -130,7 +135,7 @@ export default {
   }
   .sort-name {
     position: relative;
-    border-radius: 40px;
+    border-radius: 10px;
     background-color: transparent;
     transition: .3s ease;
     padding: 10px 15px;

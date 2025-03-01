@@ -76,7 +76,7 @@ const onEditBanner = (banner) => {
       display: flex;
       padding: 20px;
       box-sizing: border-box;
-      border-radius: 20px;
+      border-radius: 10px;
       border: 1px solid #c7c7c7;
       cursor: pointer;
       transition: .3s ease;

@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="header wrapper">
     <div class="logo">
       <router-link to="/" >
         <img :src="logotype" alt="">
@@ -32,18 +32,18 @@ import HeaderAuth from "@/components/Layout/TemplateParts/HeaderParts/HeaderAuth
 <style scoped lang="scss">
 .header {
   display: flex;
-  border-radius: 44.5px;
+  border-radius: 10px;
   background: #FFF;
   box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
   margin-top: 25px;
   margin-bottom: 25px;
-  width: 100%;
   padding: 10px;
   box-sizing: border-box;
   align-items: center;
   gap: 10px;
   justify-content: space-between;
   flex-wrap: wrap;
+  width: 98%;
 
   .logo {
     height: 100%;
@@ -80,6 +80,7 @@ import HeaderAuth from "@/components/Layout/TemplateParts/HeaderParts/HeaderAuth
 @media screen and (max-width: 500px){
   .header {
     flex-wrap: nowrap;
+    width: 95%;
     .logo {
       width: 40%;
       a {

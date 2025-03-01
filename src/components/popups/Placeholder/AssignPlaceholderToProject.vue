@@ -68,7 +68,7 @@ const assignProject = (placeholder, project) => {
   .small-placeholder {
     width: 24%;
     box-sizing: border-box;
-    border-radius: 20px;
+    border-radius: 10px;
     text-align: center;
     border: 3px solid transparent;
     position: relative;
@@ -106,7 +106,7 @@ const assignProject = (placeholder, project) => {
 
           img {
             height: 100%;
-            border-radius: 20px;
+            border-radius: 10px;
           }
         }
 

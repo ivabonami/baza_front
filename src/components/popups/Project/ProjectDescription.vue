@@ -1,6 +1,6 @@
 <template>
 <div class="project-description">
-  {{ data }}
+  {{ data.description }}
 
 </div>
 </template>
@@ -23,7 +23,7 @@ const props = defineProps({
   font-style: normal;
   font-weight: 400;
   line-height: 154.183%; /* 21.586px */
-
+  white-space: pre-wrap;
 }
 
 </style>

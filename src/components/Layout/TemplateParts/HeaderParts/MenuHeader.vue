@@ -170,7 +170,7 @@ window.addEventListener('resize', hideMenuIOnResize)
         right: 0;
         top: 40px;
         padding: 10px 20px;
-        border-radius: 20px;
+        border-radius: 10px;
         background-color: #FFFFFF;
         z-index: 20;
         width: 240px;

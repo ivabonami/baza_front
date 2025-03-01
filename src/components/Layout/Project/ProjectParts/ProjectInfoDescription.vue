@@ -4,16 +4,22 @@
       {{ data.name }}
     </h4>
     <div class="project-info-description_text">
-      <p>
-        {{ normalizeDescription(data.description) }}
-          {{ data.description.length }}
-      </p>
-
+        <transition name="slide-out">
+          <p :class="{'is-collapsed': descriptionText.short}" ref="textDescription">
+              {{ normalizeText(data.description) }}
+          </p>
+        </transition>
 
     </div>
-      <span class="more-toggle" v-if="shortDescription" @click="toggleComponent(shallowRef(ProjectDescription), data.name)">
-          полное описание
+      <div v-if="data.description.length > 250">
+          <span class="more-toggle" v-if="descriptionText.short && data.description.length > 100"  @click='toggle'>
+          Полное описание
       </span>
+          <span class="more-toggle" v-else-if="!descriptionText.short && data.description.length > 100"  @click='toggle'>
+          Свернуть описание
+      </span>
+      </div>
+
 
 
     <div class="project-info-description_links">
@@ -36,11 +42,12 @@
                 d="M3 3L4 2M4 2L3 1M4 2H3C1.89543 2 1 2.89543 1 4M9 9L8 10M8 10L9 11M8 10H9C10.1046 10 11 9.10457 11 8M5.09451 3.25C5.42755 1.95608 6.60212 1 8 1C9.65685 1 11 2.34315 11 4C11 5.39787 10.0439 6.57244 8.75003 6.90548M7 8C7 9.65685 5.65685 11 4 11C2.34315 11 1 9.65685 1 8C1 6.34315 2.34315 5 4 5C5.65685 5 7 6.34315 7 8Z"
                 stroke="#191B2A" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          {{ data.minValueToExchange }}
+          {{ data.minValueToExchange }} ₽
         </div>
         <div class="desc-ex">
           мин. обмен
         </div>
+
       </div>
       <div class="exchanger_stat reserve" v-if="data.reserve">
         <div class="stat-ex">
@@ -49,7 +56,7 @@
                 d="M7.05 2.11111C7.05 2.72476 5.69566 3.22222 4.025 3.22222C2.35434 3.22222 1 2.72476 1 2.11111M7.05 2.11111C7.05 1.49746 5.69566 1 4.025 1C2.35434 1 1 1.49746 1 2.11111M7.05 2.11111V4.58731C6.37817 4.7911 5.95 5.09941 5.95 5.44444M1 2.11111V8.77778C1 9.39143 2.35434 9.88889 4.025 9.88889C4.7563 9.88889 5.42698 9.79357 5.95 9.63492V5.44444M1 4.33333C1 4.94698 2.35434 5.44444 4.025 5.44444C4.7563 5.44444 5.42698 5.34913 5.95 5.19047M1 6.55556C1 7.16921 2.35434 7.66667 4.025 7.66667C4.7563 7.66667 5.42698 7.57135 5.95 7.41269M12 5.44444C12 6.05809 10.6457 6.55556 8.975 6.55556C7.30434 6.55556 5.95 6.05809 5.95 5.44444M12 5.44444C12 4.83079 10.6457 4.33333 8.975 4.33333C7.30434 4.33333 5.95 4.83079 5.95 5.44444M12 5.44444V9.88889C12 10.5025 10.6457 11 8.975 11C7.30434 11 5.95 10.5025 5.95 9.88889V5.44444M12 7.66667C12 8.28032 10.6457 8.77778 8.975 8.77778C7.30434 8.77778 5.95 8.28032 5.95 7.66667"
                 stroke="#191B2A" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          {{ data.reserve }}
+          {{ data.reserve }} ₽
         </div>
         <div class="desc-ex">
           резерв
@@ -111,18 +118,23 @@ const props = defineProps({
 })
 
 const popup = reactive({
-  isVisible: false,
-  component: null,
-  headline: null,
+    isVisible: false,
+    component: null,
+    headline: null,
     data: null
 })
 
-let shortDescription = ref(false)
+const descriptionText = reactive({
+    short: true
+})
 
-const normalizeDescription = (text) => {
-    shortDescription = true
-    console.log(shortDescription = text.length >= 350)
-    return text
+const normalizeText = (text) => {
+    if (descriptionText.short) {
+        return text
+    } else {
+        return text
+    }
+
 }
 
 const toggleComponent = (component, headline) => {
@@ -137,25 +149,62 @@ const saveDailyIncrement = (count) => {
     popup.isVisible = false
 }
 
+const textDescription = ref(null)
+const toggle = () => {
+    textDescription.value.scrollTop = 0
+    descriptionText.short = !descriptionText.short
+}
+
 </script>
 <style scoped lang="scss">
+.slide-out-enter-active,
+.slide-out-leave-active {
+  transition: all 0.3s;
+}
+
+.slide-out-enter,
+.slide-out-leave-to {
+  opacity: 0;
+  transform: translateY(-340px);
+}
+
 .project-info-description {
-  border-radius: 20px;
-  background: #FFF;
-  box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
-  padding: 20px;
-  box-sizing: border-box;
-  color: #191B2A;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  height: 240px;
-  display: block;
-  line-height: 154.183%; /* 21.586px */
+    border-radius: 10px;
+    background: #FFF;
+    box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
+    padding: 20px;
+    box-sizing: border-box;
+    color: #191B2A;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    display: block;
+    line-height: 154.183%; /* 21.586px */
+  min-height: 240px;
+
+
+
+  p {
+    position: relative;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+    color: #191B2A;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    display: -webkit-box;
+    transition: all .3s ease;
+    height: auto;
+  }
 
   .project-info-description_text {
     position: relative;
-    overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     word-break: break-word;
@@ -164,14 +213,24 @@ const saveDailyIncrement = (count) => {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    text-overflow: ellipsis;
-    display: -moz-box;
-    -moz-box-orient: vertical;
-    display: -webkit-box;
-    line-clamp: 3;
-    -webkit-line-clamp: 3;
     margin-bottom: 5px;
     width: 100%;
+
+
+    p {
+      white-space: pre-wrap;
+      max-height: 500px;
+      overflow: hidden auto;
+      transition: all 1s;
+
+      &.is-collapsed {
+        transition: all 1s;
+        max-height: 65px;
+        overflow: hidden;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+    }
 
   }
 
@@ -179,6 +238,8 @@ const saveDailyIncrement = (count) => {
     display: flex;
     gap: 20px;
     margin-top: 10px;
+
+
     .exchanger_stat {
       width: 15%;
     }
@@ -242,6 +303,24 @@ const saveDailyIncrement = (count) => {
 
     &:hover {
       color: #5D599F;
+    }
+  }
+}
+
+@media screen and (max-width: 500px){
+  .project-info-description {
+    .exchanger_stats {
+      flex-wrap: wrap;
+      align-items: center;
+
+      .exchanger_stat {
+        width: 45%;
+      }
+    }
+    .menu-item {
+      width: 100%;
+      align-items: center;
+      margin-left: 0!important;
     }
   }
 }

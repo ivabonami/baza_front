@@ -81,7 +81,7 @@ export default {
 
 <style scoped lang="scss">
 .image-input {
-  border-radius: 20px;
+  border-radius: 10px;
   border: 1px dashed #B3B4C9;
   background: #F8F7FC;
   box-sizing: border-box;
@@ -136,7 +136,7 @@ export default {
     top: 10px;
     right: 10px;
     background-color: #FFFFFF;
-    border-radius: 20px;
+    border-radius: 10px;
     padding: 2px 6px;
     box-sizing: border-box;
     width: 35px;

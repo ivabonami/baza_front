@@ -32,12 +32,8 @@
                               addNotice({name: 'Не удалось реактивно обновить отзыв', type: 'warning'})
                             }
                           }"
-                         @review-deleted="emit => {
-                          try {
-                            this.$emit('reviewDeleted', emit)
-                          } catch (e) {
-                            addNotice({name: 'Не удалось реактивно удалить отзыв', type: 'warning'})
-                          }
+                         @reviewDeleted="emit => {
+                          this.$emit('reviewDeleted', emit)
             }"
                          @disapprove-review="emit => {
                           try {
@@ -91,7 +87,7 @@ export default {
 
 <style scoped lang="scss">
 .review {
-  border-radius: 20px;
+  border-radius: 10px;
   background: #FFF;
   box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
   width: 100%;

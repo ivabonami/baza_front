@@ -35,7 +35,7 @@ export default {
   background: #f6f6f6;
   color: #191B2A;
   box-sizing: border-box;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -47,7 +47,7 @@ export default {
 
   &:hover {
     color: #FFFFFF;
-    background-color: #7773fb;
+    background-color: #575757;
   }
 
 }

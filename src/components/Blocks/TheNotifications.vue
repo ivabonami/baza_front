@@ -50,7 +50,7 @@ function onRemoveNotice(id) {
     align-items: center;
     justify-content: start;
     gap: 10px;
-    border-radius: 20px;
+    border-radius: 10px;
     cursor: pointer;
     transition: .3s ease;
     animation: 5s ease slideUp;

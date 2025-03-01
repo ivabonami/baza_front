@@ -25,7 +25,7 @@ const props = defineProps({
 const emits = defineEmits(['closePopup', 'reviewDeleted'])
 
 const onDeleteReview = (review) => {
-  // deleteReview(review)
+  deleteReview(review)
   emits('reviewDeleted', review.id)
   emits('closePopup')
 }

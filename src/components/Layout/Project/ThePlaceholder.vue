@@ -65,7 +65,7 @@ const props = defineProps({
 }
 .placeholder {
   width: 100%;
-  border-radius: 20px;
+  border-radius: 10px;
   position: relative;
   height: 100%;
 
@@ -73,7 +73,7 @@ const props = defineProps({
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    border-radius: 20px;
+    border-radius: 10px;
     //background: radial-gradient(175.11% 210.61% at 131.64% -20.57%, rgba(242, 242, 248, 0.50) 0%, rgba(233, 233, 242, 0.50) 31.1%);
     //box-shadow: -10px -12px 51.7px -40px #FFF, 24px 21px 64.8px -23px #C1BFDA;
     display: flex;

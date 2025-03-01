@@ -80,7 +80,13 @@ const router = createRouter({
       name: 'CategoriesEditor',
       component: CategoriesEditor
     }
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    if (!to.query.categoryIds) {
+      return { top: 0, behavior: 'smooth' }
+    }
+
+  },
 })
 
 export default router

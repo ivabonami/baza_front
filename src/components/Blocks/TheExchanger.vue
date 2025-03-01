@@ -323,7 +323,7 @@ export default {
   font-weight: 600;
   line-height: normal;
   transition: .3s ease;
-  border-radius: 20px;
+  border-radius: 10px;
   justify-content: space-between;
   align-items: center;
   display: flex;
@@ -395,9 +395,9 @@ export default {
         min-width: 195px;
       }
       .currency-from, .currency-to {
-        border-radius: 30px;
+        border-radius: 12px;
         border: 2px dashed #B3B4C9;
-        padding: 0 3px;
+        padding: 0 3px 0 1px;
         box-sizing: border-box;
         white-space: nowrap;
         cursor: pointer;
@@ -409,6 +409,8 @@ export default {
         gap: 5px;
         justify-content: start;
         background-color: #F8F7FC;
+
+
 
         .currency {
           display: flex;
@@ -428,7 +430,7 @@ export default {
             position: relative;
             background-color: transparent;
             border: 1px solid #c9c9c9;
-            border-radius: 20px;
+            border-radius: 10px;
             padding-left: 8px;
 
           }
@@ -448,7 +450,7 @@ export default {
           display: block;
           position: relative;
           box-sizing: content-box;
-          border-radius: 20px;
+          border-radius: 30px;
           background-color: #70718c;
 
           img {
@@ -488,6 +490,13 @@ export default {
           background: #ecebf3;
         }
       }
+
+      .currency-from {
+        padding: 0 3px 0 2px;
+      }
+      .currency-to {
+        padding: 0 2px 0 3px;
+      }
       .arrow {
         width: 15px;
       }
@@ -501,7 +510,7 @@ export default {
         line-height: 1;
         cursor: pointer;
         transition: .3s ease;
-        border-radius: 20px;
+        border-radius: 10px;
         justify-content: space-between;
         align-items: center;
         .text {

@@ -1,10 +1,10 @@
 <template>
-  <div class="banners-wrapper">
+  <div class="banners-wrapper wrapper">
     <the-loader style="min-height: 200px;" v-if="loading.loaded" />
 
     <div class="banners" v-else>
       <div class="large" v-if="adsBanners.large">
-        <div class="banner-large" v-for="banner of adsBanners.large">
+        <template v-for="banner of adsBanners.large" :key="banner.link">
           <a :href="banner.link" target="_blank">
             <img :src="api.url + banner.path" alt="">
             <div class="banner-menu" v-if="userStore.role === 'admin'" @click.prevent>
@@ -19,11 +19,11 @@
             </div>
           </a>
 
-        </div>
+        </template>
 
       </div>
       <div class="small" v-if="adsBanners.small">
-        <div class="banner-small" v-for="banner of adsBanners.small">
+        <template v-for="banner of adsBanners.small" :key="banner.link">
           <a :href="banner.link">
             <img :src="api.url + banner.path" alt="">
 
@@ -38,7 +38,7 @@
 
             </div>
           </a>
-        </div>
+        </template>
       </div>
     </div>
 
@@ -101,174 +101,112 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+
 .banners-wrapper {
   position: relative;
-  padding: 5px;
-  box-sizing: border-box;
   margin-bottom: 20px;
-
+  width: 100%;
+  box-sizing: border-box;
   .banners {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    height: fit-content;
-    position: relative;
-    align-items: stretch;
 
-    .banner-menu {
-      position: absolute;
-      z-index: 1;
-      right: 20px;
-      top: 20px;
+
+    .large, .small {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 10px;
+      width: 100%;
 
-      svg {
-        background-color: #FFFFFF;
-        border-radius: 20px;
-        width: 25px;
-        height: 25px;
-        padding: 5px;
-        box-sizing: content-box;
-        transition: .3s ease;
-        path {
-          transition: .3s ease;
-          stroke-width: 2px;
+      a {
+        display: flex;
+        height: 160px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+
+        img {
+          height: inherit;
         }
 
-        &:hover {
-          background-color: #5D599F;
-          path {
-            stroke: #fff;
+        .banner-menu {
+          position: absolute;
+          right: 5px;
+          top: 5px;
+          display: flex;
+          gap: 10px;
+          background-color: #fff;
+          padding: 5px 10px;
+          border-radius: 10px;
+
+          svg {
+            width: 15px;
+            height: 15px;
+            path {
+              transition: .3s ease;
+            }
+
+            &:hover {
+
+              path {
+                stroke:  #5D599F;
+              }
+            }
           }
         }
       }
     }
 
-    .large {
-      width: 100%;
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-
-    }
     .small {
-      width: 100%;
       display: flex;
-      gap: 20px;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      margin-top: 10px;
-
-      &::after {
-        content: '';
-        justify-content: start;
-      }
-
-    }
-  }
-
-  .banner-large, .banner-small {
-    width: 100%;
-    height: 100%;
-    border-radius: 15px;
-    position: relative;
-
-    a {
+      flex-direction: row;
+      gap: 10px;
       width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
 
-      img {
-        width: 100%;
+      a {
+        width: 33%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+
+        img {
+          height: fit-content;
+          min-width: 100%;
+        }
       }
+
     }
   }
-  .banner-large {
-    overflow: hidden;
-    width: auto;
-    min-width: 100%;
-    height: 160px;
-    a {
-      img {
-        width: 100%;
-      }
-    }
-  }
-  .banner-small {
-    width: 32%;
-    overflow: hidden;
-    height: 160px;
 
-    a {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      img {
-        width: auto;
-        height: 100%;
-      }
-    }
-  }
-  .payed-banner {
-    max-height: 165px;
-    width: 100%;
-    margin-bottom: 14px;
-    position: relative;
-    display: block;
-    overflow: hidden;
 
-  }
 }
 
 @media screen and (max-width: 500px){
-  .banners-wrapper {
-    .banner-small, .banner-large {
-      max-height: 60px;
-      border-radius: 20px;
-      overflow: hidden;
+.banners-wrapper {
+  .banners {
+    .large {
       a {
-        height: 100%;
-        display: inline;
+        width: 100%;
+        height: auto;
 
         img {
-          min-height: 100%;
+          width: 100%;
         }
       }
     }
-    .banner-small {
-      width: 47%;
+    .small {
+      flex-direction: column;
       a {
+        width: 100%;
+        height: auto;
+        max-height: 50px;
+
         img {
-          height: 100%;
-        }
-      }
-    }
-    .banners {
-      .large {
-        width: 100%;
-        height: fit-content;
-      }
-      .small {
-        width: 100%;
-        display: flex;
-        gap: 10px;
-
-      }
-
-      .banner-menu {
-        top: 10px;
-        svg {
-          width: 15px;
-          height: 15px;
+          width: 100%;
         }
       }
     }
   }
+}
 }
 
 </style>

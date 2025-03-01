@@ -12,7 +12,7 @@
           </svg>
           Рекомендованные</span>
         <span class="fresh"
-              :class="{active: currentState === 'fresh'}"
+              :class="{active: currentState === 'newest'}"
               @click="changeState('newest')"
               style="height: 45px;"
         >
@@ -103,7 +103,7 @@ export default {
       }
 
       &.recommended {
-        border-radius: 28px;
+        border-radius: 10px;
         background: rgba(255, 220, 80, .15);
         color: #d2c1ff;
 
@@ -127,7 +127,7 @@ export default {
       }
 
       &.fresh {
-        border-radius: 28px;
+        border-radius: 10px;
         background: rgba(119, 115, 251, 0.15);
         color: #d2c1ff;
 
