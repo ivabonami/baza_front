@@ -5,6 +5,7 @@ import iconAdv from '@/assets/icons/icon-advertisement.svg'
 import iconFavorite from '@/assets/icons/icon-favorite.svg'
 import iconPlus from '@/assets/icons/icon-plus.svg'
 import iconSber from '@/assets/icons/Sberbank_Logo_2020.svg'
+import iconJust from '@/assets/icons/menu-icons/JS-01.svg'
 
 export const menuItems = reactive([
     {
@@ -12,6 +13,12 @@ export const menuItems = reactive([
         href: 'https://cardbtc.io/',
         icon: iconSber,
         color: 'green',
+        type: 'external'
+    },{
+        name: 'Just-Service',
+        href: 'https://just-kill.is/',
+        icon: iconJust,
+        color: 'aquamarine',
         type: 'external'
     }, {
         name: 'Гарант',

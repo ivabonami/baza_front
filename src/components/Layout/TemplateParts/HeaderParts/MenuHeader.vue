@@ -114,7 +114,7 @@ window.addEventListener('resize', hideMenuIOnResize)
     li {
       a {
         color: #191B2A;
-        font-size: 16px;
+        font-size: 14px;
         font-style: normal;
         font-weight: 400;
         line-height: normal;
@@ -137,6 +137,9 @@ window.addEventListener('resize', hideMenuIOnResize)
 
         &.green {
           color: green;
+        }
+        &.aquamarine {
+          color: #36FDCA;
         }
 
         &.router-link-active {
