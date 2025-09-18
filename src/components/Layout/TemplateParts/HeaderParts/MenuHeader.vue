@@ -19,7 +19,7 @@
            v-if="item.type === 'external'"
            :href="item.href"
            :class="item.color">
-          <inline-svg class="menuIcon" v-if="item.icon" :src="item.icon" />
+          <inline-svg class="menuIcon" v-if="item.icon" :src="item.icon" :class="item.color" />
           <span>{{ item.name }}</span>
         </a>
         <router-link
@@ -139,7 +139,8 @@ window.addEventListener('resize', hideMenuIOnResize)
           color: green;
         }
         &.aquamarine {
-          color: #36FDCA;
+          color: #2D4A4F;
+
         }
 
         &.router-link-active {
